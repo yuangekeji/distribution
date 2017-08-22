@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.dividendHistory.mapper.DividendHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dividendHistory.model.DividendHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dividend_id" property="dividendId" jdbcType="INTEGER" />
+    <result column="received_time" property="receivedTime" jdbcType="TIMESTAMP" />
+    <result column="devidend_count" property="devidendCount" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="total_received" property="totalReceived" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    "id", "dividend_id", "received_time", "devidend_count", "amount", "total_received"
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.dividendHistory.model.DividendHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dividend_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dividend_history
+    where "id" = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dividend_history
+    where "id" = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.dividendHistory.model.DividendHistoryExample" >
+    delete from dividend_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into dividend_history ("dividend_id", "received_time", "devidend_count", 
+      "amount", "total_received")
+    values (#{dividendId,jdbcType=INTEGER}, #{receivedTime,jdbcType=TIMESTAMP}, #{devidendCount,jdbcType=INTEGER}, 
+      #{amount,jdbcType=DECIMAL}, #{totalReceived,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into dividend_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dividendId != null" >
+        "dividend_id",
+      </if>
+      <if test="receivedTime != null" >
+        "received_time",
+      </if>
+      <if test="devidendCount != null" >
+        "devidend_count",
+      </if>
+      <if test="amount != null" >
+        "amount",
+      </if>
+      <if test="totalReceived != null" >
+        "total_received",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dividendId != null" >
+        #{dividendId,jdbcType=INTEGER},
+      </if>
+      <if test="receivedTime != null" >
+        #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="devidendCount != null" >
+        #{devidendCount,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReceived != null" >
+        #{totalReceived,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.dividendHistory.model.DividendHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from dividend_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dividend_history
+    <set >
+      <if test="record.id != null" >
+        "id" = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.dividendId != null" >
+        "dividend_id" = #{record.dividendId,jdbcType=INTEGER},
+      </if>
+      <if test="record.receivedTime != null" >
+        "received_time" = #{record.receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.devidendCount != null" >
+        "devidend_count" = #{record.devidendCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null" >
+        "amount" = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalReceived != null" >
+        "total_received" = #{record.totalReceived,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dividend_history
+    set "id" = #{record.id,jdbcType=INTEGER},
+      "dividend_id" = #{record.dividendId,jdbcType=INTEGER},
+      "received_time" = #{record.receivedTime,jdbcType=TIMESTAMP},
+      "devidend_count" = #{record.devidendCount,jdbcType=INTEGER},
+      "amount" = #{record.amount,jdbcType=DECIMAL},
+      "total_received" = #{record.totalReceived,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
+    update dividend_history
+    <set >
+      <if test="dividendId != null" >
+        "dividend_id" = #{dividendId,jdbcType=INTEGER},
+      </if>
+      <if test="receivedTime != null" >
+        "received_time" = #{receivedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="devidendCount != null" >
+        "devidend_count" = #{devidendCount,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        "amount" = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalReceived != null" >
+        "total_received" = #{totalReceived,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
+    update dividend_history
+    set "dividend_id" = #{dividendId,jdbcType=INTEGER},
+      "received_time" = #{receivedTime,jdbcType=TIMESTAMP},
+      "devidend_count" = #{devidendCount,jdbcType=INTEGER},
+      "amount" = #{amount,jdbcType=DECIMAL},
+      "total_received" = #{totalReceived,jdbcType=DECIMAL}
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

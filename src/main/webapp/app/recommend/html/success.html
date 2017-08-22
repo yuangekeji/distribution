@@ -1,0 +1,29 @@
+<div class="page-group bg_white">
+    <div class="page page-current">
+        <nav class="bar bar-tab bar_btn">
+            <div class="row no-gutter">
+                <div class="col-50">
+                    <a class="button button-light button-big" ng-click="chooseShopPage()">直接预约典当</a>
+                </div>
+                <div class="col-50">
+                    <a class="button button-big button-fill button-danger" ng-click="gotoListPage()">返回列表</a>
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div><img ng-src="{{ctx+'/resources/brt/images/bg_rocket.png'}}"></div>
+            <div class="pa35 color_black">
+                <div class="font20">提交成功</div>
+                <div class="pt10" ng-show="!rebateAmountMin || !rebateAmountMax"
+                     ng-bind="'您已成功推荐，具体返利事宜请联系客服人员。'"></div>
+                <div class="pt10"
+                     ng-show="rebateAmountMin.length>0 && rebateAmountMax.length>0 && rebateAmountMin!='null' && rebateAmountMin!='null'"
+                     ng-bind="'在线预约并去店铺完成典当，您可以获得返利' + (rebateAmountMin) + '~' + (rebateAmountMax) + '元'"></div>
+                <div class="pt15 lh14">您可以查看详情或取消预约，如有问题，请点击"专家在线"菜单进行在线咨询，或直拨
+                    <a href="tel:4001889797"
+                       class="font18 fontu">4001889797</a>，谢谢合作。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

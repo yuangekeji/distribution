@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.memberLevel.mapper.MemberLevelMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.memberLevel.model.MemberLevel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="level_category" property="levelCategory" jdbcType="INTEGER" />
+    <result column="buy_amt" property="buyAmt" jdbcType="DECIMAL" />
+    <result column="buy_qty" property="buyQty" jdbcType="INTEGER" />
+    <result column="devidend_cnt" property="devidendCnt" jdbcType="INTEGER" />
+    <result column="sales_bonus_per" property="salesBonusPer" jdbcType="DECIMAL" />
+    <result column="sales_bonus_per1" property="salesBonusPer1" jdbcType="DECIMAL" />
+    <result column="sales_bonus_per2" property="salesBonusPer2" jdbcType="DECIMAL" />
+    <result column="profit_per" property="profitPer" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    "id", "level_category", "buy_amt", "buy_qty", "devidend_cnt", "sales_bonus_per", 
+    "sales_bonus_per1", "sales_bonus_per2", "profit_per", "discount"
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberLevel.model.MemberLevelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member_level
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberLevel.model.MemberLevelKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from member_level
+    where "id" = #{id,jdbcType=INTEGER}
+      and "level_category" = #{levelCategory,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.distribution.dao.memberLevel.model.MemberLevelKey" >
+    delete from member_level
+    where "id" = #{id,jdbcType=INTEGER}
+      and "level_category" = #{levelCategory,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.memberLevel.model.MemberLevelExample" >
+    delete from member_level
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into member_level ("level_category", "buy_amt", "buy_qty", 
+      "devidend_cnt", "sales_bonus_per", "sales_bonus_per1", 
+      "sales_bonus_per2", "profit_per", "discount"
+      )
+    values (#{levelCategory,jdbcType=INTEGER}, #{buyAmt,jdbcType=DECIMAL}, #{buyQty,jdbcType=INTEGER}, 
+      #{devidendCnt,jdbcType=INTEGER}, #{salesBonusPer,jdbcType=DECIMAL}, #{salesBonusPer1,jdbcType=DECIMAL}, 
+      #{salesBonusPer2,jdbcType=DECIMAL}, #{profitPer,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into member_level
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="levelCategory != null" >
+        "level_category",
+      </if>
+      <if test="buyAmt != null" >
+        "buy_amt",
+      </if>
+      <if test="buyQty != null" >
+        "buy_qty",
+      </if>
+      <if test="devidendCnt != null" >
+        "devidend_cnt",
+      </if>
+      <if test="salesBonusPer != null" >
+        "sales_bonus_per",
+      </if>
+      <if test="salesBonusPer1 != null" >
+        "sales_bonus_per1",
+      </if>
+      <if test="salesBonusPer2 != null" >
+        "sales_bonus_per2",
+      </if>
+      <if test="profitPer != null" >
+        "profit_per",
+      </if>
+      <if test="discount != null" >
+        "discount",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="levelCategory != null" >
+        #{levelCategory,jdbcType=INTEGER},
+      </if>
+      <if test="buyAmt != null" >
+        #{buyAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="buyQty != null" >
+        #{buyQty,jdbcType=INTEGER},
+      </if>
+      <if test="devidendCnt != null" >
+        #{devidendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="salesBonusPer != null" >
+        #{salesBonusPer,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer1 != null" >
+        #{salesBonusPer1,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer2 != null" >
+        #{salesBonusPer2,jdbcType=DECIMAL},
+      </if>
+      <if test="profitPer != null" >
+        #{profitPer,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.memberLevel.model.MemberLevelExample" resultType="java.lang.Integer" >
+    select count(*) from member_level
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update member_level
+    <set >
+      <if test="record.id != null" >
+        "id" = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.levelCategory != null" >
+        "level_category" = #{record.levelCategory,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyAmt != null" >
+        "buy_amt" = #{record.buyAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.buyQty != null" >
+        "buy_qty" = #{record.buyQty,jdbcType=INTEGER},
+      </if>
+      <if test="record.devidendCnt != null" >
+        "devidend_cnt" = #{record.devidendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesBonusPer != null" >
+        "sales_bonus_per" = #{record.salesBonusPer,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salesBonusPer1 != null" >
+        "sales_bonus_per1" = #{record.salesBonusPer1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salesBonusPer2 != null" >
+        "sales_bonus_per2" = #{record.salesBonusPer2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.profitPer != null" >
+        "profit_per" = #{record.profitPer,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discount != null" >
+        "discount" = #{record.discount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update member_level
+    set "id" = #{record.id,jdbcType=INTEGER},
+      "level_category" = #{record.levelCategory,jdbcType=INTEGER},
+      "buy_amt" = #{record.buyAmt,jdbcType=DECIMAL},
+      "buy_qty" = #{record.buyQty,jdbcType=INTEGER},
+      "devidend_cnt" = #{record.devidendCnt,jdbcType=INTEGER},
+      "sales_bonus_per" = #{record.salesBonusPer,jdbcType=DECIMAL},
+      "sales_bonus_per1" = #{record.salesBonusPer1,jdbcType=DECIMAL},
+      "sales_bonus_per2" = #{record.salesBonusPer2,jdbcType=DECIMAL},
+      "profit_per" = #{record.profitPer,jdbcType=DECIMAL},
+      "discount" = #{record.discount,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
+    update member_level
+    <set >
+      <if test="buyAmt != null" >
+        "buy_amt" = #{buyAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="buyQty != null" >
+        "buy_qty" = #{buyQty,jdbcType=INTEGER},
+      </if>
+      <if test="devidendCnt != null" >
+        "devidend_cnt" = #{devidendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="salesBonusPer != null" >
+        "sales_bonus_per" = #{salesBonusPer,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer1 != null" >
+        "sales_bonus_per1" = #{salesBonusPer1,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer2 != null" >
+        "sales_bonus_per2" = #{salesBonusPer2,jdbcType=DECIMAL},
+      </if>
+      <if test="profitPer != null" >
+        "profit_per" = #{profitPer,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        "discount" = #{discount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where "id" = #{id,jdbcType=INTEGER}
+      and "level_category" = #{levelCategory,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
+    update member_level
+    set "buy_amt" = #{buyAmt,jdbcType=DECIMAL},
+      "buy_qty" = #{buyQty,jdbcType=INTEGER},
+      "devidend_cnt" = #{devidendCnt,jdbcType=INTEGER},
+      "sales_bonus_per" = #{salesBonusPer,jdbcType=DECIMAL},
+      "sales_bonus_per1" = #{salesBonusPer1,jdbcType=DECIMAL},
+      "sales_bonus_per2" = #{salesBonusPer2,jdbcType=DECIMAL},
+      "profit_per" = #{profitPer,jdbcType=DECIMAL},
+      "discount" = #{discount,jdbcType=DECIMAL}
+    where "id" = #{id,jdbcType=INTEGER}
+      and "level_category" = #{levelCategory,jdbcType=INTEGER}
+  </update>
+</mapper>

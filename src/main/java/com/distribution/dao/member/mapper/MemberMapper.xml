@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.member.mapper.MemberMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.member.model.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="query_password" property="queryPassword" jdbcType="VARCHAR" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+    <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
+    <result column="node_id" property="nodeId" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
+    <result column="ID_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    "id", "member_phone", "login_password", "query_password", "pay_password", "recommend_id", 
+    "node_id", "member_name", "member_level", "ID_number", "express_address", "create_time", 
+    "status", "delete_flag"
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.member.model.MemberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from member
+    where "id" = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from member
+    where "id" = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.member.model.MemberExample" >
+    delete from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.member.model.Member" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into member ("member_phone", "login_password", "query_password", 
+      "pay_password", "recommend_id", "node_id", 
+      "member_name", "member_level", "ID_number", 
+      "express_address", "create_time", "status", 
+      "delete_flag")
+    values (#{memberPhone,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{queryPassword,jdbcType=VARCHAR}, 
+      #{payPassword,jdbcType=VARCHAR}, #{recommendId,jdbcType=INTEGER}, #{nodeId,jdbcType=INTEGER}, 
+      #{memberName,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, 
+      #{expressAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{deleteFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.member.model.Member" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="memberPhone != null" >
+        "member_phone",
+      </if>
+      <if test="loginPassword != null" >
+        "login_password",
+      </if>
+      <if test="queryPassword != null" >
+        "query_password",
+      </if>
+      <if test="payPassword != null" >
+        "pay_password",
+      </if>
+      <if test="recommendId != null" >
+        "recommend_id",
+      </if>
+      <if test="nodeId != null" >
+        "node_id",
+      </if>
+      <if test="memberName != null" >
+        "member_name",
+      </if>
+      <if test="memberLevel != null" >
+        "member_level",
+      </if>
+      <if test="idNumber != null" >
+        "ID_number",
+      </if>
+      <if test="expressAddress != null" >
+        "express_address",
+      </if>
+      <if test="createTime != null" >
+        "create_time",
+      </if>
+      <if test="status != null" >
+        "status",
+      </if>
+      <if test="deleteFlag != null" >
+        "delete_flag",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="memberPhone != null" >
+        #{memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="queryPassword != null" >
+        #{queryPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendId != null" >
+        #{recommendId,jdbcType=INTEGER},
+      </if>
+      <if test="nodeId != null" >
+        #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevel != null" >
+        #{memberLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="expressAddress != null" >
+        #{expressAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.member.model.MemberExample" resultType="java.lang.Integer" >
+    select count(*) from member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update member
+    <set >
+      <if test="record.id != null" >
+        "id" = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberPhone != null" >
+        "member_phone" = #{record.memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPassword != null" >
+        "login_password" = #{record.loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queryPassword != null" >
+        "query_password" = #{record.queryPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPassword != null" >
+        "pay_password" = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendId != null" >
+        "recommend_id" = #{record.recommendId,jdbcType=INTEGER},
+      </if>
+      <if test="record.nodeId != null" >
+        "node_id" = #{record.nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberName != null" >
+        "member_name" = #{record.memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberLevel != null" >
+        "member_level" = #{record.memberLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNumber != null" >
+        "ID_number" = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressAddress != null" >
+        "express_address" = #{record.expressAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        "status" = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteFlag != null" >
+        "delete_flag" = #{record.deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update member
+    set "id" = #{record.id,jdbcType=INTEGER},
+      "member_phone" = #{record.memberPhone,jdbcType=VARCHAR},
+      "login_password" = #{record.loginPassword,jdbcType=VARCHAR},
+      "query_password" = #{record.queryPassword,jdbcType=VARCHAR},
+      "pay_password" = #{record.payPassword,jdbcType=VARCHAR},
+      "recommend_id" = #{record.recommendId,jdbcType=INTEGER},
+      "node_id" = #{record.nodeId,jdbcType=INTEGER},
+      "member_name" = #{record.memberName,jdbcType=VARCHAR},
+      "member_level" = #{record.memberLevel,jdbcType=VARCHAR},
+      "ID_number" = #{record.idNumber,jdbcType=VARCHAR},
+      "express_address" = #{record.expressAddress,jdbcType=VARCHAR},
+      "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+      "status" = #{record.status,jdbcType=VARCHAR},
+      "delete_flag" = #{record.deleteFlag,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.member.model.Member" >
+    update member
+    <set >
+      <if test="memberPhone != null" >
+        "member_phone" = #{memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPassword != null" >
+        "login_password" = #{loginPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="queryPassword != null" >
+        "query_password" = #{queryPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null" >
+        "pay_password" = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendId != null" >
+        "recommend_id" = #{recommendId,jdbcType=INTEGER},
+      </if>
+      <if test="nodeId != null" >
+        "node_id" = #{nodeId,jdbcType=INTEGER},
+      </if>
+      <if test="memberName != null" >
+        "member_name" = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevel != null" >
+        "member_level" = #{memberLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        "ID_number" = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="expressAddress != null" >
+        "express_address" = #{expressAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        "create_time" = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        "status" = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        "delete_flag" = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.member.model.Member" >
+    update member
+    set "member_phone" = #{memberPhone,jdbcType=VARCHAR},
+      "login_password" = #{loginPassword,jdbcType=VARCHAR},
+      "query_password" = #{queryPassword,jdbcType=VARCHAR},
+      "pay_password" = #{payPassword,jdbcType=VARCHAR},
+      "recommend_id" = #{recommendId,jdbcType=INTEGER},
+      "node_id" = #{nodeId,jdbcType=INTEGER},
+      "member_name" = #{memberName,jdbcType=VARCHAR},
+      "member_level" = #{memberLevel,jdbcType=VARCHAR},
+      "ID_number" = #{idNumber,jdbcType=VARCHAR},
+      "express_address" = #{expressAddress,jdbcType=VARCHAR},
+      "create_time" = #{createTime,jdbcType=TIMESTAMP},
+      "status" = #{status,jdbcType=VARCHAR},
+      "delete_flag" = #{deleteFlag,jdbcType=VARCHAR}
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

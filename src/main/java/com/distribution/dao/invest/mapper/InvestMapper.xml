@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.invest.mapper.InvestMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.invest.model.Invest" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="invest_cnt" property="investCnt" jdbcType="INTEGER" />
+    <result column="seed_amt" property="seedAmt" jdbcType="DECIMAL" />
+    <result column="bonus_amt" property="bonusAmt" jdbcType="DECIMAL" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    "id", "member_id", "invest_cnt", "seed_amt", "bonus_amt", "create_id", "create_time", 
+    "update_id", "update_time"
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.invest.model.InvestExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from invest
+    where "id" = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from invest
+    where "id" = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.invest.model.InvestExample" >
+    delete from invest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.invest.model.Invest" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into invest ("member_id", "invest_cnt", "seed_amt", 
+      "bonus_amt", "create_id", "create_time", 
+      "update_id", "update_time")
+    values (#{memberId,jdbcType=INTEGER}, #{investCnt,jdbcType=INTEGER}, #{seedAmt,jdbcType=DECIMAL}, 
+      #{bonusAmt,jdbcType=DECIMAL}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.invest.model.Invest" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into invest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="memberId != null" >
+        "member_id",
+      </if>
+      <if test="investCnt != null" >
+        "invest_cnt",
+      </if>
+      <if test="seedAmt != null" >
+        "seed_amt",
+      </if>
+      <if test="bonusAmt != null" >
+        "bonus_amt",
+      </if>
+      <if test="createId != null" >
+        "create_id",
+      </if>
+      <if test="createTime != null" >
+        "create_time",
+      </if>
+      <if test="updateId != null" >
+        "update_id",
+      </if>
+      <if test="updateTime != null" >
+        "update_time",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="investCnt != null" >
+        #{investCnt,jdbcType=INTEGER},
+      </if>
+      <if test="seedAmt != null" >
+        #{seedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="bonusAmt != null" >
+        #{bonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.invest.model.InvestExample" resultType="java.lang.Integer" >
+    select count(*) from invest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update invest
+    <set >
+      <if test="record.id != null" >
+        "id" = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null" >
+        "member_id" = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.investCnt != null" >
+        "invest_cnt" = #{record.investCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.seedAmt != null" >
+        "seed_amt" = #{record.seedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bonusAmt != null" >
+        "bonus_amt" = #{record.bonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createId != null" >
+        "create_id" = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null" >
+        "update_id" = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null" >
+        "update_time" = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update invest
+    set "id" = #{record.id,jdbcType=INTEGER},
+      "member_id" = #{record.memberId,jdbcType=INTEGER},
+      "invest_cnt" = #{record.investCnt,jdbcType=INTEGER},
+      "seed_amt" = #{record.seedAmt,jdbcType=DECIMAL},
+      "bonus_amt" = #{record.bonusAmt,jdbcType=DECIMAL},
+      "create_id" = #{record.createId,jdbcType=INTEGER},
+      "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+      "update_id" = #{record.updateId,jdbcType=INTEGER},
+      "update_time" = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.invest.model.Invest" >
+    update invest
+    <set >
+      <if test="memberId != null" >
+        "member_id" = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="investCnt != null" >
+        "invest_cnt" = #{investCnt,jdbcType=INTEGER},
+      </if>
+      <if test="seedAmt != null" >
+        "seed_amt" = #{seedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="bonusAmt != null" >
+        "bonus_amt" = #{bonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="createId != null" >
+        "create_id" = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        "create_time" = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        "update_id" = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        "update_time" = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.invest.model.Invest" >
+    update invest
+    set "member_id" = #{memberId,jdbcType=INTEGER},
+      "invest_cnt" = #{investCnt,jdbcType=INTEGER},
+      "seed_amt" = #{seedAmt,jdbcType=DECIMAL},
+      "bonus_amt" = #{bonusAmt,jdbcType=DECIMAL},
+      "create_id" = #{createId,jdbcType=INTEGER},
+      "create_time" = #{createTime,jdbcType=TIMESTAMP},
+      "update_id" = #{updateId,jdbcType=INTEGER},
+      "update_time" = #{updateTime,jdbcType=TIMESTAMP}
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

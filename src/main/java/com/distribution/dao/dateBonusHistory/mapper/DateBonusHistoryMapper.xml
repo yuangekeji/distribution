@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.dateBonusHistory.mapper.DateBonusHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dateBonusHistory.model.DateBonusHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="total_sales" property="totalSales" jdbcType="DECIMAL" />
+    <result column="dividend_total" property="dividendTotal" jdbcType="DECIMAL" />
+    <result column="jd_bonus_total" property="jdBonusTotal" jdbcType="DECIMAL" />
+    <result column="use_dividend_total" property="useDividendTotal" jdbcType="DECIMAL" />
+    <result column="use_jd_bonus_total" property="useJdBonusTotal" jdbcType="DECIMAL" />
+    <result column="remain_dividend" property="remainDividend" jdbcType="DECIMAL" />
+    <result column="remain_jd_bonus" property="remainJdBonus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    "id", "date", "total_sales", "dividend_total", "jd_bonus_total", "use_dividend_total", 
+    "use_jd_bonus_total", "remain_dividend", "remain_jd_bonus"
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.dateBonusHistory.model.DateBonusHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from date_bonus_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from date_bonus_history
+    where "id" = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from date_bonus_history
+    where "id" = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.dateBonusHistory.model.DateBonusHistoryExample" >
+    delete from date_bonus_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.dateBonusHistory.model.DateBonusHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into date_bonus_history ("date", "total_sales", "dividend_total", 
+      "jd_bonus_total", "use_dividend_total", "use_jd_bonus_total", 
+      "remain_dividend", "remain_jd_bonus")
+    values (#{date,jdbcType=TIMESTAMP}, #{totalSales,jdbcType=DECIMAL}, #{dividendTotal,jdbcType=DECIMAL}, 
+      #{jdBonusTotal,jdbcType=DECIMAL}, #{useDividendTotal,jdbcType=DECIMAL}, #{useJdBonusTotal,jdbcType=DECIMAL}, 
+      #{remainDividend,jdbcType=DECIMAL}, #{remainJdBonus,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.dateBonusHistory.model.DateBonusHistory" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT @@IDENTITY
+    </selectKey>
+    insert into date_bonus_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="date != null" >
+        "date",
+      </if>
+      <if test="totalSales != null" >
+        "total_sales",
+      </if>
+      <if test="dividendTotal != null" >
+        "dividend_total",
+      </if>
+      <if test="jdBonusTotal != null" >
+        "jd_bonus_total",
+      </if>
+      <if test="useDividendTotal != null" >
+        "use_dividend_total",
+      </if>
+      <if test="useJdBonusTotal != null" >
+        "use_jd_bonus_total",
+      </if>
+      <if test="remainDividend != null" >
+        "remain_dividend",
+      </if>
+      <if test="remainJdBonus != null" >
+        "remain_jd_bonus",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalSales != null" >
+        #{totalSales,jdbcType=DECIMAL},
+      </if>
+      <if test="dividendTotal != null" >
+        #{dividendTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="jdBonusTotal != null" >
+        #{jdBonusTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="useDividendTotal != null" >
+        #{useDividendTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="useJdBonusTotal != null" >
+        #{useJdBonusTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="remainDividend != null" >
+        #{remainDividend,jdbcType=DECIMAL},
+      </if>
+      <if test="remainJdBonus != null" >
+        #{remainJdBonus,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.dateBonusHistory.model.DateBonusHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from date_bonus_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update date_bonus_history
+    <set >
+      <if test="record.id != null" >
+        "id" = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        "date" = #{record.date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.totalSales != null" >
+        "total_sales" = #{record.totalSales,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dividendTotal != null" >
+        "dividend_total" = #{record.dividendTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.jdBonusTotal != null" >
+        "jd_bonus_total" = #{record.jdBonusTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.useDividendTotal != null" >
+        "use_dividend_total" = #{record.useDividendTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.useJdBonusTotal != null" >
+        "use_jd_bonus_total" = #{record.useJdBonusTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remainDividend != null" >
+        "remain_dividend" = #{record.remainDividend,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remainJdBonus != null" >
+        "remain_jd_bonus" = #{record.remainJdBonus,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update date_bonus_history
+    set "id" = #{record.id,jdbcType=INTEGER},
+      "date" = #{record.date,jdbcType=TIMESTAMP},
+      "total_sales" = #{record.totalSales,jdbcType=DECIMAL},
+      "dividend_total" = #{record.dividendTotal,jdbcType=DECIMAL},
+      "jd_bonus_total" = #{record.jdBonusTotal,jdbcType=DECIMAL},
+      "use_dividend_total" = #{record.useDividendTotal,jdbcType=DECIMAL},
+      "use_jd_bonus_total" = #{record.useJdBonusTotal,jdbcType=DECIMAL},
+      "remain_dividend" = #{record.remainDividend,jdbcType=DECIMAL},
+      "remain_jd_bonus" = #{record.remainJdBonus,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.dateBonusHistory.model.DateBonusHistory" >
+    update date_bonus_history
+    <set >
+      <if test="date != null" >
+        "date" = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalSales != null" >
+        "total_sales" = #{totalSales,jdbcType=DECIMAL},
+      </if>
+      <if test="dividendTotal != null" >
+        "dividend_total" = #{dividendTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="jdBonusTotal != null" >
+        "jd_bonus_total" = #{jdBonusTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="useDividendTotal != null" >
+        "use_dividend_total" = #{useDividendTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="useJdBonusTotal != null" >
+        "use_jd_bonus_total" = #{useJdBonusTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="remainDividend != null" >
+        "remain_dividend" = #{remainDividend,jdbcType=DECIMAL},
+      </if>
+      <if test="remainJdBonus != null" >
+        "remain_jd_bonus" = #{remainJdBonus,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.dateBonusHistory.model.DateBonusHistory" >
+    update date_bonus_history
+    set "date" = #{date,jdbcType=TIMESTAMP},
+      "total_sales" = #{totalSales,jdbcType=DECIMAL},
+      "dividend_total" = #{dividendTotal,jdbcType=DECIMAL},
+      "jd_bonus_total" = #{jdBonusTotal,jdbcType=DECIMAL},
+      "use_dividend_total" = #{useDividendTotal,jdbcType=DECIMAL},
+      "use_jd_bonus_total" = #{useJdBonusTotal,jdbcType=DECIMAL},
+      "remain_dividend" = #{remainDividend,jdbcType=DECIMAL},
+      "remain_jd_bonus" = #{remainJdBonus,jdbcType=DECIMAL}
+    where "id" = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

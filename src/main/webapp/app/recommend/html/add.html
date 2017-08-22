@@ -1,0 +1,78 @@
+<div class="page-group bg_white">
+    <div class="page page-current">
+        <nav class="bar bar-tab bar_btn">
+            <div class="row no-gutter ng-cloak" ng-cloak>
+                <div class="col-50">
+                    <a class="button button-light button-big" ng-click="gotoListPage()">取消</a>
+                </div>
+                <div class="col-50">
+                    <a class="button button-big button-fill button-danger" ng-click="ok()">开始预约</a>
+                </div>
+            </div>
+        </nav>
+        <div class="content">
+            <div class="pb20 ng-cloak" ng-show="goodsList.length>0" ng-cloak>
+                <div class="title_a">
+                    <span ng-show="goodsType=='3'">{{goodsList[0].name1}}({{goodsList.length}})</span>
+                    <span ng-show="goodsType=='1'">房产({{goodsList.length}})</span>
+                    <span ng-show="goodsType=='2'">汽车({{goodsList.length}})</span>
+                </div>
+                <div class="detail_content row_b" ng-repeat="goods in goodsList track by $index">
+                    <div class="col_100 row_a">
+                        <div class="col_flex font16 text_overflow" ng-show="goods.goodsType=='3'" ng-bind="goods.name2"></div>
+                        <div ng-show="goods.goodsType=='3'" class="col_50 text_overflow font16"><span class="pl10">{{goods.name3}}</span></div>
+                        <div class="col_flex font16 text_overflow" ng-show="goods.goodsType=='1'"
+                             ng-bind="goods.house.communityName"></div>
+                        <div class="col_flex font16" ng-show="goods.goodsType=='1'"
+                             ng-bind="goods.house.constructYear?goods.house.constructYear+'年 建筑':'年 建筑'"></div>
+                        <div class="col_flex font16 text_overflow" ng-show="goods.goodsType=='2'"
+                             ng-bind="goods.car.brandModel"></div>
+                        <div class="icons">
+                            <span class="icon icon-edit" ng-click="editGoods($index)"></span>
+                            <span class="icon icon-remove" ng-click="removeGoods($index)"></span>
+                        </div>
+                    </div>
+                    <!--<div ng-show="goods.goodsType=='3'" class="col_50"><span class="pl10">{{goods.name2}}</span></div>-->
+                    <!--<div ng-show="goods.goodsType=='3'" class="col_50 text_right">{{goods.name3}}</div>-->
+                    <div class="col_100 pt5 pb10">
+                        <div class="pb5" ng-show="goods.goodsType=='3'">物品附件</div>
+                        <div class="pb5" ng-show="goods.goodsType=='1'">房产证</div>
+                        <div class="pb5" ng-show="goods.goodsType=='2'">行驶证</div>
+                        <div class="row_b list_c">
+                            <div class="item" ng-repeat="material in goods.materialIds track by $index"
+                                 ng-click="previewImage(material.url,goods.materialIds)">
+                                <figure class="thumb thumb_11 bg">
+                                    <a>
+                                        <img ng-src="{{material.url}}">
+                                    </a>
+                                </figure>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col_100 text_overflow">
+                        <span class="pb5" ng-show="goods.goodsType=='3'">物品描述:</span>
+                        <span class="pb5 color_grey" ng-show="goods.goodsType=='3'">{{goods.description}}</span>
+                        <span class="pb5" ng-show="goods.goodsType=='1'">房产描述:</span>
+                        <span class="pb5 color_grey" ng-show="goods.goodsType=='1'">{{goods.house.description}}</span>
+                    </div>
+                    <div class="col_100" ng-show="goods.goodsType=='2'">发动机燃油<span
+                            class="pl10 color_grey">{{goods.car.fuel}}</span></div>
+                    <div class="col_100" ng-show="goods.goodsType=='2'">行驶里程<span class="pl10 color_grey">{{goods.car.mileage}}{{goods.car.unit}}</span>
+                    </div>
+                    <div class="col_100" ng-show="goods.goodsType=='2'">登记日期<span class="pl10 color_grey">{{goods.car.productionTime | date:'yyyy-MM-dd'}}</span>
+                    </div>
+                    <div class="col_100" ng-show="goods.goodsType=='2'">出厂日期<span class="pl10 color_grey">{{goods.car.registrationTime | date:'yyyy-MM-dd'}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pt15">
+                <div class="pl20 pr20 ng-cloak" ng-cloak ng-show="!status || status==3">
+                    <a class="btn_add" ng-click="gotoAddPage2()">
+                        <span class="a1"><img ng-src="{{ctx+'/resources/brt/images/icon_cross.svg'}}"></span>
+                        <span class="a2">添加物品</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

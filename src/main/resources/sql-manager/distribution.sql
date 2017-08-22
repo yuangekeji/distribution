@@ -464,3 +464,9 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+
+
+-- Bright 2017年8月22日21:41:48
+ALTER TABLE `member`
+ADD COLUMN `role_id`  int NULL COMMENT '角色ID' AFTER `delete_flag`,
+ADD COLUMN `member_post`  varchar(255) NULL COMMENT '职务等级' AFTER `role_id`;

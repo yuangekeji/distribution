@@ -50,8 +50,8 @@ public class UserController extends BasicController {
     @RequestMapping("/getUserFromSession")
     @ResponseBody
     public JsonMessage getUserFromSession(HttpSession session){
-        User user = getCurrentUserBySession(session);
-        return successMsg(user);
+//        User user = getCurrentUserBySession(session);
+        return successMsg(new User());
     }
 
 }

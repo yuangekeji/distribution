@@ -1,7 +1,7 @@
 package com.distribution.common.controller;
 
 import com.distribution.common.constant.JsonMessage;
-import com.distribution.common.enums.SessionEnum;
+
 import com.distribution.common.exception.BizException;
 import com.distribution.common.utils.ErrorUtils;
 import com.distribution.dao.user.model.User;
@@ -23,9 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Administrator on 2016/9/29.
- */
+
 public class BasicController {
     protected Logger logger = LoggerFactory.getLogger(BasicController.class);
 
@@ -113,20 +111,5 @@ public class BasicController {
             }
         }
         return obj;
-    }
-
-    public User getCurrentUserBySession(HttpSession session){
-        User user =(User) session.getAttribute(SessionEnum.USER.getCode());
-        return user!=null?user:null;
-    }
-
-    public void cleanCurrentUserBySession(HttpSession session){
-        session.removeAttribute(SessionEnum.USER.getCode());
-        session.removeAttribute(SessionEnum.USER_ID.getCode());
-    }
-
-    public void setUserInSession(HttpSession session,User user){
-        session.setAttribute(SessionEnum.USER.getCode(),user);
-        session.setAttribute(SessionEnum.USER_ID.getCode(),user.getId());
     }
 }

@@ -109,9 +109,9 @@ App.factory('settings', ['$rootScope', function($rootScope) {
             pageBodySolid: false, // solid body color state
             pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
         },
-        assetsPath: '../assets',
-        globalPath: '../assets/global',
-        layoutPath: '../assets/layouts/layout2',
+        assetsPath: '../resources/metronic',
+        globalPath: '../resources/metronic/global',
+        layoutPath: '../resources/metronic/layouts/layout2',
     };
 
     $rootScope.settings = settings;

@@ -46,4 +46,11 @@
         <property name="resolveLazily" value="true"/>
     </bean>
 
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.distribution.common.intercept.LoginInterceptorAdaptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

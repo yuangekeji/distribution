@@ -19,9 +19,9 @@ angular
             {
                 name: 'recommend.list',
                 files: ['app/recommend/js/list.js?v=' + version,
-                        'resource/metronic/global/plugins/datatables/datatables.min.css',
-                        'resource/metronic/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
-                        'resource/metronic/global/plugins/datatables/datatables.all.min.js'
+                        'resources/metronic/global/plugins/datatables/datatables.min.css',
+                        'resources/metronic/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+                        'resources/metronic/global/plugins/datatables/datatables.all.min.js'
                 ]
             },
             {

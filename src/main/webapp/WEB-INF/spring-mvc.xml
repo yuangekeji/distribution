@@ -15,7 +15,7 @@
     <context:annotation-config/>
 
     <!-- 只扫描controller DispatcherServlet 上下文， 只搜索@Controller 标注的类 ，不搜索其他标注的类-->
-    <context:component-scan base-package="com.distribution">
+    <context:component-scan base-package="com.distribution.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
@@ -25,7 +25,7 @@
     <!-- 访问静态资源映射 <mvc:default-servlet-handler/> -->
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:resources mapping="/app/**" location="/app/" />
-    <mvc:resources mapping="/static/**" location="/static/" />
+
 
     <!-- 告诉DispatcherServlet 视图模式-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

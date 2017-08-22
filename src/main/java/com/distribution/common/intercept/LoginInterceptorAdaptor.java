@@ -32,7 +32,7 @@ public class LoginInterceptorAdaptor extends HandlerInterceptorAdapter {
                 if (request.getSession().getAttribute(Constant.SESSION_CURRENT_USER) == null) {
                     //没有登录，则跳转到登录页
                     response.sendRedirect(request.getContextPath() + "/admin/login");
-                    log.info("login interceptor:" + handlerMethod.getBean().getClass().getSimpleName() + "." + method.getName());
+                    log.info("================login interceptor:" + handlerMethod.getBean().getClass().getSimpleName() + "." + method.getName());
                     return false;
                 }
             }

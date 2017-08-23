@@ -2,6 +2,7 @@ package com.distribution.controller.member;
 
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.intercept.IgnoreLoginCheck;
+import com.distribution.dao.member.model.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,6 +18,13 @@ public class MemberController extends BasicController {
     @IgnoreLoginCheck
     public String init() {
         return "adminLogin/adminLogin";
+    }
+
+
+    @RequestMapping(value = "/getUserFromSession")
+    public Member getUser(){
+
+        return new Member();
     }
 
 }

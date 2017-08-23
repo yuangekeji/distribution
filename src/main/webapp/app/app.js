@@ -18,7 +18,7 @@ angular.module('recommend', []);
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
         $scope.ctx = window['ctx'];
-        $http.get(ctx + '/user/getUserFromSession').success(function (resp) {
+        $http.get(ctx + '/member/getUserFromSession').success(function (resp) {
             if (resp.successful) {
                 $sessionStorage.currentUser = resp.data;
             }

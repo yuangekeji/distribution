@@ -15,7 +15,7 @@
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8" />
-    <title>Metronic Admin Theme #2 | User Login 1</title>
+    <title>用户登录</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Preview page of Metronic Admin Theme #2 for " name="description" />
@@ -51,7 +51,7 @@
 <div class="content">
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" action="index.html" method="post">
-        <h3 class="form-title font-green">Sign In</h3>
+        <h3 class="form-title font-green">会员登录</h3>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> Enter any username and password. </span>
@@ -64,7 +64,7 @@
             <label class="control-label visible-ie8 visible-ie9">Password</label>
             <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
         <div class="form-actions">
-            <button type="submit" class="btn green uppercase">Login</button>
+            <button type="submit" class="btn green uppercase">登录</button>
             <label class="rememberme check mt-checkbox mt-checkbox-outline">
                 <input type="checkbox" name="remember" value="1" />管理员登录
                 <span></span>
@@ -93,7 +93,7 @@
     <!-- END FORGOT PASSWORD FORM -->
 
 </div>
-<div class="copyright"> 2014 © Metronic. Admin Dashboard Template. </div>
+<div class="copyright">   </div>
 <!--[if lt IE 9]>
 <script src="${ctx}/resources/metronic/global/plugins/respond.min.js"></script>
 <script src="${ctx}/resources/metronic/global/plugins/excanvas.min.js"></script>

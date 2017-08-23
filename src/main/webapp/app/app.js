@@ -20,22 +20,21 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         $scope.ctx = window['ctx'];
 
         //
-        // $http.get(ctx + '/member/getUserFromSession').success(function (res) {
-        //         if (res.successful) {
-        //         $sessionStorage.currentUser = res.data;
-        //     }
-        //
-        //     $http.get(ctx + '/menu/getMenuByRoleId',{roleId:1}).success(function (res) {
-        //
-        //         console.info(res.data);
-        //     })
-        //
-        // }).error(function (error) {
-        //     alert('用户获取失败');
-        // });
+    // $http.get(ctx + '/member/getUserFromSession').success(function (res) {
+    //         if (res.successful) {
+    //         $sessionStorage.currentUser = res.data;
+    //     }
+    //
+    //     $http.get(ctx + '/menu/getMenuByRoleId',{roleId:1}).success(function (res) {
+    //
+    //         console.info(res.data);
+    //     })
+    //
+    // }).error(function (error) {
+    //     alert('用户获取失败');
+    // });
 
     $http.get(ctx + '/menu/getMenuByRoleId?roleId=1').success(function (res) {
-
         console.info(res.data);
     })
 

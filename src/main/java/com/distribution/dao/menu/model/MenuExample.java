@@ -105,272 +105,322 @@ public class MenuExample {
         }
 
         public Criteria andIdIsNull() {
-            addCriterion("\"id\" is null");
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
         public Criteria andIdIsNotNull() {
-            addCriterion("\"id\" is not null");
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
         public Criteria andIdEqualTo(Integer value) {
-            addCriterion("\"id\" =", value, "id");
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotEqualTo(Integer value) {
-            addCriterion("\"id\" <>", value, "id");
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdGreaterThan(Integer value) {
-            addCriterion("\"id\" >", value, "id");
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("\"id\" >=", value, "id");
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdLessThan(Integer value) {
-            addCriterion("\"id\" <", value, "id");
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdLessThanOrEqualTo(Integer value) {
-            addCriterion("\"id\" <=", value, "id");
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdIn(List<Integer> values) {
-            addCriterion("\"id\" in", values, "id");
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotIn(List<Integer> values) {
-            addCriterion("\"id\" not in", values, "id");
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdBetween(Integer value1, Integer value2) {
-            addCriterion("\"id\" between", value1, value2, "id");
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("\"id\" not between", value1, value2, "id");
+            addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoIsNull() {
+            addCriterion("no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoIsNotNull() {
+            addCriterion("no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoEqualTo(Integer value) {
+            addCriterion("no =", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoNotEqualTo(Integer value) {
+            addCriterion("no <>", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoGreaterThan(Integer value) {
+            addCriterion("no >", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoGreaterThanOrEqualTo(Integer value) {
+            addCriterion("no >=", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoLessThan(Integer value) {
+            addCriterion("no <", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoLessThanOrEqualTo(Integer value) {
+            addCriterion("no <=", value, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoIn(List<Integer> values) {
+            addCriterion("no in", values, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoNotIn(List<Integer> values) {
+            addCriterion("no not in", values, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoBetween(Integer value1, Integer value2) {
+            addCriterion("no between", value1, value2, "no");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoNotBetween(Integer value1, Integer value2) {
+            addCriterion("no not between", value1, value2, "no");
             return (Criteria) this;
         }
 
         public Criteria andNameIsNull() {
-            addCriterion("\"name\" is null");
+            addCriterion("name is null");
             return (Criteria) this;
         }
 
         public Criteria andNameIsNotNull() {
-            addCriterion("\"name\" is not null");
+            addCriterion("name is not null");
             return (Criteria) this;
         }
 
         public Criteria andNameEqualTo(String value) {
-            addCriterion("\"name\" =", value, "name");
+            addCriterion("name =", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotEqualTo(String value) {
-            addCriterion("\"name\" <>", value, "name");
+            addCriterion("name <>", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameGreaterThan(String value) {
-            addCriterion("\"name\" >", value, "name");
+            addCriterion("name >", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameGreaterThanOrEqualTo(String value) {
-            addCriterion("\"name\" >=", value, "name");
+            addCriterion("name >=", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameLessThan(String value) {
-            addCriterion("\"name\" <", value, "name");
+            addCriterion("name <", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameLessThanOrEqualTo(String value) {
-            addCriterion("\"name\" <=", value, "name");
+            addCriterion("name <=", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameLike(String value) {
-            addCriterion("\"name\" like", value, "name");
+            addCriterion("name like", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotLike(String value) {
-            addCriterion("\"name\" not like", value, "name");
+            addCriterion("name not like", value, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameIn(List<String> values) {
-            addCriterion("\"name\" in", values, "name");
+            addCriterion("name in", values, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotIn(List<String> values) {
-            addCriterion("\"name\" not in", values, "name");
+            addCriterion("name not in", values, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("\"name\" between", value1, value2, "name");
+            addCriterion("name between", value1, value2, "name");
             return (Criteria) this;
         }
 
         public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("\"name\" not between", value1, value2, "name");
+            addCriterion("name not between", value1, value2, "name");
             return (Criteria) this;
         }
 
         public Criteria andParentMenuIsNull() {
-            addCriterion("\"parent_menu\" is null");
+            addCriterion("parent_menu is null");
             return (Criteria) this;
         }
 
         public Criteria andParentMenuIsNotNull() {
-            addCriterion("\"parent_menu\" is not null");
+            addCriterion("parent_menu is not null");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuEqualTo(String value) {
-            addCriterion("\"parent_menu\" =", value, "parentMenu");
+        public Criteria andParentMenuEqualTo(Integer value) {
+            addCriterion("parent_menu =", value, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuNotEqualTo(String value) {
-            addCriterion("\"parent_menu\" <>", value, "parentMenu");
+        public Criteria andParentMenuNotEqualTo(Integer value) {
+            addCriterion("parent_menu <>", value, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuGreaterThan(String value) {
-            addCriterion("\"parent_menu\" >", value, "parentMenu");
+        public Criteria andParentMenuGreaterThan(Integer value) {
+            addCriterion("parent_menu >", value, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuGreaterThanOrEqualTo(String value) {
-            addCriterion("\"parent_menu\" >=", value, "parentMenu");
+        public Criteria andParentMenuGreaterThanOrEqualTo(Integer value) {
+            addCriterion("parent_menu >=", value, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuLessThan(String value) {
-            addCriterion("\"parent_menu\" <", value, "parentMenu");
+        public Criteria andParentMenuLessThan(Integer value) {
+            addCriterion("parent_menu <", value, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuLessThanOrEqualTo(String value) {
-            addCriterion("\"parent_menu\" <=", value, "parentMenu");
+        public Criteria andParentMenuLessThanOrEqualTo(Integer value) {
+            addCriterion("parent_menu <=", value, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuLike(String value) {
-            addCriterion("\"parent_menu\" like", value, "parentMenu");
+        public Criteria andParentMenuIn(List<Integer> values) {
+            addCriterion("parent_menu in", values, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuNotLike(String value) {
-            addCriterion("\"parent_menu\" not like", value, "parentMenu");
+        public Criteria andParentMenuNotIn(List<Integer> values) {
+            addCriterion("parent_menu not in", values, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuIn(List<String> values) {
-            addCriterion("\"parent_menu\" in", values, "parentMenu");
+        public Criteria andParentMenuBetween(Integer value1, Integer value2) {
+            addCriterion("parent_menu between", value1, value2, "parentMenu");
             return (Criteria) this;
         }
 
-        public Criteria andParentMenuNotIn(List<String> values) {
-            addCriterion("\"parent_menu\" not in", values, "parentMenu");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentMenuBetween(String value1, String value2) {
-            addCriterion("\"parent_menu\" between", value1, value2, "parentMenu");
-            return (Criteria) this;
-        }
-
-        public Criteria andParentMenuNotBetween(String value1, String value2) {
-            addCriterion("\"parent_menu\" not between", value1, value2, "parentMenu");
+        public Criteria andParentMenuNotBetween(Integer value1, Integer value2) {
+            addCriterion("parent_menu not between", value1, value2, "parentMenu");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkIsNull() {
-            addCriterion("\"menu_link\" is null");
+            addCriterion("menu_link is null");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkIsNotNull() {
-            addCriterion("\"menu_link\" is not null");
+            addCriterion("menu_link is not null");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkEqualTo(String value) {
-            addCriterion("\"menu_link\" =", value, "menuLink");
+            addCriterion("menu_link =", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkNotEqualTo(String value) {
-            addCriterion("\"menu_link\" <>", value, "menuLink");
+            addCriterion("menu_link <>", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkGreaterThan(String value) {
-            addCriterion("\"menu_link\" >", value, "menuLink");
+            addCriterion("menu_link >", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkGreaterThanOrEqualTo(String value) {
-            addCriterion("\"menu_link\" >=", value, "menuLink");
+            addCriterion("menu_link >=", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkLessThan(String value) {
-            addCriterion("\"menu_link\" <", value, "menuLink");
+            addCriterion("menu_link <", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkLessThanOrEqualTo(String value) {
-            addCriterion("\"menu_link\" <=", value, "menuLink");
+            addCriterion("menu_link <=", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkLike(String value) {
-            addCriterion("\"menu_link\" like", value, "menuLink");
+            addCriterion("menu_link like", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkNotLike(String value) {
-            addCriterion("\"menu_link\" not like", value, "menuLink");
+            addCriterion("menu_link not like", value, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkIn(List<String> values) {
-            addCriterion("\"menu_link\" in", values, "menuLink");
+            addCriterion("menu_link in", values, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkNotIn(List<String> values) {
-            addCriterion("\"menu_link\" not in", values, "menuLink");
+            addCriterion("menu_link not in", values, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkBetween(String value1, String value2) {
-            addCriterion("\"menu_link\" between", value1, value2, "menuLink");
+            addCriterion("menu_link between", value1, value2, "menuLink");
             return (Criteria) this;
         }
 
         public Criteria andMenuLinkNotBetween(String value1, String value2) {
-            addCriterion("\"menu_link\" not between", value1, value2, "menuLink");
+            addCriterion("menu_link not between", value1, value2, "menuLink");
             return (Criteria) this;
         }
     }

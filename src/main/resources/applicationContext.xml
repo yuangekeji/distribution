@@ -48,7 +48,7 @@
 	<!-- 扫描Mapper文件与接口，生成代理类 遵循 Mapper.java 名称 和 Mapper.xml 名称 保持一致 -->
 	<!-- 如果扫描多个包，多个包之间用半角逗号分隔 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.distribution.dao.*.mapper,com.distribution.dao.*.custom.mapper" />
+		<property name="basePackage" value="com.distribution.dao.*.mapper,com.distribution.dao.*.more.mapper" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 

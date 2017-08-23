@@ -18,12 +18,28 @@ angular.module('recommend', []);
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
         $scope.ctx = window['ctx'];
-        $http.get(ctx + '/member/getUserFromSession').success(function (resp) {
-            if (resp.successful) {
-                $sessionStorage.currentUser = resp.data;
-            }
-        });
-        /*Model中$watch函数影响变量用于记录当前页面是否改变过内容并没保存*/
+
+        //
+        // $http.get(ctx + '/member/getUserFromSession').success(function (res) {
+        //         if (res.successful) {
+        //         $sessionStorage.currentUser = res.data;
+        //     }
+        //
+        //     $http.get(ctx + '/menu/getMenuByRoleId',{roleId:1}).success(function (res) {
+        //
+        //         console.info(res.data);
+        //     })
+        //
+        // }).error(function (error) {
+        //     alert('用户获取失败');
+        // });
+
+    $http.get(ctx + '/menu/getMenuByRoleId?roleId=1').success(function (res) {
+
+        console.info(res.data);
+    })
+
+    /*Model中$watch函数影响变量用于记录当前页面是否改变过内容并没保存*/
         var _preventNavigation = false;
         /*_preventNavigationUrl记录当前url用于与将要跳转的url进行比较*/
         var _preventNavigationUrl = null;

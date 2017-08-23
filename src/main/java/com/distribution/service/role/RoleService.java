@@ -1,8 +1,11 @@
 package com.distribution.service.role;
 
 import com.distribution.dao.role.mapper.RoleMapper;
+import com.distribution.dao.role.model.RoleExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * .
@@ -11,9 +14,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoleService {
-
-    @Autowired
-    private RoleMapper roleMapper;
 
 
 }

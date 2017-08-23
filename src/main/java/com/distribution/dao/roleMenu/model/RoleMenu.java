@@ -1,13 +1,9 @@
 package com.distribution.dao.roleMenu.model;
 
-import java.io.Serializable;
-
-public class RoleMenu implements Serializable {
+public class RoleMenu {
     private Integer roleId;
 
     private Integer menuId;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getRoleId() {
         return roleId;

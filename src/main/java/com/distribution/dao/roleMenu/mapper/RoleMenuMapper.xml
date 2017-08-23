@@ -64,13 +64,14 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "role_id", "menu_id"
+    role_id, menu_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.roleMenu.model.RoleMenuExample" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from role_menu
     <if test="_parameter != null" >
@@ -87,17 +88,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.roleMenu.model.RoleMenu" >
-    insert into role_menu ("role_id", "menu_id")
+    insert into role_menu (role_id, menu_id)
     values (#{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.roleMenu.model.RoleMenu" >
     insert into role_menu
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
-        "role_id",
+        role_id,
       </if>
       <if test="menuId != null" >
-        "menu_id",
+        menu_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -119,10 +120,10 @@
     update role_menu
     <set >
       <if test="record.roleId != null" >
-        "role_id" = #{record.roleId,jdbcType=INTEGER},
+        role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
       <if test="record.menuId != null" >
-        "menu_id" = #{record.menuId,jdbcType=INTEGER},
+        menu_id = #{record.menuId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -131,8 +132,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update role_menu
-    set "role_id" = #{record.roleId,jdbcType=INTEGER},
-      "menu_id" = #{record.menuId,jdbcType=INTEGER}
+    set role_id = #{record.roleId,jdbcType=INTEGER},
+      menu_id = #{record.menuId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

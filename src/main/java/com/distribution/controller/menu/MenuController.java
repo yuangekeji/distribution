@@ -33,6 +33,7 @@ public class MenuController extends BasicController {
     @ResponseBody
     @IgnoreLoginCheck
     public JsonMessage getMenuByRoleId(String roleId) {
+        System.out.print("roleId" + roleId);
         List<Menu> menus = menuService.getMenuByRoleId(roleId);
         return successMsg("menus", menus);
     }

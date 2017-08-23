@@ -19,7 +19,12 @@ angular.module('app').config([
             url: '/recommend-list',
             templateUrl: helper.basepath('recommend/html/list.html'),
             resolve: helper.resolveFor('recommend.list'),
-            controller: 'recommendCtrl'
+            controller: 'recommendListCtrl'
          })
-
+         .state('app.recommend-add', {
+                url: '/recommend-add',
+                templateUrl: helper.basepath('recommend/html/add.html'),
+                resolve: helper.resolveFor('recommend.add'),
+                controller: 'recommendAddCtrl'
+         })
     }]);

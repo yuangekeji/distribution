@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn sbold green"> Add New
+                                <button id="sample_editable_1_new" class="btn sbold green" > Add New
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -76,11 +76,16 @@
                                                  aria-controls="sample_1"></label>
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-2">
-                            <div class="dataTables_length" >
+                        <div class="col-md-6 col-sm-6">
+                            <div class="dataTables_length">
+                                <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+                                        <input type="text" class="form-control" name="from">
+                                        <span class="input-group-addon"> to </span>
+                                        <input type="text" class="form-control" name="to">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-6">
+                        <div class="col-md-2 col-sm-2">
                             <div id="sample_1_filter" class="dataTables_filter">
                                 <button type="button" class="btn btn-primary"> 查询 <i class="fa fa-search"></i></button>
                             </div>

@@ -1,5 +1,5 @@
 angular.module('recommend').controller('recommendCtrl', function (title, $scope, $http, $state, $sessionStorage) {
-    title.setTitle('我的推荐');
+    title.setTitle('分销中心');
     $scope.loadingFlag = true;
     $scope.notData = false;
     $scope.param = {};
@@ -7,16 +7,16 @@ angular.module('recommend').controller('recommendCtrl', function (title, $scope,
     $scope.onInit = function () {
         $scope.loadingFlag = true;
         $scope.dataList = [];
-        $http.post(ctx + '/recommend/list', $scope.param).success(function (resp) {
-            if (resp.successful) {
-                $scope.dataList = resp.data;
-                $scope.loadingFlag = false;
-                $scope.notData = false;
-                if (!$scope.dataList || $scope.dataList.length == 0) $scope.notData = true;
-            } else {
-                console.log(resp.errorMessage);
-            }
-        });
+        // $http.post(ctx + '/recommend/list', $scope.param).success(function (resp) {
+        //     if (resp.successful) {
+        //         $scope.dataList = resp.data;
+        //         $scope.loadingFlag = false;
+        //         $scope.notData = false;
+        //         if (!$scope.dataList || $scope.dataList.length == 0) $scope.notData = true;
+        //     } else {
+        //         console.log(resp.errorMessage);
+        //     }
+        // });
 
 
     };

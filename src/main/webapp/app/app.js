@@ -17,26 +17,19 @@ angular.module('recommend', []);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
-        $scope.ctx = window['ctx'];
+    $scope.ctx = window['ctx'];
 
-        //
     // $http.get(ctx + '/member/getUserFromSession').success(function (res) {
     //         if (res.successful) {
     //         $sessionStorage.currentUser = res.data;
     //     }
-    //
-    //     $http.get(ctx + '/menu/getMenuByRoleId',{roleId:1}).success(function (res) {
-    //
-    //         console.info(res.data);
-    //     })
+
+
     //
     // }).error(function (error) {
     //     alert('用户获取失败');
     // });
 
-    $http.get(ctx + '/menu/getMenuByRoleId?roleId=1').success(function (res) {
-        console.info(res.data);
-    })
 
     /*Model中$watch函数影响变量用于记录当前页面是否改变过内容并没保存*/
         var _preventNavigation = false;
@@ -143,10 +136,38 @@ App.controller('HeaderController', ['$scope', function($scope) {
 }]);
 
 /* Setup Layout Part - Sidebar */
-App.controller('SidebarController', ['$state', '$scope', function($state, $scope) {
+App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', function($state, $scope,$rootScope,$http) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar($state); // init sidebar
     });
+    $scope.onInit = function () {
+
+        $http.get(ctx + '/menu/getMenuByRoleId?roleId=1').success(function (res) {
+            $rootScope.menu = res.data.menus;
+            console.info($rootScope.menu );
+            $scope.firstMenu = [];
+
+            angular.forEach($rootScope.menu,function (menu,index) {
+                if(menu.parentMenu ==0){
+                    $scope.firstMenu.push(menu);
+                }
+            })
+
+            $scope.secondMenu =[];
+
+            angular.forEach($rootScope.menu,function (menu,index) {
+                if(menu.parentMenu > 0){
+                    $scope.secondMenu.push(menu);
+                }
+            })
+        })
+
+
+        console.info($scope.firstMenu);
+        console.info($scope.secondMenu);
+    }
+
+    $scope.onInit();
 }]);
 /* Setup Layout Part - Footer */
 App.controller('FooterController', ['$scope', function($scope) {

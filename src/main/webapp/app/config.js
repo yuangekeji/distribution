@@ -51,6 +51,7 @@ angular
                     'app/member/js/member.js?v=' + version,
                     'resources/metronic/pages/scripts/profile.js',
                     'resources/metronic/pages/css/profile.css',
+                    'resources/metronic/global/plugins/jquery.sparkline.min.js',
                 ]
             }
         ]

@@ -3,7 +3,7 @@
 
 <!-- END PAGE HEADER-->
 <!-- BEGIN PAGE CONTENT-->
-<div class="row" ng-controller="UserProfileController">
+<div class="row" ng-controller="memberCtrl">
     <div class="col-md-12">
         <!-- BEGIN PROFILE SIDEBAR -->
         <div class="profile-sidebar">
@@ -11,7 +11,7 @@
             <div class="portlet light profile-sidebar-portlet">
                 <!-- SIDEBAR USERPIC -->
                 <div class="profile-userpic">
-                    <img src="{{settings.assetsPath}}/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> </div>
+                    <img src="{{settings.assetsPath}}/pages/media/profile/profile_user.jpg" style="height: 150px" class="img-responsive" alt=""> </div>
                 <!-- END SIDEBAR USERPIC -->
                 <!-- SIDEBAR USER TITLE -->
                 <div class="profile-usertitle">
@@ -36,53 +36,9 @@
                             <a ui-sref="profile.account">
                                 <i class="icon-settings"></i> Account Settings </a>
                         </li>
-                        <li>
-                            <a href="#/todo">
-                                <i class="icon-check"></i> Tasks </a>
-                        </li>
-                        <li ng-class="{active: $state.includes('profile.help')}">
-                            <a ui-sref="profile.help">
-                                <i class="icon-info"></i> Help </a>
-                        </li>
                     </ul>
                 </div>
                 <!-- END MENU -->
-            </div>
-            <!-- END PORTLET MAIN -->
-            <!-- PORTLET MAIN -->
-            <div class="portlet light">
-                <!-- STAT -->
-                <div class="row list-separated profile-stat">
-                    <div class="col-md-4 col-sm-4 col-xs-6">
-                        <div class="uppercase profile-stat-title"> 37 </div>
-                        <div class="uppercase profile-stat-text"> Projects </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-6">
-                        <div class="uppercase profile-stat-title"> 51 </div>
-                        <div class="uppercase profile-stat-text"> Tasks </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-6">
-                        <div class="uppercase profile-stat-title"> 61 </div>
-                        <div class="uppercase profile-stat-text"> Uploads </div>
-                    </div>
-                </div>
-                <!-- END STAT -->
-                <div>
-                    <h4 class="profile-desc-title">About Marcus Doe</h4>
-                    <span class="profile-desc-text"> Lorem ipsum dolor sit amet diam nonummy nibh dolore. </span>
-                    <div class="margin-top-20 profile-desc-link">
-                        <i class="fa fa-globe"></i>
-                        <a href="http://www.keenthemes.com">www.keenthemes.com</a>
-                    </div>
-                    <div class="margin-top-20 profile-desc-link">
-                        <i class="fa fa-twitter"></i>
-                        <a href="http://www.twitter.com/keenthemes/">@keenthemes</a>
-                    </div>
-                    <div class="margin-top-20 profile-desc-link">
-                        <i class="fa fa-facebook"></i>
-                        <a href="http://www.facebook.com/keenthemes/">keenthemes</a>
-                    </div>
-                </div>
             </div>
             <!-- END PORTLET MAIN -->
         </div>
@@ -93,3 +49,8 @@
     </div>
 </div>
 <!-- END PAGE CONTENT-->
+<!-- BEGIN MAIN JS-->
+<script>
+    Profile.init(); // init page demo
+</script>
+<!-- BEGIN MAIN JS -->

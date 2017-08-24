@@ -22,7 +22,6 @@ angular
                         'resources/metronic/global/plugins/datatables/datatables.min.css',
                         'resources/metronic/global/plugins/datatables/datatables.all.min.js',
                         'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                        'resources/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
                         'app/common/pagination/dirPagination.js'
                 ]
             },
@@ -45,6 +44,14 @@ angular
             {
                 name: 'recommend.detail',
                 files: ['app/recommend/js/detail.js?v=' + version]
+            },
+            {
+                name: 'member',
+                files: [
+                    'app/member/js/member.js?v=' + version,
+                    'resources/metronic/pages/scripts/profile.js',
+                    'resources/metronic/pages/css/profile.css',
+                ]
             }
         ]
     });

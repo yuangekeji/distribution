@@ -7,13 +7,15 @@ var App = angular.module('app', [
     'ngStorage',
     //业务模块
     'home',
-    'recommend'
+    'recommend',
+    'member',
 ]);
 
 angular.module('app.lazyload', []);
 angular.module('app.routes', []);
 angular.module('home', []);
 angular.module('recommend', []);
+angular.module('member', []);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 

@@ -1,5 +1,5 @@
 angular.module('recommend').controller('recommendListCtrl', function (title, $scope, $http, $state, $sessionStorage) {
-    title.setTitle('分销中心');
+    title.setTitle('recommend');
     $scope.loadingFlag = true;
     $scope.notData = false;
     $scope.param = {};

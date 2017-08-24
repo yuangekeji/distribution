@@ -16,15 +16,34 @@ angular.module('app').config([
                 controller: 'homeCtrl'
             })
           .state('app.recommend', {
-            url: '/recommend-list',
-            templateUrl: helper.basepath('recommend/html/list.html'),
-            resolve: helper.resolveFor('recommend.list'),
-            controller: 'recommendListCtrl'
+                url: '/recommend-list',
+                templateUrl: helper.basepath('recommend/html/list.html'),
+                resolve: helper.resolveFor('recommend.list'),
+                controller: 'recommendListCtrl'
          })
-         .state('app.recommend-add', {
-                url: '/recommend-add',
+         .state('app.recommendAdd', {
+                url: '/recommendAdd',
                 templateUrl: helper.basepath('recommend/html/add.html'),
                 resolve: helper.resolveFor('recommend.add'),
                 controller: 'recommendAddCtrl'
          })
+         .state('app.member',{
+                 url: '/member',
+                 templateUrl: helper.basepath('member/html/member.html'),
+                 resolve: helper.resolveFor('member'),
+                 controller: 'memberCtrl'
+         })
+         .state('app.memberInfo',{
+                url: '/memberInfo',
+                templateUrl: helper.basepath('member/html/info.html'),
+                resolve: helper.resolveFor('member.info'),
+                controller: 'memberInfoCtrl'
+         })
+         .state('app.order',{
+                url: '/order',
+                templateUrl: helper.basepath('order/html/orderList.html'),
+                resolve: helper.resolveFor('order'),
+                controller: 'orderCtrl'
+         })
+
     }]);

@@ -87,6 +87,71 @@ angular.module('app').config([
                 templateUrl: helper.basepath('order/html/list.html'),
                 resolve: helper.resolveFor('order'),
                 controller: 'orderCtrl'
-          })
-
+            })
+            .state('app.admMember',{
+                url: '/admMember',
+                templateUrl: helper.basepath('admMember/html/list.html'),
+                resolve: helper.resolveFor('admMember'),
+                controller: 'admMemberCtrl'
+            })
+            .state('app.admOperator',{
+                url: '/admOperator',
+                templateUrl: helper.basepath('admOperator/html/list.html'),
+                resolve: helper.resolveFor('admOperator'),
+                controller: 'admOperatorCtrl'
+            })
+            .state('app.admDividend',{
+                url: '/admDividend',
+                templateUrl: helper.basepath('admDividend/html/list.html'),
+                resolve: helper.resolveFor('admDividend'),
+                controller: 'admDividendCtrl'
+            })
+            .state('app.admBonus',{
+                url: '/admBonus',
+                templateUrl: helper.basepath('admBonus/html/list.html'),
+                resolve: helper.resolveFor('admBonus'),
+                controller: 'admBonusCtrl'
+            })
+            .state('app.admRecommend',{
+                url: '/admRecommend',
+                templateUrl: helper.basepath('admRecommend/html/list.html'),
+                resolve: helper.resolveFor('admRecommend'),
+                controller: 'admRecommendCtrl'
+            })
+            .state('app.admOrder',{
+                url: '/admOrder',
+                templateUrl: helper.basepath('admOrder/html/list.html'),
+                resolve: helper.resolveFor('admOrder'),
+                controller: 'admOrderCtrl'
+            })
+            .state('app.admAdvance',{
+                url: '/admAdvance',
+                templateUrl: helper.basepath('admAdvance/html/list.html'),
+                resolve: helper.resolveFor('admAdvance'),
+                controller: 'admAdvanceCtrl'
+            })
+            .state('app.admProduct',{
+                url: '/admProduct',
+                templateUrl: helper.basepath('admProduct/html/list.html'),
+                resolve: helper.resolveFor('admProduct'),
+                controller: 'admProductCtrl'
+            })
+            .state('app.admBasicSetting',{
+                url: '/admBasicSetting',
+                templateUrl: helper.basepath('admBasicSetting/html/list.html'),
+                resolve: helper.resolveFor('admBasicSetting'),
+                controller: 'admBasicSettingCtrl'
+            })
+            .state('app.admPermission',{
+                url: '/admPermission',
+                templateUrl: helper.basepath('admPermission/html/list.html'),
+                resolve: helper.resolveFor('admPermission'),
+                controller: 'admPermissionCtrl'
+            })
+            .state('app.admin',{
+                url: '/admin',
+                templateUrl: helper.basepath('admin/html/list.html'),
+                resolve: helper.resolveFor('admin'),
+                controller: 'adminCtrl'
+            })
     }]);

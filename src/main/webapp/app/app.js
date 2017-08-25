@@ -5,7 +5,7 @@ var App = angular.module('app', [
     'app.lazyload',
     'app.routes',
     'ngStorage',
-    //业务模块
+    //前台业务模块
     'home',
     'recommend',
     'member',
@@ -14,7 +14,18 @@ var App = angular.module('app', [
     'bonus',
     'dividend',
     'graph',
-    'order'
+    'order',
+    //后台业务模块
+    'admAdvance',
+    'admBasicSetting',
+    'admDividend',
+    'admMember',
+    'admOperator',
+    'admOrder',
+    'admPermission',
+    'admProduct',
+    'admRecommend',
+    'admin'
 ]);
 
 angular.module('app.lazyload', []);
@@ -28,6 +39,17 @@ angular.module('bonus', []);
 angular.module('dividend', []);
 angular.module('graph', []);
 angular.module('order', []);
+
+angular.module('admAdvance', []);
+angular.module('admBasicSetting', []);
+angular.module('admDividend', []);
+angular.module('admMember', []);
+angular.module('admOperator', []);
+angular.module('admOrder', []);
+angular.module('admPermission', []);
+angular.module('admProduct', []);
+angular.module('admRecommend', []);
+angular.module('admin',[]);
 
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
@@ -157,7 +179,7 @@ App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', fu
     });
     $scope.onInit = function () {
 
-        $http.get(ctx + '/menu/getMenuByRoleId?roleId=1').success(function (res) {
+        $http.get(ctx + '/menu/getMenuByRoleId?roleId=2').success(function (res) {
             $rootScope.menu = res.data.menus;
             // console.info($rootScope.menu );
             $scope.firstMenu = [];

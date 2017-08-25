@@ -25,7 +25,8 @@ var App = angular.module('app', [
     'admPermission',
     'admProduct',
     'admRecommend',
-    'admin'
+    'admin',
+    'admBonus'
 ]);
 
 angular.module('app.lazyload', []);
@@ -49,6 +50,7 @@ angular.module('admOrder', []);
 angular.module('admPermission', []);
 angular.module('admProduct', []);
 angular.module('admRecommend', []);
+angular.module('admBonus', []);
 angular.module('admin',[]);
 
 

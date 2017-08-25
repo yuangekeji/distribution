@@ -1,4 +1,4 @@
-angular.module('admDividend').controller('admDividendCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('提现管理');
 
     $scope.onInit = function () {
@@ -49,7 +49,7 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
     };
 });
 
-angular.module('admDividend').controller('OtherController', function ( $scope) {
+angular.module('admBonus').controller('OtherController', function ( $scope) {
     $scope.pageChangeHandler = function(num) {
         console.log('going to page ooooo ' + num);
     };

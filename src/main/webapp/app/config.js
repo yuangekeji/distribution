@@ -104,6 +104,13 @@ angular
                 name:'account',
                 files: [
                     'app/account/js/list.js?v=' + version]
+            },{
+                name:'order',
+                files: [
+                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/order/js/list.js?v=' + version,
+                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    'app/common/pagination/dirPagination.js']
             }
         ]
     });

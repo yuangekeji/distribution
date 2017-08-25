@@ -13,7 +13,8 @@ var App = angular.module('app', [
     'account',
     'bonus',
     'dividend',
-    'graph'
+    'graph',
+    'order'
 ]);
 
 angular.module('app.lazyload', []);
@@ -26,6 +27,8 @@ angular.module('account', []);
 angular.module('bonus', []);
 angular.module('dividend', []);
 angular.module('graph', []);
+angular.module('order', []);
+
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 

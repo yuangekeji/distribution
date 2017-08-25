@@ -84,7 +84,7 @@ angular.module('app').config([
             })
            .state('app.order',{
                 url: '/order',
-                templateUrl: helper.basepath('order/html/orderList.html'),
+                templateUrl: helper.basepath('order/html/list.html'),
                 resolve: helper.resolveFor('order'),
                 controller: 'orderCtrl'
           })

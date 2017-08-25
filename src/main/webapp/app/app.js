@@ -9,6 +9,8 @@ var App = angular.module('app', [
     'home',
     'recommend',
     'member',
+    'bonus',
+    'dividend'
 ]);
 
 angular.module('app.lazyload', []);
@@ -16,6 +18,8 @@ angular.module('app.routes', []);
 angular.module('home', []);
 angular.module('recommend', []);
 angular.module('member', []);
+angular.module('bonus', []);
+angular.module('dividend', []);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
@@ -144,7 +148,7 @@ App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', fu
     });
     $scope.onInit = function () {
 
-        $http.get(ctx + '/menu/getMenuByRoleId?roleId=1').success(function (res) {
+        $http.get(ctx + '/menu/getMenuByRoleId?roleId=2').success(function (res) {
             $rootScope.menu = res.data.menus;
             console.info($rootScope.menu );
             $scope.firstMenu = [];

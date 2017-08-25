@@ -45,5 +45,17 @@ angular.module('app').config([
                 resolve: helper.resolveFor('order'),
                 controller: 'orderCtrl'
          })
+         .state('app.bonus',{
+                url: '/bonus',
+                templateUrl: helper.basepath('bonus/html/list.html'),
+                resolve: helper.resolveFor('bonus'),
+                controller: 'bonusCtrl'
+        })
+         .state('app.dividend',{
+            url: '/dividend',
+            templateUrl: helper.basepath('dividend/html/list.html'),
+            resolve: helper.resolveFor('dividend'),
+            controller: 'dividendCtrl'
+        })
 
     }]);

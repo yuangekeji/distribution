@@ -20,7 +20,6 @@ angular
                 name: 'recommend.list',
                 files: ['app/recommend/js/list.js?v=' + version,
                         'resources/metronic/global/plugins/datatables/datatables.min.css',
-                        'resources/metronic/global/plugins/datatables/datatables.all.min.js',
                         'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
                         'app/common/pagination/dirPagination.js'
                 ]
@@ -52,6 +51,24 @@ angular
                     'resources/metronic/pages/scripts/profile.js',
                     'resources/metronic/pages/css/profile.css',
                     'resources/metronic/global/plugins/jquery.sparkline.min.js',
+                ]
+            },
+            {
+                name: 'bonus',
+                files: [
+                    'app/bonus/js/list.js?v=' + version,
+                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    'app/common/pagination/dirPagination.js'
+                ]
+            },
+            {
+                name: 'dividend',
+                files: [
+                    'app/dividend/js/list.js?v=' + version,
+                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    'app/common/pagination/dirPagination.js'
                 ]
             }
         ]

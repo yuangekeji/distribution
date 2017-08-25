@@ -1,7 +1,4 @@
-/**
- * Created by lijingx on 8/24/2017.
- */
-angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('奖金明细');
 
     $scope.onInit = function () {
@@ -64,7 +61,7 @@ angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope
     $scope.onInit();
 });
 
-angular.module('dividend').controller('OtherController', function ( $scope) {
+angular.module('bonus').controller('OtherController', function ( $scope) {
     $scope.pageChangeHandler = function(num) {
         console.log('going to page ooooo ' + num);
     };

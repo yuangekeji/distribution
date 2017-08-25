@@ -81,7 +81,7 @@ angular.module('recommend').controller('recommendListCtrl', function (title, $sc
         $state.go('app.home');
     };
     $scope.detail = function (id) {
-        $state.go('app.recommend-detail', {id: id});
+        $state.go('app.recommendAdd', {id: id});
     };
 
 

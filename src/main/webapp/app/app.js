@@ -9,6 +9,8 @@ var App = angular.module('app', [
     'home',
     'recommend',
     'member',
+    'advance',
+    'account',
     'bonus',
     'dividend',
     'graph'
@@ -19,6 +21,8 @@ angular.module('app.routes', []);
 angular.module('home', []);
 angular.module('recommend', []);
 angular.module('member', []);
+angular.module('advance', []);
+angular.module('account', []);
 angular.module('bonus', []);
 angular.module('dividend', []);
 angular.module('graph', []);
@@ -152,7 +156,7 @@ App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', fu
 
         $http.get(ctx + '/menu/getMenuByRoleId?roleId=1').success(function (res) {
             $rootScope.menu = res.data.menus;
-            console.info($rootScope.menu );
+            // console.info($rootScope.menu );
             $scope.firstMenu = [];
 
             angular.forEach($rootScope.menu,function (menu,index) {
@@ -171,8 +175,8 @@ App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', fu
         })
 
 
-        console.info($scope.firstMenu);
-        console.info($scope.secondMenu);
+        // console.info($scope.firstMenu);
+        // console.info($scope.secondMenu);
     }
 
     $scope.onInit();

@@ -57,5 +57,10 @@ angular.module('app').config([
             resolve: helper.resolveFor('dividend'),
             controller: 'dividendCtrl'
         })
-
+        .state('app.graph',{
+                url: '/graph',
+                templateUrl: helper.basepath('graph/html/graph.html'),
+                resolve: helper.resolveFor('graph'),
+                controller: 'graphCtrl'
+         })
     }]);

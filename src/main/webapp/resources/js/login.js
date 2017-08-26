@@ -15,7 +15,7 @@ function login() {
 
             dataType: "json",
             success: function (resp) {
-                if (resp.successful) {alert("success");
+                if (resp.successful) {
                     window.location.href = ctx + "/index"
                 } else{
                     $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户名或密码不正确，请重新输入");

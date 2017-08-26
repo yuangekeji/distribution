@@ -196,12 +196,12 @@ public class Member {
         this.createTime = createTime;
     }
 
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
     public void setUpdateId(Integer updateId) {
         this.updateId = updateId;
+    }
+
+    public Integer getUpdateId() {
+        return updateId;
     }
 
     public Date getUpdateTime() {

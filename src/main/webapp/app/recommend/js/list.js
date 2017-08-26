@@ -1,5 +1,5 @@
 angular.module('recommend').controller('recommendListCtrl', function (title, $scope, $http, $state, $sessionStorage) {
-    title.setTitle('recommend');
+    title.setTitle('分销中心');
     $scope.loadingFlag = true;
     $scope.notData = false;
     $scope.param = {};
@@ -63,19 +63,7 @@ angular.module('recommend').controller('recommendListCtrl', function (title, $sc
     };
     $scope.onInit();
     $scope.gotoAddPage = function () {
-        // $http.get(ctx + '/evalute/getMemberFromDB').success(function (resp) {
-        //     if (resp.successful) {
-        //         $sessionStorage.membership = resp.data;
-        //     }
-        //     if (!$sessionStorage.membership || !$sessionStorage.membership.phone || !$sessionStorage.membership.openId) {
-        //         $state.go('app.auth', {state: 'app.recommend', sendType: 0});
-        //         return;
-        //     }
-        //     $state.go('app.selectModule',{
-        //         jump:'app.recommend-add',//添加完物品，要跳转的页面
-        //         cancel:'app.recommend-list'//物品列表页面，取消按钮要跳转的页面
-        //     });
-        // });
+        $state.go("app.recommendAdd");
     };
     $scope.gotoIndex = function () {
         $state.go('app.home');

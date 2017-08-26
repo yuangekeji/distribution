@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.dictionary.mapper.more.MoreDictionaryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dictionary.model.Dictionary" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dic_code" property="dicCode" jdbcType="VARCHAR" />
+    <result column="dic_name" property="dicName" jdbcType="VARCHAR" />
+    <result column="dic_type" property="dicType" jdbcType="VARCHAR" />
+    <result column="dic_des" property="dicDes" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getDictionary" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT id, dic_code, dic_name, dic_type, dic_des FROM dictionary WHERE dic_type = #{dicType}
+  </select>
+</mapper>

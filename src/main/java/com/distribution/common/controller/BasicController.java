@@ -1,5 +1,6 @@
 package com.distribution.common.controller;
 
+import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 
 import com.distribution.common.exception.BizException;
@@ -111,5 +112,9 @@ public class BasicController {
             }
         }
         return obj;
+    }
+
+    protected Object getCurrentUser(HttpSession session){
+        return session.getAttribute(Constant.SESSION_CURRENT_USER);
     }
 }

@@ -10,4 +10,9 @@ public interface MoreMemberMapper {
      * @author Bright
      * */
     List<Member> login(Map param);
+    /**
+     * description 根据手机号查询已有会员
+     * @author Bright
+     * */
+    Member getMemberByPhone(String phone);
 }

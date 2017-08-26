@@ -1,8 +1,6 @@
-<!-- END PAGE HEADER-->
 <h4 class="page-title">创建分销报单</h4>
 <div class="row">
     <div class="col-md-offset-1 col-md-10 ">
-        <!-- BEGIN SAMPLE FORM PORTLET-->
         <div class="portlet box green ">
             <div class="portlet-title">
                 <div class="caption ">
@@ -13,103 +11,60 @@
             <div class="portlet-body form">
                 <form role="form">
                     <div class="form-body">
-
                         <div class="form-group">
-                            <label >Password</label>
+                            <label >推荐人</label>
                             <div class="input-group">
-                                <input type="password" class="form-control input-circle-left" placeholder="Password">
-                                <span class="input-group-addon input-circle-right">
-                                                                        <i class="fa fa-user"></i>
-                                                                    </span>
+                                <input type="text" class="form-control input-circle-left" ng-model="member.recommendName" readonly>
+                                <span class="input-group-addon input-circle-right"> <i class="fa fa-user"></i></span>
                             </div>
-
                         </div>
-
                         <div class="form-group">
-                            <label>Circle Input</label>
+                            <label>会员姓名</label>
                             <div class="input-icon right">
                                 <i class="fa fa-microphone"></i>
-                                <input type="text" class="form-control input-circle" placeholder="Right icon"> </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Input With Spinner</label>
-                            <input class="form-control spinner input-circle" type="text" placeholder="Process something" /> </div>
-                        <div class="form-group">
-                            <label>Static Control</label>
-                            <p class="form-control-static"> email@example.com </p>
-                        </div>
-                        <div class="form-group">
-                            <label>Readonly</label>
-                            <input type="text" class="form-control input-circle" placeholder="Readonly" readonly> </div>
-                        <div class="form-group">
-                            <label>Dropdown</label>
-                            <select class="form-control input-circle">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Checkboxes</label>
-                            <div class="mt-checkbox-list">
-                                <label class="mt-checkbox"> Checkbox 1
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox"> Checkbox 2
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox"> Checkbox 3
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
+                                <input type="text" class="form-control input-circle" placeholder="请输入会员姓名" ng-model="member.memberName" maxlength="50">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Outline Checkboxes</label>
-                            <div class="mt-checkbox-list">
-                                <label class="mt-checkbox mt-checkbox-outline"> Checkbox 1
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox mt-checkbox-outline"> Checkbox 2
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox mt-checkbox-outline"> Checkbox 3
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                            </div>
+                            <label>会员账号(手机号码)</label>
+                            <input class="form-control spinner input-circle" type="text" placeholder="请输入会员账号" ng-model="member.memberPhone" maxlength="11"/>
                         </div>
                         <div class="form-group">
-                            <label>Radios</label>
-                            <div class="mt-radio-list">
-                                <label class="mt-radio"> Radio 1
-                                    <input type="radio" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-radio"> Radio 2
-                                    <input type="radio" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-radio"> Radio 3
-                                    <input type="radio" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                            </div>
+                            <label>登录密码</label>
+                            <input type="password" class="form-control input-circle" ng-model="member.loginPassword" maxlength="24">
                         </div>
-
+                        <div class="form-group">
+                            <label>确认密码</label>
+                            <input type="password" class="form-control input-circle" ng-model="member.confirmLoginPassword" maxlength="24">
+                        </div>
+                        <div class="form-group">
+                            <label>放置会员节点</label>
+                            <input type="text" class="form-control input-circle" placeholder="请输入会员节点" ng-model="member.nodeId">
+                        </div>
+                        <div class="form-group">
+                            <button id="sample_editable_1_new" class="btn sbold green">选择要放置的节点
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <label>会员等级</label>
+                            <select class="form-control input-circle" ng-model="member.memberLevel" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>收货人姓名</label>
+                            <input type="text" class="form-control input-circle" placeholder="请输入收货人姓名" ng-model="member.consignee">
+                        </div>
+                        <div class="form-group">
+                            <label>收货地址</label>
+                            <input type="text" class="form-control input-circle" placeholder="请输入收货人地址" ng-model="member.expressAddress">
+                        </div>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn blue">Submit</button>
-                        <button type="button" class="btn default">Cancel</button>
+                        <button type="button" class="btn default" ui-sref="app.recommend">取消</button>
+                        <button type="button" class="btn blue" ng-click="submit();">提交</button>
                     </div>
                 </form>
             </div>
         </div>
-        </div>
+    </div>
 </div>

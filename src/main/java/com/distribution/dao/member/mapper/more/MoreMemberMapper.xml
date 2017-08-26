@@ -39,4 +39,7 @@
   <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
+  <select id="getMemberByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{phone}
+  </select>
 </mapper>

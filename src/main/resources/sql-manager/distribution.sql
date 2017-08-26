@@ -493,4 +493,5 @@ CREATE TABLE `transfer` (
 -- ----------------------------
 
 insert into role_menu values (1,27);
+
 update menu set menu_link = 'app.account' where id = 27;

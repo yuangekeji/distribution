@@ -524,6 +524,10 @@ MODIFY COLUMN `query_password`  varchar(255) CHARACTER SET utf8 COLLATE utf8_gen
 MODIFY COLUMN `pay_password`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '支付密码',
 MODIFY COLUMN `node_id`  int(11) NULL COMMENT '放置节点的会员ID';
 
---Bright 新会员给角色默认值
+--Bright 新会员给角色默认值 2017年8月26日17:51:43
 ALTER TABLE `member`
 MODIFY COLUMN `role_id`  int(11) NULL DEFAULT 1 COMMENT '角色ID'
+
+--Bright 设置默认未打款状态 2017年8月26日17:52:00
+ALTER TABLE `member`
+MODIFY COLUMN `money_status`  varchar(255) NULL DEFAULT 'N' COMMENT '打款状态(N:未打款,Y:已打款)'

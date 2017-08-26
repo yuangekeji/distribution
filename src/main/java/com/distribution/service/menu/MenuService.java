@@ -1,6 +1,6 @@
 package com.distribution.service.menu;
 
-import com.distribution.dao.roleMenu.more.mapper.MoreRoleMenuMapper;
+import com.distribution.dao.roleMenu.mapper.more.MoreRoleMenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

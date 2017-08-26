@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.member.mapper.more.MoreMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.member.model.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="query_password" property="queryPassword" jdbcType="VARCHAR" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+    <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
+    <result column="node_id" property="nodeId" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
+    <result column="ID_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_phone, login_password, query_password, pay_password, recommend_id,
+    node_id, member_name, member_level, ID_number, express_address, create_time,
+    status, delete_flag
+  </sql>
+  <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{userName} AND login_password = #{password}
+  </select>
+</mapper>

@@ -31,7 +31,7 @@ public class MenuController extends BasicController {
 
     @RequestMapping(value = "/getMenuByRoleId", method = RequestMethod.GET)
     @ResponseBody
-    @IgnoreLoginCheck
+//    @IgnoreLoginCheck
     public JsonMessage getMenuByRoleId(String roleId) {
         System.out.print("roleId" + roleId);
         List<Menu> menus = menuService.getMenuByRoleId(roleId);

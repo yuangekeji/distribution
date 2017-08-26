@@ -103,7 +103,8 @@ angular
             {
                 name:'account',
                 files: [
-                    'app/account/js/list.js?v=' + version]
+                    'app/account/js/list.js?v=' + version,
+                    'resources/metronic/global/plugins/fuelux/js/spinner.min.js']
             },
             {
                 name:'order',

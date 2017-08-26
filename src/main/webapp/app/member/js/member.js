@@ -13,5 +13,5 @@ angular.module('member').controller('memberCtrl',
 
         // set sidebar closed and body solid layout mode
         $rootScope.settings.layout.pageBodySolid = true;
-        $rootScope.settings.layout.pageSidebarClosed = true;
+        $rootScope.settings.layout.pageSidebarClosed = false;
 });

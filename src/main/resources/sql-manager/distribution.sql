@@ -474,3 +474,7 @@ ADD COLUMN `member_post`  varchar(255) NULL COMMENT '职务等级' AFTER `role_i
 --Bright 2017年8月26日09:02:50
 ALTER TABLE `admin`
 ADD COLUMN `role_id`  int NULL COMMENT '角色ID';
+
+--Bright 2017年8月26日10:07:57
+ALTER TABLE `member`
+ADD COLUMN `order_amount`  decimal(15,2) NULL COMMENT '订单金额';

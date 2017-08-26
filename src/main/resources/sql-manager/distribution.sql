@@ -494,3 +494,14 @@ CREATE TABLE `transfer` (
 
 insert into role_menu values (1,27);
 update menu set menu_link = 'app.account' where id = 27;
+
+
+--Bright 添加字典表 2017年8月26日15:57:24
+CREATE TABLE `dictionary` (
+`id`  int NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+`dic_code`  varchar(255) NULL COMMENT '字典code' ,
+`dic_name`  varchar(255) NULL COMMENT '字典名称' ,
+`dic_type`  varchar(255) NULL COMMENT '所属模块' ,
+`dic_des`  varchar(255) NULL COMMENT '字典描述' ,
+PRIMARY KEY (`id`)
+);

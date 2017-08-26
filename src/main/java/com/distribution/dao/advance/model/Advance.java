@@ -1,10 +1,9 @@
 package com.distribution.dao.advance.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Advance implements Serializable {
+public class advance {
     private Integer id;
 
     private Integer memberId;
@@ -34,8 +33,6 @@ public class Advance implements Serializable {
     private Integer updateId;
 
     private Date updateTime;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

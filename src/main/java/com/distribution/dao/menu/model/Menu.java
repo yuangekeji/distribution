@@ -1,6 +1,6 @@
 package com.distribution.dao.menu.model;
 
-public class Menu {
+public class menu {
     private Integer id;
 
     private Integer no;

@@ -1,30 +1,30 @@
 package com.distribution.dao.menu.mapper;
 
-import com.distribution.dao.menu.model.Menu;
-import com.distribution.dao.menu.model.MenuExample;
+import com.distribution.dao.menu.model.menu;
+import com.distribution.dao.menu.model.menuExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface MenuMapper {
-    int countByExample(MenuExample example);
+public interface menuMapper {
+    int countByExample(menuExample example);
 
-    int deleteByExample(MenuExample example);
+    int deleteByExample(menuExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Menu record);
+    int insert(menu record);
 
-    int insertSelective(Menu record);
+    int insertSelective(menu record);
 
-    List<Menu> selectByExample(MenuExample example);
+    List<menu> selectByExample(menuExample example);
 
-    Menu selectByPrimaryKey(Integer id);
+    menu selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Menu record, @Param("example") MenuExample example);
+    int updateByExampleSelective(@Param("record") menu record, @Param("example") menuExample example);
 
-    int updateByExample(@Param("record") Menu record, @Param("example") MenuExample example);
+    int updateByExample(@Param("record") menu record, @Param("example") menuExample example);
 
-    int updateByPrimaryKeySelective(Menu record);
+    int updateByPrimaryKeySelective(menu record);
 
-    int updateByPrimaryKey(Menu record);
+    int updateByPrimaryKey(menu record);
 }

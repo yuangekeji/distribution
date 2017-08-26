@@ -1,13 +1,9 @@
 package com.distribution.dao.role.model;
 
-import java.io.Serializable;
-
-public class Role implements Serializable {
+public class role {
     private Integer id;
 
     private String name;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

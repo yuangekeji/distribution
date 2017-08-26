@@ -1,30 +1,30 @@
 package com.distribution.dao.transfer.mapper;
 
-import com.distribution.dao.transfer.model.Transfer;
-import com.distribution.dao.transfer.model.TransferExample;
+import com.distribution.dao.transfer.model.transfer;
+import com.distribution.dao.transfer.model.transferExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface TransferMapper {
-    int countByExample(TransferExample example);
+public interface transferMapper {
+    int countByExample(transferExample example);
 
-    int deleteByExample(TransferExample example);
+    int deleteByExample(transferExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Transfer record);
+    int insert(transfer record);
 
-    int insertSelective(Transfer record);
+    int insertSelective(transfer record);
 
-    List<Transfer> selectByExample(TransferExample example);
+    List<transfer> selectByExample(transferExample example);
 
-    Transfer selectByPrimaryKey(Integer id);
+    transfer selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Transfer record, @Param("example") TransferExample example);
+    int updateByExampleSelective(@Param("record") transfer record, @Param("example") transferExample example);
 
-    int updateByExample(@Param("record") Transfer record, @Param("example") TransferExample example);
+    int updateByExample(@Param("record") transfer record, @Param("example") transferExample example);
 
-    int updateByPrimaryKeySelective(Transfer record);
+    int updateByPrimaryKeySelective(transfer record);
 
-    int updateByPrimaryKey(Transfer record);
+    int updateByPrimaryKey(transfer record);
 }

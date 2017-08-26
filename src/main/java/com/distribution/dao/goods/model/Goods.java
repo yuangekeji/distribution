@@ -1,10 +1,9 @@
 package com.distribution.dao.goods.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Goods implements Serializable {
+public class goods {
     private Integer id;
 
     private String goodsName;
@@ -42,8 +41,6 @@ public class Goods implements Serializable {
     private Date createTime;
 
     private String deleteFlag;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

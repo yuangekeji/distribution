@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DateBonusHistoryExample {
+public class dateBonusHistoryExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public DateBonusHistoryExample() {
+    public dateBonusHistoryExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -107,542 +107,782 @@ public class DateBonusHistoryExample {
         }
 
         public Criteria andIdIsNull() {
-            addCriterion("\"id\" is null");
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
         public Criteria andIdIsNotNull() {
-            addCriterion("\"id\" is not null");
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
         public Criteria andIdEqualTo(Integer value) {
-            addCriterion("\"id\" =", value, "id");
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotEqualTo(Integer value) {
-            addCriterion("\"id\" <>", value, "id");
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdGreaterThan(Integer value) {
-            addCriterion("\"id\" >", value, "id");
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("\"id\" >=", value, "id");
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdLessThan(Integer value) {
-            addCriterion("\"id\" <", value, "id");
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdLessThanOrEqualTo(Integer value) {
-            addCriterion("\"id\" <=", value, "id");
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdIn(List<Integer> values) {
-            addCriterion("\"id\" in", values, "id");
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotIn(List<Integer> values) {
-            addCriterion("\"id\" not in", values, "id");
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdBetween(Integer value1, Integer value2) {
-            addCriterion("\"id\" between", value1, value2, "id");
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("\"id\" not between", value1, value2, "id");
+            addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
 
         public Criteria andDateIsNull() {
-            addCriterion("\"date\" is null");
+            addCriterion("date is null");
             return (Criteria) this;
         }
 
         public Criteria andDateIsNotNull() {
-            addCriterion("\"date\" is not null");
+            addCriterion("date is not null");
             return (Criteria) this;
         }
 
         public Criteria andDateEqualTo(Date value) {
-            addCriterion("\"date\" =", value, "date");
+            addCriterion("date =", value, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateNotEqualTo(Date value) {
-            addCriterion("\"date\" <>", value, "date");
+            addCriterion("date <>", value, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateGreaterThan(Date value) {
-            addCriterion("\"date\" >", value, "date");
+            addCriterion("date >", value, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateGreaterThanOrEqualTo(Date value) {
-            addCriterion("\"date\" >=", value, "date");
+            addCriterion("date >=", value, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateLessThan(Date value) {
-            addCriterion("\"date\" <", value, "date");
+            addCriterion("date <", value, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateLessThanOrEqualTo(Date value) {
-            addCriterion("\"date\" <=", value, "date");
+            addCriterion("date <=", value, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateIn(List<Date> values) {
-            addCriterion("\"date\" in", values, "date");
+            addCriterion("date in", values, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateNotIn(List<Date> values) {
-            addCriterion("\"date\" not in", values, "date");
+            addCriterion("date not in", values, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateBetween(Date value1, Date value2) {
-            addCriterion("\"date\" between", value1, value2, "date");
+            addCriterion("date between", value1, value2, "date");
             return (Criteria) this;
         }
 
         public Criteria andDateNotBetween(Date value1, Date value2) {
-            addCriterion("\"date\" not between", value1, value2, "date");
+            addCriterion("date not between", value1, value2, "date");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesIsNull() {
-            addCriterion("\"total_sales\" is null");
+            addCriterion("total_sales is null");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesIsNotNull() {
-            addCriterion("\"total_sales\" is not null");
+            addCriterion("total_sales is not null");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesEqualTo(BigDecimal value) {
-            addCriterion("\"total_sales\" =", value, "totalSales");
+            addCriterion("total_sales =", value, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesNotEqualTo(BigDecimal value) {
-            addCriterion("\"total_sales\" <>", value, "totalSales");
+            addCriterion("total_sales <>", value, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesGreaterThan(BigDecimal value) {
-            addCriterion("\"total_sales\" >", value, "totalSales");
+            addCriterion("total_sales >", value, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"total_sales\" >=", value, "totalSales");
+            addCriterion("total_sales >=", value, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesLessThan(BigDecimal value) {
-            addCriterion("\"total_sales\" <", value, "totalSales");
+            addCriterion("total_sales <", value, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"total_sales\" <=", value, "totalSales");
+            addCriterion("total_sales <=", value, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesIn(List<BigDecimal> values) {
-            addCriterion("\"total_sales\" in", values, "totalSales");
+            addCriterion("total_sales in", values, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesNotIn(List<BigDecimal> values) {
-            addCriterion("\"total_sales\" not in", values, "totalSales");
+            addCriterion("total_sales not in", values, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"total_sales\" between", value1, value2, "totalSales");
+            addCriterion("total_sales between", value1, value2, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andTotalSalesNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"total_sales\" not between", value1, value2, "totalSales");
+            addCriterion("total_sales not between", value1, value2, "totalSales");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalIsNull() {
-            addCriterion("\"dividend_total\" is null");
+            addCriterion("dividend_total is null");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalIsNotNull() {
-            addCriterion("\"dividend_total\" is not null");
+            addCriterion("dividend_total is not null");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalEqualTo(BigDecimal value) {
-            addCriterion("\"dividend_total\" =", value, "dividendTotal");
+            addCriterion("dividend_total =", value, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalNotEqualTo(BigDecimal value) {
-            addCriterion("\"dividend_total\" <>", value, "dividendTotal");
+            addCriterion("dividend_total <>", value, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalGreaterThan(BigDecimal value) {
-            addCriterion("\"dividend_total\" >", value, "dividendTotal");
+            addCriterion("dividend_total >", value, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"dividend_total\" >=", value, "dividendTotal");
+            addCriterion("dividend_total >=", value, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalLessThan(BigDecimal value) {
-            addCriterion("\"dividend_total\" <", value, "dividendTotal");
+            addCriterion("dividend_total <", value, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"dividend_total\" <=", value, "dividendTotal");
+            addCriterion("dividend_total <=", value, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalIn(List<BigDecimal> values) {
-            addCriterion("\"dividend_total\" in", values, "dividendTotal");
+            addCriterion("dividend_total in", values, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalNotIn(List<BigDecimal> values) {
-            addCriterion("\"dividend_total\" not in", values, "dividendTotal");
+            addCriterion("dividend_total not in", values, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"dividend_total\" between", value1, value2, "dividendTotal");
+            addCriterion("dividend_total between", value1, value2, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andDividendTotalNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"dividend_total\" not between", value1, value2, "dividendTotal");
+            addCriterion("dividend_total not between", value1, value2, "dividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalIsNull() {
-            addCriterion("\"jd_bonus_total\" is null");
+            addCriterion("jd_bonus_total is null");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalIsNotNull() {
-            addCriterion("\"jd_bonus_total\" is not null");
+            addCriterion("jd_bonus_total is not null");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalEqualTo(BigDecimal value) {
-            addCriterion("\"jd_bonus_total\" =", value, "jdBonusTotal");
+            addCriterion("jd_bonus_total =", value, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalNotEqualTo(BigDecimal value) {
-            addCriterion("\"jd_bonus_total\" <>", value, "jdBonusTotal");
+            addCriterion("jd_bonus_total <>", value, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalGreaterThan(BigDecimal value) {
-            addCriterion("\"jd_bonus_total\" >", value, "jdBonusTotal");
+            addCriterion("jd_bonus_total >", value, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"jd_bonus_total\" >=", value, "jdBonusTotal");
+            addCriterion("jd_bonus_total >=", value, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalLessThan(BigDecimal value) {
-            addCriterion("\"jd_bonus_total\" <", value, "jdBonusTotal");
+            addCriterion("jd_bonus_total <", value, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"jd_bonus_total\" <=", value, "jdBonusTotal");
+            addCriterion("jd_bonus_total <=", value, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalIn(List<BigDecimal> values) {
-            addCriterion("\"jd_bonus_total\" in", values, "jdBonusTotal");
+            addCriterion("jd_bonus_total in", values, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalNotIn(List<BigDecimal> values) {
-            addCriterion("\"jd_bonus_total\" not in", values, "jdBonusTotal");
+            addCriterion("jd_bonus_total not in", values, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"jd_bonus_total\" between", value1, value2, "jdBonusTotal");
+            addCriterion("jd_bonus_total between", value1, value2, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andJdBonusTotalNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"jd_bonus_total\" not between", value1, value2, "jdBonusTotal");
+            addCriterion("jd_bonus_total not between", value1, value2, "jdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalIsNull() {
-            addCriterion("\"use_dividend_total\" is null");
+            addCriterion("use_dividend_total is null");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalIsNotNull() {
-            addCriterion("\"use_dividend_total\" is not null");
+            addCriterion("use_dividend_total is not null");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalEqualTo(BigDecimal value) {
-            addCriterion("\"use_dividend_total\" =", value, "useDividendTotal");
+            addCriterion("use_dividend_total =", value, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalNotEqualTo(BigDecimal value) {
-            addCriterion("\"use_dividend_total\" <>", value, "useDividendTotal");
+            addCriterion("use_dividend_total <>", value, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalGreaterThan(BigDecimal value) {
-            addCriterion("\"use_dividend_total\" >", value, "useDividendTotal");
+            addCriterion("use_dividend_total >", value, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalGreaterThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"use_dividend_total\" >=", value, "useDividendTotal");
+            addCriterion("use_dividend_total >=", value, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalLessThan(BigDecimal value) {
-            addCriterion("\"use_dividend_total\" <", value, "useDividendTotal");
+            addCriterion("use_dividend_total <", value, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalLessThanOrEqualTo(BigDecimal value) {
-            addCriterion("\"use_dividend_total\" <=", value, "useDividendTotal");
+            addCriterion("use_dividend_total <=", value, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalIn(List<BigDecimal> values) {
-            addCriterion("\"use_dividend_total\" in", values, "useDividendTotal");
+            addCriterion("use_dividend_total in", values, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalNotIn(List<BigDecimal> values) {
-            addCriterion("\"use_dividend_total\" not in", values, "useDividendTotal");
+            addCriterion("use_dividend_total not in", values, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"use_dividend_total\" between", value1, value2, "useDividendTotal");
+            addCriterion("use_dividend_total between", value1, value2, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseDividendTotalNotBetween(BigDecimal value1, BigDecimal value2) {
-            addCriterion("\"use_dividend_total\" not between", value1, value2, "useDividendTotal");
+            addCriterion("use_dividend_total not between", value1, value2, "useDividendTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalIsNull() {
-            addCriterion("\"use_jd_bonus_total\" is null");
+            addCriterion("use_jd_bonus_total is null");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalIsNotNull() {
-            addCriterion("\"use_jd_bonus_total\" is not null");
+            addCriterion("use_jd_bonus_total is not null");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalEqualTo(Long value) {
-            addCriterion("\"use_jd_bonus_total\" =", value, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total =", value, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalNotEqualTo(Long value) {
-            addCriterion("\"use_jd_bonus_total\" <>", value, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total <>", value, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalGreaterThan(Long value) {
-            addCriterion("\"use_jd_bonus_total\" >", value, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total >", value, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalGreaterThanOrEqualTo(Long value) {
-            addCriterion("\"use_jd_bonus_total\" >=", value, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total >=", value, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalLessThan(Long value) {
-            addCriterion("\"use_jd_bonus_total\" <", value, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total <", value, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalLessThanOrEqualTo(Long value) {
-            addCriterion("\"use_jd_bonus_total\" <=", value, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total <=", value, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalIn(List<Long> values) {
-            addCriterion("\"use_jd_bonus_total\" in", values, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total in", values, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalNotIn(List<Long> values) {
-            addCriterion("\"use_jd_bonus_total\" not in", values, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total not in", values, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalBetween(Long value1, Long value2) {
-            addCriterion("\"use_jd_bonus_total\" between", value1, value2, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total between", value1, value2, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andUseJdBonusTotalNotBetween(Long value1, Long value2) {
-            addCriterion("\"use_jd_bonus_total\" not between", value1, value2, "useJdBonusTotal");
+            addCriterion("use_jd_bonus_total not between", value1, value2, "useJdBonusTotal");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendIsNull() {
-            addCriterion("\"remain_dividend\" is null");
+            addCriterion("remain_dividend is null");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendIsNotNull() {
-            addCriterion("\"remain_dividend\" is not null");
+            addCriterion("remain_dividend is not null");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendEqualTo(Long value) {
-            addCriterion("\"remain_dividend\" =", value, "remainDividend");
+            addCriterion("remain_dividend =", value, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendNotEqualTo(Long value) {
-            addCriterion("\"remain_dividend\" <>", value, "remainDividend");
+            addCriterion("remain_dividend <>", value, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendGreaterThan(Long value) {
-            addCriterion("\"remain_dividend\" >", value, "remainDividend");
+            addCriterion("remain_dividend >", value, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendGreaterThanOrEqualTo(Long value) {
-            addCriterion("\"remain_dividend\" >=", value, "remainDividend");
+            addCriterion("remain_dividend >=", value, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendLessThan(Long value) {
-            addCriterion("\"remain_dividend\" <", value, "remainDividend");
+            addCriterion("remain_dividend <", value, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendLessThanOrEqualTo(Long value) {
-            addCriterion("\"remain_dividend\" <=", value, "remainDividend");
+            addCriterion("remain_dividend <=", value, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendIn(List<Long> values) {
-            addCriterion("\"remain_dividend\" in", values, "remainDividend");
+            addCriterion("remain_dividend in", values, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendNotIn(List<Long> values) {
-            addCriterion("\"remain_dividend\" not in", values, "remainDividend");
+            addCriterion("remain_dividend not in", values, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendBetween(Long value1, Long value2) {
-            addCriterion("\"remain_dividend\" between", value1, value2, "remainDividend");
+            addCriterion("remain_dividend between", value1, value2, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainDividendNotBetween(Long value1, Long value2) {
-            addCriterion("\"remain_dividend\" not between", value1, value2, "remainDividend");
+            addCriterion("remain_dividend not between", value1, value2, "remainDividend");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusIsNull() {
-            addCriterion("\"remain_jd_bonus\" is null");
+            addCriterion("remain_jd_bonus is null");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusIsNotNull() {
-            addCriterion("\"remain_jd_bonus\" is not null");
+            addCriterion("remain_jd_bonus is not null");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusEqualTo(Long value) {
-            addCriterion("\"remain_jd_bonus\" =", value, "remainJdBonus");
+            addCriterion("remain_jd_bonus =", value, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusNotEqualTo(Long value) {
-            addCriterion("\"remain_jd_bonus\" <>", value, "remainJdBonus");
+            addCriterion("remain_jd_bonus <>", value, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusGreaterThan(Long value) {
-            addCriterion("\"remain_jd_bonus\" >", value, "remainJdBonus");
+            addCriterion("remain_jd_bonus >", value, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusGreaterThanOrEqualTo(Long value) {
-            addCriterion("\"remain_jd_bonus\" >=", value, "remainJdBonus");
+            addCriterion("remain_jd_bonus >=", value, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusLessThan(Long value) {
-            addCriterion("\"remain_jd_bonus\" <", value, "remainJdBonus");
+            addCriterion("remain_jd_bonus <", value, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusLessThanOrEqualTo(Long value) {
-            addCriterion("\"remain_jd_bonus\" <=", value, "remainJdBonus");
+            addCriterion("remain_jd_bonus <=", value, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusIn(List<Long> values) {
-            addCriterion("\"remain_jd_bonus\" in", values, "remainJdBonus");
+            addCriterion("remain_jd_bonus in", values, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusNotIn(List<Long> values) {
-            addCriterion("\"remain_jd_bonus\" not in", values, "remainJdBonus");
+            addCriterion("remain_jd_bonus not in", values, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusBetween(Long value1, Long value2) {
-            addCriterion("\"remain_jd_bonus\" between", value1, value2, "remainJdBonus");
+            addCriterion("remain_jd_bonus between", value1, value2, "remainJdBonus");
             return (Criteria) this;
         }
 
         public Criteria andRemainJdBonusNotBetween(Long value1, Long value2) {
-            addCriterion("\"remain_jd_bonus\" not between", value1, value2, "remainJdBonus");
+            addCriterion("remain_jd_bonus not between", value1, value2, "remainJdBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdIsNull() {
+            addCriterion("create_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdIsNotNull() {
+            addCriterion("create_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdEqualTo(Integer value) {
+            addCriterion("create_id =", value, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdNotEqualTo(Integer value) {
+            addCriterion("create_id <>", value, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdGreaterThan(Integer value) {
+            addCriterion("create_id >", value, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("create_id >=", value, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdLessThan(Integer value) {
+            addCriterion("create_id <", value, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdLessThanOrEqualTo(Integer value) {
+            addCriterion("create_id <=", value, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdIn(List<Integer> values) {
+            addCriterion("create_id in", values, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdNotIn(List<Integer> values) {
+            addCriterion("create_id not in", values, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdBetween(Integer value1, Integer value2) {
+            addCriterion("create_id between", value1, value2, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("create_id not between", value1, value2, "createId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdIsNull() {
+            addCriterion("update_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdIsNotNull() {
+            addCriterion("update_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdEqualTo(Integer value) {
+            addCriterion("update_id =", value, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdNotEqualTo(Integer value) {
+            addCriterion("update_id <>", value, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdGreaterThan(Integer value) {
+            addCriterion("update_id >", value, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("update_id >=", value, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdLessThan(Integer value) {
+            addCriterion("update_id <", value, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdLessThanOrEqualTo(Integer value) {
+            addCriterion("update_id <=", value, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdIn(List<Integer> values) {
+            addCriterion("update_id in", values, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdNotIn(List<Integer> values) {
+            addCriterion("update_id not in", values, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdBetween(Integer value1, Integer value2) {
+            addCriterion("update_id between", value1, value2, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("update_id not between", value1, value2, "updateId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNull() {
+            addCriterion("update_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNotNull() {
+            addCriterion("update_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeEqualTo(Date value) {
+            addCriterion("update_time =", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotEqualTo(Date value) {
+            addCriterion("update_time <>", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThan(Date value) {
+            addCriterion("update_time >", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_time >=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThan(Date value) {
+            addCriterion("update_time <", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("update_time <=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIn(List<Date> values) {
+            addCriterion("update_time in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotIn(List<Date> values) {
+            addCriterion("update_time not in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeBetween(Date value1, Date value2) {
+            addCriterion("update_time between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
     }

@@ -1,10 +1,9 @@
 package com.distribution.dao.orderDetail.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class OrderDetail extends OrderDetailKey implements Serializable {
+public class orderDetail extends orderDetailKey {
     private BigDecimal orderAmt;
 
     private Integer orderQty;
@@ -16,8 +15,6 @@ public class OrderDetail extends OrderDetailKey implements Serializable {
     private Integer updateId;
 
     private Date updateTime;
-
-    private static final long serialVersionUID = 1L;
 
     public BigDecimal getOrderAmt() {
         return orderAmt;

@@ -1,9 +1,9 @@
 package com.distribution.dao.basicManage.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
-public class BasicManage extends BasicManageKey implements Serializable {
+public class basicManage extends basicManageKey {
     private String detailNm;
 
     private BigDecimal maxPercent;
@@ -14,7 +14,13 @@ public class BasicManage extends BasicManageKey implements Serializable {
 
     private BigDecimal minAmt;
 
-    private static final long serialVersionUID = 1L;
+    private Integer createId;
+
+    private Date createTime;
+
+    private Integer updateId;
+
+    private Date updateTime;
 
     public String getDetailNm() {
         return detailNm;
@@ -54,5 +60,37 @@ public class BasicManage extends BasicManageKey implements Serializable {
 
     public void setMinAmt(BigDecimal minAmt) {
         this.minAmt = minAmt;
+    }
+
+    public Integer getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(Integer createId) {
+        this.createId = createId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getUpdateId() {
+        return updateId;
+    }
+
+    public void setUpdateId(Integer updateId) {
+        this.updateId = updateId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

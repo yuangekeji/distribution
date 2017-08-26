@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.distribution.dao.transfer.mapper.TransferMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.transfer.model.Transfer" >
+<mapper namespace="com.distribution.dao.transfer.mapper.transferMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.transfer.model.transfer" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="receive_id" property="receiveId" jdbcType="INTEGER" />
     <result column="transfer_amt" property="transferAmt" jdbcType="DECIMAL" />
+    <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
     <result column="create_id" property="createId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_id" property="updateId" jdbcType="INTEGER" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,14 +69,14 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "id", "member_id", "receive_id", "transfer_amt", "create_id", "create_time", "update_id", 
-    "update_time"
+    id, member_id, receive_id, transfer_amt, transfer_time, create_id, create_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.transfer.model.TransferExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.transfer.model.transferExample" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from transfer
     <if test="_parameter != null" >
@@ -91,58 +90,55 @@
     select 
     <include refid="Base_Column_List" />
     from transfer
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from transfer
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" >
+  <delete id="deleteByExample" parameterType="com.distribution.dao.transfer.model.transferExample" >
     delete from transfer
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.transfer.model.Transfer" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
-    insert into transfer ("member_id", "receive_id", "transfer_amt", 
-      "create_id", "create_time", "update_id", 
-      "update_time")
-    values (#{memberId,jdbcType=INTEGER}, #{receiveId,jdbcType=INTEGER}, #{transferAmt,jdbcType=DECIMAL}, 
-      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.distribution.dao.transfer.model.transfer" >
+    insert into transfer (id, member_id, receive_id, 
+      transfer_amt, transfer_time, create_id, 
+      create_time)
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{receiveId,jdbcType=INTEGER}, 
+      #{transferAmt,jdbcType=DECIMAL}, #{transferTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.transfer.model.Transfer" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.distribution.dao.transfer.model.transfer" >
     insert into transfer
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="memberId != null" >
-        "member_id",
+        member_id,
       </if>
       <if test="receiveId != null" >
-        "receive_id",
+        receive_id,
       </if>
       <if test="transferAmt != null" >
-        "transfer_amt",
+        transfer_amt,
+      </if>
+      <if test="transferTime != null" >
+        transfer_time,
       </if>
       <if test="createId != null" >
-        "create_id",
+        create_id,
       </if>
       <if test="createTime != null" >
-        "create_time",
-      </if>
-      <if test="updateId != null" >
-        "update_id",
-      </if>
-      <if test="updateTime != null" >
-        "update_time",
+        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="memberId != null" >
         #{memberId,jdbcType=INTEGER},
       </if>
@@ -152,21 +148,18 @@
       <if test="transferAmt != null" >
         #{transferAmt,jdbcType=DECIMAL},
       </if>
+      <if test="transferTime != null" >
+        #{transferTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createId != null" >
         #{createId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateId != null" >
-        #{updateId,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.distribution.dao.transfer.model.transferExample" resultType="java.lang.Integer" >
     select count(*) from transfer
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -176,28 +169,25 @@
     update transfer
     <set >
       <if test="record.id != null" >
-        "id" = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.memberId != null" >
-        "member_id" = #{record.memberId,jdbcType=INTEGER},
+        member_id = #{record.memberId,jdbcType=INTEGER},
       </if>
       <if test="record.receiveId != null" >
-        "receive_id" = #{record.receiveId,jdbcType=INTEGER},
+        receive_id = #{record.receiveId,jdbcType=INTEGER},
       </if>
       <if test="record.transferAmt != null" >
-        "transfer_amt" = #{record.transferAmt,jdbcType=DECIMAL},
+        transfer_amt = #{record.transferAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.transferTime != null" >
+        transfer_time = #{record.transferTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.createId != null" >
-        "create_id" = #{record.createId,jdbcType=INTEGER},
+        create_id = #{record.createId,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null" >
-        "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateId != null" >
-        "update_id" = #{record.updateId,jdbcType=INTEGER},
-      </if>
-      <if test="record.updateTime != null" >
-        "update_time" = #{record.updateTime,jdbcType=TIMESTAMP},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -206,54 +196,49 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update transfer
-    set "id" = #{record.id,jdbcType=INTEGER},
-      "member_id" = #{record.memberId,jdbcType=INTEGER},
-      "receive_id" = #{record.receiveId,jdbcType=INTEGER},
-      "transfer_amt" = #{record.transferAmt,jdbcType=DECIMAL},
-      "create_id" = #{record.createId,jdbcType=INTEGER},
-      "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{record.updateId,jdbcType=INTEGER},
-      "update_time" = #{record.updateTime,jdbcType=TIMESTAMP}
+    set id = #{record.id,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      receive_id = #{record.receiveId,jdbcType=INTEGER},
+      transfer_amt = #{record.transferAmt,jdbcType=DECIMAL},
+      transfer_time = #{record.transferTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.transfer.model.Transfer" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.transfer.model.transfer" >
     update transfer
     <set >
       <if test="memberId != null" >
-        "member_id" = #{memberId,jdbcType=INTEGER},
+        member_id = #{memberId,jdbcType=INTEGER},
       </if>
       <if test="receiveId != null" >
-        "receive_id" = #{receiveId,jdbcType=INTEGER},
+        receive_id = #{receiveId,jdbcType=INTEGER},
       </if>
       <if test="transferAmt != null" >
-        "transfer_amt" = #{transferAmt,jdbcType=DECIMAL},
+        transfer_amt = #{transferAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="transferTime != null" >
+        transfer_time = #{transferTime,jdbcType=TIMESTAMP},
       </if>
       <if test="createId != null" >
-        "create_id" = #{createId,jdbcType=INTEGER},
+        create_id = #{createId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        "create_time" = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateId != null" >
-        "update_id" = #{updateId,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        "update_time" = #{updateTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.transfer.model.Transfer" >
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.transfer.model.transfer" >
     update transfer
-    set "member_id" = #{memberId,jdbcType=INTEGER},
-      "receive_id" = #{receiveId,jdbcType=INTEGER},
-      "transfer_amt" = #{transferAmt,jdbcType=DECIMAL},
-      "create_id" = #{createId,jdbcType=INTEGER},
-      "create_time" = #{createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{updateId,jdbcType=INTEGER},
-      "update_time" = #{updateTime,jdbcType=TIMESTAMP}
-    where "id" = #{id,jdbcType=INTEGER}
+    set member_id = #{memberId,jdbcType=INTEGER},
+      receive_id = #{receiveId,jdbcType=INTEGER},
+      transfer_amt = #{transferAmt,jdbcType=DECIMAL},
+      transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,22 +1,30 @@
 package com.distribution.dao.admin.mapper;
 
-import com.distribution.dao.admin.model.Admin;
-import com.distribution.dao.admin.model.AdminExample;
+import com.distribution.dao.admin.model.admin;
+import com.distribution.dao.admin.model.adminExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface AdminMapper {
-    int countByExample(AdminExample example);
+public interface adminMapper {
+    int countByExample(adminExample example);
 
-    int deleteByExample(AdminExample example);
+    int deleteByExample(adminExample example);
 
-    int insert(Admin record);
+    int deleteByPrimaryKey(Integer id);
 
-    int insertSelective(Admin record);
+    int insert(admin record);
 
-    List<Admin> selectByExample(AdminExample example);
+    int insertSelective(admin record);
 
-    int updateByExampleSelective(@Param("record") Admin record, @Param("example") AdminExample example);
+    List<admin> selectByExample(adminExample example);
 
-    int updateByExample(@Param("record") Admin record, @Param("example") AdminExample example);
+    admin selectByPrimaryKey(Integer id);
+
+    int updateByExampleSelective(@Param("record") admin record, @Param("example") adminExample example);
+
+    int updateByExample(@Param("record") admin record, @Param("example") adminExample example);
+
+    int updateByPrimaryKeySelective(admin record);
+
+    int updateByPrimaryKey(admin record);
 }

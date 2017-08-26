@@ -1,30 +1,30 @@
 package com.distribution.dao.member.mapper;
 
-import com.distribution.dao.member.model.Member;
-import com.distribution.dao.member.model.MemberExample;
+import com.distribution.dao.member.model.member;
+import com.distribution.dao.member.model.memberExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface MemberMapper {
-    int countByExample(MemberExample example);
+public interface memberMapper {
+    int countByExample(memberExample example);
 
-    int deleteByExample(MemberExample example);
+    int deleteByExample(memberExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Member record);
+    int insert(member record);
 
-    int insertSelective(Member record);
+    int insertSelective(member record);
 
-    List<Member> selectByExample(MemberExample example);
+    List<member> selectByExample(memberExample example);
 
-    Member selectByPrimaryKey(Integer id);
+    member selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Member record, @Param("example") MemberExample example);
+    int updateByExampleSelective(@Param("record") member record, @Param("example") memberExample example);
 
-    int updateByExample(@Param("record") Member record, @Param("example") MemberExample example);
+    int updateByExample(@Param("record") member record, @Param("example") memberExample example);
 
-    int updateByPrimaryKeySelective(Member record);
+    int updateByPrimaryKeySelective(member record);
 
-    int updateByPrimaryKey(Member record);
+    int updateByPrimaryKey(member record);
 }

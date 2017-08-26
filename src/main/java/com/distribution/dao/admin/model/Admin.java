@@ -1,8 +1,8 @@
 package com.distribution.dao.admin.model;
 
-import java.io.Serializable;
+import java.util.Date;
 
-public class Admin implements Serializable {
+public class admin {
     private Integer id;
 
     private String mobile;
@@ -11,7 +11,15 @@ public class Admin implements Serializable {
 
     private String password;
 
-    private static final long serialVersionUID = 1L;
+    private Integer createId;
+
+    private Date createTime;
+
+    private Integer updateId;
+
+    private Date updateTime;
+
+    private Integer roleId;
 
     public Integer getId() {
         return id;
@@ -43,5 +51,45 @@ public class Admin implements Serializable {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Integer getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(Integer createId) {
+        this.createId = createId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getUpdateId() {
+        return updateId;
+    }
+
+    public void setUpdateId(Integer updateId) {
+        this.updateId = updateId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }

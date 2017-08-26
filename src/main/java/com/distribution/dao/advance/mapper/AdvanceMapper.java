@@ -1,30 +1,30 @@
 package com.distribution.dao.advance.mapper;
 
-import com.distribution.dao.advance.model.Advance;
-import com.distribution.dao.advance.model.AdvanceExample;
+import com.distribution.dao.advance.model.advance;
+import com.distribution.dao.advance.model.advanceExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface AdvanceMapper {
-    int countByExample(AdvanceExample example);
+public interface advanceMapper {
+    int countByExample(advanceExample example);
 
-    int deleteByExample(AdvanceExample example);
+    int deleteByExample(advanceExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Advance record);
+    int insert(advance record);
 
-    int insertSelective(Advance record);
+    int insertSelective(advance record);
 
-    List<Advance> selectByExample(AdvanceExample example);
+    List<advance> selectByExample(advanceExample example);
 
-    Advance selectByPrimaryKey(Integer id);
+    advance selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Advance record, @Param("example") AdvanceExample example);
+    int updateByExampleSelective(@Param("record") advance record, @Param("example") advanceExample example);
 
-    int updateByExample(@Param("record") Advance record, @Param("example") AdvanceExample example);
+    int updateByExample(@Param("record") advance record, @Param("example") advanceExample example);
 
-    int updateByPrimaryKeySelective(Advance record);
+    int updateByPrimaryKeySelective(advance record);
 
-    int updateByPrimaryKey(Advance record);
+    int updateByPrimaryKey(advance record);
 }

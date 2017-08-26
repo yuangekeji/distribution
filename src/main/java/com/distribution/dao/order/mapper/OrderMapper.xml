@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.distribution.dao.order.mapper.OrderMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.order.model.Order" >
+<mapper namespace="com.distribution.dao.order.mapper.orderMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.order.model.order" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="order_category" property="orderCategory" jdbcType="CHAR" />
     <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
@@ -75,14 +75,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "id", "order_category", "order_amt", "order_qty", "member_id", "receive_name", "express_address", 
-    "member_level", "order_statues", "create_id", "create_time", "update_id", "update_time"
+    id, order_category, order_amt, order_qty, member_id, receive_name, express_address, 
+    member_level, order_statues, create_id, create_time, update_id, update_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.order.model.OrderExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.order.model.orderExample" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from order
     <if test="_parameter != null" >
@@ -96,77 +97,77 @@
     select 
     <include refid="Base_Column_List" />
     from order
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from order
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.order.model.OrderExample" >
+  <delete id="deleteByExample" parameterType="com.distribution.dao.order.model.orderExample" >
     delete from order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.order.model.Order" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
-    insert into order ("order_category", "order_amt", "order_qty", 
-      "member_id", "receive_name", "express_address", 
-      "member_level", "order_statues", "create_id", 
-      "create_time", "update_id", "update_time"
-      )
-    values (#{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL}, #{orderQty,jdbcType=INTEGER}, 
-      #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, 
-      #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR}, #{createId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.distribution.dao.order.model.order" >
+    insert into order (id, order_category, order_amt, 
+      order_qty, member_id, receive_name, 
+      express_address, member_level, order_statues, 
+      create_id, create_time, update_id, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL}, 
+      #{orderQty,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR}, 
+      #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.order.model.Order" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
+  <insert id="insertSelective" parameterType="com.distribution.dao.order.model.order" >
     insert into order
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="orderCategory != null" >
-        "order_category",
+        order_category,
       </if>
       <if test="orderAmt != null" >
-        "order_amt",
+        order_amt,
       </if>
       <if test="orderQty != null" >
-        "order_qty",
+        order_qty,
       </if>
       <if test="memberId != null" >
-        "member_id",
+        member_id,
       </if>
       <if test="receiveName != null" >
-        "receive_name",
+        receive_name,
       </if>
       <if test="expressAddress != null" >
-        "express_address",
+        express_address,
       </if>
       <if test="memberLevel != null" >
-        "member_level",
+        member_level,
       </if>
       <if test="orderStatues != null" >
-        "order_statues",
+        order_statues,
       </if>
       <if test="createId != null" >
-        "create_id",
+        create_id,
       </if>
       <if test="createTime != null" >
-        "create_time",
+        create_time,
       </if>
       <if test="updateId != null" >
-        "update_id",
+        update_id,
       </if>
       <if test="updateTime != null" >
-        "update_time",
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="orderCategory != null" >
         #{orderCategory,jdbcType=CHAR},
       </if>
@@ -205,7 +206,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.order.model.OrderExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.distribution.dao.order.model.orderExample" resultType="java.lang.Integer" >
     select count(*) from order
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -215,43 +216,43 @@
     update order
     <set >
       <if test="record.id != null" >
-        "id" = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.orderCategory != null" >
-        "order_category" = #{record.orderCategory,jdbcType=CHAR},
+        order_category = #{record.orderCategory,jdbcType=CHAR},
       </if>
       <if test="record.orderAmt != null" >
-        "order_amt" = #{record.orderAmt,jdbcType=DECIMAL},
+        order_amt = #{record.orderAmt,jdbcType=DECIMAL},
       </if>
       <if test="record.orderQty != null" >
-        "order_qty" = #{record.orderQty,jdbcType=INTEGER},
+        order_qty = #{record.orderQty,jdbcType=INTEGER},
       </if>
       <if test="record.memberId != null" >
-        "member_id" = #{record.memberId,jdbcType=INTEGER},
+        member_id = #{record.memberId,jdbcType=INTEGER},
       </if>
       <if test="record.receiveName != null" >
-        "receive_name" = #{record.receiveName,jdbcType=VARCHAR},
+        receive_name = #{record.receiveName,jdbcType=VARCHAR},
       </if>
       <if test="record.expressAddress != null" >
-        "express_address" = #{record.expressAddress,jdbcType=VARCHAR},
+        express_address = #{record.expressAddress,jdbcType=VARCHAR},
       </if>
       <if test="record.memberLevel != null" >
-        "member_level" = #{record.memberLevel,jdbcType=VARCHAR},
+        member_level = #{record.memberLevel,jdbcType=VARCHAR},
       </if>
       <if test="record.orderStatues != null" >
-        "order_statues" = #{record.orderStatues,jdbcType=CHAR},
+        order_statues = #{record.orderStatues,jdbcType=CHAR},
       </if>
       <if test="record.createId != null" >
-        "create_id" = #{record.createId,jdbcType=INTEGER},
+        create_id = #{record.createId,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null" >
-        "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateId != null" >
-        "update_id" = #{record.updateId,jdbcType=INTEGER},
+        update_id = #{record.updateId,jdbcType=INTEGER},
       </if>
       <if test="record.updateTime != null" >
-        "update_time" = #{record.updateTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -260,79 +261,79 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update order
-    set "id" = #{record.id,jdbcType=INTEGER},
-      "order_category" = #{record.orderCategory,jdbcType=CHAR},
-      "order_amt" = #{record.orderAmt,jdbcType=DECIMAL},
-      "order_qty" = #{record.orderQty,jdbcType=INTEGER},
-      "member_id" = #{record.memberId,jdbcType=INTEGER},
-      "receive_name" = #{record.receiveName,jdbcType=VARCHAR},
-      "express_address" = #{record.expressAddress,jdbcType=VARCHAR},
-      "member_level" = #{record.memberLevel,jdbcType=VARCHAR},
-      "order_statues" = #{record.orderStatues,jdbcType=CHAR},
-      "create_id" = #{record.createId,jdbcType=INTEGER},
-      "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{record.updateId,jdbcType=INTEGER},
-      "update_time" = #{record.updateTime,jdbcType=TIMESTAMP}
+    set id = #{record.id,jdbcType=INTEGER},
+      order_category = #{record.orderCategory,jdbcType=CHAR},
+      order_amt = #{record.orderAmt,jdbcType=DECIMAL},
+      order_qty = #{record.orderQty,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      receive_name = #{record.receiveName,jdbcType=VARCHAR},
+      express_address = #{record.expressAddress,jdbcType=VARCHAR},
+      member_level = #{record.memberLevel,jdbcType=VARCHAR},
+      order_statues = #{record.orderStatues,jdbcType=CHAR},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.order.model.Order" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.order.model.order" >
     update order
     <set >
       <if test="orderCategory != null" >
-        "order_category" = #{orderCategory,jdbcType=CHAR},
+        order_category = #{orderCategory,jdbcType=CHAR},
       </if>
       <if test="orderAmt != null" >
-        "order_amt" = #{orderAmt,jdbcType=DECIMAL},
+        order_amt = #{orderAmt,jdbcType=DECIMAL},
       </if>
       <if test="orderQty != null" >
-        "order_qty" = #{orderQty,jdbcType=INTEGER},
+        order_qty = #{orderQty,jdbcType=INTEGER},
       </if>
       <if test="memberId != null" >
-        "member_id" = #{memberId,jdbcType=INTEGER},
+        member_id = #{memberId,jdbcType=INTEGER},
       </if>
       <if test="receiveName != null" >
-        "receive_name" = #{receiveName,jdbcType=VARCHAR},
+        receive_name = #{receiveName,jdbcType=VARCHAR},
       </if>
       <if test="expressAddress != null" >
-        "express_address" = #{expressAddress,jdbcType=VARCHAR},
+        express_address = #{expressAddress,jdbcType=VARCHAR},
       </if>
       <if test="memberLevel != null" >
-        "member_level" = #{memberLevel,jdbcType=VARCHAR},
+        member_level = #{memberLevel,jdbcType=VARCHAR},
       </if>
       <if test="orderStatues != null" >
-        "order_statues" = #{orderStatues,jdbcType=CHAR},
+        order_statues = #{orderStatues,jdbcType=CHAR},
       </if>
       <if test="createId != null" >
-        "create_id" = #{createId,jdbcType=INTEGER},
+        create_id = #{createId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        "create_time" = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateId != null" >
-        "update_id" = #{updateId,jdbcType=INTEGER},
+        update_id = #{updateId,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
-        "update_time" = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.order.model.Order" >
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.order.model.order" >
     update order
-    set "order_category" = #{orderCategory,jdbcType=CHAR},
-      "order_amt" = #{orderAmt,jdbcType=DECIMAL},
-      "order_qty" = #{orderQty,jdbcType=INTEGER},
-      "member_id" = #{memberId,jdbcType=INTEGER},
-      "receive_name" = #{receiveName,jdbcType=VARCHAR},
-      "express_address" = #{expressAddress,jdbcType=VARCHAR},
-      "member_level" = #{memberLevel,jdbcType=VARCHAR},
-      "order_statues" = #{orderStatues,jdbcType=CHAR},
-      "create_id" = #{createId,jdbcType=INTEGER},
-      "create_time" = #{createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{updateId,jdbcType=INTEGER},
-      "update_time" = #{updateTime,jdbcType=TIMESTAMP}
-    where "id" = #{id,jdbcType=INTEGER}
+    set order_category = #{orderCategory,jdbcType=CHAR},
+      order_amt = #{orderAmt,jdbcType=DECIMAL},
+      order_qty = #{orderQty,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      receive_name = #{receiveName,jdbcType=VARCHAR},
+      express_address = #{expressAddress,jdbcType=VARCHAR},
+      member_level = #{memberLevel,jdbcType=VARCHAR},
+      order_statues = #{orderStatues,jdbcType=CHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

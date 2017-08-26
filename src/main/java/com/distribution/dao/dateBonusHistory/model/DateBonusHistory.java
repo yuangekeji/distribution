@@ -1,10 +1,9 @@
 package com.distribution.dao.dateBonusHistory.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class DateBonusHistory implements Serializable {
+public class dateBonusHistory {
     private Integer id;
 
     private Date date;
@@ -23,7 +22,13 @@ public class DateBonusHistory implements Serializable {
 
     private Long remainJdBonus;
 
-    private static final long serialVersionUID = 1L;
+    private Integer createId;
+
+    private Date createTime;
+
+    private Integer updateId;
+
+    private Date updateTime;
 
     public Integer getId() {
         return id;
@@ -95,5 +100,37 @@ public class DateBonusHistory implements Serializable {
 
     public void setRemainJdBonus(Long remainJdBonus) {
         this.remainJdBonus = remainJdBonus;
+    }
+
+    public Integer getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(Integer createId) {
+        this.createId = createId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getUpdateId() {
+        return updateId;
+    }
+
+    public void setUpdateId(Integer updateId) {
+        this.updateId = updateId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

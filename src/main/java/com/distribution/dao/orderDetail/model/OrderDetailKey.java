@@ -1,13 +1,9 @@
 package com.distribution.dao.orderDetail.model;
 
-import java.io.Serializable;
-
-public class OrderDetailKey implements Serializable {
+public class orderDetailKey {
     private String goodsCd;
 
     private Integer id;
-
-    private static final long serialVersionUID = 1L;
 
     public String getGoodsCd() {
         return goodsCd;

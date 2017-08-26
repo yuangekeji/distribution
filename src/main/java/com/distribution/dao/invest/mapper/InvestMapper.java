@@ -1,30 +1,30 @@
 package com.distribution.dao.invest.mapper;
 
-import com.distribution.dao.invest.model.Invest;
-import com.distribution.dao.invest.model.InvestExample;
+import com.distribution.dao.invest.model.invest;
+import com.distribution.dao.invest.model.investExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface InvestMapper {
-    int countByExample(InvestExample example);
+public interface investMapper {
+    int countByExample(investExample example);
 
-    int deleteByExample(InvestExample example);
+    int deleteByExample(investExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Invest record);
+    int insert(invest record);
 
-    int insertSelective(Invest record);
+    int insertSelective(invest record);
 
-    List<Invest> selectByExample(InvestExample example);
+    List<invest> selectByExample(investExample example);
 
-    Invest selectByPrimaryKey(Integer id);
+    invest selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Invest record, @Param("example") InvestExample example);
+    int updateByExampleSelective(@Param("record") invest record, @Param("example") investExample example);
 
-    int updateByExample(@Param("record") Invest record, @Param("example") InvestExample example);
+    int updateByExample(@Param("record") invest record, @Param("example") investExample example);
 
-    int updateByPrimaryKeySelective(Invest record);
+    int updateByPrimaryKeySelective(invest record);
 
-    int updateByPrimaryKey(Invest record);
+    int updateByPrimaryKey(invest record);
 }

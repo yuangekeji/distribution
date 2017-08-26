@@ -1,30 +1,30 @@
 package com.distribution.dao.accountManager.mapper;
 
-import com.distribution.dao.accountManager.model.AccountManager;
-import com.distribution.dao.accountManager.model.AccountManagerExample;
+import com.distribution.dao.accountManager.model.accountManager;
+import com.distribution.dao.accountManager.model.accountManagerExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface AccountManagerMapper {
-    int countByExample(AccountManagerExample example);
+public interface accountManagerMapper {
+    int countByExample(accountManagerExample example);
 
-    int deleteByExample(AccountManagerExample example);
+    int deleteByExample(accountManagerExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(AccountManager record);
+    int insert(accountManager record);
 
-    int insertSelective(AccountManager record);
+    int insertSelective(accountManager record);
 
-    List<AccountManager> selectByExample(AccountManagerExample example);
+    List<accountManager> selectByExample(accountManagerExample example);
 
-    AccountManager selectByPrimaryKey(Integer id);
+    accountManager selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") AccountManager record, @Param("example") AccountManagerExample example);
+    int updateByExampleSelective(@Param("record") accountManager record, @Param("example") accountManagerExample example);
 
-    int updateByExample(@Param("record") AccountManager record, @Param("example") AccountManagerExample example);
+    int updateByExample(@Param("record") accountManager record, @Param("example") accountManagerExample example);
 
-    int updateByPrimaryKeySelective(AccountManager record);
+    int updateByPrimaryKeySelective(accountManager record);
 
-    int updateByPrimaryKey(AccountManager record);
+    int updateByPrimaryKey(accountManager record);
 }

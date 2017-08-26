@@ -1,30 +1,30 @@
 package com.distribution.dao.order.mapper;
 
-import com.distribution.dao.order.model.Order;
-import com.distribution.dao.order.model.OrderExample;
+import com.distribution.dao.order.model.order;
+import com.distribution.dao.order.model.orderExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface OrderMapper {
-    int countByExample(OrderExample example);
+public interface orderMapper {
+    int countByExample(orderExample example);
 
-    int deleteByExample(OrderExample example);
+    int deleteByExample(orderExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Order record);
+    int insert(order record);
 
-    int insertSelective(Order record);
+    int insertSelective(order record);
 
-    List<Order> selectByExample(OrderExample example);
+    List<order> selectByExample(orderExample example);
 
-    Order selectByPrimaryKey(Integer id);
+    order selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
+    int updateByExampleSelective(@Param("record") order record, @Param("example") orderExample example);
 
-    int updateByExample(@Param("record") Order record, @Param("example") OrderExample example);
+    int updateByExample(@Param("record") order record, @Param("example") orderExample example);
 
-    int updateByPrimaryKeySelective(Order record);
+    int updateByPrimaryKeySelective(order record);
 
-    int updateByPrimaryKey(Order record);
+    int updateByPrimaryKey(order record);
 }

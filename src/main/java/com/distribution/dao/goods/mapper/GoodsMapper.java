@@ -1,30 +1,30 @@
 package com.distribution.dao.goods.mapper;
 
-import com.distribution.dao.goods.model.Goods;
-import com.distribution.dao.goods.model.GoodsExample;
+import com.distribution.dao.goods.model.goods;
+import com.distribution.dao.goods.model.goodsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface GoodsMapper {
-    int countByExample(GoodsExample example);
+public interface goodsMapper {
+    int countByExample(goodsExample example);
 
-    int deleteByExample(GoodsExample example);
+    int deleteByExample(goodsExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Goods record);
+    int insert(goods record);
 
-    int insertSelective(Goods record);
+    int insertSelective(goods record);
 
-    List<Goods> selectByExample(GoodsExample example);
+    List<goods> selectByExample(goodsExample example);
 
-    Goods selectByPrimaryKey(Integer id);
+    goods selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") Goods record, @Param("example") GoodsExample example);
+    int updateByExampleSelective(@Param("record") goods record, @Param("example") goodsExample example);
 
-    int updateByExample(@Param("record") Goods record, @Param("example") GoodsExample example);
+    int updateByExample(@Param("record") goods record, @Param("example") goodsExample example);
 
-    int updateByPrimaryKeySelective(Goods record);
+    int updateByPrimaryKeySelective(goods record);
 
-    int updateByPrimaryKey(Goods record);
+    int updateByPrimaryKey(goods record);
 }

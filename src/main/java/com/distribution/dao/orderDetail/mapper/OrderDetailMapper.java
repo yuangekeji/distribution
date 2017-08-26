@@ -1,31 +1,31 @@
 package com.distribution.dao.orderDetail.mapper;
 
-import com.distribution.dao.orderDetail.model.OrderDetail;
-import com.distribution.dao.orderDetail.model.OrderDetailExample;
-import com.distribution.dao.orderDetail.model.OrderDetailKey;
+import com.distribution.dao.orderDetail.model.orderDetail;
+import com.distribution.dao.orderDetail.model.orderDetailExample;
+import com.distribution.dao.orderDetail.model.orderDetailKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface OrderDetailMapper {
-    int countByExample(OrderDetailExample example);
+public interface orderDetailMapper {
+    int countByExample(orderDetailExample example);
 
-    int deleteByExample(OrderDetailExample example);
+    int deleteByExample(orderDetailExample example);
 
-    int deleteByPrimaryKey(OrderDetailKey key);
+    int deleteByPrimaryKey(orderDetailKey key);
 
-    int insert(OrderDetail record);
+    int insert(orderDetail record);
 
-    int insertSelective(OrderDetail record);
+    int insertSelective(orderDetail record);
 
-    List<OrderDetail> selectByExample(OrderDetailExample example);
+    List<orderDetail> selectByExample(orderDetailExample example);
 
-    OrderDetail selectByPrimaryKey(OrderDetailKey key);
+    orderDetail selectByPrimaryKey(orderDetailKey key);
 
-    int updateByExampleSelective(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);
+    int updateByExampleSelective(@Param("record") orderDetail record, @Param("example") orderDetailExample example);
 
-    int updateByExample(@Param("record") OrderDetail record, @Param("example") OrderDetailExample example);
+    int updateByExample(@Param("record") orderDetail record, @Param("example") orderDetailExample example);
 
-    int updateByPrimaryKeySelective(OrderDetail record);
+    int updateByPrimaryKeySelective(orderDetail record);
 
-    int updateByPrimaryKey(OrderDetail record);
+    int updateByPrimaryKey(orderDetail record);
 }

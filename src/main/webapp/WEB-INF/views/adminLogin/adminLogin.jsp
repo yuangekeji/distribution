@@ -25,6 +25,7 @@
     <link href="${ctx}/resources/metronic/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <%--<link href="${ctx}/resources/metronic/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />--%>
     <link href="${ctx}/resources/metronic/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/resources/js/jquery-1.11.3.min.js" type="text/javascript"></script>
     <%--<link href="${ctx}/resources/metronic/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />--%>
     <!-- END GLOBAL MANDATORY STYLES -->
 
@@ -54,17 +55,17 @@
         <h3 class="form-title font-green">会员登录</h3>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
-            <span> Enter any username and password. </span>
+            <span> 请输入用户名和密码 </span>
         </div>
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-            <label class="control-label visible-ie8 visible-ie9">Username</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" /> </div>
+            <label class="control-label visible-ie8 visible-ie9">用户名</label>
+            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入用户名" name="username" id="username"/> </div>
         <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Password</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
+            <label class="control-label visible-ie8 visible-ie9">密码</label>
+            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="请输入密码" name="password" id="passwd"/> </div>
         <div class="form-actions">
-            <button type="submit" class="btn green uppercase">登录</button>
+            <input type="button" class="btn green uppercase" onclick="login();" value="登录"/>
             <label class="rememberme check mt-checkbox mt-checkbox-outline">
                 <input type="checkbox" name="remember" value="1" />管理员登录
                 <span></span>
@@ -94,6 +95,7 @@
 
 </div>
 <div class="copyright">   </div>
+<script src="${ctx}/resources/js/login.js" type="text/javascript"></script>
 <!--[if lt IE 9]>
 <script src="${ctx}/resources/metronic/global/plugins/respond.min.js"></script>
 <script src="${ctx}/resources/metronic/global/plugins/excanvas.min.js"></script>

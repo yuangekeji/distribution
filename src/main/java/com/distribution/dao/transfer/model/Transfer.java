@@ -1,10 +1,9 @@
 package com.distribution.dao.transfer.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Transfer implements Serializable {
+public class Transfer {
     private Integer id;
 
     private Integer memberId;
@@ -13,15 +12,11 @@ public class Transfer implements Serializable {
 
     private BigDecimal transferAmt;
 
+    private Date transferTime;
+
     private Integer createId;
 
     private Date createTime;
-
-    private Integer updateId;
-
-    private Date updateTime;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -55,6 +50,14 @@ public class Transfer implements Serializable {
         this.transferAmt = transferAmt;
     }
 
+    public Date getTransferTime() {
+        return transferTime;
+    }
+
+    public void setTransferTime(Date transferTime) {
+        this.transferTime = transferTime;
+    }
+
     public Integer getCreateId() {
         return createId;
     }
@@ -69,21 +72,5 @@ public class Transfer implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(Integer updateId) {
-        this.updateId = updateId;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 }

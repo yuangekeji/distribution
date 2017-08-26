@@ -1,10 +1,9 @@
 package com.distribution.dao.dividendHistory.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class DividendHistory implements Serializable {
+public class DividendHistory {
     private Integer id;
 
     private Integer dividendId;
@@ -17,7 +16,15 @@ public class DividendHistory implements Serializable {
 
     private BigDecimal totalReceived;
 
-    private static final long serialVersionUID = 1L;
+    private Integer createId;
+
+    private Date createTime;
+
+    private Integer updateId;
+
+    private Date updateTime;
+
+    private BigDecimal mgmtFee;
 
     public Integer getId() {
         return id;
@@ -65,5 +72,45 @@ public class DividendHistory implements Serializable {
 
     public void setTotalReceived(BigDecimal totalReceived) {
         this.totalReceived = totalReceived;
+    }
+
+    public Integer getCreateId() {
+        return createId;
+    }
+
+    public void setCreateId(Integer createId) {
+        this.createId = createId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getUpdateId() {
+        return updateId;
+    }
+
+    public void setUpdateId(Integer updateId) {
+        this.updateId = updateId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public BigDecimal getMgmtFee() {
+        return mgmtFee;
+    }
+
+    public void setMgmtFee(BigDecimal mgmtFee) {
+        this.mgmtFee = mgmtFee;
     }
 }

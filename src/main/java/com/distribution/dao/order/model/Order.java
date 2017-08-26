@@ -1,10 +1,9 @@
 package com.distribution.dao.order.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Order implements Serializable {
+public class Order {
     private Integer id;
 
     private String orderCategory;
@@ -30,8 +29,6 @@ public class Order implements Serializable {
     private Integer updateId;
 
     private Date updateTime;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

@@ -4,7 +4,7 @@ import com.distribution.common.constant.JsonMessage;
 
 import com.distribution.common.exception.BizException;
 import com.distribution.common.utils.ErrorUtils;
-import com.distribution.dao.user.model.User;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

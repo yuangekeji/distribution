@@ -70,14 +70,14 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "goods_cd", "id", "order_amt", "order_qty", "create_id", "create_time", "update_id", 
-    "update_time"
+    goods_cd, id, order_amt, order_qty, create_id, create_time, update_id, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.orderDetail.model.OrderDetailExample" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from order_detail
     <if test="_parameter != null" >
@@ -91,13 +91,13 @@
     select 
     <include refid="Base_Column_List" />
     from order_detail
-    where "goods_cd" = #{goodsCd,jdbcType=VARCHAR}
-      and "id" = #{id,jdbcType=INTEGER}
+    where goods_cd = #{goodsCd,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.distribution.dao.orderDetail.model.OrderDetailKey" >
     delete from order_detail
-    where "goods_cd" = #{goodsCd,jdbcType=VARCHAR}
-      and "id" = #{id,jdbcType=INTEGER}
+    where goods_cd = #{goodsCd,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.distribution.dao.orderDetail.model.OrderDetailExample" >
     delete from order_detail
@@ -106,47 +106,47 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.orderDetail.model.OrderDetail" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
-    insert into order_detail ("goods_cd", "order_amt", "order_qty", 
-      "create_id", "create_time", "update_id", 
-      "update_time")
-    values (#{goodsCd,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL}, #{orderQty,jdbcType=INTEGER}, 
-      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+    insert into order_detail (goods_cd, id, order_amt, 
+      order_qty, create_id, create_time, 
+      update_id, update_time)
+    values (#{goodsCd,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{orderAmt,jdbcType=DECIMAL}, 
+      #{orderQty,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.orderDetail.model.OrderDetail" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
     insert into order_detail
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="goodsCd != null" >
-        "goods_cd",
+        goods_cd,
+      </if>
+      <if test="id != null" >
+        id,
       </if>
       <if test="orderAmt != null" >
-        "order_amt",
+        order_amt,
       </if>
       <if test="orderQty != null" >
-        "order_qty",
+        order_qty,
       </if>
       <if test="createId != null" >
-        "create_id",
+        create_id,
       </if>
       <if test="createTime != null" >
-        "create_time",
+        create_time,
       </if>
       <if test="updateId != null" >
-        "update_id",
+        update_id,
       </if>
       <if test="updateTime != null" >
-        "update_time",
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="goodsCd != null" >
         #{goodsCd,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="orderAmt != null" >
         #{orderAmt,jdbcType=DECIMAL},
@@ -178,28 +178,28 @@
     update order_detail
     <set >
       <if test="record.goodsCd != null" >
-        "goods_cd" = #{record.goodsCd,jdbcType=VARCHAR},
+        goods_cd = #{record.goodsCd,jdbcType=VARCHAR},
       </if>
       <if test="record.id != null" >
-        "id" = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.orderAmt != null" >
-        "order_amt" = #{record.orderAmt,jdbcType=DECIMAL},
+        order_amt = #{record.orderAmt,jdbcType=DECIMAL},
       </if>
       <if test="record.orderQty != null" >
-        "order_qty" = #{record.orderQty,jdbcType=INTEGER},
+        order_qty = #{record.orderQty,jdbcType=INTEGER},
       </if>
       <if test="record.createId != null" >
-        "create_id" = #{record.createId,jdbcType=INTEGER},
+        create_id = #{record.createId,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null" >
-        "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateId != null" >
-        "update_id" = #{record.updateId,jdbcType=INTEGER},
+        update_id = #{record.updateId,jdbcType=INTEGER},
       </if>
       <if test="record.updateTime != null" >
-        "update_time" = #{record.updateTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -208,14 +208,14 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update order_detail
-    set "goods_cd" = #{record.goodsCd,jdbcType=VARCHAR},
-      "id" = #{record.id,jdbcType=INTEGER},
-      "order_amt" = #{record.orderAmt,jdbcType=DECIMAL},
-      "order_qty" = #{record.orderQty,jdbcType=INTEGER},
-      "create_id" = #{record.createId,jdbcType=INTEGER},
-      "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{record.updateId,jdbcType=INTEGER},
-      "update_time" = #{record.updateTime,jdbcType=TIMESTAMP}
+    set goods_cd = #{record.goodsCd,jdbcType=VARCHAR},
+      id = #{record.id,jdbcType=INTEGER},
+      order_amt = #{record.orderAmt,jdbcType=DECIMAL},
+      order_qty = #{record.orderQty,jdbcType=INTEGER},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -224,36 +224,36 @@
     update order_detail
     <set >
       <if test="orderAmt != null" >
-        "order_amt" = #{orderAmt,jdbcType=DECIMAL},
+        order_amt = #{orderAmt,jdbcType=DECIMAL},
       </if>
       <if test="orderQty != null" >
-        "order_qty" = #{orderQty,jdbcType=INTEGER},
+        order_qty = #{orderQty,jdbcType=INTEGER},
       </if>
       <if test="createId != null" >
-        "create_id" = #{createId,jdbcType=INTEGER},
+        create_id = #{createId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        "create_time" = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateId != null" >
-        "update_id" = #{updateId,jdbcType=INTEGER},
+        update_id = #{updateId,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
-        "update_time" = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where "goods_cd" = #{goodsCd,jdbcType=VARCHAR}
-      and "id" = #{id,jdbcType=INTEGER}
+    where goods_cd = #{goodsCd,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.distribution.dao.orderDetail.model.OrderDetail" >
     update order_detail
-    set "order_amt" = #{orderAmt,jdbcType=DECIMAL},
-      "order_qty" = #{orderQty,jdbcType=INTEGER},
-      "create_id" = #{createId,jdbcType=INTEGER},
-      "create_time" = #{createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{updateId,jdbcType=INTEGER},
-      "update_time" = #{updateTime,jdbcType=TIMESTAMP}
-    where "goods_cd" = #{goodsCd,jdbcType=VARCHAR}
-      and "id" = #{id,jdbcType=INTEGER}
+    set order_amt = #{orderAmt,jdbcType=DECIMAL},
+      order_qty = #{orderQty,jdbcType=INTEGER},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where goods_cd = #{goodsCd,jdbcType=VARCHAR}
+      and id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

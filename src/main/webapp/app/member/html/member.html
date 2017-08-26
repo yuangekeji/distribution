@@ -1,0 +1,56 @@
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title"> Profile </h3>
+
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row" ng-controller="memberCtrl">
+    <div class="col-md-12">
+        <!-- BEGIN PROFILE SIDEBAR -->
+        <div class="profile-sidebar">
+            <!-- PORTLET MAIN -->
+            <div class="portlet light profile-sidebar-portlet">
+                <!-- SIDEBAR USERPIC -->
+                <div class="profile-userpic">
+                    <img src="{{settings.assetsPath}}/pages/media/profile/profile_user.jpg" style="height: 150px" class="img-responsive" alt=""> </div>
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name"> 李晓伟 </div>
+                    <div class="profile-usertitle-job"> 2017-7-18 加入 </div>
+                </div>
+                <!-- END SIDEBAR USER TITLE -->
+                <!-- SIDEBAR BUTTONS -->
+                <div class="profile-userbuttons">
+                    <button type="button" class="btn btn-circle green-haze btn-sm">普通会员</button>
+                    <button type="button" class="btn btn-circle btn-danger btn-sm">黑金卡（60000）</button>
+                </div>
+                <!-- END SIDEBAR BUTTONS -->
+                <!-- SIDEBAR MENU -->
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li ng-class="{active: $state.includes('app.member.overview')}">
+                            <a ui-sref="app.member.overview">
+                                <i class="icon-home"></i> 账户信息 </a>
+                        </li>
+                        <li ng-class="{active: $state.includes('app.member.info')}">
+                            <a ui-sref="app.member.info">
+                                <i class="icon-settings"></i> 个人信息</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+            <!-- END PORTLET MAIN -->
+        </div>
+        <!-- END BEGIN PROFILE SIDEBAR -->
+        <!-- BEGIN PROFILE CONTENT -->
+        <div ui-view class="profile-content fade-in-up"> </div>
+        <!-- END PROFILE CONTENT -->
+    </div>
+</div>
+<!-- END PAGE CONTENT-->
+<!-- BEGIN MAIN JS-->
+<script>
+    Profile.init(); // init page demo
+</script>
+<!-- BEGIN MAIN JS -->

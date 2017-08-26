@@ -14,12 +14,12 @@ $.extend(true, $.fn.dataTable.defaults, {
     "pagingType": "bootstrap_number"
 });
 
-/* Default class modification */
-$.extend($.fn.dataTableExt.oStdClasses, {
-    "sWrapper": "dataTables_wrapper",
-    "sFilterInput": "form-control input-sm input-small input-inline",
-    "sLengthSelect": "form-control input-sm input-xsmall input-inline"
-});
+// /* Default class modification */
+// $.extend($.fn.dataTableExt.oStdClasses, {
+//     "sWrapper": "dataTables_wrapper",
+//     "sFilterInput": "form-control input-sm input-small input-inline",
+//     "sLengthSelect": "form-control input-sm input-xsmall input-inline"
+// });
 
 // In 1.10 we use the pagination renderers to draw the Bootstrap paging,
 // rather than  custom plug-in

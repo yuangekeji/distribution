@@ -1,9 +1,8 @@
 package com.distribution.dao.memberLevel.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class MemberLevel extends MemberLevelKey implements Serializable {
+public class MemberLevel extends MemberLevelKey {
     private BigDecimal buyAmt;
 
     private Integer buyQty;
@@ -19,8 +18,6 @@ public class MemberLevel extends MemberLevelKey implements Serializable {
     private BigDecimal profitPer;
 
     private BigDecimal discount;
-
-    private static final long serialVersionUID = 1L;
 
     public BigDecimal getBuyAmt() {
         return buyAmt;

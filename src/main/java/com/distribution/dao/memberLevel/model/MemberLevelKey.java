@@ -1,13 +1,9 @@
 package com.distribution.dao.memberLevel.model;
 
-import java.io.Serializable;
-
-public class MemberLevelKey implements Serializable {
+public class MemberLevelKey {
     private Integer id;
 
     private Integer levelCategory;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;

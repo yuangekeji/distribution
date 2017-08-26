@@ -5,25 +5,59 @@ var App = angular.module('app', [
     'app.lazyload',
     'app.routes',
     'ngStorage',
-    //业务模块
+    //前台业务模块
     'home',
-    'recommend'
+    'recommend',
+    'member',
+    'advance',
+    'account',
+    'bonus',
+    'dividend',
+    'graph',
+    'order',
+    //后台业务模块
+    'admAdvance',
+    'admBasicSetting',
+    'admDividend',
+    'admMember',
+    'admOperator',
+    'admOrder',
+    'admPermission',
+    'admProduct',
+    'admRecommend',
+    'admin',
+    'admBonus'
 ]);
 
 angular.module('app.lazyload', []);
 angular.module('app.routes', []);
 angular.module('home', []);
 angular.module('recommend', []);
+angular.module('member', []);
+angular.module('advance', []);
+angular.module('account', []);
+angular.module('bonus', []);
+angular.module('dividend', []);
+angular.module('graph', []);
+angular.module('order', []);
+
+angular.module('admAdvance', []);
+angular.module('admBasicSetting', []);
+angular.module('admDividend', []);
+angular.module('admMember', []);
+angular.module('admOperator', []);
+angular.module('admOrder', []);
+angular.module('admPermission', []);
+angular.module('admProduct', []);
+angular.module('admRecommend', []);
+angular.module('admBonus', []);
+angular.module('admin',[]);
+
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
-        $scope.ctx = window['ctx'];
-        $http.get(ctx + '/member/getUserFromSession').success(function (resp) {
-            if (resp.successful) {
-                $sessionStorage.currentUser = resp.data;
-            }
-        });
-        /*Model中$watch函数影响变量用于记录当前页面是否改变过内容并没保存*/
+
+    /*Model中$watch函数影响变量用于记录当前页面是否改变过内容并没保存*/
         var _preventNavigation = false;
         /*_preventNavigationUrl记录当前url用于与将要跳转的url进行比较*/
         var _preventNavigationUrl = null;
@@ -128,10 +162,48 @@ App.controller('HeaderController', ['$scope', function($scope) {
 }]);
 
 /* Setup Layout Part - Sidebar */
-App.controller('SidebarController', ['$state', '$scope', function($state, $scope) {
+App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', '$sessionStorage',function($state, $scope,$rootScope,$http,$sessionStorage) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar($state); // init sidebar
     });
+    $scope.onInit = function () {
+
+        $scope.ctx = window['ctx'];
+
+        $http.get(ctx + '/role/getUserRole').success(function (res) {
+                $sessionStorage.currentUser = res.currentUser;
+
+                $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
+
+                    $rootScope.menu = res.data.menus;
+
+                    // console.info($rootScope.menu );
+                    $scope.firstMenu = [];
+
+                    angular.forEach($rootScope.menu,function (menu,index) {
+                        if(menu.parentMenu ==0){
+                            $scope.firstMenu.push(menu);
+                        }
+                    })
+
+                    $scope.secondMenu =[];
+
+                    angular.forEach($rootScope.menu,function (menu,index) {
+                        if(menu.parentMenu > 0){
+                            $scope.secondMenu.push(menu);
+                        }
+                    })
+                })
+
+        }).error(function (error) {
+            alert('用户获取失败');
+        });
+
+        // console.info($scope.firstMenu);
+        // console.info($scope.secondMenu);
+    }
+
+    $scope.onInit();
 }]);
 /* Setup Layout Part - Footer */
 App.controller('FooterController', ['$scope', function($scope) {

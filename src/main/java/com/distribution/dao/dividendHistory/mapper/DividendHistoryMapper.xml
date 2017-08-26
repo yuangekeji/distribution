@@ -8,6 +8,11 @@
     <result column="devidend_count" property="devidendCount" jdbcType="INTEGER" />
     <result column="amount" property="amount" jdbcType="DECIMAL" />
     <result column="total_received" property="totalReceived" jdbcType="DECIMAL" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="mgmt_fee" property="mgmtFee" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,13 +73,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "id", "dividend_id", "received_time", "devidend_count", "amount", "total_received"
+    id, dividend_id, received_time, devidend_count, amount, total_received, create_id, 
+    create_time, update_id, update_time, mgmt_fee
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.dividendHistory.model.DividendHistoryExample" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from dividend_history
     <if test="_parameter != null" >
@@ -88,11 +95,11 @@
     select 
     <include refid="Base_Column_List" />
     from dividend_history
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from dividend_history
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.distribution.dao.dividendHistory.model.DividendHistoryExample" >
     delete from dividend_history
@@ -101,37 +108,56 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
-    insert into dividend_history ("dividend_id", "received_time", "devidend_count", 
-      "amount", "total_received")
-    values (#{dividendId,jdbcType=INTEGER}, #{receivedTime,jdbcType=TIMESTAMP}, #{devidendCount,jdbcType=INTEGER}, 
-      #{amount,jdbcType=DECIMAL}, #{totalReceived,jdbcType=DECIMAL})
+    insert into dividend_history (id, dividend_id, received_time, 
+      devidend_count, amount, total_received, 
+      create_id, create_time, update_id, 
+      update_time, mgmt_fee)
+    values (#{id,jdbcType=INTEGER}, #{dividendId,jdbcType=INTEGER}, #{receivedTime,jdbcType=TIMESTAMP}, 
+      #{devidendCount,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{totalReceived,jdbcType=DECIMAL}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{mgmtFee,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
     insert into dividend_history
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="dividendId != null" >
-        "dividend_id",
+        dividend_id,
       </if>
       <if test="receivedTime != null" >
-        "received_time",
+        received_time,
       </if>
       <if test="devidendCount != null" >
-        "devidend_count",
+        devidend_count,
       </if>
       <if test="amount != null" >
-        "amount",
+        amount,
       </if>
       <if test="totalReceived != null" >
-        "total_received",
+        total_received,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="mgmtFee != null" >
+        mgmt_fee,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="dividendId != null" >
         #{dividendId,jdbcType=INTEGER},
       </if>
@@ -147,6 +173,21 @@
       <if test="totalReceived != null" >
         #{totalReceived,jdbcType=DECIMAL},
       </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mgmtFee != null" >
+        #{mgmtFee,jdbcType=DECIMAL},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.distribution.dao.dividendHistory.model.DividendHistoryExample" resultType="java.lang.Integer" >
@@ -159,22 +200,37 @@
     update dividend_history
     <set >
       <if test="record.id != null" >
-        "id" = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.dividendId != null" >
-        "dividend_id" = #{record.dividendId,jdbcType=INTEGER},
+        dividend_id = #{record.dividendId,jdbcType=INTEGER},
       </if>
       <if test="record.receivedTime != null" >
-        "received_time" = #{record.receivedTime,jdbcType=TIMESTAMP},
+        received_time = #{record.receivedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.devidendCount != null" >
-        "devidend_count" = #{record.devidendCount,jdbcType=INTEGER},
+        devidend_count = #{record.devidendCount,jdbcType=INTEGER},
       </if>
       <if test="record.amount != null" >
-        "amount" = #{record.amount,jdbcType=DECIMAL},
+        amount = #{record.amount,jdbcType=DECIMAL},
       </if>
       <if test="record.totalReceived != null" >
-        "total_received" = #{record.totalReceived,jdbcType=DECIMAL},
+        total_received = #{record.totalReceived,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mgmtFee != null" >
+        mgmt_fee = #{record.mgmtFee,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -183,12 +239,17 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update dividend_history
-    set "id" = #{record.id,jdbcType=INTEGER},
-      "dividend_id" = #{record.dividendId,jdbcType=INTEGER},
-      "received_time" = #{record.receivedTime,jdbcType=TIMESTAMP},
-      "devidend_count" = #{record.devidendCount,jdbcType=INTEGER},
-      "amount" = #{record.amount,jdbcType=DECIMAL},
-      "total_received" = #{record.totalReceived,jdbcType=DECIMAL}
+    set id = #{record.id,jdbcType=INTEGER},
+      dividend_id = #{record.dividendId,jdbcType=INTEGER},
+      received_time = #{record.receivedTime,jdbcType=TIMESTAMP},
+      devidend_count = #{record.devidendCount,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      total_received = #{record.totalReceived,jdbcType=DECIMAL},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      mgmt_fee = #{record.mgmtFee,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,30 +258,50 @@
     update dividend_history
     <set >
       <if test="dividendId != null" >
-        "dividend_id" = #{dividendId,jdbcType=INTEGER},
+        dividend_id = #{dividendId,jdbcType=INTEGER},
       </if>
       <if test="receivedTime != null" >
-        "received_time" = #{receivedTime,jdbcType=TIMESTAMP},
+        received_time = #{receivedTime,jdbcType=TIMESTAMP},
       </if>
       <if test="devidendCount != null" >
-        "devidend_count" = #{devidendCount,jdbcType=INTEGER},
+        devidend_count = #{devidendCount,jdbcType=INTEGER},
       </if>
       <if test="amount != null" >
-        "amount" = #{amount,jdbcType=DECIMAL},
+        amount = #{amount,jdbcType=DECIMAL},
       </if>
       <if test="totalReceived != null" >
-        "total_received" = #{totalReceived,jdbcType=DECIMAL},
+        total_received = #{totalReceived,jdbcType=DECIMAL},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mgmtFee != null" >
+        mgmt_fee = #{mgmtFee,jdbcType=DECIMAL},
       </if>
     </set>
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
     update dividend_history
-    set "dividend_id" = #{dividendId,jdbcType=INTEGER},
-      "received_time" = #{receivedTime,jdbcType=TIMESTAMP},
-      "devidend_count" = #{devidendCount,jdbcType=INTEGER},
-      "amount" = #{amount,jdbcType=DECIMAL},
-      "total_received" = #{totalReceived,jdbcType=DECIMAL}
-    where "id" = #{id,jdbcType=INTEGER}
+    set dividend_id = #{dividendId,jdbcType=INTEGER},
+      received_time = #{receivedTime,jdbcType=TIMESTAMP},
+      devidend_count = #{devidendCount,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      total_received = #{totalReceived,jdbcType=DECIMAL},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      mgmt_fee = #{mgmtFee,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

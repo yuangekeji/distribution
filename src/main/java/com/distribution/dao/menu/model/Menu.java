@@ -1,17 +1,15 @@
 package com.distribution.dao.menu.model;
 
-import java.io.Serializable;
-
-public class Menu implements Serializable {
+public class Menu {
     private Integer id;
+
+    private Integer no;
 
     private String name;
 
-    private String parentMenu;
+    private Integer parentMenu;
 
     private String menuLink;
-
-    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -19,6 +17,14 @@ public class Menu implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getNo() {
+        return no;
+    }
+
+    public void setNo(Integer no) {
+        this.no = no;
     }
 
     public String getName() {
@@ -29,12 +35,12 @@ public class Menu implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getParentMenu() {
+    public Integer getParentMenu() {
         return parentMenu;
     }
 
-    public void setParentMenu(String parentMenu) {
-        this.parentMenu = parentMenu == null ? null : parentMenu.trim();
+    public void setParentMenu(Integer parentMenu) {
+        this.parentMenu = parentMenu;
     }
 
     public String getMenuLink() {

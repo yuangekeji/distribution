@@ -77,15 +77,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "id", "member_id", "bank_name", "card_no", "card_name", "req_amt", "act_amt", "fee_amt", 
-    "request_date", "approve_date", "statues", "create_id", "create_time", "update_id", 
-    "update_time"
+    id, member_id, bank_name, card_no, card_name, req_amt, act_amt, fee_amt, request_date, 
+    approve_date, statues, create_id, create_time, update_id, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.advance.model.AdvanceExample" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from advance
     <if test="_parameter != null" >
@@ -99,11 +99,11 @@
     select 
     <include refid="Base_Column_List" />
     from advance
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from advance
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.distribution.dao.advance.model.AdvanceExample" >
     delete from advance
@@ -112,70 +112,72 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.advance.model.Advance" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
-    insert into advance ("member_id", "bank_name", "card_no", 
-      "card_name", "req_amt", "act_amt", 
-      "fee_amt", "request_date", "approve_date", 
-      "statues", "create_id", "create_time", 
-      "update_id", "update_time")
-    values (#{memberId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, 
-      #{cardName,jdbcType=VARCHAR}, #{reqAmt,jdbcType=DECIMAL}, #{actAmt,jdbcType=DECIMAL}, 
-      #{feeAmt,jdbcType=DECIMAL}, #{requestDate,jdbcType=DATE}, #{approveDate,jdbcType=DATE}, 
-      #{statues,jdbcType=CHAR}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into advance (id, member_id, bank_name, 
+      card_no, card_name, req_amt, 
+      act_amt, fee_amt, request_date, 
+      approve_date, statues, create_id, 
+      create_time, update_id, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, 
+      #{cardNo,jdbcType=VARCHAR}, #{cardName,jdbcType=VARCHAR}, #{reqAmt,jdbcType=DECIMAL}, 
+      #{actAmt,jdbcType=DECIMAL}, #{feeAmt,jdbcType=DECIMAL}, #{requestDate,jdbcType=DATE}, 
+      #{approveDate,jdbcType=DATE}, #{statues,jdbcType=CHAR}, #{createId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.advance.model.Advance" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
     insert into advance
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="memberId != null" >
-        "member_id",
+        member_id,
       </if>
       <if test="bankName != null" >
-        "bank_name",
+        bank_name,
       </if>
       <if test="cardNo != null" >
-        "card_no",
+        card_no,
       </if>
       <if test="cardName != null" >
-        "card_name",
+        card_name,
       </if>
       <if test="reqAmt != null" >
-        "req_amt",
+        req_amt,
       </if>
       <if test="actAmt != null" >
-        "act_amt",
+        act_amt,
       </if>
       <if test="feeAmt != null" >
-        "fee_amt",
+        fee_amt,
       </if>
       <if test="requestDate != null" >
-        "request_date",
+        request_date,
       </if>
       <if test="approveDate != null" >
-        "approve_date",
+        approve_date,
       </if>
       <if test="statues != null" >
-        "statues",
+        statues,
       </if>
       <if test="createId != null" >
-        "create_id",
+        create_id,
       </if>
       <if test="createTime != null" >
-        "create_time",
+        create_time,
       </if>
       <if test="updateId != null" >
-        "update_id",
+        update_id,
       </if>
       <if test="updateTime != null" >
-        "update_time",
+        update_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="memberId != null" >
         #{memberId,jdbcType=INTEGER},
       </if>
@@ -230,49 +232,49 @@
     update advance
     <set >
       <if test="record.id != null" >
-        "id" = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.memberId != null" >
-        "member_id" = #{record.memberId,jdbcType=INTEGER},
+        member_id = #{record.memberId,jdbcType=INTEGER},
       </if>
       <if test="record.bankName != null" >
-        "bank_name" = #{record.bankName,jdbcType=VARCHAR},
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
       </if>
       <if test="record.cardNo != null" >
-        "card_no" = #{record.cardNo,jdbcType=VARCHAR},
+        card_no = #{record.cardNo,jdbcType=VARCHAR},
       </if>
       <if test="record.cardName != null" >
-        "card_name" = #{record.cardName,jdbcType=VARCHAR},
+        card_name = #{record.cardName,jdbcType=VARCHAR},
       </if>
       <if test="record.reqAmt != null" >
-        "req_amt" = #{record.reqAmt,jdbcType=DECIMAL},
+        req_amt = #{record.reqAmt,jdbcType=DECIMAL},
       </if>
       <if test="record.actAmt != null" >
-        "act_amt" = #{record.actAmt,jdbcType=DECIMAL},
+        act_amt = #{record.actAmt,jdbcType=DECIMAL},
       </if>
       <if test="record.feeAmt != null" >
-        "fee_amt" = #{record.feeAmt,jdbcType=DECIMAL},
+        fee_amt = #{record.feeAmt,jdbcType=DECIMAL},
       </if>
       <if test="record.requestDate != null" >
-        "request_date" = #{record.requestDate,jdbcType=DATE},
+        request_date = #{record.requestDate,jdbcType=DATE},
       </if>
       <if test="record.approveDate != null" >
-        "approve_date" = #{record.approveDate,jdbcType=DATE},
+        approve_date = #{record.approveDate,jdbcType=DATE},
       </if>
       <if test="record.statues != null" >
-        "statues" = #{record.statues,jdbcType=CHAR},
+        statues = #{record.statues,jdbcType=CHAR},
       </if>
       <if test="record.createId != null" >
-        "create_id" = #{record.createId,jdbcType=INTEGER},
+        create_id = #{record.createId,jdbcType=INTEGER},
       </if>
       <if test="record.createTime != null" >
-        "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateId != null" >
-        "update_id" = #{record.updateId,jdbcType=INTEGER},
+        update_id = #{record.updateId,jdbcType=INTEGER},
       </if>
       <if test="record.updateTime != null" >
-        "update_time" = #{record.updateTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -281,21 +283,21 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update advance
-    set "id" = #{record.id,jdbcType=INTEGER},
-      "member_id" = #{record.memberId,jdbcType=INTEGER},
-      "bank_name" = #{record.bankName,jdbcType=VARCHAR},
-      "card_no" = #{record.cardNo,jdbcType=VARCHAR},
-      "card_name" = #{record.cardName,jdbcType=VARCHAR},
-      "req_amt" = #{record.reqAmt,jdbcType=DECIMAL},
-      "act_amt" = #{record.actAmt,jdbcType=DECIMAL},
-      "fee_amt" = #{record.feeAmt,jdbcType=DECIMAL},
-      "request_date" = #{record.requestDate,jdbcType=DATE},
-      "approve_date" = #{record.approveDate,jdbcType=DATE},
-      "statues" = #{record.statues,jdbcType=CHAR},
-      "create_id" = #{record.createId,jdbcType=INTEGER},
-      "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{record.updateId,jdbcType=INTEGER},
-      "update_time" = #{record.updateTime,jdbcType=TIMESTAMP}
+    set id = #{record.id,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      card_no = #{record.cardNo,jdbcType=VARCHAR},
+      card_name = #{record.cardName,jdbcType=VARCHAR},
+      req_amt = #{record.reqAmt,jdbcType=DECIMAL},
+      act_amt = #{record.actAmt,jdbcType=DECIMAL},
+      fee_amt = #{record.feeAmt,jdbcType=DECIMAL},
+      request_date = #{record.requestDate,jdbcType=DATE},
+      approve_date = #{record.approveDate,jdbcType=DATE},
+      statues = #{record.statues,jdbcType=CHAR},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -304,66 +306,66 @@
     update advance
     <set >
       <if test="memberId != null" >
-        "member_id" = #{memberId,jdbcType=INTEGER},
+        member_id = #{memberId,jdbcType=INTEGER},
       </if>
       <if test="bankName != null" >
-        "bank_name" = #{bankName,jdbcType=VARCHAR},
+        bank_name = #{bankName,jdbcType=VARCHAR},
       </if>
       <if test="cardNo != null" >
-        "card_no" = #{cardNo,jdbcType=VARCHAR},
+        card_no = #{cardNo,jdbcType=VARCHAR},
       </if>
       <if test="cardName != null" >
-        "card_name" = #{cardName,jdbcType=VARCHAR},
+        card_name = #{cardName,jdbcType=VARCHAR},
       </if>
       <if test="reqAmt != null" >
-        "req_amt" = #{reqAmt,jdbcType=DECIMAL},
+        req_amt = #{reqAmt,jdbcType=DECIMAL},
       </if>
       <if test="actAmt != null" >
-        "act_amt" = #{actAmt,jdbcType=DECIMAL},
+        act_amt = #{actAmt,jdbcType=DECIMAL},
       </if>
       <if test="feeAmt != null" >
-        "fee_amt" = #{feeAmt,jdbcType=DECIMAL},
+        fee_amt = #{feeAmt,jdbcType=DECIMAL},
       </if>
       <if test="requestDate != null" >
-        "request_date" = #{requestDate,jdbcType=DATE},
+        request_date = #{requestDate,jdbcType=DATE},
       </if>
       <if test="approveDate != null" >
-        "approve_date" = #{approveDate,jdbcType=DATE},
+        approve_date = #{approveDate,jdbcType=DATE},
       </if>
       <if test="statues != null" >
-        "statues" = #{statues,jdbcType=CHAR},
+        statues = #{statues,jdbcType=CHAR},
       </if>
       <if test="createId != null" >
-        "create_id" = #{createId,jdbcType=INTEGER},
+        create_id = #{createId,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        "create_time" = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateId != null" >
-        "update_id" = #{updateId,jdbcType=INTEGER},
+        update_id = #{updateId,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
-        "update_time" = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.distribution.dao.advance.model.Advance" >
     update advance
-    set "member_id" = #{memberId,jdbcType=INTEGER},
-      "bank_name" = #{bankName,jdbcType=VARCHAR},
-      "card_no" = #{cardNo,jdbcType=VARCHAR},
-      "card_name" = #{cardName,jdbcType=VARCHAR},
-      "req_amt" = #{reqAmt,jdbcType=DECIMAL},
-      "act_amt" = #{actAmt,jdbcType=DECIMAL},
-      "fee_amt" = #{feeAmt,jdbcType=DECIMAL},
-      "request_date" = #{requestDate,jdbcType=DATE},
-      "approve_date" = #{approveDate,jdbcType=DATE},
-      "statues" = #{statues,jdbcType=CHAR},
-      "create_id" = #{createId,jdbcType=INTEGER},
-      "create_time" = #{createTime,jdbcType=TIMESTAMP},
-      "update_id" = #{updateId,jdbcType=INTEGER},
-      "update_time" = #{updateTime,jdbcType=TIMESTAMP}
-    where "id" = #{id,jdbcType=INTEGER}
+    set member_id = #{memberId,jdbcType=INTEGER},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      card_no = #{cardNo,jdbcType=VARCHAR},
+      card_name = #{cardName,jdbcType=VARCHAR},
+      req_amt = #{reqAmt,jdbcType=DECIMAL},
+      act_amt = #{actAmt,jdbcType=DECIMAL},
+      fee_amt = #{feeAmt,jdbcType=DECIMAL},
+      request_date = #{requestDate,jdbcType=DATE},
+      approve_date = #{approveDate,jdbcType=DATE},
+      statues = #{statues,jdbcType=CHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

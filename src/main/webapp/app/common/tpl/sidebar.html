@@ -8,93 +8,24 @@
     <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
     <ul class="page-sidebar-menu  page-header-fixed page-sidebar-menu-hover-submenu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
         <li class="start">
-            <a ui-sref="dashboard">
+            <a ui-sref="app.home">
                 <i class="icon-home"></i>
-                <span class="title">Dashboard</span>
+                <span class="title">主页</span>
             </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" ng-repeat="row in firstMenu">
             <a href="javascript:;" class="nav-link nav-toggle">
                 <i class="icon-settings"></i>
-                <span class="title">AngularJS Features</span>
+                <span class="title">{{row.name}}</span>
                 <span class="arrow "></span>
             </a>
             <ul class="sub-menu">
-                <li>
-                    <a ui-sref="app.recommend">
-                        <i class="icon-puzzle"></i> 报单</span>
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="fileupload">
-                        <i class="icon-paper-clip"></i> File Upload</span>
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="uiselect">
-                        <i class="icon-check"></i> UI Select</span>
+                <li ng-repeat="second in secondMenu" ng-if="second.parentMenu == row.id">
+                    <a ui-sref="{{second.menuLink}}">
+                        <i class="icon-puzzle"></i> {{second.name}}</span>
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="nav-item">
-            <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-wrench"></i>
-                <span class="title">jQuery Plugins</span>
-                <span class="arrow "></span>
-            </a>
-            <ul class="sub-menu">
-                <li>
-                    <a ui-sref="formtools">
-                        <i class="icon-puzzle"></i> Form Tools </a>
-                </li>
-                <li>
-                    <a ui-sref="pickers">
-                        <i class="icon-calendar"></i> Date & Time Pickers </a>
-                </li>
-                <li>
-                    <a ui-sref="dropdowns">
-                        <i class="icon-refresh"></i> Custom Dropdowns </a>
-                </li>
-                <li>
-                    <a ui-sref="tree">
-                        <i class="icon-share"></i> Tree View </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:;" class="nav-link nav-toggle">
-                        <i class="icon-briefcase"></i> Datatables
-                        <span class="arrow "></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a ui-sref="datatablesadvanced">
-                                <i class="icon-tag"></i> Managed Datatables </a>
-                        </li>
-                        <li>
-                            <a ui-sref="datatablesajax">
-                                <i class="icon-refresh"></i> Ajax Datatables </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a ui-sref="profile.dashboard" id="sidebar_menu_link_profile">
-                <i class="icon-user"></i>
-                <span class="title">User Profile</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a ui-sref="todo">
-                <i class="icon-check"></i>
-                <span class="title">Task & Todo</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a ui-sref="blank">
-                <i class="icon-refresh"></i>
-                <span class="title">Blank Page</span>
-            </a>
         </li>
     </ul>
     <!-- END SIDEBAR MENU -->

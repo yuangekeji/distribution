@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.roleMenu.mapper.more.MoreRoleMenuMapper" >
+
+  <select id="selectMenusByRoleId" resultType="com.distribution.dao.menu.model.Menu" parameterType="java.lang.String" >
+     select
+         id ,
+         no ,
+         name,
+         parent_menu as parentMenu,
+         menu_link as menuLink
+     from menu t1
+     where  exists (select 1 from role_menu t2 where t2.role_id = #{roleId} and t1.id = t2.menu_id)
+     order by no
+  </select>
+
+</mapper>

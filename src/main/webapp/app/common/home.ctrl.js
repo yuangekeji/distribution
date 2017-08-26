@@ -12,9 +12,7 @@ angular.module('home').controller('homeCtrl', function ($scope, $http, title, $s
     });
 
     $scope.currentUser = $sessionStorage.currentUser;
-    if($scope.currentUser){
-        $state.go("");
-    }
+
     $scope.alertDemo = function () {
         $.alert('这是alert弹窗');
     };

@@ -1,15 +1,11 @@
 package com.distribution.dao.basicManage.model;
 
-import java.io.Serializable;
-
-public class BasicManageKey implements Serializable {
+public class BasicManageKey {
     private String detailCode;
 
     private Integer id;
 
     private String typeCode;
-
-    private static final long serialVersionUID = 1L;
 
     public String getDetailCode() {
         return detailCode;

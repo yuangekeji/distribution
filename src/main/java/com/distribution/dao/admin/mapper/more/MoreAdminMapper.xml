@@ -6,8 +6,9 @@
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="role_id"  property="roleId" jdbcType="INTEGER" />
   </resultMap>
   <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
-    SELECT id,mobile,name,password FROM admin WHERE mobile = #{userName} AND password = #{password}
+    SELECT id,mobile,name,role_id FROM admin WHERE mobile = #{userName} AND password = #{password}
   </select>
 </mapper>

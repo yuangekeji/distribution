@@ -34,8 +34,7 @@ public class RoleController extends BasicController {
     @ResponseBody
     public Map<String, Object> getCurrentUserRole(HttpSession session) {
         Map<String, Object> result = new HashMap<String, Object>();
-        result.put("CurrentRole", session.getAttribute(Constant.SESSION_CURRENT_ROLE));
-        result.put("CurrentUser", session.getAttribute(Constant.SESSION_CURRENT_USER));
+        result.put("currentUser", session.getAttribute(Constant.SESSION_CURRENT_USER));
         return result;
     }
 

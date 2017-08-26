@@ -56,19 +56,6 @@ angular.module('admin',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
-    $scope.ctx = window['ctx'];
-
-    // $http.get(ctx + '/member/getUserFromSession').success(function (res) {
-    //         if (res.successful) {
-    //         $sessionStorage.currentUser = res.data;
-    //     }
-
-
-    //
-    // }).error(function (error) {
-    //     alert('用户获取失败');
-    // });
-
 
     /*Model中$watch函数影响变量用于记录当前页面是否改变过内容并没保存*/
         var _preventNavigation = false;
@@ -175,32 +162,42 @@ App.controller('HeaderController', ['$scope', function($scope) {
 }]);
 
 /* Setup Layout Part - Sidebar */
-App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', function($state, $scope,$rootScope,$http) {
+App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', '$sessionStorage',function($state, $scope,$rootScope,$http,$sessionStorage) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initSidebar($state); // init sidebar
     });
     $scope.onInit = function () {
 
-        $http.get(ctx + '/menu/getMenuByRoleId?roleId=2').success(function (res) {
-            $rootScope.menu = res.data.menus;
-            // console.info($rootScope.menu );
-            $scope.firstMenu = [];
+        $scope.ctx = window['ctx'];
 
-            angular.forEach($rootScope.menu,function (menu,index) {
-                if(menu.parentMenu ==0){
-                    $scope.firstMenu.push(menu);
-                }
-            })
+        $http.get(ctx + '/role/getUserRole').success(function (res) {
+                $sessionStorage.currentUser = res.currentUser;
 
-            $scope.secondMenu =[];
+                $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
 
-            angular.forEach($rootScope.menu,function (menu,index) {
-                if(menu.parentMenu > 0){
-                    $scope.secondMenu.push(menu);
-                }
-            })
-        })
+                    $rootScope.menu = res.data.menus;
 
+                    // console.info($rootScope.menu );
+                    $scope.firstMenu = [];
+
+                    angular.forEach($rootScope.menu,function (menu,index) {
+                        if(menu.parentMenu ==0){
+                            $scope.firstMenu.push(menu);
+                        }
+                    })
+
+                    $scope.secondMenu =[];
+
+                    angular.forEach($rootScope.menu,function (menu,index) {
+                        if(menu.parentMenu > 0){
+                            $scope.secondMenu.push(menu);
+                        }
+                    })
+                })
+
+        }).error(function (error) {
+            alert('用户获取失败');
+        });
 
         // console.info($scope.firstMenu);
         // console.info($scope.secondMenu);

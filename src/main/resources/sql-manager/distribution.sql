@@ -486,3 +486,11 @@ CREATE TABLE `transfer` (
 -- ----------------------------
 -- Records of transfer
 -- ----------------------------
+
+
+-- ----------------------------
+-- jingxin 8.26.14:44
+-- ----------------------------
+
+insert into role_menu values (1,27);
+update menu set menu_link = 'app.account' where id = 27;

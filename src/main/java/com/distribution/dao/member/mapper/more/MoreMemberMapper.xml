@@ -13,14 +13,28 @@
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
     <result column="ID_number" property="idNumber" jdbcType="VARCHAR" />
     <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="member_post" property="memberPost" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="money_status" property="moneyStatus" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_user_name" property="bankUserName" jdbcType="VARCHAR" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="is_operator" property="isOperator" jdbcType="VARCHAR" />
+    <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
+    <result column="first_agent_cnt" property="firstAgentCnt" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, member_phone, login_password, query_password, pay_password, recommend_id,
+    id, member_phone, recommend_id,
     node_id, member_name, member_level, ID_number, express_address, create_time,
-    status, delete_flag
+    status, delete_flag,role_id
   </sql>
   <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{userName} AND login_password = #{password}

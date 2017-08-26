@@ -2,7 +2,7 @@ package com.distribution.dao.memberLevel.model;
 
 import java.math.BigDecimal;
 
-public class memberLevel extends memberLevelKey {
+public class MemberLevel extends MemberLevelKey {
     private BigDecimal buyAmt;
 
     private Integer buyQty;

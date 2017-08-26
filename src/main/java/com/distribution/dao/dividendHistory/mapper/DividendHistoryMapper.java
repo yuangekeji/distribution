@@ -1,30 +1,30 @@
 package com.distribution.dao.dividendHistory.mapper;
 
-import com.distribution.dao.dividendHistory.model.dividendHistory;
-import com.distribution.dao.dividendHistory.model.dividendHistoryExample;
+import com.distribution.dao.dividendHistory.model.DividendHistory;
+import com.distribution.dao.dividendHistory.model.DividendHistoryExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface dividendHistoryMapper {
-    int countByExample(dividendHistoryExample example);
+public interface DividendHistoryMapper {
+    int countByExample(DividendHistoryExample example);
 
-    int deleteByExample(dividendHistoryExample example);
+    int deleteByExample(DividendHistoryExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(dividendHistory record);
+    int insert(DividendHistory record);
 
-    int insertSelective(dividendHistory record);
+    int insertSelective(DividendHistory record);
 
-    List<dividendHistory> selectByExample(dividendHistoryExample example);
+    List<DividendHistory> selectByExample(DividendHistoryExample example);
 
-    dividendHistory selectByPrimaryKey(Integer id);
+    DividendHistory selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") dividendHistory record, @Param("example") dividendHistoryExample example);
+    int updateByExampleSelective(@Param("record") DividendHistory record, @Param("example") DividendHistoryExample example);
 
-    int updateByExample(@Param("record") dividendHistory record, @Param("example") dividendHistoryExample example);
+    int updateByExample(@Param("record") DividendHistory record, @Param("example") DividendHistoryExample example);
 
-    int updateByPrimaryKeySelective(dividendHistory record);
+    int updateByPrimaryKeySelective(DividendHistory record);
 
-    int updateByPrimaryKey(dividendHistory record);
+    int updateByPrimaryKey(DividendHistory record);
 }

@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class dateBonusHistoryExample {
+public class DateBonusHistoryExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public dateBonusHistoryExample() {
+    public DateBonusHistoryExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

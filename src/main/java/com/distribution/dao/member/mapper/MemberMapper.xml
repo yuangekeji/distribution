@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.distribution.dao.member.mapper.memberMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.member.model.member" >
+<mapper namespace="com.distribution.dao.member.mapper.MemberMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.member.model.Member" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
     <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
@@ -96,7 +96,7 @@
     money_status, bank_name, bank_user_name, card_number, is_operator, is_sales_dept, 
     first_agent_cnt
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.member.model.memberExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.member.model.MemberExample" >
     select
     <if test="distinct" >
       distinct
@@ -121,13 +121,13 @@
     delete from member
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.member.model.memberExample" >
+  <delete id="deleteByExample" parameterType="com.distribution.dao.member.model.MemberExample" >
     delete from member
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.member.model.member" >
+  <insert id="insert" parameterType="com.distribution.dao.member.model.Member" >
     insert into member (id, member_phone, login_password, 
       query_password, pay_password, recommend_id, 
       node_id, member_name, member_level, 
@@ -149,7 +149,7 @@
       #{cardNumber,jdbcType=VARCHAR}, #{isOperator,jdbcType=VARCHAR}, #{isSalesDept,jdbcType=VARCHAR}, 
       #{firstAgentCnt,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.member.model.member" >
+  <insert id="insertSelective" parameterType="com.distribution.dao.member.model.Member" >
     insert into member
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -324,7 +324,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.member.model.memberExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.distribution.dao.member.model.MemberExample" resultType="java.lang.Integer" >
     select count(*) from member
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -456,7 +456,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.member.model.member" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.member.model.Member" >
     update member
     <set >
       <if test="memberPhone != null" >
@@ -543,7 +543,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.member.model.member" >
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.member.model.Member" >
     update member
     set member_phone = #{memberPhone,jdbcType=VARCHAR},
       login_password = #{loginPassword,jdbcType=VARCHAR},

@@ -1,22 +1,22 @@
 package com.distribution.dao.roleMenu.mapper;
 
-import com.distribution.dao.roleMenu.model.roleMenu;
-import com.distribution.dao.roleMenu.model.roleMenuExample;
+import com.distribution.dao.roleMenu.model.RoleMenu;
+import com.distribution.dao.roleMenu.model.RoleMenuExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface roleMenuMapper {
-    int countByExample(roleMenuExample example);
+public interface RoleMenuMapper {
+    int countByExample(RoleMenuExample example);
 
-    int deleteByExample(roleMenuExample example);
+    int deleteByExample(RoleMenuExample example);
 
-    int insert(roleMenu record);
+    int insert(RoleMenu record);
 
-    int insertSelective(roleMenu record);
+    int insertSelective(RoleMenu record);
 
-    List<roleMenu> selectByExample(roleMenuExample example);
+    List<RoleMenu> selectByExample(RoleMenuExample example);
 
-    int updateByExampleSelective(@Param("record") roleMenu record, @Param("example") roleMenuExample example);
+    int updateByExampleSelective(@Param("record") RoleMenu record, @Param("example") RoleMenuExample example);
 
-    int updateByExample(@Param("record") roleMenu record, @Param("example") roleMenuExample example);
+    int updateByExample(@Param("record") RoleMenu record, @Param("example") RoleMenuExample example);
 }

@@ -6,14 +6,14 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class advanceExample {
+public class AdvanceExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public advanceExample() {
+    public AdvanceExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

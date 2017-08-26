@@ -1,6 +1,6 @@
 package com.distribution.dao.roleMenu.model;
 
-public class roleMenu {
+public class RoleMenu {
     private Integer roleId;
 
     private Integer menuId;

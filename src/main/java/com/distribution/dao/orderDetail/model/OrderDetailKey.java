@@ -1,6 +1,6 @@
 package com.distribution.dao.orderDetail.model;
 
-public class orderDetailKey {
+public class OrderDetailKey {
     private String goodsCd;
 
     private Integer id;

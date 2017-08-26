@@ -3,14 +3,14 @@ package com.distribution.dao.menu.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class menuExample {
+public class MenuExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public menuExample() {
+    public MenuExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

@@ -3,7 +3,7 @@ package com.distribution.dao.goods.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class goods {
+public class Goods {
     private Integer id;
 
     private String goodsName;

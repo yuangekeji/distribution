@@ -3,7 +3,7 @@ package com.distribution.dao.orderDetail.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class orderDetail extends orderDetailKey {
+public class OrderDetail extends OrderDetailKey {
     private BigDecimal orderAmt;
 
     private Integer orderQty;

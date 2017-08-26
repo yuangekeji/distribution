@@ -2,7 +2,7 @@ package com.distribution.dao.admin.model;
 
 import java.util.Date;
 
-public class admin {
+public class Admin {
     private Integer id;
 
     private String mobile;

@@ -1,30 +1,30 @@
 package com.distribution.dao.role.mapper;
 
-import com.distribution.dao.role.model.role;
-import com.distribution.dao.role.model.roleExample;
+import com.distribution.dao.role.model.Role;
+import com.distribution.dao.role.model.RoleExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface roleMapper {
-    int countByExample(roleExample example);
+public interface RoleMapper {
+    int countByExample(RoleExample example);
 
-    int deleteByExample(roleExample example);
+    int deleteByExample(RoleExample example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(role record);
+    int insert(Role record);
 
-    int insertSelective(role record);
+    int insertSelective(Role record);
 
-    List<role> selectByExample(roleExample example);
+    List<Role> selectByExample(RoleExample example);
 
-    role selectByPrimaryKey(Integer id);
+    Role selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") role record, @Param("example") roleExample example);
+    int updateByExampleSelective(@Param("record") Role record, @Param("example") RoleExample example);
 
-    int updateByExample(@Param("record") role record, @Param("example") roleExample example);
+    int updateByExample(@Param("record") Role record, @Param("example") RoleExample example);
 
-    int updateByPrimaryKeySelective(role record);
+    int updateByPrimaryKeySelective(Role record);
 
-    int updateByPrimaryKey(role record);
+    int updateByPrimaryKey(Role record);
 }

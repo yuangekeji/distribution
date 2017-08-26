@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.distribution.dao.memberLevel.mapper.memberLevelMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.memberLevel.model.memberLevel" >
+<mapper namespace="com.distribution.dao.memberLevel.mapper.MemberLevelMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.memberLevel.model.MemberLevel" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <id column="level_category" property="levelCategory" jdbcType="INTEGER" />
     <result column="buy_amt" property="buyAmt" jdbcType="DECIMAL" />
@@ -75,7 +75,7 @@
     id, level_category, buy_amt, buy_qty, devidend_cnt, sales_bonus_per, sales_bonus_per1, 
     sales_bonus_per2, profit_per, discount
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberLevel.model.memberLevelExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberLevel.model.MemberLevelExample" >
     select
     <if test="distinct" >
       distinct
@@ -90,25 +90,25 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberLevel.model.memberLevelKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberLevel.model.MemberLevelKey" >
     select 
     <include refid="Base_Column_List" />
     from member_level
     where id = #{id,jdbcType=INTEGER}
       and level_category = #{levelCategory,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="com.distribution.dao.memberLevel.model.memberLevelKey" >
+  <delete id="deleteByPrimaryKey" parameterType="com.distribution.dao.memberLevel.model.MemberLevelKey" >
     delete from member_level
     where id = #{id,jdbcType=INTEGER}
       and level_category = #{levelCategory,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.memberLevel.model.memberLevelExample" >
+  <delete id="deleteByExample" parameterType="com.distribution.dao.memberLevel.model.MemberLevelExample" >
     delete from member_level
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.memberLevel.model.memberLevel" >
+  <insert id="insert" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
     insert into member_level (id, level_category, buy_amt, 
       buy_qty, devidend_cnt, sales_bonus_per, 
       sales_bonus_per1, sales_bonus_per2, profit_per, 
@@ -118,7 +118,7 @@
       #{salesBonusPer1,jdbcType=DECIMAL}, #{salesBonusPer2,jdbcType=DECIMAL}, #{profitPer,jdbcType=DECIMAL}, 
       #{discount,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.memberLevel.model.memberLevel" >
+  <insert id="insertSelective" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
     insert into member_level
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -185,7 +185,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.memberLevel.model.memberLevelExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.distribution.dao.memberLevel.model.MemberLevelExample" resultType="java.lang.Integer" >
     select count(*) from member_level
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -245,7 +245,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.memberLevel.model.memberLevel" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
     update member_level
     <set >
       <if test="buyAmt != null" >
@@ -276,7 +276,7 @@
     where id = #{id,jdbcType=INTEGER}
       and level_category = #{levelCategory,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.memberLevel.model.memberLevel" >
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.memberLevel.model.MemberLevel" >
     update member_level
     set buy_amt = #{buyAmt,jdbcType=DECIMAL},
       buy_qty = #{buyQty,jdbcType=INTEGER},

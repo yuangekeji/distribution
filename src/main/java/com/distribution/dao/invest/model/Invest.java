@@ -3,7 +3,7 @@ package com.distribution.dao.invest.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class invest {
+public class Invest {
     private Integer id;
 
     private Integer memberId;

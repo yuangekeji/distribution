@@ -1,31 +1,31 @@
 package com.distribution.dao.basicManage.mapper;
 
-import com.distribution.dao.basicManage.model.basicManage;
-import com.distribution.dao.basicManage.model.basicManageExample;
-import com.distribution.dao.basicManage.model.basicManageKey;
+import com.distribution.dao.basicManage.model.BasicManage;
+import com.distribution.dao.basicManage.model.BasicManageExample;
+import com.distribution.dao.basicManage.model.BasicManageKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface basicManageMapper {
-    int countByExample(basicManageExample example);
+public interface BasicManageMapper {
+    int countByExample(BasicManageExample example);
 
-    int deleteByExample(basicManageExample example);
+    int deleteByExample(BasicManageExample example);
 
-    int deleteByPrimaryKey(basicManageKey key);
+    int deleteByPrimaryKey(BasicManageKey key);
 
-    int insert(basicManage record);
+    int insert(BasicManage record);
 
-    int insertSelective(basicManage record);
+    int insertSelective(BasicManage record);
 
-    List<basicManage> selectByExample(basicManageExample example);
+    List<BasicManage> selectByExample(BasicManageExample example);
 
-    basicManage selectByPrimaryKey(basicManageKey key);
+    BasicManage selectByPrimaryKey(BasicManageKey key);
 
-    int updateByExampleSelective(@Param("record") basicManage record, @Param("example") basicManageExample example);
+    int updateByExampleSelective(@Param("record") BasicManage record, @Param("example") BasicManageExample example);
 
-    int updateByExample(@Param("record") basicManage record, @Param("example") basicManageExample example);
+    int updateByExample(@Param("record") BasicManage record, @Param("example") BasicManageExample example);
 
-    int updateByPrimaryKeySelective(basicManage record);
+    int updateByPrimaryKeySelective(BasicManage record);
 
-    int updateByPrimaryKey(basicManage record);
+    int updateByPrimaryKey(BasicManage record);
 }

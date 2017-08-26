@@ -1,31 +1,31 @@
 package com.distribution.dao.memberLevel.mapper;
 
-import com.distribution.dao.memberLevel.model.memberLevel;
-import com.distribution.dao.memberLevel.model.memberLevelExample;
-import com.distribution.dao.memberLevel.model.memberLevelKey;
+import com.distribution.dao.memberLevel.model.MemberLevel;
+import com.distribution.dao.memberLevel.model.MemberLevelExample;
+import com.distribution.dao.memberLevel.model.MemberLevelKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-public interface memberLevelMapper {
-    int countByExample(memberLevelExample example);
+public interface MemberLevelMapper {
+    int countByExample(MemberLevelExample example);
 
-    int deleteByExample(memberLevelExample example);
+    int deleteByExample(MemberLevelExample example);
 
-    int deleteByPrimaryKey(memberLevelKey key);
+    int deleteByPrimaryKey(MemberLevelKey key);
 
-    int insert(memberLevel record);
+    int insert(MemberLevel record);
 
-    int insertSelective(memberLevel record);
+    int insertSelective(MemberLevel record);
 
-    List<memberLevel> selectByExample(memberLevelExample example);
+    List<MemberLevel> selectByExample(MemberLevelExample example);
 
-    memberLevel selectByPrimaryKey(memberLevelKey key);
+    MemberLevel selectByPrimaryKey(MemberLevelKey key);
 
-    int updateByExampleSelective(@Param("record") memberLevel record, @Param("example") memberLevelExample example);
+    int updateByExampleSelective(@Param("record") MemberLevel record, @Param("example") MemberLevelExample example);
 
-    int updateByExample(@Param("record") memberLevel record, @Param("example") memberLevelExample example);
+    int updateByExample(@Param("record") MemberLevel record, @Param("example") MemberLevelExample example);
 
-    int updateByPrimaryKeySelective(memberLevel record);
+    int updateByPrimaryKeySelective(MemberLevel record);
 
-    int updateByPrimaryKey(memberLevel record);
+    int updateByPrimaryKey(MemberLevel record);
 }

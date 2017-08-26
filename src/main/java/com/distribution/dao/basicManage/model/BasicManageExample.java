@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class basicManageExample {
+public class BasicManageExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public basicManageExample() {
+    public BasicManageExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

@@ -1,6 +1,6 @@
 package com.distribution.dao.basicManage.model;
 
-public class basicManageKey {
+public class BasicManageKey {
     private String detailCode;
 
     private Integer id;

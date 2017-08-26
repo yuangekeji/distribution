@@ -1,6 +1,6 @@
 package com.distribution.dao.role.model;
 
-public class role {
+public class Role {
     private Integer id;
 
     private String name;

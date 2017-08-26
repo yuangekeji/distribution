@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.distribution.dao.roleMenu.mapper.roleMenuMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.roleMenu.model.roleMenu" >
+<mapper namespace="com.distribution.dao.roleMenu.mapper.RoleMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.roleMenu.model.RoleMenu" >
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="menu_id" property="menuId" jdbcType="INTEGER" />
   </resultMap>
@@ -66,7 +66,7 @@
   <sql id="Base_Column_List" >
     role_id, menu_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.roleMenu.model.roleMenuExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.roleMenu.model.RoleMenuExample" >
     select
     <if test="distinct" >
       distinct
@@ -81,17 +81,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.roleMenu.model.roleMenuExample" >
+  <delete id="deleteByExample" parameterType="com.distribution.dao.roleMenu.model.RoleMenuExample" >
     delete from role_menu
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.roleMenu.model.roleMenu" >
+  <insert id="insert" parameterType="com.distribution.dao.roleMenu.model.RoleMenu" >
     insert into role_menu (role_id, menu_id)
     values (#{roleId,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.roleMenu.model.roleMenu" >
+  <insert id="insertSelective" parameterType="com.distribution.dao.roleMenu.model.RoleMenu" >
     insert into role_menu
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
@@ -110,7 +110,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.roleMenu.model.roleMenuExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.distribution.dao.roleMenu.model.RoleMenuExample" resultType="java.lang.Integer" >
     select count(*) from role_menu
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />

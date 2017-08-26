@@ -3,7 +3,7 @@ package com.distribution.dao.basicManage.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class basicManage extends basicManageKey {
+public class BasicManage extends BasicManageKey {
     private String detailNm;
 
     private BigDecimal maxPercent;

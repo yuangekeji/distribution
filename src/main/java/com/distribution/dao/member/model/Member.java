@@ -3,7 +3,7 @@ package com.distribution.dao.member.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class member {
+public class Member {
     private Integer id;
 
     private String memberPhone;

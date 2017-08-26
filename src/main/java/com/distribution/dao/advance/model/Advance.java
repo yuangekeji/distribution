@@ -3,7 +3,7 @@ package com.distribution.dao.advance.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class advance {
+public class Advance {
     private Integer id;
 
     private Integer memberId;

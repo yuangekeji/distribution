@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.distribution.dao.admin.mapper.adminMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.admin.model.admin" >
+<mapper namespace="com.distribution.dao.admin.mapper.AdminMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.admin.model.Admin" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
   <sql id="Base_Column_List" >
     id, mobile, name, password, create_id, create_time, update_id, update_time, role_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.admin.model.adminExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.admin.model.AdminExample" >
     select
     <if test="distinct" >
       distinct
@@ -98,13 +98,13 @@
     delete from admin
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.admin.model.adminExample" >
+  <delete id="deleteByExample" parameterType="com.distribution.dao.admin.model.AdminExample" >
     delete from admin
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.admin.model.admin" >
+  <insert id="insert" parameterType="com.distribution.dao.admin.model.Admin" >
     insert into admin (id, mobile, name, 
       password, create_id, create_time, 
       update_id, update_time, role_id
@@ -114,7 +114,7 @@
       #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{roleId,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.admin.model.admin" >
+  <insert id="insertSelective" parameterType="com.distribution.dao.admin.model.Admin" >
     insert into admin
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -175,7 +175,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.admin.model.adminExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.distribution.dao.admin.model.AdminExample" resultType="java.lang.Integer" >
     select count(*) from admin
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -231,7 +231,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.admin.model.admin" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.admin.model.Admin" >
     update admin
     <set >
       <if test="mobile != null" >
@@ -261,7 +261,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.admin.model.admin" >
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.admin.model.Admin" >
     update admin
     set mobile = #{mobile,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},

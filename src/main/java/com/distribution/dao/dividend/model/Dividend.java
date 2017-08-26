@@ -3,7 +3,7 @@ package com.distribution.dao.dividend.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class dividend {
+public class Dividend {
     private Integer id;
 
     private Integer memberId;

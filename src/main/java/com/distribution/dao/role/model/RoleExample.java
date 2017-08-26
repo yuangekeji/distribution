@@ -3,14 +3,14 @@ package com.distribution.dao.role.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class roleExample {
+public class RoleExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public roleExample() {
+    public RoleExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

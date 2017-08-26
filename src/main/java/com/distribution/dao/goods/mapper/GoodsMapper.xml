@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.distribution.dao.goods.mapper.goodsMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.goods.model.goods" >
+<mapper namespace="com.distribution.dao.goods.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.goods.model.Goods" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
     <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
@@ -85,7 +85,7 @@
     product_standard, license_key, storage_conditions, quality_guarantee_period, edible_method, 
     matters_needing_attention, manufacturer, address, place_of_origin, create_time, delete_flag
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.goods.model.goodsExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.goods.model.GoodsExample" >
     select
     <if test="distinct" >
       distinct
@@ -110,13 +110,13 @@
     delete from goods
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.goods.model.goodsExample" >
+  <delete id="deleteByExample" parameterType="com.distribution.dao.goods.model.GoodsExample" >
     delete from goods
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.goods.model.goods" >
+  <insert id="insert" parameterType="com.distribution.dao.goods.model.Goods" >
     insert into goods (id, goods_name, goods_num, 
       goods_price, list_time, goods_type, 
       specifications, net_content, product_standard, 
@@ -132,7 +132,7 @@
       #{manufacturer,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{placeOfOrigin,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.goods.model.goods" >
+  <insert id="insertSelective" parameterType="com.distribution.dao.goods.model.Goods" >
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -253,7 +253,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.goods.model.goodsExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.distribution.dao.goods.model.GoodsExample" resultType="java.lang.Integer" >
     select count(*) from goods
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -349,7 +349,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.goods.model.goods" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.goods.model.Goods" >
     update goods
     <set >
       <if test="goodsName != null" >
@@ -409,7 +409,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.goods.model.goods" >
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.goods.model.Goods" >
     update goods
     set goods_name = #{goodsName,jdbcType=VARCHAR},
       goods_num = #{goodsNum,jdbcType=INTEGER},

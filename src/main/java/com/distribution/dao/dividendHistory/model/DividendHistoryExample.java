@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class dividendHistoryExample {
+public class DividendHistoryExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public dividendHistoryExample() {
+    public DividendHistoryExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

@@ -3,14 +3,14 @@ package com.distribution.dao.roleMenu.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class roleMenuExample {
+public class RoleMenuExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public roleMenuExample() {
+    public RoleMenuExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

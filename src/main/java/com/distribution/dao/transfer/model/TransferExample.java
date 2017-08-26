@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class transferExample {
+public class TransferExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public transferExample() {
+    public TransferExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

@@ -1,6 +1,6 @@
 package com.distribution.dao.memberLevel.model;
 
-public class memberLevelKey {
+public class MemberLevelKey {
     private Integer id;
 
     private Integer levelCategory;

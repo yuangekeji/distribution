@@ -3,7 +3,7 @@ package com.distribution.dao.dateBonusHistory.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class dateBonusHistory {
+public class DateBonusHistory {
     private Integer id;
 
     private Date date;

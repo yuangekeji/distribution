@@ -3,7 +3,7 @@ package com.distribution.dao.transfer.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class transfer {
+public class Transfer {
     private Integer id;
 
     private Integer memberId;

@@ -505,3 +505,9 @@ CREATE TABLE `dictionary` (
 `dic_des`  varchar(255) NULL COMMENT '字典描述' ,
 PRIMARY KEY (`id`)
 );
+INSERT INTO `dictionary` VALUES ('1', 'member_level1', '普卡(600)', 'member_level', '会员级别');
+INSERT INTO `dictionary` VALUES ('2', 'member_level2', '铜卡(1800)', 'member_level', '会员级别');
+INSERT INTO `dictionary` VALUES ('3', 'member_level3', '银卡(3000)', 'member_level', '会员级别');
+INSERT INTO `dictionary` VALUES ('4', 'member_level4', '金卡(9000)', 'member_level', '会员级别');
+INSERT INTO `dictionary` VALUES ('5', 'member_level5', '白金卡(30000)', 'member_level', '会员级别');
+INSERT INTO `dictionary` VALUES ('6', 'member_level6', '黑金卡(60000)', 'member_level', '会员级别');

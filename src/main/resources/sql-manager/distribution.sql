@@ -517,3 +517,7 @@ ALTER TABLE `member`
 MODIFY COLUMN `query_password`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '查询密码',
 MODIFY COLUMN `pay_password`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '支付密码',
 MODIFY COLUMN `node_id`  int(11) NULL COMMENT '放置节点的会员ID';
+
+--Bright 新会员给角色默认值
+ALTER TABLE `member`
+MODIFY COLUMN `role_id`  int(11) NULL DEFAULT 1 COMMENT '角色ID'

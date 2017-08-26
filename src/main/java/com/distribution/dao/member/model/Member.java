@@ -1,9 +1,9 @@
 package com.distribution.dao.member.model;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
-public class Member implements Serializable {
+public class Member {
     private Integer id;
 
     private String memberPhone;
@@ -32,7 +32,11 @@ public class Member implements Serializable {
 
     private String deleteFlag;
 
-    private static final long serialVersionUID = 1L;
+    private Integer roleId;
+
+    private String memberPost;
+
+    private BigDecimal orderAmount;
 
     public Integer getId() {
         return id;
@@ -144,5 +148,29 @@ public class Member implements Serializable {
 
     public void setDeleteFlag(String deleteFlag) {
         this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getMemberPost() {
+        return memberPost;
+    }
+
+    public void setMemberPost(String memberPost) {
+        this.memberPost = memberPost == null ? null : memberPost.trim();
+    }
+
+    public BigDecimal getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(BigDecimal orderAmount) {
+        this.orderAmount = orderAmount;
     }
 }

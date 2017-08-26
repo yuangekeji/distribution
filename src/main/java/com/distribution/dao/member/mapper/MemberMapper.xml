@@ -16,6 +16,9 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="VARCHAR" />
     <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="member_post" property="memberPost" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,15 +79,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    "id", "member_phone", "login_password", "query_password", "pay_password", "recommend_id", 
-    "node_id", "member_name", "member_level", "ID_number", "express_address", "create_time", 
-    "status", "delete_flag"
+    id, member_phone, login_password, query_password, pay_password, recommend_id, node_id, 
+    member_name, member_level, ID_number, express_address, create_time, status, delete_flag, 
+    role_id, member_post, order_amount
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.member.model.MemberExample" >
     select
     <if test="distinct" >
       distinct
     </if>
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from member
     <if test="_parameter != null" >
@@ -98,11 +102,11 @@
     select 
     <include refid="Base_Column_List" />
     from member
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from member
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.distribution.dao.member.model.MemberExample" >
     delete from member
@@ -111,67 +115,78 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.member.model.Member" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
-    insert into member ("member_phone", "login_password", "query_password", 
-      "pay_password", "recommend_id", "node_id", 
-      "member_name", "member_level", "ID_number", 
-      "express_address", "create_time", "status", 
-      "delete_flag")
-    values (#{memberPhone,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, #{queryPassword,jdbcType=VARCHAR}, 
-      #{payPassword,jdbcType=VARCHAR}, #{recommendId,jdbcType=INTEGER}, #{nodeId,jdbcType=INTEGER}, 
-      #{memberName,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{idNumber,jdbcType=VARCHAR}, 
-      #{expressAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
-      #{deleteFlag,jdbcType=VARCHAR})
+    insert into member (id, member_phone, login_password, 
+      query_password, pay_password, recommend_id, 
+      node_id, member_name, member_level, 
+      ID_number, express_address, create_time, 
+      status, delete_flag, role_id, 
+      member_post, order_amount)
+    values (#{id,jdbcType=INTEGER}, #{memberPhone,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, 
+      #{queryPassword,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, #{recommendId,jdbcType=INTEGER}, 
+      #{nodeId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, 
+      #{idNumber,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
+      #{memberPost,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.member.model.Member" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT @@IDENTITY
-    </selectKey>
     insert into member
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
       <if test="memberPhone != null" >
-        "member_phone",
+        member_phone,
       </if>
       <if test="loginPassword != null" >
-        "login_password",
+        login_password,
       </if>
       <if test="queryPassword != null" >
-        "query_password",
+        query_password,
       </if>
       <if test="payPassword != null" >
-        "pay_password",
+        pay_password,
       </if>
       <if test="recommendId != null" >
-        "recommend_id",
+        recommend_id,
       </if>
       <if test="nodeId != null" >
-        "node_id",
+        node_id,
       </if>
       <if test="memberName != null" >
-        "member_name",
+        member_name,
       </if>
       <if test="memberLevel != null" >
-        "member_level",
+        member_level,
       </if>
       <if test="idNumber != null" >
-        "ID_number",
+        ID_number,
       </if>
       <if test="expressAddress != null" >
-        "express_address",
+        express_address,
       </if>
       <if test="createTime != null" >
-        "create_time",
+        create_time,
       </if>
       <if test="status != null" >
-        "status",
+        status,
       </if>
       <if test="deleteFlag != null" >
-        "delete_flag",
+        delete_flag,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="memberPost != null" >
+        member_post,
+      </if>
+      <if test="orderAmount != null" >
+        order_amount,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="memberPhone != null" >
         #{memberPhone,jdbcType=VARCHAR},
       </if>
@@ -211,6 +226,15 @@
       <if test="deleteFlag != null" >
         #{deleteFlag,jdbcType=VARCHAR},
       </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="memberPost != null" >
+        #{memberPost,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        #{orderAmount,jdbcType=DECIMAL},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.distribution.dao.member.model.MemberExample" resultType="java.lang.Integer" >
@@ -223,46 +247,55 @@
     update member
     <set >
       <if test="record.id != null" >
-        "id" = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.memberPhone != null" >
-        "member_phone" = #{record.memberPhone,jdbcType=VARCHAR},
+        member_phone = #{record.memberPhone,jdbcType=VARCHAR},
       </if>
       <if test="record.loginPassword != null" >
-        "login_password" = #{record.loginPassword,jdbcType=VARCHAR},
+        login_password = #{record.loginPassword,jdbcType=VARCHAR},
       </if>
       <if test="record.queryPassword != null" >
-        "query_password" = #{record.queryPassword,jdbcType=VARCHAR},
+        query_password = #{record.queryPassword,jdbcType=VARCHAR},
       </if>
       <if test="record.payPassword != null" >
-        "pay_password" = #{record.payPassword,jdbcType=VARCHAR},
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
       </if>
       <if test="record.recommendId != null" >
-        "recommend_id" = #{record.recommendId,jdbcType=INTEGER},
+        recommend_id = #{record.recommendId,jdbcType=INTEGER},
       </if>
       <if test="record.nodeId != null" >
-        "node_id" = #{record.nodeId,jdbcType=INTEGER},
+        node_id = #{record.nodeId,jdbcType=INTEGER},
       </if>
       <if test="record.memberName != null" >
-        "member_name" = #{record.memberName,jdbcType=VARCHAR},
+        member_name = #{record.memberName,jdbcType=VARCHAR},
       </if>
       <if test="record.memberLevel != null" >
-        "member_level" = #{record.memberLevel,jdbcType=VARCHAR},
+        member_level = #{record.memberLevel,jdbcType=VARCHAR},
       </if>
       <if test="record.idNumber != null" >
-        "ID_number" = #{record.idNumber,jdbcType=VARCHAR},
+        ID_number = #{record.idNumber,jdbcType=VARCHAR},
       </if>
       <if test="record.expressAddress != null" >
-        "express_address" = #{record.expressAddress,jdbcType=VARCHAR},
+        express_address = #{record.expressAddress,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null" >
-        "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.status != null" >
-        "status" = #{record.status,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
       <if test="record.deleteFlag != null" >
-        "delete_flag" = #{record.deleteFlag,jdbcType=VARCHAR},
+        delete_flag = #{record.deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleId != null" >
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberPost != null" >
+        member_post = #{record.memberPost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderAmount != null" >
+        order_amount = #{record.orderAmount,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -271,20 +304,23 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update member
-    set "id" = #{record.id,jdbcType=INTEGER},
-      "member_phone" = #{record.memberPhone,jdbcType=VARCHAR},
-      "login_password" = #{record.loginPassword,jdbcType=VARCHAR},
-      "query_password" = #{record.queryPassword,jdbcType=VARCHAR},
-      "pay_password" = #{record.payPassword,jdbcType=VARCHAR},
-      "recommend_id" = #{record.recommendId,jdbcType=INTEGER},
-      "node_id" = #{record.nodeId,jdbcType=INTEGER},
-      "member_name" = #{record.memberName,jdbcType=VARCHAR},
-      "member_level" = #{record.memberLevel,jdbcType=VARCHAR},
-      "ID_number" = #{record.idNumber,jdbcType=VARCHAR},
-      "express_address" = #{record.expressAddress,jdbcType=VARCHAR},
-      "create_time" = #{record.createTime,jdbcType=TIMESTAMP},
-      "status" = #{record.status,jdbcType=VARCHAR},
-      "delete_flag" = #{record.deleteFlag,jdbcType=VARCHAR}
+    set id = #{record.id,jdbcType=INTEGER},
+      member_phone = #{record.memberPhone,jdbcType=VARCHAR},
+      login_password = #{record.loginPassword,jdbcType=VARCHAR},
+      query_password = #{record.queryPassword,jdbcType=VARCHAR},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      recommend_id = #{record.recommendId,jdbcType=INTEGER},
+      node_id = #{record.nodeId,jdbcType=INTEGER},
+      member_name = #{record.memberName,jdbcType=VARCHAR},
+      member_level = #{record.memberLevel,jdbcType=VARCHAR},
+      ID_number = #{record.idNumber,jdbcType=VARCHAR},
+      express_address = #{record.expressAddress,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=VARCHAR},
+      role_id = #{record.roleId,jdbcType=INTEGER},
+      member_post = #{record.memberPost,jdbcType=VARCHAR},
+      order_amount = #{record.orderAmount,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,62 +329,74 @@
     update member
     <set >
       <if test="memberPhone != null" >
-        "member_phone" = #{memberPhone,jdbcType=VARCHAR},
+        member_phone = #{memberPhone,jdbcType=VARCHAR},
       </if>
       <if test="loginPassword != null" >
-        "login_password" = #{loginPassword,jdbcType=VARCHAR},
+        login_password = #{loginPassword,jdbcType=VARCHAR},
       </if>
       <if test="queryPassword != null" >
-        "query_password" = #{queryPassword,jdbcType=VARCHAR},
+        query_password = #{queryPassword,jdbcType=VARCHAR},
       </if>
       <if test="payPassword != null" >
-        "pay_password" = #{payPassword,jdbcType=VARCHAR},
+        pay_password = #{payPassword,jdbcType=VARCHAR},
       </if>
       <if test="recommendId != null" >
-        "recommend_id" = #{recommendId,jdbcType=INTEGER},
+        recommend_id = #{recommendId,jdbcType=INTEGER},
       </if>
       <if test="nodeId != null" >
-        "node_id" = #{nodeId,jdbcType=INTEGER},
+        node_id = #{nodeId,jdbcType=INTEGER},
       </if>
       <if test="memberName != null" >
-        "member_name" = #{memberName,jdbcType=VARCHAR},
+        member_name = #{memberName,jdbcType=VARCHAR},
       </if>
       <if test="memberLevel != null" >
-        "member_level" = #{memberLevel,jdbcType=VARCHAR},
+        member_level = #{memberLevel,jdbcType=VARCHAR},
       </if>
       <if test="idNumber != null" >
-        "ID_number" = #{idNumber,jdbcType=VARCHAR},
+        ID_number = #{idNumber,jdbcType=VARCHAR},
       </if>
       <if test="expressAddress != null" >
-        "express_address" = #{expressAddress,jdbcType=VARCHAR},
+        express_address = #{expressAddress,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
-        "create_time" = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
-        "status" = #{status,jdbcType=VARCHAR},
+        status = #{status,jdbcType=VARCHAR},
       </if>
       <if test="deleteFlag != null" >
-        "delete_flag" = #{deleteFlag,jdbcType=VARCHAR},
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="memberPost != null" >
+        member_post = #{memberPost,jdbcType=VARCHAR},
+      </if>
+      <if test="orderAmount != null" >
+        order_amount = #{orderAmount,jdbcType=DECIMAL},
       </if>
     </set>
-    where "id" = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.distribution.dao.member.model.Member" >
     update member
-    set "member_phone" = #{memberPhone,jdbcType=VARCHAR},
-      "login_password" = #{loginPassword,jdbcType=VARCHAR},
-      "query_password" = #{queryPassword,jdbcType=VARCHAR},
-      "pay_password" = #{payPassword,jdbcType=VARCHAR},
-      "recommend_id" = #{recommendId,jdbcType=INTEGER},
-      "node_id" = #{nodeId,jdbcType=INTEGER},
-      "member_name" = #{memberName,jdbcType=VARCHAR},
-      "member_level" = #{memberLevel,jdbcType=VARCHAR},
-      "ID_number" = #{idNumber,jdbcType=VARCHAR},
-      "express_address" = #{expressAddress,jdbcType=VARCHAR},
-      "create_time" = #{createTime,jdbcType=TIMESTAMP},
-      "status" = #{status,jdbcType=VARCHAR},
-      "delete_flag" = #{deleteFlag,jdbcType=VARCHAR}
-    where "id" = #{id,jdbcType=INTEGER}
+    set member_phone = #{memberPhone,jdbcType=VARCHAR},
+      login_password = #{loginPassword,jdbcType=VARCHAR},
+      query_password = #{queryPassword,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      recommend_id = #{recommendId,jdbcType=INTEGER},
+      node_id = #{nodeId,jdbcType=INTEGER},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      member_level = #{memberLevel,jdbcType=VARCHAR},
+      ID_number = #{idNumber,jdbcType=VARCHAR},
+      express_address = #{expressAddress,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER},
+      member_post = #{memberPost,jdbcType=VARCHAR},
+      order_amount = #{orderAmount,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

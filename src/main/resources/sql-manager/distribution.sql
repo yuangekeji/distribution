@@ -511,6 +511,12 @@ INSERT INTO `dictionary` VALUES ('3', 'member_level3', '银卡(3000)', 'member_l
 INSERT INTO `dictionary` VALUES ('4', 'member_level4', '金卡(9000)', 'member_level', '会员级别');
 INSERT INTO `dictionary` VALUES ('5', 'member_level5', '白金卡(30000)', 'member_level', '会员级别');
 INSERT INTO `dictionary` VALUES ('6', 'member_level6', '黑金卡(60000)', 'member_level', '会员级别');
+INSERT INTO `dictionary` VALUES ('9', 'post_level1', '普通会员', 'post_level', '爵位(职务等级)');
+INSERT INTO `dictionary` VALUES ('10', 'post_level2', '主任', 'post_level', '爵位(职务等级)');
+INSERT INTO `dictionary` VALUES ('11', 'post_level3', '经理', 'post_level', '爵位(职务等级)');
+INSERT INTO `dictionary` VALUES ('12', 'post_level4', '总监', 'post_level', '爵位(职务等级)');
+INSERT INTO `dictionary` VALUES ('13', 'post_level5', '董事', 'post_level', '爵位(职务等级)');
+INSERT INTO `dictionary` VALUES ('14', 'post_level6', '全国董事', 'post_level', '爵位(职务等级)');
 
 --Bright 去掉会员表一些字段必填 2017年8月26日17:28:14
 ALTER TABLE `member`

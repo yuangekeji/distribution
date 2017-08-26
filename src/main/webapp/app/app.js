@@ -5,6 +5,7 @@ var App = angular.module('app', [
     'app.lazyload',
     'app.routes',
     'ngStorage',
+    'ui.bootstrap',
     //前台业务模块
     'home',
     'recommend',

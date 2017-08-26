@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.accountFlowHistory.model.AccountFlowHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="total_amt" property="totalAmt" jdbcType="DECIMAL" />
+    <result column="bonus_amt" property="bonusAmt" jdbcType="DECIMAL" />
+    <result column="seed_amt" property="seedAmt" jdbcType="DECIMAL" />
+    <result column="flow_type" property="flowType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, member_id, create_time, create_id, type, total_amt, bonus_amt, seed_amt, flow_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from account_flow_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from account_flow_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account_flow_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistoryExample" >
+    delete from account_flow_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistory" >
+    insert into account_flow_history (id, member_id, create_time, 
+      create_id, type, total_amt, 
+      bonus_amt, seed_amt, flow_type
+      )
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{totalAmt,jdbcType=DECIMAL}, 
+      #{bonusAmt,jdbcType=DECIMAL}, #{seedAmt,jdbcType=DECIMAL}, #{flowType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistory" >
+    insert into account_flow_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="totalAmt != null" >
+        total_amt,
+      </if>
+      <if test="bonusAmt != null" >
+        bonus_amt,
+      </if>
+      <if test="seedAmt != null" >
+        seed_amt,
+      </if>
+      <if test="flowType != null" >
+        flow_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmt != null" >
+        #{totalAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="bonusAmt != null" >
+        #{bonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="seedAmt != null" >
+        #{seedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="flowType != null" >
+        #{flowType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from account_flow_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update account_flow_history
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null" >
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalAmt != null" >
+        total_amt = #{record.totalAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bonusAmt != null" >
+        bonus_amt = #{record.bonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.seedAmt != null" >
+        seed_amt = #{record.seedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.flowType != null" >
+        flow_type = #{record.flowType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update account_flow_history
+    set id = #{record.id,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      total_amt = #{record.totalAmt,jdbcType=DECIMAL},
+      bonus_amt = #{record.bonusAmt,jdbcType=DECIMAL},
+      seed_amt = #{record.seedAmt,jdbcType=DECIMAL},
+      flow_type = #{record.flowType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistory" >
+    update account_flow_history
+    <set >
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmt != null" >
+        total_amt = #{totalAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="bonusAmt != null" >
+        bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="seedAmt != null" >
+        seed_amt = #{seedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="flowType != null" >
+        flow_type = #{flowType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistory" >
+    update account_flow_history
+    set member_id = #{memberId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      total_amt = #{totalAmt,jdbcType=DECIMAL},
+      bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
+      seed_amt = #{seedAmt,jdbcType=DECIMAL},
+      flow_type = #{flowType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

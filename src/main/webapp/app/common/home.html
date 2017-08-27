@@ -71,7 +71,27 @@
                     </a>
                 </div>
             </div>
-            <div class="portlet-body"> Blank page content goes here... </div>
+            <div class="portlet-body">
+                <!-- BEGIN MAIN JS -->
+                <div >
+                    <script type="text/ng-template" id="myModalContent.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title">提示信息</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ msg }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" ng-click="ok()">确认</button>
+                            <button class="btn btn-warning" ng-if="type == 'confirm'" type="button" ng-click="cancel()">取消</button>
+                        </div>
+                    </script>
+                    <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+                    <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
+                    <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>
@@ -80,47 +100,3 @@
 <script>
     // call any jquery or angularjs code ehre
 </script>
-<!-- BEGIN MAIN JS -->
-
-<!--<div class="page-group bg_white">-->
-
-    <!--<div class="page page-current">-->
-
-        <!--<div class="content">-->
-
-            <!--<div class="row no-gutter index_menu">-->
-
-                <!--<div class="item col-33" ng-click="alertDemo();">-->
-
-                    <!--<div class="icons icon_1"></div>-->
-
-                    <!--<div class="tit">alert</div>-->
-
-                <!--</div>-->
-
-                <!--<div class="item col-33" ng-click="confirmDemo();">-->
-
-                    <!--<div class="icons icon_2"></div>-->
-
-                    <!--<div class="tit">confirm</div>-->
-
-                <!--</div>-->
-
-                <!--<div class="item col-33" ui-sref="app.list-page">-->
-
-                    <!--<div class="icons icon_5"></div>-->
-
-                    <!--<div class="tit">demo</div>-->
-
-                <!--</div>-->
-
-
-
-            <!--</div>-->
-
-
-        <!--</div>-->
-
-    <!--</div>-->
-
-<!--</div>-->

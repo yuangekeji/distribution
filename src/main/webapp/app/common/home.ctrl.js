@@ -1,4 +1,4 @@
-angular.module('home').controller('homeCtrl', function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,settings) {
+angular.module('home').controller('homeCtrl', function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,settings ,$uibModal, $log) {
     title.setTitle('home');
 
     $scope.$on('$viewContentLoaded', function() {
@@ -13,33 +13,53 @@ angular.module('home').controller('homeCtrl', function ($scope, $http, title, $s
 
     $scope.currentUser = $sessionStorage.currentUser;
 
-    $scope.alertDemo = function () {
-        $.alert('这是alert弹窗');
-    };
-
-    $scope.confirmDemo = function () {
-        $.modal({
-            title: '提示，这里是可变的',
-            text: '这是提示说明，也是可变的，通常这个属性可以不设置，直接使用title就行',
-            buttons: [
+    /**
+     * @param {number} opt_attributes
+     * @return {undefined}
+     */
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: $scope.animationsEnabled,
+                backdrop: 'static',
+                templateUrl: "myModalContent.html",
+                controller: "ModalInstanceCtrl",
+                size: opt_attributes,
+                resolve:
                 {
-                    text: '确定',
-                    onClick: function () {
-                        $.alert("您选择了确定操作，这里便可以放上您箱操作的代码");
-                    }
-                },
-                {
-                    text: '取消',
-                    onClick: function () {
-                        $.alert("您选择了取消操作，确认窗关闭，什么都不做，这里可以空着");
+                    getMsg: function()
+                    {
+                        return "确定要转账给该用户吗？";
+                    },
+                    getType: function()
+                    {
+                        return "confirm";
                     }
                 }
-            ]
+            });
+        out.result.then(function(value)
+        {
+            console.info('确认');
+
+        }, function()
+        {
+            console.info('取消');
         });
     };
 
-    $scope.modalDemo = function () {
-        // $.alert("这是点击模态框时调取JS的操作");
-    };
+});
+angular.module('home').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, getMsg,getType)
+{
+    $scope.msg = getMsg;
+    $scope.type = getType;
 
+    $scope.ok = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
 });

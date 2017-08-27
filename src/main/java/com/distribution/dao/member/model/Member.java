@@ -60,6 +60,10 @@ public class Member {
 
     private Integer firstAgentCnt;
 
+    private String recommendName;
+
+    private String nodeName;
+
     public Integer getId() {
         return id;
     }
@@ -196,12 +200,12 @@ public class Member {
         this.createTime = createTime;
     }
 
-    public void setUpdateId(Integer updateId) {
-        this.updateId = updateId;
-    }
-
     public Integer getUpdateId() {
         return updateId;
+    }
+
+    public void setUpdateId(Integer updateId) {
+        this.updateId = updateId;
     }
 
     public Date getUpdateTime() {
@@ -282,5 +286,21 @@ public class Member {
 
     public void setFirstAgentCnt(Integer firstAgentCnt) {
         this.firstAgentCnt = firstAgentCnt;
+    }
+
+    public String getRecommendName() {
+        return recommendName;
+    }
+
+    public void setRecommendName(String recommendName) {
+        this.recommendName = recommendName == null ? null : recommendName.trim();
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName == null ? null : nodeName.trim();
     }
 }

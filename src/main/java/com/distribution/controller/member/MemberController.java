@@ -2,7 +2,7 @@ package com.distribution.controller.member;
 
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
-import com.distribution.common.intercept.IgnoreLoginCheck;
+import com.distribution.common.utils.Page;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
 import com.distribution.service.common.CommonService;
@@ -28,19 +28,22 @@ public class MemberController extends BasicController {
     @Autowired
     private MemberService memberService;
 
-/*    @RequestMapping(value = "/login")
-    @IgnoreLoginCheck
-    public String init() {
-        return "adminLogin/adminLogin";
+    /**
+     * description 会员列表查询
+     * @author Bright
+     * */
+    @RequestMapping("/list")
+    @ResponseBody
+    public JsonMessage list(@RequestBody Page page,HttpSession session){
+        if(null!=page.getParameterMap().get("myRecord") && (Boolean) page.getParameterMap().get("myRecord")){
+            Member m = (Member) getCurrentUser(session);
+            page.getParameterMap().put("recommendId",m.getId());
+        }else{
+            page.getParameterMap().put("recommendId",null);
+        }
+        page = memberService.list(page);
+        return successMsg(page);
     }
-
-
-    @RequestMapping(value = "/getUserFromSession")
-    public Member getUser(){
-
-        return new Member();
-    }
-    */
     /**
      * description 创建报单初始化，查询会员等级字典表
      * @author Bright
@@ -63,7 +66,6 @@ public class MemberController extends BasicController {
         if(getCurrentUser(session) instanceof Member) {
             currentUser = (Member) getCurrentUser(session);
         }
-        ;
         if(null==memberService.insert(member,currentUser)) {
             return successMsg();
         }else{

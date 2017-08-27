@@ -1,13 +1,13 @@
 package com.distribution.service.member;
 
 import com.distribution.common.utils.CryptoUtil;
+import com.distribution.common.utils.Page;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -17,6 +17,20 @@ public class MemberService {
     private MemberMapper memberMapper;
     @Autowired
     private MoreMemberMapper moreMemberMapper;
+
+    /**
+     * description 会员列表查询
+     * @author Bright
+     * */
+    public Page list(Page page){
+        if(null!=page.getParameterMap().get("startTime"))
+            page.getParameterMap().put("start",page.getParameterMap().get("startTime").toString()+" 00:00:00");
+        if(null!=page.getParameterMap().get("endTime"))
+            page.getParameterMap().put("end",page.getParameterMap().get("endTime").toString()+" 23:59:59");
+        page.setTotalCount(moreMemberMapper.getMemberCount(page));
+        page.setResult(moreMemberMapper.list(page));
+        return page;
+    }
 
     /**
      * description 插入报单数据
@@ -49,6 +63,7 @@ public class MemberService {
             }
             if (null == member.getRecommendId())
                 member.setRecommendId(currentUser.getId());
+            memberMapper.insert(member);
             return null;
         }else{
             return historyMember;

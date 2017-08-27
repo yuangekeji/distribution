@@ -6,7 +6,6 @@
     var _ctx = "${ctx}";
     var ctx = _ctx;
     var version = '${version}';
-    alert(_ctx );
 </script>
 <!--[if IE 8]> <html lang="en" class="ie8 no-js" data-ng-app="app"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js" data-ng-app="app"> <![endif]-->

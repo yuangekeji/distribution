@@ -53,10 +53,11 @@
                             <div class="form-group col-md-5">
                                 <label class="control-label col-md-3">订单时间</label>
                                 <div class="col-md-8">
-                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                        <input type="text" class="form-control" name="from">
+                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime">
                                         <span class="input-group-addon"> to </span>
-                                        <input type="text" class="to-control" name="to"></div>
+                                        <input type="text" class="form-control" name="to" ng-model="myPage.parameterMap.endTime">
+                                    </div>
                                 </div>
 
                             </div>

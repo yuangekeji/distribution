@@ -39,7 +39,7 @@
     member_name, member_level, ID_number, express_address, status, delete_flag, role_id,
     member_post, create_id, create_time, update_id, update_time, order_amount, consignee,
     money_status, bank_name, bank_user_name, card_number, is_operator, is_sales_dept,
-    first_agent_cnt, recommend_name, node_name
+    first_agent_cnt, recommend_id as recommend_name, node_id as node_name
   </sql>
 
    <sql id="where">

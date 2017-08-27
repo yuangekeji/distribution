@@ -24,59 +24,20 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.submit = function () {
         if($scope.submitFlag){
             $scope.submitFlag = false;
-            if(!$scope.member.recommendPhone||!$scope.member.recommendPhone.trim()){
-                alert("请输入推荐人手机号码。");
-                $scope.submitFlag = true;
-            }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.recommendPhone))){
-                alert("推荐人手机号有误，请重新输入。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.memberName||!$scope.member.memberName.trim()){
-                 alert("请输入会员姓名。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.memberPhone||!$scope.member.memberPhone.trim()){
-                 alert("请输入会员账号。");
-                $scope.submitFlag = true;
-            }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
-                 alert("会员账号有误，会员账号为手机号码。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
-                 alert("请输入登录密码。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.confirmLoginPassword||!$scope.member.confirmLoginPassword.trim()){
-                 alert("请输入确认密码。");
-                $scope.submitFlag = true;
-            }else if($scope.member.loginPassword!=$scope.member.confirmLoginPassword){
-                 alert("登录密码与确认密码不一致，请重新输入。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
-                 alert("请输入节点手机号码。");
-                $scope.submitFlag = true;
-            }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
-                alert("节点手机号有误，请重新输入。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.memberLevel){
-                 alert("请选择会员等级。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
-                 alert("请输入收货人姓名。");
-                $scope.submitFlag = true;
-            }else if(!$scope.member.expressAddress||!$scope.member.expressAddress.trim()){
-                 alert("请输入收货地址。");
-                $scope.submitFlag = true;
-            }else{
+            if($scope.check()){
                 $http.post(ctx + "/member/insert",$scope.member).success(function (resp) {
                     if(resp.successful){
                         if(resp.data=='NO_RECOMMENDER'){
-                            alert("推荐人不存在，请重新输入。");
+                            window.wxc.xcConfirm("推荐人不存在，请重新输入。", window.wxc.xcConfirm.typeEnum.info);
                             $scope.submitFlag = true;
                         }else if(resp.data=='PHONE_EXISTENCE'){
-                            alert("会员账号已存在，请重新输入。");
+                            window.wxc.xcConfirm("会员账号已存在，请重新输入。", window.wxc.xcConfirm.typeEnum.info);
                             $scope.submitFlag = true;
                         }else if(resp.data=='NO_NODE_MEMBER'){
-                            alert("节点不存在，请重新输入。");
+                            window.wxc.xcConfirm("节点不存在，请重新输入。", window.wxc.xcConfirm.typeEnum.info);
                             $scope.submitFlag = true;
                         }else if(resp.data=='NOTE_FULL'){
-                            alert("该节点该区已满，请从新输入。");
+                            window.wxc.xcConfirm("该节点该区已满，请从新输入。", window.wxc.xcConfirm.typeEnum.info);
                             $scope.submitFlag = true;
                         }else{
                             $state.go("app.recommend");
@@ -89,5 +50,51 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
                 });
             }
         }
-    }
+    };
+
+    /**校验*/
+    $scope.check = function () {
+        if(!$scope.member.recommendPhone||!$scope.member.recommendPhone.trim()){
+            window.wxc.xcConfirm("请输入推荐人手机号码", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.recommendPhone))){
+            window.wxc.xcConfirm("推荐人手机号有误，请重新输入。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.memberName||!$scope.member.memberName.trim()){
+            window.wxc.xcConfirm("请输入会员姓名。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.memberPhone||!$scope.member.memberPhone.trim()){
+            window.wxc.xcConfirm("请输入会员账号。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
+            window.wxc.xcConfirm("会员账号有误，会员账号为手机号码。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
+            window.wxc.xcConfirm("请输入登录密码。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.confirmLoginPassword||!$scope.member.confirmLoginPassword.trim()){
+            window.wxc.xcConfirm("请输入确认密码。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if($scope.member.loginPassword!=$scope.member.confirmLoginPassword){
+            window.wxc.xcConfirm("登录密码与确认密码不一致，请重新输入。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
+            window.wxc.xcConfirm("请输入节点手机号码。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
+            window.wxc.xcConfirm("节点手机号有误，请重新输入。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.memberLevel){
+            window.wxc.xcConfirm("请选择会员等级。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
+            window.wxc.xcConfirm("请输入收货人姓名。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else if(!$scope.member.expressAddress||!$scope.member.expressAddress.trim()){
+            window.wxc.xcConfirm("请输入收货地址。", window.wxc.xcConfirm.typeEnum.info);
+            $scope.submitFlag = true;
+        }else{
+            return true;
+        }
+    };
  });

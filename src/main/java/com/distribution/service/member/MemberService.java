@@ -90,4 +90,14 @@ public class MemberService {
             }
         }
     }
+
+    /**
+     * description 激活账户
+     * @author Bright
+     * */
+    public Integer activation(Member member){
+        member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
+        member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
+        return memberMapper.updateByPrimaryKeySelective(member);
+    }
 }

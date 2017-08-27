@@ -6,7 +6,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     };
     $scope.dictionary = [];
     $scope.onInit = function () {
-        $http.get(ctx + '/member/getDictionary').success(function (resp) {
+        $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
             if(resp.successful){
                 $scope.dictionary = resp.data;
                 if($scope.dictionary){

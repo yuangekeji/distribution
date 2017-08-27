@@ -1,9 +1,8 @@
 angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('创建分销订单');
-    $scope.user = $sessionStorage.currentUser
+    $scope.user = $sessionStorage.currentUser;
     $scope.member = {
-        recommendName:$sessionStorage.currentUser.memberName,
-        recommendId:$sessionStorage.currentUser.recommendId,
+        recommendPhone:$sessionStorage.currentUser.memberPhone
     };
     $scope.dictionary = [];
     $scope.onInit = function () {
@@ -25,7 +24,13 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.submit = function () {
         if($scope.submitFlag){
             $scope.submitFlag = false;
-            if(!$scope.member.memberName||!$scope.member.memberName.trim()){
+            if(!$scope.member.recommendPhone||!$scope.member.recommendPhone.trim()){
+                alert("请输入推荐人手机号码。");
+                $scope.submitFlag = true;
+            }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.recommendPhone))){
+                alert("推荐人手机号有误，请重新输入。");
+                $scope.submitFlag = true;
+            }else if(!$scope.member.memberName||!$scope.member.memberName.trim()){
                  alert("请输入会员姓名。");
                 $scope.submitFlag = true;
             }else if(!$scope.member.memberPhone||!$scope.member.memberPhone.trim()){
@@ -34,8 +39,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
             }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
                  alert("会员账号有误，会员账号为手机号码。");
                 $scope.submitFlag = true;
-            }
-            else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
+            }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
                  alert("请输入登录密码。");
                 $scope.submitFlag = true;
             }else if(!$scope.member.confirmLoginPassword||!$scope.member.confirmLoginPassword.trim()){
@@ -44,12 +48,13 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
             }else if($scope.member.loginPassword!=$scope.member.confirmLoginPassword){
                  alert("登录密码与确认密码不一致，请重新输入。");
                 $scope.submitFlag = true;
-            }
-            /*else if(!$scope.member.nodeId||!$scope.member.nodeId.trim()){
-                 alert("请输入会员节点。");
+            }else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
+                 alert("请输入节点手机号码。");
                 $scope.submitFlag = true;
-            }*/
-            else if(!$scope.member.memberLevel){
+            }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
+                alert("节点手机号有误，请重新输入。");
+                $scope.submitFlag = true;
+            }else if(!$scope.member.memberLevel){
                  alert("请选择会员等级。");
                 $scope.submitFlag = true;
             }else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
@@ -61,10 +66,22 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
             }else{
                 $http.post(ctx + "/member/insert",$scope.member).success(function (resp) {
                     if(resp.successful){
-                        $state.go("app.recommend");
-                    }else{
-                         alert("会员账号已存在，请重新输入。")
-                        $scope.submitFlag = true;
+                        if(resp.data=='NO_RECOMMENDER'){
+                            alert("推荐人不存在，请重新输入。");
+                            $scope.submitFlag = true;
+                        }else if(resp.data=='PHONE_EXISTENCE'){
+                            alert("会员账号已存在，请重新输入。");
+                            $scope.submitFlag = true;
+                        }else if(resp.data=='NO_NODE_MEMBER'){
+                            alert("节点不存在，请重新输入。");
+                            $scope.submitFlag = true;
+                        }else if(resp.data=='NOTE_FULL'){
+                            alert("该节点该区已满，请从新输入。");
+                            $scope.submitFlag = true;
+                        }else{
+                            $state.go("app.recommend");
+                            $scope.submitFlag = true;
+                        }
                     }
                 }).error(function (resp) {
                     console.log(resp);

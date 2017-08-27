@@ -5,6 +5,7 @@ import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
+import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.service.common.CommonService;
 import com.distribution.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,15 +62,12 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/insert")
     @ResponseBody
-    public JsonMessage insert(@RequestBody Member member, HttpSession session){
+    public JsonMessage insert(@RequestBody MoreMember moreMember, HttpSession session){
         Member currentUser = null;
         if(getCurrentUser(session) instanceof Member) {
             currentUser = (Member) getCurrentUser(session);
         }
-        if(null==memberService.insert(member,currentUser)) {
-            return successMsg();
-        }else{
-            return failMsg();
-        }
+        String result = memberService.insert(moreMember,currentUser);
+        return successMsg(result);
     }
 }

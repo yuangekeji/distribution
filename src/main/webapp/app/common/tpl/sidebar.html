@@ -1,4 +1,4 @@
-<div class="page-sidebar navbar-collapse collapse"  ng-class="{'in': settings.layout.smallScreenMenuToggle}">
+<div class="page-sidebar navbar-collapse collapse" >
     <!-- BEGIN SIDEBAR MENU -->
     <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
     <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
@@ -21,7 +21,7 @@
             </a>
             <ul class="sub-menu">
                 <li ng-repeat="second in secondMenu" ng-if="second.parentMenu == row.id">
-                    <a ui-sref="{{second.menuLink}}">
+                    <a  ng-click="goUrl(second.menuLink)">
                         <i class="icon-puzzle"></i> {{second.name}}</span>
                     </a>
                 </li>

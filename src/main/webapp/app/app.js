@@ -205,6 +205,18 @@ App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', '$
     }
 
     $scope.onInit();
+    $scope.goUrl= function (url) {
+        $state.go(url);
+        $scope.dimension = function () {
+            var hasWidth = $('.navbar-collapse').hasClass('width')
+            return hasWidth ? 'width' : 'height'
+        }
+
+        $('.navbar-collapse')
+            .removeClass('collapse in')
+            .addClass('collapse')[$scope.dimension](0)
+            .attr('aria-expanded', false)
+    }
 }]);
 /* Setup Layout Part - Footer */
 App.controller('FooterController', ['$scope', function($scope) {

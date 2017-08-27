@@ -1965,6 +1965,146 @@ public class MemberExample {
             addCriterion("first_agent_cnt not between", value1, value2, "firstAgentCnt");
             return (Criteria) this;
         }
+
+        public Criteria andRecommendNameIsNull() {
+            addCriterion("recommend_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameIsNotNull() {
+            addCriterion("recommend_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameEqualTo(String value) {
+            addCriterion("recommend_name =", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameNotEqualTo(String value) {
+            addCriterion("recommend_name <>", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameGreaterThan(String value) {
+            addCriterion("recommend_name >", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameGreaterThanOrEqualTo(String value) {
+            addCriterion("recommend_name >=", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameLessThan(String value) {
+            addCriterion("recommend_name <", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameLessThanOrEqualTo(String value) {
+            addCriterion("recommend_name <=", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameLike(String value) {
+            addCriterion("recommend_name like", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameNotLike(String value) {
+            addCriterion("recommend_name not like", value, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameIn(List<String> values) {
+            addCriterion("recommend_name in", values, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameNotIn(List<String> values) {
+            addCriterion("recommend_name not in", values, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameBetween(String value1, String value2) {
+            addCriterion("recommend_name between", value1, value2, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecommendNameNotBetween(String value1, String value2) {
+            addCriterion("recommend_name not between", value1, value2, "recommendName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameIsNull() {
+            addCriterion("node_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameIsNotNull() {
+            addCriterion("node_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameEqualTo(String value) {
+            addCriterion("node_name =", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameNotEqualTo(String value) {
+            addCriterion("node_name <>", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameGreaterThan(String value) {
+            addCriterion("node_name >", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameGreaterThanOrEqualTo(String value) {
+            addCriterion("node_name >=", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameLessThan(String value) {
+            addCriterion("node_name <", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameLessThanOrEqualTo(String value) {
+            addCriterion("node_name <=", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameLike(String value) {
+            addCriterion("node_name like", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameNotLike(String value) {
+            addCriterion("node_name not like", value, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameIn(List<String> values) {
+            addCriterion("node_name in", values, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameNotIn(List<String> values) {
+            addCriterion("node_name not in", values, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameBetween(String value1, String value2) {
+            addCriterion("node_name between", value1, value2, "nodeName");
+            return (Criteria) this;
+        }
+
+        public Criteria andNodeNameNotBetween(String value1, String value2) {
+            addCriterion("node_name not between", value1, value2, "nodeName");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -531,3 +531,8 @@ MODIFY COLUMN `role_id`  int(11) NULL DEFAULT 1 COMMENT '角色ID';
 -- Bright 设置默认未打款状态 2017年8月26日17:52:00
 ALTER TABLE `member`
 MODIFY COLUMN `money_status`  varchar(255) NULL DEFAULT 'N' COMMENT '打款状态(N:未打款,Y:已打款)';
+
+--Bright 添加推荐人姓名，节点人姓名字段 2017年8月27日13:20:47
+ALTER TABLE `member`
+ADD COLUMN `recommend_name`  varchar(255) NULL COMMENT '推荐者姓名',
+ADD COLUMN `node_name`  varchar(255) NULL COMMENT '放置到的节点的人的姓名';

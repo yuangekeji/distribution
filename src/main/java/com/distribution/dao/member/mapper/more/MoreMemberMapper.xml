@@ -30,16 +30,56 @@
     <result column="is_operator" property="isOperator" jdbcType="VARCHAR" />
     <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
     <result column="first_agent_cnt" property="firstAgentCnt" jdbcType="INTEGER" />
+    <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
+    <result column="node_name" property="nodeName" jdbcType="VARCHAR" />
   </resultMap>
+
   <sql id="Base_Column_List" >
-    id, member_phone, recommend_id,
-    node_id, member_name, member_level, ID_number, express_address, create_time,
-    status, delete_flag,role_id
+    id, member_phone, login_password, query_password, pay_password, recommend_id, node_id,
+    member_name, member_level, ID_number, express_address, status, delete_flag, role_id,
+    member_post, create_id, create_time, update_id, update_time, order_amount, consignee,
+    money_status, bank_name, bank_user_name, card_number, is_operator, is_sales_dept,
+    first_agent_cnt, recommend_name, node_name
   </sql>
+
+   <sql id="where">
+     <where>
+       <if test="parameterMap.phone!=null and parameterMap.phone!=''">
+         AND member_phone LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.phone}))),'%') ESCAPE '*'
+       </if>
+       <if test="parameterMap.status!=null and parameterMap.status!=''">
+         AND status = #{parameterMap.status}
+       </if>
+       <if test="parameterMap.start!=null and parameterMap.start!=''">
+         AND create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+       </if>
+       <if test="parameterMap.recommendId!=null and parameterMap.recommendId!=''">
+         AND recommend_id = #{parameterMap.recommendId}
+       </if>
+     </where>
+   </sql>
+
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+
   <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
+
   <select id="getMemberByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{phone}
+  </select>
+
+  <select id="getMemberCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM member <include refid="where"/>
+  </select>
+  
+  <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM member <include refid="where"/> <include refid="pageLimit"/>
   </select>
 </mapper>

@@ -2,64 +2,24 @@ angular.module('recommend').controller('recommendListCtrl', function (title, $sc
     title.setTitle('分销中心');
     $scope.loadingFlag = true;
     $scope.notData = false;
-    $scope.param = {};
-    $scope.dataList = [];
+    $scope.myPage = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {}
+    };
     $scope.onInit = function () {
-
-        $scope.loadingFlag = true;
-
-
-        $scope.currentPage = 1;
-        $scope.pageSize = 10;
-        $scope.meals = [];
-        $scope.totalItems = 40;
-        var dishes = [
-            'noodles',
-            'sausage',
-            'beans on ',
-            'chee',
-            'battered  ',
-            'crisp ',
-            'yorkshire ',
-            'wiener ',
-            'sauerkraut ',
-            'salad',
-            'onion ',
-            'bak ',
-            'avacado '
-        ];
-        var sides = [
-            'with',
-            'a la',
-            'drizzled',
-            'with ',
-            'on ',
-            'with ',
-            'on a ',
-            'wrapped ',
-            'on a',
-            'in pitta'
-        ];
-        for (var i = 1; i <= 20; i++) {
-            var dish = dishes[Math.floor(Math.random() * dishes.length)];
-            var side = sides[Math.floor(Math.random() * sides.length)];
-            $scope.meals.push('meal ' + i + ': ' + dish + ' ' + side);
-        }
-
-
-        $scope.dataList = [];
-        // $http.post(ctx + '/recommend/list', $scope.param).success(function (resp) {
-        //     if (resp.successful) {
-        //         $scope.dataList = resp.data;
-        //         $scope.loadingFlag = false;
-        //         $scope.notData = false;
-        //         if (!$scope.dataList || $scope.dataList.length == 0) $scope.notData = true;
-        //     } else {
-        //         console.log(resp.errorMessage);
-        //     }
-        // });
-
-
+        $http.post(ctx + '/member/list', $scope.myPage).success(function (resp) {
+            if (resp.successful) {
+                $scope.myPage = resp.data;
+                $scope.loadingFlag = false;
+                $scope.notData = false;
+                if (!$scope.dataList || $scope.dataList.length == 0) $scope.notData = true;
+            } else {
+                console.log(resp.errorMessage);
+            }
+        });
     };
     $scope.onInit();
     $scope.gotoAddPage = function () {
@@ -72,12 +32,42 @@ angular.module('recommend').controller('recommendListCtrl', function (title, $sc
         $state.go('app.recommendAdd', {id: id});
     };
 
+    /**查询*/
+    $scope.search = function () {
+        $scope.myPage.pageNo = 1;
+        $scope.myPage.totalCount = 0;
+        $http.post(ctx + '/member/list', $scope.myPage).success(function (resp) {
+            if (resp.successful) {
+                $scope.myPage = resp.data;
+            } else {
+                console.log(resp.errorMessage);
+            }
+        });
+    };
 
+    /**翻页*/
+    $scope.pageChangeHandler = function(num) {
+        console.log('going to page ooooo ' + num);
+        $scope.myPage.pageNo = num;
+        $scope.onInit();
+    };
 
 });
 
-angular.module('recommend').controller('OtherController', function ( $scope) {
-    $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
-    };
+angular.module('recommend').filter("MemberLevelFilter",function () {
+    return function (input) {
+        if(input=='member_level1'){return '普卡'};
+        if(input=='member_level2'){return '铜卡'};
+        if(input=='member_level3'){return '银卡'};
+        if(input=='member_level4'){return '金卡'};
+        if(input=='member_level5'){return '白金卡'};
+        if(input=='member_level6'){return '黑金卡'};
+    }
+});
+
+angular.module('recommend').filter("StatusFilter",function () {
+    return function (input) {
+        if(input=='Y'){return '已激活'};
+        if(input=='N'){return '未激活'};
+    }
 });

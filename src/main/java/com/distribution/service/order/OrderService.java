@@ -4,7 +4,9 @@ import com.distribution.common.utils.Page;
 import com.distribution.dao.order.mapper.OrderMapper;
 import com.distribution.dao.order.mapper.more.MoreOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderService {
     @Autowired
     private OrderMapper orderMapper;

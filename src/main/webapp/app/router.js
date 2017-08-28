@@ -83,11 +83,19 @@ angular.module('app').config([
                 controller: 'graphCtrl'
             })
            .state('app.order',{
-                url: '/order',
+                url: '/list',
                 templateUrl: helper.basepath('order/html/list.html'),
                 resolve: helper.resolveFor('order'),
                 controller: 'orderCtrl'
             })
+
+            /*.state('app.order', {
+                url: '/list',
+                templateUrl: helper.basepath('order/html/list.html'),
+                resolve: helper.resolveFor('order.list'),
+                controller: 'orderCtrl'
+            })*/
+
             .state('app.admMember',{
                 url: '/admMember',
                 templateUrl: helper.basepath('admMember/html/list.html'),

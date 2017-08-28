@@ -100,4 +100,13 @@ public class MemberService {
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
         return memberMapper.updateByPrimaryKeySelective(member);
     }
+
+    /**
+     * 通过手机号查询member add by jingxin
+     * @param phone
+     * @return
+     */
+    public Member getMemberByPhone(String phone){
+        return moreMemberMapper.getMemberByPhone(phone);
+    }
 }

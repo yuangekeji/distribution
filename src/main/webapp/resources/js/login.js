@@ -6,7 +6,7 @@ function login() {
 	if(check()) {
         $.ajax({
             type: "POST",
-            url: ctx + "/admin/login",
+            url: ctx + "/member/login",
             data: {
                 userName: $("#username").val(),
                 password: $("#passwd").val(),

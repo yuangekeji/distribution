@@ -3,6 +3,8 @@ package com.distribution.controller.member;
 import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
+import com.distribution.common.intercept.IgnoreLoginCheck;
+import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
@@ -17,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jingxin on 2017/8/21.
@@ -30,6 +34,22 @@ public class MemberController extends BasicController {
     private CommonService commonService;
     @Autowired
     private MemberService memberService;
+
+    @RequestMapping(value = "/jump")
+    @IgnoreLoginCheck
+    public String init() {
+        return "adminLogin/adminLogin";
+    }
+
+    @RequestMapping("/login")
+    @IgnoreLoginCheck
+    @ResponseBody
+    public JsonMessage login(String userName, String password, String remember, HttpSession session){
+        Map param = new HashMap();
+        param.put("userName",userName);
+        param.put("password", CryptoUtil.md5ByHex(password));
+        return memberService.login(param,remember,session);
+    }
 
     /**
      * description 会员列表查询

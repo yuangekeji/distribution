@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
     @RequestMapping(value = "")
-    @IgnoreLoginCheck
+//    @IgnoreLoginCheck
     public String index() {
         return "forward:/WEB-INF/main.jsp";
     }

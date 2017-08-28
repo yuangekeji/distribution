@@ -3,13 +3,16 @@
  */
 angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('我的分红包');
-
+    $scope.notData = false;
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {}
+        parameterMap: {
+            orderNo:'',
+            dividendStatus:''
+        }
     };
     $scope.search = function(){
 
@@ -17,7 +20,9 @@ angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myPage = resp.data;
-                    $scope.loadingFlag = false;
+                    $scope.notData = false;
+                    if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
+
                 } else {
                     console.log(resp.errorMessage);
                 }
@@ -45,6 +50,7 @@ angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope
 
         $scope.myPage.pageNo = 1;
         $scope.myPage.totalCount = 0;
+
         $scope.search();
 
     }
@@ -57,4 +63,10 @@ angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+});
+angular.module('dividend').filter("StatusFilter",function () {
+    return function (input) {
+        if(input=='1'){return '领取中'};
+        if(input=='2'){return '领取完'};
+    }
 });

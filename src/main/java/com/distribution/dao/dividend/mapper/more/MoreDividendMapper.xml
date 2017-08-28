@@ -25,11 +25,14 @@
   </sql>
   <sql id="where">
     <where>
-      <if test="memberId!=null and memberId!=''">
-        AND member_id = #{memberId}
+      <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+        AND member_id = #{parameterMap.memberId}
       </if>
-      <if test="dividendStatus!=null and dividendStatus!=''">
-        AND dividend_status = #{dividendStatus}
+      <if test="parameterMap.dividendStatus!=null and parameterMap.dividendStatus!=''">
+        AND dividend_status = #{parameterMap.dividendStatus}
+      </if>
+      <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+        AND order_no = #{parameterMap.orderNo}
       </if>
     </where>
   </sql>
@@ -45,8 +48,9 @@
     <include refid="Base_Column_List" />
     from dividend
     <include refid="where"/>
-    <include refid="pageLimit"/>
     order by id desc
+    <include refid="pageLimit"/>
+
   </select>
   <select id="getDividendListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
     select

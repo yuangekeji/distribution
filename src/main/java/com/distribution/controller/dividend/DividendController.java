@@ -7,6 +7,7 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.service.dividend.DividendService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
 public class DividendController extends BasicController {
     private static final Log loger = LogFactory.getLog(DividendController.class);
 
+    @Autowired
     private DividendService dividendService;
 
     /**
@@ -30,7 +32,10 @@ public class DividendController extends BasicController {
      @RequestMapping("/list")
      @ResponseBody
      public JsonMessage dividendList(@RequestBody Page page, HttpSession session){
-         return successMsg(dividendService.dividendList(page));
+         Member m = (Member) getCurrentUser(session);
+         page.getParameterMap().put("memberId",m.getId());
+         page = dividendService.dividendList(page);
+         return successMsg(page);
      }
 
     /**

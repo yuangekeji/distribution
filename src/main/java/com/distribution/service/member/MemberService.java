@@ -90,4 +90,13 @@ public class MemberService {
             }
         }
     }
+
+    /**
+     * 通过手机号查询member add by jingxin
+     * @param phone
+     * @return
+     */
+    public Member getMemberByPhone(String phone){
+        return moreMemberMapper.getMemberByPhone(phone);
+    }
 }

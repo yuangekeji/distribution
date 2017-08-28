@@ -68,7 +68,11 @@
   </sql>
 
   <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{userName} AND login_password = #{password}
+    SELECT id, member_phone, recommend_id, node_id,
+    member_name, member_level, express_address, status, role_id,
+    member_post, order_amount, consignee,
+    money_status, is_operator, is_sales_dept,
+    first_agent_cnt, recommend_name, node_name FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
 
   <select id="getMemberByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">

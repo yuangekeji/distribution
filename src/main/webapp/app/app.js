@@ -156,10 +156,25 @@ App.factory('settings', ['$rootScope', function($rootScope) {
 
 
 /* Setup Layout Part - Header */
-App.controller('HeaderController', ['$scope', function($scope) {
+App.controller('HeaderController', ['$scope','$http', function($scope,$http,$sessionStorage,$state) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
     });
+    /**
+     * description 退出
+     * @author Bright
+     * */
+    $scope.logOut = function () {
+        $http.post(ctx + "/member/logout").success(function (resp) {
+            if(resp.successful){
+                if($sessionStorage && $sessionStorage.currentUser)
+                    $sessionStorage.currentUser = null;
+                window.location.href = ctx;
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        });
+    };
 }]);
 
 /* Setup Layout Part - Sidebar */

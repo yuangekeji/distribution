@@ -41,6 +41,10 @@ public class MemberController extends BasicController {
         return "adminLogin/adminLogin";
     }
 
+    /**
+     * description 登录
+     * @author Bright
+     * */
     @RequestMapping("/login")
     @IgnoreLoginCheck
     @ResponseBody
@@ -49,6 +53,18 @@ public class MemberController extends BasicController {
         param.put("userName",userName);
         param.put("password", CryptoUtil.md5ByHex(password));
         return memberService.login(param,remember,session);
+    }
+
+    /**
+     * description 退出
+     * @author Bright
+     * */
+    @RequestMapping("/logout")
+    @ResponseBody
+    @IgnoreLoginCheck
+    public JsonMessage logout(HttpSession session){
+        session.removeAttribute(Constant.SESSION_CURRENT_USER);
+        return successMsg();
     }
 
     /**

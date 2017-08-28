@@ -31,7 +31,7 @@ public class LoginInterceptorAdaptor extends HandlerInterceptorAdapter {
                 //没有注解，说明该方法没有被忽略，需要判断是否登录
                 if (request.getSession().getAttribute(Constant.SESSION_CURRENT_USER) == null) {
                     //没有登录，则跳转到登录页
-                    response.sendRedirect(request.getContextPath() + "/admin/jump");
+                    response.sendRedirect(request.getContextPath() + "/member/jump");
                     log.info("================login interceptor:" + handlerMethod.getBean().getClass().getSimpleName() + "." + method.getName());
                     return false;
                 }

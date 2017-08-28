@@ -1,7 +1,10 @@
 package com.distribution.controller.member;
 
+import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
+import com.distribution.common.intercept.IgnoreLoginCheck;
+import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
@@ -10,12 +13,15 @@ import com.distribution.service.common.CommonService;
 import com.distribution.service.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jingxin on 2017/8/21.
@@ -28,6 +34,22 @@ public class MemberController extends BasicController {
     private CommonService commonService;
     @Autowired
     private MemberService memberService;
+
+    @RequestMapping(value = "/jump")
+    @IgnoreLoginCheck
+    public String init() {
+        return "adminLogin/adminLogin";
+    }
+
+    @RequestMapping("/login")
+    @IgnoreLoginCheck
+    @ResponseBody
+    public JsonMessage login(String userName, String password, String remember, HttpSession session){
+        Map param = new HashMap();
+        param.put("userName",userName);
+        param.put("password", CryptoUtil.md5ByHex(password));
+        return memberService.login(param,remember,session);
+    }
 
     /**
      * description 会员列表查询
@@ -49,10 +71,10 @@ public class MemberController extends BasicController {
      * description 创建报单初始化，查询会员等级字典表
      * @author Bright
      * */
-    @RequestMapping("/getDictionary")
+    @RequestMapping("/getDictionary/{dicType}")
     @ResponseBody
-    public JsonMessage getDictionary(){
-        List<Dictionary> list = commonService.getDictionary("member_level");
+    public JsonMessage getDictionary(@PathVariable String dicType){
+        List<Dictionary> list = commonService.getDictionary(dicType);
         return successMsg(list);
     }
 
@@ -69,5 +91,21 @@ public class MemberController extends BasicController {
         }
         String result = memberService.insert(moreMember,currentUser);
         return successMsg(result);
+    }
+
+    /**
+     * description 激活账户
+     * @author Bright
+     * */
+    @RequestMapping("/activation")
+    @ResponseBody
+    public JsonMessage activation(@RequestBody Member member,HttpSession session){
+        Integer it = memberService.activation(member);
+        if(it>0) {
+            session.setAttribute(Constant.SESSION_CURRENT_USER,member);
+            return successMsg();
+        }else {
+            return failMsg();
+        }
     }
 }

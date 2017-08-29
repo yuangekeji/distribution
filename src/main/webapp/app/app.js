@@ -16,6 +16,7 @@ var App = angular.module('app', [
     'dividend',
     'graph',
     'order',
+    'operator',
     //后台业务模块
     'admAdvance',
     'admBasicSetting',
@@ -27,7 +28,8 @@ var App = angular.module('app', [
     'admProduct',
     'admRecommend',
     'admin',
-    'admBonus'
+    'admBonus',
+    'admWarning'
 ]);
 
 angular.module('app.lazyload', []);
@@ -41,6 +43,7 @@ angular.module('bonus', []);
 angular.module('dividend', []);
 angular.module('graph', []);
 angular.module('order', []);
+angular.module('operator',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);
@@ -53,7 +56,7 @@ angular.module('admProduct', []);
 angular.module('admRecommend', []);
 angular.module('admBonus', []);
 angular.module('admin',[]);
-
+angular.module('admWarning',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 

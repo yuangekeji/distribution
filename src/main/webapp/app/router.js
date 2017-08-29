@@ -88,6 +88,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('order'),
                 controller: 'orderCtrl'
             })
+            .state('app.operator',{
+                url: '/operator',
+                templateUrl: helper.basepath('operator/html/apply.html'),
+                resolve: helper.resolveFor('operator'),
+                controller: 'operatorCtrl'
+            })
             .state('app.admMember',{
                 url: '/admMember',
                 templateUrl: helper.basepath('admMember/html/list.html'),
@@ -153,5 +159,11 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admin/html/list.html'),
                 resolve: helper.resolveFor('admin'),
                 controller: 'adminCtrl'
+            })
+            .state('app.admWarning',{
+                url: '/admWarning',
+                templateUrl: helper.basepath('admWarning/html/list.html'),
+                resolve: helper.resolveFor('admWarning'),
+                controller: 'admWarningCtrl'
             })
     }]);

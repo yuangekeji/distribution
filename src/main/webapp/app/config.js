@@ -82,6 +82,12 @@ angular
                 ]
             },
             {
+                name:'operator',
+                files: [
+                    'app/operator/js/apply.js?v=' + version
+                ]
+            },
+            {
                 name: 'bonus',
                 files: [
                     'resources/metronic/global/plugins/datatables/datatables.min.css',
@@ -200,6 +206,15 @@ angular
                 files: [
                     'resources/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admPermission/js/list.js?v=' + version,
+                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    'app/common/pagination/dirPagination.js'
+                ]
+            },
+            {
+                name:'admWarning',
+                files: [
+                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admWarning/js/list.js?v=' + version,
                     'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
                     'app/common/pagination/dirPagination.js'
                 ]

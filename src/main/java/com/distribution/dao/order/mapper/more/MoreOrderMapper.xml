@@ -54,6 +54,6 @@
   </select>
   
   <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"/> FROM member <include refid="where"/> <include refid="pageLimit"/>
+    SELECT <include refid="Base_Column_List"/> FROM order <include refid="where"/> <include refid="pageLimit"/>
   </select>
 </mapper>

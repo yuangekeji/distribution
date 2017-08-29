@@ -69,13 +69,17 @@
     <script src="${ctx}/resources/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 
     <script src="${ctx}/resources/metronic/global/scripts/ngStorage.js?v=${version}"></script>
+
     <script src="${ctx}/app/app.js?v=${version}"></script>
     <script src="${ctx}/app/config.js?v=${version}"></script>
     <script src="${ctx}/app/router.js?v=${version}"></script>
 
-    <script src="${ctx}/app/common/service/title.service.js?v=1"></script>
-    <script src="${ctx}/app/common/directive/loading.directive.js?v=1"></script>
 
+    <script src="${ctx}/app/directives.js?v=${version}"></script>
+
+    <script src="${ctx}/app/controllers.js?v=${version}"></script>
+    <script src="${ctx}/app/services.js?v=${version}"></script>
+    <script src="${ctx}/app/filter.js?v=${version}"></script>
 
 <body ng-controller="AppCtrl" class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid" ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
 <div ui-view></div>

@@ -1,0 +1,22 @@
+﻿
+        <div class="modal-content">
+            <div class="modal-header">
+                <button ng-show="isCancel" type="button" class="close" ng-click="cancel()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                   确认信息
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p >{{text}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" ng-click="ok()">
+                    确定
+                </button>
+                <button ng-show="isCancel" type="button" class="btn btn-default" ng-click="cancel()">
+                    取消
+                </button>
+            </div>
+        </div>

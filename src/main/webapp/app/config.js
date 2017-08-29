@@ -6,14 +6,13 @@ angular
     }])
     .constant('APP_REQUIRES', {
         scripts: {
-            'extDate': ['app/common/filter/expDate.filter.js'],
-            'focusDirective': ['app/common/directive/focus.directive.js']
+            'angular-ui-tree': ['resources/angular-ui-tree/angular-ui-tree.js']
         },
         modules: [
             {
                 name: 'home',
                 files: [
-                    'app/common/home.ctrl.js?v=' + version
+                    'app/home/home.ctrl.js?v=' + version
                 ]
             },
             {

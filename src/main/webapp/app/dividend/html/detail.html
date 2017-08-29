@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<h4 class="page-title">我的分红包</h4>
+<h4 class="page-title">我的分红包领取明细</h4>
 <!--<div class="page-bar">-->
 <!--<ul class="page-breadcrumb">-->
 <!--<li>-->
@@ -27,10 +27,8 @@
 
                 </div>
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
-
                     <div class="note note-info">
-                        <h5> 领取完的分红包：0个</h5>
-                        <h5> 领取中的分红包：1个</h5>
+                        <h5> 累计领取：2000.00</h5>
                     </div>
                     <!-- END FORM-->
                     <div class="table-scrollable">
@@ -38,14 +36,12 @@
                                id="sample_1">
                             <thead>
                             <tr >
-                                <th width="20%">订单编号</th>
-                                <th width="10%">分红包个数</th>
-                                <th width="10%">订单金额</th>
-                                <th width="10%">已领取金额</th>
-                                <th width="10%">未领取金额</th>
-                                <th width="10%">领取金额上限</th>
-                                <th width="10%">状态</th>
-                                <th width="20%">操作</th>
+                                <th>领取时间</th>
+                                <th>分红包个数</th>
+                                <th>当日分红包金额</th>
+                                <th>领取金额</th>
+                                <th>管理费</th>
+                                <th>状态</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -56,12 +52,10 @@
                                 <td>{{row.orderAmount}}</td>
                                 <td>{{row.receivedAmount}}</td>
                                 <td>{{row.remainAmount}}</td>
-                                <td>{{row.dividendLimit}}</td>
                                 <td><span class="label label-sm label-success"> {{row.dividendStatus | StatusFilter}} </span></td>
-                                <td><a href="javascript:;" > 领取明细 </a></td>
                             </tr>
                             <tr ng-if= "!myPage.result.length" >
-                                <td colspan="8">无记录</td>
+                                <td colspan="6">无记录</td>
                             </tr>
                             </tbody>
                         </table>

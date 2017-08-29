@@ -11,7 +11,7 @@ angular.module('app').config([
             })
             .state('app.home', {
                 url: '/home',
-                templateUrl: helper.basepath('common/home.html'),
+                templateUrl: helper.basepath('home/home.html'),
                 resolve: helper.resolveFor('home'),
                 controller: 'homeCtrl'
             })

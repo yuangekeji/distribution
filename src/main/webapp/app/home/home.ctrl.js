@@ -1,4 +1,5 @@
-angular.module('home').controller('homeCtrl', function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,settings ,$uibModal, $log) {
+angular.module('home').controller('homeCtrl',
+    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,Notify,ConfirmModal,settings ,$uibModal, $log) {
     title.setTitle('home');
 
     $scope.$on('$viewContentLoaded', function() {
@@ -13,6 +14,17 @@ angular.module('home').controller('homeCtrl', function ($scope, $http, title, $s
 
     $scope.currentUser = $sessionStorage.currentUser;
     console.log("$sessionStorage.currentUser："+$sessionStorage.currentUser);
+
+    $scope.test =function () {
+        ConfirmModal.show({
+            text: '确定要转账给该用户3000.00吗？',
+            isCancel:false //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+        })
+    }
     /**
      * description 激活弹出窗
      * @author Bright

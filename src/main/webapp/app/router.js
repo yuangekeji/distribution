@@ -70,6 +70,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('bonus'),
                 controller: 'bonusCtrl'
             })
+            .state('app.dividend-de',{
+                url: '/dividend',
+                templateUrl: helper.basepath('dividend/html/list.html'),
+                resolve: helper.resolveFor('dividend'),
+                controller: 'dividendCtrl'
+            })
             .state('app.dividend',{
                 url: '/dividend',
                 templateUrl: helper.basepath('dividend/html/list.html'),

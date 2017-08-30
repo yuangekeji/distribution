@@ -1,4 +1,4 @@
-package com.distribution.service.dividend;
+package com.distribution.service;
 
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dividend.mapper.more.MoreDividendMapper;

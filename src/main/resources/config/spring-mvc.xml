@@ -23,7 +23,7 @@
     <mvc:annotation-driven />
 
     <!-- 访问静态资源映射 <mvc:default-servlet-handler/> -->
-    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/static/**" location="/static/" />
     <mvc:resources mapping="/app/**" location="/app/" />
 
 

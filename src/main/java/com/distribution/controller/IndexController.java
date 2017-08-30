@@ -1,4 +1,4 @@
-package com.distribution.controller.index;
+package com.distribution.controller;
 
 import com.distribution.common.intercept.IgnoreLoginCheck;
 import org.springframework.stereotype.Controller;

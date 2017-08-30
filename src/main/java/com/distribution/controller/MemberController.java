@@ -1,4 +1,4 @@
-package com.distribution.controller.member;
+package com.distribution.controller;
 
 import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
@@ -9,8 +9,8 @@ import com.distribution.common.utils.Page;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
-import com.distribution.service.common.CommonService;
-import com.distribution.service.member.MemberService;
+import com.distribution.service.CommonService;
+import com.distribution.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

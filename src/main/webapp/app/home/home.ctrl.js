@@ -1,5 +1,5 @@
 angular.module('home').controller('homeCtrl',
-    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,Notify,ConfirmModal,settings ,$uibModal, $log) {
+    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $log) {
     title.setTitle('home');
 
     $scope.$on('$viewContentLoaded', function() {

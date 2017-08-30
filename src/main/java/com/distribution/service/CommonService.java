@@ -1,4 +1,4 @@
-package com.distribution.service.common;
+package com.distribution.service;
 
 import com.distribution.dao.dictionary.mapper.more.MoreDictionaryMapper;
 import com.distribution.dao.dictionary.model.Dictionary;

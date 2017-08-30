@@ -1,4 +1,4 @@
-package com.distribution.controller.admin;
+package com.distribution.controller;
 
 import com.distribution.common.controller.BasicController;
 import org.springframework.stereotype.Controller;

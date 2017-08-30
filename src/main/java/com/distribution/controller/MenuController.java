@@ -1,12 +1,9 @@
-package com.distribution.controller.menu;
+package com.distribution.controller;
 
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
-import com.distribution.common.intercept.IgnoreLoginCheck;
-import com.distribution.controller.role.RoleController;
 import com.distribution.dao.menu.model.Menu;
-import com.distribution.service.menu.MenuService;
-import com.distribution.service.role.RoleService;
+import com.distribution.service.MenuService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

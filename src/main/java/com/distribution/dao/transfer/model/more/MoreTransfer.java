@@ -18,23 +18,4 @@ public class MoreTransfer extends Transfer {
         this.payPassword = payPassword;
     }
 
-    private String memberPhone;
-
-    public String getMemberPhone() {
-        return memberPhone;
-    }
-
-    public void setMemberPhone(String memberPhone) {
-        this.memberPhone = memberPhone;
-    }
-
-    private String receviedPhone;
-
-    public String getReceviedPhone() {
-        return receviedPhone;
-    }
-
-    public void setReceviedPhone(String receviedPhone) {
-        this.receviedPhone = receviedPhone;
-    }
 }

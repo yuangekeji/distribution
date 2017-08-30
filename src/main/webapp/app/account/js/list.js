@@ -1,5 +1,5 @@
 angular.module('account').controller('accountListCtrl',
-    function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal, $log,ConfirmModal) {
+    function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal) {
     title.setTitle('我的账户');
 
     //账户信息
@@ -18,10 +18,9 @@ angular.module('account').controller('accountListCtrl',
      */
     $scope.getAccount =function () {
         $http.get(ctx + '/transfer/getAccountInfo').success(function (resp) {
-            $scope.accountInfo = resp.data;
-
-
-
+            if(resp.successful){
+                 $scope.accountInfo = resp.data.account;
+            }
         });
 
     }
@@ -40,7 +39,7 @@ angular.module('account').controller('accountListCtrl',
 
         $http.get(ctx + '/transfer/getMemberByPhone?phone='+$scope.transfer.receviedPhone).success(function (resp) {
 
-            $scope.transfer.receviedName = resp.data.memberName;
+            $scope.transfer.receviedName = resp.data.member.memberName;
 
             ConfirmModal.show({
                 text: '确定要转账给'+$scope.transfer.receviedName+'用户'+$scope.transfer.transferAmt+'吗？',
@@ -51,16 +50,17 @@ angular.module('account').controller('accountListCtrl',
                 }
 
                 $http.post(ctx + '/transfer/transferProcess',$scope.transfer).success(function (resp) {
+                    console.info(resp);
                    $scope.msg = "";
 
-                   if(resp.data == 'success'){
+                   if(resp.data.result == 'success'){
                        $scope.msg = "转账成功";
 
-                   }else if(resp.data == 'pwdWrong'){
+                   }else if(resp.data.result == 'pwdWrong'){
 
                        $scope.msg = "支付密码错误";
 
-                   }else if(resp.data == 'error'){
+                   }else if(resp.data.result == 'fail'){
 
                        $scope.msg = "转账失败，请重新尝试";
                    }

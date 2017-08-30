@@ -110,20 +110,20 @@ factory('ConfirmModal', ['$uibModal', '$q', '$sce', '$timeout', function ($uibMo
  * Module: Notify
  *js工具类库 notify.js
  =========================================================*/
-angular.module('app').service('Notify', [function(){
-    this.success = function(message){
-        $.notify('<i class=\"fa fa-check \"></i> '+message,
-            {status: 'success'});
-    }
-    this.error = function(message){
-        $.notify('<i class=\"fa fa-times-circle \"></i> '+message,
-            {status: 'danger'});
-    }
-    this.warning = function(message){
-        $.notify('<i class=\"fa fa-lg fa-exclamation-triangle fload-l mt5\"></i> '+message,
-            {status: 'warning'});
-    }
-}]);
+// angular.module('app').service('Notify', [function(){
+//     this.success = function(message){
+//         $.notify('<i class=\"fa fa-check \"></i> '+message,
+//             {status: 'success'});
+//     }
+//     this.error = function(message){
+//         $.notify('<i class=\"fa fa-times-circle \"></i> '+message,
+//             {status: 'danger'});
+//     }
+//     this.warning = function(message){
+//         $.notify('<i class=\"fa fa-lg fa-exclamation-triangle fload-l mt5\"></i> '+message,
+//             {status: 'warning'});
+//     }
+// }]);
 
 
 angular.module('app')
@@ -321,47 +321,47 @@ angular.module('app')
         return self;
     }]);
 
-angular.module('app').factory('sessionRecoverer', ['$q', '$injector','Notify', function($q, $injector,Notify) {
-    var sessionRecoverer = {
-        request: function (config) {
-            return config || $q.when(config);
-        },
-        //response:function(response)
-        //{
-        //    switch (response.status) {
-        //        case (200):
-        //            //if(!angular.isObject(response.data))
-        //            //{
-        //            //
-        //            //}
-        //            break;
-        //        case (500):
-        //            alert("服务器系统内部错误");
-        //            break;
-        //        case (401):
-        //            alert("未登录");
-        //            break;
-        //        case (403):
-        //            alert("无权限执行此操作");
-        //            break;
-        //        case (408):
-        //            alert("请求超时");
-        //            break;
-        //        default:
-        //            alert("未知错误");
-        //    }
-        //    return response;
-        //},
-        responseError: function(response) {
-            // Session has expired
-            Notify.error(response.data.errorMessage);
-            return $q.reject(response);
-        }
-    };
-    return sessionRecoverer;
-}]).config(['$httpProvider', function($httpProvider) {
-    $httpProvider.interceptors.push('sessionRecoverer');
-}]);
+// angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($q, $injector) {
+//     var sessionRecoverer = {
+//         request: function (config) {
+//             return config || $q.when(config);
+//         },
+//         //response:function(response)
+//         //{
+//         //    switch (response.status) {
+//         //        case (200):
+//         //            //if(!angular.isObject(response.data))
+//         //            //{
+//         //            //
+//         //            //}
+//         //            break;
+//         //        case (500):
+//         //            alert("服务器系统内部错误");
+//         //            break;
+//         //        case (401):
+//         //            alert("未登录");
+//         //            break;
+//         //        case (403):
+//         //            alert("无权限执行此操作");
+//         //            break;
+//         //        case (408):
+//         //            alert("请求超时");
+//         //            break;
+//         //        default:
+//         //            alert("未知错误");
+//         //    }
+//         //    return response;
+//         //},
+//         responseError: function(response) {
+//             // Session has expired
+//            console.error( response.data.errorMessage);
+//             return $q.reject(response);
+//         }
+//     };
+//     return sessionRecoverer;
+// }]).config(['$httpProvider', function($httpProvider) {
+//     $httpProvider.interceptors.push('sessionRecoverer');
+// }]);
 
 angular.module('app').service('citySelectService',["$http","$q",function($http,$q){
     return {

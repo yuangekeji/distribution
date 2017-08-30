@@ -65,13 +65,18 @@ public class TransferController extends BasicController{
 
 
     @RequestMapping(value = "/transferProcess", method = RequestMethod.POST)
+    @ResponseBody
     public JsonMessage transferProcess(MoreTransfer transfer,HttpSession session){
         //校验支付密码是否正确
         Member m = (Member) getCurrentUser(session);
         transfer.setMemberId(m.getId());
+        transfer.setMemberPhone(m.getMemberPhone());
+        transfer.setMemberName(m.getMemberName());
+
+        String result =transferService.insertTransferProcess(transfer);
         //密码正确处理转账
 //        return failMsg(e.getMessage());
-        return successMsg("result",transferService.insertTransferProcess(transfer));
+        return successMsg("result",result);
     }
 
 

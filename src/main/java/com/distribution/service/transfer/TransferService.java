@@ -64,16 +64,21 @@ public class TransferService {
                 //step1) 插入转账明细表 todo
                 Transfer tsf = new Transfer();
                 tsf.setMemberId(transfer.getMemberId());
+                tsf.setMemberName(transfer.getMemberName());
+                tsf.setMemberPhone(transfer.getMemberPhone());
                 tsf.setCreateId(transfer.getMemberId());
-                tsf.setTransferAmt(transfer.getTransferAmt());
                 tsf.setCreateTime(new Date());
+                tsf.setTransferAmt(transfer.getTransferAmt());
                 tsf.setTransferTime(new Date());
+
                 //step1-1) 通过手机号找id收款人的
                 Member receivedMember = memberMapper.getMemberByPhone(transfer.getMemberPhone());
                 tsf.setReceiveId(receivedMember.getId());
+                tsf.setReceivePhone(receivedMember.getMemberPhone());
+                tsf.setReceiveName(receivedMember.getMemberName());
 
                 //step1-2) 插入转账明细表
-                int cnt1 = transferMapper.insert(tsf);
+                int  cnt1 = transferMapper.insert(tsf);
 
                 //step 2)账户转出更新
                 AccountManager transAccount = new AccountManager();
@@ -99,14 +104,19 @@ public class TransferService {
 
                 int cnt3 =  accountManagerMapper.updateAccountManagerAmt(recivedAccount);
 
-                //转账成功
-                return "success";
+                if(cnt1 >0 && cnt2 >0 && cnt3>0){
+                    //转账成功
+                    return "success";
+                }else{
+                    return "fail";
+                }
+
             }
 
         }catch (Exception e){
             System.err.println(e.getMessage());
             //程序异常
-            return  "error";
+            return  "fail";
         }
 
         //密码错误

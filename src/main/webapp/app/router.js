@@ -76,6 +76,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('dividend'),
                 controller: 'dividendCtrl'
             })
+            .state('app.dividend-detail',{
+                url: '/dividend-detail/:memberId/:orderId/:orderNo',
+                templateUrl: helper.basepath('dividend/html/detail.html'),
+                resolve: helper.resolveFor('dividend.detail'),
+                controller: 'dividendDetailCtrl'
+            })
             .state('app.graph',{
                 url: '/graph',
                 templateUrl: helper.basepath('graph/html/graph.html'),

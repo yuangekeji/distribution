@@ -28,7 +28,15 @@
                 </div>
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <div class="note note-info">
-                        <h5> 累计领取：2000.00</h5>
+                       <h5>
+                           订单编号: {{titleData.orderNo}}&emsp;
+                           分红包个数: {{titleData.dividendCount}}&emsp;
+                           订单金额: {{titleData.orderAmount}}&emsp;
+                           已领取金额: {{titleData.receivedAmount}}&emsp;
+                           未领取金额: {{titleData.remainAmount}}&emsp;
+                           领取金额上限: {{titleData.dividendLimit}}&emsp;
+                           状态: {{titleData.dividendStatus | StatusFilter}}
+                       </h5>
                     </div>
                     <!-- END FORM-->
                     <div class="table-scrollable">
@@ -37,7 +45,6 @@
                             <thead>
                             <tr >
                                 <th>领取时间</th>
-                                <th>分红包个数</th>
                                 <th>当日分红包金额</th>
                                 <th>领取金额</th>
                                 <th>管理费</th>
@@ -47,12 +54,11 @@
                             <tbody>
                             <tr ng-if= "myPage.result.length >0" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
                                 total-items="myPage.result.totalCount">
-                                <td>{{row.orderNo}}</td>
-                                <td>{{row.dividendCount}}</td>
-                                <td>{{row.orderAmount}}</td>
-                                <td>{{row.receivedAmount}}</td>
-                                <td>{{row.remainAmount}}</td>
-                                <td><span class="label label-sm label-success"> {{row.dividendStatus | StatusFilter}} </span></td>
+                                <td>{{row.bonusDate  | date:'yyyy-MM-dd'}}</td>
+                                <td>{{row.amout}}</td>
+                                <td>{{row.actualAmout}}</td>
+                                <td>{{row.manageFee}}</td>
+                                <td><span class="label label-sm label-success">已领取</span></td>
                             </tr>
                             <tr ng-if= "!myPage.result.length" >
                                 <td colspan="6">无记录</td>

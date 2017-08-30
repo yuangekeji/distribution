@@ -39,12 +39,28 @@ public class DividendController extends BasicController {
      }
 
     /**
+     * 查詢分紅包明細Head
+     */
+
+    @RequestMapping("/detailsTitleData")
+    @ResponseBody
+    public JsonMessage detailsTitleData(@RequestBody Page page, String memberId, String orderNo){
+
+        page.getParameterMap().put("memberId",memberId);
+        page.getParameterMap().put("orderNo",orderNo);
+        return successMsg(dividendService.dividendList(page));
+    }
+
+    /**
      * 查詢分紅包明細
      */
 
     @RequestMapping("/details")
     @ResponseBody
-    public JsonMessage dividendDetails(@RequestBody Page page, HttpSession session){
+    public JsonMessage dividendDetails(@RequestBody Page page, String memberId, String orderId){
+
+        page.getParameterMap().put("memberId",memberId);
+        page.getParameterMap().put("orderId",orderId);
         return successMsg(dividendService.dividendDetails(page));
     }
 

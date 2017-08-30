@@ -541,3 +541,19 @@ ADD COLUMN `node_name`  varchar(255) NULL COMMENT '放置到的节点的人的�
 ALTER TABLE `transfer`
 ADD COLUMN `member_phone`  varchar(255) NULL COMMENT '会员电话号',
 ADD COLUMN `member_name`  varchar(255) NULL COMMENT '会员名字';
+
+--Bright 2017年8月30日21:37:32
+CREATE TABLE `operation_request` (
+`id`  int NOT NULL AUTO_INCREMENT COMMENT 'ID主键' ,
+`member_id`  int NULL COMMENT '会员ID' ,
+`total_order_amount`  decimal(15,2) NULL COMMENT '总订单金额' ,
+`status`  varchar(255) NULL DEFAULT 'wait' COMMENT '审核状态(\'wait\':待审核，\'pass\':通过，\'refuse\':拒绝)' ,
+`create_id`  int NULL COMMENT '创建人(自己)' ,
+`create_time`  datetime NULL COMMENT '创建时间(申请时间)' ,
+`update_id`  int NULL COMMENT '审批人' ,
+`update_time`  datetime NULL COMMENT '审批时间' ,
+PRIMARY KEY (`id`)
+);
+ALTER TABLE `member`
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`, `member_phone`);

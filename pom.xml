@@ -7,7 +7,35 @@
   <version>1.0-SNAPSHOT</version>
   <name>distribution Maven Webapp</name>
   <url>http://maven.apache.org</url>
+    <profiles>
+        <!-- 开发/测试环境，默认激活 -->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault><!--默认启用的是dev环境配置-->
+            </activation>
+        </profile>
+        <!-- 生产 -->
+        <profile>
+            <id>prd</id>
+            <properties>
+                <env>prd</env>
+            </properties>
+        </profile>
+    </profiles>
+
   <properties>
+      <!-- 开发服务器 -->
+      <filters>src/main/resources/filters/filter-${env}.properties</filters>
+      <!-- 正式服务器 -->
+      <!--<filters>src/main/resources/filters/filter-product.properties</filters>-->
+
+    <maven.test.skip>true</maven.test.skip>
+    <maven.test.failure.ignore>true</maven.test.failure.ignore>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- spring版本号 -->
     <spring.version>4.0.5.RELEASE</spring.version>
@@ -31,6 +59,7 @@
     <jspapi.version>2.2</jspapi.version>
     <commons-lang3.version>3.3.2</commons-lang3.version>
     <guava.version>17.0</guava.version>
+     <logging.version>1.1.1</logging.version>
   </properties>
 
    <dependencies>
@@ -121,17 +150,40 @@
         </dependency>
         <!-- 日志文件管理包 -->
         <!-- log start -->
-        <dependency>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-          <version>${log4j.version}</version>
-        </dependency>
+
+
+       <!-- @@@@@@@@@@@@@@@ Log begin @@@@@@@@@@@@@@@ -->
+       <!-- Solr用到 -->
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-api</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>log4j</groupId>
+           <artifactId>log4j</artifactId>
+           <version>${log4j.version}</version>
+       </dependency>
+       <!-- Solr用到 -->
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-log4j12</artifactId>
+           <version>${slf4j.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>commons-logging</groupId>
+           <artifactId>commons-logging</artifactId>
+           <version>${logging.version}</version>
+       </dependency>
+       <!-- @@@@@@@@@@@@@@@ Log end @@@@@@@@@@@@@@@ -->
+
         <!--json模型 -->
         <dependency>
           <groupId>com.fasterxml.jackson.core</groupId>
           <artifactId>jackson-databind</artifactId>
           <version>${jackson-databind.version}</version>
         </dependency>
+
         <!-- 文件上传-->
         <dependency>
           <groupId>commons-fileupload</groupId>
@@ -145,6 +197,11 @@
           <version>${tomcat-jdbc.version}</version>
         </dependency>
         <!-- spring aop -->
+       <dependency>
+           <groupId>commons-dbcp</groupId>
+           <artifactId>commons-dbcp</artifactId>
+           <version>1.4</version>
+       </dependency>
         <dependency>
           <groupId>org.aspectj</groupId>
           <artifactId>aspectjweaver</artifactId>
@@ -185,12 +242,6 @@
         </dependency>
 
         <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-          <version>${slf4j.version}</version>
-        </dependency>
-
-        <dependency>
           <groupId>org.appfuse.plugins</groupId>
           <artifactId>maven-warpath-plugin</artifactId>
           <version>3.0.0</version>
@@ -204,8 +255,20 @@
         <!--GENERAL UTILS end-->
 
       </dependencies>
-  <build>
+
+
+   <build>
+
       <plugins>
+       <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.1</version>
+              <configuration>
+                  <source>1.7</source> <!-- 源代码使用的开发版本 -->
+                  <target>1.7</target>
+              </configuration>
+          </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
@@ -225,15 +288,29 @@
           <version>2.2.2</version>
         </plugin>
       </plugins>
-      <resources>
+
+       <filters>
+           <!-- specify where is your filters file with -Dfilters option -->
+           <filter>${filters}</filter>
+       </filters>
+
+       <resources>
           <resource>
               <directory>src/main/java</directory>
               <includes>
+                  <include>**/*.properties</include>
                   <include>**/*.xml</include>
+              </includes>
+              <!-- 是否替换资源中的属性-->
+              <filtering>false</filtering>
+          </resource>
+          <resource>
+              <directory>src/main/resources</directory>
+              <includes>
+                  <include>**/*.*</include>
               </includes>
               <filtering>true</filtering>
           </resource>
-
       </resources>
   </build>
 </project>

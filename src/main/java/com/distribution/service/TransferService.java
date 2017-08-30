@@ -1,4 +1,4 @@
-package com.distribution.service.transfer;
+package com.distribution.service;
 
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;

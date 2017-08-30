@@ -1,13 +1,12 @@
-package com.distribution.controller.transfer;
+package com.distribution.controller;
 
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.transfer.model.more.MoreTransfer;
-import com.distribution.service.admin.AdminService;
-import com.distribution.service.member.MemberService;
-import com.distribution.service.transfer.TransferService;
+import com.distribution.service.MemberService;
+import com.distribution.service.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

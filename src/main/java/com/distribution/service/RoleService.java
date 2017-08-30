@@ -1,4 +1,4 @@
-package com.distribution.service.role;
+package com.distribution.service;
 
 import com.distribution.dao.role.mapper.RoleMapper;
 import com.distribution.dao.role.model.RoleExample;

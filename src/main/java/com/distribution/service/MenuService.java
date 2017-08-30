@@ -1,4 +1,4 @@
-package com.distribution.service.menu;
+package com.distribution.service;
 
 import com.distribution.dao.roleMenu.mapper.more.MoreRoleMenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;

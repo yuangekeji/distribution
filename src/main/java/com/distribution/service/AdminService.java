@@ -1,4 +1,4 @@
-package com.distribution.service.admin;
+package com.distribution.service;
 
 import org.springframework.stereotype.Service;
 

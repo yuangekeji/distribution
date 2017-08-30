@@ -1,21 +1,17 @@
-package com.distribution.controller.role;
+package com.distribution.controller;
 
 import com.distribution.common.constant.Constant;
-import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
-import com.distribution.dao.menu.model.Menu;
-import com.distribution.service.role.RoleService;
+import com.distribution.service.RoleService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

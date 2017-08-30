@@ -1,38 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.distribution.dao.transfer.mapper.TransferMapper">
-  <resultMap id="BaseResultMap" type="com.distribution.dao.transfer.model.Transfer">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="member_id" jdbcType="INTEGER" property="memberId" />
-    <result column="receive_id" jdbcType="INTEGER" property="receiveId" />
-    <result column="transfer_amt" jdbcType="DECIMAL" property="transferAmt" />
-    <result column="transfer_time" jdbcType="TIMESTAMP" property="transferTime" />
-    <result column="create_id" jdbcType="INTEGER" property="createId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="member_phone" jdbcType="VARCHAR" property="memberPhone" />
-    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
-    <result column="receive_phone" jdbcType="VARCHAR" property="receivePhone" />
-    <result column="receive_name" jdbcType="VARCHAR" property="receiveName" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.transfer.mapper.TransferMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.transfer.model.Transfer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="receive_id" property="receiveId" jdbcType="INTEGER" />
+    <result column="transfer_amt" property="transferAmt" jdbcType="DECIMAL" />
+    <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="receive_phone" property="receivePhone" jdbcType="VARCHAR" />
+    <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
   </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -43,25 +43,25 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
                   and ${criterion.condition}
                 </when>
-                <when test="criterion.singleValue">
+                <when test="criterion.singleValue" >
                   and ${criterion.condition} #{criterion.value}
                 </when>
-                <when test="criterion.betweenValue">
+                <when test="criterion.betweenValue" >
                   and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
                 </when>
-                <when test="criterion.listValue">
+                <when test="criterion.listValue" >
                   and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
                     #{listItem}
                   </foreach>
                 </when>
@@ -72,42 +72,42 @@
       </foreach>
     </where>
   </sql>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, member_id, receive_id, transfer_amt, transfer_time, create_id, create_time, member_phone, 
     member_name, receive_phone, receive_name
   </sql>
-  <select id="selectByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultMap="BaseResultMap">
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.transfer.model.TransferExample" >
     select
-    <if test="distinct">
+    <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
     from transfer
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    <if test="orderByClause != null">
+    <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from transfer
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from transfer
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.transfer.model.TransferExample">
+  <delete id="deleteByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" >
     delete from transfer
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.distribution.dao.transfer.model.Transfer">
+  <insert id="insert" parameterType="com.distribution.dao.transfer.model.Transfer" >
     insert into transfer (id, member_id, receive_id, 
       transfer_amt, transfer_time, create_id, 
       create_time, member_phone, member_name, 
@@ -117,127 +117,127 @@
       #{createTime,jdbcType=TIMESTAMP}, #{memberPhone,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
       #{receivePhone,jdbcType=VARCHAR}, #{receiveName,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.transfer.model.Transfer">
+  <insert id="insertSelective" parameterType="com.distribution.dao.transfer.model.Transfer" >
     insert into transfer
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="memberId != null">
+      <if test="memberId != null" >
         member_id,
       </if>
-      <if test="receiveId != null">
+      <if test="receiveId != null" >
         receive_id,
       </if>
-      <if test="transferAmt != null">
+      <if test="transferAmt != null" >
         transfer_amt,
       </if>
-      <if test="transferTime != null">
+      <if test="transferTime != null" >
         transfer_time,
       </if>
-      <if test="createId != null">
+      <if test="createId != null" >
         create_id,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
-      <if test="memberPhone != null">
+      <if test="memberPhone != null" >
         member_phone,
       </if>
-      <if test="memberName != null">
+      <if test="memberName != null" >
         member_name,
       </if>
-      <if test="receivePhone != null">
+      <if test="receivePhone != null" >
         receive_phone,
       </if>
-      <if test="receiveName != null">
+      <if test="receiveName != null" >
         receive_name,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="memberId != null">
+      <if test="memberId != null" >
         #{memberId,jdbcType=INTEGER},
       </if>
-      <if test="receiveId != null">
+      <if test="receiveId != null" >
         #{receiveId,jdbcType=INTEGER},
       </if>
-      <if test="transferAmt != null">
+      <if test="transferAmt != null" >
         #{transferAmt,jdbcType=DECIMAL},
       </if>
-      <if test="transferTime != null">
+      <if test="transferTime != null" >
         #{transferTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createId != null">
+      <if test="createId != null" >
         #{createId,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="memberPhone != null">
+      <if test="memberPhone != null" >
         #{memberPhone,jdbcType=VARCHAR},
       </if>
-      <if test="memberName != null">
+      <if test="memberName != null" >
         #{memberName,jdbcType=VARCHAR},
       </if>
-      <if test="receivePhone != null">
+      <if test="receivePhone != null" >
         #{receivePhone,jdbcType=VARCHAR},
       </if>
-      <if test="receiveName != null">
+      <if test="receiveName != null" >
         #{receiveName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultType="java.lang.Integer">
+  <select id="countByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultType="java.lang.Integer" >
     select count(*) from transfer
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map">
+  <update id="updateByExampleSelective" parameterType="map" >
     update transfer
-    <set>
-      <if test="record.id != null">
+    <set >
+      <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.memberId != null">
+      <if test="record.memberId != null" >
         member_id = #{record.memberId,jdbcType=INTEGER},
       </if>
-      <if test="record.receiveId != null">
+      <if test="record.receiveId != null" >
         receive_id = #{record.receiveId,jdbcType=INTEGER},
       </if>
-      <if test="record.transferAmt != null">
+      <if test="record.transferAmt != null" >
         transfer_amt = #{record.transferAmt,jdbcType=DECIMAL},
       </if>
-      <if test="record.transferTime != null">
+      <if test="record.transferTime != null" >
         transfer_time = #{record.transferTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.createId != null">
+      <if test="record.createId != null" >
         create_id = #{record.createId,jdbcType=INTEGER},
       </if>
-      <if test="record.createTime != null">
+      <if test="record.createTime != null" >
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.memberPhone != null">
+      <if test="record.memberPhone != null" >
         member_phone = #{record.memberPhone,jdbcType=VARCHAR},
       </if>
-      <if test="record.memberName != null">
+      <if test="record.memberName != null" >
         member_name = #{record.memberName,jdbcType=VARCHAR},
       </if>
-      <if test="record.receivePhone != null">
+      <if test="record.receivePhone != null" >
         receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
       </if>
-      <if test="record.receiveName != null">
+      <if test="record.receiveName != null" >
         receive_name = #{record.receiveName,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByExample" parameterType="map">
+  <update id="updateByExample" parameterType="map" >
     update transfer
     set id = #{record.id,jdbcType=INTEGER},
       member_id = #{record.memberId,jdbcType=INTEGER},
@@ -250,653 +250,47 @@
       member_name = #{record.memberName,jdbcType=VARCHAR},
       receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
       receive_name = #{record.receiveName,jdbcType=VARCHAR}
-    <if test="_parameter != null">
+    <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.transfer.model.Transfer">
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.transfer.model.Transfer" >
     update transfer
-    <set>
-      <if test="memberId != null">
+    <set >
+      <if test="memberId != null" >
         member_id = #{memberId,jdbcType=INTEGER},
       </if>
-      <if test="receiveId != null">
+      <if test="receiveId != null" >
         receive_id = #{receiveId,jdbcType=INTEGER},
       </if>
-      <if test="transferAmt != null">
+      <if test="transferAmt != null" >
         transfer_amt = #{transferAmt,jdbcType=DECIMAL},
       </if>
-      <if test="transferTime != null">
+      <if test="transferTime != null" >
         transfer_time = #{transferTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createId != null">
+      <if test="createId != null" >
         create_id = #{createId,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="memberPhone != null">
+      <if test="memberPhone != null" >
         member_phone = #{memberPhone,jdbcType=VARCHAR},
       </if>
-      <if test="memberName != null">
+      <if test="memberName != null" >
         member_name = #{memberName,jdbcType=VARCHAR},
       </if>
-      <if test="receivePhone != null">
+      <if test="receivePhone != null" >
         receive_phone = #{receivePhone,jdbcType=VARCHAR},
       </if>
-      <if test="receiveName != null">
+      <if test="receiveName != null" >
         receive_name = #{receiveName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.transfer.model.Transfer">
-    update transfer
-    set member_id = #{memberId,jdbcType=INTEGER},
-      receive_id = #{receiveId,jdbcType=INTEGER},
-      transfer_amt = #{transferAmt,jdbcType=DECIMAL},
-      transfer_time = #{transferTime,jdbcType=TIMESTAMP},
-      create_id = #{createId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      member_phone = #{memberPhone,jdbcType=VARCHAR},
-      member_name = #{memberName,jdbcType=VARCHAR},
-      receive_phone = #{receivePhone,jdbcType=VARCHAR},
-      receive_name = #{receiveName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.distribution.dao.transfer.model.Transfer">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="member_id" jdbcType="INTEGER" property="memberId" />
-    <result column="receive_id" jdbcType="INTEGER" property="receiveId" />
-    <result column="transfer_amt" jdbcType="DECIMAL" property="transferAmt" />
-    <result column="transfer_time" jdbcType="TIMESTAMP" property="transferTime" />
-    <result column="create_id" jdbcType="INTEGER" property="createId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="member_phone" jdbcType="VARCHAR" property="memberPhone" />
-    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
-    <result column="receive_phone" jdbcType="VARCHAR" property="receivePhone" />
-    <result column="receive_name" jdbcType="VARCHAR" property="receiveName" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, member_id, receive_id, transfer_amt, transfer_time, create_id, create_time, member_phone, 
-    member_name, receive_phone, receive_name
-  </sql>
-  <select id="selectByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from transfer
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from transfer
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from transfer
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.transfer.model.TransferExample">
-    delete from transfer
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.distribution.dao.transfer.model.Transfer">
-    insert into transfer (id, member_id, receive_id, 
-      transfer_amt, transfer_time, create_id, 
-      create_time, member_phone, member_name, 
-      receive_phone, receive_name)
-    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{receiveId,jdbcType=INTEGER}, 
-      #{transferAmt,jdbcType=DECIMAL}, #{transferTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{memberPhone,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
-      #{receivePhone,jdbcType=VARCHAR}, #{receiveName,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.transfer.model.Transfer">
-    insert into transfer
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="memberId != null">
-        member_id,
-      </if>
-      <if test="receiveId != null">
-        receive_id,
-      </if>
-      <if test="transferAmt != null">
-        transfer_amt,
-      </if>
-      <if test="transferTime != null">
-        transfer_time,
-      </if>
-      <if test="createId != null">
-        create_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="memberPhone != null">
-        member_phone,
-      </if>
-      <if test="memberName != null">
-        member_name,
-      </if>
-      <if test="receivePhone != null">
-        receive_phone,
-      </if>
-      <if test="receiveName != null">
-        receive_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="memberId != null">
-        #{memberId,jdbcType=INTEGER},
-      </if>
-      <if test="receiveId != null">
-        #{receiveId,jdbcType=INTEGER},
-      </if>
-      <if test="transferAmt != null">
-        #{transferAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="transferTime != null">
-        #{transferTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createId != null">
-        #{createId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="memberPhone != null">
-        #{memberPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="memberName != null">
-        #{memberName,jdbcType=VARCHAR},
-      </if>
-      <if test="receivePhone != null">
-        #{receivePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="receiveName != null">
-        #{receiveName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultType="java.lang.Integer">
-    select count(*) from transfer
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update transfer
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.memberId != null">
-        member_id = #{record.memberId,jdbcType=INTEGER},
-      </if>
-      <if test="record.receiveId != null">
-        receive_id = #{record.receiveId,jdbcType=INTEGER},
-      </if>
-      <if test="record.transferAmt != null">
-        transfer_amt = #{record.transferAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="record.transferTime != null">
-        transfer_time = #{record.transferTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.createId != null">
-        create_id = #{record.createId,jdbcType=INTEGER},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.memberPhone != null">
-        member_phone = #{record.memberPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.memberName != null">
-        member_name = #{record.memberName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.receivePhone != null">
-        receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.receiveName != null">
-        receive_name = #{record.receiveName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update transfer
-    set id = #{record.id,jdbcType=INTEGER},
-      member_id = #{record.memberId,jdbcType=INTEGER},
-      receive_id = #{record.receiveId,jdbcType=INTEGER},
-      transfer_amt = #{record.transferAmt,jdbcType=DECIMAL},
-      transfer_time = #{record.transferTime,jdbcType=TIMESTAMP},
-      create_id = #{record.createId,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      member_phone = #{record.memberPhone,jdbcType=VARCHAR},
-      member_name = #{record.memberName,jdbcType=VARCHAR},
-      receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
-      receive_name = #{record.receiveName,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.transfer.model.Transfer">
-    update transfer
-    <set>
-      <if test="memberId != null">
-        member_id = #{memberId,jdbcType=INTEGER},
-      </if>
-      <if test="receiveId != null">
-        receive_id = #{receiveId,jdbcType=INTEGER},
-      </if>
-      <if test="transferAmt != null">
-        transfer_amt = #{transferAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="transferTime != null">
-        transfer_time = #{transferTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createId != null">
-        create_id = #{createId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="memberPhone != null">
-        member_phone = #{memberPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="memberName != null">
-        member_name = #{memberName,jdbcType=VARCHAR},
-      </if>
-      <if test="receivePhone != null">
-        receive_phone = #{receivePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="receiveName != null">
-        receive_name = #{receiveName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.transfer.model.Transfer">
-    update transfer
-    set member_id = #{memberId,jdbcType=INTEGER},
-      receive_id = #{receiveId,jdbcType=INTEGER},
-      transfer_amt = #{transferAmt,jdbcType=DECIMAL},
-      transfer_time = #{transferTime,jdbcType=TIMESTAMP},
-      create_id = #{createId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      member_phone = #{memberPhone,jdbcType=VARCHAR},
-      member_name = #{memberName,jdbcType=VARCHAR},
-      receive_phone = #{receivePhone,jdbcType=VARCHAR},
-      receive_name = #{receiveName,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <resultMap id="BaseResultMap" type="com.distribution.dao.transfer.model.Transfer">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="member_id" jdbcType="INTEGER" property="memberId" />
-    <result column="receive_id" jdbcType="INTEGER" property="receiveId" />
-    <result column="transfer_amt" jdbcType="DECIMAL" property="transferAmt" />
-    <result column="transfer_time" jdbcType="TIMESTAMP" property="transferTime" />
-    <result column="create_id" jdbcType="INTEGER" property="createId" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="member_phone" jdbcType="VARCHAR" property="memberPhone" />
-    <result column="member_name" jdbcType="VARCHAR" property="memberName" />
-    <result column="receive_phone" jdbcType="VARCHAR" property="receivePhone" />
-    <result column="receive_name" jdbcType="VARCHAR" property="receiveName" />
-  </resultMap>
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List">
-    id, member_id, receive_id, transfer_amt, transfer_time, create_id, create_time, member_phone, 
-    member_name, receive_phone, receive_name
-  </sql>
-  <select id="selectByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultMap="BaseResultMap">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from transfer
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from transfer
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from transfer
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.distribution.dao.transfer.model.TransferExample">
-    delete from transfer
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.distribution.dao.transfer.model.Transfer">
-    insert into transfer (id, member_id, receive_id, 
-      transfer_amt, transfer_time, create_id, 
-      create_time, member_phone, member_name, 
-      receive_phone, receive_name)
-    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{receiveId,jdbcType=INTEGER}, 
-      #{transferAmt,jdbcType=DECIMAL}, #{transferTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{memberPhone,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, 
-      #{receivePhone,jdbcType=VARCHAR}, #{receiveName,jdbcType=VARCHAR})
-  </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.transfer.model.Transfer">
-    insert into transfer
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="memberId != null">
-        member_id,
-      </if>
-      <if test="receiveId != null">
-        receive_id,
-      </if>
-      <if test="transferAmt != null">
-        transfer_amt,
-      </if>
-      <if test="transferTime != null">
-        transfer_time,
-      </if>
-      <if test="createId != null">
-        create_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="memberPhone != null">
-        member_phone,
-      </if>
-      <if test="memberName != null">
-        member_name,
-      </if>
-      <if test="receivePhone != null">
-        receive_phone,
-      </if>
-      <if test="receiveName != null">
-        receive_name,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="memberId != null">
-        #{memberId,jdbcType=INTEGER},
-      </if>
-      <if test="receiveId != null">
-        #{receiveId,jdbcType=INTEGER},
-      </if>
-      <if test="transferAmt != null">
-        #{transferAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="transferTime != null">
-        #{transferTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createId != null">
-        #{createId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="memberPhone != null">
-        #{memberPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="memberName != null">
-        #{memberName,jdbcType=VARCHAR},
-      </if>
-      <if test="receivePhone != null">
-        #{receivePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="receiveName != null">
-        #{receiveName,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.distribution.dao.transfer.model.TransferExample" resultType="java.lang.Integer">
-    select count(*) from transfer
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map">
-    update transfer
-    <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.memberId != null">
-        member_id = #{record.memberId,jdbcType=INTEGER},
-      </if>
-      <if test="record.receiveId != null">
-        receive_id = #{record.receiveId,jdbcType=INTEGER},
-      </if>
-      <if test="record.transferAmt != null">
-        transfer_amt = #{record.transferAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="record.transferTime != null">
-        transfer_time = #{record.transferTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.createId != null">
-        create_id = #{record.createId,jdbcType=INTEGER},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.memberPhone != null">
-        member_phone = #{record.memberPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.memberName != null">
-        member_name = #{record.memberName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.receivePhone != null">
-        receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="record.receiveName != null">
-        receive_name = #{record.receiveName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    update transfer
-    set id = #{record.id,jdbcType=INTEGER},
-      member_id = #{record.memberId,jdbcType=INTEGER},
-      receive_id = #{record.receiveId,jdbcType=INTEGER},
-      transfer_amt = #{record.transferAmt,jdbcType=DECIMAL},
-      transfer_time = #{record.transferTime,jdbcType=TIMESTAMP},
-      create_id = #{record.createId,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      member_phone = #{record.memberPhone,jdbcType=VARCHAR},
-      member_name = #{record.memberName,jdbcType=VARCHAR},
-      receive_phone = #{record.receivePhone,jdbcType=VARCHAR},
-      receive_name = #{record.receiveName,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.transfer.model.Transfer">
-    update transfer
-    <set>
-      <if test="memberId != null">
-        member_id = #{memberId,jdbcType=INTEGER},
-      </if>
-      <if test="receiveId != null">
-        receive_id = #{receiveId,jdbcType=INTEGER},
-      </if>
-      <if test="transferAmt != null">
-        transfer_amt = #{transferAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="transferTime != null">
-        transfer_time = #{transferTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createId != null">
-        create_id = #{createId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="memberPhone != null">
-        member_phone = #{memberPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="memberName != null">
-        member_name = #{memberName,jdbcType=VARCHAR},
-      </if>
-      <if test="receivePhone != null">
-        receive_phone = #{receivePhone,jdbcType=VARCHAR},
-      </if>
-      <if test="receiveName != null">
-        receive_name = #{receiveName,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.transfer.model.Transfer">
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.transfer.model.Transfer" >
     update transfer
     set member_id = #{memberId,jdbcType=INTEGER},
       receive_id = #{receiveId,jdbcType=INTEGER},

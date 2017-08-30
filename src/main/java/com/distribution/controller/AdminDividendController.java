@@ -1,10 +1,9 @@
-package com.distribution.controller.dividend;
+package com.distribution.controller;
 
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
-import com.distribution.dao.member.model.Member;
-import com.distribution.service.dividend.DividendService;
+import com.distribution.service.DividendService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

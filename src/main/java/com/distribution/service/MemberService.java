@@ -1,4 +1,4 @@
-package com.distribution.service.member;
+package com.distribution.service;
 
 import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;

@@ -15,16 +15,18 @@
                         <table class="table table-striped table-bordered table-hover table-checkable order-column"
                                id="sample_1">
                             <thead>
-                            <tr >
-                                <th>订单编号</th>
-                                <th>分红包个数</th>
-                                <th>订单金额</th>
-                                <th>已领取金额</th>
-                                <th>未领取金额</th>
-                                <th>领取金额上限</th>
-                                <th>状态</th>
-                                <th>操作</th>
-                            </tr>
+                                <tr >
+                                    <th>日期</th>
+                                    <th>分红包发放状态</th>
+                                    <th>广告宣传奖发放状态</th>
+                                    <th>营业额</th>
+                                    <th>应发分红包金额</th>
+                                    <th>应发广告宣传奖金额</th>
+                                    <th>用于分红包发放（营业额20%）</th>
+                                    <th>用于广告宣传奖金额（营业额10%）</th>
+                                    <th>补发分红包</th>
+                                    <th>补发广告宣传奖</th>
+                                </tr>
                             </thead>
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
@@ -37,9 +39,12 @@
                                 <td>{{row.dividendLimit}}</td>
                                 <td><span class="label label-sm label-success"> {{row.dividendStatus | StatusFilter}} </span></td>
                                 <td><a href="javascript:;" > 领取明细 </a></td>
+                                <td><a href="javascript:;" > 领取明细 </a></td>
+                                <td><a href="javascript:;" > 领取明细 </a></td>
+
                             </tr>
                             <tr ng-show= "notData" >
-                                <td colspan="8">无记录</td>
+                                <td colspan="10">无记录</td>
                             </tr>
                             </tbody>
                         </table>

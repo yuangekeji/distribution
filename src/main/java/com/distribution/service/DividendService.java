@@ -2,6 +2,7 @@ package com.distribution.service;
 
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dividend.mapper.more.MoreDividendMapper;
+import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class DividendService {
 
     @Autowired
     private MoreDividendMapper dividendMapper;
+
+    @Autowired
+    private MoreMemberBonusMapper memberBonusMapper;
 
 
 
@@ -36,7 +40,7 @@ public class DividendService {
     public Page dividendDetails(Page page){
 
         page.setTotalCount(dividendMapper.getDividendListCount(page));
-        page.setResult( dividendMapper.getDividendList(page));
+        page.setResult( memberBonusMapper.getDividendDetails(page));
         return page;
     }
 }

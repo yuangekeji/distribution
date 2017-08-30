@@ -105,6 +105,15 @@ angular
                 ]
             },
             {
+                name: 'dividend.detail',
+                files: [
+                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/dividend/js/detail.js?v=' + version,
+                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    'app/common/pagination/dirPagination.js'
+                ]
+            },
+            {
                 name:'account',
                 files: [
                     'app/account/js/list.js?v=' + version,

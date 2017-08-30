@@ -70,7 +70,7 @@
   <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
     SELECT id, member_phone, recommend_id, node_id,
     member_name, member_level, express_address, status, role_id,
-    member_post, order_amount, consignee,
+    member_post, create_time, order_amount, consignee,
     money_status, is_operator, is_sales_dept,
     first_agent_cnt, recommend_name, node_name FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
@@ -90,6 +90,10 @@
   </select>
   
   <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"/> FROM member <include refid="where"/> <include refid="pageLimit"/>
+    SELECT id, member_phone, recommend_id, node_id,
+    member_name, member_level, express_address, status, role_id,
+    member_post, create_time, order_amount, consignee,
+    money_status, is_operator, is_sales_dept,
+    first_agent_cnt, recommend_name, node_name FROM member <include refid="where"/> <include refid="pageLimit"/>
   </select>
 </mapper>

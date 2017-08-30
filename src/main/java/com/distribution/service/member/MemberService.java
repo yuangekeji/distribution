@@ -4,6 +4,8 @@ import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
+import com.distribution.dao.accountManager.mapper.AccountManagerMapper;
+import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.mapper.more.MoreAdminMapper;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.member.mapper.MemberMapper;
@@ -28,6 +30,8 @@ public class MemberService {
     private MoreMemberMapper moreMemberMapper;
     @Autowired
     private MoreAdminMapper moreAdminMapper;
+    @Autowired
+    private AccountManagerMapper accountManagerMapper;
 
     /**
      * description 会员列表查询
@@ -126,12 +130,39 @@ public class MemberService {
 
     /**
      * description 激活账户
+     *
+     * 更新状态；
+     * 补充用户银卡等身份信息；
+     * 如果订单超过3w，就更新是否是工作中心字段；
+     * 给推荐人的一代个数中 +1；
+     * 创建账户信息；
      * @author Bright
      * */
     public Integer activation(Member member){
         member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
-        return memberMapper.updateByPrimaryKeySelective(member);
+        if(member.getOrderAmount().compareTo(new BigDecimal(30000))==1){
+            member.setIsSalesDept("Y");
+        }
+        Integer it = memberMapper.updateByPrimaryKeySelective(member);
+        //给推荐人的一代个数中 +1
+        Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
+        m.setFirstAgentCnt(null!=member.getFirstAgentCnt()?(member.getFirstAgentCnt()+1):1);
+        //创建账户信息
+        AccountManager accountManager = new AccountManager();
+        accountManager.setMemberId(member.getId());
+        accountManager.setTotalBonus(new BigDecimal(0));
+        accountManager.setSeedAmt(new BigDecimal(0));
+        accountManager.setBonusAmt(new BigDecimal(0));
+        accountManager.setAdvanceAmt(new BigDecimal(0));
+        accountManager.setCreateId(member.getId());
+        accountManager.setCreateTime(new Date());
+        accountManager.setUpdateId(member.getId());
+        accountManager.setUpdateTime(new Date());
+        accountManagerMapper.insert(accountManager);
+        //TODO 生成订单
+        //TODO 生成分红包
+        return it;
     }
 
     /**

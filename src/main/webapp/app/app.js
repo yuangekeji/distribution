@@ -6,6 +6,7 @@ var App = angular.module('app', [
     'app.routes',
     'ngStorage',
     'ui.bootstrap',
+    'angularUtils.directives.dirPagination',
     //前台业务模块
     'home',
     'recommend',

@@ -9,7 +9,7 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
         $scope.currentPage = 1;
         $scope.pageSize = 10;
         $scope.meals = [];
-        $scope.totalItems = 40;
+        $scope.totalItems = 10;
         var dishes = [
             'noodles',
             'sausage',

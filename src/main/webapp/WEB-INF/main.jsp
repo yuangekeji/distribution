@@ -69,6 +69,8 @@
     <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 
     <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>
+    <script src="${ctx}/app/common/pagination/dirPagination.js" type="text/javascript" charset="utf-8"></script>
+
 
     <script src="${ctx}/app/app.js?v=${version}"></script>
     <script src="${ctx}/app/config.js?v=${version}"></script>

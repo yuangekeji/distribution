@@ -133,7 +133,7 @@
   <update id="updateByExample" parameterType="map" >
     update role_menu
     set role_id = #{record.roleId,jdbcType=INTEGER},
-      menu_id = #{record.menuId,jdbcType=INTEGER}
+    menu_id = #{record.menuId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

@@ -370,15 +370,18 @@ INSERT INTO `menu` VALUES ('26', null, '管理员列表', '25', 'app.admin');
 INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.admAccount');
 
 -- ----------------------------
--- Table structure for order
+-- Table structure for order_master
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单号',
+DROP TABLE IF EXISTS `order_master`;
+CREATE TABLE `order_master` (
+  `order_no` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单号',
   `order_category` char(1) DEFAULT NULL COMMENT '订单分类',
-  `order_amt` decimal(15,2) NOT NULL COMMENT '订单金额',
-  `order_qty` int(11) NOT NULL COMMENT '订购数量',
-  `member_id` int(11) NOT NULL COMMENT '会员id',
+  `order_amt` decimal(15,2) DEFAULT NULL COMMENT '订单金额',
+  `order_qty` int(11) DEFAULT NULL COMMENT '订购数量',
+  `discount` int(11) DEFAULT NULL COMMENT '折扣',
+  `act_amt` decimal(15,2) DEFAULT NULL COMMENT '实付金额',
+  `express_fee` decimal(15,2) DEFAULT NULL COMMENT '快递费',
+  `member_id` int(11) DEFAULT NULL COMMENT '会员id',
   `receive_name` varchar(50) DEFAULT NULL COMMENT '收货人姓名',
   `express_address` varchar(500) DEFAULT NULL COMMENT '收货地址',
   `member_level` varchar(2) DEFAULT NULL COMMENT '会员等级',

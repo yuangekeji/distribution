@@ -225,6 +225,12 @@ angular
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js',
                     // 'app/common/pagination/dirPagination.js'
                 ]
+            },
+            {
+                name:'authFail',
+                files: [
+                    'app/auth/js/fail.js?v=' + version,
+                ]
             }
         ]
     });

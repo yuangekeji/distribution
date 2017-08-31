@@ -326,8 +326,8 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($
         request: function (config) {
             return config || $q.when(config);
         },
-        //response:function(response)
-        //{
+        // response:function(response)
+        // {
         //    switch (response.status) {
         //        case (200):
         //            //if(!angular.isObject(response.data))
@@ -351,10 +351,14 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($
         //            alert("未知错误");
         //    }
         //    return response;
-        //},
+        // },
         responseError: function(response) {
             // Session has expired
-           console.error( response.data.errorMessage);
+            if(response.status =='403'){
+                alert('无权限访问');
+
+            }
+            console.error( response.data.errorMessage);
             return $q.reject(response);
         }
     };

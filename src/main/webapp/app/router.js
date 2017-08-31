@@ -178,4 +178,10 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admWarning'),
                 controller: 'admWarningCtrl'
             })
+            .state('app.authFail', {
+                url: '/authFail',
+                templateUrl: helper.basepath('auth/fail.html'),
+                resolve: helper.resolveFor('authFail'),
+                controller: 'authFailCtrl'
+            })
     }]);

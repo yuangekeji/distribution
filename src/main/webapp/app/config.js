@@ -6,7 +6,7 @@ angular
     }])
     .constant('APP_REQUIRES', {
         scripts: {
-            'angular-ui-tree': ['resources/angular-ui-tree/angular-ui-tree.js']
+            'angular-ui-tree': ['static/angular-ui-tree/angular-ui-tree.js']
         },
         modules: [
             {
@@ -18,11 +18,11 @@ angular
             {
                 name: 'recommend.list',
                 files: [
-                        'resources/metronic/global/plugins/datatables/datatables.min.css',
+                        'static/metronic/global/plugins/datatables/datatables.min.css',
                         'app/recommend/js/list.js?v=' + version,
-                        'resources/metronic/global/plugins/datatables/datatables.all.min.js',
-                        'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                        'app/common/pagination/dirPagination.js'
+                        'static/metronic/global/plugins/datatables/datatables.all.min.js',
+                        'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                        // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
@@ -48,10 +48,10 @@ angular
             {
                 name: 'member',
                 files: [
-                    'resources/metronic/pages/css/profile.css',
+                    'static/metronic/pages/css/profile.css',
                     'app/member/js/member.js?v=' + version,
-                    'resources/metronic/pages/scripts/profile.js',
-                    'resources/metronic/global/plugins/jquery.sparkline.min.js',
+                    'static/metronic/pages/scripts/profile.js',
+                    'static/metronic/global/plugins/jquery.sparkline.min.js',
                 ]
             },
             {
@@ -69,10 +69,10 @@ angular
             {
                 name:'advance.list',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/advance/js/list.js?v=' + version,
-                    'app/common/pagination/dirPagination.js',
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    // 'app/common/pagination/dirPagination.js',
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
             {
@@ -90,133 +90,146 @@ angular
             {
                 name: 'bonus',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/bonus/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name: 'dividend',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/dividend/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
+            },
+            {
+                name: 'dividend.detail',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/dividend/js/detail.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
             {
                 name:'account',
                 files: [
                     'app/account/js/list.js?v=' + version,
-                    'resources/metronic/global/plugins/fuelux/js/spinner.min.js']
+                    'static/metronic/global/plugins/fuelux/js/spinner.min.js']
             },
             {
                 name:'order',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/order/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admMember',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admMember/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admOperator',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admOperator/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admDividend',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admDividend/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admBonus',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admBonus/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admRecommend',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admRecommend/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admOrder',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admOrder/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admAdvance',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admAdvance/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admProduct',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admProduct/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admBasicSetting',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admBasicSetting/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admPermission',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admPermission/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
                 ]
             },
             {
                 name:'admWarning',
                 files: [
-                    'resources/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admWarning/js/list.js?v=' + version,
-                    'resources/metronic/pages/scripts/components-date-time-pickers.min.js',
-                    'app/common/pagination/dirPagination.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
+                ]
+            },
+            {
+                name:'authFail',
+                files: [
+                    'app/auth/js/fail.js?v=' + version,
                 ]
             }
         ]

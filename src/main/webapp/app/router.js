@@ -70,11 +70,23 @@ angular.module('app').config([
                 resolve: helper.resolveFor('bonus'),
                 controller: 'bonusCtrl'
             })
+            .state('app.dividend-de',{
+                url: '/dividend',
+                templateUrl: helper.basepath('dividend/html/list.html'),
+                resolve: helper.resolveFor('dividend'),
+                controller: 'dividendCtrl'
+            })
             .state('app.dividend',{
                 url: '/dividend',
                 templateUrl: helper.basepath('dividend/html/list.html'),
                 resolve: helper.resolveFor('dividend'),
                 controller: 'dividendCtrl'
+            })
+            .state('app.dividend-detail',{
+                url: '/dividend-detail/:memberId/:orderId/:orderNo',
+                templateUrl: helper.basepath('dividend/html/detail.html'),
+                resolve: helper.resolveFor('dividend.detail'),
+                controller: 'dividendDetailCtrl'
             })
             .state('app.graph',{
                 url: '/graph',
@@ -165,5 +177,11 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admWarning/html/list.html'),
                 resolve: helper.resolveFor('admWarning'),
                 controller: 'admWarningCtrl'
+            })
+            .state('app.authFail', {
+                url: '/authFail',
+                templateUrl: helper.basepath('auth/fail.html'),
+                resolve: helper.resolveFor('authFail'),
+                controller: 'authFailCtrl'
             })
     }]);

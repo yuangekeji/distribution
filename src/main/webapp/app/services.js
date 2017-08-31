@@ -110,20 +110,20 @@ factory('ConfirmModal', ['$uibModal', '$q', '$sce', '$timeout', function ($uibMo
  * Module: Notify
  *js工具类库 notify.js
  =========================================================*/
-angular.module('app').service('Notify', [function(){
-    this.success = function(message){
-        $.notify('<i class=\"fa fa-check \"></i> '+message,
-            {status: 'success'});
-    }
-    this.error = function(message){
-        $.notify('<i class=\"fa fa-times-circle \"></i> '+message,
-            {status: 'danger'});
-    }
-    this.warning = function(message){
-        $.notify('<i class=\"fa fa-lg fa-exclamation-triangle fload-l mt5\"></i> '+message,
-            {status: 'warning'});
-    }
-}]);
+// angular.module('app').service('Notify', [function(){
+//     this.success = function(message){
+//         $.notify('<i class=\"fa fa-check \"></i> '+message,
+//             {status: 'success'});
+//     }
+//     this.error = function(message){
+//         $.notify('<i class=\"fa fa-times-circle \"></i> '+message,
+//             {status: 'danger'});
+//     }
+//     this.warning = function(message){
+//         $.notify('<i class=\"fa fa-lg fa-exclamation-triangle fload-l mt5\"></i> '+message,
+//             {status: 'warning'});
+//     }
+// }]);
 
 
 angular.module('app')
@@ -321,13 +321,13 @@ angular.module('app')
         return self;
     }]);
 
-angular.module('app').factory('sessionRecoverer', ['$q', '$injector','Notify', function($q, $injector,Notify) {
+angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($q, $injector) {
     var sessionRecoverer = {
         request: function (config) {
             return config || $q.when(config);
         },
-        //response:function(response)
-        //{
+        // response:function(response)
+        // {
         //    switch (response.status) {
         //        case (200):
         //            //if(!angular.isObject(response.data))
@@ -351,10 +351,14 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector','Notify', f
         //            alert("未知错误");
         //    }
         //    return response;
-        //},
+        // },
         responseError: function(response) {
             // Session has expired
-            Notify.error(response.data.errorMessage);
+            if(response.status =='403'){
+                alert('无权限访问');
+
+            }
+            console.error( response.data.errorMessage);
             return $q.reject(response);
         }
     };

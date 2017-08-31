@@ -1,1 +1,1 @@
-<% response.sendRedirect("http://localhost:8080/index");%>
+<% response.sendRedirect("http://localhost:8080/distribution/index");%>

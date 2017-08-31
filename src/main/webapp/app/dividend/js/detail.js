@@ -3,20 +3,40 @@
  */
 angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('分红包明细');
+
     $scope.notData = false;
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {
-            orderNo:'',
-            dividendStatus:''
-        }
+        parameterMap: {}
+    };
+    $scope.titleData = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {}
     };
     $scope.search = function(){
 
-        $http.post(ctx + '/dividend/details', $scope.myPage)
+        $http.post(ctx + '/dividend/detailsTitleData?memberId=' + $stateParams.memberId + '&orderNo=' + $stateParams.orderNo, $scope.titleData)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.titleData = resp.data.result[0];
+                    $scope.notData = false;
+                    if (!$scope.titleData.result || $scope.titleData.result.length == 0) $scope.notData = true;
+
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
+        });
+
+        $http.post(ctx + '/dividend/details?memberId=' + $stateParams.memberId + '&orderId=' + $stateParams.orderId, $scope.myPage)
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myPage = resp.data;

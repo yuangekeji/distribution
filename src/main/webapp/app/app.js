@@ -6,6 +6,7 @@ var App = angular.module('app', [
     'app.routes',
     'ngStorage',
     'ui.bootstrap',
+    'angularUtils.directives.dirPagination',
     //前台业务模块
     'home',
     'recommend',
@@ -17,6 +18,7 @@ var App = angular.module('app', [
     'graph',
     'order',
     'operator',
+    'auth',
     //后台业务模块
     'admAdvance',
     'admBasicSetting',
@@ -44,6 +46,7 @@ angular.module('dividend', []);
 angular.module('graph', []);
 angular.module('order', []);
 angular.module('operator',[]);
+angular.module('auth',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);
@@ -147,9 +150,9 @@ App.factory('settings', ['$rootScope', function($rootScope) {
             pageBodySolid: false, // solid body color state
             pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
         },
-        assetsPath: 'resources/metronic',
-        globalPath: 'resources/metronic/global',
-        layoutPath: 'resources/metronic/layouts/layout2',
+        assetsPath: 'static/metronic',
+        globalPath: 'static/metronic/global',
+        layoutPath: 'static/metronic/layouts/layout2',
     };
 
     $rootScope.settings = settings;

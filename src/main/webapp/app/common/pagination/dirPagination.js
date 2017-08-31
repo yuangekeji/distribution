@@ -19,7 +19,7 @@
     /**
      * Config
      */
-    var moduleName = 'app';
+    var moduleName = 'angularUtils.directives.dirPagination';
     var DEFAULT_ID = '__default';
 
     /**

@@ -63,6 +63,16 @@ angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+
+    /**
+     * 分红包明细查询
+     * @param memberId
+     * @param orderId
+     */
+    $scope.searchDividendDetails = function (memberId, orderId, orderNo) {
+        $state.go('app.dividend-detail', {memberId: memberId, orderId: orderId, orderNo: orderNo});
+    }
+
 });
 angular.module('dividend').filter("StatusFilter",function () {
     return function (input) {

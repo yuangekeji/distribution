@@ -12,5 +12,14 @@ public class Constant {
     public static final String SESSION_CURRENT_USER="currentUser";
     public static final String SESSION_CURRENT_ROLE="currentUserRole";
 
+    //资金流向类型（支出：复投1，转出2，提现3；收入：分红包奖金4，转入5，动态奖金6）
+
+    public static final String REORDER = "1";
+    public static final String TRANSFEROUT = "2";
+    public static final String ADVANCE = "3";
+    public static final String DIVIDEND = "4";
+    public static final String TRANSFERIN = "5";
+    public static final String BONUS = "6";
+
 
 }

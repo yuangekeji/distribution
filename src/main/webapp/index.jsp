@@ -1,1 +1,1 @@
-<% response.sendRedirect("http://donglimao.tunnel.qydev.com/distribution/index");%>
+<% response.sendRedirect("http://localhost:8080/distribution/index");%>

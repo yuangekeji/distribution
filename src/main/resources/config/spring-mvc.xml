@@ -52,11 +52,18 @@
             <mvc:mapping path="/**"/>
             <bean class="com.distribution.common.intercept.LoginInterceptorAdaptor"/>
         </mvc:interceptor>
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--<mvc:exclude-mapping path="/member/jump"/>-->
-            <!--<bean class="com.distribution.common.intercept.AuthInterceptorAdaptor"/>-->
-        <!--</mvc:interceptor>-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/member/jump"/>
+            <mvc:exclude-mapping path="/member/login"/>
+            <mvc:exclude-mapping path="/member/logout"/>
+            <mvc:exclude-mapping path="/role/**"/>
+            <mvc:exclude-mapping path="/menu/**"/>
+            <mvc:exclude-mapping path="/index/**"/>
+            <mvc:exclude-mapping path="/static/**"/>
+            <mvc:exclude-mapping path="/app/**"/>
+            <bean class="com.distribution.common.intercept.AuthInterceptorAdaptor"/>
+        </mvc:interceptor>
 
     </mvc:interceptors>
 </beans>

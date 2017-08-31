@@ -18,6 +18,7 @@ var App = angular.module('app', [
     'graph',
     'order',
     'operator',
+    'auth',
     //后台业务模块
     'admAdvance',
     'admBasicSetting',
@@ -45,6 +46,7 @@ angular.module('dividend', []);
 angular.module('graph', []);
 angular.module('order', []);
 angular.module('operator',[]);
+angular.module('auth',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);

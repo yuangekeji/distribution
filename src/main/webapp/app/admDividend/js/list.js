@@ -22,7 +22,7 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
 
                 } else {
-                    console.log(resp.errorMessage);
+                    console.error(resp.errorMessage);
                 }
 
             }).error(function (error) {

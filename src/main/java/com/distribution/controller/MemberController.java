@@ -41,6 +41,7 @@ public class MemberController extends BasicController {
         return "adminLogin/adminLogin";
     }
 
+
     /**
      * description 登录
      * @author Bright

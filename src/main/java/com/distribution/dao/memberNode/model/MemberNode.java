@@ -13,11 +13,11 @@ public class MemberNode {
 
     private Date createTime;
 
-    private String createBy;
+    private Integer createBy;
 
     private Date updateTime;
 
-    private String updateBy;
+    private Integer updateBy;
 
     private Integer memberTotal;
 
@@ -63,12 +63,12 @@ public class MemberNode {
         this.createTime = createTime;
     }
 
-    public String getCreateBy() {
+    public Integer getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Date getUpdateTime() {
@@ -79,12 +79,12 @@ public class MemberNode {
         this.updateTime = updateTime;
     }
 
-    public String getUpdateBy() {
+    public Integer getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy == null ? null : updateBy.trim();
+    public void setUpdateBy(Integer updateBy) {
+        this.updateBy = updateBy;
     }
 
     public Integer getMemberTotal() {

@@ -11,9 +11,9 @@
     <result column="actual_amout" property="actualAmout" jdbcType="DOUBLE" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="INTEGER" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -118,7 +118,7 @@
     values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{bonusDate,jdbcType=TIMESTAMP}, 
       #{bonusType,jdbcType=VARCHAR}, #{amout,jdbcType=DOUBLE}, #{manageFee,jdbcType=DOUBLE}, 
       #{actualAmout,jdbcType=DOUBLE}, #{orderId,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
-      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.memberBonus.model.MemberBonus" >
@@ -193,13 +193,13 @@
         #{remarks,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
+        #{createBy,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
         #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
+        #{updateBy,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
@@ -243,13 +243,13 @@
         remarks = #{record.remarks,jdbcType=VARCHAR},
       </if>
       <if test="record.createBy != null" >
-        create_by = #{record.createBy,jdbcType=VARCHAR},
+        create_by = #{record.createBy,jdbcType=INTEGER},
       </if>
       <if test="record.createDate != null" >
         create_date = #{record.createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateBy != null" >
-        update_by = #{record.updateBy,jdbcType=VARCHAR},
+        update_by = #{record.updateBy,jdbcType=INTEGER},
       </if>
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
@@ -270,9 +270,9 @@
       actual_amout = #{record.actualAmout,jdbcType=DOUBLE},
       order_id = #{record.orderId,jdbcType=INTEGER},
       remarks = #{record.remarks,jdbcType=VARCHAR},
-      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=INTEGER},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
-      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -306,13 +306,13 @@
         remarks = #{remarks,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
+        create_by = #{createBy,jdbcType=INTEGER},
       </if>
       <if test="createDate != null" >
         create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
       <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_by = #{updateBy,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -330,9 +330,9 @@
       actual_amout = #{actualAmout,jdbcType=DOUBLE},
       order_id = #{orderId,jdbcType=INTEGER},
       remarks = #{remarks,jdbcType=VARCHAR},
-      create_by = #{createBy,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -7,9 +7,9 @@
     <result column="right_id" property="rightId" jdbcType="INTEGER" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="INTEGER" />
     <result column="member_total" property="memberTotal" jdbcType="INTEGER" />
     <result column="sales_total" property="salesTotal" jdbcType="DOUBLE" />
   </resultMap>
@@ -112,8 +112,8 @@
       update_time, update_by, member_total, 
       sales_total)
     values (#{id,jdbcType=INTEGER}, #{leftId,jdbcType=INTEGER}, #{rightId,jdbcType=INTEGER}, 
-      #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{memberTotal,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, #{memberTotal,jdbcType=INTEGER}, 
       #{salesTotal,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
@@ -167,13 +167,13 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
+        #{createBy,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
+        #{updateBy,jdbcType=INTEGER},
       </if>
       <if test="memberTotal != null" >
         #{memberTotal,jdbcType=INTEGER},
@@ -208,13 +208,13 @@
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.createBy != null" >
-        create_by = #{record.createBy,jdbcType=VARCHAR},
+        create_by = #{record.createBy,jdbcType=INTEGER},
       </if>
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.updateBy != null" >
-        update_by = #{record.updateBy,jdbcType=VARCHAR},
+        update_by = #{record.updateBy,jdbcType=INTEGER},
       </if>
       <if test="record.memberTotal != null" >
         member_total = #{record.memberTotal,jdbcType=INTEGER},
@@ -234,9 +234,9 @@
       right_id = #{record.rightId,jdbcType=INTEGER},
       parent_id = #{record.parentId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=INTEGER},
       member_total = #{record.memberTotal,jdbcType=INTEGER},
       sales_total = #{record.salesTotal,jdbcType=DOUBLE}
     <if test="_parameter != null" >
@@ -259,13 +259,13 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
+        create_by = #{createBy,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_by = #{updateBy,jdbcType=INTEGER},
       </if>
       <if test="memberTotal != null" >
         member_total = #{memberTotal,jdbcType=INTEGER},
@@ -282,9 +282,9 @@
       right_id = #{rightId,jdbcType=INTEGER},
       parent_id = #{parentId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_by = #{createBy,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=INTEGER},
       member_total = #{memberTotal,jdbcType=INTEGER},
       sales_total = #{salesTotal,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}

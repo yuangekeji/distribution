@@ -21,11 +21,11 @@ public class MemberBonus {
 
     private String remarks;
 
-    private String createBy;
+    private Integer createBy;
 
     private Date createDate;
 
-    private String updateBy;
+    private Integer updateBy;
 
     private Date updateTime;
 
@@ -101,12 +101,12 @@ public class MemberBonus {
         this.remarks = remarks == null ? null : remarks.trim();
     }
 
-    public String getCreateBy() {
+    public Integer getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateDate() {
@@ -117,12 +117,12 @@ public class MemberBonus {
         this.createDate = createDate;
     }
 
-    public String getUpdateBy() {
+    public Integer getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy == null ? null : updateBy.trim();
+    public void setUpdateBy(Integer updateBy) {
+        this.updateBy = updateBy;
     }
 
     public Date getUpdateTime() {

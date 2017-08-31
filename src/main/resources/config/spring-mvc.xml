@@ -57,7 +57,6 @@
             <mvc:exclude-mapping path="/member/jump"/>
             <mvc:exclude-mapping path="/member/login"/>
             <mvc:exclude-mapping path="/member/logout"/>
-            <mvc:exclude-mapping path="/member/authFail"/>
             <mvc:exclude-mapping path="/role/**"/>
             <mvc:exclude-mapping path="/menu/**"/>
             <mvc:exclude-mapping path="/index/**"/>

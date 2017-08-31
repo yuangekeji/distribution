@@ -41,11 +41,6 @@ public class MemberController extends BasicController {
         return "adminLogin/adminLogin";
     }
 
-    @RequestMapping(value = "/authFail")
-    @ResponseBody
-    public JsonMessage authFail() {
-        return failMsg("authFail");
-    }
 
     /**
      * description 登录

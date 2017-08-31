@@ -40,8 +40,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
             if(roleId == 1){
 
                 if(requestURI.indexOf("admin") > -1){
-                    System.out.println("=========会员==不允许访问"+requestURI);
-//                    response.sendRedirect(request.getContextPath() + "/member/authFail");
+//                    System.out.println("=========会员==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
                 }
@@ -50,8 +49,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
             }else if(roleId == 2){
 
                 if(requestURI.indexOf("admin") <= -1){
-                    System.out.println("=========超级管理员==不允许访问"+requestURI);
-//                    response.sendRedirect(request.getContextPath() + "/member/authFail");
+//                    System.out.println("=========超级管理员==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
                 }
@@ -61,8 +59,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
 
 
                 if(requestURI.indexOf("admin") <= -1){
-                    System.out.println("=========财务==不允许访问"+requestURI);
-//                    response.sendRedirect(request.getContextPath() + "/member/anthFail");
+//                    System.out.println("=========财务==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
                 }

@@ -27,4 +27,11 @@ public interface MoreMemberMapper {
      * @author Bright
      * */
     List<Member> list(Page page);
+
+    /**
+     * 校验支付密码
+     * @param param
+     * @return
+     */
+    Integer findMatchMemberQueryPwd(Map param);
 }

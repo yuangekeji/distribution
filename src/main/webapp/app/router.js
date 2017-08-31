@@ -70,11 +70,23 @@ angular.module('app').config([
                 resolve: helper.resolveFor('bonus'),
                 controller: 'bonusCtrl'
             })
+            .state('app.dividend-de',{
+                url: '/dividend',
+                templateUrl: helper.basepath('dividend/html/list.html'),
+                resolve: helper.resolveFor('dividend'),
+                controller: 'dividendCtrl'
+            })
             .state('app.dividend',{
                 url: '/dividend',
                 templateUrl: helper.basepath('dividend/html/list.html'),
                 resolve: helper.resolveFor('dividend'),
                 controller: 'dividendCtrl'
+            })
+            .state('app.dividend-detail',{
+                url: '/dividend-detail/:memberId/:orderId/:orderNo',
+                templateUrl: helper.basepath('dividend/html/detail.html'),
+                resolve: helper.resolveFor('dividend.detail'),
+                controller: 'dividendDetailCtrl'
             })
             .state('app.graph',{
                 url: '/graph',
@@ -88,14 +100,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('order'),
                 controller: 'orderCtrl'
             })
-
-            /*.state('app.order', {
-                url: '/list',
-                templateUrl: helper.basepath('order/html/list.html'),
-                resolve: helper.resolveFor('order.list'),
-                controller: 'orderCtrl'
-            })*/
-
+            .state('app.operator',{
+                url: '/operator',
+                templateUrl: helper.basepath('operator/html/apply.html'),
+                resolve: helper.resolveFor('operator'),
+                controller: 'operatorCtrl'
+            })
             .state('app.admMember',{
                 url: '/admMember',
                 templateUrl: helper.basepath('admMember/html/list.html'),
@@ -161,5 +171,11 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admin/html/list.html'),
                 resolve: helper.resolveFor('admin'),
                 controller: 'adminCtrl'
+            })
+            .state('app.admWarning',{
+                url: '/admWarning',
+                templateUrl: helper.basepath('admWarning/html/list.html'),
+                resolve: helper.resolveFor('admWarning'),
+                controller: 'admWarningCtrl'
             })
     }]);

@@ -18,6 +18,14 @@ public class Transfer {
 
     private Date createTime;
 
+    private String memberPhone;
+
+    private String memberName;
+
+    private String receivePhone;
+
+    private String receiveName;
+
     public Integer getId() {
         return id;
     }
@@ -72,5 +80,37 @@ public class Transfer {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getMemberPhone() {
+        return memberPhone;
+    }
+
+    public void setMemberPhone(String memberPhone) {
+        this.memberPhone = memberPhone == null ? null : memberPhone.trim();
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName == null ? null : memberName.trim();
+    }
+
+    public String getReceivePhone() {
+        return receivePhone;
+    }
+
+    public void setReceivePhone(String receivePhone) {
+        this.receivePhone = receivePhone == null ? null : receivePhone.trim();
+    }
+
+    public String getReceiveName() {
+        return receiveName;
+    }
+
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName == null ? null : receiveName.trim();
     }
 }

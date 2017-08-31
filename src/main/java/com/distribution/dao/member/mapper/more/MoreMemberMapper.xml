@@ -74,7 +74,13 @@
     money_status, is_operator, is_sales_dept,
     first_agent_cnt, recommend_name, node_name FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
-
+  <select id="findMatchMemberQueryPwd" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT count(0) as count
+    FROM member
+    WHERE id = #{memberId}
+    AND member_phone = #{memberPhone}
+    AND pay_password = #{payPassword}
+  </select>
   <select id="getMemberByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM member WHERE member_phone = #{phone}
   </select>

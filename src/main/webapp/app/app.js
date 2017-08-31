@@ -6,6 +6,7 @@ var App = angular.module('app', [
     'app.routes',
     'ngStorage',
     'ui.bootstrap',
+    'angularUtils.directives.dirPagination',
     //前台业务模块
     'home',
     'recommend',
@@ -16,6 +17,7 @@ var App = angular.module('app', [
     'dividend',
     'graph',
     'order',
+    'operator',
     //后台业务模块
     'admAdvance',
     'admBasicSetting',
@@ -27,7 +29,8 @@ var App = angular.module('app', [
     'admProduct',
     'admRecommend',
     'admin',
-    'admBonus'
+    'admBonus',
+    'admWarning'
 ]);
 
 angular.module('app.lazyload', []);
@@ -41,6 +44,7 @@ angular.module('bonus', []);
 angular.module('dividend', []);
 angular.module('graph', []);
 angular.module('order', []);
+angular.module('operator',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);
@@ -53,7 +57,7 @@ angular.module('admProduct', []);
 angular.module('admRecommend', []);
 angular.module('admBonus', []);
 angular.module('admin',[]);
-
+angular.module('admWarning',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
@@ -144,9 +148,9 @@ App.factory('settings', ['$rootScope', function($rootScope) {
             pageBodySolid: false, // solid body color state
             pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
         },
-        assetsPath: 'resources/metronic',
-        globalPath: 'resources/metronic/global',
-        layoutPath: 'resources/metronic/layouts/layout2',
+        assetsPath: 'static/metronic',
+        globalPath: 'static/metronic/global',
+        layoutPath: 'static/metronic/layouts/layout2',
     };
 
     $rootScope.settings = settings;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.memberBonus.model.MemberBonus" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="bonus_date" property="bonusDate" jdbcType="TIMESTAMP" />
+    <result column="bonus_type" property="bonusType" jdbcType="VARCHAR" />
+    <result column="amout" property="amout" jdbcType="DOUBLE" />
+    <result column="manage_fee" property="manageFee" jdbcType="DOUBLE" />
+    <result column="actual_amout" property="actualAmout" jdbcType="DOUBLE" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_id, bonus_date, bonus_type, amout, manage_fee, actual_amout,
+    order_id, remarks, create_by, create_date, update_by, update_time
+  </sql>
+  <sql id="where">
+    <where>
+        AND member_id = #{parameterMap.memberId}
+        AND order_id = #{parameterMap.orderId}
+        AND bonus_type = '3'
+    </where>
+  </sql>
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+  <select id="getDividendDetails" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page" >
+    select
+    <include refid="Base_Column_List" />
+    from member_bonus
+    <include refid="where"/>
+    order by bonus_date desc
+    <include refid="pageLimit"/>
+
+  </select>
+</mapper>

@@ -31,10 +31,10 @@
                         <h5 ng-if="titleData.result.length > 0" ng-repeat="row in titleData.result">
                             订单编号: {{row.orderNo}}&emsp;
                             分红包个数: {{row.dividendCount}}&emsp;
-                            订单金额: {{row.orderAmount}}&emsp;
-                            已领取金额: {{row.receivedAmount}}&emsp;
-                            未领取金额: {{row.remainAmount}}&emsp;
-                            领取金额上限: {{row.dividendLimit}}&emsp;
+                            订单金额: {{row.orderAmount | number:2}}&emsp;
+                            已领取金额: {{row.receivedAmount | number:2}}&emsp;
+                            未领取金额: {{row.remainAmount | number:2}}&emsp;
+                            领取金额上限: {{row.dividendLimit | number:2}}&emsp;
                             状态: {{row.dividendStatus | StatusFilter}}
                         </h5>
                         <h5 ng-if="!titleData.result.length">我的分红包领取明细</h5>
@@ -44,22 +44,22 @@
                         <table class="table table-striped table-bordered table-hover table-checkable order-column"
                                id="sample_1">
                             <thead>
-                            <tr >
-                                <th>领取时间</th>
-                                <th>当日分红包金额</th>
-                                <th>领取金额</th>
-                                <th>管理费</th>
-                                <th>状态</th>
+                            <tr>
+                                <th class="text-center">领取时间</th>
+                                <th class="text-center">当日分红包金额</th>
+                                <th class="text-center">领取金额</th>
+                                <th class="text-center">管理费</th>
+                                <th class="text-center">状态</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-if= "myPage.result.length >0" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
                                 total-items="myPage.result.totalCount">
                                 <td>{{row.bonusDate  | date:'yyyy-MM-dd'}}</td>
-                                <td>{{row.amout}}</td>
-                                <td>{{row.actualAmout}}</td>
-                                <td>{{row.manageFee}}</td>
-                                <td><span class="label label-sm label-success">已领取</span></td>
+                                <td class="text-right">{{row.amout | number:2}}</td>
+                                <td class="text-right">{{row.actualAmout | number:2}}</td>
+                                <td class="text-right">{{row.manageFee | number:2}}</td>
+                                <td class="text-center"><span class="label label-sm label-success">已领取</span></td>
                             </tr>
                             <tr ng-if= "!myPage.result.length" >
                                 <td colspan="6">无记录</td>

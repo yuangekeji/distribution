@@ -70,12 +70,6 @@ angular.module('app').config([
                 resolve: helper.resolveFor('bonus'),
                 controller: 'bonusCtrl'
             })
-            .state('app.dividend-de',{
-                url: '/dividend',
-                templateUrl: helper.basepath('dividend/html/list.html'),
-                resolve: helper.resolveFor('dividend'),
-                controller: 'dividendCtrl'
-            })
             .state('app.dividend',{
                 url: '/dividend',
                 templateUrl: helper.basepath('dividend/html/list.html'),
@@ -123,6 +117,12 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admDividend/html/list.html'),
                 resolve: helper.resolveFor('admDividend'),
                 controller: 'admDividendCtrl'
+            })
+            .state('app.admDividend-detail',{
+                url: '/admDividend-detail/:memberId/:orderId/:orderNo',
+                templateUrl: helper.basepath('admDividend/html/detail.html'),
+                resolve: helper.resolveFor('admDividend.detail'),
+                controller: 'admDividendDetailCtrl'
             })
             .state('app.admBonus',{
                 url: '/admBonus',

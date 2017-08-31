@@ -1,5 +1,8 @@
-angular.module('admDividend').controller('admDividendCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
-    title.setTitle('分红包管理');
+/**
+ * Created by dongshiqing on 8/31/2017.
+ */
+angular.module('admDividend').controller('admDividendDetailCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+    title.setTitle('分红包明细');
 
     $scope.notData = false;
     $scope.myPage = {
@@ -7,14 +10,33 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {
-            orderNo:'',
-            dividendStatus:''
-        }
+        parameterMap: {}
+    };
+    $scope.titleData = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {}
     };
     $scope.search = function(){
 
-        $http.post(ctx + '/adminDividend/list', $scope.myPage)
+        $http.post(ctx + '/adminDividend/detailsTitleData?memberId=' + $stateParams.memberId + '&orderNo=' + $stateParams.orderNo, $scope.titleData)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.titleData = resp.data;
+                    $scope.notData = false;
+                    if (!$scope.titleData.result || $scope.titleData.result.length == 0) $scope.notData = true;
+
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
+        });
+
+        $http.post(ctx + '/adminDividend/details?memberId=' + $stateParams.memberId + '&orderId=' + $stateParams.orderId, $scope.myPage)
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myPage = resp.data;
@@ -22,7 +44,7 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
 
                 } else {
-                    console.error(resp.errorMessage);
+                    console.log(resp.errorMessage);
                 }
 
             }).error(function (error) {
@@ -34,6 +56,7 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
      * 初始化
      */
     $scope.onInit = function () {
+
         $scope.search();
     };
 
@@ -47,6 +70,7 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
 
         $scope.myPage.pageNo = 1;
         $scope.myPage.totalCount = 0;
+
         $scope.search();
 
     }
@@ -59,14 +83,6 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
         $scope.myPage.pageNo = num;
         $scope.search();
     };
-    /**
-     * 分红包明细查询
-     * @param memberId
-     * @param orderId
-     */
-    $scope.searchDividendDetails = function (memberId, orderId, orderNo) {
-        $state.go('app.admDividend-detail', {memberId: memberId, orderId: orderId, orderNo: orderNo});
-    }
 });
 angular.module('admDividend').filter("StatusFilter",function () {
     return function (input) {

@@ -28,15 +28,15 @@
                 </div>
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <div class="note note-info">
-                        <h5 ng-if="titleData.result.length > 0" ng-repeat="row in titleData.result">
-                            订单编号: {{row.orderNo}}&emsp;
-                            分红包个数: {{row.dividendCount}}&emsp;
-                            订单金额: {{row.orderAmount}}&emsp;
-                            已领取金额: {{row.receivedAmount}}&emsp;
-                            未领取金额: {{row.remainAmount}}&emsp;
-                            领取金额上限: {{row.dividendLimit}}&emsp;
-                            状态: {{row.dividendStatus | StatusFilter}}
-                        </h5>
+                       <h5 ng-if="titleData.result.length > 0" ng-repeat="row in titleData.result">
+                           订单编号: {{row.orderNo}}&emsp;
+                           分红包个数: {{row.dividendCount}}&emsp;
+                           订单金额: {{row.orderAmount}}&emsp;
+                           已领取金额: {{row.receivedAmount}}&emsp;
+                           未领取金额: {{row.remainAmount}}&emsp;
+                           领取金额上限: {{row.dividendLimit}}&emsp;
+                           状态: {{row.dividendStatus | StatusFilter}}
+                       </h5>
                         <h5 ng-if="!titleData.result.length">我的分红包领取明细</h5>
                     </div>
                     <!-- END FORM-->

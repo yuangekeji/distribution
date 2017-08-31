@@ -155,6 +155,15 @@ angular
                 ]
             },
             {
+                name:'admDividend.detail',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admDividend/js/detail.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    // 'app/common/pagination/dirPagination.js'
+                ]
+            },
+            {
                 name:'admBonus',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',

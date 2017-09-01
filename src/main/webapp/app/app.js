@@ -63,63 +63,7 @@ angular.module('admWarning',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
-
-    /*Model中$watch函数影响变量用于记录当前页面是否改变过内容并没保存*/
-        var _preventNavigation = false;
-        /*_preventNavigationUrl记录当前url用于与将要跳转的url进行比较*/
-        var _preventNavigationUrl = null;
-        /**
-         * 相应工具函数
-         * allowNavigation：允许跳转
-         * preventNavigation：拒绝跳转
-         * checkNavigation：验证当前状态是否需要confirm。用于在拦截器无法生效的时候手动调用。
-         */
-        $rootScope.allowNavigation = function () {
-            _preventNavigation = false;
-        };
-        $rootScope.checkNavigation = function () {
-            return _preventNavigation;
-        };
-        $rootScope.preventNavigation = function () {
-            _preventNavigation = true;
-            _preventNavigationUrl = $scope.$state.current.url;
-        };
-        /*拦截器-检查菜单是否修改过 ConfirmModal ---start*/
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-            $scope.url = toState.url.replaceAll('/', '').replaceAll('-', '');
-            if (_preventNavigationUrl != fromState.url || _preventNavigationUrl == null) {
-                $rootScope.allowNavigation();
-            }
-            if (_preventNavigation) {
-                $.modal({
-                    title: '你确定要放弃当前编辑内容吗？',
-                    buttons: [
-                        {
-                            text: '确定',
-                            onClick: function () {
-                                $rootScope.allowNavigation();
-                                $state.go(toState.name, toParams);
-                            }
-                        },
-                        {
-                            text: '取消',
-                            onClick: function () {
-                                $rootScope.preventNavigation();
-                            }
-                        },
-                    ]
-                });
-                event.preventDefault();
-                return;
-            } else {
-                $rootScope.allowNavigation();
-            }
-        });
-        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-            //  $scope.pageLoading = false;
-        });
-        /*拦截器-检查菜单是否修改过 ConfirmModal ---end*/
-    });
+});
 
 /*metronic start*/
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
@@ -140,32 +84,14 @@ App.config(['$controllerProvider', function($controllerProvider) {
  END: BREAKING CHANGE in AngularJS v1.3.x:
  *********************************************/
 
-/* Setup global settings */
-App.factory('settings', ['$rootScope', function($rootScope) {
-    // supported languages
-    var settings = {
-        layout: {
-            pageSidebarClosed: false, // sidebar menu state
-            pageContentWhite: true, // set page content layout
-            pageBodySolid: false, // solid body color state
-            pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
-        },
-        assetsPath: 'static/metronic',
-        globalPath: 'static/metronic/global',
-        layoutPath: 'static/metronic/layouts/layout2',
-    };
-
-    $rootScope.settings = settings;
-
-    return settings;
-}]);
-
-
-/* Setup Layout Part - Header */
-App.controller('HeaderController', ['$scope','$http', function($scope,$http,$sessionStorage,$state) {
+/* Setup Layout Part - Sidebar */
+App.controller('TplController', ['$state', '$scope','$rootScope','$http', '$sessionStorage',function($state, $scope,$rootScope,$http,$sessionStorage) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
+        Layout.initSidebar($state); // init sidebar
+        Layout.initFooter(); // init footer
     });
+    $scope.currentUser = {};
     /**
      * description 退出
      * @author Bright
@@ -181,20 +107,12 @@ App.controller('HeaderController', ['$scope','$http', function($scope,$http,$ses
             console.log(resp);
         });
     };
-}]);
 
-/* Setup Layout Part - Sidebar */
-App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', '$sessionStorage',function($state, $scope,$rootScope,$http,$sessionStorage) {
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initSidebar($state); // init sidebar
-    });
     $scope.onInit = function () {
-
         $scope.ctx = window['ctx'];
-
         $http.get(ctx + '/role/getUserRole').success(function (res) {
                 $sessionStorage.currentUser = res.currentUser;
-
+                $scope.currentUser = res.currentUser;
                 $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
 
                     $rootScope.menu = res.data.menus;
@@ -216,13 +134,9 @@ App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', '$
                         }
                     })
                 })
-
         }).error(function (error) {
             alert('用户获取失败');
         });
-
-        // console.info($scope.firstMenu);
-        // console.info($scope.secondMenu);
     }
 
     $scope.onInit();
@@ -239,13 +153,28 @@ App.controller('SidebarController', ['$state', '$scope','$rootScope','$http', '$
             .attr('aria-expanded', false)
     }
 }]);
-/* Setup Layout Part - Footer */
-App.controller('FooterController', ['$scope', function($scope) {
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initFooter(); // init footer
-    });
+
+
+/* Setup global settings */
+App.factory('settings', ['$rootScope', function($rootScope) {
+    // supported languages
+    var settings = {
+        layout: {
+            pageSidebarClosed: false, // sidebar menu state
+            pageContentWhite: true, // set page content layout
+            pageBodySolid: false, // solid body color state
+            pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
+        },
+        assetsPath: 'static/metronic',
+        globalPath: 'static/metronic/global',
+        layoutPath: 'static/metronic/layouts/layout2',
+    };
+
+    $rootScope.settings = settings;
+
+    return settings;
 }]);
-/*metronic end*/
+
 
 
 String.prototype.replaceAll = function (s1, s2) {

@@ -39,7 +39,7 @@
     <!-- END THEME STYLES -->
     <link href="${ctx}/static/metronic/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />
     <!-- metronic  end -->
-
+    <link href="${ctx}/static/angular-ui-tree/angular-ui-tree.css" rel="stylesheet" type="text/css"/>
     <!-- BEGIN CORE JQUERY PLUGINS -->
     <!--[if lt IE 9]>
     <script src="${ctx}/static/metronic/global/plugins/respond.min.js"></script>
@@ -58,6 +58,7 @@
 
     <script src="${ctx}/static/xcConfirm/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
 
+
     <!-- BEGIN CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/metronic/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
@@ -67,6 +68,28 @@
     <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
     <!-- END CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+    <script src="${ctx}/static/angular-ui-tree/main.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/controllers/handleCtrl.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/controllers/nodeCtrl.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/controllers/nodesCtrl.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/controllers/treeCtrl.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/directives/uiTree.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/directives/uiTreeHandle.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/directives/uiTreeNode.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/directives/uiTreeNodes.js" type="text/javascript"></script>
+    <script src="${ctx}/static/angular-ui-tree/services/helper.js" type="text/javascript"></script>
+
+    <%--<script src="source/controllers/handleCtrl.js"></script>--%>
+    <%--<script src="source/controllers/nodeCtrl.js"></script>--%>
+    <%--<script src="source/controllers/nodesCtrl.js"></script>--%>
+    <%--<script src="source/controllers/treeCtrl.js"></script>--%>
+    <%--<script src="source/directives/uiTree.js"></script>--%>
+    <%--<script src="source/directives/uiTreeHandle.js"></script>--%>
+    <%--<script src="source/directives/uiTreeNode.js"></script>--%>
+    <%--<script src="source/directives/uiTreeNodes.js"></script>--%>
+    <%--<script src="source/services/helper.js"></script>--%>
+
 
     <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>
     <script src="${ctx}/app/common/pagination/dirPagination.js" type="text/javascript" charset="utf-8"></script>

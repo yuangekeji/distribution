@@ -6,7 +6,6 @@ angular
     }])
     .constant('APP_REQUIRES', {
         scripts: {
-            'angular-ui-tree': ['static/angular-ui-tree/angular-ui-tree.js']
         },
         modules: [
             {
@@ -230,9 +229,7 @@ angular
                 name:'graph',
                 files: [
                     'app/graph/js/graph.js?v=' + version,
-                    'static/angular-ui-tree/angular-ui-tree.css',
-                    'static/angular-ui-tree/angular-ui-tree.js',
-                    'static/metronic/global/plugins/jstree/dist/themes/default/style.min.css'
+                    'static/metronic/pages/css/graph.css'
 
                 ]
             }

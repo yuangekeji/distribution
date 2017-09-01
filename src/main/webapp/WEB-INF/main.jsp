@@ -49,7 +49,7 @@
     <script src="${ctx}/static/metronic/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/metronic/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
     <%--<script src="${ctx}/static/metronic/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>--%>
-    <%--<script src="${ctx}/static/metronic/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>--%>
+    <script src="${ctx}/static/metronic/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/metronic/global/plugins/js.cookie.min.js" type="text/javascript"></script>
     <%--<script src="${ctx}/static/metronic/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>--%>
     <%--<script src="${ctx}/static/metronic/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>--%>
@@ -84,10 +84,17 @@
     <script src="${ctx}/app/filter.js?v=${version}"></script>
 
 <body ng-controller="AppCtrl" class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid" ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
+<!-- BEGIN PAGE SPINNER -->
+<div ng-spinner-bar class="page-spinner-bar">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+<!-- END PAGE SPINNER -->
 <div ui-view></div>
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
-<script src="${ctx}/static/metronic/global/scripts/app.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/metronic/global/scripts/app.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>

@@ -11,6 +11,8 @@ public class Menu {
 
     private String menuLink;
 
+    private String menuIcon;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class Menu {
 
     public void setMenuLink(String menuLink) {
         this.menuLink = menuLink == null ? null : menuLink.trim();
+    }
+
+    public String getMenuIcon() {
+        return menuIcon;
+    }
+
+    public void setMenuIcon(String menuIcon) {
+        this.menuIcon = menuIcon == null ? null : menuIcon.trim();
     }
 }

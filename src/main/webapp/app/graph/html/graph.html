@@ -6,64 +6,27 @@
     <div class="col-md-12">
         <!-- BEGIN: ACCORDION DEMO -->
         <div class="portlet light bordered">
-            <div class="portlet-title">
-            </div>
             <div class="portlet-body">
-                <div id="tree_1" class="tree-demo jstree jstree-1 jstree-default" role="tree">
-                    <ul class="jstree-container-ul jstree-children jstree-wholerow-ul jstree-no-dots" role="group">
-                        <li role="treeitem" id="j1_1" class="jstree-node  jstree-open">
-                            <i class="jstree-icon jstree-ocl" role="presentation"></i>
-                            <a class="jstree-anchor" href="#" tabindex="-1" id="j1_1_anchor"><i
-                                    class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"
-                                    role="presentation"></i> Root node 1</a>
-                            <ul role="group" class="jstree-children">
-                                <li role="treeitem" id="j1_2" class="jstree-node  jstree-leaf">
-                                        <i class="jstree-icon jstree-ocl" role="presentation"></i>
-                                        <a class="jstree-anchor  jstree-clicked" href="javascript:;" tabindex="-1" id="j1_2_anchor">
-                                            <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom" role="presentation"></i> Initially selected
-                                        </a>
-                                </li>
-                                <li role="treeitem" id="j1_4" class="jstree-node  jstree-open">
-                                    <i class="jstree-icon jstree-ocl" role="presentation"></i>
-                                    <a class="jstree-anchor" href="#" tabindex="-1" id="j1_4_anchor">
-                                        <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom" role="presentation"></i> initially open</a>
-                                    <!--<ul role="group" class="jstree-children">-->
-                                        <!--<li role="treeitem" id="j1_5" class="jstree-node  jstree-leaf"><i-->
-                                                <!--class="jstree-icon jstree-ocl" role="presentation"></i><a-->
-                                                <!--class="jstree-anchor  jstree-disabled" href="#" tabindex="-1"-->
-                                                <!--id="j1_5_anchor"><i-->
-                                                <!--class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"-->
-                                                <!--role="presentation"></i> Disabled Node </a></li>-->
-                                        <!--<li role="treeitem" id="j1_6"-->
-                                            <!--class="jstree-node  jstree-leaf jstree-last"><i-->
-                                                <!--class="jstree-icon jstree-ocl" role="presentation"></i><a-->
-                                                <!--class="jstree-anchor" href="#" tabindex="-1" id="j1_6_anchor"><i-->
-                                                <!--class="jstree-icon jstree-themeicon fa fa-file icon-state-warning icon-lg jstree-themeicon-custom"-->
-                                                <!--role="presentation"></i> Another node </a></li>-->
-                                    <!--</ul>-->
-                                </li>
 
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Nested node template -->
                 <script type="text/ng-template" id="nodes_renderer.html">
-                    <div ui-tree-handle class="tree-node tree-node-content">
-                        <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag
-                           ng-click="toggle(this)"><li
-
+                    <div ui-tree-handle class="tree-node tree-node-content" >
+                        <a style="padding-bottom: 5px" class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0"  ng-click="toggle_(this)"><span
+                                class="glyphicon"
                                 ng-class="{
-                                          'icon-plus font-green-sharp': collapsed,
-                                          'icon-minus': !collapsed
-                                          }"></li></a>
+                                      'glyphicon-chevron-right': collapsed,
+                                      'glyphicon-chevron-down': !collapsed
+                                    }"></span></a>
                         {{node.title}}
-                        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
-                                class="glyphicon glyphicon-remove"></span></a>
-                        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)"
-                           style="margin-right: 8px;"><span
-                                class="glyphicon glyphicon-plus"></span></a>
+                        <!--<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span-->
+                                <!--class="glyphicon glyphicon-remove"></span></a>-->
+                        <!--<a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span-->
+                        <!--class="glyphicon glyphicon-plus"></span></a>-->
+                        <div class="pull-right" ng-show="this.$modelValue.nodes.length < 2">
+                            <label class="mt-radio">
+                                <input type="radio" value="node.id" name="node">
+                                <span></span>
+                            </label>
+                        </div>
                     </div>
                     <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
                         <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
@@ -72,21 +35,21 @@
                 </script>
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>Basic Example</h3>
-
-                        <button ng-click="expandAll()">Expand all</button>
-                        <button ng-click="collapseAll()">Collapse all</button>
+                        <p style="margin-bottom:20px">
+                            <a href="javascript:;" class="btn green-haze btn-outline sbold uppercase"  ng-click="expandAll()"> 收起</a>
+                            <a href="javascript:;" class="btn green-haze btn-outline sbold uppercase"  ng-click="collapseAll()"> 展开</a>
+                        </p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div ui-tree id="tree-root">
+                    <div class="col-sm-8">
+                        <div ui-tree id="tree-root" data-drag-enabled="false" data-nodrop-enabled="false" data-clone-enabled="false">
                             <ol ui-tree-nodes ng-model="data">
                                 <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
                             </ol>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="info">
                             {{info}}
                         </div>

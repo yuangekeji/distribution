@@ -321,7 +321,7 @@ angular.module('app')
         return self;
     }]);
 
-angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($q, $injector) {
+angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', function($q, $injector,$window) {
     var sessionRecoverer = {
         request: function (config) {
             return config || $q.when(config);
@@ -379,6 +379,13 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($
                    default:
                        alert("未知错误");
                }
+             if(response.status == 500 ){
+                 $window.location.reload();
+             }
+
+             if(response.status == 403){
+                 $window.location.href = ctx + '/index#/app/home'
+             }
             // console.error( response.data.errorMessage);
             return $q.reject(response);
         }

@@ -7,6 +7,7 @@ var App = angular.module('app', [
     'ngStorage',
     'ui.bootstrap',
     'angularUtils.directives.dirPagination',
+    'ui.tree',
     //前台业务模块
     'home',
     'recommend',
@@ -62,7 +63,70 @@ angular.module('admin',[]);
 angular.module('admWarning',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
+    $scope.$on('$includeContentLoaded', function() {
+        Layout.initSidebar($state); // init sidebar
+    });
+    $scope.currentUser = {};
+    /**
+     * description 退出
+     * @author Bright
+     * */
+    $scope.logOut = function () {
+        $http.post(ctx + "/member/logout").success(function (resp) {
+            if(resp.successful){
+                if($sessionStorage && $sessionStorage.currentUser)
+                    $sessionStorage.currentUser = null;
+                window.location.href = ctx;
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        });
+    };
 
+    $scope.onInit = function () {
+        $scope.ctx = window['ctx'];
+        $http.get(ctx + '/role/getUserRole').success(function (res) {
+            $sessionStorage.currentUser = res.currentUser;
+            $scope.currentUser = res.currentUser;
+            $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
+
+                $rootScope.menu = res.data.menus;
+
+                // console.info($rootScope.menu );
+                $scope.firstMenu = [];
+
+                angular.forEach($rootScope.menu,function (menu,index) {
+                    if(menu.parentMenu ==0){
+                        $scope.firstMenu.push(menu);
+                    }
+                })
+
+                $scope.secondMenu =[];
+
+                angular.forEach($rootScope.menu,function (menu,index) {
+                    if(menu.parentMenu > 0){
+                        $scope.secondMenu.push(menu);
+                    }
+                })
+            })
+        }).error(function (error) {
+            alert('用户获取失败');
+        });
+    }
+
+    $scope.onInit();
+    $scope.goUrl= function (url) {
+        $state.go(url);
+        $scope.dimension = function () {
+            var hasWidth = $('.navbar-collapse').hasClass('width')
+            return hasWidth ? 'width' : 'height'
+        }
+
+        $('.navbar-collapse')
+            .removeClass('collapse in')
+            .addClass('collapse')[$scope.dimension](0)
+            .attr('aria-expanded', false)
+    }
 });
 
 /*metronic start*/
@@ -88,70 +152,9 @@ App.config(['$controllerProvider', function($controllerProvider) {
 App.controller('TplController', ['$state', '$scope','$rootScope','$http', '$sessionStorage',function($state, $scope,$rootScope,$http,$sessionStorage) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
-        Layout.initSidebar($state); // init sidebar
         Layout.initFooter(); // init footer
     });
-    $scope.currentUser = {};
-    /**
-     * description 退出
-     * @author Bright
-     * */
-    $scope.logOut = function () {
-        $http.post(ctx + "/member/logout").success(function (resp) {
-            if(resp.successful){
-                if($sessionStorage && $sessionStorage.currentUser)
-                    $sessionStorage.currentUser = null;
-                window.location.href = ctx;
-            }
-        }).error(function (resp) {
-            console.log(resp);
-        });
-    };
-
-    $scope.onInit = function () {
-        $scope.ctx = window['ctx'];
-        $http.get(ctx + '/role/getUserRole').success(function (res) {
-                $sessionStorage.currentUser = res.currentUser;
-                $scope.currentUser = res.currentUser;
-                $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
-
-                    $rootScope.menu = res.data.menus;
-
-                    // console.info($rootScope.menu );
-                    $scope.firstMenu = [];
-
-                    angular.forEach($rootScope.menu,function (menu,index) {
-                        if(menu.parentMenu ==0){
-                            $scope.firstMenu.push(menu);
-                        }
-                    })
-
-                    $scope.secondMenu =[];
-
-                    angular.forEach($rootScope.menu,function (menu,index) {
-                        if(menu.parentMenu > 0){
-                            $scope.secondMenu.push(menu);
-                        }
-                    })
-                })
-        }).error(function (error) {
-            alert('用户获取失败');
-        });
-    }
-
-    $scope.onInit();
-    $scope.goUrl= function (url) {
-        $state.go(url);
-        $scope.dimension = function () {
-            var hasWidth = $('.navbar-collapse').hasClass('width')
-            return hasWidth ? 'width' : 'height'
-        }
-
-        $('.navbar-collapse')
-            .removeClass('collapse in')
-            .addClass('collapse')[$scope.dimension](0)
-            .attr('aria-expanded', false)
-    }
+    $scope.currentUser =  $sessionStorage.currentUser
 }]);
 
 

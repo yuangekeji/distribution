@@ -87,8 +87,13 @@ public class TransferService {
 
                 transAccount = this.selectAccountManager(transAccount);
 
-                transAccount.setTotalBonus(transAccount.getTotalBonus().subtract(transfer.getTransferAmt()));
-                transAccount.setBonusAmt(transAccount.getTotalBonus().subtract(transfer.getTransferAmt()));//更新奖金币
+                //判断如果账户余额小于转账金额就失败
+                if(transAccount.getBonusAmt().compareTo(transfer.getTransferAmt()) == -1){
+                    throw new RuntimeException();
+                }
+
+                transAccount.setBonusAmt(transAccount.getBonusAmt().subtract(transfer.getTransferAmt()));//从奖金币中扣除
+                transAccount.setTotalBonus(transAccount.getBonusAmt().add(transAccount.getSeedAmt()));//计算总奖金字段
                 transAccount.setUpdateId(tsf.getMemberId());
                 transAccount.setUpdateTime(new Date());
 
@@ -97,8 +102,9 @@ public class TransferService {
                 recivedAccount.setMemberId(tsf.getReceiveId());
                 recivedAccount = this.selectAccountManager(recivedAccount);
 
-                recivedAccount.setTotalBonus(recivedAccount.getTotalBonus().add(transfer.getTransferAmt()));
-                recivedAccount.setBonusAmt(recivedAccount.getTotalBonus().add(transfer.getTransferAmt()));//更新奖金币
+                recivedAccount.setBonusAmt(recivedAccount.getBonusAmt().add(transfer.getTransferAmt()));//增加奖金币
+                recivedAccount.setTotalBonus(recivedAccount.getBonusAmt().add(recivedAccount.getSeedAmt()));//计算总奖金字段
+
                 recivedAccount.setUpdateId(tsf.getMemberId());
                 recivedAccount.setUpdateTime(new Date());
 
@@ -112,7 +118,7 @@ public class TransferService {
                 historyout.setBonusAmt(tsf.getTransferAmt());
 
                 AccountFlowHistory historyin = new AccountFlowHistory();
-                historyin.setMemberId(tsf.getMemberId());
+                historyin.setMemberId(tsf.getReceiveId());
                 historyin.setCreateTime(new Date());
                 historyin.setCreateId(tsf.getMemberId());
                 historyin.setType("2");      //1支出 进账2
@@ -121,7 +127,6 @@ public class TransferService {
 
                 if(transAccount.getId() != null && transAccount.getId() >0
                         && recivedAccount.getId() !=null && recivedAccount.getId() >0){
-
                         //step1-3) 插入转账明细表，计算各账户金额
                         int  cnt1 = transferMapper.insert(tsf);
 

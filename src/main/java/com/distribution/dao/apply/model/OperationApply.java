@@ -3,7 +3,7 @@ package com.distribution.dao.apply.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class operationApply {
+public class OperationApply {
     private Integer id;
 
     private Integer memberId;

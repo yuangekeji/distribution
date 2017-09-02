@@ -106,63 +106,63 @@ public class OrderExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andIdIsNull() {
-            addCriterion("id is null");
+        public Criteria andOrderNoIsNull() {
+            addCriterion("order_no is null");
             return (Criteria) this;
         }
 
-        public Criteria andIdIsNotNull() {
-            addCriterion("id is not null");
+        public Criteria andOrderNoIsNotNull() {
+            addCriterion("order_no is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
-            addCriterion("id =", value, "id");
+        public Criteria andOrderNoEqualTo(Integer value) {
+            addCriterion("order_no =", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
-            addCriterion("id <>", value, "id");
+        public Criteria andOrderNoNotEqualTo(Integer value) {
+            addCriterion("order_no <>", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
-            addCriterion("id >", value, "id");
+        public Criteria andOrderNoGreaterThan(Integer value) {
+            addCriterion("order_no >", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("id >=", value, "id");
+        public Criteria andOrderNoGreaterThanOrEqualTo(Integer value) {
+            addCriterion("order_no >=", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
-            addCriterion("id <", value, "id");
+        public Criteria andOrderNoLessThan(Integer value) {
+            addCriterion("order_no <", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
-            addCriterion("id <=", value, "id");
+        public Criteria andOrderNoLessThanOrEqualTo(Integer value) {
+            addCriterion("order_no <=", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
-            addCriterion("id in", values, "id");
+        public Criteria andOrderNoIn(List<Integer> values) {
+            addCriterion("order_no in", values, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
-            addCriterion("id not in", values, "id");
+        public Criteria andOrderNoNotIn(List<Integer> values) {
+            addCriterion("order_no not in", values, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
-            addCriterion("id between", value1, value2, "id");
+        public Criteria andOrderNoBetween(Integer value1, Integer value2) {
+            addCriterion("order_no between", value1, value2, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("id not between", value1, value2, "id");
+        public Criteria andOrderNoNotBetween(Integer value1, Integer value2) {
+            addCriterion("order_no not between", value1, value2, "orderNo");
             return (Criteria) this;
         }
 
@@ -353,6 +353,186 @@ public class OrderExample {
 
         public Criteria andOrderQtyNotBetween(Integer value1, Integer value2) {
             addCriterion("order_qty not between", value1, value2, "orderQty");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountIsNull() {
+            addCriterion("discount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountIsNotNull() {
+            addCriterion("discount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountEqualTo(Integer value) {
+            addCriterion("discount =", value, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountNotEqualTo(Integer value) {
+            addCriterion("discount <>", value, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountGreaterThan(Integer value) {
+            addCriterion("discount >", value, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountGreaterThanOrEqualTo(Integer value) {
+            addCriterion("discount >=", value, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountLessThan(Integer value) {
+            addCriterion("discount <", value, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountLessThanOrEqualTo(Integer value) {
+            addCriterion("discount <=", value, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountIn(List<Integer> values) {
+            addCriterion("discount in", values, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountNotIn(List<Integer> values) {
+            addCriterion("discount not in", values, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountBetween(Integer value1, Integer value2) {
+            addCriterion("discount between", value1, value2, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andDiscountNotBetween(Integer value1, Integer value2) {
+            addCriterion("discount not between", value1, value2, "discount");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtIsNull() {
+            addCriterion("act_amt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtIsNotNull() {
+            addCriterion("act_amt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtEqualTo(BigDecimal value) {
+            addCriterion("act_amt =", value, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtNotEqualTo(BigDecimal value) {
+            addCriterion("act_amt <>", value, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtGreaterThan(BigDecimal value) {
+            addCriterion("act_amt >", value, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("act_amt >=", value, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtLessThan(BigDecimal value) {
+            addCriterion("act_amt <", value, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("act_amt <=", value, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtIn(List<BigDecimal> values) {
+            addCriterion("act_amt in", values, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtNotIn(List<BigDecimal> values) {
+            addCriterion("act_amt not in", values, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("act_amt between", value1, value2, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andActAmtNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("act_amt not between", value1, value2, "actAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeIsNull() {
+            addCriterion("express_fee is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeIsNotNull() {
+            addCriterion("express_fee is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeEqualTo(BigDecimal value) {
+            addCriterion("express_fee =", value, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeNotEqualTo(BigDecimal value) {
+            addCriterion("express_fee <>", value, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeGreaterThan(BigDecimal value) {
+            addCriterion("express_fee >", value, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("express_fee >=", value, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeLessThan(BigDecimal value) {
+            addCriterion("express_fee <", value, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("express_fee <=", value, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeIn(List<BigDecimal> values) {
+            addCriterion("express_fee in", values, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeNotIn(List<BigDecimal> values) {
+            addCriterion("express_fee not in", values, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("express_fee between", value1, value2, "expressFee");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpressFeeNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("express_fee not between", value1, value2, "expressFee");
             return (Criteria) this;
         }
 

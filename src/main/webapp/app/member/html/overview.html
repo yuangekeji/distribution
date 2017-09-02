@@ -1,103 +1,61 @@
 <div class="row">
     <div class="col-md-12">
-        <!-- BEGIN PORTLET -->
         <div class="portlet light ">
             <div class="portlet-title">
                 <div class="caption caption-md">
                     <i class="icon-bar-chart theme-font hide"></i>
                     <span class="caption-subject font-blue-madison bold uppercase">账户信息</span>
                 </div>
-                <!--<div class="actions">-->
-                    <!--<div class="btn-group btn-group-devided" data-toggle="buttons">-->
-                        <!--<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">-->
-                            <!--<input type="radio" name="options" class="toggle" id="option1">Today</label>-->
-                        <!--<label class="btn btn-transparent grey-salsa btn-circle btn-sm">-->
-                            <!--<input type="radio" name="options" class="toggle" id="option2">Week</label>-->
-                        <!--<label class="btn btn-transparent grey-salsa btn-circle btn-sm">-->
-                            <!--<input type="radio" name="options" class="toggle" id="option2">Month</label>-->
-                    <!--</div>-->
-                <!--</div>-->
             </div>
             <div class="portlet-body">
-                <!--<div class="row number-stats margin-bottom-30">-->
-                    <!--<div class="col-md-6 col-sm-6 col-xs-6">-->
-                        <!--<div class="stat-left">-->
-                            <!--<div class="stat-chart">-->
-                                <!--&lt;!&ndash; do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break &ndash;&gt;-->
-                                <!--<div id="sparkline_bar"></div>-->
-                            <!--</div>-->
-                            <!--<div class="stat-number">-->
-                                <!--<div class="title"> Total </div>-->
-                                <!--<div class="number"> 2460 </div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-6 col-sm-6 col-xs-6">-->
-                        <!--<div class="stat-right">-->
-                            <!--<div class="stat-chart">-->
-                                <!--&lt;!&ndash; do not line break "sparkline_bar" div. sparkline chart has an issue when the container div has line break &ndash;&gt;-->
-                                <!--<div id="sparkline_bar2"></div>-->
-                            <!--</div>-->
-                            <!--<div class="stat-number">-->
-                                <!--<div class="title"> New </div>-->
-                                <!--<div class="number"> 719 </div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-hover table-light">
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Brain</a>
+                                <a href="#" class="primary-link">市级市场业绩</a>
                             </td>
-                            <td> $345 </td>
-                            <td> 45 </td>
+                            <td></td>
                             <td>
-                                <span class="bold theme-font">80%</span>
+                                <a href="#" class="primary-link">市级市场人数</a>
                             </td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Nick</a>
+                                <a href="#" class="primary-link">县级市场业绩</a>
                             </td>
-                            <td> $560 </td>
-                            <td> 12 </td>
+                            <td></td>
                             <td>
-                                <span class="bold theme-font">67%</span>
+                                <a href="#" class="primary-link">县级市场人数</a>
                             </td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Tim</a>
+                                <a href="#" class="primary-link">奖金币</a>
                             </td>
-                            <td> $1,345 </td>
+                            <td>{{MemberInfo.bonusAmount}}</td>
                             <td>
-                                <span class="bold theme-font">98%</span>
+                                <a href="#" class="primary-link">种子币</a>
                             </td>
-                            <td> 450 </td>
-
+                            <td>{{MemberInfo.seedAmount}}</td>
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Tom</a>
+                                <a href="#" class="primary-link">推荐人数</a>
                             </td>
-                            <td> $645 </td>
+                            <td>{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</td>
                             <td>
-                                <span class="bold theme-font">58%</span>
+                                <a href="#" class="primary-link">提现总额</a>
                             </td>
-                            <td> 50 </td>
-
+                            <td>{{MemberInfo.actualAmount}}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- END PORTLET -->
     </div>
 </div>
-<!-- BEGIN MAIN JS-->
 <script>
     Profile.init(); // init page demo
 </script>
-<!-- BEGIN MAIN JS -->

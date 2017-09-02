@@ -1,6 +1,8 @@
 package com.distribution.dao.accountManager.mapper.more;
 import com.distribution.dao.accountManager.mapper.AccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
+import com.distribution.dao.member.model.more.MoreMember;
+
 import java.util.Map;
 
 public interface MoreAccountManagerMapper extends AccountManagerMapper{
@@ -15,4 +17,9 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
 
     int updateAccountManagerAmt(AccountManager accountManager);
 
+    /**
+     * description 查询奖金币和种子币各自总额
+     * @author Bright
+     * */
+    MoreMember getSeedsAndBondsByMemberId(Integer memberId);
 }

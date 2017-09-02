@@ -16,6 +16,11 @@
 <head>
     <meta charset="utf-8" />
     <title>用户登录</title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="bookmark" href="favicon.ico" type="image/x-icon" />
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Preview page of Metronic Admin Theme #2 for " name="description" />
@@ -40,18 +45,86 @@
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" /> </head>
 <!-- END HEAD -->
+<style>
+    /*==========  Mobile First Method  ==========*/
 
-<body class=" login">
-<!-- BEGIN LOGO -->
-<div class="logo">
-    <a href="index.html">
-        <img src="${ctx}/static/metronic/pages/img/logo-big.png" alt="" /> </a>
-</div>
-<!-- END LOGO -->
+    /* Custom, iPhone Retina */
+    @media only screen and (min-width : 320px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
+            background-size: 100% ;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 200px !important;
+        }
+    }
+
+    /* Extra Small Devices, Phones */
+    @media only screen and (min-width : 480px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 300px !important;
+        }
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top:400px !important;
+        }
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-pc.jpg');
+            background-size: 600px 450px;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 350px !important;
+        }
+    }
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1200px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-pc.jpg');
+            background-size: 800px 600px;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 350px !important;
+        }
+    }
+
+</style>
+
+<body class="login" >
 <!-- BEGIN LOGIN -->
-<div class="content">
+<div class="content"  >
     <!-- BEGIN LOGIN FORM -->
-    <form class="login-form" action="index.html" method="post">
+    <form class="login-form" method="post">
         <h3 class="form-title font-green">会员登录</h3>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
@@ -73,15 +146,10 @@
             <a href="javascript:;" id="forget-password" class="forget-password">忘记密码?</a>
         </div>
 
-        <div class="create-account">
-            <p>
-                <%--<a href="javascript:;" id="register-btn" class="uppercase">Create an account</a>--%>
-            </p>
-        </div>
     </form>
     <!-- END LOGIN FORM -->
     <!-- BEGIN FORGOT PASSWORD FORM -->
-    <form class="forget-form" action="index.html" method="post">
+    <form class="forget-form" method="post">
         <h3 class="font-green">忘记密码 ?</h3>
         <p> 输入手机号</p>
         <div class="form-group">
@@ -94,7 +162,7 @@
     <!-- END FORGOT PASSWORD FORM -->
 
 </div>
-<div class="copyright">   </div>
+
 <script src="${ctx}/static/js/login.js" type="text/javascript"></script>
 <!--[if lt IE 9]>
 <script src="${ctx}/static/metronic/global/plugins/respond.min.js"></script>
@@ -104,10 +172,7 @@
 <!-- BEGIN CORE PLUGINS -->
 <script src="${ctx}/static/metronic/global/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<%--<script src="${ctx}/static/metronic/global/plugins/js.cookie.min.js" type="text/javascript"></script>--%>
-<%--<script src="${ctx}/static/metronic/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>--%>
-<%--<script src="${ctx}/static/metronic/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>--%>
-<%--<script src="${ctx}/static/metronic/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>--%>
+
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 <script src="${ctx}/static/metronic/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>

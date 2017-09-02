@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <script>
+
     var _ctx = "${ctx}";
     var ctx = _ctx;
     var version = '${version}';
@@ -17,6 +18,10 @@
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="bookmark" href="favicon.ico" type="image/x-icon" />
     <!-- metronic  start -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
@@ -57,7 +62,6 @@
     <!-- END CORE JQUERY PLUGINS -->
 
     <script src="${ctx}/static/xcConfirm/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
-
 
     <!-- BEGIN CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>

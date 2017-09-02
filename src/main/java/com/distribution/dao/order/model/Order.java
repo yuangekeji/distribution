@@ -36,6 +36,10 @@ public class Order {
 
     private Date updateTime;
 
+    private Integer goodsCd;
+
+    private String goodsNm;
+
     public Integer getOrderNo() {
         return orderNo;
     }
@@ -130,6 +134,22 @@ public class Order {
 
     public void setOrderStatues(String orderStatues) {
         this.orderStatues = orderStatues == null ? null : orderStatues.trim();
+    }
+
+    public Integer getGoodsCd() {
+        return goodsCd;
+    }
+
+    public void setGoodsCd(Integer goodsCd) {
+        this.goodsCd = goodsCd;
+    }
+
+    public String getGoodsNm() {
+        return goodsNm;
+    }
+
+    public void setGoodsNm(String goodsNm) {
+        this.goodsNm = goodsNm == null ? null : goodsNm.trim();
     }
 
     public Integer getCreateId() {

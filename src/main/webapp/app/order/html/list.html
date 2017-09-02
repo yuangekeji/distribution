@@ -18,7 +18,7 @@
                                 <label class="control-label col-md-5">订单状态</label>
                                     <div class="col-md-7">
                                     <select class="form-control input-sm input-xsmall input-inline" ng-model="myPage.parameterMap.orderStatus">
-                                        <option value="">All</option>
+                                        <option value="">全部</option>
                                         <option value="1">待支付</option>
                                         <option value="2">待发货</option>
                                         <option value="3">待收货</option>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group col-md-1">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn green" ng-click="search();"><i class="fa fa-search"></i>查询</button>
+                                    <button type="button" class="btn green" ng-click="searchByParam();"><i class="fa fa-search"></i>查询</button>
                                 </div>
                             </div>
                         </div>
@@ -80,14 +80,14 @@
                                     <td align="right">{{orderMaster.discount}}</td>
                                     <td align="right">{{orderMaster.actAmt}}</td>
                                     <td align="right">{{orderMaster.expressFee}}</td>
-                                    <td align="left">{{orderMaster.orderNo}}</td>
+                                    <td align="left">{{orderMaster.goodsNm}},{{orderMaster.orderQty}}个</td>
                                     <td align="center">{{orderMaster.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
                                     <td align="center">{{orderMaster.orderStatues|OrderStatuesFilter}}</td>
                                     <td align="left">{{orderMaster.expressAddress}}</td>
                                     <td align="center"><a href="javascript:;">确认收货</a></td>
                                 </tr>
                                 <tr ng-show= "notData" >
-                                    <td colspan="8">无记录</td>
+                                    <td colspan="11">无记录</td>
                                 </tr>
                             </tbody>
                         </table>

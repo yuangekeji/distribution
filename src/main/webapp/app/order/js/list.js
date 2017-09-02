@@ -1,7 +1,5 @@
 angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage) {
     title.setTitle('我的订单');
-    $scope.loadingFlag = true;
-    $scope.notData = false;
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,
@@ -9,49 +7,55 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         result: [],
         parameterMap: {}
     };
+    $scope.search = function(){
 
-    $scope.onInit = function () {
-        $http.post(ctx + '/order/list', $scope.myPage).success(function (resp) {
-            if (resp.successful) {
-                $scope.myPage = resp.data;
-                $scope.loadingFlag = false;
-                $scope.notData = false;
-                if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
-            } else {
-                console.log(resp.errorMessage);
-            }
+        $http.post(ctx + '/order/list', $scope.myPage)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.myPage = resp.data;
+                    $scope.notData = false;
+                    if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
+
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
         });
+    }
+
+    /**
+     * 初始化
+     */
+    $scope.onInit = function () {
+
+        $scope.search();
     };
+
 
     $scope.onInit();
 
-  /*  $scope.gotoIndex = function () {
-        $state.go('app.home');
-    };
-*/
-    /**查询*/
-    $scope.search = function () {
+    /**
+     * 查询按钮触发
+     */
+    $scope.searchByParam =function () {
+
         $scope.myPage.pageNo = 1;
         $scope.myPage.totalCount = 0;
-        $http.post(ctx + '/order/list', $scope.myPage).success(function (resp) {
-            if (resp.successful) {
-                $scope.myPage = resp.data;
-                $scope.notData = false;
-                if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
-            } else {
-                console.log(resp.errorMessage);
-            }
-        });
-    };
 
+        $scope.search();
 
-    /**翻页*/
+    }
+
+    /**
+     * 分页触发
+     * @param num
+     */
     $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
         $scope.myPage.pageNo = num;
-        $scope.onInit();
+        $scope.search();
     };
-
 });
 
 angular.module('order').filter("OrderStatuesFilter",function () {

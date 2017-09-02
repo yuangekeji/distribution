@@ -6,6 +6,8 @@
     <result column="order_category" property="orderCategory" jdbcType="CHAR" />
     <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
     <result column="order_qty" property="orderQty" jdbcType="INTEGER" />
+    <result column="goods_cd" property="goodsCd" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsNm" jdbcType="VARCHAR" />
     <result column="discount" property="discount" jdbcType="INTEGER" />
     <result column="act_amt" property="actAmt" jdbcType="DECIMAL" />
     <result column="express_fee" property="expressFee" jdbcType="DECIMAL" />
@@ -31,11 +33,11 @@
        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
          AND member_id = #{parameterMap.memberId}
        </if>
-       <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
-         AND order_statues = #{parameterMap.orderCategory}
+       <if test="parameterMap.orderStatus!=null and parameterMap.orderStatus!=''">
+         AND order_statues = #{parameterMap.orderStatus}
        </if>
-       <if test="parameterMap.id!=null and parameterMap.id!=''">
-         AND order_no = #{parameterMap.order_no}
+       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+         AND order_no = #{parameterMap.orderNo}
        </if>
        <if test="parameterMap.start!=null and parameterMap.start!=''">
          AND create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
@@ -51,11 +53,71 @@
     </if>
   </sql>
 
-  <select id="getOrderCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
+  <select id="getOrderListCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
     SELECT COUNT(*) FROM order_master <include refid="where"/>
   </select>
   
-  <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"/> FROM order_master <include refid="where"/> <include refid="pageLimit"/>
+  <select id="getOrderList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    SELECT a.order_no
+         , a.order_category
+         , a.order_amt
+         , a.discount
+         , a.act_amt
+         , b.goods_cd
+         , c.goods_name
+         , b.order_qty
+         , a.express_fee
+         , a.member_id
+         , a.receive_name
+         , a.express_address
+         , a.member_level
+         , a.order_statues
+         , a.create_id
+         , a.create_time
+         , a.update_id
+         , a.update_time
+      FROM order_master a,  order_detail b, goods c
+      WHERE a.order_no = b.id
+        AND b.goods_cd = c.id
+        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+            AND a.member_id = #{parameterMap.memberId}
+        </if>
+        <if test="parameterMap.orderStatus!=null and parameterMap.orderStatus!=''">
+            AND a.order_statues = #{parameterMap.orderStatus}
+        </if>
+        <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+            AND a.order_no = #{parameterMap.orderNo}
+        </if>
+        <if test="parameterMap.start!=null and parameterMap.start!=''">
+            AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+        </if>
   </select>
+
+    <insert id="insertOrder" parameterType="com.distribution.dao.order.model.Order" useGeneratedKeys="true" keyProperty="order_no">
+        insert into order_master (order_no, order_category, order_amt,
+        order_qty, discount, act_amt,
+        express_fee, member_id, receive_name,
+        express_address, member_level, order_statues,
+        create_id, create_time, update_id,
+        update_time)
+        values (#{orderNo,jdbcType=INTEGER}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
+        #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{actAmt,jdbcType=DECIMAL},
+        #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR},
+        #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},
+        #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER},
+        #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertOrderDetail" parameterType="com.distribution.dao.order.model.Order" >
+        insert into order_detail (id, goods_cd, order_amt,
+        order_qty, create_id, create_time,
+        update_id, update_time)
+        values (#{orderNo,jdbcType=INTEGER}, #{goodsCd,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL},
+        #{orderQty,jdbcType=INTEGER}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+  <!--<select id="getOrderList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM order_master <include refid="where"/> <include refid="pageLimit"/>
+  </select>-->
 </mapper>

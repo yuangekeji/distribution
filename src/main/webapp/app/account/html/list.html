@@ -8,7 +8,7 @@
                          <uib-tabset  >
                              <uib-tab index="0" heading="转账">
                                  <div class="note note-success note-bordered">
-                                     <h4>奖金币余额：{{accountInfo.bonusAmt}}元</h4>
+                                     <h4>奖金币余额：{{accountInfo.bonusAmt | number:2}}元</h4>
                                  </div>
                                  <form role="form" action="#">
                                      <div class="form-group"  ng-class="{'has-error':validateErrors.transferAmtError}">
@@ -27,17 +27,15 @@
                              </uib-tab>
                              <uib-tab index="1" heading="复投">
                                  <div class="note note-success note-bordered">
-                                     <h4>奖金币余额：{{accountInfo.bonusAmt}}元 </h4>
-                                     <h4>种子币余额：{{accountInfo.seedAmt}}元</h4>
+                                     <h4>奖金币余额：{{accountInfo.bonusAmt | number:2}}元 </h4>
+                                     <h4>种子币余额：{{accountInfo.seedAmt | number:2}}元</h4>
                                  </div>
                                  <form action="#">
                                      <div class="form-group">
                                          <label class="control-label">复投单数选择</label>
                                          <div>
                                            <input type="text"  placeholder="输入金额" class="form-control input-circle" /> x 600.00 = {{}}
-
                                          </div>
-
                                      </div>
                                      <div class="form-group">
                                          <label class="control-label">从种子币中扣除</label>

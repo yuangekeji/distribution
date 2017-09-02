@@ -12,15 +12,15 @@ angular.module('graph').controller('graphCtrl',
 
         window.setTimeout(function() {
             App.unblockUI(e1);
-        }, 3000);
+        }, 1000);
 
 
         $scope.remove = function (scope) {
             scope.remove();
         };
 
-        $scope.toggle = function (scope) {
-            scope.toggle();
+        $scope.toggle_ = function (scope) {
+            scope.toggle_();
         };
 
         $scope.moveLastToTheBeginning = function () {
@@ -31,8 +31,6 @@ angular.module('graph').controller('graphCtrl',
         $scope.newSubItem = function (scope) {
 
             var nodeData = scope.$modelValue;
-            alert( nodeData.nodes.length);
-
             nodeData.nodes.push({
                 id: nodeData.id * 10 + nodeData.nodes.length,
                 title: nodeData.title + '.' + (nodeData.nodes.length + 1),
@@ -69,10 +67,9 @@ angular.module('graph').controller('graphCtrl',
                     'nodes': []
                 }
             ]
-        }, {
+          }, {
             'id': 2,
             'title': 'node2',
-            'nodrop': true, // An arbitrary property to check in custom template for nodrop-enabled
             'nodes': [
                 {
                     'id': 21,
@@ -82,16 +79,6 @@ angular.module('graph').controller('graphCtrl',
                 {
                     'id': 22,
                     'title': 'node2.2',
-                    'nodes': []
-                }
-            ]
-        }, {
-            'id': 3,
-            'title': 'node3',
-            'nodes': [
-                {
-                    'id': 31,
-                    'title': 'node3.1',
                     'nodes': []
                 }
             ]

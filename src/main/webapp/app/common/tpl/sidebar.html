@@ -13,22 +13,22 @@
                 <span class="title">主页</span>
             </a>
         </li>
-        <li class="start">
-            <a ui-sref="app.graph">
-                <i class="icon-home"></i>
+        <li class="nav-item">
+            <a   ui-sref="app.graph">
+                <i class="icon-graph"></i>
                 <span class="title">推荐网络图</span>
             </a>
         </li>
         <li class="nav-item" ng-repeat="row in firstMenu">
             <a href="javascript:;" class="nav-link nav-toggle">
-                <i class="icon-settings"></i>
+                <i class="{{row.menuIcon}}"></i>
                 <span class="title">{{row.name}}</span>
                 <span class="arrow "></span>
             </a>
             <ul class="sub-menu">
                 <li ng-repeat="second in secondMenu" ng-if="second.parentMenu == row.id">
                     <a  ng-click="goUrl(second.menuLink)">
-                        <i class="icon-puzzle"></i> {{second.name}}</span>
+                        <i class="icon-puzzle"></i> {{second.name}}
                     </a>
                 </li>
             </ul>

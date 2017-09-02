@@ -6,12 +6,7 @@ angular.module('account').controller('accountListCtrl',
     $scope.accountInfo = {};
     $scope.validateErrors ={};
     //定义转账model
-    $scope.transfer = {
-        transferAmt:0.00,
-        receivePhone:'',
-        receiveName:'',
-        payPassword:''
-    };
+    $scope.transfer = {};
 
     /**
      * 页面初始化查询账户信息
@@ -28,7 +23,12 @@ angular.module('account').controller('accountListCtrl',
     }
 
     $scope.onInit=function () {
-
+        $scope.transfer = {
+            transferAmt:0.00,
+            receivePhone:'',
+            receiveName:'',
+            payPassword:''
+        };
         $scope.getAccount();
     }
 
@@ -69,13 +69,12 @@ angular.module('account').controller('accountListCtrl',
                             receiveName:$scope.transfer.receiveName,
                             payPassword:$scope.transfer.payPassword
                         }).success(function (resp) {
-                        console.info(resp);
                         if(resp.successful) {
 
                             $scope.msg = "";
                             if (resp.data.result == 'success') {
                                 $scope.msg = "转账成功";
-                                $scope.transfer ={};
+
                             } else if (resp.data.result == 'pwdWrong') {
                                 $scope.msg = "支付密码错误";
                             } else if (resp.data.result == 'fail') {
@@ -83,10 +82,12 @@ angular.module('account').controller('accountListCtrl',
                             }
 
                             ConfirmModal.show({text: $scope.msg, isCancel: false});
-                            $scope.accountInfo();
+
                         }else{
                             console.error("转账失败，请稍后再试。")
+                            $window.location.reload();
                         }
+                        $scope.onInit();
                     });
 
                 })

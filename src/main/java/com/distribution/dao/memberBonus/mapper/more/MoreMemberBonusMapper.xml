@@ -24,11 +24,17 @@
     <result column="order_no" property="orderNo" jdbcType="INTEGER" />
     <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
     <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
-      <result column="order_amount" property="orderAmount" jdbcType="DOUBLE" />
+    <result column="order_amount" property="orderAmount" jdbcType="DOUBLE" />
     <result column="amout_total" property="amoutTotal" jdbcType="DOUBLE" />
     <result column="manage_fee_total" property="manageFeeTotal" jdbcType="DOUBLE" />
     <result column="actual_amout_total" property="actualAmoutTotal" jdbcType="DOUBLE" />
-
+    <result column="bonus_first_agent_amout" property="bonusFirstAgentAmout" jdbcType="DOUBLE" />
+    <result column="bonus_second_agent_amout" property="bonusSecondAgentAmout" jdbcType="DOUBLE" />
+    <result column="bonus_dividend_amout" property="bonusDividendAmout" jdbcType="DOUBLE" />
+    <result column="bonus_point_amout" property="bonusPointAmout" jdbcType="DOUBLE" />
+    <result column="bonus_graded_amout" property="bonusGradedAmout" jdbcType="DOUBLE" />
+    <result column="bonus_workroom_amout" property="bonusWorkroomAmout" jdbcType="DOUBLE" />
+    <result column="bonus_workcenter_amout" property="bonusWorkcenterAmout" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, member_id, bonus_date, bonus_type, amout, manage_fee, actual_amout,
@@ -68,10 +74,6 @@
       <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
          and member_id = #{parameterMap.memberId}
       </if>
-      <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-          and order_no = #{parameterMap.orderNo}
-      </if>
-          and   bonus_type not in ('8')
       <if test="parameterMap.bonusStartDate!=null and parameterMap.bonusStartDate!=''">
           and DATE_FORMAT(bonus_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.bonusStartDate},'%Y%m%d')
       </if>
@@ -91,18 +93,67 @@
           member.order_amount,
           mb.amout_total,
           mb.manage_fee_total,
-          mb.actual_amout_total
+          mb.actual_amout_total,
+          mb.bonus_first_agent_amout,
+          mb.bonus_second_agent_amout,
+          mb.bonus_dividend_amout,
+          mb.bonus_point_amout,
+          mb.bonus_graded_amout,
+          mb.bonus_workroom_amout,
+          mb.bonus_workcenter_amout
       from (
           select
-              member_id,
-              order_id,
-              order_no,
-              sum(amout) as amout_total,
-              sum(manage_fee) as manage_fee_total,
-              sum(actual_amout) as actual_amout_total
+          member_id,
+          order_id,
+          order_no,
+          sum(amout_total) amout_total,
+          sum(manage_fee_total) manage_fee_total,
+          sum(actual_amout_total) actual_amout_total,
+          max(case bonus_type when '1' then actual_amout_total else 0 end) bonus_first_agent_amout,
+          max(case bonus_type when '2' then actual_amout_total else 0 end) bonus_second_agent_amout,
+          max(case bonus_type when '3' then actual_amout_total else 0 end) bonus_dividend_amout,
+          max(case bonus_type when '4' then actual_amout_total else 0 end) bonus_point_amout,
+          max(case bonus_type when '5' then actual_amout_total else 0 end) bonus_graded_amout,
+          max(case bonus_type when '7' then actual_amout_total else 0 end) bonus_workroom_amout,
+          max(case bonus_type when '8' then actual_amout_total else 0 end) bonus_workcenter_amout
+          from(select
+                  member_id,
+                  order_id,
+                  order_no,
+                  bonus_type,
+                  sum(amout) as amout_total,
+                  sum(manage_fee) as manage_fee_total,
+                  sum(actual_amout) as actual_amout_total
+              from member_bonus
+              <include refid="whereMemberBonusList"/>
+              <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+                  and order_no = #{parameterMap.orderNo}
+              </if>
+              and   bonus_type not in ('6')
+              group by member_id, order_id, order_no,bonus_type) temp
+          group by member_id, order_id, order_no
+      <if test="parameterMap.chinaPresidentBonusYN==1">
+          union all
+          select
+          member_id,
+          order_id,
+          order_no,
+          sum(amout) as amout_total,
+          sum(manage_fee) as manage_fee_total,
+          sum(actual_amout) as actual_amout_total,
+          0 bonus_first_agent_amout,
+          0 bonus_second_agent_amout,
+          0 bonus_dividend_amout,
+          0 bonus_point_amout,
+          0 bonus_graded_amout,
+          0 bonus_workroom_amout,
+          0 bonus_workcenter_amout
           from member_bonus
           <include refid="whereMemberBonusList"/>
-          group by member_id, order_id, order_no) mb, member member
+          and   bonus_type = '6'
+          group by member_id, order_id, order_no
+      </if>
+      ) mb, member member
       where mb.member_id = member.id
       order by mb.order_id
     <include refid="pageLimit"/>
@@ -111,16 +162,29 @@
     select
         count(0) as count
     from (
-        select
-        member_id,
-        order_id,
-        order_no,
-        sum(amout) as amout_total,
-        sum(manage_fee) as manage_fee_total,
-        sum(actual_amout) as actual_amout_total
-        from member_bonus
-        <include refid="whereMemberBonusList"/>
-        group by member_id, order_id, order_no) mb, member member
-        where mb.member_id = member.id
+      select
+      member_id,
+      order_id,
+      order_no
+      from member_bonus
+      <include refid="whereMemberBonusList"/>
+      <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+          and order_no = #{parameterMap.orderNo}
+      </if>
+      and   bonus_type not in ('6')
+      group by member_id, order_id, order_no
+      <if test="parameterMap.chinaPresidentBonusYN==1">
+          union all
+          select
+          member_id,
+          order_id,
+          order_no
+          from member_bonus
+          <include refid="whereMemberBonusList"/>
+          and   bonus_type = '6'
+          group by member_id, order_id, order_no
+      </if>
+      ) mb, member member
+      where mb.member_id = member.id
   </select>
 </mapper>

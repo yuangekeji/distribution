@@ -36,8 +36,11 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
                         }else if(resp.data=='NO_NODE_MEMBER'){
                             alert("节点不存在，请重新输入。");
                             $scope.submitFlag = true;
-                        }else if(resp.data=='NOTE_FULL'){
-                            alert("该节点该区已满，请从新输入。");
+                        }else if(resp.data=='LEFT_NOTE_FULL'){
+                            alert("该节点左区已存在，请从新选择节点区域。");
+                            $scope.submitFlag = true;
+                        }else if(resp.data=='RIGHT_NOTE_FULL'){
+                            alert("该节点右区已存在，请从新选择节点区域。");
                             $scope.submitFlag = true;
                         }else{
                             $state.go("app.recommend");
@@ -80,6 +83,9 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
             $scope.submitFlag = true;
         }else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
             alert("请输入节点手机号码。");
+            $scope.submitFlag = true;
+        }else if(!$scope.member.area){
+            alert("请选择节点区域。");
             $scope.submitFlag = true;
         }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
             alert("节点手机号有误，请重新输入。");

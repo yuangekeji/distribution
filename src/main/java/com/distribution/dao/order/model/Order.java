@@ -4,13 +4,19 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Order {
-    private Integer id;
+    private Integer orderNo;
 
     private String orderCategory;
 
     private BigDecimal orderAmt;
 
     private Integer orderQty;
+
+    private Integer discount;
+
+    private BigDecimal actAmt;
+
+    private BigDecimal expressFee;
 
     private Integer memberId;
 
@@ -30,12 +36,16 @@ public class Order {
 
     private Date updateTime;
 
-    public Integer getId() {
-        return id;
+    private Integer goodsCd;
+
+    private String goodsNm;
+
+    public Integer getOrderNo() {
+        return orderNo;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getOrderCategory() {
@@ -60,6 +70,30 @@ public class Order {
 
     public void setOrderQty(Integer orderQty) {
         this.orderQty = orderQty;
+    }
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getActAmt() {
+        return actAmt;
+    }
+
+    public void setActAmt(BigDecimal actAmt) {
+        this.actAmt = actAmt;
+    }
+
+    public BigDecimal getExpressFee() {
+        return expressFee;
+    }
+
+    public void setExpressFee(BigDecimal expressFee) {
+        this.expressFee = expressFee;
     }
 
     public Integer getMemberId() {
@@ -100,6 +134,22 @@ public class Order {
 
     public void setOrderStatues(String orderStatues) {
         this.orderStatues = orderStatues == null ? null : orderStatues.trim();
+    }
+
+    public Integer getGoodsCd() {
+        return goodsCd;
+    }
+
+    public void setGoodsCd(Integer goodsCd) {
+        this.goodsCd = goodsCd;
+    }
+
+    public String getGoodsNm() {
+        return goodsNm;
+    }
+
+    public void setGoodsNm(String goodsNm) {
+        this.goodsNm = goodsNm == null ? null : goodsNm.trim();
     }
 
     public Integer getCreateId() {

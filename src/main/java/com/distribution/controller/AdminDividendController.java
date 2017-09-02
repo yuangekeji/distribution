@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/adminDividend")
 public class AdminDividendController extends BasicController {
 
-    private static final Log loger = LogFactory.getLog(AdminDividendController.class);
+    //private static final Log loger = LogFactory.getLog(AdminDividendController.class);
 
     @Autowired
     private DividendService dividendService;

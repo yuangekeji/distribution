@@ -5,6 +5,7 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountManager.mapper.AccountManagerMapper;
+import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.mapper.more.MoreAdminMapper;
 import com.distribution.dao.admin.model.Admin;
@@ -12,6 +13,7 @@ import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
+import com.distribution.dao.memberNode.model.MemberNode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,10 @@ public class MemberService {
     private MoreAdminMapper moreAdminMapper;
     @Autowired
     private AccountManagerMapper accountManagerMapper;
+    @Autowired
+    private MoreAccountManagerMapper moreAccountManagerMapper;
+    @Autowired
+    private NodeService nodeService;
 
     /**
      * description 会员列表查询
@@ -64,10 +70,23 @@ public class MemberService {
                 if(null==noteMember){//查询节点是否存在，否则报错
                     return "NO_NODE_MEMBER";
                 } else {
-                    //TODO
-                    if(false){//判断节点是否还可以放一代，否则报错
-                        return "NOTE_FULL";
+                    Integer it = nodeService.findNodeByParentNode(noteMember.getNodeId(),moreMember.getArea());
+                    if(it.intValue()!=0){//判断节点是否还可以放一代，否则报错
+                        if("left".equals(moreMember.getArea()))
+                            return "LEFT_NOTE_FULL";
+                        else
+                            return "RIGHT_NOTE_FULL";
                     }else {
+                        //保存节点信息
+                        MemberNode memberNode = new MemberNode();
+                        memberNode.setCreateBy(currentUser.getId());
+                        memberNode.setCreateTime(new Date());
+                        memberNode.setParentId(noteMember.getNodeId());
+                        memberNode.setUpdateBy(currentUser.getId());
+                        memberNode.setUpdateTime(new Date());
+                        Integer noteId = nodeService.saveNode(memberNode,moreMember.getArea());
+
+                        //保存报单信息
                         Member member = new Member();
                         BeanUtils.copyProperties(moreMember,member);
                         member.setLoginPassword(CryptoUtil.md5ByHex(member.getLoginPassword()));
@@ -80,6 +99,7 @@ public class MemberService {
                         member.setUpdateTime(new Date());
                         member.setMoneyStatus("N");
                         member.setRecommendName(recommendMember.getMemberName());
+                        member.setNodeId(noteId);
                         member.setNodeName(noteMember.getMemberName());
                         if ("member_level1".equals(member.getMemberLevel())) {
                             member.setOrderAmount(new BigDecimal(600));
@@ -178,7 +198,10 @@ public class MemberService {
      * description 获取会员详细信息
      * @author Bright
      * */
-    public Member getMemberInfo(Integer id){
-        return memberMapper.selectByPrimaryKey(id);
+    public MoreMember getMemberInfo(Integer id){
+        MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
+        Member member = memberMapper.selectByPrimaryKey(id);
+        BeanUtils.copyProperties(member,moreMember);
+        return moreMember;
     }
 }

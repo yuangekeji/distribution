@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <script>
+
     var _ctx = "${ctx}";
     var ctx = _ctx;
     var version = '${version}';

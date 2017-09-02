@@ -1,4 +1,5 @@
 angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope) {
+    //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
     if($scope.user.memberPost){
@@ -7,6 +8,20 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
              $scope.user.nextMemberPost = $scope.user.memberPost.toString().substr(0,$scope.user.memberPost.toString().length-1) + (Number(str)+1);
         }
     }
+    $scope.MemberInfo = {};
+
+    $scope.onInit = function () {
+        $http.get(ctx + '/member/getMemberInfo/'+$scope.user.id).success(function (resp) {
+            if(resp.successful){
+                $scope.MemberInfo = resp.data.member;
+                $scope.banks = resp.data.list;
+            }else{
+                console.log(resp);
+            }
+        });
+    };
+    $scope.onInit();
+    //Bright End
 
     $scope.$on('$viewContentLoaded', function() {
         App.initAjax(); // initialize core components
@@ -16,6 +31,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
     // set sidebar closed and body solid layout mode
     $rootScope.settings.layout.pageBodySolid = true;
     $rootScope.settings.layout.pageSidebarClosed = false;
+
 });
 
 angular.module('member').filter("MemberLevelFilter",function () {

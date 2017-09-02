@@ -115,6 +115,14 @@ CREATE TABLE `basic_manage` (
   `type_code` varchar(10) NOT NULL COMMENT '类型',
   `detail_code` varchar(10) NOT NULL COMMENT 'code',
   `detail_nm` varchar(50) NOT NULL COMMENT '名称',
+  `buy_amt` DECIMAL(15,2) NULL DEFAULT '0.00' COMMENT '购买金额',
+  `buy_qty` INT(11) NULL DEFAULT '0' COMMENT '购买数量',
+  `devidend_cnt` INT(11) NULL DEFAULT '0' COMMENT '分红包个数',
+  `sales_bonus_per` DECIMAL(3,2) NULL DEFAULT '0.00' COMMENT '销售奖比例',
+  `sales_bonus_per1` DECIMAL(3,2) NULL DEFAULT '0.00' COMMENT '一代销售奖比例',
+  `sales_bonus_per2` DECIMAL(3,2) NULL DEFAULT '0.00' COMMENT '二代销售奖比例',
+  `profit_per` DECIMAL(2,2) NULL DEFAULT '0.00' COMMENT '公司分红比例',
+  `discount` DECIMAL(2,2) NULL DEFAULT '0.00' COMMENT '会员折扣',
   `max_percent` decimal(3,2) NOT NULL COMMENT '最大比例',
   `min_percent` decimal(3,2) NOT NULL COMMENT '最小比例',
   `max_amt` decimal(15,2) NOT NULL COMMENT '最大金额',
@@ -362,15 +370,18 @@ INSERT INTO `menu` VALUES ('26', null, '管理员列表', '25', 'app.admin');
 INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.admAccount');
 
 -- ----------------------------
--- Table structure for order
+-- Table structure for order_master
 -- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单号',
+DROP TABLE IF EXISTS `order_master`;
+CREATE TABLE `order_master` (
+  `order_no` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单号',
   `order_category` char(1) DEFAULT NULL COMMENT '订单分类',
-  `order_amt` decimal(15,2) NOT NULL COMMENT '订单金额',
-  `order_qty` int(11) NOT NULL COMMENT '订购数量',
-  `member_id` int(11) NOT NULL COMMENT '会员id',
+  `order_amt` decimal(15,2) DEFAULT NULL COMMENT '订单金额',
+  `order_qty` int(11) DEFAULT NULL COMMENT '订购数量',
+  `discount` int(11) DEFAULT NULL COMMENT '折扣',
+  `act_amt` decimal(15,2) DEFAULT NULL COMMENT '实付金额',
+  `express_fee` decimal(15,2) DEFAULT NULL COMMENT '快递费',
+  `member_id` int(11) DEFAULT NULL COMMENT '会员id',
   `receive_name` varchar(50) DEFAULT NULL COMMENT '收货人姓名',
   `express_address` varchar(500) DEFAULT NULL COMMENT '收货地址',
   `member_level` varchar(2) DEFAULT NULL COMMENT '会员等级',

@@ -39,7 +39,7 @@
     <link href="${ctx}/static/metronic/global/css/components.min.css" id="style_components" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/layouts/layout2/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/metronic/layouts/layout2/css/themes/grey.min.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="${ctx}/static/metronic/layouts/layout2/css/themes/blue.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="${ctx}/static/metronic/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME STYLES -->
     <link href="${ctx}/static/metronic/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />

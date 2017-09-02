@@ -5,6 +5,7 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountManager.mapper.AccountManagerMapper;
+import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.mapper.more.MoreAdminMapper;
 import com.distribution.dao.admin.model.Admin;
@@ -33,6 +34,8 @@ public class MemberService {
     private MoreAdminMapper moreAdminMapper;
     @Autowired
     private AccountManagerMapper accountManagerMapper;
+    @Autowired
+    private MoreAccountManagerMapper moreAccountManagerMapper;
     @Autowired
     private NodeService nodeService;
 
@@ -195,7 +198,10 @@ public class MemberService {
      * description 获取会员详细信息
      * @author Bright
      * */
-    public Member getMemberInfo(Integer id){
-        return memberMapper.selectByPrimaryKey(id);
+    public MoreMember getMemberInfo(Integer id){
+        MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
+        Member member = memberMapper.selectByPrimaryKey(id);
+        BeanUtils.copyProperties(member,moreMember);
+        return moreMember;
     }
 }

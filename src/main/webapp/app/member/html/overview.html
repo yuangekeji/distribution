@@ -12,45 +12,43 @@
                     <table class="table table-hover table-light">
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Brain</a>
+                                <a href="#" class="primary-link">市级市场业绩</a>
                             </td>
-                            <td> $345 </td>
-                            <td> 45 </td>
+                            <td></td>
                             <td>
-                                <span class="bold theme-font">80%</span>
+                                <a href="#" class="primary-link">市级市场人数</a>
                             </td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Nick</a>
+                                <a href="#" class="primary-link">县级市场业绩</a>
                             </td>
-                            <td> $560 </td>
-                            <td> 12 </td>
+                            <td></td>
                             <td>
-                                <span class="bold theme-font">67%</span>
+                                <a href="#" class="primary-link">县级市场人数</a>
                             </td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Tim</a>
+                                <a href="#" class="primary-link">奖金币</a>
                             </td>
-                            <td> $1,345 </td>
+                            <td>{{MemberInfo.bonusAmount}}</td>
                             <td>
-                                <span class="bold theme-font">98%</span>
+                                <a href="#" class="primary-link">种子币</a>
                             </td>
-                            <td> 450 </td>
-
+                            <td>{{MemberInfo.seedAmount}}</td>
                         </tr>
                         <tr>
                             <td>
-                                <a href="#" class="primary-link">Tom</a>
+                                <a href="#" class="primary-link">推荐人数</a>
                             </td>
-                            <td> $645 </td>
+                            <td>{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</td>
                             <td>
-                                <span class="bold theme-font">58%</span>
+                                <a href="#" class="primary-link">提现总额</a>
                             </td>
-                            <td> 50 </td>
-
+                            <td>{{MemberInfo.actualAmount}}</td>
                         </tr>
                     </table>
                 </div>

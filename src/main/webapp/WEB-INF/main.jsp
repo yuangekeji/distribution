@@ -94,14 +94,10 @@
     <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>
     <script src="${ctx}/app/common/pagination/dirPagination.js" type="text/javascript" charset="utf-8"></script>
 
-
     <script src="${ctx}/app/app.js?v=${version}"></script>
     <script src="${ctx}/app/config.js?v=${version}"></script>
     <script src="${ctx}/app/router.js?v=${version}"></script>
-
-
     <script src="${ctx}/app/directives.js?v=${version}"></script>
-
     <script src="${ctx}/app/controllers.js?v=${version}"></script>
     <script src="${ctx}/app/services.js?v=${version}"></script>
     <script src="${ctx}/app/filter.js?v=${version}"></script>
@@ -122,6 +118,7 @@
 <script src="${ctx}/static/metronic/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>
+
 <!-- END APP LEVEL JQUERY SCRIPTS -->
 <!-- END JAVASCRIPTS --
 </body>

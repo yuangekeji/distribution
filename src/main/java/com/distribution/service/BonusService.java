@@ -24,4 +24,12 @@ public class BonusService {
         page.setResult( moreMemberBonusMapper.selectMemberBonusList(page));
         return page;
     }
+    /**
+     * description 查詢获奖明细
+     * @author shiqing
+     * */
+    public Page selectMemberBonusDetail(Page page){
+        page.setResult( moreMemberBonusMapper.selectMemberBonusDetail(page));
+        return page;
+    }
 }

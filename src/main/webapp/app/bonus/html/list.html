@@ -40,29 +40,21 @@
                                            aria-controls="sample_1">
                                 </div>
                             </div>
-                            <!--<div class="form-group col-md-2">
-                                <div class="col-md-12">
-                                    <label control-label class="control-label check mt-checkbox mt-checkbox-outline">
-                                        <input type="checkbox" name="remember" value="1" />全国董事奖
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>-->
                             <div class="form-group col-md-2">
                                 <div class="col-md-12">
                                     <label class="control-label check mt-checkbox mt-checkbox-outline">
-                                        <input type="checkbox" ng-model="myPage.parameterMap.chinaPresidentBonusYN"/>
+                                        <input type="checkbox" checked ng-model="myPage.parameterMap.chinaPresidentBonusYN"/>
                                         <span style="margin-top: 8px;"></span>全国董事奖
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group col-md-5">
-                                <label class="control-label col-md-3">发生日期</label>
+                                <label class="control-label col-md-3">订单日期</label>
                                 <div class="col-md-8">
                                     <div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-mm-dd">
-                                        <input type="text" class="form-control" ng-model="myPage.parameterMap.bonusStartDate" name="from">
+                                        <input type="text" class="form-control" ng-model="myPage.parameterMap.orderStartDate" name="from">
                                         <span class="input-group-addon"> to </span>
-                                        <input type="text" class="form-control" ng-model="myPage.parameterMap.bonusEndDate" name="to"></div>
+                                        <input type="text" class="form-control" ng-model="myPage.parameterMap.orderEndDate" name="to"></div>
                                 </div>
 
                             </div>
@@ -83,6 +75,7 @@
                                 <th class="text-center">推荐人</th>
                                 <th class="text-center">购买会员</th>
                                 <th class="text-center">订单金额</th>
+                                <th class="text-center">订单日期</th>
                                 <th class="text-center">状态</th>
                                 <th class="text-center">奖金总额</th>
                                 <th class="text-center">管理费</th>
@@ -98,11 +91,12 @@
                                     <td class="text-center">{{row.recommendName}}</td>
                                     <td class="text-center">{{row.memberName}}</td>
                                     <td class="text-right">{{row.orderAmount | number:2}}</td>
+                                    <td class="text-center">{{row.orderDate | date:'yyyy-MM-dd'}}</td>
                                     <td class="text-center">已到账</td>
                                     <td class="text-right">{{row.amoutTotal | number:2}}</td>
                                     <td class="text-right">{{row.manageFeeTotal | number:2}}</td>
                                     <td class="text-right">{{row.actualAmoutTotal | number:2}}</td>
-                                    <td class="text-center" ng-show="row.orderNo!=0"><a href="javascript:" >获奖明细</a></td>
+                                    <td class="text-center" ng-show="row.orderNo!=0"><a href="javascript:" ng-click="searchBonusDetail(row.memberId, row.memberName, row.orderNo, row.orderStartDate, row.orderEndDate)" >获奖明细</a></td>
                                 </tr>
                                 <tr ng-show= "notData" >
                                     <td colspan="9">无记录</td>

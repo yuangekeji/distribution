@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
-    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
     <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
     <result column="dividend_count" property="dividendCount" jdbcType="INTEGER" />
     <result column="received_amount" property="receivedAmount" jdbcType="DECIMAL" />
@@ -120,7 +120,7 @@
       create_time, update_id, update_time
       )
     values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
-      #{orderNo,jdbcType=VARCHAR}, #{orderAmount,jdbcType=DECIMAL}, #{dividendCount,jdbcType=INTEGER}, 
+      #{orderNo,jdbcType=BIGINT}, #{orderAmount,jdbcType=DECIMAL}, #{dividendCount,jdbcType=INTEGER}, 
       #{receivedAmount,jdbcType=DECIMAL}, #{remainAmount,jdbcType=DECIMAL}, #{dividendLimit,jdbcType=DECIMAL}, 
       #{dividendStatus,jdbcType=VARCHAR}, #{mgmtFee,jdbcType=DECIMAL}, #{createId,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
@@ -186,7 +186,7 @@
         #{orderId,jdbcType=INTEGER},
       </if>
       <if test="orderNo != null" >
-        #{orderNo,jdbcType=VARCHAR},
+        #{orderNo,jdbcType=BIGINT},
       </if>
       <if test="orderAmount != null" >
         #{orderAmount,jdbcType=DECIMAL},
@@ -242,7 +242,7 @@
         order_id = #{record.orderId,jdbcType=INTEGER},
       </if>
       <if test="record.orderNo != null" >
-        order_no = #{record.orderNo,jdbcType=VARCHAR},
+        order_no = #{record.orderNo,jdbcType=BIGINT},
       </if>
       <if test="record.orderAmount != null" >
         order_amount = #{record.orderAmount,jdbcType=DECIMAL},
@@ -287,7 +287,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       member_id = #{record.memberId,jdbcType=INTEGER},
       order_id = #{record.orderId,jdbcType=INTEGER},
-      order_no = #{record.orderNo,jdbcType=VARCHAR},
+      order_no = #{record.orderNo,jdbcType=BIGINT},
       order_amount = #{record.orderAmount,jdbcType=DECIMAL},
       dividend_count = #{record.dividendCount,jdbcType=INTEGER},
       received_amount = #{record.receivedAmount,jdbcType=DECIMAL},
@@ -313,7 +313,7 @@
         order_id = #{orderId,jdbcType=INTEGER},
       </if>
       <if test="orderNo != null" >
-        order_no = #{orderNo,jdbcType=VARCHAR},
+        order_no = #{orderNo,jdbcType=BIGINT},
       </if>
       <if test="orderAmount != null" >
         order_amount = #{orderAmount,jdbcType=DECIMAL},
@@ -355,7 +355,7 @@
     update dividend
     set member_id = #{memberId,jdbcType=INTEGER},
       order_id = #{orderId,jdbcType=INTEGER},
-      order_no = #{orderNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=BIGINT},
       order_amount = #{orderAmount,jdbcType=DECIMAL},
       dividend_count = #{dividendCount,jdbcType=INTEGER},
       received_amount = #{receivedAmount,jdbcType=DECIMAL},

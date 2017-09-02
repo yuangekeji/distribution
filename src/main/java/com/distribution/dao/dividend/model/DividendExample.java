@@ -296,62 +296,52 @@ public class DividendExample {
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoEqualTo(String value) {
+        public Criteria andOrderNoEqualTo(Long value) {
             addCriterion("order_no =", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoNotEqualTo(String value) {
+        public Criteria andOrderNoNotEqualTo(Long value) {
             addCriterion("order_no <>", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoGreaterThan(String value) {
+        public Criteria andOrderNoGreaterThan(Long value) {
             addCriterion("order_no >", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoGreaterThanOrEqualTo(String value) {
+        public Criteria andOrderNoGreaterThanOrEqualTo(Long value) {
             addCriterion("order_no >=", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoLessThan(String value) {
+        public Criteria andOrderNoLessThan(Long value) {
             addCriterion("order_no <", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoLessThanOrEqualTo(String value) {
+        public Criteria andOrderNoLessThanOrEqualTo(Long value) {
             addCriterion("order_no <=", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoLike(String value) {
-            addCriterion("order_no like", value, "orderNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andOrderNoNotLike(String value) {
-            addCriterion("order_no not like", value, "orderNo");
-            return (Criteria) this;
-        }
-
-        public Criteria andOrderNoIn(List<String> values) {
+        public Criteria andOrderNoIn(List<Long> values) {
             addCriterion("order_no in", values, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoNotIn(List<String> values) {
+        public Criteria andOrderNoNotIn(List<Long> values) {
             addCriterion("order_no not in", values, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoBetween(String value1, String value2) {
+        public Criteria andOrderNoBetween(Long value1, Long value2) {
             addCriterion("order_no between", value1, value2, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoNotBetween(String value1, String value2) {
+        public Criteria andOrderNoNotBetween(Long value1, Long value2) {
             addCriterion("order_no not between", value1, value2, "orderNo");
             return (Criteria) this;
         }

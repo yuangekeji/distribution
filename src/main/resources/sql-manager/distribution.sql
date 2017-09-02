@@ -540,7 +540,7 @@ ADD COLUMN `node_name`  varchar(255) NULL COMMENT '放置到的节点的人的�
 -- lijingxin
 ALTER TABLE `transfer`
   ADD COLUMN `member_phone`  varchar(255) NULL COMMENT '会员电话号',
-  ADD COLUMN `member_name`  varchar(255) NULL COMMENT '会员名字';
+  ADD COLUMN `member_name`  varchar(255) NULL COMMENT '会员名字',
   ADD COLUMN `receive_phone`  varchar(255) NULL COMMENT '收款会员电话号',
   ADD COLUMN `receive_name`  varchar(255) NULL COMMENT '收款会员名字';
 

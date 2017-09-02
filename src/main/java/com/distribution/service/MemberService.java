@@ -173,4 +173,12 @@ public class MemberService {
     public Member getMemberByPhone(String phone){
         return moreMemberMapper.getMemberByPhone(phone);
     }
+
+    /**
+     * description 获取会员详细信息
+     * @author Bright
+     * */
+    public Member getMemberInfo(Integer id){
+        return memberMapper.selectByPrimaryKey(id);
+    }
 }

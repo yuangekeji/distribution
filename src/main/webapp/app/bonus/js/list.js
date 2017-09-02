@@ -1,68 +1,65 @@
 angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('奖金明细');
 
+    $scope.notData = false;
+    $scope.myPage = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {
+            orderNo:'',
+        }
+    };
+
+    $scope.search = function(){
+
+        $http.post(ctx + '/bonus/list', $scope.myPage)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.myPage = resp.data;
+                    $scope.notData = false;
+                    if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
+
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
+        });
+    }
+
+    /**
+     * 初始化
+     */
     $scope.onInit = function () {
 
-        $scope.loadingFlag = true;
-
-
-        $scope.currentPage = 1;
-        $scope.pageSize = 10;
-        $scope.meals = [];
-        $scope.totalItems = 10;
-        var dishes = [
-            'noodles',
-            'sausage',
-            'beans on ',
-            'chee',
-            'battered  ',
-            'crisp ',
-            'yorkshire ',
-            'wiener ',
-            'sauerkraut ',
-            'salad',
-            'onion ',
-            'bak ',
-            'avacado '
-        ];
-        var sides = [
-            'with',
-            'a la',
-            'drizzled',
-            'with ',
-            'on ',
-            'with ',
-            'on a ',
-            'wrapped ',
-            'on a',
-            'in pitta'
-        ];
-        for (var i = 1; i <= 20; i++) {
-            var dish = dishes[Math.floor(Math.random() * dishes.length)];
-            var side = sides[Math.floor(Math.random() * sides.length)];
-            $scope.meals.push('meal ' + i + ': ' + dish + ' ' + side);
-        }
-
-
-        $scope.dataList = [];
-        // $http.post(ctx + '/recommend/list', $scope.param).success(function (resp) {
-        //     if (resp.successful) {
-        //         $scope.dataList = resp.data;
-        //         $scope.loadingFlag = false;
-        //         $scope.notData = false;
-        //         if (!$scope.dataList || $scope.dataList.length == 0) $scope.notData = true;
-        //     } else {
-        //         console.log(resp.errorMessage);
-        //     }
-        // });
-
-
+        $scope.search();
     };
+
+
     $scope.onInit();
-});
 
-angular.module('bonus').controller('OtherController', function ( $scope) {
+    /**
+     * 查询按钮触发
+     */
+    $scope.searchByParam =function () {
+
+        $scope.myPage.pageNo = 1;
+        $scope.myPage.totalCount = 0;
+
+        $scope.search();
+
+    }
+
+    /**
+     * 分页触发
+     * @param num
+     */
     $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
+        $scope.myPage.pageNo = num;
+        $scope.search();
     };
+
 });

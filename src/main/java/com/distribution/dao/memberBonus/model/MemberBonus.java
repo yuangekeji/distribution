@@ -19,6 +19,8 @@ public class MemberBonus {
 
     private Integer orderId;
 
+    private Integer orderNo;
+
     private String remarks;
 
     private Integer createBy;
@@ -91,6 +93,14 @@ public class MemberBonus {
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Integer orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getRemarks() {

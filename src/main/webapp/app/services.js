@@ -321,7 +321,7 @@ angular.module('app')
         return self;
     }]);
 
-angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($q, $injector) {
+angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', function($q, $injector,$window) {
     var sessionRecoverer = {
         request: function (config) {
             return config || $q.when(config);
@@ -354,11 +354,39 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector', function($
         // },
         responseError: function(response) {
             // Session has expired
-            if(response.status =='403'){
-                alert('无权限访问');
+               switch (response.status) {
+                   case (200):
+                       //if(!angular.isObject(response.data))
+                       //{
+                       //
+                       //}
+                       break;
+                   case (500):
+                       alert("服务器系统内部错误");
+                       break;
+                   case (401):
+                       alert("未登录");
+                       break;
+                   case (403):
+                       alert("无权限执行此操作");
+                       break;
+                   case (408):
+                       alert("请求超时");
+                       break;
+                   case (404):
+                       alert("404找不到路径");
+                       break;
+                   default:
+                       alert("未知错误");
+               }
+             if(response.status == 500 ){
+                 $window.location.reload();
+             }
 
-            }
-            console.error( response.data.errorMessage);
+             if(response.status == 403){
+                 $window.location.href = ctx + '/index#/app/home'
+             }
+            // console.error( response.data.errorMessage);
             return $q.reject(response);
         }
     };

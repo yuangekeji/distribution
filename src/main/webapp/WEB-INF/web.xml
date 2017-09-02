@@ -53,14 +53,14 @@
     <param-value>classpath*:/config/applicationContext.xml</param-value>
   </context-param>
 
-  <!--&lt;!&ndash; Log4j properties path &ndash;&gt;-->
-  <!--<context-param>-->
-    <!--<param-name>log4jConfigLocation</param-name>-->
-    <!--<param-value>classpath*:/properties/log4j.properties</param-value>-->
-  <!--</context-param>-->
-  <!--<listener>-->
-    <!--<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
-  <!--</listener>-->
+  <!-- Log4j properties path -->
+  <context-param>
+    <param-name>log4jConfigLocation</param-name>
+    <param-value>classpath:/properties/log4j.properties</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
 
 
 </web-app>

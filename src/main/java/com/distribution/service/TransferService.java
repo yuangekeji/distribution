@@ -1,6 +1,9 @@
 package com.distribution.service;
 
+import com.distribution.common.constant.Constant;
 import com.distribution.common.utils.CryptoUtil;
+import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
+import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.member.mapper.MemberMapper;
@@ -28,6 +31,8 @@ public class TransferService {
     private MoreAccountManagerMapper accountManagerMapper;
 
     @Autowired
+    private AccountFlowHistoryMapper accountFlowHistoryMapper;
+    @Autowired
     private MoreMemberMapper memberMapper;
 
     @Autowired
@@ -50,8 +55,6 @@ public class TransferService {
     public String insertTransferProcess(MoreTransfer transfer){
 
         //根据member_id 和 paypwd 查询会员是否存在
-        try {
-
             Map param = new HashMap();
             param.put("memberId",transfer.getMemberId());
             param.put("memberPhone",transfer.getMemberPhone());
@@ -61,7 +64,7 @@ public class TransferService {
 
             if(count != null  && count >0 ){
 
-                //step1) 插入转账明细表 todo
+                //step1) 插入转账明细表
                 Transfer tsf = new Transfer();
                 tsf.setMemberId(transfer.getMemberId());
                 tsf.setMemberName(transfer.getMemberName());
@@ -72,52 +75,79 @@ public class TransferService {
                 tsf.setTransferTime(new Date());
 
                 //step1-1) 通过手机号找id收款人的
-                Member receivedMember = memberMapper.getMemberByPhone(transfer.getMemberPhone());
+                Member receivedMember = memberMapper.getMemberByPhone(transfer.getReceivePhone());
                 tsf.setReceiveId(receivedMember.getId());
                 tsf.setReceivePhone(receivedMember.getMemberPhone());
                 tsf.setReceiveName(receivedMember.getMemberName());
 
-                //step1-2) 插入转账明细表
-                int  cnt1 = transferMapper.insert(tsf);
 
-                //step 2)账户转出更新
+                //step 1)账户转出计算
                 AccountManager transAccount = new AccountManager();
                 transAccount.setMemberId(transfer.getMemberId());
 
                 transAccount = this.selectAccountManager(transAccount);
-                transAccount.setTotalBonus(transAccount.getTotalBonus().subtract(transfer.getTransferAmt()));
-                transAccount.setBonusAmt(transAccount.getTotalBonus().multiply(new BigDecimal(0.6)));
-                transAccount.setSeedAmt(transAccount.getTotalBonus().subtract(transAccount.getBonusAmt()));
 
-                int cnt2 = accountManagerMapper.updateAccountManagerAmt(transAccount);
-
-
-                //step 3)转入账户更新
-
-                AccountManager recivedAccount = new AccountManager();
-                recivedAccount.setMemberId(transfer.getReceiveId());
-                recivedAccount = this.selectAccountManager(recivedAccount);
-
-                recivedAccount.setTotalBonus(recivedAccount.getTotalBonus().add(transfer.getTransferAmt()));
-                recivedAccount.setBonusAmt(recivedAccount.getTotalBonus().multiply(new BigDecimal(0.6)));
-                recivedAccount.setSeedAmt(recivedAccount.getTotalBonus().subtract(recivedAccount.getBonusAmt()));
-
-                int cnt3 =  accountManagerMapper.updateAccountManagerAmt(recivedAccount);
-
-                if(cnt1 >0 && cnt2 >0 && cnt3>0){
-                    //转账成功
-                    return "success";
-                }else{
-                    return "fail";
+                //判断如果账户余额小于转账金额就失败
+                if(transAccount.getBonusAmt().compareTo(transfer.getTransferAmt()) == -1){
+                    throw new RuntimeException();
                 }
 
-            }
+                transAccount.setBonusAmt(transAccount.getBonusAmt().subtract(transfer.getTransferAmt()));//从奖金币中扣除
+                transAccount.setTotalBonus(transAccount.getBonusAmt().add(transAccount.getSeedAmt()));//计算总奖金字段
+                transAccount.setUpdateId(tsf.getMemberId());
+                transAccount.setUpdateTime(new Date());
 
-        }catch (Exception e){
-            System.err.println(e.getMessage());
-            //程序异常
-            return  "fail";
-        }
+                //step 2)转入账户计算
+                AccountManager recivedAccount = new AccountManager();
+                recivedAccount.setMemberId(tsf.getReceiveId());
+                recivedAccount = this.selectAccountManager(recivedAccount);
+
+                recivedAccount.setBonusAmt(recivedAccount.getBonusAmt().add(transfer.getTransferAmt()));//增加奖金币
+                recivedAccount.setTotalBonus(recivedAccount.getBonusAmt().add(recivedAccount.getSeedAmt()));//计算总奖金字段
+
+                recivedAccount.setUpdateId(tsf.getMemberId());
+                recivedAccount.setUpdateTime(new Date());
+
+
+                AccountFlowHistory historyout = new AccountFlowHistory();
+                historyout.setMemberId(tsf.getMemberId());
+                historyout.setCreateTime(new Date());
+                historyout.setCreateId(tsf.getMemberId());
+                historyout.setType("1");      //1支出 进账2
+                historyout.setFlowType(Constant.TRANSFEROUT); //转出
+                historyout.setBonusAmt(tsf.getTransferAmt());
+
+                AccountFlowHistory historyin = new AccountFlowHistory();
+                historyin.setMemberId(tsf.getReceiveId());
+                historyin.setCreateTime(new Date());
+                historyin.setCreateId(tsf.getMemberId());
+                historyin.setType("2");      //1支出 进账2
+                historyin.setFlowType(Constant.TRANSFERIN); //转出
+                historyin.setBonusAmt(tsf.getTransferAmt());
+
+                if(transAccount.getId() != null && transAccount.getId() >0
+                        && recivedAccount.getId() !=null && recivedAccount.getId() >0){
+                        //step1-3) 插入转账明细表，计算各账户金额
+                        int  cnt1 = transferMapper.insert(tsf);
+
+                        int  cnt2 = accountManagerMapper.updateAccountManagerAmt(transAccount);
+
+                        int  cnt3 = accountManagerMapper.updateAccountManagerAmt(recivedAccount);
+
+                        int  cnt4= accountFlowHistoryMapper.insert(historyout);
+
+                        int  cnt5= accountFlowHistoryMapper.insert(historyin);
+
+                        if(cnt1 >0 && cnt2 >0 && cnt3>0 && cnt4 >0 && cnt5 >0){
+                            //转账成功
+                            return "success";
+                        }else{
+                            throw new RuntimeException();
+                        }
+                }else{
+                    throw new RuntimeException();
+                }
+            }
 
         //密码错误
         return  "pwdWrong";

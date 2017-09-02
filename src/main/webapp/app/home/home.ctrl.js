@@ -1,5 +1,5 @@
 angular.module('home').controller('homeCtrl',
-    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $log) {
+    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $window) {
     title.setTitle('home');
 
     $scope.$on('$viewContentLoaded', function() {
@@ -13,7 +13,6 @@ angular.module('home').controller('homeCtrl',
     });
 
     $scope.currentUser = $sessionStorage.currentUser;
-    console.log("$sessionStorage.currentUser："+$sessionStorage.currentUser);
 
     $scope.test =function () {
         ConfirmModal.show({
@@ -81,6 +80,7 @@ angular.module('home').controller('homeCtrl',
             $http.post(ctx + "/member/activation",$scope.currentUser).success(function (resp) {
                 if(resp.successful){
                     $("#add").modal("hide");
+                    $window.location.reload();
                 }
             }).error(function (resp) {
                 console.log(resp);

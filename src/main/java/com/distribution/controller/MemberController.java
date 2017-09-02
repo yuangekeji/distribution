@@ -125,4 +125,19 @@ public class MemberController extends BasicController {
             return failMsg();
         }
     }
+
+    /**
+     * description 获取会员详细信息
+     * @author Bright
+     * */
+    @RequestMapping("/getMemberInfo/{id}")
+    @ResponseBody
+    public JsonMessage getMemberInfo(@PathVariable Integer id){
+        Member member = memberService.getMemberInfo(id);
+        List<Dictionary> list = commonService.getDictionary("bank_name");
+        Map result= new HashMap();
+        result.put("member",member);
+        result.put("list",list);
+        return successMsg(result);
+    }
 }

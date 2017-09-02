@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.memberNode.model.MemberNode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="left_id" property="leftId" jdbcType="INTEGER" />
+    <result column="right_id" property="rightId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="member_total" property="memberTotal" jdbcType="INTEGER" />
+    <result column="sales_total" property="salesTotal" jdbcType="DOUBLE" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, left_id, right_id, parent_id, create_time, create_by, update_time, update_by, 
+    member_total, sales_total
+  </sql>
+  
+  <insert id="insertBackId" useGeneratedKeys="true" keyProperty="id" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
+    insert into member_node (left_id, right_id, 
+      parent_id, create_time, create_by, 
+      update_time, update_by, member_total, 
+      sales_total)
+    values (#{leftId,jdbcType=INTEGER}, #{rightId,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{memberTotal,jdbcType=INTEGER}, 
+      #{salesTotal,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
+    insert into member_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="leftId != null" >
+        left_id,
+      </if>
+      <if test="rightId != null" >
+        right_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="memberTotal != null" >
+        member_total,
+      </if>
+      <if test="salesTotal != null" >
+        sales_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="leftId != null" >
+        #{leftId,jdbcType=INTEGER},
+      </if>
+      <if test="rightId != null" >
+        #{rightId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="memberTotal != null" >
+        #{memberTotal,jdbcType=INTEGER},
+      </if>
+      <if test="salesTotal != null" >
+        #{salesTotal,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
+    update member_node
+    <set >
+      <if test="leftId != null" >
+        left_id = #{leftId,jdbcType=INTEGER},
+      </if>
+      <if test="rightId != null" >
+        right_id = #{rightId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="memberTotal != null" >
+        member_total = #{memberTotal,jdbcType=INTEGER},
+      </if>
+      <if test="salesTotal != null" >
+        sales_total = #{salesTotal,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
+    update member_node
+    set left_id = #{leftId,jdbcType=INTEGER},
+      right_id = #{rightId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      member_total = #{memberTotal,jdbcType=INTEGER},
+      sales_total = #{salesTotal,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

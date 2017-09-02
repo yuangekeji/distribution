@@ -7,6 +7,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="parent_menu" property="parentMenu" jdbcType="INTEGER" />
     <result column="menu_link" property="menuLink" jdbcType="VARCHAR" />
+    <result column="menu_icon" property="menuIcon" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, no, name, parent_menu, menu_link
+    id, no, name, parent_menu, menu_link, menu_icon
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.menu.model.MenuExample" >
     select
@@ -102,9 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.menu.model.Menu" >
     insert into menu (id, no, name, 
-      parent_menu, menu_link)
+      parent_menu, menu_link, menu_icon
+      )
     values (#{id,jdbcType=INTEGER}, #{no,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{parentMenu,jdbcType=INTEGER}, #{menuLink,jdbcType=VARCHAR})
+      #{parentMenu,jdbcType=INTEGER}, #{menuLink,jdbcType=VARCHAR}, #{menuIcon,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.menu.model.Menu" >
     insert into menu
@@ -124,6 +127,9 @@
       <if test="menuLink != null" >
         menu_link,
       </if>
+      <if test="menuIcon != null" >
+        menu_icon,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -140,6 +146,9 @@
       </if>
       <if test="menuLink != null" >
         #{menuLink,jdbcType=VARCHAR},
+      </if>
+      <if test="menuIcon != null" >
+        #{menuIcon,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -167,6 +176,9 @@
       <if test="record.menuLink != null" >
         menu_link = #{record.menuLink,jdbcType=VARCHAR},
       </if>
+      <if test="record.menuIcon != null" >
+        menu_icon = #{record.menuIcon,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +190,8 @@
       no = #{record.no,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
       parent_menu = #{record.parentMenu,jdbcType=INTEGER},
-      menu_link = #{record.menuLink,jdbcType=VARCHAR}
+      menu_link = #{record.menuLink,jdbcType=VARCHAR},
+      menu_icon = #{record.menuIcon,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +211,9 @@
       <if test="menuLink != null" >
         menu_link = #{menuLink,jdbcType=VARCHAR},
       </if>
+      <if test="menuIcon != null" >
+        menu_icon = #{menuIcon,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -206,7 +222,8 @@
     set no = #{no,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       parent_menu = #{parentMenu,jdbcType=INTEGER},
-      menu_link = #{menuLink,jdbcType=VARCHAR}
+      menu_link = #{menuLink,jdbcType=VARCHAR},
+      menu_icon = #{menuIcon,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

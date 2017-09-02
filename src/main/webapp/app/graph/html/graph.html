@@ -1,78 +1,66 @@
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title"> Blank Page
-    <small>blank page template</small>
-</h3>
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="dashboard">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a ui-sref="blank">Blank Page</a>
-        </li>
-    </ul>
-    <div class="page-toolbar">
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" dropdown-menu-hover data-delay="1000" data-close-others="true"> Actions
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu pull-right" role="menu">
-                <li>
-                    <a href="#">
-                        <i class="icon-user"></i> New User </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-present"></i> New Event
-                        <span class="badge badge-success">4</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-basket"></i> New order </a>
-                </li>
-                <li class="divider"> </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-flag"></i> Pending Orders
-                        <span class="badge badge-danger">4</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-users"></i> Pending Users
-                        <span class="badge badge-warning">12</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<h3 class="page-title">推荐网络图</h3>
 <!-- END PAGE HEADER-->
 <!-- BEGIN MAIN CONTENT -->
-<div class="row" ng-controller="homeCtrl">
+<div class="row">
     <div class="col-md-12">
         <!-- BEGIN: ACCORDION DEMO -->
         <div class="portlet light bordered">
-            <div class="portlet-title">
-                <div class="caption font-green-sharp">
-                    <i class="icon-settings font-green-sharp"></i>
-                    <span class="caption-subject bold uppercase">Page Portlet</span>
-                    <span class="caption-helper hide"></span>
+            <div class="portlet-body">
+
+                <script type="text/ng-template" id="nodes_renderer.html">
+                    <div ui-tree-handle class="tree-node tree-node-content" >
+                        <a style="padding-bottom: 5px" class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0"  ng-click="toggle_(this)"><span
+                                class="glyphicon"
+                                ng-class="{
+                                      'glyphicon-chevron-right': collapsed,
+                                      'glyphicon-chevron-down': !collapsed
+                                    }"></span></a>
+                        {{node.title}}
+                        <!--<a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span-->
+                                <!--class="glyphicon glyphicon-remove"></span></a>-->
+                        <!--<a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span-->
+                        <!--class="glyphicon glyphicon-plus"></span></a>-->
+                        <div class="pull-right" ng-show="this.$modelValue.nodes.length < 2">
+                            <label class="mt-radio">
+                                <input type="radio" value="node.id" name="node">
+                                <span></span>
+                            </label>
+                        </div>
+                    </div>
+                    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+                        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+                        </li>
+                    </ol>
+                </script>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p style="margin-bottom:20px">
+                            <a href="javascript:;" class="btn green-haze btn-outline sbold uppercase"  ng-click="expandAll()"> 收起</a>
+                            <a href="javascript:;" class="btn green-haze btn-outline sbold uppercase"  ng-click="collapseAll()"> 展开</a>
+                        </p>
+                    </div>
                 </div>
-                <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-cloud-upload"></i>
-                    </a>
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-wrench"></i>
-                    </a>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div ui-tree id="tree-root" data-drag-enabled="false" data-nodrop-enabled="false" data-clone-enabled="false">
+                            <ol ui-tree-nodes ng-model="data">
+                                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="info">
+                            {{info}}
+                        </div>
+                        <pre class="code">{{ data | json }}</pre>
+                    </div>
                 </div>
             </div>
-            <div class="portlet-body"> Blank page content goes here... </div>
         </div>
     </div>
 </div>
 <!-- END MAIN CONTENT -->
+<script type="text/javascript">
+
+</script>

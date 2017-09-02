@@ -9,10 +9,12 @@ import com.distribution.service.MemberService;
 import com.distribution.service.TransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -43,7 +45,7 @@ public class TransferController extends BasicController{
 
             return successMsg("member", m);
         }else{
-            return successMsg("member", new Member());
+            return failMsg("noMember");
         }
     }
 
@@ -59,14 +61,17 @@ public class TransferController extends BasicController{
         AccountManager account = new AccountManager();
         account.setMemberId(m.getId());
         //查询账户信息
-        return successMsg("account",transferService.selectAccountManager(account));
+        account = transferService.selectAccountManager(account);
+
+        return successMsg("account",account);
     }
 
 
-    @RequestMapping(value = "/transferProcess", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert")
     @ResponseBody
-    public JsonMessage transferProcess(MoreTransfer transfer,HttpSession session){
+    public JsonMessage insert(@RequestBody MoreTransfer transfer, HttpSession session, HttpServletRequest request){
         //校验支付密码是否正确
+        request.getParameterMap();
         Member m = (Member) getCurrentUser(session);
         transfer.setMemberId(m.getId());
         transfer.setMemberPhone(m.getMemberPhone());

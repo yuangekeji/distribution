@@ -15,8 +15,7 @@
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id, member_id, total_bonus, seed_amt, bonus_amt, advance_amt, create_id, create_time, 
-    update_id, update_time
+    id, member_id, total_bonus, seed_amt, bonus_amt, advance_amt
   </sql>
 
   <select id="selectAccountManager" resultMap="BaseResultMap" parameterType="com.distribution.dao.accountManager.model.AccountManager" >
@@ -30,8 +29,12 @@
      update account_manager
      set
         total_bonus = #{totalBonus,jdbcType=DECIMAL},
-        seed_amt =  #{seedAmt,jdbcType=DECIMAL},
-        bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
+       <if test="seedAmt!=null and seedAmt!='' and seedAmt >0 ">
+           seed_amt =  #{seedAmt,jdbcType=DECIMAL},
+       </if>
+       <if test="bonusAmt!=null and bonusAmt!='' and bonusAmt >0 ">
+           bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
+       </if>
         update_id = #{updateId,jdbcType=INTEGER},
         update_time = #{updateTime,jdbcType=TIMESTAMP}
       where member_id = #{memberId,jdbcType=INTEGER}

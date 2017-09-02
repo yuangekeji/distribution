@@ -24,7 +24,7 @@ angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, 
         $http.post(ctx + '/dividend/detailsTitleData?memberId=' + $stateParams.memberId + '&orderNo=' + $stateParams.orderNo, $scope.titleData)
             .success(function (resp) {
                 if (resp.successful) {
-                    $scope.titleData = resp.data.result[0];
+                    $scope.titleData = resp.data;
                     $scope.notData = false;
                     if (!$scope.titleData.result || $scope.titleData.result.length == 0) $scope.notData = true;
 

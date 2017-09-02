@@ -39,7 +39,7 @@ public class DividendService {
      */
     public Page dividendDetails(Page page){
 
-        page.setTotalCount(dividendMapper.getDividendListCount(page));
+        page.setTotalCount(memberBonusMapper.getDividendDetailsCount(page));
         page.setResult( memberBonusMapper.getDividendDetails(page));
         return page;
     }

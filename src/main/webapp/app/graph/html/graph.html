@@ -1,78 +1,103 @@
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title"> Blank Page
-    <small>blank page template</small>
-</h3>
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <i class="fa fa-home"></i>
-            <a ui-sref="dashboard">Home</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a ui-sref="blank">Blank Page</a>
-        </li>
-    </ul>
-    <div class="page-toolbar">
-        <div class="btn-group pull-right">
-            <button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" data-toggle="dropdown" dropdown-menu-hover data-delay="1000" data-close-others="true"> Actions
-                <i class="fa fa-angle-down"></i>
-            </button>
-            <ul class="dropdown-menu pull-right" role="menu">
-                <li>
-                    <a href="#">
-                        <i class="icon-user"></i> New User </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-present"></i> New Event
-                        <span class="badge badge-success">4</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-basket"></i> New order </a>
-                </li>
-                <li class="divider"> </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-flag"></i> Pending Orders
-                        <span class="badge badge-danger">4</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="icon-users"></i> Pending Users
-                        <span class="badge badge-warning">12</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+<h3 class="page-title">推荐网络图</h3>
 <!-- END PAGE HEADER-->
 <!-- BEGIN MAIN CONTENT -->
-<div class="row" ng-controller="homeCtrl">
+<div class="row">
     <div class="col-md-12">
         <!-- BEGIN: ACCORDION DEMO -->
         <div class="portlet light bordered">
             <div class="portlet-title">
-                <div class="caption font-green-sharp">
-                    <i class="icon-settings font-green-sharp"></i>
-                    <span class="caption-subject bold uppercase">Page Portlet</span>
-                    <span class="caption-helper hide"></span>
+            </div>
+            <div class="portlet-body">
+                <div id="tree_1" class="tree-demo jstree jstree-1 jstree-default" role="tree">
+                    <ul class="jstree-container-ul jstree-children jstree-wholerow-ul jstree-no-dots" role="group">
+                        <li role="treeitem" id="j1_1" class="jstree-node  jstree-open">
+                            <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                            <a class="jstree-anchor" href="#" tabindex="-1" id="j1_1_anchor"><i
+                                    class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"
+                                    role="presentation"></i> Root node 1</a>
+                            <ul role="group" class="jstree-children">
+                                <li role="treeitem" id="j1_2" class="jstree-node  jstree-leaf">
+                                        <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                                        <a class="jstree-anchor  jstree-clicked" href="javascript:;" tabindex="-1" id="j1_2_anchor">
+                                            <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom" role="presentation"></i> Initially selected
+                                        </a>
+                                </li>
+                                <li role="treeitem" id="j1_4" class="jstree-node  jstree-open">
+                                    <i class="jstree-icon jstree-ocl" role="presentation"></i>
+                                    <a class="jstree-anchor" href="#" tabindex="-1" id="j1_4_anchor">
+                                        <i class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom" role="presentation"></i> initially open</a>
+                                    <!--<ul role="group" class="jstree-children">-->
+                                        <!--<li role="treeitem" id="j1_5" class="jstree-node  jstree-leaf"><i-->
+                                                <!--class="jstree-icon jstree-ocl" role="presentation"></i><a-->
+                                                <!--class="jstree-anchor  jstree-disabled" href="#" tabindex="-1"-->
+                                                <!--id="j1_5_anchor"><i-->
+                                                <!--class="jstree-icon jstree-themeicon fa fa-folder icon-state-warning icon-lg jstree-themeicon-custom"-->
+                                                <!--role="presentation"></i> Disabled Node </a></li>-->
+                                        <!--<li role="treeitem" id="j1_6"-->
+                                            <!--class="jstree-node  jstree-leaf jstree-last"><i-->
+                                                <!--class="jstree-icon jstree-ocl" role="presentation"></i><a-->
+                                                <!--class="jstree-anchor" href="#" tabindex="-1" id="j1_6_anchor"><i-->
+                                                <!--class="jstree-icon jstree-themeicon fa fa-file icon-state-warning icon-lg jstree-themeicon-custom"-->
+                                                <!--role="presentation"></i> Another node </a></li>-->
+                                    <!--</ul>-->
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-                <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-cloud-upload"></i>
-                    </a>
-                    <a class="btn btn-circle btn-icon-only btn-default" href="#">
-                        <i class="icon-wrench"></i>
-                    </a>
+
+                <!-- Nested node template -->
+                <script type="text/ng-template" id="nodes_renderer.html">
+                    <div ui-tree-handle class="tree-node tree-node-content">
+                        <a class="btn btn-success btn-xs" ng-if="node.nodes && node.nodes.length > 0" data-nodrag
+                           ng-click="toggle(this)"><li
+
+                                ng-class="{
+                                          'icon-plus font-green-sharp': collapsed,
+                                          'icon-minus': !collapsed
+                                          }"></li></a>
+                        {{node.title}}
+                        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span
+                                class="glyphicon glyphicon-remove"></span></a>
+                        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)"
+                           style="margin-right: 8px;"><span
+                                class="glyphicon glyphicon-plus"></span></a>
+                    </div>
+                    <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+                        <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">
+                        </li>
+                    </ol>
+                </script>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Basic Example</h3>
+
+                        <button ng-click="expandAll()">Expand all</button>
+                        <button ng-click="collapseAll()">Collapse all</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div ui-tree id="tree-root">
+                            <ol ui-tree-nodes ng-model="data">
+                                <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="info">
+                            {{info}}
+                        </div>
+                        <pre class="code">{{ data | json }}</pre>
+                    </div>
                 </div>
             </div>
-            <div class="portlet-body"> Blank page content goes here... </div>
         </div>
     </div>
 </div>
 <!-- END MAIN CONTENT -->
+<script type="text/javascript">
+
+</script>

@@ -29,117 +29,32 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{memberTotal,jdbcType=INTEGER}, 
       #{salesTotal,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
-    insert into member_node
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="leftId != null" >
-        left_id,
-      </if>
-      <if test="rightId != null" >
-        right_id,
-      </if>
-      <if test="parentId != null" >
-        parent_id,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="memberTotal != null" >
-        member_total,
-      </if>
-      <if test="salesTotal != null" >
-        sales_total,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="leftId != null" >
-        #{leftId,jdbcType=INTEGER},
-      </if>
-      <if test="rightId != null" >
-        #{rightId,jdbcType=INTEGER},
-      </if>
-      <if test="parentId != null" >
-        #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="memberTotal != null" >
-        #{memberTotal,jdbcType=INTEGER},
-      </if>
-      <if test="salesTotal != null" >
-        #{salesTotal,jdbcType=DOUBLE},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
-    update member_node
-    <set >
-      <if test="leftId != null" >
-        left_id = #{leftId,jdbcType=INTEGER},
-      </if>
-      <if test="rightId != null" >
-        right_id = #{rightId,jdbcType=INTEGER},
-      </if>
-      <if test="parentId != null" >
-        parent_id = #{parentId,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="memberTotal != null" >
-        member_total = #{memberTotal,jdbcType=INTEGER},
-      </if>
-      <if test="salesTotal != null" >
-        sales_total = #{salesTotal,jdbcType=DOUBLE},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.memberNode.model.MemberNode" >
-    update member_node
-    set left_id = #{leftId,jdbcType=INTEGER},
-      right_id = #{rightId,jdbcType=INTEGER},
-      parent_id = #{parentId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_by = #{createBy,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=VARCHAR},
-      member_total = #{memberTotal,jdbcType=INTEGER},
-      sales_total = #{salesTotal,jdbcType=DOUBLE}
-    where id = #{id,jdbcType=INTEGER}
+  <select id="findParentNodes" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  		select id from member_node
+		where find_in_set(id,getParentList(#{id}))
+		order by id desc
+  </select>
+  <select id="findTotalSalesByParentId" resultType="java.lang.Double" parameterType="java.lang.Integer">
+  		select sum(o.order_amt) as total_sales from member m
+		left join order_master o on m.id = o.member_id
+		where find_in_set(m.node_id,getChildList(#{id})) and (o.order_category = 1 or o.order_category = 2)
+  </select>
+  <select id="listParentNodesWhichHasTwoSubNodes" resultType="map" parameterType="map">
+  		SELECT tep.*,rt.member_level as right_level,lt.member_level as left_level
+		from 
+		(SELECT m.id,n.left_id,n.right_id
+		from member m
+		LEFT JOIN member_node n on m.node_id = n.id
+		where FIND_IN_SET(node_id,getParentList(#{nodeId})) 
+		and member_level = #{fromLevel}
+		and n.left_id > 0
+		and n.right_id > 0
+		order by node_id desc)tep
+		LEFT JOIN member lt on lt.node_id = tep.left_id
+		LEFT JOIN member rt on rt.node_id = tep.right_id
+  </select>
+  <update id="updateParentLevel" parameterType="map">
+  		update member set member_level = #{toLevel}
+		where FIND_IN_SET(node_id,getParentList(#{nodeId})) and member_level = #{fromLevel}
   </update>
 </mapper>

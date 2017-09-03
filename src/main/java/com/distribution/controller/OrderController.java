@@ -4,7 +4,7 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.member.model.Member;
-import com.distribution.dao.order.model.more.MoreOrder;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
 import com.distribution.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +44,7 @@ public class OrderController extends BasicController{
      * */
     @RequestMapping("/insertOrder")
     @ResponseBody
-    public JsonMessage insertOrder(@RequestBody MoreOrder moreOrder, HttpSession session, HttpServletRequest request){
+    public JsonMessage insertOrder(@RequestBody MoreOrderMaster moreOrderMaster, HttpSession session, HttpServletRequest request){
         Member currentUser = null;
         if(getCurrentUser(session) instanceof Member) {
             currentUser = (Member) getCurrentUser(session);
@@ -65,7 +65,7 @@ public class OrderController extends BasicController{
 
 
 
-        String result = orderService.insertOrder(moreOrder,currentUser);
+        String result = orderService.insertOrder(moreOrderMaster);
         return successMsg("result",result);
     }
 

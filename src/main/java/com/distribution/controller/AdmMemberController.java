@@ -38,8 +38,8 @@ public class AdmMemberController extends BasicController{
     @RequestMapping("/init")
     @ResponseBody
     public JsonMessage init(){
-        List<Dictionary> post = commonService.getDictionary("post_level");
-        List<Dictionary> level = commonService.getDictionary("member_level");
+        List<Dictionary> post = commonService.selectDictionary("post_level");
+        List<Dictionary> level = commonService.selectDictionary("member_level");
         Map result = new HashMap();
         result.put("post",post);
         result.put("level",level);
@@ -53,7 +53,7 @@ public class AdmMemberController extends BasicController{
     @RequestMapping("/list")
     @ResponseBody
     public JsonMessage list(@RequestBody Page page){
-        page = admMemberService.list(page);
+        page = admMemberService.selectList(page);
         return successMsg(page);
     }
 }

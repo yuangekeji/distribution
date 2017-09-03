@@ -28,7 +28,7 @@ public class AdmRecommendController extends BasicController{
     @RequestMapping("/list")
     @ResponseBody
     public JsonMessage list(@RequestBody Page page){
-        page = adminRecommendService.list(page);
+        page = adminRecommendService.selectList(page);
         return successMsg(page);
     }
 }

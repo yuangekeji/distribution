@@ -3,7 +3,7 @@ package com.distribution.dao.order.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Order {
+public class OrderMaster {
     private Integer id;
 
     private Long orderNo;

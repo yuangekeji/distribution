@@ -83,7 +83,7 @@ public class MemberController extends BasicController {
         }else{
             page.getParameterMap().put("recommendId",null);
         }
-        page = memberService.list(page);
+        page = memberService.findList(page);
         return successMsg(page);
     }
     /**
@@ -93,7 +93,7 @@ public class MemberController extends BasicController {
     @RequestMapping("/getDictionary/{dicType}")
     @ResponseBody
     public JsonMessage getDictionary(@PathVariable String dicType){
-        List<Dictionary> list = commonService.getDictionary(dicType);
+        List<Dictionary> list = commonService.selectDictionary(dicType);
         return successMsg(list);
     }
 
@@ -119,7 +119,7 @@ public class MemberController extends BasicController {
     @RequestMapping("/activation")
     @ResponseBody
     public JsonMessage activation(@RequestBody Member member,HttpSession session){
-        Integer it = memberService.activation(member);
+        Integer it = memberService.updateActivation(member);
         if(it>0) {
             session.setAttribute(Constant.SESSION_CURRENT_USER,member);
             return successMsg();
@@ -136,7 +136,7 @@ public class MemberController extends BasicController {
     @ResponseBody
     public JsonMessage getMemberInfo(@PathVariable Integer id){
         MoreMember moreMember = memberService.getMemberInfo(id);
-        List<Dictionary> list = commonService.getDictionary("bank_name");
+        List<Dictionary> list = commonService.selectDictionary("bank_name");
 
         Map result= new HashMap();
         result.put("member",moreMember);
@@ -152,7 +152,7 @@ public class MemberController extends BasicController {
     @ResponseBody
     public JsonMessage apply(@RequestBody OperationApply operationApply, HttpSession session){
         Member member = (Member) getCurrentUser(session);
-        Integer it = memberService.apply(operationApply,member);
+        Integer it = memberService.insertApply(operationApply,member);
         if(it>0)
             return successMsg();
         else

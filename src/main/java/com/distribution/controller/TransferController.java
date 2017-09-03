@@ -40,7 +40,7 @@ public class TransferController extends BasicController{
     @ResponseBody
     public JsonMessage getUser(String phone){
 
-        Member m =  memberService.getMemberByPhone(phone);
+        Member m =  memberService.selectMemberByPhone(phone);
         if(m !=null){
 
             return successMsg("member", m);

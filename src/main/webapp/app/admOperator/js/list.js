@@ -58,6 +58,19 @@ angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, 
         $scope.myPage.pageNo = num;
         $scope.onInit();
     };
+
+    $scope.approval = function (id,status) {
+        $http.post(ctx + "/admOperator/approval",{id:id,status:status}).success(function (resp) {
+            if(resp.successful){
+                alert("审批完成。");
+                $scope.search();
+            }else{
+                console.log(resp);
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        })
+    }
 });
 
 angular.module('admOperator').filter("MemberLevelFilter",function () {
@@ -79,5 +92,13 @@ angular.module('admOperator').filter("PostLevelFilter",function () {
         if(input=='post_level4'){return '总监'};
         if(input=='post_level5'){return '董事'};
         if(input=='post_level6'){return '全国董事'};
+    }
+});
+
+angular.module('admOperator').filter("StatusFilter",function () {
+    return function (input) {
+        if(input=='wait'){return '待审核'};
+        if(input=='pass'){return '审核通过'};
+        if(input=='refuse'){return '审核驳回'};
     }
 });

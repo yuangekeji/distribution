@@ -32,4 +32,13 @@ public class BonusService {
         page.setResult( moreMemberBonusMapper.selectMemberBonusDetail(page));
         return page;
     }
+    /**
+     * description admin查詢奖金明细列表
+     * @author shiqing
+     * */
+    public Page selectAdminMemberBonusList(Page page){
+        page.setTotalCount(moreMemberBonusMapper.selectAdminMemberBonusListCount(page));
+        page.setResult( moreMemberBonusMapper.selectAdminMemberBonusList(page));
+        return page;
+    }
 }

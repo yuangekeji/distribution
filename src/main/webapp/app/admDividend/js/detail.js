@@ -2,7 +2,7 @@
  * Created by dongshiqing on 8/31/2017.
  */
 angular.module('admDividend').controller('admDividendDetailCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
-    title.setTitle('分红包明细');
+    title.setTitle('领取明细');
 
     $scope.notData = false;
     $scope.myPage = {

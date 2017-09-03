@@ -64,8 +64,8 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
      * @param memberId
      * @param orderId
      */
-    $scope.searchDividendDetails = function (memberId, orderId, orderNo) {
-        $state.go('app.admDividend-detail', {memberId: memberId, orderId: orderId, orderNo: orderNo});
+    $scope.searchDividendDetails = function (memberId, orderNo) {
+        $state.go('app.admDividend-detail', {memberId: memberId, orderNo: orderNo});
     }
 });
 angular.module('admDividend').filter("StatusFilter",function () {

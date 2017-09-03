@@ -12,7 +12,7 @@ angular.module('admDividend').controller('admDividendDetailCtrl',function ($q, t
         result: [],
         parameterMap: {
             memberId: $stateParams.memberId,
-            orderId: $stateParams.orderId
+            orderNo: $stateParams.orderNo
         }
     };
     $scope.titleData = {

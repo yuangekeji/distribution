@@ -33,8 +33,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-if= "myPage.result.length >0" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
-                                total-items="myPage.result.totalCount">
+                            <tr ng-if= "myPage.result.length >0" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
+                                total-items="myPage.totalCount">
                                 <td>{{row.bonusDate  | date:'yyyy-MM-dd'}}</td>
                                 <td class="text-right">{{row.amout | number:2}}</td>
                                 <td class="text-right">{{row.actualAmout | number:2}}</td>

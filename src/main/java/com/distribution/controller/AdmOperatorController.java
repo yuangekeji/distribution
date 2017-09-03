@@ -28,7 +28,7 @@ public class AdmOperatorController extends BasicController{
     @RequestMapping("/list")
     @ResponseBody
     public JsonMessage list(@RequestBody Page page){
-        page = admOperatorService.list(page);
+        page = admOperatorService.selectList(page);
         return successMsg(page);
     }
 }

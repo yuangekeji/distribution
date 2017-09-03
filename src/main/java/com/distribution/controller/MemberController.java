@@ -135,7 +135,7 @@ public class MemberController extends BasicController {
     @RequestMapping("/getMemberInfo/{id}")
     @ResponseBody
     public JsonMessage getMemberInfo(@PathVariable Integer id){
-        MoreMember moreMember = memberService.getMemberInfo(id);
+        MoreMember moreMember = memberService.selectMemberInfo(id);
         List<Dictionary> list = commonService.selectDictionary("bank_name");
 
         Map result= new HashMap();

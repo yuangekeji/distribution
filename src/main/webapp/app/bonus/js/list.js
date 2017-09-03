@@ -1,4 +1,4 @@
-angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$uibModal) {
     title.setTitle('奖金明细');
 
     $scope.notData = false;
@@ -74,6 +74,8 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
     };
 
     $scope.searchBonusDetail = function(orderNo, orderStartDate, orderEndDate){
+
+
         $scope.myDetail.parameterMap.orderNo = orderNo;
         $scope.myDetail.parameterMap.orderStartDate = orderStartDate;
         $scope.myDetail.parameterMap.orderEndDate = orderEndDate;
@@ -81,6 +83,7 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myDetail = resp.data;
+                    $scope.open();
                 } else {
                     console.log(resp.errorMessage);
                 }
@@ -89,4 +92,45 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
             console.error(error);
         });
     }
+
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "bonusDetail.html",
+                controller: "BonusDetailCtrl",
+                size: opt_attributes,
+                resolve:
+                {
+                    getDatas: function()
+                    {
+                        return $scope.myDetail.result;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            console.info('确认');
+
+        }, function()
+        {
+            console.info('取消');
+        });
+    };
+});
+
+angular.module('bonus').controller('BonusDetailCtrl', function ($scope, $uibModalInstance,getDatas) {
+
+    $scope.datas = getDatas;
+
+    $scope.ok = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
 });

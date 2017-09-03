@@ -43,7 +43,9 @@ public class BonusController extends BasicController {
      */
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
     @ResponseBody
-    public JsonMessage selectMemberBonusDetail(@RequestBody Page page){
+    public JsonMessage selectMemberBonusDetail(@RequestBody Page page, HttpSession session){
+        Member m = (Member) getCurrentUser(session);
+        page.getParameterMap().put("memberId",m.getId());
         page = bonusService.selectMemberBonusDetail(page);
         return successMsg(page);
     }

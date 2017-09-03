@@ -80,7 +80,6 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myDetail = resp.data;
-                    console.info($scope.myDetail.result);
                 } else {
                     console.log(resp.errorMessage);
                 }

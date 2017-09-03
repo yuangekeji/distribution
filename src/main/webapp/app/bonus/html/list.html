@@ -81,7 +81,7 @@
                                     <td class="text-right">{{row.amoutTotal | number:2}}</td>
                                     <td class="text-right">{{row.manageFeeTotal | number:2}}</td>
                                     <td class="text-right">{{row.actualAmoutTotal | number:2}}</td>
-                                    <td class="text-center" ng-show="row.orderNo!=0"><a href="javascript:" ng-click="searchBonusDetail(row.memberId, row.orderNo, orow.rderStartDate, row.orderEndDate)" >获奖明细</a></td>
+                                    <td class="text-center" ng-show="row.orderNo!=0"><a href="javascript:" ng-click="searchBonusDetail(row.orderNo, row.orderStartDate, row.orderEndDate)" >获奖明细</a></td>
                                 </tr>
                                 <tr ng-show= "notData" >
                                     <td colspan="9">无记录</td>

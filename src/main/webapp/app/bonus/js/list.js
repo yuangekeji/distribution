@@ -26,7 +26,6 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
     };
 
     $scope.search = function(){
-        console.info($scope.myPage);
         $http.post(ctx + '/bonus/list', $scope.myPage)
             .success(function (resp) {
                 if (resp.successful) {
@@ -74,8 +73,7 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
         $scope.search();
     };
 
-    $scope.searchBonusDetail = function(memberId, orderNo, orderStartDate, orderEndDate){
-        $scope.myDetail.parameterMap.memberId = memberId;
+    $scope.searchBonusDetail = function(orderNo, orderStartDate, orderEndDate){
         $scope.myDetail.parameterMap.orderNo = orderNo;
         $scope.myDetail.parameterMap.orderStartDate = orderStartDate;
         $scope.myDetail.parameterMap.orderEndDate = orderEndDate;
@@ -83,7 +81,6 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myDetail = resp.data;
-                    console.info( $scope.myDetail.result);
                 } else {
                     console.log(resp.errorMessage);
                 }

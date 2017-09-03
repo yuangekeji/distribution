@@ -1,13 +1,14 @@
 package com.distribution.dao.order.mapper.more;
 
 import com.distribution.common.utils.Page;
-import com.distribution.dao.order.model.Order;
+import com.distribution.dao.order.model.OrderMaster;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface MoreOrderMapper{
+public interface MoreOrderMasterMapper {
     /**
      * description 订单总数
      * @author WYN
@@ -17,19 +18,19 @@ public interface MoreOrderMapper{
      * description 订单列表
      * @author WYN
      * */
-    List<Order> getOrderList(Page page);
+    List<OrderMaster> getOrderList(Page page);
 
     /**
      * description 订单插入
      * @author WYN
      * */
-    int insertOrder(Order order);
+    int insertOrder(MoreOrderMaster moreOrderMaster);
 
     /**
      * description 订单详细插入
      * @author WYN
      * */
-    int insertOrderDetail(Order order);
+    int insertOrderDetail(MoreOrderMaster moreOrderMaster);
 
     /**
      * description 查询订单总金额

@@ -1,5 +1,6 @@
 package com.distribution.service;
 
+import com.distribution.common.constant.Constant;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
@@ -7,9 +8,8 @@ import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.dividend.mapper.DividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
-import com.distribution.dao.member.model.Member;
-import com.distribution.dao.order.mapper.more.MoreOrderMapper;
-import com.distribution.dao.order.model.more.MoreOrder;
+import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ import java.util.Random;
 public class OrderService {
 
     @Autowired
-    private MoreOrderMapper moreOrderMapper;
+    private MoreOrderMasterMapper moreOrderMasterMapper;
 
     @Autowired
     private MoreAccountManagerMapper moreAccountManagerMapper;
@@ -42,8 +42,8 @@ public class OrderService {
         if(null!=page.getParameterMap().get("endTime") && !"".equals(page.getParameterMap().get("endTime")))
             page.getParameterMap().put("end",page.getParameterMap().get("endTime").toString()+" 23:59:59");
 
-        page.setTotalCount(moreOrderMapper.getOrderListCount(page));
-        page.setResult(moreOrderMapper.getOrderList(page));
+        page.setTotalCount(moreOrderMasterMapper.getOrderListCount(page));
+        page.setResult(moreOrderMasterMapper.getOrderList(page));
         return page;
     }
 
@@ -51,7 +51,7 @@ public class OrderService {
      * description 插入订单
      * @author Bright
      * */
-    public String insertOrder(MoreOrder moreOrder, Member member){
+    public String insertOrder(MoreOrderMaster moreOrderMaster){
         int cnt1 = 0;
         int cnt2 = 0;
         int cnt3 = 0;
@@ -62,26 +62,26 @@ public class OrderService {
 
         Long orderNo = this.getOrderNo();
 
-        moreOrder.setOrderNo(orderNo);
+        moreOrderMaster.setOrderNo(orderNo);
 
         //order_master insert
-        int orderId = moreOrderMapper.insertOrder(moreOrder);
+        int orderId = moreOrderMasterMapper.insertOrder(moreOrderMaster);
 
         if(orderId > 0){
             //order_detail_insert
-            cnt1 = moreOrderMapper.insertOrderDetail(moreOrder);
+            cnt1 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
         }
 
         //扣款登记 account_manager
         if(cnt1 > 0){
             AccountManager accountManager = new AccountManager();
 
-            accountManager.setMemberId(moreOrder.getMemberId());
-            accountManager.setSeedAmt(moreOrder.getSeedAmt());
-            accountManager.setBonusAmt(moreOrder.getBonusAmt());
-            accountManager.setCreateId(member.getId());
+            accountManager.setMemberId(moreOrderMaster.getMemberId());
+            accountManager.setSeedAmt(moreOrderMaster.getSeedAmt());
+            accountManager.setBonusAmt(moreOrderMaster.getBonusAmt());
+            accountManager.setCreateId(moreOrderMaster.getCreateId());
             accountManager.setCreateTime(new Date());
-            accountManager.setUpdateId(member.getId());
+            accountManager.setUpdateId(moreOrderMaster.getCreateId());
             accountManager.setUpdateTime(new Date());
 
             cnt2 = moreAccountManagerMapper.updateAccountManager(accountManager);
@@ -91,52 +91,49 @@ public class OrderService {
         if(cnt2 > 0){
             AccountFlowHistory accountFlowHistory = new AccountFlowHistory();
 
-            String flow_type = "";
-            accountFlowHistory.setMemberId(moreOrder.getMemberId());
-            accountFlowHistory.setSeedAmt(moreOrder.getSeedAmt());
-            accountFlowHistory.setBonusAmt(moreOrder.getBonusAmt());
-            accountFlowHistory.setCreateId(member.getId());
+            accountFlowHistory.setMemberId(moreOrderMaster.getMemberId());
+            accountFlowHistory.setSeedAmt(moreOrderMaster.getSeedAmt());
+            accountFlowHistory.setBonusAmt(moreOrderMaster.getBonusAmt());
+            accountFlowHistory.setCreateId(moreOrderMaster.getCreateId());
             accountFlowHistory.setCreateTime(new Date());
-            accountFlowHistory.setTotalAmt(moreOrder.getSeedAmt().add(moreOrder.getBonusAmt()));
+            accountFlowHistory.setTotalAmt(moreOrderMaster.getSeedAmt().add(moreOrderMaster.getBonusAmt()));
             accountFlowHistory.setType("1");
-            if("1".equals(moreOrder.getOrderCategory())){
-                flow_type = "7";
-            }
-            if("2".equals(moreOrder.getOrderCategory())){
-                flow_type = "1";
-            }
-            if("3".equals(moreOrder.getOrderCategory())){
-                flow_type = "8";
+            if("1".equals(moreOrderMaster.getOrderCategory())){
+                accountFlowHistory.setFlowType(Constant.MEMBERORDER);
+            }else if("2".equals(moreOrderMaster.getOrderCategory())){
+                accountFlowHistory.setFlowType(Constant.REORDER);
+            }else if("3".equals(moreOrderMaster.getOrderCategory())){
+                accountFlowHistory.setFlowType(Constant.DISCOUNTORDER);
             }
 
             cnt3 = accountFlowHistoryMapper.insert(accountFlowHistory);
         }
 
         //报单，复投分红包处理
-        if(cnt3 > 0 && ("1".equals(moreOrder.getOrderCategory()) || "2".equals(moreOrder.getOrderCategory()))){
+        if(cnt3 > 0 && ("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory()))){
             Dividend dividend = new Dividend();
             dividend.setOrderId(orderId);
             dividend.setOrderNo(orderNo);
-            dividend.setOrderAmount(moreOrder.getOrderAmt());
-            if(new BigDecimal(600).compareTo(moreOrder.getOrderAmt()) == 0){
+            dividend.setOrderAmount(moreOrderMaster.getOrderAmt());
+            if(new BigDecimal(600).compareTo(moreOrderMaster.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(1));
-            }else if(new BigDecimal(1800).compareTo(moreOrder.getOrderAmt()) == 0){
+            }else if(new BigDecimal(1800).compareTo(moreOrderMaster.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(3));
-            }else if(new BigDecimal(3000).compareTo(moreOrder.getOrderAmt()) == 0){
+            }else if(new BigDecimal(3000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(5));
-            }else if(new BigDecimal(9000).compareTo(moreOrder.getOrderAmt()) == 0){
+            }else if(new BigDecimal(9000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(15));
-            }else if(new BigDecimal(30000).compareTo(moreOrder.getOrderAmt()) == 0){
+            }else if(new BigDecimal(30000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(50));
-            }else if(new BigDecimal(60000).compareTo(moreOrder.getOrderAmt()) == 0){
+            }else if(new BigDecimal(60000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(100));
             }
-            dividend.setDividendLimit(moreOrder.getOrderAmt().divide(new BigDecimal(0.75)));
+            dividend.setDividendLimit(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
             dividend.setDividendStatus("1");
-            dividend.setMgmtFee(moreOrder.getOrderAmt().divide(new BigDecimal(0.75)).multiply(new BigDecimal(0.06)));
-            dividend.setCreateId(member.getId());
+            dividend.setMgmtFee(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)).multiply(new BigDecimal(0.06)));
+            dividend.setCreateId(moreOrderMaster.getCreateId());
             dividend.setCreateTime(new Date());
-            dividend.setUpdateId(member.getId());
+            dividend.setUpdateId(moreOrderMaster.getCreateId());
             dividend.setUpdateTime(new Date());
 
             cnt4 = dividendMapper.insert(dividend);
@@ -145,7 +142,7 @@ public class OrderService {
         }
 
         //报单，复投做奖金处理
-        if(cnt4 > 0 && ("1".equals(moreOrder.getOrderCategory()) || "2".equals(moreOrder.getOrderCategory()))){
+        if(cnt4 > 0 && ("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory()))){
             cnt5 = 0; //todo 奖金接口调用 order
         }else{
             cnt5 = 1;

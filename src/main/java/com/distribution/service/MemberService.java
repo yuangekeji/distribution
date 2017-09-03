@@ -16,7 +16,7 @@ import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.memberNode.model.MemberNode;
-import com.distribution.dao.order.mapper.more.MoreOrderMapper;
+import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class MemberService {
     @Autowired
     private MoreAccountManagerMapper moreAccountManagerMapper;
     @Autowired
-    private MoreOrderMapper moreOrderMapper;
+    private MoreOrderMasterMapper moreOrderMasterMapper;
     @Autowired
     private OperationApplyMapper operationApplyMapper;
     @Autowired
@@ -209,7 +209,7 @@ public class MemberService {
         MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
         Member member = memberMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(member,moreMember);
-        Double orderTotalAmount = moreOrderMapper.countOrderAmcountByMemberId(id);
+        Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(id);
         moreMember.setOrderTotalAmount(new BigDecimal(orderTotalAmount));
         return moreMember;
     }

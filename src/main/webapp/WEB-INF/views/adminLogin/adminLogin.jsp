@@ -59,9 +59,39 @@
         }
         .content{
             margin-top: 240px !important;
+            width: 280px !important;
         }
     }
 
+    /* Custom, iPhone Retina */
+    @media only screen and (min-width : 370px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
+            background-size: 100% ;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 280px !important;
+            width: 330px !important;
+        }
+    }
+
+    /* Custom, iPhone Retina */
+    @media only screen and (min-width : 400px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
+            background-size: 100% ;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 320px !important;
+            width: 360px !important;
+        }
+    }
     /* Extra Small Devices, Phones */
     @media only screen and (min-width : 480px) {
         .login {
@@ -72,7 +102,8 @@
             background-position: center top ;
         }
         .content{
-            margin-top: 250px !important;
+            margin-top: 450px !important;
+            width: 400px !important;
         }
     }
 
@@ -80,13 +111,14 @@
     @media only screen and (min-width : 768px) {
         .login {
             background-color:#01407d !important;
-            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-pc.jpg');
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
             background-size: 100%;
             background-repeat: no-repeat;
             background-position: center top ;
         }
         .content{
-            margin-top:250px !important;
+            margin-top:550px !important;
+            width: 400px !important;
         }
     }
 
@@ -101,6 +133,7 @@
         }
         .content{
             margin-top: 250px !important;
+            width: 320px !important;
         }
     }
 
@@ -115,6 +148,7 @@
         }
         .content{
             margin-top: 250px !important;
+            width: 320px !important;
         }
     }
 

@@ -120,4 +120,8 @@
   <!--<select id="getOrderList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM order_master <include refid="where"/> <include refid="pageLimit"/>
   </select>-->
+
+  <select id="countOrderAmcountByMemberId" resultType="java.lang.Double" parameterType="java.lang.Integer">
+      SELECT SUM(order_amt) FROM order_master WHERE member_id = #{memberId}
+  </select>
 </mapper>

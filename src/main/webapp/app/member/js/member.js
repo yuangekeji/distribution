@@ -21,6 +21,18 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         });
     };
     $scope.onInit();
+
+    /**
+     * 申请成为运营中心
+     * */
+    $scope.apply = function () {
+        $http.post(ctx + '/member/apply',{totalOrderAmount:$scope.MemberInfo.orderTotalAmount,memberId:$scope.MemberInfo.id}).success(function (resp) {
+            if(resp.successful){
+            }else{
+                console.log(resp);
+            }
+        });
+    };
     //Bright End
 
     $scope.$on('$viewContentLoaded', function() {

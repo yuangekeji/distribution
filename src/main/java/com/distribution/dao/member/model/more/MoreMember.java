@@ -16,6 +16,7 @@ public class MoreMember extends Member{
     private BigDecimal bonusAmount;          //奖金币
     private BigDecimal seedAmount;           //种子币
     private BigDecimal actualAmount;         //提现总额
+    private BigDecimal orderTotalAmount;     //累计订单金额
 
     public String getRecommendPhone() {
         return recommendPhone;
@@ -95,5 +96,13 @@ public class MoreMember extends Member{
 
     public void setActualAmount(BigDecimal actualAmount) {
         this.actualAmount = actualAmount;
+    }
+
+    public BigDecimal getOrderTotalAmount() {
+        return orderTotalAmount;
+    }
+
+    public void setOrderTotalAmount(BigDecimal orderTotalAmount) {
+        this.orderTotalAmount = orderTotalAmount;
     }
 }

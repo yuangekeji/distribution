@@ -6,6 +6,7 @@ import com.distribution.common.controller.BasicController;
 import com.distribution.common.intercept.IgnoreLoginCheck;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
+import com.distribution.dao.apply.model.OperationApply;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,5 +142,20 @@ public class MemberController extends BasicController {
         result.put("member",moreMember);
         result.put("list",list);
         return successMsg(result);
+    }
+
+    /**
+     * description 申请成为运营中心
+     * @author Bright
+     * */
+    @RequestMapping("/apply")
+    @ResponseBody
+    public JsonMessage apply(@RequestBody OperationApply operationApply, HttpSession session){
+        Member member = (Member) getCurrentUser(session);
+        Integer it = memberService.apply(operationApply,member);
+        if(it>0)
+            return successMsg();
+        else
+            return failMsg();
     }
 }

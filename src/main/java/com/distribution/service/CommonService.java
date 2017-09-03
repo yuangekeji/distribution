@@ -21,7 +21,7 @@ public class CommonService {
      * @author Bright
      * @param dicType 字典所属模块
      * */
-    public List<Dictionary> getDictionary(String dicType){
+    public List<Dictionary> selectDictionary(String dicType){
         return moreDictionaryMapper.getDictionary(dicType);
     }
 }

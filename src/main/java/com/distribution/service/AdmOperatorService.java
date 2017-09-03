@@ -18,7 +18,7 @@ public class AdmOperatorService {
      * description 后台运营中心列表分页查询
      * @author Bright
      * */
-    public Page list(Page page){
+    public Page selectList(Page page){
         page.setTotalCount(moreOperationApplyMapper.getOperationCount(page));
         page.setResult(moreOperationApplyMapper.list(page));
         return page;

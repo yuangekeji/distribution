@@ -205,7 +205,7 @@ public class MemberService {
      * description 获取会员详细信息
      * @author Bright
      * */
-    public MoreMember getMemberInfo(Integer id){
+    public MoreMember selectMemberInfo(Integer id){
         MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
         Member member = memberMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(member,moreMember);

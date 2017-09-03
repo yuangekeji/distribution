@@ -15,7 +15,7 @@ public class AdminRecommendService {
      * description 后台报单记录列表分页查询
      * @author Bright
      * */
-    public Page list(Page page){
+    public Page selectList(Page page){
         if(null!=page.getParameterMap().get("startTime"))
             page.getParameterMap().put("start",page.getParameterMap().get("startTime").toString()+" 00:00:00");
         if(null!=page.getParameterMap().get("endTime"))

@@ -93,7 +93,7 @@ public class MemberController extends BasicController {
     @RequestMapping("/getDictionary/{dicType}")
     @ResponseBody
     public JsonMessage getDictionary(@PathVariable String dicType){
-        List<Dictionary> list = commonService.getDictionary(dicType);
+        List<Dictionary> list = commonService.selectDictionary(dicType);
         return successMsg(list);
     }
 
@@ -135,8 +135,8 @@ public class MemberController extends BasicController {
     @RequestMapping("/getMemberInfo/{id}")
     @ResponseBody
     public JsonMessage getMemberInfo(@PathVariable Integer id){
-        MoreMember moreMember = memberService.getMemberInfo(id);
-        List<Dictionary> list = commonService.getDictionary("bank_name");
+        MoreMember moreMember = memberService.selectMemberInfo(id);
+        List<Dictionary> list = commonService.selectDictionary("bank_name");
 
         Map result= new HashMap();
         result.put("member",moreMember);

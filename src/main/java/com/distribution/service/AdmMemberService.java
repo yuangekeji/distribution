@@ -20,7 +20,7 @@ public class AdmMemberService {
      * description 后台会员列表分页查询
      * @author Bright
      * */
-    public Page list(Page page){
+    public Page selectList(Page page){
         page.setTotalCount(moreMemberMapper.getMemberCount(page));
         page.setResult(moreMemberMapper.list(page));
         return page;

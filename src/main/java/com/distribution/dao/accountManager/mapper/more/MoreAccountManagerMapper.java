@@ -22,4 +22,5 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
      * @author Bright
      * */
     MoreMember getSeedsAndBondsByMemberId(Integer memberId);
+
 }

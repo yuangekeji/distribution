@@ -58,10 +58,6 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         $scope.myPage.pageNo = num;
         $scope.onInit();
     };
-
-    /*$scope.detail = function (id) {
-        $state.go('app.advanceAdd');
-    };*/
 });
 
 angular.module('admMember').filter("MemberLevelFilter",function () {

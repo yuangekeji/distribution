@@ -120,6 +120,7 @@ public class OrderService {
             dividend.setOrderId(orderId);
             dividend.setOrderNo(orderNo);
             dividend.setOrderAmount(moreOrderMaster.getOrderAmt());
+            dividend.setMemberId(moreOrderMaster.getMemberId());
             if(new BigDecimal(600).compareTo(moreOrderMaster.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(1));
             }else if(new BigDecimal(1800).compareTo(moreOrderMaster.getOrderAmt()) == 0){
@@ -140,6 +141,8 @@ public class OrderService {
             dividend.setCreateTime(new Date());
             dividend.setUpdateId(moreOrderMaster.getCreateId());
             dividend.setUpdateTime(new Date());
+            dividend.setReceivedAmount(new BigDecimal(0)); //已领取金额给个0
+            dividend.setRemainAmount(new BigDecimal(0));   //还未领取金额个0
 
            int  cnt4 = dividendMapper.insert(dividend);
            if(cnt4 == 0){

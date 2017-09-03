@@ -11,7 +11,8 @@ angular.module('home').controller('homeCtrl',
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
     });
-
+     $scope.queryPasswordConfirm = '';
+     $scope.payPasswordConfirm = '';
     $scope.currentUser = $sessionStorage.currentUser;
 
     $scope.test =function () {
@@ -65,15 +66,15 @@ angular.module('home').controller('homeCtrl',
             alert("银行卡号只能为纯数字，请重新输入。")
         }else if(!$scope.currentUser.queryPassword||!$scope.currentUser.queryPassword.trim()){
             alert("请输入二级密码。")
-        }else if(!$scope.currentUser.queryPasswordConfirm||!$scope.currentUser.queryPasswordConfirm.trim()){
+        }else if(!$scope.queryPasswordConfirm||!$scope.queryPasswordConfirm.trim()){
             alert("请确认二级密码。")
-        }else if($scope.currentUser.queryPassword!=$scope.currentUser.queryPasswordConfirm){
+        }else if($scope.currentUser.queryPassword!=$scope.queryPasswordConfirm){
             alert("二级密码和二级密码确认不同，请重新输入。")
         }else if(!$scope.currentUser.payPassword||!$scope.currentUser.payPassword.trim()){
             alert("请输入三级密码。")
-        }else if(!$scope.currentUser.payPasswordConfirm||!$scope.currentUser.payPasswordConfirm.trim()){
+        }else if(!$scope.payPasswordConfirm||!$scope.payPasswordConfirm.trim()){
             alert("请确认三级密码。")
-        }else if($scope.currentUser.payPassword!=$scope.currentUser.payPasswordConfirm){
+        }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
             alert("三级密码和三级密码确认不同,请重新输入。")
         }else{
             $scope.currentUser.status='Y';

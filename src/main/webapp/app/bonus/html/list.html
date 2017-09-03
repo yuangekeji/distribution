@@ -1,20 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
 <h4 class="page-title">奖金明细</h4>
-<!--<div class="page-bar">-->
-<!--<ul class="page-breadcrumb">-->
-<!--<li>-->
-<!--<i class="fa fa-home"></i>-->
-<!--<a ui-sref="dashboard">Home</a>-->
-<!--<i class="fa fa-angle-right"></i>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a ui-sref="datatablesmanaged">Datatables</a>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a ui-sref="datatablesmanaged">Advanced Datatables</a>-->
-<!--</li>-->
-<!--</ul>-->
-<!--</div>-->
 <!-- END PAGE HEADER-->
 <!-- BEGIN MAIN CONTENT -->
 <div class="row">
@@ -96,7 +81,7 @@
                                     <td class="text-right">{{row.amoutTotal | number:2}}</td>
                                     <td class="text-right">{{row.manageFeeTotal | number:2}}</td>
                                     <td class="text-right">{{row.actualAmoutTotal | number:2}}</td>
-                                    <td class="text-center" ng-show="row.orderNo!=0"><a href="javascript:" ng-click="searchBonusDetail(row.memberId, row.memberName, row.orderNo, row.orderStartDate, row.orderEndDate)" >获奖明细</a></td>
+                                    <td class="text-center" ng-show="row.orderNo!=0"><a href="javascript:" ng-click="searchBonusDetail(row.memberId, row.orderNo, orow.rderStartDate, row.orderEndDate)" >获奖明细</a></td>
                                 </tr>
                                 <tr ng-show= "notData" >
                                     <td colspan="9">无记录</td>

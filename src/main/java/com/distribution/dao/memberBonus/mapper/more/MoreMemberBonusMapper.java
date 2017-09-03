@@ -41,4 +41,16 @@ public interface MoreMemberBonusMapper extends MemberBonusMapper {
      * @return
      */
     List<MoreMemberBonus> selectMemberBonusDetail(Page page);
+    /**
+     * admin查詢奖金明细列表
+     * @param page
+     * @return
+     */
+    List<MoreMemberBonus> selectAdminMemberBonusList(Page page);
+    /**
+     * admin查詢總條數
+     * @param page
+     * @return
+     */
+    Integer selectAdminMemberBonusListCount(Page page);
 }

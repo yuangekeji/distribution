@@ -46,6 +46,8 @@ public class MemberService {
     private OperationApplyMapper operationApplyMapper;
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private OrderService orderService;
 
     /**
      * description 会员列表查询
@@ -208,6 +210,7 @@ public class MemberService {
         order.setUpdateId(member.getId());
         order.setUpdateTime(new Date());
         order.setBonusAmt(member.getOrderAmount());
+        orderService.insertOrder(order);
 
         return it;
     }

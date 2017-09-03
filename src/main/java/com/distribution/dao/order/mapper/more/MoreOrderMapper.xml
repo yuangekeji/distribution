@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.distribution.dao.order.mapper.more.MoreOrderMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.order.model.Order" >
-    <id column="order_no" property="orderNo" jdbcType="INTEGER" />
+  <resultMap id="BaseResultMap" type="com.distribution.dao.order.model.more.MoreOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
     <result column="order_category" property="orderCategory" jdbcType="CHAR" />
     <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
     <result column="order_qty" property="orderQty" jdbcType="INTEGER" />
@@ -77,7 +78,7 @@
          , a.update_id
          , a.update_time
       FROM order_master a,  order_detail b, goods c
-      WHERE a.order_no = b.id
+      WHERE a.order_no = b.order_no
         AND b.goods_cd = c.id
         <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
             AND a.member_id = #{parameterMap.memberId}
@@ -93,14 +94,14 @@
         </if>
   </select>
 
-    <insert id="insertOrder" parameterType="com.distribution.dao.order.model.Order" useGeneratedKeys="true" keyProperty="order_no">
+    <insert id="insertOrder" parameterType="com.distribution.dao.order.model.Order" useGeneratedKeys="true" keyProperty="id">
         insert into order_master (order_no, order_category, order_amt,
         order_qty, discount, act_amt,
         express_fee, member_id, receive_name,
         express_address, member_level, order_statues,
         create_id, create_time, update_id,
         update_time)
-        values (#{orderNo,jdbcType=INTEGER}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
+        values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
         #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{actAmt,jdbcType=DECIMAL},
         #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR},
         #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},

@@ -3,7 +3,13 @@ package com.distribution.dao.orderDetail.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class OrderDetail extends OrderDetailKey {
+public class OrderDetail {
+    private Integer id;
+
+    private Long orderNo;
+
+    private String goodsCd;
+
     private BigDecimal orderAmt;
 
     private Integer orderQty;
@@ -15,6 +21,30 @@ public class OrderDetail extends OrderDetailKey {
     private Integer updateId;
 
     private Date updateTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Long getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Long orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public String getGoodsCd() {
+        return goodsCd;
+    }
+
+    public void setGoodsCd(String goodsCd) {
+        this.goodsCd = goodsCd == null ? null : goodsCd.trim();
+    }
 
     public BigDecimal getOrderAmt() {
         return orderAmt;

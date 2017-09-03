@@ -25,6 +25,11 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         });
     }
 
+    $scope.updateOrderStatus = function(){
+
+    };
+
+
     /**
      * 初始化
      */

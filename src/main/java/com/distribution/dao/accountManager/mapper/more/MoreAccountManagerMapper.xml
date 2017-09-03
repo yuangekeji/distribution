@@ -26,19 +26,29 @@
   </select>
 
   <update id="updateAccountManagerAmt" parameterType="com.distribution.dao.accountManager.model.AccountManager">
-     update account_manager
-     set
-        total_bonus = #{totalBonus,jdbcType=DECIMAL},
-       <if test="seedAmt!=null and seedAmt!='' and seedAmt >0 ">
-           seed_amt =  #{seedAmt,jdbcType=DECIMAL},
-       </if>
-       <if test="bonusAmt!=null and bonusAmt!='' and bonusAmt >0 ">
-           bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
-       </if>
-        update_id = #{updateId,jdbcType=INTEGER},
-        update_time = #{updateTime,jdbcType=TIMESTAMP}
-      where member_id = #{memberId,jdbcType=INTEGER}
+    update account_manager
+    set
+    total_bonus = #{totalBonus,jdbcType=DECIMAL},
+    <if test="seedAmt!=null and seedAmt!='' and seedAmt >0 ">
+        seed_amt =  #{seedAmt,jdbcType=DECIMAL},
+    </if>
+    <if test="bonusAmt!=null and bonusAmt!='' and bonusAmt >0 ">
+        bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
+    </if>
+    update_id = #{updateId,jdbcType=INTEGER},
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where member_id = #{memberId,jdbcType=INTEGER}
   </update>
+
+    <update id="updateAccountManager" parameterType="com.distribution.dao.accountManager.model.AccountManager">
+        update account_manager
+           set total_bonus = total_bonus - #{seedAmt,jdbcType=DECIMAL} - #{bonusAmt,jdbcType=DECIMAL},
+               seed_amt =  seed_amt - #{seedAmt,jdbcType=DECIMAL},
+               bonus_amt = bonus_amt - #{bonusAmt,jdbcType=DECIMAL},
+               update_id = #{updateId,jdbcType=INTEGER},
+               update_time = #{updateTime,jdbcType=TIMESTAMP}
+         where member_id = #{memberId,jdbcType=INTEGER}
+    </update>
 
   <select id="getSeedsAndBondsByMemberId" parameterType="java.lang.Integer" resultType="com.distribution.dao.member.model.more.MoreMember">
       SELECT
@@ -50,4 +60,5 @@
       WHERE
         member_id = #{memberId}
   </select>
+
 </mapper>

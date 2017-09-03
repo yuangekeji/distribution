@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Order {
-    private Integer orderNo;
+    private Integer id;
+
+    private Long orderNo;
 
     private String orderCategory;
 
@@ -36,15 +38,19 @@ public class Order {
 
     private Date updateTime;
 
-    private Integer goodsCd;
+    public Integer getId() {
+        return id;
+    }
 
-    private String goodsNm;
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public Integer getOrderNo() {
+    public Long getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(Integer orderNo) {
+    public void setOrderNo(Long orderNo) {
         this.orderNo = orderNo;
     }
 
@@ -134,22 +140,6 @@ public class Order {
 
     public void setOrderStatues(String orderStatues) {
         this.orderStatues = orderStatues == null ? null : orderStatues.trim();
-    }
-
-    public Integer getGoodsCd() {
-        return goodsCd;
-    }
-
-    public void setGoodsCd(Integer goodsCd) {
-        this.goodsCd = goodsCd;
-    }
-
-    public String getGoodsNm() {
-        return goodsNm;
-    }
-
-    public void setGoodsNm(String goodsNm) {
-        this.goodsNm = goodsNm == null ? null : goodsNm.trim();
     }
 
     public Integer getCreateId() {

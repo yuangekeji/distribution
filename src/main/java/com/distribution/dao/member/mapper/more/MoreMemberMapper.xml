@@ -106,4 +106,10 @@
     money_status, is_operator, is_sales_dept,
     first_agent_cnt, recommend_name, node_name FROM member <include refid="where"/> ORDER BY id DESC <include refid="pageLimit"/>
   </select>
+  <update id="updateMemberMoneyStatusY" parameterType="java.lang.Integer">
+       update member
+       set   money_status = 'Y'
+       where member_id = #{memberId}
+  </update>
+
 </mapper>

@@ -35,7 +35,8 @@ angular.module('home').controller('homeCtrl',
         if($scope.currentUser.moneyStatus=='Y' && $scope.currentUser.status=='N'){
             $http.get(ctx + "/member/getDictionary/bank_name").success(function (resp) {
                 if(resp.successful){
-                    $scope.dictionary = resp.data;
+                    $scope.dictionary = resp.data.list;
+                    $scope.moreMember = resp.data.moreMember;
                     if($scope.dictionary){
                         $scope.currentUser.bankName = $scope.dictionary[0].dicCode;
                     }

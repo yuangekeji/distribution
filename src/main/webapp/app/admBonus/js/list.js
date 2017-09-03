@@ -1,4 +1,4 @@
-angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal) {
     title.setTitle('分销记录');
 
     $scope.notData = false;
@@ -81,7 +81,6 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
                 if (resp.successful) {
                     $scope.myDetail = resp.data;
                     $scope.open();
-
                 } else {
                     console.log(resp.errorMessage);
                 }
@@ -97,8 +96,8 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
             {
                 animation: true,
                 backdrop: 'static',
-                templateUrl: "bonusDetail.html",
-                controller: "BonusDetailCtrl",
+                templateUrl: "admBonusDetail.html",
+                controller: "admBonusDetailCtrl",
                 size: opt_attributes,
                 resolve:
                 {
@@ -111,14 +110,13 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
         out.result.then(function(value)
         {
             console.info('确认');
-
         }, function()
         {
             console.info('取消');
         });
     };
 });
-angular.module('admBonus').controller('BonusDetailCtrl', function ($scope, $uibModalInstance,getDatas) {
+angular.module('admBonus').controller('admBonusDetailCtrl', function ($scope, $uibModalInstance,getDatas) {
 
     $scope.datas = getDatas;
 
@@ -130,4 +128,18 @@ angular.module('admBonus').controller('BonusDetailCtrl', function ($scope, $uibM
     {
         $uibModalInstance.dismiss('cancel');
     };
+});
+angular.module('admBonus').filter("StatusFilter",function () {
+    return function (input) {
+        if(input=='0'){return '销售奖'};
+        if(input=='1'){return '一代奖'};
+        if(input=='2'){return '二代奖'};
+        if(input=='3'){return '分红包奖'};
+        if(input=='4'){return '见点奖'};
+        if(input=='5'){return '级差奖'};
+        if(input=='6'){return '全国董事奖'};
+        if(input=='7'){return '工作室奖'};
+        if(input=='8'){return '运营中心奖'};
+        if(input=='9'){return '运营中心扶持奖'};
+    }
 });

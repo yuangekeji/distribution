@@ -4,6 +4,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.member = {
         recommendPhone:$sessionStorage.currentUser.memberPhone
     };
+    $scope.confirmLoginPassword = "";
     $scope.dictionary = [];
     $scope.onInit = function () {
         $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
@@ -25,7 +26,6 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         if($scope.submitFlag){
             $scope.submitFlag = false;
             if($scope.check()){
-                delete $scope.member.confirmLoginPassword;
                 $http.post(ctx + "/member/insert",$scope.member).success(function (resp) {
                 if(resp.successful){
                     if(resp.data=='NO_RECOMMENDER'){

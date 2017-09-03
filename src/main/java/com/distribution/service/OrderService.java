@@ -116,7 +116,7 @@ public class OrderService {
         if(cnt3 > 0 && ("1".equals(moreOrder.getOrderCategory()) || "2".equals(moreOrder.getOrderCategory()))){
             Dividend dividend = new Dividend();
             dividend.setOrderId(orderId);
-            dividend.setOrderNo(orderNo.toString());
+            dividend.setOrderNo(orderNo);
             dividend.setOrderAmount(moreOrder.getOrderAmt());
             if(new BigDecimal(600).compareTo(moreOrder.getOrderAmt()) == 0){
                 dividend.setDividendCount(new Integer(1));

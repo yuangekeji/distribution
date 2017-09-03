@@ -80,6 +80,8 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myDetail = resp.data;
+                    $scope.open();
+
                 } else {
                     console.log(resp.errorMessage);
                 }
@@ -88,4 +90,44 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
             console.error(error);
         });
     }
+
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "bonusDetail.html",
+                controller: "BonusDetailCtrl",
+                size: opt_attributes,
+                resolve:
+                {
+                    getDatas: function()
+                    {
+                        return $scope.myDetail.result;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            console.info('确认');
+
+        }, function()
+        {
+            console.info('取消');
+        });
+    };
+});
+angular.module('admBonus').controller('BonusDetailCtrl', function ($scope, $uibModalInstance,getDatas) {
+
+    $scope.datas = getDatas;
+
+    $scope.ok = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
 });

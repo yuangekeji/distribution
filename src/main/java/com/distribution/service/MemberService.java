@@ -17,6 +17,7 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class MemberService {
      * description 会员列表查询
      * @author Bright
      * */
-    public Page list(Page page){
+    public Page findList(Page page){
         if(null!=page.getParameterMap().get("startTime"))
             page.getParameterMap().put("start",page.getParameterMap().get("startTime").toString()+" 00:00:00");
         if(null!=page.getParameterMap().get("endTime"))
@@ -124,6 +125,20 @@ public class MemberService {
                         if (null == member.getRecommendId())
                             member.setRecommendId(currentUser.getId());
                         memberMapper.insert(member);
+
+                        //创建账户信息
+                        AccountManager accountManager = new AccountManager();
+                        accountManager.setMemberId(member.getId());
+                        accountManager.setTotalBonus(new BigDecimal(0));
+                        accountManager.setSeedAmt(new BigDecimal(0));
+                        accountManager.setBonusAmt(new BigDecimal(0));
+                        accountManager.setAdvanceAmt(new BigDecimal(0));
+                        accountManager.setCreateId(member.getId());
+                        accountManager.setCreateTime(new Date());
+                        accountManager.setUpdateId(member.getId());
+                        accountManager.setUpdateTime(new Date());
+                        accountManagerMapper.insert(accountManager);
+
                         return "SUCCESS";
                     }
                 }
@@ -165,7 +180,7 @@ public class MemberService {
      * 创建账户信息；
      * @author Bright
      * */
-    public Integer activation(Member member){
+    public Integer updateActivation(Member member){
         member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
         if(member.getOrderAmount().compareTo(new BigDecimal(30000))==1){
@@ -175,20 +190,25 @@ public class MemberService {
         //给推荐人的一代个数中 +1
         Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
         m.setFirstAgentCnt(null!=member.getFirstAgentCnt()?(member.getFirstAgentCnt()+1):1);
-        //创建账户信息
-        AccountManager accountManager = new AccountManager();
-        accountManager.setMemberId(member.getId());
-        accountManager.setTotalBonus(new BigDecimal(0));
-        accountManager.setSeedAmt(new BigDecimal(0));
-        accountManager.setBonusAmt(new BigDecimal(0));
-        accountManager.setAdvanceAmt(new BigDecimal(0));
-        accountManager.setCreateId(member.getId());
-        accountManager.setCreateTime(new Date());
-        accountManager.setUpdateId(member.getId());
-        accountManager.setUpdateTime(new Date());
-        accountManagerMapper.insert(accountManager);
-        //TODO 生成订单
-        //TODO 生成分红包
+
+        MoreOrderMaster order = new MoreOrderMaster();
+        order.setOrderCategory("1");
+        order.setOrderAmt(member.getOrderAmount());
+        order.setOrderQty(null!=member.getOrderAmount()?(member.getOrderAmount().intValue()/600):0);
+        order.setDiscount(0);
+        order.setActAmt(member.getOrderAmount());
+        order.setExpressFee(new BigDecimal(0));
+        order.setMemberId(member.getId());
+        order.setReceiveName(member.getConsignee());
+        order.setExpressAddress(member.getExpressAddress());
+        order.setMemberLevel(member.getMemberLevel());
+        order.setOrderStatues("2");
+        order.setCreateId(member.getId());
+        order.setCreateTime(new Date());
+        order.setUpdateId(member.getId());
+        order.setUpdateTime(new Date());
+        order.setBonusAmt(member.getOrderAmount());
+
         return it;
     }
 
@@ -197,7 +217,7 @@ public class MemberService {
      * @param phone
      * @return
      */
-    public Member getMemberByPhone(String phone){
+    public Member selectMemberByPhone(String phone){
         return moreMemberMapper.getMemberByPhone(phone);
     }
 
@@ -205,7 +225,7 @@ public class MemberService {
      * description 获取会员详细信息
      * @author Bright
      * */
-    public MoreMember selectMemberInfo(Integer id){
+    public MoreMember getMemberInfo(Integer id){
         MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
         Member member = memberMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(member,moreMember);
@@ -218,7 +238,7 @@ public class MemberService {
      * description 申请成为运营中心
      * @author Bright
      * */
-    public Integer apply(OperationApply operationApply,Member member){
+    public Integer insertApply(OperationApply operationApply,Member member){
         operationApply.setMemberId(member.getId());
         operationApply.setStatus("wait");
         operationApply.setCreateId(member.getId());

@@ -3,6 +3,7 @@ package com.distribution.controller;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
+import com.distribution.dao.apply.model.OperationApply;
 import com.distribution.service.AdmOperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,5 +31,21 @@ public class AdmOperatorController extends BasicController{
     public JsonMessage list(@RequestBody Page page){
         page = admOperatorService.selectList(page);
         return successMsg(page);
+    }
+
+
+    /**
+     * description 审批
+     * @author Bright
+     * */
+    @RequestMapping("/approval")
+    @ResponseBody
+    public JsonMessage approval(@RequestBody OperationApply apply){
+        Integer it = admOperatorService.approval(apply);
+        if(it>0){
+            return successMsg();
+        }else {
+            return failMsg();
+        }
     }
 }

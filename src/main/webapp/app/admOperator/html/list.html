@@ -13,6 +13,16 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
+                                <label class="control-label col-md-5">审核状态</label>
+                                <div class="col-md-7">
+                                    <select class="form-control input-sm input-small input-inline"  ng-model="myPage.parameterMap.status">
+                                        <option value="wait">待审核</option>
+                                        <option value="pass">审核通过</option>
+                                        <option value="refuse">审核驳回</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
                                 <label class="control-label col-md-5">爵位</label>
                                 <div class="col-md-7">
                                     <select class="form-control input-sm input-small input-inline" ng-options="dic.dicCode as dic.dicName for dic in posts" ng-model="myPage.parameterMap.post"></select>
@@ -41,6 +51,7 @@
                                     <th>会员等级</th>
                                     <th>爵位</th>
                                     <th>推荐人</th>
+                                    <th>审核状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -51,7 +62,11 @@
                                     <td>{{ope.memberLevel|MemberLevelFilter}}</td>
                                     <td>{{ope.memberPost|PostLevelFilter}}</td>
                                     <td>{{ope.recommendName}}</td>
-                                    <td></td>
+                                    <td>{{ope.status|StatusFilter}}</td>
+                                    <td>
+                                        <button class="btn sbold input-circle green" ng-click="approval(ope.id,'pass');" ng-if="ope.status=='wait'">审批通过</button>
+                                        <button class="btn sbold input-circle red" ng-click="approval(ope.id,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

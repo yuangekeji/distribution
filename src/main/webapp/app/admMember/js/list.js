@@ -81,3 +81,10 @@ angular.module('admMember').filter("PostLevelFilter",function () {
         if(input=='post_level6'){return '全国董事'};
     }
 });
+
+angular.module('admMember').filter("StatusFilter",function () {
+    return function (input) {
+        if(input=='Y'){return '已激活'};
+        if(input=='N'){return '未激活'};
+    }
+});

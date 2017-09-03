@@ -95,13 +95,13 @@
   </select>
 
     <insert id="insertOrder" parameterType="com.distribution.dao.order.model.more.MoreOrderMaster" useGeneratedKeys="true" keyProperty="id">
-        insert into order_master (id,order_no, order_category, order_amt,
+        insert into order_master (order_no, order_category, order_amt,
         order_qty, discount, act_amt,
         express_fee, member_id, receive_name,
         express_address, member_level, order_statues,
         create_id, create_time, update_id,
         update_time)
-        values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
+        values (#{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
         #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{actAmt,jdbcType=DECIMAL},
         #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR},
         #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},

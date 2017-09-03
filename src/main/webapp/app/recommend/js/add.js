@@ -9,7 +9,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.onInit = function () {
         $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
             if(resp.successful){
-                $scope.dictionary = resp.data;
+                $scope.dictionary = resp.data.list;
                 if($scope.dictionary){
                     $scope.member.memberLevel = $scope.dictionary[0].dicCode;
                 }

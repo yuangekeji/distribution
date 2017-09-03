@@ -92,9 +92,14 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/getDictionary/{dicType}")
     @ResponseBody
-    public JsonMessage getDictionary(@PathVariable String dicType){
+    public JsonMessage getDictionary(@PathVariable String dicType,HttpSession session){
+        Member member = (Member) getCurrentUser(session);
         List<Dictionary> list = commonService.selectDictionary(dicType);
-        return successMsg(list);
+        MoreMember moreMember = memberService.findAccountManageByMemberId(member.getId());
+        Map result = new HashMap();
+        result.put("list",list);
+        result.put("moreMember",moreMember);
+        return successMsg(result);
     }
 
     /**
@@ -135,7 +140,7 @@ public class MemberController extends BasicController {
     @RequestMapping("/getMemberInfo/{id}")
     @ResponseBody
     public JsonMessage getMemberInfo(@PathVariable Integer id){
-        MoreMember moreMember = memberService.getMemberInfo(id);
+        MoreMember moreMember = memberService.selectMemberInfo(id);
         List<Dictionary> list = commonService.selectDictionary("bank_name");
 
         Map result= new HashMap();

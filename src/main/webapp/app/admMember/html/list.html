@@ -19,17 +19,39 @@
                                     <select class="form-control input-sm input-small input-inline" ng-options="dic.dicCode as dic.dicName for dic in posts" ng-model="myPage.parameterMap.post"></select>
                                 </div>
                             </div>
+
+                            <div class="form-group col-md-4">
+                                <label class="control-label col-md-3">报单时间</label>
+                                <div class="col-md-9">
+                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime"> <span class="input-group-addon"> to </span> <input type="text" class="form-control" name="to" ng-model="myPage.parameterMap.endTime">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn green" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-body">
+                            <div class="form-group col-md-3">
+                                <label class="control-label col-md-5">报单状态</label>
+                                <div class="col-md-7">
+                                    <select class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.status">
+                                        <option value="Y">已激活</option>
+                                        <option value="N">未激活</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group col-md-3">
                                 <label class="control-label col-md-5">会员等级</label>
                                 <div class="col-md-7">
                                     <select class="form-control input-sm input-small input-inline" ng-options="dic.dicCode as dic.dicName for dic in levels" ng-model="myPage.parameterMap.level"></select>
                                 </div>
                             </div>
-                            <div class="form-group col-md-1">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn green" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
-                                </div>
-                            </div>
+                            <div class="form-group col-md-3"></div>
+                            <div class="form-group col-md-3"></div>
                         </div>
                     </form>
                     <div class="table-scrollable">
@@ -42,7 +64,11 @@
                                     <th>爵位</th>
                                     <th>推荐人</th>
                                     <th>一代个数</th>
-                                    <th>地址</th>
+                                    <th>放置节点信息</th>
+                                    <th>报单时间</th>
+                                    <!--<th>激活时间</th>-->
+                                    <th>状态</th>
+                                    <!--<th>地址</th>-->
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -54,7 +80,11 @@
                                 <td>{{member.memberPost|PostLevelFilter}}</td>
                                 <td>{{member.recommendName}}</td>
                                 <td>{{member.firstAgentCnt}}</td>
-                                <td>{{member.expressAddress}}</td>
+                                <td>{{member.nodeName}}</td>
+                                <!--<td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>-->
+                                <td>{{member.status=='Y'?(admRecommend.updateTime|date:'yyyy年MM月dd日 HH:mm'):'该账户尚未激活'}}</td>
+                                <td>{{member.status|StatusFilter}}</td>
+                                <!--<td>{{member.expressAddress}}</td>-->
                                 <td></td>
                             </tr>
                             </tbody>

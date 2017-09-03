@@ -17,6 +17,8 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
 
     int updateAccountManagerAmt(AccountManager accountManager);
 
+    int updateAccountManager(AccountManager accountManager);
+
     /**
      * description 查询奖金币和种子币各自总额
      * @author Bright

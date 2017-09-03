@@ -72,7 +72,7 @@
             background-position: center top ;
         }
         .content{
-            margin-top: 290px !important;
+            margin-top: 250px !important;
         }
     }
 
@@ -86,7 +86,7 @@
             background-position: center top ;
         }
         .content{
-            margin-top:380px !important;
+            margin-top:250px !important;
         }
     }
 
@@ -100,7 +100,7 @@
             background-position: center top ;
         }
         .content{
-            margin-top: 380px !important;
+            margin-top: 250px !important;
         }
     }
 
@@ -114,7 +114,7 @@
             background-position: center top ;
         }
         .content{
-            margin-top: 380px !important;
+            margin-top: 250px !important;
         }
     }
 

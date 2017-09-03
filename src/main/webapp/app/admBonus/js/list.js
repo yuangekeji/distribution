@@ -1,56 +1,92 @@
 angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
-    title.setTitle('提现管理');
+    title.setTitle('分销记录');
 
-    $scope.onInit = function () {
-        /*paging start*/
-        $scope.currentPage = 1;
-        $scope.pageSize = 10;
-        $scope.meals = [];
-        $scope.totalItems = 40;
-        var dishes = [
-            'noodles',
-            'sausage',
-            'beans on ',
-            'chee',
-            'battered  ',
-            'crisp ',
-            'yorkshire ',
-            'wiener ',
-            'sauerkraut ',
-            'salad',
-            'onion ',
-            'bak ',
-            'avacado '
-        ];
-        var sides = [
-            'with',
-            'a la',
-            'drizzled',
-            'with ',
-            'on ',
-            'with ',
-            'on a ',
-            'wrapped ',
-            'on a',
-            'in pitta'
-        ];
-        for (var i = 1; i <= 20; i++) {
-            var dish = dishes[Math.floor(Math.random() * dishes.length)];
-            var side = sides[Math.floor(Math.random() * sides.length)];
-            $scope.meals.push('meal ' + i + ': ' + dish + ' ' + side);
+    $scope.notData = false;
+    $scope.myPage = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {
+            orderNo:'',
+            chinaPresidentBonusYN: true
         }
+    };
+    $scope.myDetail = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {
+            orderNo: '',
+            orderStartDate: '',
+            orderEndDate: ''
+        }
+    };
 
-        /*paging end*/
+    $scope.search = function(){
+        $http.post(ctx + '/adminBonus/list', $scope.myPage)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.myPage = resp.data;
+                    $scope.notData = false;
+                    if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
+
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
+        });
     }
 
-    $scope.onInit();
-    $scope.detail = function (id) {
-        $state.go('app.advanceAdd');
+    /**
+     * 初始化
+     */
+    $scope.onInit = function () {
+        $scope.search();
     };
-});
 
-angular.module('admBonus').controller('OtherController', function ( $scope) {
+
+    $scope.onInit();
+
+    /**
+     * 查询按钮触发
+     */
+    $scope.searchByParam =function () {
+
+        $scope.myPage.pageNo = 1;
+        $scope.myPage.totalCount = 0;
+
+        $scope.search();
+
+    }
+
+    /**
+     * 分页触发
+     * @param num
+     */
     $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
+        $scope.myPage.pageNo = num;
+        $scope.search();
     };
+
+    $scope.searchBonusDetail = function(orderNo, orderStartDate, orderEndDate){
+        $scope.myDetail.parameterMap.orderNo = orderNo;
+        $scope.myDetail.parameterMap.orderStartDate = orderStartDate;
+        $scope.myDetail.parameterMap.orderEndDate = orderEndDate;
+        $http.post(ctx + '/adminBonus/detail', $scope.myDetail)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.myDetail = resp.data;
+                    console.info($scope.myDetail.result);
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
+        });
+    }
 });

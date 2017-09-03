@@ -1,20 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<h4 class="page-title">我的提现</h4>
-<!--<div class="page-bar">-->
-<!--<ul class="page-breadcrumb">-->
-<!--<li>-->
-<!--<i class="fa fa-home"></i>-->
-<!--<a ui-sref="dashboard">Home</a>-->
-<!--<i class="fa fa-angle-right"></i>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a ui-sref="datatablesmanaged">Datatables</a>-->
-<!--</li>-->
-<!--<li>-->
-<!--<a ui-sref="datatablesmanaged">Advanced Datatables</a>-->
-<!--</li>-->
-<!--</ul>-->
-<!--</div>-->
+<h4 class="page-title">分销记录</h4>
 <!-- END PAGE HEADER-->
 <!-- BEGIN MAIN CONTENT -->
 <div class="row">
@@ -24,62 +9,43 @@
 
             <div class="portlet-body">
                 <div class="table-toolbar">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn sbold green" ng-click="detail(0)" > 申请提现
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <!--<div class="btn-group pull-right">-->
-                            <!--<button class="btn green  btn-outline dropdown-toggle" data-toggle="dropdown">Tools-->
-                            <!--<i class="fa fa-angle-down"></i>-->
-                            <!--</button>-->
-                            <!--<ul class="dropdown-menu pull-right">-->
-                            <!--<li>-->
-                            <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-print"></i> Print </a>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                            <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-file-pdf-o"></i> Save as PDF </a>-->
-                            <!--</li>-->
-                            <!--<li>-->
-                            <!--<a href="javascript:;">-->
-                            <!--<i class="fa fa-file-excel-o"></i> Export to Excel </a>-->
-                            <!--</li>-->
-                            <!--</ul>-->
-                            <!--</div>-->
-                        </div>
-                    </div>
+
                 </div>
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <!-- BEGIN FORM-->
                     <form action="#" class="form-horizontal form-bordered">
                         <div class="form-body">
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">提现状态</label>
+                            <div class="form-group col-md-4">
+                                <label class="control-label col-md-5">订单编号</label>
                                 <div class="col-md-7">
-                                    <select class="form-control input-sm input-xsmall input-inline">
-                                        <option value="20">20</option>
-                                        <option value="-1">All</option></select>
+                                    <input type="search"
+                                           ng-model="myPage.parameterMap.orderNo"
+                                           class="form-control input-sm input-small input-inline"
+                                           placeholder="输入订单编号"
+                                           aria-controls="sample_1">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <div class="col-md-12">
+                                    <label class="control-label check mt-checkbox mt-checkbox-outline">
+                                        <input type="checkbox" checked ng-model="myPage.parameterMap.chinaPresidentBonusYN"/>
+                                        <span style="margin-top: 8px;"></span>全国董事奖
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group col-md-5">
-                                <label class="control-label col-md-3">申请时间</label>
+                                <label class="control-label col-md-3">订单日期</label>
                                 <div class="col-md-8">
-                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                                        <input type="text" class="form-control" name="from">
+                                    <div class="input-group input-large date-picker input-daterange" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control" ng-model="myPage.parameterMap.orderStartDate" name="from">
                                         <span class="input-group-addon"> to </span>
-                                        <input type="text" class="form-control" name="to"></div>
+                                        <input type="text" class="form-control" ng-model="myPage.parameterMap.orderEndDate" name="to"></div>
                                 </div>
 
                             </div>
                             <div class="form-group col-md-1">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn green"><i class="fa fa-search"></i> 查询</button>
+                                    <button type="button" class="btn green" ng-click="searchByParam()"><i class="fa fa-search"></i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -90,207 +56,42 @@
                                id="sample_1">
                             <thead>
                             <tr >
-                                <th width="40%">销售员</th>
-                                <th width="40%"> 消费者</th>
-                                <th width="20%"> 消费者电话</th>
-                                <!--<th> 放置销售节点</th>-->
-                                <!--<th> 会员卡级别</th>-->
-                                <!--<th> 订单金额</th>-->
-                                <!--<th> 商品数量</th>-->
-                                <!--<th> 状态</th>-->
-                                <!--<th> 报单时间</th>-->
-                                <!--<th> 收货地址</th>-->
+                                <th class="text-center">订单编号</th>
+                                <th class="text-center">推荐人</th>
+                                <th class="text-center">购买会员</th>
+                                <th class="text-center">订单金额</th>
+                                <th class="text-center">订单日期</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center">奖金总额</th>
+                                <th class="text-center">管理费</th>
+                                <th class="text-center">实到</th>
+                                <th class="text-center"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="odd gradeX"
-                                dir-paginate="meal in meals | itemsPerPage: pageSize" current-page="currentPage"
-                                total-items="totalItems">
-                                <td>{{meal}}</td>
-                                <td>{{meal}}</td>
-                                <td>{{meal}}</td>
-
-
-                                <!--<td>B</td>-->
-                                <!--<td>13842648081</td>-->
-                                <!--<td>A</td>-->
-                                <!--<td >金卡</td>-->
-                                <!--<td class="center">9000</td>-->
-                                <!--<td class="center">15</td>-->
-                                <!--<td class="center">2017-08-11</td>-->
-                                <!--<td>-->
-                                <!--<span class="label label-sm label-success"> 已激活 </span>-->
-                                <!--</td>-->
-                                <!--<td >xx</td>-->
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
+                                total-items="myPage.result.totalCount">
+                                <td ng-show="row.orderNo==0" class="text-center">全国董事奖</td>
+                                <td ng-show="row.orderNo!=0" class="text-center">{{row.orderNo}}</td>
+                                <td class="text-center">{{row.recommendName}}</td>
+                                <td class="text-center">{{row.memberName}}</td>
+                                <td class="text-right">{{row.orderAmount | number:2}}</td>
+                                <td class="text-center">{{row.orderDate | date:'yyyy-MM-dd'}}</td>
+                                <td class="text-center">已到账</td>
+                                <td class="text-right">{{row.amoutTotal | number:2}}</td>
+                                <td class="text-right">{{row.manageFeeTotal | number:2}}</td>
+                                <td class="text-right">{{row.actualAmoutTotal | number:2}}</td>
+                                <td class="text-center" ng-show="row.orderNo!=0"><a href="javascript:" ng-click="searchBonusDetail(row.orderNo, row.orderStartDate, row.orderEndDate)">分销记录明细</a></td>
                             </tr>
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-success"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-default"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-success"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-success"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-default"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-default"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-success"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-success"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
-                            <!--<tr class="odd gradeX">-->
-                            <!--<td>-->
-                            <!--A-->
-                            <!--</td>-->
-                            <!--<td> B</td>-->
-                            <!--<td>-->
-                            <!--13842648081-->
-                            <!--</td>-->
-                            <!--<td>A</td>-->
-                            <!--<td >金卡</td>-->
-                            <!--<td class="center">9000</td>-->
-                            <!--<td class="center">15</td>-->
-                            <!--<td class="center">2017-08-11</td>-->
-                            <!--<td>-->
-                            <!--<span class="label label-sm label-default"> 已激活 </span>-->
-                            <!--</td>-->
-                            <!--<td >xx</td>-->
-                            <!--</tr>-->
+                            <tr ng-show= "notData" >
+                                <td colspan="9">无记录</td>
+                            </tr>
                             </tbody>
                         </table>
                         <div ng-controller="OtherController" class="other-controller">
                             <div class="text-center">
                                 <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"
-                                                         template-url="/app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+                                                         template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
                             </div>
                         </div>
                     </div>

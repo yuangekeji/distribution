@@ -23,6 +23,7 @@
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="order_no" property="orderNo" jdbcType="BIGINT" />
     <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="bonus_type" property="bonusType" jdbcType="VARCHAR" />
     <result column="order_start_date" property="orderStartDate" jdbcType="VARCHAR" />
     <result column="order_end_date" property="orderEndDate" jdbcType="VARCHAR" />
     <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
@@ -33,11 +34,12 @@
     <result column="actual_amout_total" property="actualAmoutTotal" jdbcType="DOUBLE" />
   </resultMap>
   <resultMap id="MemberBonusDetailResultMap" type="com.distribution.dao.memberBonus.model.more.MoreMemberBonus" >
-        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="member_name" property="memberName" jdbcType="VARCHAR" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
     <result column="order_no" property="orderNo" jdbcType="BIGINT" />
     <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="bonus_type" property="bonusType" jdbcType="VARCHAR" />
     <result column="order_start_date" property="orderStartDate" jdbcType="VARCHAR" />
     <result column="order_end_date" property="orderEndDate" jdbcType="VARCHAR" />
     <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
@@ -46,13 +48,6 @@
     <result column="amout_total" property="amoutTotal" jdbcType="DOUBLE" />
     <result column="manage_fee_total" property="manageFeeTotal" jdbcType="DOUBLE" />
     <result column="actual_amout_total" property="actualAmoutTotal" jdbcType="DOUBLE" />
-    <result column="bonus_first_agent_amout" property="bonusFirstAgentAmout" jdbcType="DOUBLE" />
-    <result column="bonus_second_agent_amout" property="bonusSecondAgentAmout" jdbcType="DOUBLE" />
-    <result column="bonus_dividend_amout" property="bonusDividendAmout" jdbcType="DOUBLE" />
-    <result column="bonus_point_amout" property="bonusPointAmout" jdbcType="DOUBLE" />
-    <result column="bonus_graded_amout" property="bonusGradedAmout" jdbcType="DOUBLE" />
-    <result column="bonus_workroom_amout" property="bonusWorkroomAmout" jdbcType="DOUBLE" />
-    <result column="bonus_workcenter_amout" property="bonusWorkcenterAmout" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, member_id, bonus_date, bonus_type, amout, manage_fee, actual_amout,
@@ -92,12 +87,16 @@
       <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
          and member_id = #{parameterMap.memberId}
       </if>
+      <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+          and order_no = #{parameterMap.orderNo}
+      </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
           and DATE_FORMAT(order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')
       </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
           and DATE_FORMAT(order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
       </if>
+          and bonus_type not in ('6')
     </where>
   </sql>
   <select id="selectMemberBonusList" resultMap="MemberBonusListResultMap" parameterType="com.distribution.common.utils.Page" >
@@ -130,10 +129,6 @@
           sum(actual_amout) as actual_amout_total
         from member_bonus
         <include refid="whereMemberBonusList"/>
-        <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-          and order_no = #{parameterMap.orderNo}
-        </if>
-        and   bonus_type not in ('6')
         group by member_id, order_id, order_no,order_date
       <if test="parameterMap.chinaPresidentBonusYN==1">
       union all
@@ -153,7 +148,7 @@
       </if>
       ) mb, member member
       where mb.member_id = member.id
-      order by mb.order_id
+      order by mb.order_id desc, mb.member_id desc
     <include refid="pageLimit"/>
   </select>
   <select id="selectMemberBonusListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
@@ -166,10 +161,6 @@
       order_no
       from member_bonus
       <include refid="whereMemberBonusList"/>
-      <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-          and order_no = #{parameterMap.orderNo}
-      </if>
-      and   bonus_type not in ('6')
       group by member_id, order_id, order_no
       <if test="parameterMap.chinaPresidentBonusYN==1">
       union all
@@ -186,40 +177,116 @@
       ) mb, member member
       where mb.member_id = member.id
   </select>
-  <select id="selectMemberBonusDetail" resultMap="MemberBonusDetailResultMap" parameterType="com.distribution.common.utils.Page" >
-  select
-    member_id,
-    #{parameterMap.memberName} member_name,
-    order_id,
-    order_no,
-    max(case bonus_type when '1' then actual_amout_total else 0 end) bonus_first_agent_amout,
-    max(case bonus_type when '2' then actual_amout_total else 0 end) bonus_second_agent_amout,
-    max(case bonus_type when '3' then actual_amout_total else 0 end) bonus_dividend_amout,
-    max(case bonus_type when '4' then actual_amout_total else 0 end) bonus_point_amout,
-    max(case bonus_type when '5' then actual_amout_total else 0 end) bonus_graded_amout,
-    max(case bonus_type when '7' then actual_amout_total else 0 end) bonus_workroom_amout,
-    max(case bonus_type when '8' then actual_amout_total else 0 end) bonus_workcenter_amout
-    from(
-      select
-        member_id,
-        order_id,
-        order_no,
-        bonus_type,
-        sum(amout) as amout_total,
-        sum(manage_fee) as manage_fee_total,
-        sum(actual_amout) as actual_amout_total
-        from member_bonus
-        where  member_id = #{parameterMap.memberId}
+  <sql id="whereMemberBonusDetail">
+    <where>
+        and mb.member_id = mm.id
+      <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+        and mb.member_id = #{parameterMap.memberId}
+      </if>
+      <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+        and mb.order_no = #{parameterMap.orderNo}
+      </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
-          and DATE_FORMAT(order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')
+        and DATE_FORMAT(mb.order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')
       </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
-          and DATE_FORMAT(order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
+        and DATE_FORMAT(mb.order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
       </if>
-        and    order_no = #{parameterMap.orderNo}
-        and    bonus_type not in ('6')
-        group by member_id, order_id, order_no,bonus_type) temp
-      group by member_id, order_id, order_no
-      order by member_id
+      and bonus_type not in ('6')
+    </where>
+  </sql>
+  <select id="selectMemberBonusDetail" resultMap="MemberBonusDetailResultMap" parameterType="com.distribution.common.utils.Page" >
+    select
+      mb.member_id,
+      mm.member_name,
+      mb.order_id,
+      mb.order_no,
+      mb.bonus_type,
+      sum(mb.amout) as amout_total,
+      sum(mb.manage_fee) as manage_fee_total,
+      sum(mb.actual_amout) as actual_amout_total
+    from member_bonus mb, member mm
+    <include refid="whereMemberBonusDetail"/>
+    group by mb.member_id, mb.order_id, mb.order_no,mb.bonus_type
+      order by mb.member_id desc
+  </select>
+
+  <select id="selectAdminMemberBonusList" resultMap="MemberBonusListResultMap" parameterType="com.distribution.common.utils.Page" >
+    select
+    mb.member_id,
+    member.member_name,
+    mb.order_id,
+    mb.order_no,
+    mb.order_date,
+    <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
+      DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d') order_start_date,
+    </if>
+    <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
+      DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d') order_end_date,
+    </if>
+    member.recommend_id,
+    member.recommend_name,
+    member.order_amount,
+    mb.amout_total,
+    mb.manage_fee_total,
+    mb.actual_amout_total
+    from (
+    select
+    member_id,
+    order_id,
+    order_no,
+    order_date order_date,
+    sum(amout) as amout_total,
+    sum(manage_fee) as manage_fee_total,
+    sum(actual_amout) as actual_amout_total
+    from member_bonus
+    <include refid="whereMemberBonusList"/>
+    group by order_id, order_no,order_date
+    <if test="parameterMap.chinaPresidentBonusYN==1">
+      union all
+      select
+      member_id,
+      order_id,
+      order_no,
+      null order_date,
+      amout as amout_total,
+      manage_fee as manage_fee_total,
+      actual_amout as actual_amout_total
+      from member_bonus
+      where   bonus_type = '6'
+      <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+        and   member_id = #{parameterMap.memberId}
+      </if>
+    </if>
+    ) mb, member member
+    where mb.member_id = member.id
+    order by mb.order_id desc, mb.member_id desc
+    <include refid="pageLimit"/>
+  </select>
+  <select id="selectAdminMemberBonusListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
+    select
+    count(0) as count
+    from (
+    select
+    member_id,
+    order_id,
+    order_no
+    from member_bonus
+    <include refid="whereMemberBonusList"/>
+    group by order_id, order_no
+    <if test="parameterMap.chinaPresidentBonusYN==1">
+      union all
+      select
+      member_id,
+      order_id,
+      order_no
+      from member_bonus
+      where   bonus_type = '6'
+      <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+        and   member_id = #{parameterMap.memberId}
+      </if>
+    </if>
+    ) mb, member member
+    where mb.member_id = member.id
   </select>
 </mapper>

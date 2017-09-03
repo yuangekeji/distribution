@@ -10,91 +10,11 @@ public class MoreMemberBonus extends MemberBonus {
     private Double amoutTotal;
     private Double manageFeeTotal;
     private Double actualAmoutTotal;
-    private Double bonusFirstAgentAmout;
-    private Double bonusSecondAgentAmout;
-    private Double bonusDividendAmout;
-    private Double bonusPointAmout;
-    private Double bonusGradedAmout;
-    private Double bonusWorkroomAmout;
-    private Double bonusWorkcenterAmout;
     private String orderStartDate;
     private String orderEndDate;
 
-    public String getOrderStartDate() {
-        return orderStartDate;
-    }
-
-    public void setOrderStartDate(String orderStartDate) {
-        this.orderStartDate = orderStartDate;
-    }
-
-    public String getOrderEndDate() {
-        return orderEndDate;
-    }
-
-    public void setOrderEndDate(String orderEndDate) {
-        this.orderEndDate = orderEndDate;
-    }
-
-    public Double getBonusFirstAgentAmout() {
-        return bonusFirstAgentAmout;
-    }
-
-    public void setBonusFirstAgentAmout(Double bonusFirstAgentAmout) {
-        this.bonusFirstAgentAmout = bonusFirstAgentAmout;
-    }
-
-    public Double getBonusSecondAgentAmout() {
-        return bonusSecondAgentAmout;
-    }
-
-    public void setBonusSecondAgentAmout(Double bonusSecondAgentAmout) {
-        this.bonusSecondAgentAmout = bonusSecondAgentAmout;
-    }
-
-    public Double getBonusDividendAmout() {
-        return bonusDividendAmout;
-    }
-
-    public void setBonusDividendAmout(Double bonusDividendAmout) {
-        this.bonusDividendAmout = bonusDividendAmout;
-    }
-
-    public Double getBonusPointAmout() {
-        return bonusPointAmout;
-    }
-
-    public void setBonusPointAmout(Double bonusPointAmout) {
-        this.bonusPointAmout = bonusPointAmout;
-    }
-
-    public Double getBonusGradedAmout() {
-        return bonusGradedAmout;
-    }
-
-    public void setBonusGradedAmout(Double bonusGradedAmout) {
-        this.bonusGradedAmout = bonusGradedAmout;
-    }
-
-    public Double getBonusWorkroomAmout() {
-        return bonusWorkroomAmout;
-    }
-
-    public void setBonusWorkroomAmout(Double bonusWorkroomAmout) {
-        this.bonusWorkroomAmout = bonusWorkroomAmout;
-    }
-
-    public Double getBonusWorkcenterAmout() {
-        return bonusWorkcenterAmout;
-    }
-
-    public void setBonusWorkcenterAmout(Double bonusWorkcenterAmout) {
-        this.bonusWorkcenterAmout = bonusWorkcenterAmout;
-    }
-
     public String getMemberName() {
         return memberName;
-
     }
 
     public void setMemberName(String memberName) {
@@ -147,5 +67,21 @@ public class MoreMemberBonus extends MemberBonus {
 
     public void setActualAmoutTotal(Double actualAmoutTotal) {
         this.actualAmoutTotal = actualAmoutTotal;
+    }
+
+    public String getOrderStartDate() {
+        return orderStartDate;
+    }
+
+    public void setOrderStartDate(String orderStartDate) {
+        this.orderStartDate = orderStartDate;
+    }
+
+    public String getOrderEndDate() {
+        return orderEndDate;
+    }
+
+    public void setOrderEndDate(String orderEndDate) {
+        this.orderEndDate = orderEndDate;
     }
 }

@@ -126,7 +126,7 @@ public class MemberService {
                         }
                         if (null == member.getRecommendId())
                             member.setRecommendId(currentUser.getId());
-                        memberMapper.insert(member);
+                        moreMemberMapper.insert(member);
 
                         //创建账户信息
                         AccountManager accountManager = new AccountManager();

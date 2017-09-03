@@ -61,8 +61,6 @@
     <%--<script src="${ctx}/static/metronic/global/plugins/datatables/datatables.all.min.js" type="text/javascript"></script>--%>
     <!-- END CORE JQUERY PLUGINS -->
 
-    <script src="${ctx}/static/xcConfirm/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
-
     <!-- BEGIN CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/metronic/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>

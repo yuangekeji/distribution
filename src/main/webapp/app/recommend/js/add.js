@@ -4,6 +4,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.member = {
         recommendPhone:$sessionStorage.currentUser.memberPhone
     };
+    $scope.confirmLoginPassword = "";
     $scope.dictionary = [];
     $scope.onInit = function () {
         $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
@@ -26,27 +27,27 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
             $scope.submitFlag = false;
             if($scope.check()){
                 $http.post(ctx + "/member/insert",$scope.member).success(function (resp) {
-                    if(resp.successful){
-                        if(resp.data=='NO_RECOMMENDER'){
-                            alert("推荐人不存在，请重新输入。");
-                            $scope.submitFlag = true;
-                        }else if(resp.data=='PHONE_EXISTENCE'){
-                            alert("会员账号已存在，请重新输入。");
-                            $scope.submitFlag = true;
-                        }else if(resp.data=='NO_NODE_MEMBER'){
-                            alert("节点不存在，请重新输入。");
-                            $scope.submitFlag = true;
-                        }else if(resp.data=='LEFT_NOTE_FULL'){
-                            alert("该节点左区已存在，请从新选择节点区域。");
-                            $scope.submitFlag = true;
-                        }else if(resp.data=='RIGHT_NOTE_FULL'){
-                            alert("该节点右区已存在，请从新选择节点区域。");
-                            $scope.submitFlag = true;
-                        }else{
-                            $state.go("app.recommend");
-                            $scope.submitFlag = true;
-                        }
+                if(resp.successful){
+                    if(resp.data=='NO_RECOMMENDER'){
+                        alert("推荐人不存在，请重新输入。");
+                        $scope.submitFlag = true;
+                    }else if(resp.data=='PHONE_EXISTENCE'){
+                        alert("会员账号已存在，请重新输入。");
+                        $scope.submitFlag = true;
+                    }else if(resp.data=='NO_NODE_MEMBER'){
+                        alert("节点不存在，请重新输入。");
+                        $scope.submitFlag = true;
+                    }else if(resp.data=='LEFT_NOTE_FULL'){
+                        alert("该节点左区已存在，请从新选择节点区域。");
+                        $scope.submitFlag = true;
+                    }else if(resp.data=='RIGHT_NOTE_FULL'){
+                        alert("该节点右区已存在，请从新选择节点区域。");
+                        $scope.submitFlag = true;
+                    }else{
+                        $state.go("app.recommend");
+                        $scope.submitFlag = true;
                     }
+                }
                 }).error(function (resp) {
                     console.log(resp);
                     $scope.submitFlag = true;

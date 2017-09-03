@@ -18,13 +18,16 @@
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="bookmark" href="favicon.ico" type="image/x-icon" />
     <!-- metronic  start -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/xcConfirm/css/xcConfirm.css" rel="stylesheet" type="text/css"/>
     <%--<link href="${ctx}/static/metronic/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />--%>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
@@ -56,8 +59,6 @@
     <%--<script src="${ctx}/static/metronic/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>--%>
     <%--<script src="${ctx}/static/metronic/global/plugins/datatables/datatables.all.min.js" type="text/javascript"></script>--%>
     <!-- END CORE JQUERY PLUGINS -->
-
-    <script src="${ctx}/static/xcConfirm/js/xcConfirm.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- BEGIN CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>

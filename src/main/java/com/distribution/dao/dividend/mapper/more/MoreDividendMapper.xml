@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
-    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
     <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
     <result column="dividend_count" property="dividendCount" jdbcType="INTEGER" />
     <result column="received_amount" property="receivedAmount" jdbcType="DECIMAL" />

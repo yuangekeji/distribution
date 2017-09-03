@@ -10,7 +10,7 @@ public class Dividend {
 
     private Integer orderId;
 
-    private String orderNo;
+    private Long orderNo;
 
     private BigDecimal orderAmount;
 
@@ -58,12 +58,12 @@ public class Dividend {
         this.orderId = orderId;
     }
 
-    public String getOrderNo() {
+    public Long getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo == null ? null : orderNo.trim();
+    public void setOrderNo(Long orderNo) {
+        this.orderNo = orderNo;
     }
 
     public BigDecimal getOrderAmount() {

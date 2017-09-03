@@ -1,56 +1,83 @@
 angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
-    title.setTitle('提现管理');
+    title.setTitle('运营中心管理');
+    $scope.loadingFlag = true;
+    $scope.notData = false;
+    $scope.posts = [];
+    $scope.levels = [];
+    $scope.myPage = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {}
+    };
+
+    $scope.initDic = function () {
+        $http.get(ctx + "/admMember/init").success(function (resp) {
+            if(resp.successful){
+                $scope.posts = resp.data.post;
+                $scope.levels = resp.data.level;
+            }else{
+                console.log(resp);
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        })
+    };
+    $scope.initDic();
 
     $scope.onInit = function () {
-        /*paging start*/
-        $scope.currentPage = 1;
-        $scope.pageSize = 10;
-        $scope.meals = [];
-        $scope.totalItems = 40;
-        var dishes = [
-            'noodles',
-            'sausage',
-            'beans on ',
-            'chee',
-            'battered  ',
-            'crisp ',
-            'yorkshire ',
-            'wiener ',
-            'sauerkraut ',
-            'salad',
-            'onion ',
-            'bak ',
-            'avacado '
-        ];
-        var sides = [
-            'with',
-            'a la',
-            'drizzled',
-            'with ',
-            'on ',
-            'with ',
-            'on a ',
-            'wrapped ',
-            'on a',
-            'in pitta'
-        ];
-        for (var i = 1; i <= 20; i++) {
-            var dish = dishes[Math.floor(Math.random() * dishes.length)];
-            var side = sides[Math.floor(Math.random() * sides.length)];
-            $scope.meals.push('meal ' + i + ': ' + dish + ' ' + side);
-        }
-
-        /*paging end*/
-    }
-
+        $http.post(ctx + '/admOperator/list', $scope.myPage).success(function (resp) {
+            if (resp.successful) {
+                $scope.myPage = resp.data;
+                $scope.loadingFlag = false;
+                $scope.notData = false;
+            } else {
+                console.log(resp.errorMessage);
+            }
+        });
+    };
     $scope.onInit();
-    $scope.detail = function (id) {
-        $state.go('app.advanceAdd');
+
+    /**查询*/
+    $scope.search = function () {
+        $scope.myPage.pageNo = 1;
+        $scope.myPage.totalCount = 0;
+        $http.post(ctx + '/admOperator/list', $scope.myPage).success(function (resp) {
+            if (resp.successful) {
+                $scope.myPage = resp.data;
+            } else {
+                console.log(resp.errorMessage);
+            }
+        });
+    };
+
+    /**翻页*/
+    $scope.pageChangeHandler = function(num) {
+        console.log('going to page ooooo ' + num);
+        $scope.myPage.pageNo = num;
+        $scope.onInit();
     };
 });
 
-angular.module('admOperator').controller('OtherController', function ( $scope) {
-    $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
-    };
+angular.module('admOperator').filter("MemberLevelFilter",function () {
+    return function (input) {
+        if(input=='member_level1'){return '普卡'};
+        if(input=='member_level2'){return '铜卡'};
+        if(input=='member_level3'){return '银卡'};
+        if(input=='member_level4'){return '金卡'};
+        if(input=='member_level5'){return '白金卡'};
+        if(input=='member_level6'){return '黑金卡'};
+    }
+});
+
+angular.module('admOperator').filter("PostLevelFilter",function () {
+    return function (input) {
+        if(input=='post_level1'){return '普通会员'};
+        if(input=='post_level2'){return '主任'};
+        if(input=='post_level3'){return '经理'};
+        if(input=='post_level4'){return '总监'};
+        if(input=='post_level5'){return '董事'};
+        if(input=='post_level6'){return '全国董事'};
+    }
 });

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -41,12 +42,9 @@ public class AdminDividendController extends BasicController {
      * 查詢分紅包明細Head
      */
 
-    @RequestMapping("/detailsTitleData")
+    @RequestMapping(value = "/detailsTitleData", method = RequestMethod.POST)
     @ResponseBody
-    public JsonMessage detailsTitleData(@RequestBody Page page, String memberId, String orderNo){
-
-        page.getParameterMap().put("memberId",memberId);
-        page.getParameterMap().put("orderNo",orderNo);
+    public JsonMessage detailsTitleData(@RequestBody Page page){
         return successMsg(dividendService.dividendList(page));
     }
 
@@ -54,12 +52,9 @@ public class AdminDividendController extends BasicController {
      * 查詢分紅包明細
      */
 
-    @RequestMapping("/details")
+    @RequestMapping(value = "/details", method = RequestMethod.POST)
     @ResponseBody
-    public JsonMessage dividendDetails(@RequestBody Page page, String memberId, String orderId){
-
-        page.getParameterMap().put("memberId",memberId);
-        page.getParameterMap().put("orderId",orderId);
+    public JsonMessage dividendDetails(@RequestBody Page page){
         return successMsg(dividendService.dividendDetails(page));
     }
 

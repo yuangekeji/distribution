@@ -50,4 +50,15 @@
          where member_id = #{memberId,jdbcType=INTEGER}
     </update>
 
+  <select id="getSeedsAndBondsByMemberId" parameterType="java.lang.Integer" resultType="com.distribution.dao.member.model.more.MoreMember">
+      SELECT
+        seed_amt AS seedAmount,
+        bonus_amt AS bonusAmount,
+        advance_amt AS actualAmount
+      FROM
+        account_manager
+      WHERE
+        member_id = #{memberId}
+  </select>
+
 </mapper>

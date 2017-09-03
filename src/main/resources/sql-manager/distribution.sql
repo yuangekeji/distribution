@@ -558,7 +558,7 @@ ALTER TABLE `transfer`
   ADD COLUMN `receive_name`  varchar(255) NULL COMMENT '收款会员名字';
 
 --Bright 2017年8月30日21:37:32
-CREATE TABLE `operation_request` (
+CREATE TABLE `operation_apply` (
 `id`  int NOT NULL AUTO_INCREMENT COMMENT 'ID主键' ,
 `member_id`  int NULL COMMENT '会员ID' ,
 `total_order_amount`  decimal(15,2) NULL COMMENT '总订单金额' ,

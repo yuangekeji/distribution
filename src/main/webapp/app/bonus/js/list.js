@@ -9,11 +9,24 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
         result: [],
         parameterMap: {
             orderNo:'',
+            chinaPresidentBonusYN: true
+        }
+    };
+    $scope.myDetail = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {
+            memberId: '',
+            memberName: '',
+            orderNo: '',
+            orderStartDate: '',
+            orderEndDate: ''
         }
     };
 
     $scope.search = function(){
-
         $http.post(ctx + '/bonus/list', $scope.myPage)
             .success(function (resp) {
                 if (resp.successful) {
@@ -34,7 +47,6 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
      * 初始化
      */
     $scope.onInit = function () {
-
         $scope.search();
     };
 
@@ -62,4 +74,22 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
         $scope.search();
     };
 
+    $scope.searchBonusDetail = function(memberId, memberName, orderNo, orderStartDate, orderEndDate){
+        $scope.myDetail.parameterMap.memberId = memberId;
+        $scope.myDetail.parameterMap.memberName = memberName;
+        $scope.myDetail.parameterMap.orderNo = orderNo;
+        $scope.myDetail.parameterMap.orderStartDate = orderStartDate;
+        $scope.myDetail.parameterMap.orderEndDate = orderEndDate;
+        $http.post(ctx + '/bonus/detail', $scope.myDetail)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.myDetail = resp.data;
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
+        });
+    }
 });

@@ -10,24 +10,27 @@ angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, 
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {}
+        parameterMap: {
+            memberId: $stateParams.memberId,
+            orderId: $stateParams.orderId
+        }
     };
     $scope.titleData = {
         pageNo: 1,
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {}
+        parameterMap: {
+            memberId: $stateParams.memberId,
+            orderNo: $stateParams.orderNo
+        }
     };
     $scope.search = function(){
-
-        $http.post(ctx + '/dividend/detailsTitleData?memberId=' + $stateParams.memberId + '&orderNo=' + $stateParams.orderNo, $scope.titleData)
+        console.info($scope.titleData);
+        $http.post(ctx + '/dividend/detailsTitleData', $scope.titleData)
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.titleData = resp.data;
-                    $scope.notData = false;
-                    if (!$scope.titleData.result || $scope.titleData.result.length == 0) $scope.notData = true;
-
                 } else {
                     console.log(resp.errorMessage);
                 }
@@ -36,7 +39,7 @@ angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, 
             console.error(error);
         });
 
-        $http.post(ctx + '/dividend/details?memberId=' + $stateParams.memberId + '&orderId=' + $stateParams.orderId, $scope.myPage)
+        $http.post(ctx + '/dividend/details', $scope.myPage)
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myPage = resp.data;

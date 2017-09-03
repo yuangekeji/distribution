@@ -35,4 +35,10 @@ public interface MoreMemberBonusMapper extends MemberBonusMapper {
      * @return
      */
     Integer selectMemberBonusListCount(Page page);
+    /**
+     * 查詢获奖明细
+     * @param page
+     * @return
+     */
+    List<MoreMemberBonus> selectMemberBonusDetail(Page page);
 }

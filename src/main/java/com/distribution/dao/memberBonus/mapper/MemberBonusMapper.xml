@@ -10,7 +10,8 @@
     <result column="manage_fee" property="manageFee" jdbcType="DOUBLE" />
     <result column="actual_amout" property="actualAmout" jdbcType="DOUBLE" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
-    <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
     <result column="remarks" property="remarks" jdbcType="VARCHAR" />
     <result column="create_by" property="createBy" jdbcType="INTEGER" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
@@ -77,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, member_id, bonus_date, bonus_type, amout, manage_fee, actual_amout, order_id, 
-    order_no, remarks, create_by, create_date, update_by, update_time
+    order_no, order_date, remarks, create_by, create_date, update_by, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberBonus.model.MemberBonusExample" >
     select
@@ -114,13 +115,15 @@
     insert into member_bonus (id, member_id, bonus_date, 
       bonus_type, amout, manage_fee, 
       actual_amout, order_id, order_no, 
-      remarks, create_by, create_date, 
-      update_by, update_time)
+      order_date, remarks, create_by, 
+      create_date, update_by, update_time
+      )
     values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{bonusDate,jdbcType=TIMESTAMP}, 
       #{bonusType,jdbcType=VARCHAR}, #{amout,jdbcType=DOUBLE}, #{manageFee,jdbcType=DOUBLE}, 
-      #{actualAmout,jdbcType=DOUBLE}, #{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=INTEGER}, 
-      #{remarks,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+      #{actualAmout,jdbcType=DOUBLE}, #{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, 
+      #{orderDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.memberBonus.model.MemberBonus" >
     insert into member_bonus
@@ -151,6 +154,9 @@
       </if>
       <if test="orderNo != null" >
         order_no,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
       </if>
       <if test="remarks != null" >
         remarks,
@@ -194,7 +200,10 @@
         #{orderId,jdbcType=INTEGER},
       </if>
       <if test="orderNo != null" >
-        #{orderNo,jdbcType=INTEGER},
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remarks != null" >
         #{remarks,jdbcType=VARCHAR},
@@ -247,7 +256,10 @@
         order_id = #{record.orderId,jdbcType=INTEGER},
       </if>
       <if test="record.orderNo != null" >
-        order_no = #{record.orderNo,jdbcType=INTEGER},
+        order_no = #{record.orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderDate != null" >
+        order_date = #{record.orderDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.remarks != null" >
         remarks = #{record.remarks,jdbcType=VARCHAR},
@@ -279,7 +291,8 @@
       manage_fee = #{record.manageFee,jdbcType=DOUBLE},
       actual_amout = #{record.actualAmout,jdbcType=DOUBLE},
       order_id = #{record.orderId,jdbcType=INTEGER},
-      order_no = #{record.orderNo,jdbcType=INTEGER},
+      order_no = #{record.orderNo,jdbcType=BIGINT},
+      order_date = #{record.orderDate,jdbcType=TIMESTAMP},
       remarks = #{record.remarks,jdbcType=VARCHAR},
       create_by = #{record.createBy,jdbcType=INTEGER},
       create_date = #{record.createDate,jdbcType=TIMESTAMP},
@@ -314,7 +327,10 @@
         order_id = #{orderId,jdbcType=INTEGER},
       </if>
       <if test="orderNo != null" >
-        order_no = #{orderNo,jdbcType=INTEGER},
+        order_no = #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=TIMESTAMP},
       </if>
       <if test="remarks != null" >
         remarks = #{remarks,jdbcType=VARCHAR},
@@ -343,7 +359,8 @@
       manage_fee = #{manageFee,jdbcType=DOUBLE},
       actual_amout = #{actualAmout,jdbcType=DOUBLE},
       order_id = #{orderId,jdbcType=INTEGER},
-      order_no = #{orderNo,jdbcType=INTEGER},
+      order_no = #{orderNo,jdbcType=BIGINT},
+      order_date = #{orderDate,jdbcType=TIMESTAMP},
       remarks = #{remarks,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=INTEGER},
       create_date = #{createDate,jdbcType=TIMESTAMP},

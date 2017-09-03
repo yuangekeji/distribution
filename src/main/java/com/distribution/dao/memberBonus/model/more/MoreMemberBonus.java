@@ -17,6 +17,24 @@ public class MoreMemberBonus extends MemberBonus {
     private Double bonusGradedAmout;
     private Double bonusWorkroomAmout;
     private Double bonusWorkcenterAmout;
+    private String orderStartDate;
+    private String orderEndDate;
+
+    public String getOrderStartDate() {
+        return orderStartDate;
+    }
+
+    public void setOrderStartDate(String orderStartDate) {
+        this.orderStartDate = orderStartDate;
+    }
+
+    public String getOrderEndDate() {
+        return orderEndDate;
+    }
+
+    public void setOrderEndDate(String orderEndDate) {
+        this.orderEndDate = orderEndDate;
+    }
 
     public Double getBonusFirstAgentAmout() {
         return bonusFirstAgentAmout;

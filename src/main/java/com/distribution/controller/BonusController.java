@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -29,7 +30,7 @@ public class BonusController extends BasicController {
     /**
      * 查詢奖金明细列表
      */
-     @RequestMapping("/list")
+     @RequestMapping(value = "/list", method = RequestMethod.POST)
      @ResponseBody
      public JsonMessage selectMemberBonusList(@RequestBody Page page, HttpSession session){
          Member m = (Member) getCurrentUser(session);
@@ -37,4 +38,13 @@ public class BonusController extends BasicController {
          page = bonusService.selectMemberBonusList(page);
          return successMsg(page);
      }
+    /**
+     * 查詢获奖明细
+     */
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonMessage selectMemberBonusDetail(@RequestBody Page page){
+        page = bonusService.selectMemberBonusDetail(page);
+        return successMsg(page);
+    }
 }

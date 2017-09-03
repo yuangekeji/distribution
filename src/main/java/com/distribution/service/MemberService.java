@@ -5,14 +5,18 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountManager.mapper.AccountManagerMapper;
+import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.mapper.more.MoreAdminMapper;
 import com.distribution.dao.admin.model.Admin;
+import com.distribution.dao.apply.mapper.OperationApplyMapper;
+import com.distribution.dao.apply.model.OperationApply;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.memberNode.model.MemberNode;
+import com.distribution.dao.order.mapper.more.MoreOrderMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +37,12 @@ public class MemberService {
     private MoreAdminMapper moreAdminMapper;
     @Autowired
     private AccountManagerMapper accountManagerMapper;
+    @Autowired
+    private MoreAccountManagerMapper moreAccountManagerMapper;
+    @Autowired
+    private MoreOrderMapper moreOrderMapper;
+    @Autowired
+    private OperationApplyMapper operationApplyMapper;
     @Autowired
     private NodeService nodeService;
 
@@ -195,7 +205,26 @@ public class MemberService {
      * description 获取会员详细信息
      * @author Bright
      * */
-    public Member getMemberInfo(Integer id){
-        return memberMapper.selectByPrimaryKey(id);
+    public MoreMember getMemberInfo(Integer id){
+        MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
+        Member member = memberMapper.selectByPrimaryKey(id);
+        BeanUtils.copyProperties(member,moreMember);
+        Double orderTotalAmount = moreOrderMapper.countOrderAmcountByMemberId(id);
+        moreMember.setOrderTotalAmount(new BigDecimal(orderTotalAmount));
+        return moreMember;
+    }
+
+    /**
+     * description 申请成为运营中心
+     * @author Bright
+     * */
+    public Integer apply(OperationApply operationApply,Member member){
+        operationApply.setMemberId(member.getId());
+        operationApply.setStatus("wait");
+        operationApply.setCreateId(member.getId());
+        operationApply.setCreateTime(new Date());
+        operationApply.setUpdateId(member.getId());
+        operationApply.setUpdateTime(new Date());
+        return operationApplyMapper.insert(operationApply);
     }
 }

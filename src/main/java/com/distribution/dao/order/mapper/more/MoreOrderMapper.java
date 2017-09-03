@@ -30,4 +30,10 @@ public interface MoreOrderMapper{
      * @author WYN
      * */
     int insertOrderDetail(Order order);
+
+    /**
+     * description 查询订单总金额
+     * @author Bright
+     * */
+    Double countOrderAmcountByMemberId(Integer memberId);
 }

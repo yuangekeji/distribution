@@ -109,7 +109,7 @@
   <update id="updateMemberMoneyStatusY" parameterType="java.lang.Integer">
        update member
        set   money_status = 'Y'
-       where member_id = #{memberId}
+       where id = #{memberId}
   </update>
 
 </mapper>

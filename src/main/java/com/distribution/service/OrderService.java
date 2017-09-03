@@ -55,48 +55,50 @@ public class OrderService {
         int cnt1 = 0;
         int cnt2 = 0;
         int cnt3 = 0;
-        int cnt4 = 0;
         int cnt5 = 0;
 
         //BigInteger orderNo = this.getOrderNo();
-
         Long orderNo = this.getOrderNo();
-
         moreOrderMaster.setOrderNo(orderNo);
-
         //order_master insert
         int orderId = moreOrderMasterMapper.insertOrder(moreOrderMaster);
-
-        if(orderId > 0){
-            //order_detail_insert
-            cnt1 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
+        if(orderId == 0){
+            throw new RuntimeException();
         }
+            //order_detail_inser
+        moreOrderMaster.setGoodsCd(1);
+        cnt1 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
+        if(cnt1 == 0){
+           throw new RuntimeException();
+         }
 
         //扣款登记 account_manager
-        if(cnt1 > 0){
+
             AccountManager accountManager = new AccountManager();
 
             accountManager.setMemberId(moreOrderMaster.getMemberId());
-            accountManager.setSeedAmt(moreOrderMaster.getSeedAmt());
-            accountManager.setBonusAmt(moreOrderMaster.getBonusAmt());
+            accountManager.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
+            accountManager.setBonusAmt(moreOrderMaster.getBonusAmt() ==null ? new BigDecimal(0):moreOrderMaster.getBonusAmt());
             accountManager.setCreateId(moreOrderMaster.getCreateId());
             accountManager.setCreateTime(new Date());
             accountManager.setUpdateId(moreOrderMaster.getCreateId());
             accountManager.setUpdateTime(new Date());
 
             cnt2 = moreAccountManagerMapper.updateAccountManager(accountManager);
-        }
+           if(cnt2 == 0){
+              throw new RuntimeException();
+           }
 
         //账户流水登记account_flow_history
-        if(cnt2 > 0){
+
             AccountFlowHistory accountFlowHistory = new AccountFlowHistory();
 
             accountFlowHistory.setMemberId(moreOrderMaster.getMemberId());
-            accountFlowHistory.setSeedAmt(moreOrderMaster.getSeedAmt());
+            accountFlowHistory.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
             accountFlowHistory.setBonusAmt(moreOrderMaster.getBonusAmt());
             accountFlowHistory.setCreateId(moreOrderMaster.getCreateId());
             accountFlowHistory.setCreateTime(new Date());
-            accountFlowHistory.setTotalAmt(moreOrderMaster.getSeedAmt().add(moreOrderMaster.getBonusAmt()));
+            accountFlowHistory.setTotalAmt(accountFlowHistory.getSeedAmt().add(moreOrderMaster.getBonusAmt()));
             accountFlowHistory.setType("1");
             if("1".equals(moreOrderMaster.getOrderCategory())){
                 accountFlowHistory.setFlowType(Constant.MEMBERORDER);
@@ -107,10 +109,13 @@ public class OrderService {
             }
 
             cnt3 = accountFlowHistoryMapper.insert(accountFlowHistory);
-        }
+
+            if(cnt3 == 0){
+                throw new RuntimeException();
+            }
 
         //报单，复投分红包处理
-        if(cnt3 > 0 && ("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory()))){
+        if("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory())){
             Dividend dividend = new Dividend();
             dividend.setOrderId(orderId);
             dividend.setOrderNo(orderNo);
@@ -136,25 +141,22 @@ public class OrderService {
             dividend.setUpdateId(moreOrderMaster.getCreateId());
             dividend.setUpdateTime(new Date());
 
-            cnt4 = dividendMapper.insert(dividend);
-        }else{
-            cnt4 = 1;
+           int  cnt4 = dividendMapper.insert(dividend);
+           if(cnt4 == 0){
+                throw new RuntimeException();
+            }
+
         }
 
         //报单，复投做奖金处理
-        if(cnt4 > 0 && ("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory()))){
-            cnt5 = 0; //todo 奖金接口调用 order
-        }else{
-            cnt5 = 1;
+        if("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory())){
+            cnt5 = 1; //todo 奖金接口调用 order
+            if(cnt5 ==0){
+                throw new RuntimeException();
+            }
         }
 
-        if(cnt1 > 0 && cnt2 > 0 && cnt3 > 0 && cnt4 >0 && cnt5 >0){
-            return "success";
-        }else{
-            throw new RuntimeException();
-        }
-
-
+        return "success";
     }
 
     /**

@@ -50,10 +50,12 @@ angular.module('account').controller('accountListCtrl',
         $scope.getAccount();
 
         $scope.reOrder={
-            reOrderCnt: 0,
-            seedAmtMinus:0.00,
-            bonusAmtMinus:0.00,
-            totalAmtMinus:$scope.reOrder.reOrderCnt * 600
+            orderQty: 0,
+            price:600,
+            seedAmt:0.00,
+            bonusAmt:0.00,
+            orderAmt:$scope.reOrder.orderQty * $scope.reOrder.price,
+            payPassword:''
         }
     }
     $scope.onInit();
@@ -186,23 +188,29 @@ angular.module('account').controller('accountListCtrl',
 
      $scope.reOrdervalidateConditionArray = {
             transferAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.reOrderCnt) ||
-                    $scope.reOrder.reOrderCnt <= 0) {
-                    $scope.reOrdervalidateErrors.reOrderCntError = true;
+                if (angular.isUndefined($scope.reOrder.orderQty) ||
+                    $scope.reOrder.orderQty <= 0) {
+                    $scope.reOrdervalidateErrors.orderQtyError = true;
                 }
             },
-            receivePhoneError: function () {
-                if (angular.isUndefined($scope.reOrder.seedAmtMinus) ||
-                    $scope.reOrder.seedAmtMinus.length < 1) {
-                    $scope.reOrdervalidateErrors.seedAmtMinusError = true;
+         seedAmtError: function () {
+                if (angular.isUndefined($scope.reOrder.seedAmt) ||
+                    $scope.reOrder.seedAmt <= 0) {
+                    $scope.reOrdervalidateErrors.seedAmtError = true;
                 }
             },
-            payPasswordError: function () {
-                if (angular.isUndefined($scope.reOrder.bonusAmtMinus) ||
-                    $scope.reOrder.bonusAmtMinus.length <= 0) {
-                    $scope.reOrdervalidateErrors.bonusAmtMinusError = true;
+         bonusAmtError: function () {
+                if (angular.isUndefined($scope.reOrder.bonusAmt) ||
+                    $scope.reOrder.bonusAmt <= 0) {
+                    $scope.reOrdervalidateErrors.bonusAmtError = true;
                 }
-            }
+            },
+         payPasswordError: function () {
+             if (angular.isUndefined($scope.reOrder.payPassword) ||
+                 $scope.reOrder.payPassword.length <= 0) {
+                 $scope.reOrdervalidateErrors.payPasswordError = true;
+             }
+         }
 
         }
 
@@ -214,10 +222,44 @@ angular.module('account').controller('accountListCtrl',
              return false;
          }
 
-         if($scope.reOrder.totalAmtMinus != ( $scope.reOrder.seedAmtMinus +$scope.reOrder.bonusAmtMinus)  ){
+         if($scope.reOrder.orderAmt != ( $scope.reOrder.seedAmt +$scope.reOrder.bonusAmt)  ){
              ConfirmModal.show({text: '请确认输入的金额和复投单金额是否匹配', isCancel:false });
              return false;
          }
+
+         $scope.startLoading();
+
+         $http.post(ctx + '/order/reOrder',
+             {
+                 orderQty:$scope.reOrder.orderQty,
+                 orderAmt:$scope.reOrder.orderAmt,
+                 seedAmt:$scope.reOrder.seedAmt,
+                 bonusAmt:$scope.reOrder.bonusAmt
+             }).success(function (resp) {
+
+             $scope.stopLoading();
+             //处理完成后重新获取账户信息
+             $scope.onInit();
+             if(resp.successful) {
+                 $scope.msg = "";
+                 if (resp.data.result == 'success') {
+                     $scope.msg = "复投成功，已生成分红包。";
+
+                 } else if (resp.data.result == 'pwdWrong') {
+                     $scope.msg = "支付密码错误";
+                 } else if (resp.data.result == 'fail') {
+                     $scope.msg = "复投失败，请重新尝试";
+                 }
+                 ConfirmModal.show({text: $scope.msg, isCancel: false});
+
+             }else{
+                 console.error("复投失败，请稍后再试");
+                 //失败后停止loading，刷新页面
+                 $scope.stopLoading();
+                 $window.location.reload();
+             }
+
+         });
 
      }
 

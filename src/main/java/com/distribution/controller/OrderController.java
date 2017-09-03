@@ -39,7 +39,7 @@ public class OrderController extends BasicController{
     }
 
     /**
-     * description 订单列表查询
+     * description 创建订单
      * @author WYN
      * */
     @RequestMapping("/insertOrder")
@@ -69,4 +69,16 @@ public class OrderController extends BasicController{
         return successMsg("result",result);
     }
 
+    @RequestMapping("/reOrder")
+    @ResponseBody
+    public JsonMessage reOrder(@RequestBody MoreOrderMaster moreOrderMaster, HttpSession session, HttpServletRequest request) {
+        Member currentUser = null;
+        if (getCurrentUser(session) instanceof Member) {
+            currentUser = (Member) getCurrentUser(session);
+        }
+
+//        String result = orderService.insertOrder(moreOrderMaster);
+        return successMsg("result",null);
+
+    }
 }

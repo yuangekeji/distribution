@@ -59,17 +59,17 @@
                                id="sample_1">
                             <thead>
                             <tr >
-                                <th align="center">订单号</th>
-                                <th align="center">总金额</th>
-                                <th align="center">订单来源</th>
-                                <th align="center">折扣</th>
-                                <th align="center">实付金额</th>
-                                <th align="center">快递费</th>
-                                <th align="center">商品名信息</th>
-                                <th align="center">订单时间</th>
-                                <th align="center">订单状态</th>
-                                <th align="center">物流信息</th>
-                                <th align="center">操作</th>
+                                <th align="center" width="15%">订单号</th>
+                                <th align="center" width="6%">总金额</th>
+                                <th align="center" width="6%">订单来源</th>
+                                <th align="center" width="6%">折扣</th>
+                                <th align="center" width="6%">实付金额</th>
+                                <th align="center" width="6%">快递费</th>
+                                <th align="center" width="15%">商品名信息</th>
+                                <th align="center" width="10%">订单时间</th>
+                                <th align="center" width="6%">订单状态</th>
+                                <th align="center" width="18%">物流信息</th>
+                                <th align="center" width="6%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -84,7 +84,7 @@
                                     <td align="center">{{orderMaster.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
                                     <td align="center">{{orderMaster.orderStatues|OrderStatuesFilter}}</td>
                                     <td align="left">{{orderMaster.expressAddress}}</td>
-                                    <td align="center"><a href="javascript:;">确认收货</a></td>
+                                    <td align="center"><a href="javascript:" ng-click="updateOrderStatus()">确认收货</a></td>
                                 </tr>
                                 <tr ng-show= "notData" >
                                     <td colspan="11">无记录</td>

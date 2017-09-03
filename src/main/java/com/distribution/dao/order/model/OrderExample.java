@@ -106,6 +106,66 @@ public class OrderExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
         public Criteria andOrderNoIsNull() {
             addCriterion("order_no is null");
             return (Criteria) this;
@@ -116,52 +176,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoEqualTo(Integer value) {
+        public Criteria andOrderNoEqualTo(Long value) {
             addCriterion("order_no =", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoNotEqualTo(Integer value) {
+        public Criteria andOrderNoNotEqualTo(Long value) {
             addCriterion("order_no <>", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoGreaterThan(Integer value) {
+        public Criteria andOrderNoGreaterThan(Long value) {
             addCriterion("order_no >", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoGreaterThanOrEqualTo(Integer value) {
+        public Criteria andOrderNoGreaterThanOrEqualTo(Long value) {
             addCriterion("order_no >=", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoLessThan(Integer value) {
+        public Criteria andOrderNoLessThan(Long value) {
             addCriterion("order_no <", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoLessThanOrEqualTo(Integer value) {
+        public Criteria andOrderNoLessThanOrEqualTo(Long value) {
             addCriterion("order_no <=", value, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoIn(List<Integer> values) {
+        public Criteria andOrderNoIn(List<Long> values) {
             addCriterion("order_no in", values, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoNotIn(List<Integer> values) {
+        public Criteria andOrderNoNotIn(List<Long> values) {
             addCriterion("order_no not in", values, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoBetween(Integer value1, Integer value2) {
+        public Criteria andOrderNoBetween(Long value1, Long value2) {
             addCriterion("order_no between", value1, value2, "orderNo");
             return (Criteria) this;
         }
 
-        public Criteria andOrderNoNotBetween(Integer value1, Integer value2) {
+        public Criteria andOrderNoNotBetween(Long value1, Long value2) {
             addCriterion("order_no not between", value1, value2, "orderNo");
             return (Criteria) this;
         }

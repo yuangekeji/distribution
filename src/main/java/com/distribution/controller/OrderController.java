@@ -4,15 +4,15 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.member.model.Member;
-import com.distribution.dao.order.model.Order;
+import com.distribution.dao.order.model.more.MoreOrder;
 import com.distribution.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -41,10 +41,15 @@ public class OrderController extends BasicController{
      * description 订单列表查询
      * @author WYN
      * */
-    @RequestMapping(value = "/insertOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertOrder")
     @ResponseBody
-    public JsonMessage insertOrder(Order order, HttpSession session){
-        String result = orderService.insertOrder(order);
+    public JsonMessage insertOrder(@RequestBody MoreOrder moreOrder, HttpSession session, HttpServletRequest request){
+        Member currentUser = null;
+        if(getCurrentUser(session) instanceof Member) {
+            currentUser = (Member) getCurrentUser(session);
+        }
+
+        String result = orderService.insertOrder(moreOrder,currentUser);
         return successMsg("result",result);
     }
 

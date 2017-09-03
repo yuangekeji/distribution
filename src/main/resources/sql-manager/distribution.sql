@@ -374,7 +374,8 @@ INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.admAccount');
 -- ----------------------------
 DROP TABLE IF EXISTS `order_master`;
 CREATE TABLE `order_master` (
-  `order_no` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单号',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_no` BIGINT(20) NOT NULL COMMENT '订单号',
   `order_category` char(1) DEFAULT NULL COMMENT '订单分类',
   `order_amt` decimal(15,2) DEFAULT NULL COMMENT '订单金额',
   `order_qty` int(11) DEFAULT NULL COMMENT '订购数量',
@@ -402,7 +403,8 @@ CREATE TABLE `order_master` (
 -- ----------------------------
 DROP TABLE IF EXISTS `order_detail`;
 CREATE TABLE `order_detail` (
-  `id` int(11) NOT NULL COMMENT '订单号',
+  `id` int(11) NOT NULL AUTO_INCREMENT
+  `order_no` BIGINT(20) NOT NULL COMMENT '订单号',
   `goods_cd` varchar(50) NOT NULL COMMENT '商品编号',
   `order_amt` decimal(15,2) NOT NULL COMMENT '订单金额',
   `order_qty` int(11) NOT NULL COMMENT '订购数量',

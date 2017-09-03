@@ -4,10 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.distribution.common.utils.Page;
-import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.model.Member;
 
-public interface MoreMemberMapper extends MemberMapper{
+public interface MoreMemberMapper {
     /**
      * description 登录
      * @author Bright
@@ -37,4 +36,9 @@ public interface MoreMemberMapper extends MemberMapper{
     Integer findMatchMemberQueryPwd(Map param);
 
     int updateMemberMoneyStatusY(Integer memberId);
+    /**
+     * description 插入返回id
+     * @author Bright
+     * */
+    int insert(Member member);
 }

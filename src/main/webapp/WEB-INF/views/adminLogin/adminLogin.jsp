@@ -159,7 +159,7 @@
 <div class="content"  style="border-radius: 10px !important;padding: 10px 30px !important;" >
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" method="post">
-        <h4 class="form-title text-center" style="color: #01407d">欢迎登录</h4>
+        <h4 class="form-title text-center" style="color: #01407d">欢迎登录11</h4>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> 请输入用户名和密码 </span>

@@ -53,8 +53,18 @@
 		LEFT JOIN member lt on lt.node_id = tep.left_id
 		LEFT JOIN member rt on rt.node_id = tep.right_id
   </select>
+  <select id="listParentIsManageLevelNodes" resultType="map" parameterType="map">
+  		select max(id) as memberId,member_level as memberLevel
+		from 
+		(select m.id,m.member_level
+		from member m
+		where FIND_IN_SET(node_id,getParentList(#{nodeId}))
+		order by node_id desc)tem
+		group by member_level
+  </select>
   <update id="updateParentLevel" parameterType="map">
   		update member set member_level = #{toLevel}
 		where FIND_IN_SET(node_id,getParentList(#{nodeId})) and member_level = #{fromLevel}
   </update>
+  
 </mapper>

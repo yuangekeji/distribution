@@ -6,6 +6,9 @@ package com.distribution.service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +18,13 @@ import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
+import com.distribution.dao.basicManage.mapper.BasicManageMapper;
+import com.distribution.dao.basicManage.model.BasicManage;
+import com.distribution.dao.basicManage.model.BasicManageExample;
+import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
+import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.order.model.Order;
 
 @Service
@@ -24,8 +32,14 @@ public class BonusService {
 	
 	@Autowired
 	private MoreMemberBonusMapper moreMemberBonusMapper;
+	@Autowired
 	private MoreAccountManagerMapper moreAccountManagerMapper;
+	@Autowired
 	private AccountFlowHistoryMapper accountFlowHistoryMapper;
+	@Autowired
+	private MoreMemberNodeMapper moreNodeMapper;
+	@Autowired
+	private BasicManageMapper basicManageMapper;
 	
 	/**
 	 * 奖金处理总入口方法
@@ -50,7 +64,65 @@ public class BonusService {
 	  //生成分红包记录
 
 	}
-	
+	/**
+	 * 计算级差奖
+	 * @param nodeId
+	 * @param orderAmount
+	 * @param orderId
+	 * @param createId
+	 */
+	public void calculateMemberLevelBonus(int nodeId,double orderAmount,int orderId,int createId){
+		//查找当前节点的所有父节点非普通会员信息，从小到大升序排列；
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("nodeId", String.valueOf(nodeId));
+		param.put("memberLevel", BonusConstant.POST_LEVEL1);
+        List<Map<String,String>> list = moreNodeMapper.listParentIsManageLevelNodes(param);
+        for(Map<String,String> m : list){
+        	int memberId = Integer.parseInt(m.get("memberId"));
+        	String memberLevel = m.get("memberLevel");
+            if(memberLevel.equals(BonusConstant.POST_LEVEL2)){
+            	//计算主任奖金
+            	buidBonus(BonusConstant.D05,BonusConstant.CODE_01,orderAmount,BonusConstant.BONUS_TYPE_5,memberId,orderId,createId);
+            }else if(memberLevel.equals(BonusConstant.POST_LEVEL3)){
+            	//计算经理奖金
+            	buidBonus(BonusConstant.D05,BonusConstant.CODE_02,orderAmount,BonusConstant.BONUS_TYPE_5,memberId,orderId,createId);
+            }else if(memberLevel.equals(BonusConstant.POST_LEVEL4)){
+            	//计算总监奖金
+            	buidBonus(BonusConstant.D05,BonusConstant.CODE_03,orderAmount,BonusConstant.BONUS_TYPE_5,memberId,orderId,createId);
+            }else if(memberLevel.equals(BonusConstant.POST_LEVEL5)){
+            	//计算董事奖金
+            	buidBonus(BonusConstant.D05,BonusConstant.CODE_04,orderAmount,BonusConstant.BONUS_TYPE_5,memberId,orderId,createId);
+            }
+       }
+	}
+	/**
+	 * 构建奖金对象并保存
+	 * @param bonusType
+	 * @param memberId
+	 * @param orderId
+	 * @return
+	 */
+	private MemberBonus buidBonus(String typeCode,String detailCode,double orderAmount,String bonusType,int memberId,int orderId,int createId){
+		//奖金比例
+		double bonusPercent = getMaxPercent(typeCode,detailCode);
+		double bonusAmt =  multiply(orderAmount,bonusPercent);
+		//管理费
+		double managePercent = getMaxPercent(BonusConstant.D07,BonusConstant.CODE_00);
+		double manageFee = multiply(bonusAmt,managePercent);
+		MemberBonus bonus = new MemberBonus();
+		bonus.setActualAmout(bonusAmt-manageFee);
+		bonus.setAmout(bonusAmt);
+		bonus.setBonusDate(new Date());
+		bonus.setBonusType(bonusType);
+		bonus.setCreateBy(createId);
+		bonus.setCreateDate(new Date());
+		bonus.setManageFee(manageFee);
+		bonus.setMemberId(memberId);
+		bonus.setOrderId(orderId);
+		//保存奖金
+    	saveBonus(bonus);
+		return bonus;
+	}
 	//保存奖金，更新账户余额，记录账号流水。
 	public void saveBonus(MemberBonus bonus){
 		
@@ -100,6 +172,20 @@ public class BonusService {
 		BigDecimal result = a1.multiply(b1);
 		return result.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
+	//
+	private double getMaxPercent(String typeCode,String detailCode){
+		BigDecimal big = null;
+		BasicManageExample example = new BasicManageExample();
+		List<BasicManage> list = basicManageMapper.selectByExample(example);
+		for(BasicManage basic : list){
+			if(basic.getTypeCode().equals(typeCode) && basic.getDetailCode().equals(detailCode)){
+				big = basic.getMaxPercent();
+				break;
+			}
+		}
+		return big.doubleValue()/100;
+	}
+	
 	/*public static void main(String[] arg){
 		double v1 = 1.96;
 		double v2 = bonus_percent;

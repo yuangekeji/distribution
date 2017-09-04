@@ -17,6 +17,8 @@ import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.MemberNode;
+import com.distribution.dao.memberNode.model.more.CustomNode;
+import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 
 @Service
 public class NodeService {
@@ -176,4 +178,63 @@ public class NodeService {
 		}
 		return result;
 	}
+	/**
+	 * 
+	 * 通过某一节点查询下属所有节点
+	 * 并构建成二叉树结构
+	 * 数据中，节点的id必须是自增长的
+	 * 查询结果必须从小到大排列
+	 * @date 2017年9月4日 下午8:59:32
+	 * @param nodeId
+	 * @return
+	 */
+	public CustomNode buildNodeTreeByNode(int nodeId){
+		//构建根节点
+		CustomNode root = new CustomNode(nodeId);
+		//查询结果中的节点ID从小到大排列，不能人为调整节点主键值。
+		List<MoreMemberNode> list = moreNodeMapper.listSubNodes(nodeId);
+		root = convertBiTree(root,list);
+		return root;
+	}
+	/**
+	 * 从数据表中查询数据构建二叉树对象
+	 * 默认参数root,需要设置节点值
+	 * @date 2017年9月4日 下午7:13:16
+	 * @param root
+	 * @return
+	 */
+	public CustomNode convertBiTree(CustomNode root,List<MoreMemberNode> list) {
+		//用来存放所有节点对象
+		Map<Integer,CustomNode> map = new HashMap<Integer,CustomNode>();
+		map.put(root.getNodeId(), root);
+		//定义变量
+		CustomNode currentNode = null;
+		//循环构建二叉树对象
+		for(MoreMemberNode m : list){
+			//取得缓存的节点对象
+			currentNode = map.get(m.getId());
+			if(null != currentNode){
+				//设置树节点对象属性
+				currentNode.setNodeName(m.getMemberName());
+				currentNode.setOrderAmount(m.getOrderAmount());
+				currentNode.setMobile(m.getMemberPhone());
+				currentNode.setCreateTime(m.getCreateTime());
+				if(null != m.getLeftId()){
+					CustomNode left = new CustomNode(m.getLeftId());
+					currentNode.setLeft(left);
+					//计入缓存
+					map.put(m.getLeftId(), left);
+				}
+				if(null != m.getRightId()){
+					CustomNode right = new CustomNode(m.getRightId());
+					currentNode.setRight(right);
+					//计入缓存
+					map.put(m.getRightId(), right);
+				}
+			}else{
+				//输出日志当前节点为无效节点
+			}
+		}
+        return root;
+    }
 }

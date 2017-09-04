@@ -69,8 +69,8 @@ angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope
      * @param memberId
      * @param orderId
      */
-    $scope.searchDividendDetails = function (memberId, orderId, orderNo) {
-        $state.go('app.dividend-detail', {memberId: memberId, orderId: orderId, orderNo: orderNo});
+    $scope.searchDividendDetails = function (memberId, orderNo) {
+        $state.go('app.dividend-detail', {memberId: memberId, orderNo: orderNo});
     }
 
 });

@@ -77,7 +77,7 @@ angular.module('app').config([
                 controller: 'dividendCtrl'
             })
             .state('app.dividend-detail',{
-                url: '/dividend-detail/:memberId/:orderId/:orderNo',
+                url: '/dividend-detail/:memberId/:orderNo',
                 templateUrl: helper.basepath('dividend/html/detail.html'),
                 resolve: helper.resolveFor('dividend.detail'),
                 controller: 'dividendDetailCtrl'
@@ -119,7 +119,7 @@ angular.module('app').config([
                 controller: 'admDividendCtrl'
             })
             .state('app.admDividend-detail',{
-                url: '/admDividend-detail/:memberId/:orderId/:orderNo',
+                url: '/admDividend-detail/:memberId/:orderNo',
                 templateUrl: helper.basepath('admDividend/html/detail.html'),
                 resolve: helper.resolveFor('admDividend.detail'),
                 controller: 'admDividendDetailCtrl'

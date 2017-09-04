@@ -33,8 +33,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-if= "myPage.result.length >0" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
-                                total-items="myPage.result.totalCount">
+                            <tr ng-if= "myPage.result.length >0" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
+                                total-items="myPage.totalCount">
                                 <td>{{row.bonusDate  | date:'yyyy-MM-dd'}}</td>
                                 <td class="text-right">{{row.amout | number:2}}</td>
                                 <td class="text-right">{{row.actualAmout | number:2}}</td>
@@ -42,7 +42,7 @@
                                 <td class="text-center"><span class="label label-sm label-success">已领取</span></td>
                             </tr>
                             <tr ng-if= "!myPage.result.length" >
-                                <td colspan="6">无记录</td>
+                                <td colspan="5" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>

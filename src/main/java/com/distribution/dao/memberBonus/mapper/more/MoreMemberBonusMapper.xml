@@ -56,7 +56,7 @@
   <sql id="where">
     <where>
         AND member_id = #{parameterMap.memberId}
-        AND order_id = #{parameterMap.orderId}
+        AND order_no = #{parameterMap.orderNo}
         AND bonus_type = '3'
     </where>
   </sql>

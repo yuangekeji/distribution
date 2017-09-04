@@ -102,7 +102,7 @@
         express_address, member_level, order_statues,
         create_id, create_time, update_id,
         update_time)
-        values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
+        values (#{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
         #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{actAmt,jdbcType=DECIMAL},
         #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR},
         #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},
@@ -111,7 +111,7 @@
     </insert>
 
     <insert id="insertOrderDetail" parameterType="com.distribution.dao.order.model.more.MoreOrderMaster" >
-        insert into order_detail (id, goods_cd, order_amt,
+        insert into order_detail (order_no, goods_cd, order_amt,
         order_qty, create_id, create_time,
         update_id, update_time)
         values (#{orderNo,jdbcType=INTEGER}, #{goodsCd,jdbcType=VARCHAR}, #{orderAmt,jdbcType=DECIMAL},

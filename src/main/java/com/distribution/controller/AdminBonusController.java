@@ -32,8 +32,8 @@ public class AdminBonusController extends BasicController {
      */
      @RequestMapping(value = "/list", method = RequestMethod.POST)
      @ResponseBody
-     public JsonMessage selectAdminMemberBonusList(@RequestBody Page page){
-         page = bonusService.selectAdminMemberBonusList(page);
+     public JsonMessage selectMemberBonusList(@RequestBody Page page){
+         page = bonusService.selectMemberBonusList(page);
          return successMsg(page);
      }
     /**

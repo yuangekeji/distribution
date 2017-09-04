@@ -46,6 +46,8 @@ public class MemberService {
     private OperationApplyMapper operationApplyMapper;
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private OrderService orderService;
 
     /**
      * description 会员列表查询
@@ -124,7 +126,7 @@ public class MemberService {
                         }
                         if (null == member.getRecommendId())
                             member.setRecommendId(currentUser.getId());
-                        memberMapper.insert(member);
+                        moreMemberMapper.insert(member);
 
                         //创建账户信息
                         AccountManager accountManager = new AccountManager();
@@ -190,6 +192,7 @@ public class MemberService {
         //给推荐人的一代个数中 +1
         Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
         m.setFirstAgentCnt(null!=member.getFirstAgentCnt()?(member.getFirstAgentCnt()+1):1);
+        memberMapper.updateByPrimaryKeySelective(m);
 
         MoreOrderMaster order = new MoreOrderMaster();
         order.setOrderCategory("1");
@@ -208,6 +211,7 @@ public class MemberService {
         order.setUpdateId(member.getId());
         order.setUpdateTime(new Date());
         order.setBonusAmt(member.getOrderAmount());
+        orderService.insertOrder(order);
 
         return it;
     }
@@ -225,7 +229,7 @@ public class MemberService {
      * description 获取会员详细信息
      * @author Bright
      * */
-    public MoreMember getMemberInfo(Integer id){
+    public MoreMember selectMemberInfo(Integer id){
         MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
         Member member = memberMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(member,moreMember);
@@ -246,5 +250,13 @@ public class MemberService {
         operationApply.setUpdateId(member.getId());
         operationApply.setUpdateTime(new Date());
         return operationApplyMapper.insert(operationApply);
+    }
+
+    /**
+     * description 查询到账多少金币
+     * @author Bright
+     * */
+    public MoreMember findAccountManageByMemberId(Integer memberId){
+        return moreAccountManagerMapper.getSeedsAndBondsByMemberId(memberId);
     }
 }

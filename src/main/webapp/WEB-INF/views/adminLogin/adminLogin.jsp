@@ -58,10 +58,40 @@
             background-position: center top ;
         }
         .content{
-            margin-top: 200px !important;
+            margin-top: 240px !important;
+            width: 280px !important;
         }
     }
 
+    /* Custom, iPhone Retina */
+    @media only screen and (min-width : 370px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
+            background-size: 100% ;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 280px !important;
+            width: 330px !important;
+        }
+    }
+
+    /* Custom, iPhone Retina */
+    @media only screen and (min-width : 400px) {
+        .login {
+            background-color:#01407d !important;
+            background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-m.jpg');
+            background-size: 100% ;
+            background-repeat: no-repeat;
+            background-position: center top ;
+        }
+        .content{
+            margin-top: 320px !important;
+            width: 360px !important;
+        }
+    }
     /* Extra Small Devices, Phones */
     @media only screen and (min-width : 480px) {
         .login {
@@ -72,7 +102,8 @@
             background-position: center top ;
         }
         .content{
-            margin-top: 300px !important;
+            margin-top: 450px !important;
+            width: 400px !important;
         }
     }
 
@@ -86,7 +117,8 @@
             background-position: center top ;
         }
         .content{
-            margin-top:400px !important;
+            margin-top:550px !important;
+            width: 400px !important;
         }
     }
 
@@ -100,7 +132,8 @@
             background-position: center top ;
         }
         .content{
-            margin-top: 350px !important;
+            margin-top: 250px !important;
+            width: 320px !important;
         }
     }
 
@@ -109,12 +142,13 @@
         .login {
             background-color:#01407d !important;
             background-image:url('${ctx}/static/metronic/layouts/layout2/img/bg-pc.jpg');
-            background-size: 800px 600px;
+            background-size: 1000px 800px;
             background-repeat: no-repeat;
             background-position: center top ;
         }
         .content{
-            margin-top: 350px !important;
+            margin-top: 250px !important;
+            width: 320px !important;
         }
     }
 
@@ -122,10 +156,10 @@
 
 <body class="login" >
 <!-- BEGIN LOGIN -->
-<div class="content"  >
+<div class="content"  style="border-radius: 10px !important;padding: 10px 30px !important;" >
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" method="post">
-        <h3 class="form-title font-green">会员登录</h3>
+        <h4 class="form-title text-center" style="color: #01407d">欢迎登录</h4>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span> 请输入用户名和密码 </span>
@@ -137,13 +171,14 @@
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">密码</label>
             <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="请输入密码" name="password" id="passwd"/> </div>
-        <div class="form-actions">
-            <input type="button" class="btn green uppercase" onclick="login();" value="登录"/>
+        <div class="form-actions" style="border-bottom:none !important;padding: 10px 30px !important;">
+            <input type="button" class="btn uppercase" onclick="login();"
+                   style="background-color: #01407d;color: white;border-radius: 5px !important;" value="登录"/>
             <label class="rememberme check mt-checkbox mt-checkbox-outline">
                 <input type="checkbox" name="remember" value="1" />管理员登录
                 <span></span>
             </label>
-            <a href="javascript:;" id="forget-password" class="forget-password">忘记密码?</a>
+            <%--<a href="javascript:;" id="forget-password" class="forget-password">忘记密码?</a>--%>
         </div>
 
     </form>

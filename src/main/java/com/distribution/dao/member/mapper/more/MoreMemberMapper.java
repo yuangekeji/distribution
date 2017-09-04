@@ -34,4 +34,11 @@ public interface MoreMemberMapper {
      * @return
      */
     Integer findMatchMemberQueryPwd(Map param);
+
+    int updateMemberMoneyStatusY(Integer memberId);
+    /**
+     * description 插入返回id
+     * @author Bright
+     * */
+    int insert(Member member);
 }

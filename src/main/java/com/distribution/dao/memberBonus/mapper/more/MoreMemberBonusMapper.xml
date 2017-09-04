@@ -56,7 +56,7 @@
   <sql id="where">
     <where>
         AND member_id = #{parameterMap.memberId}
-        AND order_id = #{parameterMap.orderId}
+        AND order_no = #{parameterMap.orderNo}
         AND bonus_type = '3'
     </where>
   </sql>
@@ -84,19 +84,20 @@
   </select>
   <sql id="whereMemberBonusList">
     <where>
+          and mb.order_no = om.order_no
       <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-         and member_id = #{parameterMap.memberId}
+          and mb.member_id = #{parameterMap.memberId}
       </if>
       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-          and order_no = #{parameterMap.orderNo}
+          and mb.order_no = #{parameterMap.orderNo}
       </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
-          and DATE_FORMAT(order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')
+          and DATE_FORMAT(mb.order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')
       </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
-          and DATE_FORMAT(order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
+          and DATE_FORMAT(mb.order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
       </if>
-          and bonus_type not in ('6')
+          and mb.bonus_type not in ('6')
     </where>
   </sql>
   <select id="selectMemberBonusList" resultMap="MemberBonusListResultMap" parameterType="com.distribution.common.utils.Page" >
@@ -120,35 +121,36 @@
       mb.actual_amout_total
       from (
         select
-          member_id,
-          order_id,
-          order_no,
-          order_date order_date,
-          sum(amout) as amout_total,
-          sum(manage_fee) as manage_fee_total,
-          sum(actual_amout) as actual_amout_total
-        from member_bonus
+          om.member_id,
+          mb.order_id,
+          mb.order_no,
+          mb.order_date order_date,
+          sum(mb.amout) AS amout_total,
+          sum(mb.manage_fee) AS manage_fee_total,
+          sum(mb.actual_amout) AS actual_amout_total
+        from
+        member_bonus mb, order_master om
         <include refid="whereMemberBonusList"/>
-        group by member_id, order_id, order_no,order_date
+        group by order_no
       <if test="parameterMap.chinaPresidentBonusYN==1">
       union all
-        select
-          member_id,
-          order_id,
-          order_no,
-          null order_date,
-          amout as amout_total,
-          manage_fee as manage_fee_total,
-          actual_amout as actual_amout_total
-          from member_bonus
-          where   bonus_type = '6'
+      select
+        member_id member_id,
+        order_id,
+        order_no,
+        NULL order_date,
+        amout AS amout_total,
+        manage_fee AS manage_fee_total,
+        actual_amout AS actual_amout_total
+      from member_bonus
+      where   bonus_type = '6'
           <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
             and   member_id = #{parameterMap.memberId}
           </if>
       </if>
       ) mb, member member
       where mb.member_id = member.id
-      order by mb.order_id desc, mb.member_id desc
+      order by mb.order_id, mb.member_id
     <include refid="pageLimit"/>
   </select>
   <select id="selectMemberBonusListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
@@ -156,26 +158,33 @@
       count(0) as count
     from (
       select
-      member_id,
-      order_id,
-      order_no
+        member_id
       from member_bonus
-      <include refid="whereMemberBonusList"/>
-      group by member_id, order_id, order_no
+    where bonus_type not in ('6')
+    <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+      and member_id = #{parameterMap.memberId}
+    </if>
+    <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+      and order_no = #{parameterMap.orderNo}
+    </if>
+    <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
+      and DATE_FORMAT(order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')
+    </if>
+    <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
+      and DATE_FORMAT(order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
+    </if>
+      group by order_no
       <if test="parameterMap.chinaPresidentBonusYN==1">
       union all
       select
-      member_id,
-      order_id,
-      order_no
+        member_id
       from member_bonus
       where   bonus_type = '6'
       <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
           and   member_id = #{parameterMap.memberId}
       </if>
       </if>
-      ) mb, member member
-      where mb.member_id = member.id
+      ) mb
   </select>
   <sql id="whereMemberBonusDetail">
     <where>
@@ -209,84 +218,5 @@
     <include refid="whereMemberBonusDetail"/>
     group by mb.member_id, mb.order_id, mb.order_no,mb.bonus_type
       order by mb.member_id desc
-  </select>
-
-  <select id="selectAdminMemberBonusList" resultMap="MemberBonusListResultMap" parameterType="com.distribution.common.utils.Page" >
-    select
-    mb.member_id,
-    member.member_name,
-    mb.order_id,
-    mb.order_no,
-    mb.order_date,
-    <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
-      DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d') order_start_date,
-    </if>
-    <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
-      DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d') order_end_date,
-    </if>
-    member.recommend_id,
-    member.recommend_name,
-    member.order_amount,
-    mb.amout_total,
-    mb.manage_fee_total,
-    mb.actual_amout_total
-    from (
-    select
-    member_id,
-    order_id,
-    order_no,
-    order_date order_date,
-    sum(amout) as amout_total,
-    sum(manage_fee) as manage_fee_total,
-    sum(actual_amout) as actual_amout_total
-    from member_bonus
-    <include refid="whereMemberBonusList"/>
-    group by order_id, order_no,order_date
-    <if test="parameterMap.chinaPresidentBonusYN==1">
-      union all
-      select
-      member_id,
-      order_id,
-      order_no,
-      null order_date,
-      amout as amout_total,
-      manage_fee as manage_fee_total,
-      actual_amout as actual_amout_total
-      from member_bonus
-      where   bonus_type = '6'
-      <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-        and   member_id = #{parameterMap.memberId}
-      </if>
-    </if>
-    ) mb, member member
-    where mb.member_id = member.id
-    order by mb.order_id desc, mb.member_id desc
-    <include refid="pageLimit"/>
-  </select>
-  <select id="selectAdminMemberBonusListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
-    select
-    count(0) as count
-    from (
-    select
-    member_id,
-    order_id,
-    order_no
-    from member_bonus
-    <include refid="whereMemberBonusList"/>
-    group by order_id, order_no
-    <if test="parameterMap.chinaPresidentBonusYN==1">
-      union all
-      select
-      member_id,
-      order_id,
-      order_no
-      from member_bonus
-      where   bonus_type = '6'
-      <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-        and   member_id = #{parameterMap.memberId}
-      </if>
-    </if>
-    ) mb, member member
-    where mb.member_id = member.id
   </select>
 </mapper>

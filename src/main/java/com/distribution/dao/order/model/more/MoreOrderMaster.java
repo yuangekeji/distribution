@@ -16,6 +16,7 @@ public class MoreOrderMaster extends OrderMaster{
 
     private Integer createId;
 
+    private String payPassword;
 
     public Integer getGoodsCd() {
         return goodsCd;
@@ -57,6 +58,14 @@ public class MoreOrderMaster extends OrderMaster{
     @Override
     public void setCreateId(Integer createId) {
         this.createId = createId;
+    }
+
+    public String getPayPassword() {
+        return payPassword;
+    }
+
+    public void setPayPassword(String payPassword) {
+        this.payPassword = payPassword;
     }
 }
 

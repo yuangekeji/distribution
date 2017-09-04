@@ -380,7 +380,7 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', 
                        alert("未知错误");
                }
              if(response.status == 500 ){
-                 $window.location.reload();
+                 // $window.location.reload();
              }
 
              if(response.status == 403){

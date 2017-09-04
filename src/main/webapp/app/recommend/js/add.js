@@ -9,7 +9,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.onInit = function () {
         $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
             if(resp.successful){
-                $scope.dictionary = resp.data;
+                $scope.dictionary = resp.data.list;
                 if($scope.dictionary){
                     $scope.member.memberLevel = $scope.dictionary[0].dicCode;
                 }
@@ -76,10 +76,10 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
             alert("请输入登录密码。");
             $scope.submitFlag = true;
-        }else if(!$scope.member.confirmLoginPassword||!$scope.member.confirmLoginPassword.trim()){
+        }else if(!$scope.confirmLoginPassword||!$scope.confirmLoginPassword.trim()){
             alert("请输入确认密码。");
             $scope.submitFlag = true;
-        }else if($scope.member.loginPassword!=$scope.member.confirmLoginPassword){
+        }else if($scope.member.loginPassword!=$scope.confirmLoginPassword){
             alert("登录密码与确认密码不一致，请重新输入。");
             $scope.submitFlag = true;
         }else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){

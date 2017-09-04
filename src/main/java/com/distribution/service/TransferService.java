@@ -80,7 +80,6 @@ public class TransferService {
                 tsf.setReceivePhone(receivedMember.getMemberPhone());
                 tsf.setReceiveName(receivedMember.getMemberName());
 
-
                 //step 1)账户转出计算
                 AccountManager transAccount = new AccountManager();
                 transAccount.setMemberId(transfer.getMemberId());
@@ -105,6 +104,7 @@ public class TransferService {
                 recivedAccount.setBonusAmt(recivedAccount.getBonusAmt().add(transfer.getTransferAmt()));//增加奖金币
                 recivedAccount.setTotalBonus(recivedAccount.getBonusAmt().add(recivedAccount.getSeedAmt()));//计算总奖金字段
 
+
                 recivedAccount.setUpdateId(tsf.getMemberId());
                 recivedAccount.setUpdateTime(new Date());
 
@@ -124,6 +124,14 @@ public class TransferService {
                 historyin.setType("2");      //1支出 进账2
                 historyin.setFlowType(Constant.TRANSFERIN); //转出
                 historyin.setBonusAmt(tsf.getTransferAmt());
+
+                //判断如果会员状态未激活，并且账户的余额和订单金额相同，更新会员款状态
+                if("N".equals(receivedMember.getStatus()) && "N".equals(receivedMember.getMoneyStatus())){
+                    //账户余额 大于或者等于 订单金额时
+                    if(recivedAccount.getBonusAmt().compareTo(receivedMember.getOrderAmount()) > -1){
+                        memberMapper.updateMemberMoneyStatusY(receivedMember.getId());
+                    }
+                }
 
                 if(transAccount.getId() != null && transAccount.getId() >0
                         && recivedAccount.getId() !=null && recivedAccount.getId() >0){

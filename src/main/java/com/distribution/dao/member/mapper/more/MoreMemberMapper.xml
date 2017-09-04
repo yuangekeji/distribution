@@ -106,4 +106,35 @@
     money_status, is_operator, is_sales_dept,
     first_agent_cnt, recommend_name, node_name FROM member <include refid="where"/> ORDER BY id DESC <include refid="pageLimit"/>
   </select>
+  <update id="updateMemberMoneyStatusY" parameterType="java.lang.Integer">
+       update member
+       set   money_status = 'Y'
+       where id = #{memberId}
+  </update>
+
+
+  <insert id="insert" parameterType="com.distribution.dao.member.model.Member" useGeneratedKeys="true" keyProperty="id">
+    insert into member (id, member_phone, login_password,
+    query_password, pay_password, recommend_id,
+    node_id, member_name, member_level,
+    ID_number, express_address, status,
+    delete_flag, role_id, member_post,
+    create_id, create_time, update_id,
+    update_time, order_amount, consignee,
+    money_status, bank_name, bank_user_name,
+    card_number, is_operator, is_sales_dept,
+    first_agent_cnt, recommend_name, node_name
+    )
+    values (#{id,jdbcType=INTEGER}, #{memberPhone,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR},
+    #{queryPassword,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, #{recommendId,jdbcType=INTEGER},
+    #{nodeId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR},
+    #{idNumber,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+    #{deleteFlag,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{memberPost,jdbcType=VARCHAR},
+    #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER},
+    #{updateTime,jdbcType=TIMESTAMP}, #{orderAmount,jdbcType=DECIMAL}, #{consignee,jdbcType=VARCHAR},
+    #{moneyStatus,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankUserName,jdbcType=VARCHAR},
+    #{cardNumber,jdbcType=VARCHAR}, #{isOperator,jdbcType=VARCHAR}, #{isSalesDept,jdbcType=VARCHAR},
+    #{firstAgentCnt,jdbcType=INTEGER}, #{recommendName,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}
+    )
+  </insert>
 </mapper>

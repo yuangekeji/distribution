@@ -11,7 +11,8 @@ angular.module('home').controller('homeCtrl',
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
     });
-
+     $scope.queryPasswordConfirm = '';
+     $scope.payPasswordConfirm = '';
     $scope.currentUser = $sessionStorage.currentUser;
 
     $scope.test =function () {
@@ -34,7 +35,8 @@ angular.module('home').controller('homeCtrl',
         if($scope.currentUser.moneyStatus=='Y' && $scope.currentUser.status=='N'){
             $http.get(ctx + "/member/getDictionary/bank_name").success(function (resp) {
                 if(resp.successful){
-                    $scope.dictionary = resp.data;
+                    $scope.dictionary = resp.data.list;
+                    $scope.moreMember = resp.data.moreMember;
                     if($scope.dictionary){
                         $scope.currentUser.bankName = $scope.dictionary[0].dicCode;
                     }
@@ -65,15 +67,15 @@ angular.module('home').controller('homeCtrl',
             alert("银行卡号只能为纯数字，请重新输入。")
         }else if(!$scope.currentUser.queryPassword||!$scope.currentUser.queryPassword.trim()){
             alert("请输入二级密码。")
-        }else if(!$scope.currentUser.queryPasswordConfirm||!$scope.currentUser.queryPasswordConfirm.trim()){
+        }else if(!$scope.queryPasswordConfirm||!$scope.queryPasswordConfirm.trim()){
             alert("请确认二级密码。")
-        }else if($scope.currentUser.queryPassword!=$scope.currentUser.queryPasswordConfirm){
+        }else if($scope.currentUser.queryPassword!=$scope.queryPasswordConfirm){
             alert("二级密码和二级密码确认不同，请重新输入。")
         }else if(!$scope.currentUser.payPassword||!$scope.currentUser.payPassword.trim()){
             alert("请输入三级密码。")
-        }else if(!$scope.currentUser.payPasswordConfirm||!$scope.currentUser.payPasswordConfirm.trim()){
+        }else if(!$scope.payPasswordConfirm||!$scope.payPasswordConfirm.trim()){
             alert("请确认三级密码。")
-        }else if($scope.currentUser.payPassword!=$scope.currentUser.payPasswordConfirm){
+        }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
             alert("三级密码和三级密码确认不同,请重新输入。")
         }else{
             $scope.currentUser.status='Y';
@@ -88,58 +90,6 @@ angular.module('home').controller('homeCtrl',
         }
     };
 
-    /**
-     * description alert和confirm代码demo
-     * @author Bright
-     * */
-    //start
-    $scope.info = function () {
-        var txt=  "提示文字，提示文字，提示文字，提示文字，提示文字，提示文字";
-        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.info);
-    };
-    $scope.confirm = function () {
-        var txt=  "提示文字，提示文字，提示文字，提示文字，提示文字，提示文字";
-        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.confirm,{
-            onOk:function(){
-                window.wxc.xcConfirm("您选择了确认", window.wxc.xcConfirm.typeEnum.info);
-            },
-            onCancel:function(){
-                window.wxc.xcConfirm("您选择了取消", window.wxc.xcConfirm.typeEnum.info);
-            }
-        });
-    };
-    $scope.warning = function () {
-        var txt=  "提示文字，提示文字，提示文字，提示文字，提示文字，提示文字";
-        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.warning);
-    };
-    $scope.error = function () {
-        var txt=  "提示文字，提示文字，提示文字，提示文字，提示文字，提示文字";
-        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.error);
-    };
-    $scope.success = function () {
-        var txt=  "提示文字，提示文字，提示文字，提示文字，提示文字，提示文字";
-        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.success);
-    };
-    $scope.input = function () {
-        var txt=  "请输入";
-        window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
-            onOk:function(v){
-                console.log(v);
-            }
-        });
-    };
-    $scope.custom = function () {
-        var txt=  "自定义呀";
-        var option = {
-            title: "自定义",
-            btn: parseInt("0011",2),
-            onOk: function(){
-                console.log("确认啦");
-            }
-        };
-        window.wxc.xcConfirm(txt, "custom", option);
-    };
-    //end
 
     /**
      * @param {number} opt_attributes
@@ -168,11 +118,11 @@ angular.module('home').controller('homeCtrl',
             });
         out.result.then(function(value)
         {
-            console.info('确认');
+            // console.info('确认');
 
         }, function()
         {
-            console.info('取消');
+            // console.info('取消');
         });
     };
 

@@ -12,7 +12,7 @@ angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, 
         result: [],
         parameterMap: {
             memberId: $stateParams.memberId,
-            orderId: $stateParams.orderId
+            orderNo: $stateParams.orderNo
         }
     };
     $scope.titleData = {
@@ -26,7 +26,6 @@ angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, 
         }
     };
     $scope.search = function(){
-        console.info($scope.titleData);
         $http.post(ctx + '/dividend/detailsTitleData', $scope.titleData)
             .success(function (resp) {
                 if (resp.successful) {

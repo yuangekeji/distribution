@@ -90,41 +90,86 @@ angular.module('home').controller('homeCtrl',
         }
     };
 
-
-    /**
-     * @param {number} opt_attributes
-     * @return {undefined}
-     */
-    $scope.open = function(opt_attributes)
-    {
-        var out = $uibModal.open(
+        /**
+         * 轮播
+         * @param args
+         */
+        function render(args)
+        {
+            var i = 0;
+            var valuesLen = values.length;
+            for (; i < valuesLen; i++)
             {
-                animation: $scope.animationsEnabled,
-                backdrop: 'static',
-                templateUrl: "myModalContent.html",
-                controller: "ModalInstanceCtrl",
-                size: opt_attributes,
-                resolve:
-                {
-                    getMsg: function()
-                    {
-                        return "确定要转账给该用户吗？";
-                    },
-                    getType: function()
-                    {
-                        return "confirm";
-                    }
-                }
-            });
-        out.result.then(function(value)
-        {
-            // console.info('确认');
+                values[i].id = args.pop();
+            }
+        }
 
-        }, function()
+        function compiler()
         {
-            // console.info('取消');
-        });
-    };
+            var e = [];
+            var n = 0;
+            for (; n < l; ++n)
+            {
+                e[n] = n;
+            }
+            return next(e);
+        }
+
+        function next(result)
+        {
+            var value;
+            var key;
+            var index = result.length;
+            if (index)
+            {
+                for (; --index;)
+                {
+                    key = Math.floor(Math.random() * (index + 1));
+                    value = result[key];
+                    result[key] = result[index];
+                    result[index] = value;
+                }
+            }
+            return result;
+        }
+        /** @type {number} */
+        $scope.myInterval = 3E3;
+        /** @type {boolean} */
+        $scope.noWrapSlides = false;
+        /** @type {number} */
+        $scope.active = 0;
+        /** @type {Array} */
+        var values = $scope.slides = [];
+        /** @type {number} */
+        var l = 0;
+        /**
+         * @return {undefined}
+         */
+        $scope.addSlide = function()
+        {
+            /** @type {number} */
+            var newWidth = 600 + values.length + 1;
+            values.push(
+                {
+                    image: $scope.settings.layoutPath+"/img/bg-pc.jpg",
+                    text: ["Nice image", "Awesome photograph", "That is so cool", "I love that"][values.length % 4],
+                    id: l++
+                });
+        };
+        /**
+         * @return {undefined}
+         */
+        $scope.randomize = function()
+        {
+            var typePattern = compiler();
+            render(typePattern);
+        };
+        /** @type {number} */
+        var i = 0;
+        for (; i < 4; i++)
+        {
+            $scope.addSlide();
+        }
 
 });
 angular.module('home').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, getMsg,getType) {

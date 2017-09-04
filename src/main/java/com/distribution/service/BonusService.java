@@ -26,6 +26,7 @@ import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.order.model.Order;
+import com.distribution.common.utils.Page;
 
 @Service
 public class BonusService {
@@ -41,6 +42,24 @@ public class BonusService {
 	@Autowired
 	private BasicManageMapper basicManageMapper;
 	
+	/**
+     * description 查詢奖金明细列表
+     * @author shiqing
+     * */
+    public Page selectMemberBonusList(Page page){
+        page.setTotalCount(moreMemberBonusMapper.selectMemberBonusListCount(page));
+        page.setResult( moreMemberBonusMapper.selectMemberBonusList(page));
+        return page;
+    }
+    /**
+     * description 查詢获奖明细
+     * @author shiqing
+     * */
+    public Page selectMemberBonusDetail(Page page){
+        page.setResult( moreMemberBonusMapper.selectMemberBonusDetail(page));
+        return page;
+    }
+    
 	/**
 	 * 奖金处理总入口方法
 	 * 当订单生效时调用此方法

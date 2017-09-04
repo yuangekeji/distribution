@@ -46,6 +46,22 @@ angular.module('graph').controller('graphCtrl',
             $scope.$broadcast('angular-ui-tree:expand-all');
         };
 
+
+
+        $scope.getGraphTree = function () {
+
+            $http.post(ctx + "/node/tree").success(function (resp) {
+                if(resp.successful){
+                    console.info(resp);
+                }
+            }).error(function (resp) {
+                console.log(resp);
+            });
+
+        }
+
+        $scope.getGraphTree();
+
         $scope.data = [{
             'id': 1,
             'title': 'node1',

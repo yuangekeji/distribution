@@ -84,7 +84,7 @@
                                     <td align="center">{{orderMaster.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
                                     <td align="center">{{orderMaster.orderStatues|OrderStatuesFilter}}</td>
                                     <td align="left">{{orderMaster.expressAddress}}</td>
-                                    <td align="center"><a href="javascript:" ng-click="updateOrderStatus()">确认收货</a></td>
+                                    <td align="center"><a href="javascript:" ng-click="confirmOrder(orderMaster.id,orderMaster.orderNo,'4')">确认收货</a></td>
                                 </tr>
                                 <tr ng-show= "notData" >
                                     <td colspan="11">无记录</td>

@@ -59,7 +59,8 @@
   </select>
   
   <select id="getOrderList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
-    SELECT a.order_no
+    SELECT a.id
+         , a.order_no
          , a.order_category
          , a.order_amt
          , a.discount
@@ -125,4 +126,14 @@
   <select id="countOrderAmcountByMemberId" resultType="java.lang.Double" parameterType="java.lang.Integer">
       SELECT SUM(order_amt) FROM order_master WHERE member_id = #{memberId}
   </select>
+
+    <update id="confirmOrder" parameterType="com.distribution.dao.order.model.more.MoreOrderMaster" >
+        update order_master
+           set order_statues = #{orderStatues,jdbcType=CHAR},
+               update_id = #{updateId,jdbcType=INTEGER},
+               update_time = #{updateTime,jdbcType=TIMESTAMP}
+         where id = #{id,jdbcType=INTEGER}
+           and order_no = #{orderNo,jdbcType=BIGINT}
+    </update>
+
 </mapper>

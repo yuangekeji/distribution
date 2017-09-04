@@ -181,4 +181,14 @@ public class OrderService {
 
         return orderNo;
     }
+
+    public String confirmOrder(MoreOrderMaster moreOrderMaster) {
+        int cnt = moreOrderMasterMapper.confirmOrder(moreOrderMaster);
+
+        if(cnt > 0){
+            return "success";
+        }else{
+            throw new RuntimeException();
+        }
+    }
 }

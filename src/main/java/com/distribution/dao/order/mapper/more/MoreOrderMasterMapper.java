@@ -37,4 +37,10 @@ public interface MoreOrderMasterMapper {
      * @author Bright
      * */
     Double countOrderAmcountByMemberId(Integer memberId);
+
+    /**
+     * description 确认收货
+     * @author WYN
+     * */
+    int confirmOrder(MoreOrderMaster moreOrderMaster);
 }

@@ -65,9 +65,9 @@ public class BonusService {
 	 * 当订单生效时调用此方法
 	 * order对象中必须包含订单的主体信息
 	 * @date 2017年9月1日 下午3:22:21
-	 * @param orderMaster
+	 * @param order
 	 */
-	public void calculateOrderBonus(OrderMaster orderMaster){
+	public void calculateOrderBonus(OrderMaster order){
 	   //初始化计算所需变量
 
       //销售奖

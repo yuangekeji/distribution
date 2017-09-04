@@ -25,7 +25,7 @@ import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
-import com.distribution.dao.order.model.Order;
+import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.common.utils.Page;
 
 @Service
@@ -67,7 +67,7 @@ public class BonusService {
 	 * @date 2017年9月1日 下午3:22:21
 	 * @param order
 	 */
-	public void calculateOrderBonus(Order order){
+	public void calculateOrderBonus(OrderMaster order){
 	   //初始化计算所需变量
 
       //销售奖

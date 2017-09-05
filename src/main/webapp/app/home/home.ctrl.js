@@ -1,6 +1,6 @@
 angular.module('home').controller('homeCtrl',
-    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $window) {
-    title.setTitle('home');
+    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $window,Notify) {
+    title.setTitle('主页');
 
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
@@ -16,14 +16,9 @@ angular.module('home').controller('homeCtrl',
     $scope.currentUser = $sessionStorage.currentUser;
 
     $scope.test =function () {
-        ConfirmModal.show({
-            text: '确定要转账给该用户3000.00吗？',
-            isCancel:false //false alert ,true confirm
-        }).then(function (sure) {
-            if (!sure) {
-                return;
-            }
-        })
+        Notify.warning('请填写完整的转账信息');
+        Notify.success('请填写完整的转账信息');
+        Notify.error('请填写完整的转账信息');
     }
     /**
      * description 激活弹出窗

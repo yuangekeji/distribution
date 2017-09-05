@@ -1,5 +1,5 @@
 angular.module('account').controller('accountListCtrl',
-    function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal) {
+    function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal,Notify) {
     title.setTitle('我的账户');
     //账户信息
     $scope.accountInfo = {};
@@ -64,7 +64,7 @@ angular.module('account').controller('accountListCtrl',
         //校验转入账户是否存在，询问用户，是否正确
         //转账处理，判断密码是否正确，若正确正常转账，否则提示密码错误
        if( !$scope.validate()) {
-           ConfirmModal.show({text: '请填写完整的转账信息', isCancel:false });
+           Notify.warning('请填写完整的转账信息');
            return false;
        }
 
@@ -103,16 +103,19 @@ angular.module('account').controller('accountListCtrl',
                             if(resp.successful) {
                                 $scope.msg = "";
                                 if (resp.data.result == 'success') {
-                                    $scope.msg = "转账成功";
+                                    Notify.success('转账成功');
                                     $scope.onInit();
 
                                 } else if (resp.data.result == 'pwdWrong') {
-                                    $scope.msg = "支付密码错误";
+                                    // $scope.msg = "支付密码错误";
+                                    Notify.error('支付密码错误');
                                 } else if (resp.data.result == 'fail') {
-                                    $scope.msg = "转账失败，请重新尝试";
+                                    // $scope.msg = "转账失败，请重新尝试";
+                                    Notify.error('转账失败，请重新尝试');
                                     $scope.onInit();
                                 }
-                                ConfirmModal.show({text: $scope.msg, isCancel: false});
+                                // ConfirmModal.show({text: $scope.msg, isCancel: false});
+
 
                             }else{
                                 console.error("转账失败，请稍后再试");

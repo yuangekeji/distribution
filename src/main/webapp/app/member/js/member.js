@@ -2,6 +2,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
+    $scope.applyFlag = true;
     if($scope.user.memberPost){
         var str = $scope.user.memberPost.toString().substr($scope.user.memberPost.toString().length-1,$scope.user.memberPost.toString().length);
         if(Number(str)&&Number(str)!=6){
@@ -15,6 +16,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
             if(resp.successful){
                 $scope.MemberInfo = resp.data.member;
                 $scope.banks = resp.data.list;
+                $scope.it = resp.data.it;
             }else{
                 console.log(resp);
             }
@@ -26,12 +28,29 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
      * 申请成为运营中心
      * */
     $scope.apply = function () {
-        $http.post(ctx + '/member/apply',{totalOrderAmount:$scope.MemberInfo.orderTotalAmount,memberId:$scope.MemberInfo.id}).success(function (resp) {
-            if(resp.successful){
-            }else{
-                console.log(resp);
+        if($scope.applyFlag) {
+            $scope.applyFlag = false;
+            if($scope.MemberInfo.orderTotalAmount<30000){
+                alert("订单金额累计达到3万可申请成为运营中心,您的订单累计金额为"+$scope.MemberInfo.orderTotalAmount);
+                $scope.applyFlag = true;
+            }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it>0){
+                alert("您已提交过成为运营中心申请，请耐心等待");
+                $scope.applyFlag = true;
+            }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it==0){
+                $http.post(ctx + '/member/apply', {
+                    totalOrderAmount: $scope.MemberInfo.orderTotalAmount,
+                    memberId: $scope.MemberInfo.id
+                }).success(function (resp) {
+                    if (resp.successful) {
+                        $scope.it = 1;
+                        $scope.applyFlag = true;
+                    } else {
+                        console.log(resp);
+                        $scope.applyFlag = true;
+                    }
+                });
             }
-        });
+        }
     };
     //Bright End
 

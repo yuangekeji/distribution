@@ -16,4 +16,9 @@ public interface MoreOperationApplyMapper {
      * @author Bright
      * */
     List<OperationApply> list(Page page);
+    /**
+     * description 根据memberId查询申请记录
+     * @author Bright
+     * */
+    List<OperationApply> getByMemberId(Integer memberId);
 }

@@ -14,8 +14,8 @@ public class ChinaPresidentBonusJob {
 
     @Autowired
     private ChinaPresidentBonusService chinaPresidentBonusService;
-    @Scheduled(cron = "0/10 * * * * *")
-    //@Scheduled(cron ="0 0 1 * * ?" )//每天早上1点钟执行
+    //@Scheduled(cron = "0/10 * * * * *")  //测试用
+    @Scheduled(cron ="0 0 1 * * ?" )//每天早上1点钟执行
     public void addChinaPresidentBonusByDay() {
         chinaPresidentBonusService.addChinaPresidentBonusByDay();
     }

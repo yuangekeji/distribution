@@ -70,7 +70,7 @@ angular.module('account').controller('accountListCtrl',
 
 
         if($scope.transfer.transferAmt > $scope.accountInfo.bonusAmt ){
-            ConfirmModal.show({text: '转账金额不能超过奖金币余额', isCancel:false });
+            Notify.warning('转账金额不能超过奖金币余额');
             return false;
         }
 
@@ -114,11 +114,11 @@ angular.module('account').controller('accountListCtrl',
                                     Notify.error('转账失败，请重新尝试');
                                     $scope.onInit();
                                 }
-                                // ConfirmModal.show({text: $scope.msg, isCancel: false});
 
 
                             }else{
-                                console.error("转账失败，请稍后再试");
+
+                                Notify.error('转账金额不能超过奖金币余额');
                                 //失败后停止loading，刷新页面
                                 $scope.stopLoading();
                                 $window.location.reload();
@@ -131,12 +131,13 @@ angular.module('account').controller('accountListCtrl',
             else{
 
                 $scope.stopLoading();
-                ConfirmModal.show({text: '请确认收款账户信息是否正确', isCancel:false });
+                Notify.warning('请确认收款账户信息是否正确');
 
             }
 
         }).error(function (error) {
-            console.info(error);
+
+            Notify.error(error);
             $scope.stopLoading();
         });
 
@@ -221,22 +222,22 @@ angular.module('account').controller('accountListCtrl',
      $scope.reOrderCommit= function () {
 
          if( !$scope.reOrdervalidate()) {
-             ConfirmModal.show({text: '请填写完整的复投信息', isCancel:false });
+             Notify.warning('请填写完整的复投信息');
              return false;
          }
 
          if($scope.reOrder.bonusAmt > $scope.accountInfo.bonusAmt){
-             ConfirmModal.show({text: '扣除的奖金币金额不能大于账户奖金币余额', isCancel:false });
+             Notify.warning('扣除的奖金币金额不能大于账户奖金币余额');
              return false;
          }
 
          if($scope.reOrder.seedAmt > $scope.accountInfo.seedAmt){
-             ConfirmModal.show({text: '扣除的种子币金额不能大于账户种子币余额', isCancel:false });
+             Notify.warning('扣除的种子币金额不能大于账户种子币余额');
              return false;
          }
          $scope.reOrder.orderAmt = $scope.reOrder.orderQty * $scope.reOrder.price;
          if($scope.reOrder.orderAmt != ( $scope.reOrder.seedAmt +$scope.reOrder.bonusAmt)  ){
-             ConfirmModal.show({text: '请确认输入的金额和复投单金额是否匹配', isCancel:false });
+             Notify.warning('请确认输入的金额和复投单金额是否匹配');
              return false;
          }
 
@@ -257,19 +258,17 @@ angular.module('account').controller('accountListCtrl',
              if(resp.successful) {
                  $scope.msg = "";
                  if (resp.data.result == 'success') {
-                     $scope.msg = "复投成功，已生成分红包。";
+                     Notify.success('复投成功，已生成分红包。');
                      $scope.onInit();
-
                  } else if (resp.data.result == 'pwdWrong') {
-                     $scope.msg = "支付密码错误";
+                     Notify.error('支付密码错误');
                  } else if (resp.data.result == 'fail') {
-                     $scope.msg = "复投失败，请重新尝试";
+                     Notify.error('复投失败，请重新尝试');
                      $scope.onInit();
                  }
-                 ConfirmModal.show({text: $scope.msg, isCancel: false});
 
              }else{
-                 console.error("复投失败，请稍后再试");
+                 Notify.error('复投失败，请重新尝试');
                  //失败后停止loading，刷新页面
                  $scope.stopLoading();
                  $window.location.reload();

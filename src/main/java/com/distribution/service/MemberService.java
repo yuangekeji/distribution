@@ -10,6 +10,7 @@ import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.mapper.more.MoreAdminMapper;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.apply.mapper.OperationApplyMapper;
+import com.distribution.dao.apply.mapper.more.MoreOperationApplyMapper;
 import com.distribution.dao.apply.model.OperationApply;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
@@ -44,6 +45,8 @@ public class MemberService {
     private MoreOrderMasterMapper moreOrderMasterMapper;
     @Autowired
     private OperationApplyMapper operationApplyMapper;
+    @Autowired
+    private MoreOperationApplyMapper moreOperationApplyMapper;
     @Autowired
     private NodeService nodeService;
     @Autowired
@@ -234,7 +237,7 @@ public class MemberService {
         Member member = memberMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(member,moreMember);
         Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(id);
-        moreMember.setOrderTotalAmount(new BigDecimal(orderTotalAmount));
+        moreMember.setOrderTotalAmount(new BigDecimal(null!=orderTotalAmount?orderTotalAmount:0));
         return moreMember;
     }
 
@@ -258,5 +261,14 @@ public class MemberService {
      * */
     public MoreMember findAccountManageByMemberId(Integer memberId){
         return moreAccountManagerMapper.getSeedsAndBondsByMemberId(memberId);
+    }
+
+    public Integer getByMemberId(Integer memberId){
+        List<OperationApply> list = moreOperationApplyMapper.getByMemberId(memberId);
+        if(list.isEmpty()){
+            return 0;
+        }else{
+            return list.size();
+        }
     }
 }

@@ -35,7 +35,7 @@
 
 		<!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
 
-		<table tableName="order_master" domainObjectName="Order" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true" />
+		<table tableName="order_master" domainObjectName="OrderMaster" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true" />
 
 	</context>
 

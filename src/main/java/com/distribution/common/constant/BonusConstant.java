@@ -1,0 +1,69 @@
+/*
+  * Pactera Technology International Ltd.
+  * Copyright (c) 2014-2015 All Rights Reserved.
+  */
+package com.distribution.common.constant;
+
+ /**
+  * Name: 
+  * Description: 
+  * Create Date: 2017年9月2日 下午1:47:02
+  * File: com.distribution.common.constant.BonusConstant.java 
+  * @version 1.0
+  */
+public class BonusConstant extends Constant{
+	public static double BONUS_PERCENT = 0.60;
+	public static double SEED_PERCENT = 0.40;
+	public static String ACCOUNT_TYPE_IN = "2";
+	//固定内置数据分红包池和见点奖池数据ID
+	public static int POOL_ID_DIVIDEND = 1;
+	public static int POOL_ID_NODE = 2;
+	//奖金类型分红包奖
+	public static int POOL_TYPE_DIVIDEND = 1;
+	//奖金类型见点奖
+	public static int POOL_TYPE_NODE = 2;
+	//增加还是扣除 1-增加，0-扣除
+	public static int POOL_BONUS_ADD = 1;
+	public static int POOL_BONUS_REDUCE = 0;
+	//晋升判断标准
+	public static double PROMOTION_JUDGE_STANDARD = 150000;
+	//普通会员
+	public static String POST_LEVEL1 = "post_level1";
+	//主任
+	public static String POST_LEVEL2 = "post_level2";
+	//经理
+	public static String POST_LEVEL3 = "post_level3";
+	//总监
+	public static String POST_LEVEL4 = "post_level4";
+	//董事
+	public static String POST_LEVEL5 = "post_level5";
+	//全国董事
+	public static String POST_LEVEL6 = "post_level6";
+	
+	public static String D05 = "D05";
+	public static String D07 = "D07";
+	public static String CODE_00 = "00";
+	public static String CODE_01 = "01";
+	public static String CODE_02 = "02";
+	public static String CODE_03 = "03";
+	public static String CODE_04 = "04";
+	public static String CODE_05 = "05";
+	//奖金类型0-销售佣金，
+	public static String BONUS_TYPE_0 = "0";
+	//1-1代奖，
+	public static String BONUS_TYPE_1 = "1";
+	//2-2代奖，
+	public static String BONUS_TYPE_2 = "2";
+	//3-分红包奖，
+	public static String BONUS_TYPE_3 = "3";
+	//4-见点奖，
+	public static String BONUS_TYPE_4 = "4";
+	//5-级差奖，
+	public static String BONUS_TYPE_5 = "5";
+	//6，全国懂事奖，
+	public static String BONUS_TYPE_6 = "6";
+	//7-工作室奖，
+	public static String BONUS_TYPE_7 = "7";
+	//8-运营中心奖
+	public static String BONUS_TYPE_8 = "8";
+}

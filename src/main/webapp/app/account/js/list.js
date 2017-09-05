@@ -54,7 +54,7 @@ angular.module('account').controller('accountListCtrl',
             price:600,
             seedAmt:0.00,
             bonusAmt:0.00,
-            orderAmt:$scope.reOrder.orderQty * $scope.reOrder.price,
+            orderAmt:0.00,
             payPassword:''
         }
     }
@@ -99,16 +99,18 @@ angular.module('account').controller('accountListCtrl',
                         }).success(function (resp) {
                              $scope.stopLoading();
                              //处理完成后重新获取账户信息
-                             $scope.onInit();
+
                             if(resp.successful) {
                                 $scope.msg = "";
                                 if (resp.data.result == 'success') {
                                     $scope.msg = "转账成功";
+                                    $scope.onInit();
 
                                 } else if (resp.data.result == 'pwdWrong') {
                                     $scope.msg = "支付密码错误";
                                 } else if (resp.data.result == 'fail') {
                                     $scope.msg = "转账失败，请重新尝试";
+                                    $scope.onInit();
                                 }
                                 ConfirmModal.show({text: $scope.msg, isCancel: false});
 
@@ -211,17 +213,25 @@ angular.module('account').controller('accountListCtrl',
                  $scope.reOrdervalidateErrors.payPasswordError = true;
              }
          }
-
         }
 
      $scope.reOrderCommit= function () {
-
 
          if( !$scope.reOrdervalidate()) {
              ConfirmModal.show({text: '请填写完整的复投信息', isCancel:false });
              return false;
          }
 
+         if($scope.reOrder.bonusAmt > $scope.accountInfo.bonusAmt){
+             ConfirmModal.show({text: '扣除的奖金币金额不能大于账户奖金币余额', isCancel:false });
+             return false;
+         }
+
+         if($scope.reOrder.seedAmt > $scope.accountInfo.seedAmt){
+             ConfirmModal.show({text: '扣除的种子币金额不能大于账户种子币余额', isCancel:false });
+             return false;
+         }
+         $scope.reOrder.orderAmt = $scope.reOrder.orderQty * $scope.reOrder.price;
          if($scope.reOrder.orderAmt != ( $scope.reOrder.seedAmt +$scope.reOrder.bonusAmt)  ){
              ConfirmModal.show({text: '请确认输入的金额和复投单金额是否匹配', isCancel:false });
              return false;
@@ -234,21 +244,24 @@ angular.module('account').controller('accountListCtrl',
                  orderQty:$scope.reOrder.orderQty,
                  orderAmt:$scope.reOrder.orderAmt,
                  seedAmt:$scope.reOrder.seedAmt,
-                 bonusAmt:$scope.reOrder.bonusAmt
+                 bonusAmt:$scope.reOrder.bonusAmt,
+                 payPassword:$scope.reOrder.payPassword
              }).success(function (resp) {
 
              $scope.stopLoading();
              //处理完成后重新获取账户信息
-             $scope.onInit();
+
              if(resp.successful) {
                  $scope.msg = "";
                  if (resp.data.result == 'success') {
                      $scope.msg = "复投成功，已生成分红包。";
+                     $scope.onInit();
 
                  } else if (resp.data.result == 'pwdWrong') {
                      $scope.msg = "支付密码错误";
                  } else if (resp.data.result == 'fail') {
                      $scope.msg = "复投失败，请重新尝试";
+                     $scope.onInit();
                  }
                  ConfirmModal.show({text: $scope.msg, isCancel: false});
 

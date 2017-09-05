@@ -28,6 +28,17 @@
     <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
     <result column="member_name" property="memberName" jdbcType="VARCHAR" />
     <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    
+    <result column="rownum" property="rownum" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="first_agent_cnt" property="firstAgentCnt" jdbcType="INTEGER" />
+    
+    <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
+    <result column="left_level" property="leftLevel" jdbcType="VARCHAR" />
+    <result column="right_level" property="rightLevel" jdbcType="VARCHAR" />
+    
+    <result column="is_operator" property="isOperator" jdbcType="VARCHAR" />
+    <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
   </resultMap>
   
   <sql id="Base_Column_List" >
@@ -55,8 +66,10 @@
 		left join order_master o on m.id = o.member_id
 		where find_in_set(m.node_id,getChildList(#{id})) and (o.order_category = 1 or o.order_category = 2)
   </select>
-  <select id="listParentNodesWhichHasTwoSubNodes" resultType="map" parameterType="map">
-  		SELECT tep.*,rt.member_level as right_level,lt.member_level as left_level
+  <select id="listParentNodesWhichHasTwoSubNodes" resultMap="MoreResultMap" parameterType="map">
+  		SELECT tep.*,
+  			rt.member_level as right_level,
+  			lt.member_level as left_level
 		from 
 		(SELECT m.id,n.left_id,n.right_id
 		from member m
@@ -69,8 +82,8 @@
 		LEFT JOIN member lt on lt.node_id = tep.left_id
 		LEFT JOIN member rt on rt.node_id = tep.right_id
   </select>
-  <select id="listParentIsManageLevelNodes" resultType="map" parameterType="map">
-  		select max(id) as memberId,member_level as memberLevel
+  <select id="listParentIsManageLevelNodes" resultMap="MoreResultMap" parameterType="map">
+  		select max(id) as member_id,member_level
 		from 
 		(select m.id,m.member_level
 		from member m
@@ -92,6 +105,18 @@
 		on n.id = m.node_id
 		where FIND_IN_SET(n.id,getChildList(#{nodeId}))
 		order by n.id asc
+  </select>
+  <select id="listParentNodesWithMemberInfo" resultMap="MoreResultMap" parameterType="java.lang.Integer">
+  		set @rownum=-1;
+		select @rownum:=@rownum+1 as rownum,
+		m.id as member_id,
+		m.node_id as id,
+		m.first_agent_cnt,
+		m.is_operator,
+		m.is_sales_dept
+		from member m
+		where find_in_set(m.node_id,getParentList(#{nodeId}))
+		order by m.node_id desc
   </select>
   <update id="updateParentLevel" parameterType="map">
   		update member set member_level = #{toLevel}

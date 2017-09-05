@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.basicManage.mapper.more.MoreBasicManageMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.basicManage.model.BasicManage" >
+    <id column="detail_code" property="detailCode" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="type_code" property="typeCode" jdbcType="VARCHAR" />
+    <result column="detail_nm" property="detailNm" jdbcType="VARCHAR" />
+    <result column="buy_amt" property="buyAmt" jdbcType="DECIMAL" />
+    <result column="buy_qty" property="buyQty" jdbcType="INTEGER" />
+    <result column="devidend_cnt" property="devidendCnt" jdbcType="INTEGER" />
+    <result column="sales_bonus_per" property="salesBonusPer" jdbcType="DECIMAL" />
+    <result column="sales_bonus_per1" property="salesBonusPer1" jdbcType="DECIMAL" />
+    <result column="sales_bonus_per2" property="salesBonusPer2" jdbcType="DECIMAL" />
+    <result column="profit_per" property="profitPer" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
+    <result column="max_percent" property="maxPercent" jdbcType="DECIMAL" />
+    <result column="min_percent" property="minPercent" jdbcType="DECIMAL" />
+    <result column="max_amt" property="maxAmt" jdbcType="DECIMAL" />
+    <result column="min_amt" property="minAmt" jdbcType="DECIMAL" />
+    <result column="recommend_cnt" property="recommendCnt" jdbcType="INTEGER" />
+    <result column="remain_cnt" property="remainCnt" jdbcType="INTEGER" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    detail_code, id, type_code, detail_nm, buy_amt, buy_qty, devidend_cnt, sales_bonus_per, 
+    sales_bonus_per1, sales_bonus_per2, profit_per, discount, max_percent, min_percent, 
+    max_amt, min_amt, recommend_cnt, remain_cnt
+  </sql>
+  <select id="listAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from basic_manage
+  </select>
+  
+</mapper>

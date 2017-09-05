@@ -60,6 +60,8 @@
     <commons-lang3.version>3.3.2</commons-lang3.version>
     <guava.version>17.0</guava.version>
      <logging.version>1.1.1</logging.version>
+      <quartz.version>2.2.0</quartz.version>
+      <logback.version>1.1.2</logback.version>
   </properties>
   <repositories>
 	    <repository>
@@ -266,7 +268,19 @@
            <version>${spring-data-jpa.version}</version>
        </dependency>
         <!--GENERAL UTILS end-->
-
+       <!-- @@@@@@@@@@@@@@@ Quartz begin @@@@@@@@@@@@@@@ -->
+       <!-- jobs -->
+       <dependency>
+           <groupId>org.quartz-scheduler</groupId>
+           <artifactId>quartz</artifactId>
+           <version>${quartz.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.quartz-scheduler</groupId>
+           <artifactId>quartz-jobs</artifactId>
+           <version>${quartz.version}</version>
+       </dependency>
+       <!-- @@@@@@@@@@@@@@@ Quartz end @@@@@@@@@@@@@@@ -->
       </dependencies>
 
 

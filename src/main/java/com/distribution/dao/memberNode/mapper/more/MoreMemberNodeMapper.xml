@@ -13,6 +13,22 @@
     <result column="member_total" property="memberTotal" jdbcType="INTEGER" />
     <result column="sales_total" property="salesTotal" jdbcType="DOUBLE" />
   </resultMap>
+  <resultMap id="MoreResultMap" type="com.distribution.dao.memberNode.model.more.MoreMemberNode" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="left_id" property="leftId" jdbcType="INTEGER" />
+    <result column="right_id" property="rightId" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="member_total" property="memberTotal" jdbcType="INTEGER" />
+    <result column="sales_total" property="salesTotal" jdbcType="DOUBLE" />
+    
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+  </resultMap>
   
   <sql id="Base_Column_List" >
     id, left_id, right_id, parent_id, create_time, create_by, update_time, update_by, 
@@ -61,6 +77,21 @@
 		where FIND_IN_SET(node_id,getParentList(#{nodeId}))
 		order by node_id desc)tem
 		group by member_level
+  </select>
+  <select id="listSubNodes" resultMap="MoreResultMap" parameterType="java.lang.Integer">
+  		select 
+			n.id,
+			n.left_id,
+			n.right_id,
+			n.create_time,
+			m.member_name,
+			m.member_phone,
+			m.order_amount
+		from member_node n
+		left join member m 
+		on n.id = m.node_id
+		where FIND_IN_SET(n.id,getChildList(#{nodeId}))
+		order by n.id asc
   </select>
   <update id="updateParentLevel" parameterType="map">
   		update member set member_level = #{toLevel}

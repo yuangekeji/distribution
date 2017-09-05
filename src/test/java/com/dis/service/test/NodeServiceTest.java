@@ -40,4 +40,9 @@ public class NodeServiceTest extends SpringServiceTest{
 		int result = nodeService.findNodeByParentNode(2, "right");
 		log.debug("========= result is " + result);
 	}
+	@Test
+	public void buildNodeTreeByNodeTest(){
+		int nodeId = 2;
+		nodeService.buildNodeTreeByNode(nodeId);
+	}
 }

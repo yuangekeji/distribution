@@ -1,4 +1,4 @@
-angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal) {
     title.setTitle('提现管理');
 
     $scope.myPage = {
@@ -11,6 +11,18 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
             statues:'',
             startTime:'',
             endTime:''
+        }
+    };
+
+    $scope.approvalRemark = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {
+            id: '',
+            statues: '',
+            remark: ''
         }
     };
 
@@ -50,7 +62,7 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
 
     }
 
-    /**提现批注、驳回*/
+    /**提现批准*/
     $scope.confirmAdvance = function (id, statues) {
         $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues}).success(function (resp) {
             if(resp.successful){
@@ -63,6 +75,41 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
             console.log(resp);
         })
 
+    };
+
+    /**提现驳回*/
+    $scope.rejectAdvance = function (id, statues) {
+        $scope.approvalRemark.parameterMap.id = id;
+        $scope.approvalRemark.parameterMap.statues = statues;
+        $scope.approvalRemark.parameterMap.remark = '';
+        $scope.open();
+
+    };
+
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "admAdvanceApproval.html",
+                controller: "admAdvanceApprovalCtrl",
+                size: opt_attributes,
+                resolve:
+                    {
+                        getDatas: function()
+                        {
+                            return $scope.approvalRemark.result;
+                        }
+                    }
+            });
+        out.result.then(function(value)
+        {
+            console.info('确认');
+        }, function()
+        {
+            console.info('取消');
+        });
     };
 
     /**

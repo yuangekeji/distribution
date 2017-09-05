@@ -3,6 +3,7 @@ package com.distribution.controller;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
+import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.advance.model.more.MoreAdvance;
 import com.distribution.dao.member.model.Member;
 import com.distribution.service.AdmAdvanceService;
@@ -43,6 +44,13 @@ public class AdmAdvanceController extends BasicController {
     @RequestMapping("/confirmAdvance")
     @ResponseBody
     public JsonMessage confirmAdvance(@RequestBody MoreAdvance moreAdvance, HttpSession session){
+        Admin currentUser = null;
+        if(getCurrentUser(session) instanceof Admin) {
+            currentUser = (Admin) getCurrentUser(session);
+        }
+
+        moreAdvance.setUpdateId(currentUser.getId());
+        moreAdvance.setUpdateTime(new Date());
         String result = admAdvanceService.confirmAdvance(moreAdvance);
         return successMsg("result",result);
     }

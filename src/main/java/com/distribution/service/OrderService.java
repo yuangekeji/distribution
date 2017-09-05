@@ -58,7 +58,7 @@ public class OrderService {
 
     /**
      * description 插入订单
-     * @author Bright
+     * @author WYN
      * */
     public String insertOrder(MoreOrderMaster moreOrderMaster){
         int cnt1 = 0;
@@ -171,29 +171,37 @@ public class OrderService {
     }
 
     /**
-     * description 插入订单
-     * @author Bright
+     * description 订单号生成
+     * @author WYN
      * */
     public Long getOrderNo(){
         int max = 100;
         int min = 1;
 
-        long t = System.currentTimeMillis();//获得当前时间的毫秒数
-        Random rd = new Random(t);//作为种子数传入到Random的构造器中
+        long timeMillis = System.currentTimeMillis();//获得当前时间的毫秒数
+        Random rd = new Random(timeMillis);//作为种子数传入到Random的构造器中
 
-        int s = rd.nextInt(max)%(max-min+1) + min;
+        int num = rd.nextInt(max)%(max-min+1) + min;
+        String strNum = "";
+        if(num < 10){
+            strNum = "00" + num;
+        }else if (num >= 10 && num < 100){
+            strNum = "0" + num;
+        }else{
+            strNum = num + "";
+        }
 
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String sd = sdf.format(d);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+        String strDate = sdf.format(date);
 
-        String str = sd + s + "";
+        String str = strDate + strNum;
 
         long orderNo = Long.valueOf(str).longValue();
-       // BigInteger orderNo = BigInteger.valueOf(order);
 
         return orderNo;
     }
+
 
     public String insertReOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
 
@@ -227,6 +235,19 @@ public class OrderService {
 
         return "pwdWrong";
 
-        }
+    }
 
+    /**
+     * description 确认收货
+     * @author WYN
+     * */
+    public String confirmOrder(MoreOrderMaster moreOrderMaster) {
+        int cnt = moreOrderMasterMapper.confirmOrder(moreOrderMaster);
+
+        if(cnt > 0){
+            return "success";
+        }else{
+            throw new RuntimeException();
+        }
+    }
 }

@@ -64,8 +64,8 @@
                                     <td>{{ope.recommendName}}</td>
                                     <td>{{ope.status|StatusFilter}}</td>
                                     <td>
-                                        <button class="btn sbold input-circle green" ng-click="approval(ope.id,'pass');" ng-if="ope.status=='wait'">审批通过</button>
-                                        <button class="btn sbold input-circle red" ng-click="approval(ope.id,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>
+                                        <button class="btn sbold input-circle green" ng-click="approval(ope.id,ope.memberId,'pass');" ng-if="ope.status=='wait'">审批通过</button>
+                                        <button class="btn sbold input-circle red" ng-click="approval(ope.id,ope.memberId,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>
                                     </td>
                                 </tr>
                             </tbody>

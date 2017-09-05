@@ -4,6 +4,7 @@
   */
 package com.distribution.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,8 @@ import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.memberNode.model.more.CustomNode;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
+import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper;
+import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
 
 @Service
 public class NodeService {
@@ -26,8 +29,18 @@ public class NodeService {
 	private MoreMemberNodeMapper moreNodeMapper;
 	@Autowired
 	private MoreMemberMapper moreMemberMapper;
+	@Autowired
+	private MoreNodeBonusHistoryMapper nodeBonusHistoryMapper;
+	@Autowired
+	private CommonService commonService;
 	
-	//通过父节点和左右分区标识来判断是否存在
+	/**
+	 * 通过父节点和左右分区标识来判断是否存在
+	 * @param parentNodeId 父节点
+	 * @param flag 左右区(left,right)
+	 * @author su
+	 * @return 大于0存在
+	 */
 	public int findNodeByParentNode(int parentNodeId,String flag){
 		MemberNode node = moreNodeMapper.selectByPrimaryKey(parentNodeId);
 		int result = 0;
@@ -41,7 +54,13 @@ public class NodeService {
 		}
 		return result;
 	}
-	//通过传来的父节点与左右分区信息来存储新节点
+	/**
+	 * 通过传来的父节点与左右分区信息来存储新节点
+	 * @param node node对象
+	 * @param flag 左右区(left,right)
+	 * @author su
+	 * @return
+	 */
 	public int saveNode(MemberNode node,String flag){
 		//node.setCreateBy(createBy);
 		moreNodeMapper.insertBackId(node);
@@ -58,11 +77,64 @@ public class NodeService {
 		return node.getId();
 	}
 	/**
+	 * 新会员生效时
+	 * 其上级所有节点都会分配一个见点奖
+	 * 限制逻辑，每个人所得见点将上限与其直销会员卡数有关系
+	 * @author su
+	 * @date 2017年9月5日 下午1:00:07
+	 */
+	public List<NodeBonusHistory> generateMemberNodeBonus(int nodeId,int createId){
+		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
+        //查找当前节点的所有父节点，查找其直销的卡数是多少张。
+        List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
+        //见点奖金额
+        double bonusPercent = commonService.getMaxPercent(BonusConstant.D03,BonusConstant.CODE_01);
+        for(MoreMemberNode m:list){
+        	//忽略当前节点
+        	if(m.getId().intValue() == nodeId){
+        		continue;
+        	}
+        	Integer salesNum = m.getFirstAgentCnt();
+        	//当前节点会员推荐人数大于零才可以领取见点奖
+        	if(null != salesNum && salesNum.intValue() > 0){
+        		//取得当前会员可以领节点奖代数
+        		int configNum = commonService.getRecommendCount(salesNum);
+        		Integer nodeNum = m.getRownum();
+        		//直销的卡数和后台的配置数据对比,在领取的代数范围内。
+            	if(null != nodeNum && nodeNum.intValue() <= configNum){
+            		//构建见点奖对象
+            		NodeBonusHistory history = new NodeBonusHistory();
+            		history.setBonusAmount(bonusPercent);
+            		history.setCreateBy(createId);
+            		history.setCreateTime(new Date());
+            		history.setFromNodeId(nodeId);
+            		history.setMebmerId(m.getMemberId());
+            		history.setStatus(BonusConstant.BONUS_STATUS_0);
+            		historyList.add(history);
+            	}
+        	}
+        }
+        return historyList;
+	}
+	/**
+	 * 批量插入见点奖明细
+	 * @author su
+	 * @date 2017年9月5日 下午6:06:21
+	 * @param historyList
+	 */
+	public void saveNodeBonusHistoryBatch(List<NodeBonusHistory> historyList){
+		if(historyList.size() > 0){
+			nodeBonusHistoryMapper.insertBatch(historyList);
+		}
+	}
+	/**
 	 * 处理会员晋升
 	 * 当会员生效时调用
-	 * @date 2017年9月1日 下午3:31:11
+	 * @param nodeId 当前会员节点
+	 * @param orderAmount 订单金额
+	 * @author su
 	 */
-	public void processMemberPromotion(int nodeId,double orderAmount){
+	public void processMemberPromotion(int nodeId,double orderAmount,int updateId){
 		
 		//根据当前会员的nodeId查询其所有上级;
 		List<MemberNode> list = moreNodeMapper.findParentNodes(nodeId);
@@ -72,7 +144,7 @@ public class NodeService {
 				//查询其下属所有节点的销售业绩
 				double total = moreNodeMapper.findTotalSalesByParentId(node.getId());
 				//判断是否符合主任晋升标准
-				if(total >= BonusConstant.PROMOTION_JUDGE_STANDARD){
+				if(total >= commonService.getPromotionStandard(BonusConstant.D10,BonusConstant.CODE_00)){
 			        //更新会员级别为主任，其上级中不是主任的都升为主任。
 					updateParentLevel(nodeId,BonusConstant.POST_LEVEL1,BonusConstant.POST_LEVEL2);
 			        //主任晋升截止
@@ -80,11 +152,11 @@ public class NodeService {
 				}
 			}
 			//处理主任晋升为经理
-			processMemberPromotion(nodeId,BonusConstant.POST_LEVEL2,BonusConstant.POST_LEVEL3);
+			processMemberPromotion(nodeId,BonusConstant.POST_LEVEL2,BonusConstant.POST_LEVEL3,updateId);
             //处理经理晋升为总监
-            processMemberPromotion(nodeId,BonusConstant.POST_LEVEL3,BonusConstant.POST_LEVEL4);
+            processMemberPromotion(nodeId,BonusConstant.POST_LEVEL3,BonusConstant.POST_LEVEL4,updateId);
             //处理总监晋升为董事   
-            processMemberPromotion(nodeId,BonusConstant.POST_LEVEL4,BonusConstant.POST_LEVEL5);
+            processMemberPromotion(nodeId,BonusConstant.POST_LEVEL4,BonusConstant.POST_LEVEL5,updateId);
 		}else{
 			return;
 		}
@@ -96,26 +168,29 @@ public class NodeService {
 	 * @param fromLevel
 	 * @param toLevel
 	 */
-	public void processMemberPromotion(int nodeId,String fromLevel,String toLevel){
+	public List<Member> processMemberPromotion(int nodeId,String fromLevel,String toLevel,int updateId){
         
 		Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
 		//查找带左右子节点上级
-        List<Map<String,String>> list = moreNodeMapper.listParentNodesWhichHasTwoSubNodes(param);
-        for(Map<String,String> node:list){
+        List<MoreMemberNode> list = moreNodeMapper.listParentNodesWhichHasTwoSubNodes(param);
+        List<Member> members = new ArrayList<Member>();
+        for(MoreMemberNode node:list){
         	//当前节点的左右子节点职务级别是否满足晋升条件
-        	String leftLevel = node.get("left_level");
-        	String rightLevel = node.get("right_level");
-        	int promotionId = Integer.parseInt(node.get("id"));
+        	String leftLevel = node.getLeftLevel();
+        	String rightLevel = node.getRightLevel();
+        	//会员主键
+        	int promotionId = node.getId();
         	//如果左右的职务都大于等于父节点的职务，执行晋升。
         	if(convertLevel(leftLevel) >= convertLevel(fromLevel) && convertLevel(rightLevel) >= convertLevel(fromLevel)){
         		Member member = new Member();
         		member.setId(promotionId);
         		member.setMemberLevel(toLevel);
         		member.setUpdateTime(new Date());
-        		//member.setUpdateId(updateId);
-        		updateMemberLevel(member);
+        		member.setUpdateId(updateId);
+        		members.add(member);
         	}
         }
+        return members;
 	}
 	/**
 	 * 
@@ -138,8 +213,9 @@ public class NodeService {
 	 * @param nodeId
 	 * @param postLevel
 	 */
-	public void updateMemberLevel(Member member){
-		moreMemberMapper.updateByPrimaryKeySelective(member);
+	public void updateMemberLevelBatch(List<Member> member){
+		
+		//moreMemberMapper.updateByPrimaryKeySelective(member);
 	}
 	/**
 	 * 封装参数
@@ -219,17 +295,26 @@ public class NodeService {
 				currentNode.setOrderAmount(m.getOrderAmount());
 				currentNode.setMobile(m.getMemberPhone());
 				currentNode.setCreateTime(m.getCreateTime());
+				List<CustomNode> nodes = null;
+				if(null != m.getLeftId() || null != m.getRightId()){
+					nodes = new ArrayList<CustomNode>();
+					currentNode.setNodes(nodes);
+				}
 				if(null != m.getLeftId()){
 					CustomNode left = new CustomNode(m.getLeftId());
-					currentNode.setLeft(left);
+					left.setFlag("left");
+					//currentNode.setLeft(left);
 					//计入缓存
 					map.put(m.getLeftId(), left);
+					nodes.add(left);
 				}
 				if(null != m.getRightId()){
 					CustomNode right = new CustomNode(m.getRightId());
-					currentNode.setRight(right);
+					//currentNode.setRight(right);
+					right.setFlag("right");
 					//计入缓存
 					map.put(m.getRightId(), right);
+					nodes.add(right);
 				}
 			}else{
 				//输出日志当前节点为无效节点

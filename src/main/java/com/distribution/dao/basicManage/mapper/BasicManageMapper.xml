@@ -6,10 +6,20 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <id column="type_code" property="typeCode" jdbcType="VARCHAR" />
     <result column="detail_nm" property="detailNm" jdbcType="VARCHAR" />
+    <result column="buy_amt" property="buyAmt" jdbcType="DECIMAL" />
+    <result column="buy_qty" property="buyQty" jdbcType="INTEGER" />
+    <result column="devidend_cnt" property="devidendCnt" jdbcType="INTEGER" />
+    <result column="sales_bonus_per" property="salesBonusPer" jdbcType="DECIMAL" />
+    <result column="sales_bonus_per1" property="salesBonusPer1" jdbcType="DECIMAL" />
+    <result column="sales_bonus_per2" property="salesBonusPer2" jdbcType="DECIMAL" />
+    <result column="profit_per" property="profitPer" jdbcType="DECIMAL" />
+    <result column="discount" property="discount" jdbcType="DECIMAL" />
     <result column="max_percent" property="maxPercent" jdbcType="DECIMAL" />
     <result column="min_percent" property="minPercent" jdbcType="DECIMAL" />
     <result column="max_amt" property="maxAmt" jdbcType="DECIMAL" />
     <result column="min_amt" property="minAmt" jdbcType="DECIMAL" />
+    <result column="recommend_cnt" property="recommendCnt" jdbcType="INTEGER" />
+    <result column="remain_cnt" property="remainCnt" jdbcType="INTEGER" />
     <result column="create_id" property="createId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
@@ -74,8 +84,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    detail_code, id, type_code, detail_nm, max_percent, min_percent, max_amt, min_amt, 
-    create_id, create_time, update_id, update_time
+    detail_code, id, type_code, detail_nm, buy_amt, buy_qty, devidend_cnt, sales_bonus_per, 
+    sales_bonus_per1, sales_bonus_per2, profit_per, discount, max_percent, min_percent, 
+    max_amt, min_amt, recommend_cnt, remain_cnt, create_id, create_time, update_id, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.basicManage.model.BasicManageExample" >
     select
@@ -114,15 +125,21 @@
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.basicManage.model.BasicManage" >
     insert into basic_manage (detail_code, id, type_code, 
-      detail_nm, max_percent, min_percent, 
-      max_amt, min_amt, create_id, 
-      create_time, update_id, update_time
-      )
+      detail_nm, buy_amt, buy_qty, 
+      devidend_cnt, sales_bonus_per, sales_bonus_per1, 
+      sales_bonus_per2, profit_per, discount, 
+      max_percent, min_percent, max_amt, 
+      min_amt, recommend_cnt, remain_cnt, 
+      create_id, create_time, update_id, 
+      update_time)
     values (#{detailCode,jdbcType=VARCHAR}, #{id,jdbcType=INTEGER}, #{typeCode,jdbcType=VARCHAR}, 
-      #{detailNm,jdbcType=VARCHAR}, #{maxPercent,jdbcType=DECIMAL}, #{minPercent,jdbcType=DECIMAL}, 
-      #{maxAmt,jdbcType=DECIMAL}, #{minAmt,jdbcType=DECIMAL}, #{createId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{detailNm,jdbcType=VARCHAR}, #{buyAmt,jdbcType=DECIMAL}, #{buyQty,jdbcType=INTEGER}, 
+      #{devidendCnt,jdbcType=INTEGER}, #{salesBonusPer,jdbcType=DECIMAL}, #{salesBonusPer1,jdbcType=DECIMAL}, 
+      #{salesBonusPer2,jdbcType=DECIMAL}, #{profitPer,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, 
+      #{maxPercent,jdbcType=DECIMAL}, #{minPercent,jdbcType=DECIMAL}, #{maxAmt,jdbcType=DECIMAL}, 
+      #{minAmt,jdbcType=DECIMAL}, #{recommendCnt,jdbcType=INTEGER}, #{remainCnt,jdbcType=INTEGER}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.basicManage.model.BasicManage" >
     insert into basic_manage
@@ -139,6 +156,30 @@
       <if test="detailNm != null" >
         detail_nm,
       </if>
+      <if test="buyAmt != null" >
+        buy_amt,
+      </if>
+      <if test="buyQty != null" >
+        buy_qty,
+      </if>
+      <if test="devidendCnt != null" >
+        devidend_cnt,
+      </if>
+      <if test="salesBonusPer != null" >
+        sales_bonus_per,
+      </if>
+      <if test="salesBonusPer1 != null" >
+        sales_bonus_per1,
+      </if>
+      <if test="salesBonusPer2 != null" >
+        sales_bonus_per2,
+      </if>
+      <if test="profitPer != null" >
+        profit_per,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
       <if test="maxPercent != null" >
         max_percent,
       </if>
@@ -150,6 +191,12 @@
       </if>
       <if test="minAmt != null" >
         min_amt,
+      </if>
+      <if test="recommendCnt != null" >
+        recommend_cnt,
+      </if>
+      <if test="remainCnt != null" >
+        remain_cnt,
       </if>
       <if test="createId != null" >
         create_id,
@@ -177,6 +224,30 @@
       <if test="detailNm != null" >
         #{detailNm,jdbcType=VARCHAR},
       </if>
+      <if test="buyAmt != null" >
+        #{buyAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="buyQty != null" >
+        #{buyQty,jdbcType=INTEGER},
+      </if>
+      <if test="devidendCnt != null" >
+        #{devidendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="salesBonusPer != null" >
+        #{salesBonusPer,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer1 != null" >
+        #{salesBonusPer1,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer2 != null" >
+        #{salesBonusPer2,jdbcType=DECIMAL},
+      </if>
+      <if test="profitPer != null" >
+        #{profitPer,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=DECIMAL},
+      </if>
       <if test="maxPercent != null" >
         #{maxPercent,jdbcType=DECIMAL},
       </if>
@@ -188,6 +259,12 @@
       </if>
       <if test="minAmt != null" >
         #{minAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="recommendCnt != null" >
+        #{recommendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="remainCnt != null" >
+        #{remainCnt,jdbcType=INTEGER},
       </if>
       <if test="createId != null" >
         #{createId,jdbcType=INTEGER},
@@ -224,6 +301,30 @@
       <if test="record.detailNm != null" >
         detail_nm = #{record.detailNm,jdbcType=VARCHAR},
       </if>
+      <if test="record.buyAmt != null" >
+        buy_amt = #{record.buyAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.buyQty != null" >
+        buy_qty = #{record.buyQty,jdbcType=INTEGER},
+      </if>
+      <if test="record.devidendCnt != null" >
+        devidend_cnt = #{record.devidendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.salesBonusPer != null" >
+        sales_bonus_per = #{record.salesBonusPer,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salesBonusPer1 != null" >
+        sales_bonus_per1 = #{record.salesBonusPer1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salesBonusPer2 != null" >
+        sales_bonus_per2 = #{record.salesBonusPer2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.profitPer != null" >
+        profit_per = #{record.profitPer,jdbcType=DECIMAL},
+      </if>
+      <if test="record.discount != null" >
+        discount = #{record.discount,jdbcType=DECIMAL},
+      </if>
       <if test="record.maxPercent != null" >
         max_percent = #{record.maxPercent,jdbcType=DECIMAL},
       </if>
@@ -235,6 +336,12 @@
       </if>
       <if test="record.minAmt != null" >
         min_amt = #{record.minAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.recommendCnt != null" >
+        recommend_cnt = #{record.recommendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="record.remainCnt != null" >
+        remain_cnt = #{record.remainCnt,jdbcType=INTEGER},
       </if>
       <if test="record.createId != null" >
         create_id = #{record.createId,jdbcType=INTEGER},
@@ -259,10 +366,20 @@
       id = #{record.id,jdbcType=INTEGER},
       type_code = #{record.typeCode,jdbcType=VARCHAR},
       detail_nm = #{record.detailNm,jdbcType=VARCHAR},
+      buy_amt = #{record.buyAmt,jdbcType=DECIMAL},
+      buy_qty = #{record.buyQty,jdbcType=INTEGER},
+      devidend_cnt = #{record.devidendCnt,jdbcType=INTEGER},
+      sales_bonus_per = #{record.salesBonusPer,jdbcType=DECIMAL},
+      sales_bonus_per1 = #{record.salesBonusPer1,jdbcType=DECIMAL},
+      sales_bonus_per2 = #{record.salesBonusPer2,jdbcType=DECIMAL},
+      profit_per = #{record.profitPer,jdbcType=DECIMAL},
+      discount = #{record.discount,jdbcType=DECIMAL},
       max_percent = #{record.maxPercent,jdbcType=DECIMAL},
       min_percent = #{record.minPercent,jdbcType=DECIMAL},
       max_amt = #{record.maxAmt,jdbcType=DECIMAL},
       min_amt = #{record.minAmt,jdbcType=DECIMAL},
+      recommend_cnt = #{record.recommendCnt,jdbcType=INTEGER},
+      remain_cnt = #{record.remainCnt,jdbcType=INTEGER},
       create_id = #{record.createId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_id = #{record.updateId,jdbcType=INTEGER},
@@ -277,6 +394,30 @@
       <if test="detailNm != null" >
         detail_nm = #{detailNm,jdbcType=VARCHAR},
       </if>
+      <if test="buyAmt != null" >
+        buy_amt = #{buyAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="buyQty != null" >
+        buy_qty = #{buyQty,jdbcType=INTEGER},
+      </if>
+      <if test="devidendCnt != null" >
+        devidend_cnt = #{devidendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="salesBonusPer != null" >
+        sales_bonus_per = #{salesBonusPer,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer1 != null" >
+        sales_bonus_per1 = #{salesBonusPer1,jdbcType=DECIMAL},
+      </if>
+      <if test="salesBonusPer2 != null" >
+        sales_bonus_per2 = #{salesBonusPer2,jdbcType=DECIMAL},
+      </if>
+      <if test="profitPer != null" >
+        profit_per = #{profitPer,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DECIMAL},
+      </if>
       <if test="maxPercent != null" >
         max_percent = #{maxPercent,jdbcType=DECIMAL},
       </if>
@@ -288,6 +429,12 @@
       </if>
       <if test="minAmt != null" >
         min_amt = #{minAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="recommendCnt != null" >
+        recommend_cnt = #{recommendCnt,jdbcType=INTEGER},
+      </if>
+      <if test="remainCnt != null" >
+        remain_cnt = #{remainCnt,jdbcType=INTEGER},
       </if>
       <if test="createId != null" >
         create_id = #{createId,jdbcType=INTEGER},
@@ -309,10 +456,20 @@
   <update id="updateByPrimaryKey" parameterType="com.distribution.dao.basicManage.model.BasicManage" >
     update basic_manage
     set detail_nm = #{detailNm,jdbcType=VARCHAR},
+      buy_amt = #{buyAmt,jdbcType=DECIMAL},
+      buy_qty = #{buyQty,jdbcType=INTEGER},
+      devidend_cnt = #{devidendCnt,jdbcType=INTEGER},
+      sales_bonus_per = #{salesBonusPer,jdbcType=DECIMAL},
+      sales_bonus_per1 = #{salesBonusPer1,jdbcType=DECIMAL},
+      sales_bonus_per2 = #{salesBonusPer2,jdbcType=DECIMAL},
+      profit_per = #{profitPer,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
       max_percent = #{maxPercent,jdbcType=DECIMAL},
       min_percent = #{minPercent,jdbcType=DECIMAL},
       max_amt = #{maxAmt,jdbcType=DECIMAL},
       min_amt = #{minAmt,jdbcType=DECIMAL},
+      recommend_cnt = #{recommendCnt,jdbcType=INTEGER},
+      remain_cnt = #{remainCnt,jdbcType=INTEGER},
       create_id = #{createId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_id = #{updateId,jdbcType=INTEGER},

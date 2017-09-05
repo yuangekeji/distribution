@@ -35,6 +35,9 @@
     <if test="bonusAmt!=null and bonusAmt!='' and bonusAmt >0 ">
         bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
     </if>
+    <if test="advanceAmt!=null and advanceAmt!='' and advanceAmt >0 ">
+        advance_amt = #{advanceAmt,jdbcType=DECIMAL},
+    </if>
     update_id = #{updateId,jdbcType=INTEGER},
     update_time = #{updateTime,jdbcType=TIMESTAMP}
     where member_id = #{memberId,jdbcType=INTEGER}

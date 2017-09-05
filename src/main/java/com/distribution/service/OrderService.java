@@ -1,6 +1,7 @@
 package com.distribution.service;
 
 import com.distribution.common.constant.Constant;
+import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
@@ -8,7 +9,10 @@ import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.dividend.mapper.DividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
+import com.distribution.dao.member.mapper.more.MoreMemberMapper;
+import com.distribution.dao.member.model.Member;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
+import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -32,6 +38,9 @@ public class OrderService {
 
     @Autowired
     private DividendMapper dividendMapper;
+
+    @Autowired
+    private MoreMemberMapper memberMapper;
     /**
      * description 订单列表查询
      * @author WYN
@@ -148,7 +157,6 @@ public class OrderService {
            if(cnt4 == 0){
                 throw new RuntimeException();
             }
-
         }
 
         //报单，复投做奖金处理
@@ -186,4 +194,39 @@ public class OrderService {
 
         return orderNo;
     }
+
+    public String insertReOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
+
+
+        //根据member_id 和 paypwd 查询会员是否存在
+        Map param = new HashMap();
+        param.put("memberId",currentUser.getId());
+        param.put("memberPhone",currentUser.getMemberPhone());
+        param.put("payPassword", CryptoUtil.md5ByHex(moreOrderMaster.getPayPassword()));
+
+        Integer count = memberMapper.findMatchMemberQueryPwd(param);
+
+        if(count != null  && count >0 ) {
+            moreOrderMaster.setOrderCategory("2");
+            moreOrderMaster.setDiscount(0);
+            moreOrderMaster.setActAmt(moreOrderMaster.getOrderAmt());
+            moreOrderMaster.setExpressFee(new BigDecimal(0));
+            moreOrderMaster.setMemberId(currentUser.getId());
+            moreOrderMaster.setReceiveName(currentUser.getConsignee());
+            moreOrderMaster.setExpressAddress(currentUser.getExpressAddress());
+            moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
+            moreOrderMaster.setOrderStatues("2");
+            moreOrderMaster.setCreateId(currentUser.getId());
+            moreOrderMaster.setCreateTime(new Date());
+            moreOrderMaster.setUpdateId(currentUser.getId());
+            moreOrderMaster.setUpdateTime(new Date());
+            String result = this.insertOrder(moreOrderMaster);
+
+            return result;
+        }
+
+        return "pwdWrong";
+
+        }
+
 }

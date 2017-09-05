@@ -12,7 +12,7 @@ public class AdminService {
 
     /**
      * description 管理员列表
-     * @author WYB
+     * @author WYN
      * */
     public Page adminList(Page page){
 

@@ -1,3 +1,190 @@
-angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal) {
     title.setTitle('申请提现');
+    $scope.user = $sessionStorage.currentUser;
+    //定义提现model
+    $scope.advance = {};
+    //个人信息
+    $scope.MemberInfo = {
+        bankName    : '',
+        bankUserName: '',
+        cardNumber  : ''
+    };
+
+
+    //账户信息
+    $scope.accountInfo = {};
+    $scope.validateErrors ={};
+    $scope.advanceValidateErrors={};
+
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
+    /**
+     * 页面初始化查询账户信息
+     */
+    $scope.getAccount =function () {
+        $scope.startLoading();
+        $http.get(ctx + '/advance/getAccountInfo').success(function (resp) {
+
+            if(resp.successful){
+                $scope.accountInfo = resp.data.account;
+            }else{
+                console.error('获取账户信息错误，请重新尝试');
+            }
+            $scope.stopLoading();
+        });
+
+    }
+
+    /**
+     * 页面初始化查询个人信息
+     */
+    $scope.getMemberInfo = function () {
+       $scope.startLoading();
+        $http.get(ctx + '/member/getMemberInfo/'+$scope.user.id).success(function (resp) {
+            if(resp.successful){
+                $scope.MemberInfo = resp.data.member;
+                $scope.banks = resp.data.list;
+            }else{
+                console.log(resp);
+            }
+           $scope.stopLoading();
+        });
+    }
+    $scope.onInit=function () {
+        $scope.getMemberInfo();
+        $scope.getAccount();
+
+        $scope.advance = {
+            reqAmt      : 0.00,
+            feeAmt      : 0.00,
+            actAmt      : 0.00,
+            payPassword : ''
+        };
+    }
+    $scope.onInit();
+
+
+    $scope.advanceCommit= function () {
+
+
+        if( !$scope.advanceValidate()) {
+            ConfirmModal.show({text: '请填写完整的提现信息', isCancel:false });
+            return false;
+        }
+
+        if($scope.advance.reqAmt < 100  ){
+            ConfirmModal.show({text: '100元以上金额可以申请提现', isCancel:false });
+            return false;
+        }
+
+        if($scope.advance.reqAmt % 100 != 0  ){
+            ConfirmModal.show({text: '提现金额应为100的整数倍', isCancel:false });
+            return false;
+        }
+
+        if($scope.advance.reqAmt >  $scope.accountInfo.bonusAmt){
+            ConfirmModal.show({text: '提现金额不能大于账户总余额', isCancel:false });
+            return false;
+        }
+
+        $scope.startLoading();
+
+        //alert($scope.MemberInfo.bankName + $scope.MemberInfo.bankUserName + $scope.MemberInfo.cardNumber);
+        $http.post(ctx + '/advance/insertAdvance',
+            {
+                bankName    : $scope.MemberInfo.bankName,
+                cardName    : $scope.MemberInfo.bankUserName,
+                cardNo      : $scope.MemberInfo.cardNumber,
+                reqAmt      : $scope.advance.reqAmt,
+                feeAmt      : $scope.advance.feeAmt,
+                actAmt      : $scope.advance.actAmt,
+                payPassword : $scope.advance.payPassword
+            }).success(function (resp) {
+
+            $scope.stopLoading();
+            //处理完成后重新获取账户信息，个人信息
+            $scope.onInit();
+            if(resp.successful) {
+                $scope.msg = "";
+                if (resp.data.result == 'success') {
+                    $scope.msg = "提现成功";
+                } else if (resp.data.result == 'pwdWrong') {
+                    $scope.msg = "支付密码错误";
+                } else if (resp.data.result == 'fail') {
+                    $scope.msg = "提现失败，请重新尝试";
+                }
+                ConfirmModal.show({text: $scope.msg, isCancel: false});
+                $scope.go("app.advance");
+
+            }else{
+                console.error("提现失败，请稍后再试");
+                //失败后停止loading，刷新页面
+                $scope.stopLoading();
+                $window.location.reload();
+            }
+        });
+    }
+
+    /**
+     * 提现校验
+     * @returns {*}
+     */
+    $scope.advanceValidate = function () {
+        $scope.advanceValidateErrors={};
+
+        for (conditionthis in $scope.advanceValidateConditionArray) {
+            $scope.advanceValidateConditionArray[conditionthis]();
+        }
+        return $.isEmptyObject(this.advanceValidateErrors)
+    }
+
+    $scope.advanceValidateConditionArray = {
+        bankNameError: function () {
+            if (angular.isUndefined($scope.MemberInfo.bankName) ||
+                $scope.MemberInfo.bankName.length <= 0) {
+                $scope.advanceValidateErrors.bankNameError = true;
+            }
+        },
+        bankUserNameError: function () {
+            if (angular.isUndefined($scope.MemberInfo.bankUserName) ||
+                $scope.MemberInfo.bankUserName.length <= 0) {
+                $scope.advanceValidateErrors.bankUserNameError = true;
+            }
+        },
+        cardNumberError: function () {
+            if (angular.isUndefined($scope.MemberInfo.cardNumber) ||
+                $scope.MemberInfo.cardNumber.length <= 0) {
+                $scope.advanceValidateErrors.cardNumberError = true;
+            }
+        },
+        advanceAmtError: function () {
+            if (angular.isUndefined($scope.advance.reqAmt) ||
+                $scope.advance.reqAmt <= 0) {
+                $scope.advanceValidateErrors.advanceAmtError = true;
+            }
+        },
+
+        payPasswordError: function () {
+            if (angular.isUndefined($scope.advance.payPassword) ||
+                $scope.advance.payPassword.length <= 0) {
+                $scope.advanceValidateErrors.payPasswordError = true;
+            }
+        }
+    }
+
+    $scope.changeReqAmt = function () {
+        $scope.advance.feeAmt = ($scope.advance.reqAmt * 0.06).toFixed(2);
+        $scope.advance.actAmt = $scope.advance.reqAmt - $scope.advance.feeAmt;
+    }
 });

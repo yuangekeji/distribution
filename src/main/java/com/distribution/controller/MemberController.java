@@ -142,10 +142,12 @@ public class MemberController extends BasicController {
     public JsonMessage getMemberInfo(@PathVariable Integer id){
         MoreMember moreMember = memberService.selectMemberInfo(id);
         List<Dictionary> list = commonService.selectDictionary("bank_name");
+        Integer it = memberService.getByMemberId(id);
 
         Map result= new HashMap();
         result.put("member",moreMember);
         result.put("list",list);
+        result.put("it",it);
         return successMsg(result);
     }
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Created by WIYN on 2017/8/27.
@@ -50,22 +50,31 @@ public class OrderController extends BasicController{
             currentUser = (Member) getCurrentUser(session);
         }
 
-        /*test
-        moreOrder.setOrderCategory("1");
-        moreOrder.setOrderAmt(new BigDecimal(600));
-        moreOrder.setOrderQty(1);
-        moreOrder.setActAmt(new BigDecimal(600));
-        moreOrder.setBonusAmt(new BigDecimal(0));
-        moreOrder.setSeedAmt(new BigDecimal(0));
-        moreOrder.setGoodsCd(1);
-        moreOrder.setMemberId(currentUser.getId());
-        moreOrder.setMemberLevel(currentUser.getMemberLevel());
-        moreOrder.setExpressFee(new BigDecimal(10));
-        moreOrder.setExpressAddress("辽宁省大连市");*/
-
-
 
         String result = orderService.insertOrder(moreOrderMaster);
+        return successMsg("result",result);
+    }
+
+    /**
+     * description 确认收货
+     * @author WYN
+     * */
+    @RequestMapping("/confirmOrder")
+    @ResponseBody
+    public JsonMessage confirmOrder(Integer id, Long orderNo, String orderStatues, HttpSession session){
+        Member currentUser = null;
+        if(getCurrentUser(session) instanceof Member) {
+            currentUser = (Member) getCurrentUser(session);
+        }
+
+        MoreOrderMaster moreOrderMaster = new MoreOrderMaster();
+        moreOrderMaster.setId(id);
+        moreOrderMaster.setOrderNo(orderNo);
+        moreOrderMaster.setOrderStatues(orderStatues);
+        moreOrderMaster.setUpdateId(currentUser.getId());
+        moreOrderMaster.setUpdateTime(new Date());
+
+        String result = orderService.confirmOrder(moreOrderMaster);
         return successMsg("result",result);
     }
 

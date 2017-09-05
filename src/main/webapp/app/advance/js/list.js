@@ -6,7 +6,11 @@ angular.module('advance').controller('advanceListCtrl',function ($q, title, $sco
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {}
+        parameterMap: {
+            statues:'',
+            startTime:'',
+            endTime:''
+        }
     };
 
     $scope.search = function(){
@@ -52,6 +56,10 @@ angular.module('advance').controller('advanceListCtrl',function ($q, title, $sco
     $scope.pageChangeHandler = function(num) {
         $scope.myPage.pageNo = num;
         $scope.search();
+    };
+
+    $scope.gotoAddPage = function () {
+        $state.go("app.advanceAdd");
     };
 });
 

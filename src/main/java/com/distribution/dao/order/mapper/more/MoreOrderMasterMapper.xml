@@ -78,9 +78,12 @@
          , a.create_time
          , a.update_id
          , a.update_time
-      FROM order_master a,  order_detail b, goods c
-      WHERE a.order_no = b.order_no
-        AND b.goods_cd = c.id
+      FROM order_master a
+      LEFT JOIN order_detail b
+        ON a.order_no = b.order_no
+      LEFT JOIN goods c
+        ON b.goods_cd = c.id
+      WHERE 1 = 1
         <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
             AND a.member_id = #{parameterMap.memberId}
         </if>

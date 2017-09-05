@@ -137,4 +137,11 @@
     #{firstAgentCnt,jdbcType=INTEGER}, #{recommendName,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}
     )
   </insert>
+  
+  <select id="getPostLevel6Member" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    select
+      id, member_name, member_post
+    from member
+    where member_post = 'post_level6'
+  </select>
 </mapper>

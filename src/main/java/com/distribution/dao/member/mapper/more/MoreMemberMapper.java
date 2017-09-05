@@ -42,4 +42,9 @@ public interface MoreMemberMapper extends MemberMapper{
      * @author Bright
      * */
     int insert(Member member);
+    /**
+     * description 查询全国董事会员人数
+     * @author shiqing
+     * */
+    List<Member> getPostLevel6Member();
 }

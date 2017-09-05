@@ -1,4 +1,4 @@
-angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope) {
+angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,ConfirmModal) {
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
@@ -31,10 +31,10 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         if($scope.applyFlag) {
             $scope.applyFlag = false;
             if($scope.MemberInfo.orderTotalAmount<30000){
-                alert("订单金额累计达到3万可申请成为运营中心,您的订单累计金额为"+$scope.MemberInfo.orderTotalAmount);
+                ConfirmModal.show({text: "订单金额累计达到3万可申请成为运营中心,您的订单累计金额为"+$scope.MemberInfo.orderTotalAmount, isCancel:false });
                 $scope.applyFlag = true;
             }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it>0){
-                alert("您已提交过成为运营中心申请，请耐心等待");
+                ConfirmModal.show({text: "您已提交过成为运营中心申请，请耐心等待", isCancel:false });
                 $scope.applyFlag = true;
             }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it==0){
                 $http.post(ctx + '/member/apply', {

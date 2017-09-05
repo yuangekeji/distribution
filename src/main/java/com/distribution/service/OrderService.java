@@ -1,6 +1,7 @@
 package com.distribution.service;
 
 import com.distribution.common.constant.Constant;
+import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
@@ -8,7 +9,10 @@ import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.dividend.mapper.DividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
+import com.distribution.dao.member.mapper.more.MoreMemberMapper;
+import com.distribution.dao.member.model.Member;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
+import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -32,6 +38,9 @@ public class OrderService {
 
     @Autowired
     private DividendMapper dividendMapper;
+
+    @Autowired
+    private MoreMemberMapper memberMapper;
     /**
      * description 订单列表查询
      * @author WYN
@@ -49,7 +58,7 @@ public class OrderService {
 
     /**
      * description 插入订单
-     * @author Bright
+     * @author WYN
      * */
     public String insertOrder(MoreOrderMaster moreOrderMaster){
         int cnt1 = 0;
@@ -148,7 +157,6 @@ public class OrderService {
            if(cnt4 == 0){
                 throw new RuntimeException();
             }
-
         }
 
         //报单，复投做奖金处理
@@ -163,27 +171,83 @@ public class OrderService {
     }
 
     /**
-     * description 插入订单
-     * @author Bright
+     * description 订单号生成
+     * @author WYN
      * */
     public Long getOrderNo(){
         int max = 100;
         int min = 1;
 
-        long t = System.currentTimeMillis();//获得当前时间的毫秒数
-        Random rd = new Random(t);//作为种子数传入到Random的构造器中
+        long timeMillis = System.currentTimeMillis();//获得当前时间的毫秒数
+        Random rd = new Random(timeMillis);//作为种子数传入到Random的构造器中
 
-        int s = rd.nextInt(max)%(max-min+1) + min;
+        int num = rd.nextInt(max)%(max-min+1) + min;
+        String strNum = "";
+        if(num < 10){
+            strNum = "00" + num;
+        }else if (num >= 10 && num < 100){
+            strNum = "0" + num;
+        }else{
+            strNum = num + "";
+        }
 
-        Date d = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String sd = sdf.format(d);
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddHHmmss");
+        String strDate = sdf.format(date);
 
-        String str = sd + s + "";
+        String str = strDate + strNum;
 
         long orderNo = Long.valueOf(str).longValue();
-       // BigInteger orderNo = BigInteger.valueOf(order);
 
         return orderNo;
+    }
+
+
+    public String insertReOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
+
+
+        //根据member_id 和 paypwd 查询会员是否存在
+        Map param = new HashMap();
+        param.put("memberId",currentUser.getId());
+        param.put("memberPhone",currentUser.getMemberPhone());
+        param.put("payPassword", CryptoUtil.md5ByHex(moreOrderMaster.getPayPassword()));
+
+        Integer count = memberMapper.findMatchMemberQueryPwd(param);
+
+        if(count != null  && count >0 ) {
+            moreOrderMaster.setOrderCategory("2");
+            moreOrderMaster.setDiscount(0);
+            moreOrderMaster.setActAmt(moreOrderMaster.getOrderAmt());
+            moreOrderMaster.setExpressFee(new BigDecimal(0));
+            moreOrderMaster.setMemberId(currentUser.getId());
+            moreOrderMaster.setReceiveName(currentUser.getConsignee());
+            moreOrderMaster.setExpressAddress(currentUser.getExpressAddress());
+            moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
+            moreOrderMaster.setOrderStatues("2");
+            moreOrderMaster.setCreateId(currentUser.getId());
+            moreOrderMaster.setCreateTime(new Date());
+            moreOrderMaster.setUpdateId(currentUser.getId());
+            moreOrderMaster.setUpdateTime(new Date());
+            String result = this.insertOrder(moreOrderMaster);
+
+            return result;
+        }
+
+        return "pwdWrong";
+
+    }
+
+    /**
+     * description 确认收货
+     * @author WYN
+     * */
+    public String confirmOrder(MoreOrderMaster moreOrderMaster) {
+        int cnt = moreOrderMasterMapper.confirmOrder(moreOrderMaster);
+
+        if(cnt > 0){
+            return "success";
+        }else{
+            throw new RuntimeException();
+        }
     }
 }

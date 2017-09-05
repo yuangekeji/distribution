@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.advance.mapper.more.MoreAdvanceMapper" >
+    <resultMap id="BaseResultMap" type="com.distribution.dao.advance.model.more.MoreAdvance" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="member_id" property="memberId" jdbcType="INTEGER" />
+        <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+        <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+        <result column="req_amt" property="reqAmt" jdbcType="DECIMAL" />
+        <result column="act_amt" property="actAmt" jdbcType="DECIMAL" />
+        <result column="fee_amt" property="feeAmt" jdbcType="DECIMAL" />
+        <result column="request_date" property="requestDate" jdbcType="DATE" />
+        <result column="approve_date" property="approveDate" jdbcType="DATE" />
+        <result column="statues" property="statues" jdbcType="CHAR" />
+        <result column="create_id" property="createId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_id" property="updateId" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        id, member_id, bank_name, card_no, card_name, req_amt, act_amt, fee_amt, request_date,
+        approve_date, statues, create_id, create_time, update_id, update_time
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="parameterMap.id!=null and parameterMap.id!=''">
+                AND id = #{parameterMap.id}
+            </if>
+            <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+                AND member_id = #{parameterMap.memberId}
+            </if>
+            <if test="parameterMap.statues!=null and parameterMap.statues!=''">
+                AND statues = #{parameterMap.statues}
+            </if>
+            <if test="parameterMap.start!=null and parameterMap.start!=''">
+                AND create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="pageLimit">
+        <if test="pageSize!=null">
+            <if test="offset!=null">
+                LIMIT #{pageSize} OFFSET #{offset}
+            </if>
+        </if>
+    </sql>
+
+    <!--查詢提现列表-->
+    <select id="getAdvanceList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+        SELECT a.id
+             , a.member_id
+             , b.member_name
+             , a.bank_name
+             , a.card_no
+             , a.card_name
+             , a.req_amt
+             , a.act_amt
+             , a.fee_amt
+             , a.request_date
+             , a.approve_date
+             , a.statues
+             , a.create_id
+             , a.create_time
+             , a.update_id
+             , a.update_time
+        FROM advance a
+        LEFT JOIN member b
+        ON a.member_id = b.id
+        WHERE 1 = 1
+        <if test="parameterMap.id!=null and parameterMap.id!=''">
+            AND a.id = #{parameterMap.id}
+        </if>
+        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+            AND a.member_id = #{parameterMap.memberId}
+        </if>
+        <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+            AND b.member_name LIKE '${parameterMap.memberName}%'
+        </if>
+        <if test="parameterMap.statues!=null and parameterMap.statues!=''">
+            AND a.statues = #{parameterMap.statues}
+        </if>
+        <if test="parameterMap.start!=null and parameterMap.start!=''">
+            AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+        </if>
+        order by id desc
+        <include refid="pageLimit"/>
+    </select>
+
+    <!--查詢总数-->
+    <select id="getAdvanceListCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer" >
+        SELECT count(*)
+        FROM advance a
+        LEFT JOIN member b
+        ON a.member_id = b.id
+        WHERE 1 = 1
+        <if test="parameterMap.id!=null and parameterMap.id!=''">
+            AND a.id = #{parameterMap.id}
+        </if>
+        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+            AND a.member_id = #{parameterMap.memberId}
+        </if>
+        <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+            AND b.member_name LIKE '${parameterMap.memberName}%'
+        </if>
+        <if test="parameterMap.statues!=null and parameterMap.statues!=''">
+            AND a.statues = #{parameterMap.statues}
+        </if>
+        <if test="parameterMap.start!=null and parameterMap.start!=''">
+            AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+        </if>
+    </select>
+
+    <!--查詢提现列表-->
+    <!--<select id="getAdvanceList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from advance
+        <include refid="where"/>
+        order by id desc
+        <include refid="pageLimit"/>
+    </select>-->
+
+    <!--查詢总数-->
+    <!--<select id="getAdvanceListCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer" >
+        select count(*)
+        from advance
+        <include refid="where"/>
+    </select>-->
+
+
+    <insert id="insert" parameterType="com.distribution.dao.advance.model.Advance" >
+        insert into advance (id, member_id, bank_name,
+        card_no, card_name, req_amt,
+        act_amt, fee_amt, request_date,
+        approve_date, statues, create_id,
+        create_time, update_id, update_time
+        )
+        values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR},
+        #{cardNo,jdbcType=VARCHAR}, #{cardName,jdbcType=VARCHAR}, #{reqAmt,jdbcType=DECIMAL},
+        #{actAmt,jdbcType=DECIMAL}, #{feeAmt,jdbcType=DECIMAL}, #{requestDate,jdbcType=DATE},
+        #{approveDate,jdbcType=DATE}, #{statues,jdbcType=CHAR}, #{createId,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+
+
+    <update id="updateByPrimaryKey" parameterType="com.distribution.dao.advance.model.Advance" >
+        update advance
+        set member_id = #{memberId,jdbcType=INTEGER},
+        bank_name = #{bankName,jdbcType=VARCHAR},
+        card_no = #{cardNo,jdbcType=VARCHAR},
+        card_name = #{cardName,jdbcType=VARCHAR},
+        req_amt = #{reqAmt,jdbcType=DECIMAL},
+        act_amt = #{actAmt,jdbcType=DECIMAL},
+        fee_amt = #{feeAmt,jdbcType=DECIMAL},
+        request_date = #{requestDate,jdbcType=DATE},
+        approve_date = #{approveDate,jdbcType=DATE},
+        statues = #{statues,jdbcType=CHAR},
+        create_id = #{createId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        update_id = #{updateId,jdbcType=INTEGER},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="confirmAdvance" parameterType="com.distribution.dao.advance.model.more.MoreAdvance" >
+        update advance
+        set statues = #{statues,jdbcType=CHAR},
+        update_id = #{updateId,jdbcType=INTEGER},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

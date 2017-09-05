@@ -83,7 +83,8 @@ angular
             {
                 name:'advance.add',
                 files: [
-                    'app/advance/js/add.js?v=' + version
+                    'app/advance/js/add.js?v=' + version,
+                    'static/metronic/global/plugins/fuelux/js/spinner.min.js'
                 ]
             },
             {

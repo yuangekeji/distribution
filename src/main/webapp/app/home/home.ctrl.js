@@ -1,6 +1,6 @@
 angular.module('home').controller('homeCtrl',
-    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $window) {
-    title.setTitle('home');
+    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $window,Notify) {
+    title.setTitle('主页');
 
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
@@ -16,14 +16,9 @@ angular.module('home').controller('homeCtrl',
     $scope.currentUser = $sessionStorage.currentUser;
 
     $scope.test =function () {
-        ConfirmModal.show({
-            text: '确定要转账给该用户3000.00吗？',
-            isCancel:false //false alert ,true confirm
-        }).then(function (sure) {
-            if (!sure) {
-                return;
-            }
-        })
+        Notify.warning('请填写完整的转账信息');
+        Notify.success('请填写完整的转账信息');
+        Notify.error('请填写完整的转账信息');
     }
     /**
      * description 激活弹出窗
@@ -54,29 +49,29 @@ angular.module('home').controller('homeCtrl',
      * */
     $scope.activation = function () {
         if(!$scope.currentUser.idNumber||!$scope.currentUser.idNumber.trim()){
-            alert("请输入身份证号码。");
+            ConfirmModal.show({text: "请输入身份证号码。", isCancel:false });
         }else if(!/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test($scope.currentUser.idNumber.trim())){
-            alert("身份证号码格式有误，请重新输入。")
+            ConfirmModal.show({text: "身份证号码格式有误，请重新输入。", isCancel:false });
         }else if(!$scope.currentUser.bankName){
-            alert("请选择开户行。")
+            ConfirmModal.show({text: "请选择开户行。", isCancel:false });
         }else if(!$scope.currentUser.bankUserName||!$scope.currentUser.bankUserName.trim()){
-            alert("请输入开户人姓名。");
+            ConfirmModal.show({text: "请输入开户人姓名。", isCancel:false });
         }else if(!$scope.currentUser.cardNumber||!$scope.currentUser.cardNumber.trim()){
-            alert("请输入银行卡号。")
+            ConfirmModal.show({text: "请输入银行卡号。", isCancel:false });
         }else if(!/^[0-9]*$/.test($scope.currentUser.cardNumber)){
-            alert("银行卡号只能为纯数字，请重新输入。")
+            ConfirmModal.show({text: "银行卡号只能为纯数字，请重新输入。", isCancel:false });
         }else if(!$scope.currentUser.queryPassword||!$scope.currentUser.queryPassword.trim()){
-            alert("请输入二级密码。")
+            ConfirmModal.show({text: "请输入二级密码。", isCancel:false });
         }else if(!$scope.queryPasswordConfirm||!$scope.queryPasswordConfirm.trim()){
-            alert("请确认二级密码。")
+            ConfirmModal.show({text: "请确认二级密码。", isCancel:false });
         }else if($scope.currentUser.queryPassword!=$scope.queryPasswordConfirm){
-            alert("二级密码和二级密码确认不同，请重新输入。")
+            ConfirmModal.show({text: "二级密码和二级密码确认不同，请重新输入。", isCancel:false });
         }else if(!$scope.currentUser.payPassword||!$scope.currentUser.payPassword.trim()){
-            alert("请输入三级密码。")
+            ConfirmModal.show({text: "请输入三级密码。", isCancel:false });
         }else if(!$scope.payPasswordConfirm||!$scope.payPasswordConfirm.trim()){
-            alert("请确认三级密码。")
+            ConfirmModal.show({text: "请确认三级密码。", isCancel:false });
         }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
-            alert("三级密码和三级密码确认不同,请重新输入。")
+            ConfirmModal.show({text: "三级密码和三级密码确认不同,请重新输入。", isCancel:false });
         }else{
             $scope.currentUser.status='Y';
             $http.post(ctx + "/member/activation",$scope.currentUser).success(function (resp) {

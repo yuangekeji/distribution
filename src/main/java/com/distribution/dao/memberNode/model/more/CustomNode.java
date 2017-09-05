@@ -6,6 +6,7 @@ package com.distribution.dao.memberNode.model.more;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 
 public class CustomNode {
@@ -15,8 +16,11 @@ public class CustomNode {
 	private String mobile;
 	private BigDecimal orderAmount;
 	private Date createTime;
-	private CustomNode left;
-	private CustomNode right;
+//	private CustomNode left;
+//	private CustomNode right;
+	private String flag;
+	private List<CustomNode> nodes;
+	
 	static int counter = 0;
 	
 	public CustomNode(Integer nodeId){
@@ -63,7 +67,31 @@ public class CustomNode {
 		this.createTime = createTime;
 	}
 
-	public CustomNode getLeft() {
+	public String getFlag() {
+		return flag;
+	}
+
+	public List<CustomNode> getNodes() {
+		return nodes;
+	}
+
+	public static int getCounter() {
+		return counter;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+
+	public void setNodes(List<CustomNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	public static void setCounter(int counter) {
+		CustomNode.counter = counter;
+	}
+
+	/*public CustomNode getLeft() {
 		return left;
 	}
 
@@ -77,5 +105,6 @@ public class CustomNode {
 
 	public void setRight(CustomNode right) {
 		this.right = right;
-	}
+	}*/
+	
 }

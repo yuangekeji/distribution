@@ -110,20 +110,20 @@ factory('ConfirmModal', ['$uibModal', '$q', '$sce', '$timeout', function ($uibMo
  * Module: Notify
  *js工具类库 notify.js
  =========================================================*/
-// angular.module('app').service('Notify', [function(){
-//     this.success = function(message){
-//         $.notify('<i class=\"fa fa-check \"></i> '+message,
-//             {status: 'success'});
-//     }
-//     this.error = function(message){
-//         $.notify('<i class=\"fa fa-times-circle \"></i> '+message,
-//             {status: 'danger'});
-//     }
-//     this.warning = function(message){
-//         $.notify('<i class=\"fa fa-lg fa-exclamation-triangle fload-l mt5\"></i> '+message,
-//             {status: 'warning'});
-//     }
-// }]);
+angular.module('app').service('Notify', [function(){
+    this.success = function(message){
+        $.notify('<i class=\"fa fa-check \"></i> '+message,
+            {status: 'success'});
+    }
+    this.error = function(message){
+        $.notify('<i class=\"fa fa-times-circle \"></i> '+message,
+            {status: 'danger'});
+    }
+    this.warning = function(message){
+        $.notify('<i class=\"fa fa-lg fa-exclamation-triangle fload-l mt5\"></i> '+message,
+            {status: 'warning'});
+    }
+}]);
 
 
 angular.module('app')

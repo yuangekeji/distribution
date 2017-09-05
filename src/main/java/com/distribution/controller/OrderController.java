@@ -75,11 +75,9 @@ public class OrderController extends BasicController{
         Member currentUser = null;
         if (getCurrentUser(session) instanceof Member) {
             currentUser = (Member) getCurrentUser(session);
-
         }
-
-//        String result = orderService.insertOrder(moreOrderMaster);
-        return successMsg("result",null);
+        String result = orderService.insertReOrder(moreOrderMaster,currentUser);
+        return successMsg("result",result);
 
     }
 }

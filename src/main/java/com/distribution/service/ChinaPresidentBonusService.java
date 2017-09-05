@@ -33,15 +33,11 @@ public class ChinaPresidentBonusService {
         List<Member> postLevel6MemberList = moreMemberMapper.getPostLevel6Member();
         if (postLevel6MemberList.size() > 0){
             DateBonusHistory dateBonusHistory = moreDateBonusHistoryMapper.getTotalSales(postLevel6MemberList.size());
-            System.out.println("dateBonusHistory====" + dateBonusHistory);
             if (dateBonusHistory != null) {
-                System.out.println("dateBonusHistory.getTotalSales()==="+dateBonusHistory.getTotalSales());
                 BigDecimal salesByMembers = dateBonusHistory.getTotalSales();
-                System.out.println("salesByMembers====" + salesByMembers);
                 Date date = new Date();
                 for (int i=0; i<postLevel6MemberList.size(); i++){
                     ChinaPresidentBonus chinaPresidentBonus = new ChinaPresidentBonus();
-                    System.out.println("PostLevel6MemberList====" + postLevel6MemberList.get(i).getId());
                     chinaPresidentBonus.setMemberId(postLevel6MemberList.get(i).getId());
                     chinaPresidentBonus.setBonusAmout(salesByMembers);
                     chinaPresidentBonus.setBonusDate(date);

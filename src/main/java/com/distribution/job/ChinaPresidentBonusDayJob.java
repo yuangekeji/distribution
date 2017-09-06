@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by shiqing on 2017/9/5.
  */
 @Component
-public class ChinaPresidentBonusJob {
+public class ChinaPresidentBonusDayJob {
 
     @Autowired
     private ChinaPresidentBonusService chinaPresidentBonusService;

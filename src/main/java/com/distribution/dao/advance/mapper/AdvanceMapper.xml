@@ -3,6 +3,7 @@
 <mapper namespace="com.distribution.dao.advance.mapper.AdvanceMapper" >
   <resultMap id="BaseResultMap" type="com.distribution.dao.advance.model.Advance" >
     <id column="id" property="id" jdbcType="INTEGER" />
+
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
     <result column="card_no" property="cardNo" jdbcType="VARCHAR" />

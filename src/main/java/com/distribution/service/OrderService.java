@@ -41,6 +41,9 @@ public class OrderService {
 
     @Autowired
     private MoreMemberMapper memberMapper;
+    
+    @Autowired
+    private BonusService bonusService;
     /**
      * description 订单列表查询
      * @author WYN
@@ -165,6 +168,7 @@ public class OrderService {
             if(cnt5 ==0){
                 throw new RuntimeException();
             }
+            bonusService.insertOrderBonus(moreOrderMaster);
         }
 
         return "success";

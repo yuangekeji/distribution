@@ -1,4 +1,4 @@
-angular.module('admMember').controller('admMemberCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admMember').controller('admMemberCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,ConfirmModal) {
     title.setTitle('会员管理');
     $scope.loadingFlag = true;
     $scope.notData = false;
@@ -11,6 +11,11 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         result: [],
         parameterMap: {}
     };
+    $scope.param = {
+        chargeAmt : "",
+        memberId:""
+    };
+    $scope.flag = true;
 
     $scope.initDic = function () {
         $http.get(ctx + "/admMember/init").success(function (resp) {
@@ -58,6 +63,42 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         $scope.myPage.pageNo = num;
         $scope.onInit();
     };
+
+    /**
+     * 点击充值按钮
+     * @author Bright
+     * */
+    $scope.showTab = function(id){
+        $scope.param.memberId = id;
+        $("#add").modal("show");
+    };
+
+    /**
+     * 确认充值
+     * @author Bright
+     * */
+    $scope.ok = function () {
+        if($scope.flag) {
+            $scope.flag = false;
+            if (!/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test($scope.param.chargeAmt)) {
+                ConfirmModal.show({text: "充值金额有误，请重新输入。", isCancel: false});
+                $scope.flag = true;
+            } else {
+                $http.post(ctx + "/admMember/addAccount",$scope.param).success(function (resp) {
+                    if(resp.successful){
+                        $("#add").modal("hide");
+                        $scope.param.chargeAmt = "";
+                        $scope.param.memberId = "";
+                    }else{
+                        console.log(resp);
+                    }
+                }).error(function (resp) {
+                    console.log(resp);
+                });
+            }
+        }
+    };
+
 });
 
 angular.module('admMember').filter("MemberLevelFilter",function () {

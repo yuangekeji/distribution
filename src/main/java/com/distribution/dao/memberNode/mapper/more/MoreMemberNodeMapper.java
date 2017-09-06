@@ -13,7 +13,7 @@ public interface MoreMemberNodeMapper extends MemberNodeMapper{
 	double findTotalSalesByParentId(int parentId);
 	int updateParentLevel(Map<String,String> map);
 	List<MoreMemberNode> listParentNodesWhichHasTwoSubNodes(Map<String,String> map);
-	List<MoreMemberNode> listParentIsManageLevelNodes(Map<String,String> map);
+	List<MoreMemberNode> listParentIsManageLevelNodes(int nodeId);
 	List<MoreMemberNode> listSubNodes(int nodeId);
 	List<MoreMemberNode> listParentNodesWithMemberInfo(int nodeId);
 }

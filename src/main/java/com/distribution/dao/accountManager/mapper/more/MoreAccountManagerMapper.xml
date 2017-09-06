@@ -64,4 +64,16 @@
         member_id = #{memberId}
   </select>
 
+  <select id="selectByMemberId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+      SELECT * FROM account_manager WHERE member_id = #{memberId}
+  </select>
+    <update id="updateByMemberId" parameterType="com.distribution.dao.accountManager.model.AccountManager">
+        UPDATE account_manager
+        SET
+        total_bonus = #{totalBonus},
+        bonus_amt = #{bonusAmt},
+        update_id = #{updateId},
+        update_time = #{updateTime}
+        WHERE member_id = #{memberId}
+    </update>
 </mapper>

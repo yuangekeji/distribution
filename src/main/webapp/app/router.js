@@ -148,6 +148,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admAdvance'),
                 controller: 'admAdvanceCtrl'
             })
+            .state('app.product',{
+                url: '/product',
+                templateUrl: helper.basepath('product/html/list.html'),
+                resolve: helper.resolveFor('product'),
+                controller: 'productCtrl'
+            })
             .state('app.admProduct',{
                 url: '/admProduct',
                 templateUrl: helper.basepath('admProduct/html/list.html'),

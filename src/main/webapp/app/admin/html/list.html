@@ -60,7 +60,7 @@
                                 <th class="text-center">姓名</th>
                                 <th class="text-center">角色</th>
                                 <th class="text-center">电话</th>
-                                <th class="text-center">操作</th>
+                                <th class="text-center" ng-show="false">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -69,7 +69,7 @@
                                 <td class="text-center">{{row.name}}</td>
                                 <td class="text-center">{{row.roleId | RoleFilter}}</td>
                                 <td class="text-center">{{row.mobile}}</td>
-                                <td class="text-center">
+                                <td class="text-center" ng-show="false">
                                     <a href="javascript:"  ng-click="updateNoAdmin(row.id)" ng-show="{{row.roleId != '2'}}"> 禁用 </a>
                                     |<a href="javascript:" ng-click="searchAdminDetails(row.id)"> 编辑 </a>
                                 </td>

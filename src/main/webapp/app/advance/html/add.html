@@ -7,14 +7,14 @@
             <div class="portlet-title">
                 <div class="caption ">
                     <i class="icon-settings"></i>
-                    <span class="caption-subject bold uppercase">申请提现</span>
+                    <span class="caption-subject bold uppercase">提现余额到银行卡</span>
                 </div>
             </div>
             <div class="portlet-body form">
                 <form role="form">
                     <div class="form-body">
                         <div class="note note-success note-bordered">
-                            <h4>提现余额到银行卡：&nbsp; 账户奖金币余额：{{accountInfo.bonusAmt | number:2}}元</h4>
+                            <h4>账户奖金币余额：{{accountInfo.bonusAmt | number:2}}元</h4>
                         </div>
 
                         <div class="form-group" ng-class="{'has-error':advanceValidateErrors.bankNameError}">
@@ -39,7 +39,7 @@
                             <input type="password" ng-model="advance.payPassword" placeholder="输入支付密码" class="form-control input-circle" />
                         </div>
                         <div class="form-group">
-                            <label>提现金额： <span ng-bind="advance.reqAmt" ></span>&nbsp; &nbsp; 提现手续费：<span class="number" ng-model="advance.feeAmt" ng-bind="advance.feeAmt"></span> (6%) &nbsp; &nbsp; 实到金额：<span ng-model="advance.actAmt" ng-bind="advance.actAmt"></span></label>
+                            <label>提现金额： <span ng-bind="advance.reqAmt| number:2" ></span>&nbsp; &nbsp; 提现手续费：<span class="number" ng-model="advance.feeAmt" ng-bind="advance.feeAmt| number:2"></span> (6%) &nbsp; &nbsp; 实到金额：<span ng-model="advance.actAmt" ng-bind="advance.actAmt| number:2"></span></label>
                         </div>
                     </div>
                     <div class="form-actions">

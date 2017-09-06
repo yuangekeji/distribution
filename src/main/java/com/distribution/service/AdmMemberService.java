@@ -66,11 +66,11 @@ public class AdmMemberService {
         af.setMemberId(memberCharge.getMemberId());
         af.setCreateTime(new Date());
         af.setCreateId(admin.getId());
-        af.setType("-2");
+        af.setType("2"); //转入
         af.setTotalAmt(memberCharge.getChargeAmt());
         af.setBonusAmt(memberCharge.getChargeAmt());
         af.setSeedAmt(new BigDecimal(0));
-        af.setFlowType("9");
+        af.setFlowType("9");//管理员充值
 
         Integer af1 = accountFlowHistoryMapper.insert(af);
 

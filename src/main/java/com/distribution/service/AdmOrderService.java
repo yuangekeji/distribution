@@ -1,7 +1,9 @@
 package com.distribution.service;
 
 import com.distribution.common.utils.Page;
+import com.distribution.dao.order.mapper.OrderMasterMapper;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
+import com.distribution.dao.order.model.OrderMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Service;
 public class AdmOrderService {
     @Autowired
     private MoreOrderMasterMapper moreOrderMasterMapper;
+
+    @Autowired
+    private OrderMasterMapper orderMasterMapper;
     /**
      * description 订单列表查询
      * @author WYN
@@ -22,5 +27,19 @@ public class AdmOrderService {
         page.setTotalCount(moreOrderMasterMapper.getOrderListCount(page));
         page.setResult(moreOrderMasterMapper.getOrderList(page));
         return page;
+    }
+
+    /**
+     * description 确认发货
+     * @author WYN
+     * */
+    public String confirmSendOrder(OrderMaster orderMaster) {
+        int cnt = orderMasterMapper.updateByPrimaryKeySelective(orderMaster);
+
+        if(cnt > 0){
+            return "success";
+        }else{
+            throw new RuntimeException();
+        }
     }
 }

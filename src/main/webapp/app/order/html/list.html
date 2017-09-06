@@ -75,17 +75,30 @@
                             </thead>
                             <tbody>
                                 <tr ng-show= "!notData" class="odd gradeX" dir-paginate="orderMaster in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
-                                    <td >{{orderMaster.orderNo}}</td>
-                                    <td >{{orderMaster.orderAmt | number:2}}</td>
-                                    <td >{{orderMaster.orderCategory|OrderCategoryFilter}}</td>
-                                    <td >{{orderMaster.discount}}</td>
-                                    <td >{{orderMaster.actAmt | number:2}}</td>
-                                    <td >{{orderMaster.expressFee | number:2}}</td>
-                                    <td >{{orderMaster.goodsNm}},{{orderMaster.orderQty}}个</td>
-                                    <td >{{orderMaster.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
-                                    <td >{{orderMaster.orderStatues|OrderStatuesFilter}}</td>
-                                    <td >{{orderMaster.expressAddress}}</td>
-                                    <td ><a href="javascript:" ng-click="confirmOrder(orderMaster.id,orderMaster.orderNo,'4')" ng-show="{{orderMaster.orderStatues != '4'}}">确认收货</a></td>
+                                    <td class="text-left">{{orderMaster.orderNo}}</td>
+                                    <td class="text-left">{{orderMaster.orderAmt | number:2}}</td>
+                                    <td class="text-left">{{orderMaster.orderCategory|OrderCategoryFilter}}</td>
+                                    <td class="text-left">{{orderMaster.discount}}</td>
+                                    <td class="text-left">{{orderMaster.actAmt | number:2}}</td>
+                                    <td class="text-left">{{orderMaster.expressFee | number:2}}</td>
+                                    <td class="text-left">
+                                        {{orderMaster.goodsNm}}
+                                        <span ng-show="orderMaster.goodsNm != null">,</span>
+                                        {{orderMaster.orderQty}}
+                                        <span ng-show="orderMaster.orderQty != null">个</span>
+                                    </td>
+                                    <td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td class="text-left">
+                                        <span class="label label-sm " ng-class="{'label-default': orderMaster.orderStatues == '1', 'label-info': orderMaster.orderStatues == '2', 'label-primary': orderMaster.orderStatues == '3', 'label-success': orderMaster.orderStatues == '4'}">
+                                        {{orderMaster.orderStatues|OrderStatuesFilter}}
+                                        </span>
+                                    </td>
+                                    <td class="text-left">{{orderMaster.expressAddress}}</td>
+                                    <td class="text-left">
+                                        <div class="btn btn-circle">
+                                            <button type="button" class="btn btn-outline green btn-sm" ng-click="confirmOrder(orderMaster.id,'4')" ng-show="{{orderMaster.orderStatues != '4'}}">确认收货</button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr class="text-center" ng-show= "notData">
                                     <td colspan="11" class="text-center">无记录</td>

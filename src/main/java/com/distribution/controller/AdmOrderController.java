@@ -3,7 +3,10 @@ package com.distribution.controller;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
+import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.member.model.Member;
+import com.distribution.dao.order.model.OrderMaster;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
 import com.distribution.service.AdmOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * Created by WIYN on 2017/8/27.
@@ -33,4 +37,22 @@ public class AdmOrderController extends BasicController{
         return successMsg(page);
     }
 
+    /**
+     * description 确认发货
+     * @author WYN
+     * */
+    @RequestMapping("/confirmSendOrder")
+    @ResponseBody
+    public JsonMessage confirmSendOrder(@RequestBody OrderMaster orderMaster, HttpSession session){
+        Admin currentUser = null;
+        if(getCurrentUser(session) instanceof Admin) {
+            currentUser = (Admin) getCurrentUser(session);
+        }
+
+        orderMaster.setUpdateId(currentUser.getId());
+        orderMaster.setUpdateTime(new Date());
+
+        String result = admOrderService.confirmSendOrder(orderMaster);
+        return successMsg("result",result);
+    }
 }

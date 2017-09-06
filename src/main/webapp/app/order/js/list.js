@@ -1,4 +1,4 @@
-angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage) {
+angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage,Notify) {
     title.setTitle('我的订单');
     $scope.myPage = {
         pageNo: 1,
@@ -26,7 +26,7 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
     }
 
     /**确认收货*/
-    $scope.confirmOrder = function (id, orderNo, orderStatues) {
+    /*$scope.confirmOrder = function (id, orderNo, orderStatues) {
         $.ajax({
             type: "POST",
             url: ctx + "/order/confirmOrder",
@@ -52,6 +52,19 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
             }
         });
 
+    };*/
+
+    $scope.confirmOrder = function (id, statues) {
+        $http.post(ctx + "/order/confirmOrder",{id:id,orderStatues:statues}).success(function (resp) {
+            if(resp.successful){
+                Notify.success("确认收货完成。");
+                $scope.search();
+            }else{
+                Notify.error(resp.error());
+            }
+        }).error(function (error) {
+            Notify.error(error);
+        });
     };
 
 

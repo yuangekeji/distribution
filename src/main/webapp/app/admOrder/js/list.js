@@ -1,4 +1,4 @@
-angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, Notify) {
+angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope, $http, $state, $stateParams, $sessionStorage, $uibModal,Notify) {
     title.setTitle('订单管理');
     $scope.myPage = {
         pageNo: 1,
@@ -6,6 +6,12 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         totalCount: 0,
         result: [],
         parameterMap: {}
+    };
+
+    $scope.orderExpress = {
+        id: '',
+        statues: '',
+        expressAddress: ''
     };
 
     /**
@@ -28,33 +34,38 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         });
     }
 
-    /**确认收货*/
-    $scope.confirmOrder = function (id, orderNo, orderStatues) {
-        $.ajax({
-            type: "POST",
-            url: ctx + "/admOrder/confirmSendOrder",
-            data: {
-                id: id,
-                orderNo: orderNo,
-                orderStatues: orderStatues
-            },
+    /**确认发货*/
+    $scope.confirmOrder = function (id, statues, expressAddress) {
+        $scope.orderExpress.id = id;
+        $scope.orderExpress.statues = statues;
+        $scope.orderExpress.expressAddress = expressAddress;
+        $scope.open();
 
-            dataType: "json",
-            success: function (resp) {
-                if (resp.successful) {
-                    Nodify.success("确认发货成功");
-                    $scope.search();
-                } else{
-                    Nodify.error("确认发货失败，请重新尝试");
-                    console.log("error==", error);
+    };
+
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "admOrderExpress.html",
+                controller: "admOrderExpressCtrl",
+                size: opt_attributes,
+                resolve: {
+                    getDatas: function()
+                    {
+                        return $scope.orderExpress;
+                    }
                 }
-            },
-            error: function (error) {
-                Nodify.error("确认发货失败，请重新尝试");
-                console.log("error==", error);
-            }
+            });
+        out.result.then(function(value)
+        {
+            console.info('确认');
+        }, function()
+        {
+            console.info('取消');
         });
-
     };
 
     /**
@@ -86,6 +97,36 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
     $scope.pageChangeHandler = function(num) {
         $scope.myPage.pageNo = num;
         $scope.search();
+    };
+});
+
+angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, Notify) {
+
+    $scope.datas = getDatas;
+
+    $scope.close = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+
+    /**确认发货提交*/
+    $scope.submit = function (id, statues, expressAddress) {
+        $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderStatues:statues, expressAddress:expressAddress}).success(function (resp) {
+            if(resp.successful){
+                Notify.success("确认发货完成");
+                $uibModalInstance.close(true);
+                $state.go("app.admOrder", {}, {reload: true});
+            }else{
+                Notify.error(resp);
+            }
+        }).error(function (error) {
+            Notify.error(error);
+        })
     };
 });
 

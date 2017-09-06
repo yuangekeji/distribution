@@ -4,6 +4,7 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.member.model.Member;
+import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
 import com.distribution.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,20 +62,16 @@ public class OrderController extends BasicController{
      * */
     @RequestMapping("/confirmOrder")
     @ResponseBody
-    public JsonMessage confirmOrder(Integer id, Long orderNo, String orderStatues, HttpSession session){
+    public JsonMessage confirmOrder(@RequestBody OrderMaster orderMaster, HttpSession session){
         Member currentUser = null;
         if(getCurrentUser(session) instanceof Member) {
             currentUser = (Member) getCurrentUser(session);
         }
 
-        MoreOrderMaster moreOrderMaster = new MoreOrderMaster();
-        moreOrderMaster.setId(id);
-        moreOrderMaster.setOrderNo(orderNo);
-        moreOrderMaster.setOrderStatues(orderStatues);
-        moreOrderMaster.setUpdateId(currentUser.getId());
-        moreOrderMaster.setUpdateTime(new Date());
+        orderMaster.setUpdateId(currentUser.getId());
+        orderMaster.setUpdateTime(new Date());
 
-        String result = orderService.confirmOrder(moreOrderMaster);
+        String result = orderService.confirmOrder(orderMaster);
         return successMsg("result",result);
     }
 

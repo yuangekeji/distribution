@@ -147,7 +147,6 @@
                update_id = #{updateId,jdbcType=INTEGER},
                update_time = #{updateTime,jdbcType=TIMESTAMP}
          where id = #{id,jdbcType=INTEGER}
-           and order_no = #{orderNo,jdbcType=BIGINT}
     </update>
 
 </mapper>

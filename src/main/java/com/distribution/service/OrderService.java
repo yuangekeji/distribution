@@ -11,6 +11,7 @@ import com.distribution.dao.dividend.mapper.DividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
+import com.distribution.dao.order.mapper.OrderMasterMapper;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
@@ -26,6 +27,9 @@ import java.util.Random;
 
 @Service
 public class OrderService {
+
+    @Autowired
+    private OrderMasterMapper orderMasterMapper;
 
     @Autowired
     private MoreOrderMasterMapper moreOrderMasterMapper;
@@ -64,20 +68,24 @@ public class OrderService {
         int cnt1 = 0;
         int cnt2 = 0;
         int cnt3 = 0;
+        int cnt4 = 0;
         int cnt5 = 0;
+        int cnt6 = 0;
 
         //BigInteger orderNo = this.getOrderNo();
         Long orderNo = this.getOrderNo();
         moreOrderMaster.setOrderNo(orderNo);
         //order_master insert
-        int orderId = moreOrderMasterMapper.insertOrder(moreOrderMaster);
-        if(orderId == 0){
+        cnt1 = moreOrderMasterMapper.insertOrder(moreOrderMaster);
+        if(cnt1 == 0){
             throw new RuntimeException();
         }
+
+        int orderId = moreOrderMaster.getId();
             //order_detail_inser
         moreOrderMaster.setGoodsCd(1);
-        cnt1 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
-        if(cnt1 == 0){
+        cnt2 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
+        if(cnt2 == 0){
            throw new RuntimeException();
          }
 
@@ -93,8 +101,8 @@ public class OrderService {
             accountManager.setUpdateId(moreOrderMaster.getCreateId());
             accountManager.setUpdateTime(new Date());
 
-            cnt2 = moreAccountManagerMapper.updateAccountManager(accountManager);
-           if(cnt2 == 0){
+            cnt3 = moreAccountManagerMapper.updateAccountManager(accountManager);
+           if(cnt3 == 0){
               throw new RuntimeException();
            }
 
@@ -117,9 +125,9 @@ public class OrderService {
                 accountFlowHistory.setFlowType(Constant.DISCOUNTORDER);
             }
 
-            cnt3 = accountFlowHistoryMapper.insert(accountFlowHistory);
+            cnt4 = accountFlowHistoryMapper.insert(accountFlowHistory);
 
-            if(cnt3 == 0){
+            if(cnt4 == 0){
                 throw new RuntimeException();
             }
 
@@ -153,16 +161,16 @@ public class OrderService {
             dividend.setReceivedAmount(new BigDecimal(0)); //已领取金额给个0
             dividend.setRemainAmount(new BigDecimal(0));   //还未领取金额个0
 
-           int  cnt4 = dividendMapper.insert(dividend);
-           if(cnt4 == 0){
+           cnt5 = dividendMapper.insert(dividend);
+           if(cnt5 == 0){
                 throw new RuntimeException();
             }
         }
 
         //报单，复投做奖金处理
         if("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory())){
-            cnt5 = 1; //todo 奖金接口调用 order
-            if(cnt5 ==0){
+            cnt6 = 1; //todo 奖金接口调用 order
+            if(cnt6 ==0){
                 throw new RuntimeException();
             }
         }
@@ -251,8 +259,8 @@ public class OrderService {
      * description 确认收货
      * @author WYN
      * */
-    public String confirmOrder(MoreOrderMaster moreOrderMaster) {
-        int cnt = moreOrderMasterMapper.confirmOrder(moreOrderMaster);
+    public String confirmOrder(OrderMaster orderMaster) {
+        int cnt = orderMasterMapper.updateByPrimaryKeySelective(orderMaster);
 
         if(cnt > 0){
             return "success";

@@ -47,4 +47,8 @@ public interface MoreMemberMapper extends MemberMapper{
      * @author shiqing
      * */
     List<Member> getPostLevel6Member();
+    /**
+     * 批量更新会员爵位级别
+     */
+    int updateMemberLevelBatch(Map<String,Object> map);
 }

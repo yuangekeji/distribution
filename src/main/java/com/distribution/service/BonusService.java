@@ -19,11 +19,14 @@ import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
+import com.distribution.dao.member.mapper.MemberMapper;
+import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 import com.distribution.dao.order.model.OrderMaster;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
 
 @Service
 public class BonusService {
@@ -37,7 +40,11 @@ public class BonusService {
 	@Autowired
 	private MoreMemberNodeMapper moreNodeMapper;
 	@Autowired
+	private MemberMapper memberMapper;
+	@Autowired
 	private CommonService commonService;
+	@Autowired
+	private NodeService nodeService;
 	
 	
 	
@@ -65,23 +72,33 @@ public class BonusService {
 	 * @param order 对象中必须包含订单的主体信息
 	 * @author su
 	 */
-	public void calculateOrderBonus(OrderMaster order){
+	public void insertOrderBonus(OrderMaster order){
 	    //初始化计算所需配置中的变量
-		commonService.initBasicManageList();;
-		//销售奖
-		order.getCreateId();
-		order.getOrderNo();
-		//1代奖
-		
+		commonService.initBasicManageList();
+		//订单主人会员
+		Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
+		//当前订单的主人的推荐人
+		int recommendUser = owner.getRecommendId();
+		//订单主人的推荐人
+		Member ownerRecomend = memberMapper.selectByPrimaryKey(recommendUser);
+		//当前订单的主人对应的会员节点
+		int nodeId = owner.getNodeId();
+		//当前订单的主人对应的推荐人的推荐人
+		int recommendUserParent = ownerRecomend.getRecommendId();
+		//销售奖 订单的推荐人
+		insertSalseBonus(recommendUser,order);
+		//1代奖 订单的推荐人
+		insertFirstGenerationBonus(recommendUser,order);
 		//2代奖直推人的推荐人获得2代奖
-
-		//级差奖
-		
+		insertSecondGenerationBonus(recommendUserParent,order);
+		//级差奖 当前节点所有上级
+		insertMemberLevelBonus(nodeId,order);
 		//分红包记录
 
-		//工作室&运营中心奖/扶持奖
-	  
-		//处理会员晋升
+		//工作室&运营中心奖/扶持奖 当前节点的所有上级
+		insertWorkRoomAndOperatingCenterBonus(nodeId,order);
+		//处理会员晋升 当前节点的所有上级
+		nodeService.processMemberPromotion(nodeId,order.getCreateId());
 	}
 	/**
 	 * 销售奖计算
@@ -90,11 +107,11 @@ public class BonusService {
 	 * @param order 订单
 	 * @author su
 	 */
-	public void calculateSalseBonus(int memberId,OrderMaster order){
+	public void insertSalseBonus(int memberId,OrderMaster order){
 		//计算奖金金额
 		double bonusPercent = commonService.getSalesBonusPercent(BonusConstant.D01,BonusConstant.CODE_01,BonusConstant.SALES_BONUS_PER);
 	    //生成奖金
-		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_0,memberId,order);
+		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_0,memberId,order);
 	}
 	/**
 	 * 1代奖金结算方法
@@ -103,11 +120,11 @@ public class BonusService {
 	 * @param order 订单
 	 * @author su
 	 */
-	public void calculateFirstGenerationBonus(int memberId,OrderMaster order){
+	public void insertFirstGenerationBonus(int memberId,OrderMaster order){
 		//计算奖金金额
 		double bonusPercent = commonService.getSalesBonusPercent(BonusConstant.D01,BonusConstant.CODE_01,BonusConstant.SALES_BONUS_PER1);
 	    //生成奖金
-		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_1,memberId,order);
+		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_1,memberId,order);
 	}
 
 	/**
@@ -117,11 +134,11 @@ public class BonusService {
 	 * @param order 订单
 	 * @author su
 	 */
-	public void calculateSecondGenerationBonus(int memberId,OrderMaster order){
+	public void insertSecondGenerationBonus(int memberId,OrderMaster order){
 		//计算奖金金额
 		double bonusPercent = commonService.getSalesBonusPercent(BonusConstant.D01,BonusConstant.CODE_01,BonusConstant.SALES_BONUS_PER2);
 	    //生成奖金
-		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_2,memberId,order);
+		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_2,memberId,order);
 	}
 
 	/**
@@ -130,12 +147,9 @@ public class BonusService {
 	 * @param order 订单
 	 * @author su
 	 */
-	public void calculateMemberLevelBonus(int nodeId,OrderMaster order){
-		//查找当前节点的所有父节点非普通会员信息，从小到大升序排列；
-		Map<String,String> param = new HashMap<String,String>();
-		param.put("nodeId", String.valueOf(nodeId));
-		param.put("memberLevel", BonusConstant.POST_LEVEL1);
-        List<MoreMemberNode> list = moreNodeMapper.listParentIsManageLevelNodes(param);
+	public void insertMemberLevelBonus(int nodeId,OrderMaster order){
+		//查找当前节点的所有父节点信息，从小到大升序排列；
+        List<MoreMemberNode> list = moreNodeMapper.listParentIsManageLevelNodes(nodeId);
         for(MoreMemberNode m : list){
         	//当前节点不参与奖金计算
         	if(null != m.getId() && m.getId().intValue() == nodeId){
@@ -147,22 +161,22 @@ public class BonusService {
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_01);
             	//计算主任奖金
-        		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
+        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
             }else if(memberLevel.equals(BonusConstant.POST_LEVEL3)){
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_02);
             	//计算经理奖金
-        		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
+        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
             }else if(memberLevel.equals(BonusConstant.POST_LEVEL4)){
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_03);
             	//计算总监奖金
-        		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
+        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
             }else if(memberLevel.equals(BonusConstant.POST_LEVEL5)){
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_04);
             	//计算董事奖金
-        		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
+        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
             }
        }
 	}
@@ -173,7 +187,7 @@ public class BonusService {
 	 * @param nodeId
 	 * @param order
 	 */
-	public void calculateWorkRoomAndOperatingCenterBonus(int nodeId,OrderMaster order){
+	public void insertWorkRoomAndOperatingCenterBonus(int nodeId,OrderMaster order){
 	    //根据当前节点ID查找所有上级会员节点
 		List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
 		for(int i=0;i<list.size();i++){
@@ -186,14 +200,14 @@ public class BonusService {
         	if(null != m.getIsSalesDept() && m.getIsSalesDept().equalsIgnoreCase("Y")){
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_03);
         		//发工作室奖
-        		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_7,m.getMemberId(),order);
+        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_7,m.getMemberId(),order);
         		//发运营中心扶持奖，从当前节点开始向上找，遇到普通会员结束，遇到运营中心发奖。
-        		calculateOperatingCenterHelpBonus(list,i+1,order);
+        		insertOperatingCenterHelpBonus(list,i+1,order);
         		break;
         	}else if(null != m.getIsOperator() && m.getIsOperator().equalsIgnoreCase("Y")){
         		//如果是运营中心发运营中心奖，发奖结束。
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_01);
-        		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_8,m.getMemberId(),order);
+        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_8,m.getMemberId(),order);
         		break;
         	}else{
         		continue;
@@ -211,7 +225,7 @@ public class BonusService {
 	 * @param num
 	 * @param order
 	 */
-	public void calculateOperatingCenterHelpBonus(List<MoreMemberNode> list,int num,OrderMaster order){
+	public void insertOperatingCenterHelpBonus(List<MoreMemberNode> list,int num,OrderMaster order){
 	    //接着刚才循环的节点继续向上找
 		for(int i=num;i<list.size();i++){
 			MoreMemberNode m = list.get(i);
@@ -221,7 +235,7 @@ public class BonusService {
         	}else if(null != m.getIsOperator() && m.getIsOperator().equalsIgnoreCase("Y")){
         		//如果是运营中心发运营中心扶持奖，发奖结束。
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_02);
-        		buidAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_9,m.getMemberId(),order);
+        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_9,m.getMemberId(),order);
         		break;
         	}else{
         		//非工作室，非运营中心，即是普通会员，发奖结束。
@@ -239,7 +253,7 @@ public class BonusService {
 	 * @return
 	 * @author su
 	 */
-	private MemberBonus buidAndSaveBonus(double bonusPercent,String bonusType,int memberId,OrderMaster order){
+	private MemberBonus insertAndSaveBonus(double bonusPercent,String bonusType,int memberId,OrderMaster order){
 		double bonusAmt =  commonService.multiply(order.getOrderAmt().doubleValue(),bonusPercent);
 		//管理费
 		double managePercent = commonService.getMaxPercent(BonusConstant.D07,BonusConstant.CODE_00);
@@ -255,6 +269,7 @@ public class BonusService {
 		bonus.setMemberId(memberId);
 		bonus.setOrderId(order.getId());
 		bonus.setOrderNo(order.getOrderNo());
+		bonus.setOrderDate(order.getCreateTime());
 		//保存奖金
     	saveBonus(bonus);
 		return bonus;
@@ -271,37 +286,53 @@ public class BonusService {
 		//根据实际获得奖金数量计算种子币
 		double seedBonus = commonService.multiply(totalBonus,BonusConstant.SEED_PERCENT);
 		//根据实际获得奖金数量计算奖金币
-		double bonus_rest = commonService.multiply(totalBonus,BonusConstant.BONUS_PERCENT);
+		double bonusRest = commonService.multiply(totalBonus,BonusConstant.BONUS_PERCENT);
+		AccountFlowHistory flow = new AccountFlowHistory();
+		flow.setCreateId(bonus.getCreateBy());
+		flow.setCreateTime(new Date());
+		//奖金类型，参照奖金表设置
+		flow.setFlowType(bonus.getBonusType());
+		flow.setMemberId(bonus.getMemberId());
+		//设置入账
+		flow.setSeedAmt(new BigDecimal(seedBonus));
+		flow.setBonusAmt(new BigDecimal(bonusRest));
+		flow.setTotalAmt(new BigDecimal(totalBonus));
+		flow.setType(BonusConstant.ACCOUNT_TYPE_IN);
 		
 		//查询现有账号信息
-		AccountManager account = new AccountManager();
-		account.setMemberId(bonus.getMemberId());
-		account = moreAccountManagerMapper.selectAccountManager(account);
-		//对账户余额进行赋值
+		AccountManager param = new AccountManager();
+		param.setMemberId(bonus.getMemberId());
+		AccountManager account = moreAccountManagerMapper.selectAccountManager(param);
+		if(null == account){
+			account = param;
+			account.setTotalBonus(new BigDecimal(0));
+			account.setSeedAmt(new BigDecimal(0));
+			account.setBonusAmt(new BigDecimal(0));
+			account.setAdvanceAmt(new BigDecimal(0));
+			account.setCreateId(bonus.getCreateBy());
+			account.setCreateTime(new Date());
+			account.setUpdateId(bonus.getCreateBy());
+			account.setUpdateTime(new Date());
+		}
+		//对现有余额进行相加
 		BigDecimal total = account.getTotalBonus().add(new BigDecimal(totalBonus));
 		BigDecimal seedAmt = account.getSeedAmt().add(new BigDecimal(seedBonus));
-		BigDecimal bonusAmt = account.getBonusAmt().add(new BigDecimal(bonus_rest));
+		BigDecimal bonusAmt = account.getBonusAmt().add(new BigDecimal(bonusRest));
+		//对账户余额进行赋值
 		account.setBonusAmt(bonusAmt);
 		account.setSeedAmt(seedAmt);
 		account.setTotalBonus(total);
 		account.setUpdateId(bonus.getMemberId());
 		account.setUpdateTime(new Date());
-		
-		AccountFlowHistory flow = new AccountFlowHistory();
-		flow.setBonusAmt(bonusAmt);
-		flow.setCreateId(bonus.getMemberId());
-		flow.setCreateTime(new Date());
-		//奖金类型，参照奖金表设置
-		flow.setFlowType(bonus.getBonusType());
-		flow.setMemberId(account.getMemberId());
-		flow.setSeedAmt(seedAmt);
-		//设置入账
-		flow.setTotalAmt(total);
-		flow.setType(BonusConstant.ACCOUNT_TYPE_IN);
 		//保存奖金
 		moreMemberBonusMapper.insert(bonus);
-		//更新账户余额
-		moreAccountManagerMapper.updateByPrimaryKeySelective(account);
+		if(null != account.getId() && account.getId() > 0){
+			//更新账户余额
+			moreAccountManagerMapper.updateByPrimaryKeySelective(account);
+		}else{
+			//创建账户
+			moreAccountManagerMapper.insert(account);
+		}
 		//记录账号资金出入情况
 		accountFlowHistoryMapper.insert(flow);
 	}

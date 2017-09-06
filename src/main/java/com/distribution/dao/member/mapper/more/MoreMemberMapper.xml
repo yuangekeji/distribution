@@ -144,4 +144,15 @@
     from member
     where member_post = 'post_level6'
   </select>
+  <update id="updateMemberLevelBatch" parameterType="java.util.Map"  >
+    update member
+    set 
+      member_level = #{memberLevel,jdbcType=VARCHAR},
+      update_id = #{updateId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id in
+    <foreach collection="memberIds" index="index" item="item" open="(" separator="," close=")">
+     #{item}
+     </foreach>
+  </update>
 </mapper>

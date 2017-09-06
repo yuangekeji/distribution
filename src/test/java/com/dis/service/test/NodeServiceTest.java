@@ -4,6 +4,7 @@
   */
 package com.dis.service.test;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dis.junit.test.SpringServiceTest;
 import com.distribution.dao.memberNode.model.MemberNode;
+import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.service.NodeService;
 
 public class NodeServiceTest extends SpringServiceTest{
@@ -44,5 +46,17 @@ public class NodeServiceTest extends SpringServiceTest{
 	public void buildNodeTreeByNodeTest(){
 		int nodeId = 2;
 		nodeService.buildNodeTreeByNode(nodeId);
+	}
+	@Test
+	public void processMemberPromotionTest(){
+		OrderMaster order = new OrderMaster();
+		order.setOrderAmt(new BigDecimal(9000));
+		order.setId(8);
+		order.setCreateId(8);
+		order.setOrderNo(new Long("1701230"));
+		order.setCreateTime(new Date());
+		order.setMemberId(9);
+		int nodeId = 10;
+		nodeService.processMemberPromotion(nodeId, order.getCreateId());
 	}
 }

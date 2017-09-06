@@ -71,18 +71,24 @@
   			rt.member_level as right_level,
   			lt.member_level as left_level
 		from 
-		(SELECT m.id,n.left_id,n.right_id
-		from member m
-		LEFT JOIN member_node n on m.node_id = n.id
-		where FIND_IN_SET(node_id,getParentList(#{nodeId})) 
-		and member_level = #{fromLevel}
-		and n.left_id > 0
-		and n.right_id > 0
-		order by node_id desc)tep
+		(
+			SELECT 
+				m.id as member_id,
+				m.node_id as id,
+				n.left_id,
+				n.right_id
+			from member m
+			LEFT JOIN member_node n on m.node_id = n.id
+			where FIND_IN_SET(node_id,getParentList(#{nodeId})) 
+			and member_level = #{fromLevel}
+			and n.left_id > 0
+			and n.right_id > 0
+			order by node_id desc
+		)tep
 		LEFT JOIN member lt on lt.node_id = tep.left_id
 		LEFT JOIN member rt on rt.node_id = tep.right_id
   </select>
-  <select id="listParentIsManageLevelNodes" resultMap="MoreResultMap" parameterType="map">
+  <select id="listParentIsManageLevelNodes" resultMap="MoreResultMap" parameterType="java.lang.Integer">
   		select max(id) as member_id,member_level
 		from 
 		(select m.id,m.member_level

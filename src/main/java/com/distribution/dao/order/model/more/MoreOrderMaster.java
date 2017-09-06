@@ -14,6 +14,8 @@ public class MoreOrderMaster extends OrderMaster{
 
     private BigDecimal bonusAmt;
 
+    private String memberName;
+
     private Integer createId;
 
     private String payPassword;
@@ -66,6 +68,14 @@ public class MoreOrderMaster extends OrderMaster{
 
     public void setPayPassword(String payPassword) {
         this.payPassword = payPassword;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 }
 

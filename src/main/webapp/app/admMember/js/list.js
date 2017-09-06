@@ -1,4 +1,4 @@
-angular.module('admMember').controller('admMemberCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,ConfirmModal) {
+angular.module('admMember').controller('admMemberCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,ConfirmModal,Notify) {
     title.setTitle('会员管理');
     $scope.loadingFlag = true;
     $scope.notData = false;
@@ -16,7 +16,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         memberId:""
     };
     $scope.flag = true;
-
+    var e1 = $('.portlet');
     $scope.initDic = function () {
         $http.get(ctx + "/admMember/init").success(function (resp) {
             if(resp.successful){
@@ -59,7 +59,6 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
 
     /**翻页*/
     $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
         $scope.myPage.pageNo = num;
         $scope.onInit();
     };
@@ -68,8 +67,10 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
      * 点击充值按钮
      * @author Bright
      * */
-    $scope.showTab = function(id){
-        $scope.param.memberId = id;
+    $scope.showTab = function(member){
+        $scope.param.memberId = member.id;
+        $scope.chargeMember  = member;
+        $scope.param.chargeAmt = "";
         $("#add").modal("show");
     };
 
@@ -81,19 +82,32 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         if($scope.flag) {
             $scope.flag = false;
             if (!/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test($scope.param.chargeAmt)) {
-                ConfirmModal.show({text: "充值金额有误，请重新输入。", isCancel: false});
+                Notify.warning('请输入充值金额。');
                 $scope.flag = true;
             } else {
-                $http.post(ctx + "/admMember/addAccount",$scope.param).success(function (resp) {
-                    if(resp.successful){
+                App.blockUI({
+                    target: e1,
+                    animate: true,
+                    overlayColor: 'none'
+
+                });
+                $http.post(ctx + "/admMember/addAccount", $scope.param).success(function (resp) {
+                    $scope.flag = true;
+                    App.unblockUI(e1);
+                    if (resp.successful) {
                         $("#add").modal("hide");
                         $scope.param.chargeAmt = "";
                         $scope.param.memberId = "";
-                    }else{
+                        Notify.success('充值成功。');
+                    } else {
+                        Notify.error('充值失败。');
                         console.log(resp);
                     }
-                }).error(function (resp) {
-                    console.log(resp);
+                }).error(function (error) {
+                    $scope.flag = true;
+                    App.unblockUI(e1);
+                    Notify.error('充值失败。');
+                    console.error(error);
                 });
             }
         }

@@ -118,7 +118,7 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     };
 });
 
-angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {
+angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas,Notify) {
 
     $scope.datas = getDatas;
 
@@ -137,7 +137,7 @@ angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, 
             if(resp.successful){
                 Notify.success("提现驳回完成。");
                 $uibModalInstance.close(true);
-                $scope.search();
+                $state.go("app.admAdvance", {}, {reload: true});
             }else{
                 Notify.error(resp);
             }

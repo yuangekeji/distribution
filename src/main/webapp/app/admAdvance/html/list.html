@@ -64,14 +64,14 @@
                             </thead>
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="advance in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
-                                <td >{{advance.memberName}}</td>
-                                <td >{{advance.reqAmt | number:2}}</td>
-                                <td >{{advance.feeAmt | number:2}}</td>
-                                <td >{{advance.actAmt | number:2}}</td>
-                                <td >{{advance.requestDate|date:'yyyy-MM-dd'}}</td>
-                                <td >{{advance.cardName}}|{{advance.bankName}}|{{advance.cardNo}}</td>
-                                <td >{{advance.statues|AdvanceStatuesFilter}}</td>
-                                <td >
+                                <td class="text-left">{{advance.memberName}}</td>
+                                <td class="text-left">{{advance.reqAmt | number:2}}</td>
+                                <td class="text-left">{{advance.feeAmt | number:2}}</td>
+                                <td class="text-left">{{advance.actAmt | number:2}}</td>
+                                <td class="text-left">{{advance.requestDate|date:'yyyy-MM-dd'}}</td>
+                                <td class="text-left">{{advance.cardName}}|{{advance.bankName}}|{{advance.cardNo}}</td>
+                                <td class="text-left">{{advance.statues|AdvanceStatuesFilter}}</td>
+                                <td class="text-left">
                                     <div class="btn-group btn-group-circle">
                                         <button type="button" class="btn btn-outline green btn-sm"  ng-click="confirmAdvance(advance.id,'2')" ng-show="{{advance.statues == '1'}}">批准</button>
                                         <button type="button" class="btn btn-outline red btn-sm" ng-click="rejectAdvance(advance.id,'3')" ng-show="{{advance.statues == '1'}}">驳回</button>

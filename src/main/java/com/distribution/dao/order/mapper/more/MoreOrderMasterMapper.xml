@@ -13,6 +13,7 @@
     <result column="act_amt" property="actAmt" jdbcType="DECIMAL" />
     <result column="express_fee" property="expressFee" jdbcType="DECIMAL" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
     <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
     <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
@@ -32,16 +33,19 @@
    <sql id="where">
      <where>
        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-         AND member_id = #{parameterMap.memberId}
+          AND member_id = #{parameterMap.memberId}
        </if>
        <if test="parameterMap.orderStatus!=null and parameterMap.orderStatus!=''">
-         AND order_statues = #{parameterMap.orderStatus}
+          AND order_statues = #{parameterMap.orderStatus}
        </if>
        <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-         AND order_no = #{parameterMap.orderNo}
+          AND order_no = #{parameterMap.orderNo}
+       </if>
+       <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
+          AND order_category = #{parameterMap.orderCategory}
        </if>
        <if test="parameterMap.start!=null and parameterMap.start!=''">
-         AND create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+          AND create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
        </if>
      </where>
    </sql>
@@ -70,6 +74,7 @@
          , b.order_qty
          , a.express_fee
          , a.member_id
+         , d.member_name
          , a.receive_name
          , a.express_address
          , a.member_level
@@ -83,6 +88,8 @@
         ON a.order_no = b.order_no
       LEFT JOIN goods c
         ON b.goods_cd = c.id
+      LEFT JOIN member d
+        ON a.member_id = d.id
       WHERE 1 = 1
         <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
             AND a.member_id = #{parameterMap.memberId}
@@ -93,9 +100,13 @@
         <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
             AND a.order_no = #{parameterMap.orderNo}
         </if>
+        <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
+            AND a.order_category = #{parameterMap.orderCategory}
+        </if>
         <if test="parameterMap.start!=null and parameterMap.start!=''">
             AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
         </if>
+      <include refid="pageLimit"/>
   </select>
 
     <insert id="insertOrder" parameterType="com.distribution.dao.order.model.more.MoreOrderMaster" useGeneratedKeys="true" keyProperty="id">
@@ -136,7 +147,6 @@
                update_id = #{updateId,jdbcType=INTEGER},
                update_time = #{updateTime,jdbcType=TIMESTAMP}
          where id = #{id,jdbcType=INTEGER}
-           and order_no = #{orderNo,jdbcType=BIGINT}
     </update>
 
 </mapper>

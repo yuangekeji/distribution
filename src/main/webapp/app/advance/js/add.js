@@ -1,4 +1,4 @@
-angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal) {
+angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal,Notify) {
     title.setTitle('申请提现');
     $scope.user = $sessionStorage.currentUser;
     //定义提现model
@@ -39,8 +39,11 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
             if(resp.successful){
                 $scope.accountInfo = resp.data.account;
             }else{
-                console.error('获取账户信息错误，请重新尝试');
+                Notify.error('获取账户信息错误，请重新尝试');
             }
+            $scope.stopLoading();
+        }).error(function (error) {
+            Notify.error(error);
             $scope.stopLoading();
         });
 
@@ -56,9 +59,12 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
                 $scope.MemberInfo = resp.data.member;
                 $scope.banks = resp.data.list;
             }else{
-                console.log(resp);
+                Notify.error("获取个人信息错误，请重新尝试");
             }
            $scope.stopLoading();
+        }).error(function (error) {
+            Notify.error(error);
+            $scope.stopLoading();
         });
     }
     $scope.onInit=function () {
@@ -79,28 +85,27 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
 
 
         if( !$scope.advanceValidate()) {
-            ConfirmModal.show({text: '请填写完整的提现信息', isCancel:false });
+            Notify.warning('请填写完整的提现信息');
             return false;
         }
 
         if($scope.advance.reqAmt < 100  ){
-            ConfirmModal.show({text: '100元以上金额可以申请提现', isCancel:false });
+            Notify.warning('100元以上金额可以申请提现');
             return false;
         }
 
         if($scope.advance.reqAmt % 100 != 0  ){
-            ConfirmModal.show({text: '提现金额应为100的整数倍', isCancel:false });
+            Notify.warning('提现金额应为100的整数倍');
             return false;
         }
 
         if($scope.advance.reqAmt >  $scope.accountInfo.bonusAmt){
-            ConfirmModal.show({text: '提现金额不能大于账户总余额', isCancel:false });
+            Notify.warning('提现金额不能大于账户总余额');
             return false;
         }
 
         $scope.startLoading();
 
-        //alert($scope.MemberInfo.bankName + $scope.MemberInfo.bankUserName + $scope.MemberInfo.cardNumber);
         $http.post(ctx + '/advance/insertAdvance',
             {
                 bankName    : $scope.MemberInfo.bankName,
@@ -116,19 +121,20 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
             //处理完成后重新获取账户信息，个人信息
             $scope.onInit();
             if(resp.successful) {
-                $scope.msg = "";
+                //$scope.msg = "";
                 if (resp.data.result == 'success') {
-                    $scope.msg = "提现成功";
+                    Notify.success("提现成功");
                 } else if (resp.data.result == 'pwdWrong') {
-                    $scope.msg = "支付密码错误";
+                    Notify.error("支付密码错误");
                 } else if (resp.data.result == 'fail') {
-                    $scope.msg = "提现失败，请重新尝试";
+                    Notify.error("提现失败，请重新尝试");
                 }
-                ConfirmModal.show({text: $scope.msg, isCancel: false});
+
+                //ConfirmModal.show({text: $scope.msg, isCancel: false});
                 $scope.go("app.advance");
 
             }else{
-                console.error("提现失败，请稍后再试");
+                Notify.error("提现失败，请稍后再试");
                 //失败后停止loading，刷新页面
                 $scope.stopLoading();
                 $window.location.reload();

@@ -1,4 +1,4 @@
-angular.module('advance').controller('advanceListCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal) {
+angular.module('advance').controller('advanceListCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal,Notify) {
     title.setTitle('我的提现');
 
     $scope.myPage = {
@@ -24,11 +24,12 @@ angular.module('advance').controller('advanceListCtrl',function ($q, title, $sco
                     $scope.notData = false;
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
                 } else {
-                    console.log(resp.errorMessage);
+                    Notify.error(resp);
                 }
             }).error(function (error) {
-            console.error(error);
-        });
+                Notify.error(error);
+            });
+
     };
 
     /**提现驳回备注*/

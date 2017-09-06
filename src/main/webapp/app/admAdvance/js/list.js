@@ -1,4 +1,4 @@
-angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal) {
+angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal, Notify) {
     title.setTitle('提现管理');
 
     $scope.myPage = {
@@ -15,9 +15,9 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     };
 
     $scope.approvalRemark = {
-            id: '',
-            statues: '',
-            remark: ''
+        id: '',
+        statues: '',
+        remark: ''
     };
 
     $scope.search = function(){
@@ -60,14 +60,14 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     $scope.confirmAdvance = function (id, statues) {
         $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues}).success(function (resp) {
             if(resp.successful){
-                alert("提现审批完成。");
+                Notify.success("提现审批完成。");
                 $scope.search();
             }else{
-                console.log(resp);
+                Notify.error(resp.error());
             }
-        }).error(function (resp) {
-            console.log(resp);
-        })
+        }).error(function (error) {
+            Notify.error(error);
+        });
     };
 
     /**提现驳回*/
@@ -135,14 +135,14 @@ angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, 
     $scope.reject = function (id, statues, remark) {
         $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues,remark:remark}).success(function (resp) {
             if(resp.successful){
-                alert("提现驳回完成。");
+                Notify.success("提现驳回完成。");
                 $uibModalInstance.close(true);
                 $scope.search();
             }else{
-                console.log(resp);
+                Notify.error(resp);
             }
-        }).error(function (resp) {
-            console.log(resp);
+        }).error(function (error) {
+            Notify.error(error);
         })
     };
 });

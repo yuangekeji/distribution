@@ -47,4 +47,6 @@ public interface MoreMemberMapper extends MemberMapper{
      * @author shiqing
      * */
     List<Member> getPostLevel6Member();
+
+    int updateMemberSalesDept(Integer memberId);
 }

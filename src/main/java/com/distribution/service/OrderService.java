@@ -205,7 +205,6 @@ public class OrderService {
 
     public String insertReOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
 
-
         //根据member_id 和 paypwd 查询会员是否存在
         Map param = new HashMap();
         param.put("memberId",currentUser.getId());
@@ -216,7 +215,15 @@ public class OrderService {
 
         if(count != null  && count >0 ) {
 
-            //判断累计的订单金额 如果是超过3万 就更新为工销售部
+            if(currentUser.getIsSalesDept() !=null && "N".equals(currentUser.getIsSalesDept())){
+                //判断累计的订单金额 如果是超过3万 就更新为工销售部
+                Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(currentUser.getId());
+
+                if(orderTotalAmount >= 30000){
+                    //更新为工作室
+                    memberMapper.updateMemberSalesDept(currentUser.getId());
+                }
+            }
 
             moreOrderMaster.setOrderCategory("2");
             moreOrderMaster.setDiscount(0);

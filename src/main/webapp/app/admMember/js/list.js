@@ -87,6 +87,8 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
                 $http.post(ctx + "/admMember/addAccount",$scope.param).success(function (resp) {
                     if(resp.successful){
                         $("#add").modal("hide");
+                        $scope.param.chargeAmt = "";
+                        $scope.param.memberId = "";
                     }else{
                         console.log(resp);
                     }

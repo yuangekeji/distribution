@@ -101,6 +101,6 @@ angular.module('order').filter("OrderCategoryFilter",function () {
     return function (input) {
         if(input=='1'){return '报单'};
         if(input=='2'){return '复投'};
-        if(input=='3'){return '线上下单'};
+        if(input=='3'){return '折扣单'};
     }
 });

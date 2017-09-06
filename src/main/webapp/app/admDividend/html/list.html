@@ -67,7 +67,9 @@
                                 <td >{{row.receivedAmount | number:2}}</td>
                                 <td >{{row.remainAmount | number:2}}</td>
                                 <td >{{row.dividendLimit | number:2}}</td>
-                                <td ><span class="label label-sm label-success"> {{row.dividendStatus | StatusFilter}} </span></td>
+                                <td >
+                                    <span class="label label-sm " ng-class="{'label-info': row.dividendStatus == '1','label-success': row.dividendStatus == '2'}"> {{row.dividendStatus | StatusFilter}} </span>
+                                </td>
                                 <td ><a href="javascript:"  ng-click="searchDividendDetails(row.memberId, row.orderNo)"> 领取明细 </a></td>
                             </tr>
                             <tr ng-show= "notData" >

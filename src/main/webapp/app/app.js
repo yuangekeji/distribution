@@ -30,7 +30,6 @@ var App = angular.module('app', [
     'admOrder',
     'admPermission',
     'admProduct',
-    'admRecommend',
     'admin',
     'admBonus',
     'admWarning'
@@ -59,7 +58,6 @@ angular.module('admOperator', []);
 angular.module('admOrder', []);
 angular.module('admPermission', []);
 angular.module('admProduct', []);
-angular.module('admRecommend', []);
 angular.module('admBonus', []);
 angular.module('admin',[]);
 angular.module('admWarning',[]);

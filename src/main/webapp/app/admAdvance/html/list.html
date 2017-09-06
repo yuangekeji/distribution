@@ -65,9 +65,9 @@
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="advance in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
                                 <td class="text-center">{{advance.memberName}}</td>
-                                <td class="text-right">{{advance.reqAmt}}</td>
-                                <td class="text-right">{{advance.feeAmt}}</td>
-                                <td class="text-right">{{advance.actAmt}}</td>
+                                <td class="text-right">{{advance.reqAmt | number:2}}</td>
+                                <td class="text-right">{{advance.feeAmt | number:2}}</td>
+                                <td class="text-right">{{advance.actAmt | number:2}}</td>
                                 <td class="text-center">{{advance.requestDate|date:'yyyy-MM-dd'}}</td>
                                 <td class="text-left">{{advance.cardName}}|{{advance.bankName}}|{{advance.cardNo}}</td>
                                 <td class="text-center">{{advance.statues|AdvanceStatuesFilter}}</td>

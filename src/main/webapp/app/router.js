@@ -130,12 +130,7 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admBonus'),
                 controller: 'admBonusCtrl'
             })
-            .state('app.admRecommend',{
-                url: '/admRecommend',
-                templateUrl: helper.basepath('admRecommend/html/list.html'),
-                resolve: helper.resolveFor('admRecommend'),
-                controller: 'admRecommendCtrl'
-            })
+
             .state('app.admOrder',{
                 url: '/admOrder',
                 templateUrl: helper.basepath('admOrder/html/list.html'),

@@ -21,11 +21,12 @@
                 <li class="dropdown dropdown-user" style="padding-left: 0px">
                     <a href="#" ui-sref="app.member.overview" class="dropdown-toggle" style="padding-right: 10px" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
                         <i class="icon-user" aria-hidden="true"></i>
-                        <span class="username"> {{currentUser.memberPhone}}</span>
+                        <span class="username" ng-if="currentUser.roleId == '1'"> {{currentUser.memberPhone}}</span>
+                        <span class="username" ng-if="currentUser.roleId == '2' || currentUser.roleId == '3'"> {{currentUser.mobile}}</span>
                     </a>
                 </li>
 
-                <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
+                <li ng-if="currentUser.roleId == '2' || currentUser.roleId == '3'" class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">
                     <a href="#" ui-sref="app.admWarning" class="dropdown-toggle" style="padding:27px 10px" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
                         <i class="icon-bell"></i>
                         <span class="badge badge-danger"> 7 </span>

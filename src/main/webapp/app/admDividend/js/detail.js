@@ -86,6 +86,10 @@ angular.module('admDividend').controller('admDividendDetailCtrl',function ($q, t
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+
+    $scope.returnList = function () {
+        $state.go('app.admDividend');
+    }
 });
 angular.module('admDividend').filter("StatusFilter",function () {
     return function (input) {

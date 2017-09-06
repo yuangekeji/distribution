@@ -89,9 +89,7 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
             $sessionStorage.currentUser = res.currentUser;
             $scope.currentUser = res.currentUser;
             $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
-
                 $rootScope.menu = res.data.menus;
-
                 // console.info($rootScope.menu );
                 $scope.firstMenu = [];
 
@@ -177,8 +175,6 @@ App.factory('settings', ['$rootScope', function($rootScope) {
 
     return settings;
 }]);
-
-
 
 String.prototype.replaceAll = function (s1, s2) {
     var temp = this;

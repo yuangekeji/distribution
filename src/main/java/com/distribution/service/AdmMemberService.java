@@ -66,7 +66,7 @@ public class AdmMemberService {
         af.setMemberId(memberCharge.getMemberId());
         af.setCreateTime(new Date());
         af.setCreateId(admin.getId());
-        af.setType("-2");
+        af.setType("2");
         af.setTotalAmt(memberCharge.getChargeAmt());
         af.setBonusAmt(memberCharge.getChargeAmt());
         af.setSeedAmt(new BigDecimal(0));

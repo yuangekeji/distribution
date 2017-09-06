@@ -2,7 +2,7 @@
  * Created by lijingx on 8/24/2017.
  */
 angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
-    title.setTitle('我的分红包');
+    title.setTitle('job奖金发放管理');
     $scope.notData = false;
     $scope.myPage = {
         pageNo: 1,
@@ -54,7 +54,6 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         $scope.search();
 
     }
-
     /**
      * 分页触发
      * @param num
@@ -63,10 +62,4 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         $scope.myPage.pageNo = num;
         $scope.search();
     };
-});
-angular.module('dividend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='1'){return '领取中'};
-        if(input=='2'){return '领取完'};
-    }
 });

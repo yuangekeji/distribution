@@ -59,8 +59,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
-                                total-items="myPage.result.totalCount">
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
+                                total-items="myPage.totalCount">
                                 <td >{{row.orderNo}}</td>
                                 <td >{{row.dividendCount}}</td>
                                 <td >{{row.orderAmount | number:2}}</td>
@@ -73,7 +73,7 @@
                                 <td ><a href="javascript:"  ng-click="searchDividendDetails(row.memberId, row.orderNo)"> 领取明细 </a></td>
                             </tr>
                             <tr ng-show= "notData" >
-                                <td colspan="8">无记录</td>
+                                <td colspan="8" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>

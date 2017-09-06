@@ -36,7 +36,7 @@
                             </div>
                             <div class="form-group col-md-1">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn green" ng-click="searchByParam()"><i class="fa fa-search"></i> 查询</button>
+                                    <button type="button" class="btn blue-steel" ng-click="searchByParam()"><i class="fa fa-search"></i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -48,30 +48,31 @@
                                id="sample_1">
                             <thead>
                             <tr >
-                                <th class="text-center">订单编号</th>
-                                <th class="text-center">分红包个数</th>
-                                <th class="text-center">订单金额</th>
-                                <th class="text-center">已领取金额</th>
-                                <th class="text-center">未领取金额</th>
-                                <th class="text-center">领取金额上限</th>
-                                <th class="text-center">状态</th>
-                                <th class="text-center">操作</th>
+                                <th >订单编号</th>
+                                <th >分红包个数</th>
+                                <th >订单金额</th>
+                                <th >已领取金额</th>
+                                <th >未领取金额</th>
+                                <th >领取金额上限</th>
+                                <th >状态</th>
+                                <th >操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
-                                total-items="myPage.result.totalCount">
-                                <td class="text-center">{{row.orderNo}}</td>
-                                <td class="text-center">{{row.dividendCount}}</td>
-                                <td class="text-right">{{row.orderAmount | number:2}}</td>
-                                <td class="text-right">{{row.receivedAmount | number:2}}</td>
-                                <td class="text-right">{{row.remainAmount | number:2}}</td>
-                                <td class="text-right">{{row.dividendLimit | number:2}}</td>
-                                <td class="text-center"><span class="label label-sm label-success"> {{row.dividendStatus | StatusFilter}} </span></td>
-                                <td class="text-center"><a href="javascript:"  ng-click="searchDividendDetails(row.memberId, row.orderNo)"> 领取明细 </a></td>
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
+                                total-items="myPage.totalCount">
+                                <td >{{row.orderNo}}</td>
+                                <td >{{row.dividendCount}}个</td>
+                                <td >{{row.orderAmount | number:2}}</td>
+                                <td >{{row.receivedAmount | number:2}}</td>
+                                <td >{{row.remainAmount | number:2}}</td>
+                                <td >{{row.dividendLimit | number:2}}</td>
+                                <!--label-success green ,label-info blue ,label-warning yellow, label-danger red-->
+                                <td ><span class="label label-sm " ng-class="{'label-info': row.dividendStatus == '1','label-success': row.dividendStatus == '2'}"> {{row.dividendStatus | StatusFilter}} </span></td>
+                                <td ><a href="javascript:"  ng-click="searchDividendDetails(row.memberId, row.orderNo)"> 领取明细 </a></td>
                             </tr>
                             <tr ng-show= "notData" >
-                                <td colspan="8">无记录</td>
+                                <td colspan="8" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>

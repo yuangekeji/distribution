@@ -32,19 +32,7 @@ angular.module('app').filter('MaxLengthFilter', function () {
         return param;
     }
 });
-angular.module('app').filter('TypeFilter', function () {
-    return function (param) {
-        if (param == "subscribe") {
-            return '订阅号';
-        }
-        if (param == "service") {
-            return '服务号';
-        }
-        if (param == "enterprise") {
-            return '企业号'
-        }
-    }
-});
+
 angular.module('app').filter('dateformat', function () {
     return function (param) {
         return new Date(param).Format("yyyy-MM-dd hh:mm:ss");
@@ -81,33 +69,6 @@ angular.module('app').filter('getLength', function () {
     }
 });
 
-angular.module('app').filter('GroupingTypeFilter', function () {
-    return function (param) {
-        if (param == "all") {
-            return '全部分组';
-        }
-        if (param == "static") {
-            return '静态分组';
-        }
-        if (param == "dynamic") {
-            return '动态分组';
-        }
-    }
-});
-
-angular.module('app').filter('GroupingTypeFilter', function () {
-    return function (param) {
-        if (param == "all") {
-            return '全部分组';
-        }
-        if (param == "static") {
-            return '静态分组';
-        }
-        if (param == "dynamic") {
-            return '动态分组';
-        }
-    }
-});
 
 angular.module("app").filter(
     'to_trusted', ['$sce', function ($sce) {
@@ -166,5 +127,12 @@ angular.module('app').filter('expDate', function ($filter) {
         var sub = new Date(data);
         sub.setMonth(sub.getMonth() + 2);
         return $filter('date')(sub, 'yyyy-MM-dd');
+    }
+});
+
+angular.module('app').filter("StatusFilter",function () {
+    return function (input) {
+        if(input=='1'){return '领取中'};
+        if(input=='2'){return '领取完'};
     }
 });

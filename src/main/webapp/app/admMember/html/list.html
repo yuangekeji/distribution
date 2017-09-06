@@ -7,51 +7,55 @@
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <form action="#" class="form-horizontal form-bordered">
                         <div class="form-body">
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">会员姓名</label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control input-sm input-small input-inline" placeholder="请输入会员姓名" aria-controls="sample_1" maxlength="20" ng-model="myPage.parameterMap.name">
+                            <div class="row col-md-12">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label col-md-5">会员姓名</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control input-sm input-small input-inline" placeholder="请输入会员姓名" aria-controls="sample_1" maxlength="20" ng-model="myPage.parameterMap.name">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">爵位</label>
-                                <div class="col-md-7">
-                                    <select class="form-control input-sm input-small input-inline" ng-options="dic.dicCode as dic.dicName for dic in posts" ng-model="myPage.parameterMap.post"></select>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label col-md-5">爵位</label>
+                                    <div class="col-md-7">
+                                        <select class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.post">
+                                            <option value="">全部</option>
+                                            <option ng-repeat="post in posts" value="{{post.dicCode}}">{{post.dicName}}</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-3">报单时间</label>
-                                <div class="col-md-9">
-                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
-                                        <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime"> <span class="input-group-addon"> to </span> <input type="text" class="form-control" name="to" ng-model="myPage.parameterMap.endTime">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label col-md-5">报单状态</label>
+                                    <div class="col-md-7">
+                                        <select class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.status">
+                                            <option value="">全部</option>
+                                            <option value="Y">已激活</option>
+                                            <option value="N">未激活</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label col-md-5">会员等级</label>
+                                    <div class="col-md-7">
+                                        <select class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.level">
+                                            <option value="">全部</option>
+                                            <option ng-repeat="level in levels" value="{{level.dicCode}}">{{level.dicName}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-2">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn green" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-body">
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">报单状态</label>
-                                <div class="col-md-7">
-                                    <select class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.status">
-                                        <option value="Y">已激活</option>
-                                        <option value="N">未激活</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">会员等级</label>
-                                <div class="col-md-7">
-                                    <select class="form-control input-sm input-small input-inline" ng-options="dic.dicCode as dic.dicName for dic in levels" ng-model="myPage.parameterMap.level"></select>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-3"></div>
-                            <div class="form-group col-md-3"></div>
+                          <div class="row col-md-12">
+                              <div class="form-group col-md-7">
+                                  <label class="control-label col-md-2">报单时间</label>
+                                  <div class="col-md-10">
+                                      <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                                          <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime"> <span class="input-group-addon"> to </span> <input type="text" class="form-control" name="to" ng-model="myPage.parameterMap.endTime">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="form-group col-md-2">
+                                  <button type="button" class="btn blue-steel pull-right" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
+                              </div>
+                          </div>
                         </div>
                     </form>
                     <div class="table-scrollable">
@@ -82,10 +86,11 @@
                                 <td>{{member.firstAgentCnt}}</td>
                                 <td>{{member.nodeName}}</td>
                                 <!--<td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>-->
-                                <td>{{member.status=='Y'?(admRecommend.updateTime|date:'yyyy年MM月dd日 HH:mm'):'该账户尚未激活'}}</td>
+                                <td>{{admRecommend.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
                                 <td>{{member.status|StatusFilter}}</td>
                                 <!--<td>{{member.expressAddress}}</td>-->
-                                <td></td>
+                                <td><a href="javascript:;" class="btn btn-xs grey-cascade"> 充值</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

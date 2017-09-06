@@ -144,4 +144,13 @@
     from member
     where member_post = 'post_level6'
   </select>
+  <update id="updateMemberSalesDept" parameterType="java.lang.Integer">
+    update member
+    set is_sales_dept ='Y',
+         update_time = now(),
+         update_id = #{memberId}
+    where id = #{memberId}
+     and  is_sales_dept ='N';
+  </update>
+
 </mapper>

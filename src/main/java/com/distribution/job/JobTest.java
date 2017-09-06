@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 public class JobTest {
 
     //5秒钟执行一次
-    @Scheduled(cron = "0/5 * * * * *")
-    public void process() {
+    //@Scheduled(cron = "0/5 * * * * *")
+    /*public void process() {
         System.out.println("job run");
-    }
+    }*/
 
 }

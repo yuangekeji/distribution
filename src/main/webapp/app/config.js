@@ -173,14 +173,6 @@ angular
                 ]
             },
             {
-                name:'admRecommend',
-                files: [
-                    'static/metronic/global/plugins/datatables/datatables.min.css',
-                    'app/admRecommend/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
-                ]
-            },
-            {
                 name:'admOrder',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
@@ -201,6 +193,14 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admProduct/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
+            },
+            {
+                name:'product',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/product/js/list.js?v=' + version,
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },

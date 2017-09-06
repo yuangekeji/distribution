@@ -200,14 +200,12 @@ angular.module('account').controller('accountListCtrl',
                 }
             },
          seedAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.seedAmt) ||
-                    $scope.reOrder.seedAmt <= 0) {
+                if (angular.isUndefined($scope.reOrder.seedAmt) ) {
                     $scope.reOrdervalidateErrors.seedAmtError = true;
                 }
             },
          bonusAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.bonusAmt) ||
-                    $scope.reOrder.bonusAmt <= 0) {
+                if (angular.isUndefined($scope.reOrder.bonusAmt) ) {
                     $scope.reOrdervalidateErrors.bonusAmtError = true;
                 }
             },

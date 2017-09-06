@@ -20,6 +20,7 @@ var App = angular.module('app', [
     'order',
     'operator',
     'auth',
+    'product',
     //后台业务模块
     'admAdvance',
     'admBasicSetting',
@@ -29,7 +30,6 @@ var App = angular.module('app', [
     'admOrder',
     'admPermission',
     'admProduct',
-    'admRecommend',
     'admin',
     'admBonus',
     'admWarning'
@@ -48,6 +48,7 @@ angular.module('graph', []);
 angular.module('order', []);
 angular.module('operator',[]);
 angular.module('auth',[]);
+angular.module('product',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);
@@ -57,7 +58,6 @@ angular.module('admOperator', []);
 angular.module('admOrder', []);
 angular.module('admPermission', []);
 angular.module('admProduct', []);
-angular.module('admRecommend', []);
 angular.module('admBonus', []);
 angular.module('admin',[]);
 angular.module('admWarning',[]);
@@ -89,9 +89,7 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
             $sessionStorage.currentUser = res.currentUser;
             $scope.currentUser = res.currentUser;
             $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
-
                 $rootScope.menu = res.data.menus;
-
                 // console.info($rootScope.menu );
                 $scope.firstMenu = [];
 
@@ -177,8 +175,6 @@ App.factory('settings', ['$rootScope', function($rootScope) {
 
     return settings;
 }]);
-
-
 
 String.prototype.replaceAll = function (s1, s2) {
     var temp = this;

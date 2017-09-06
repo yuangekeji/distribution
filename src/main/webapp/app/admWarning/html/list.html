@@ -1,6 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<h4 class="page-title">分红包/广告宣传奖发放</h4>
-
+<h4 class="page-title">job奖金发放管理</h4>
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -16,21 +15,19 @@
                                id="sample_1">
                             <thead>
                                 <tr >
-                                    <th>日期</th>
+                                    <th>发放日期</th>
                                     <th>分红包发放状态</th>
                                     <th>广告宣传奖发放状态</th>
-                                    <th>营业额</th>
-                                    <th>应发分红包金额</th>
-                                    <th>应发广告宣传奖金额</th>
-                                    <th>用于分红包发放（营业额20%）</th>
-                                    <th>用于广告宣传奖金额（营业额10%）</th>
+                                    <th>营业额|营业额20%|营业额10%</th>
+                                    <th>应发分红包总额</th>
+                                    <th>应发广告宣传奖总额</th>
                                     <th>补发分红包</th>
                                     <th>补发广告宣传奖</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.result.pageSize" current-page="myPage.result.pageNo"
-                                total-items="myPage.result.totalCount">
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
+                                total-items="myPage.totalCount">
                                 <td>{{row.orderNo}}</td>
                                 <td>{{row.dividendCount}}</td>
                                 <td>{{row.orderAmount}}</td>
@@ -39,12 +36,9 @@
                                 <td>{{row.dividendLimit}}</td>
                                 <td><span class="label label-sm label-success"> {{row.dividendStatus | StatusFilter}} </span></td>
                                 <td><a href="javascript:;" > 领取明细 </a></td>
-                                <td><a href="javascript:;" > 领取明细 </a></td>
-                                <td><a href="javascript:;" > 领取明细 </a></td>
-
                             </tr>
                             <tr ng-show= "notData" >
-                                <td colspan="10">无记录</td>
+                                <td colspan="8" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>

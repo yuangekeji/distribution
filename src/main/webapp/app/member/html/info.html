@@ -10,7 +10,7 @@
                         <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active"
                                data-target="#tab_1_1" data-toggle="tab">
                             <input type="radio" name="options" class="toggle" id="option1">个人信息</label>
-                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm " data-target="#tab_1_2"
+                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm " data-target="#tab_1_2" ng-show="false"
                                data-toggle="tab">
                             <input type="radio" name="options" class="toggle" id="option2">修改密码</label>
                     </div>
@@ -37,11 +37,11 @@
                                 <div class="form-control" ng-bind="MemberInfo.memberLevel|MemberLevelFilter" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">职务等级</label>
+                                <label class="control-label">爵位等级</label>
                                 <div class="form-control" ng-bind="MemberInfo.memberPost|PostLevelFilter" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">推荐者姓名</label>
+                                <label class="control-label">推荐人</label>
                                 <div class="form-control" ng-bind="MemberInfo.recommendName" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
@@ -53,7 +53,7 @@
                                 <div class="form-control" readonly="readonly">{{MemberInfo.isSalesDep=='Y'?'是':'否'}}</div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">一代个数</label>
+                                <label class="control-label">一代人数</label>
                                 <div class="form-control" readonly="readonly">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</div>
                             </div>
                             <div class="form-group">
@@ -95,7 +95,7 @@
                                 <label class="control-label">Re-type New Password</label>
                                 <input type="password" class="form-control"/></div>
                             <div class="margin-top-10">
-                                <a href="#" class="btn green-haze"> Change Password </a>
+                                <a href="#" class="btn blue-steel"> Change Password </a>
                                 <a href="#" class="btn default"> Cancel </a>
                             </div>
                         </form>

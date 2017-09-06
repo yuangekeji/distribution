@@ -46,13 +46,14 @@ angular.module('graph').controller('graphCtrl',
             $scope.$broadcast('angular-ui-tree:expand-all');
         };
 
-
+        $scope.data=[];
 
         $scope.getGraphTree = function () {
 
             $http.post(ctx + "/node/tree").success(function (resp) {
                 if(resp.successful){
                     console.info(resp);
+                    $scope.data[0] = resp.data;
                 }
             }).error(function (resp) {
                 console.log(resp);
@@ -61,43 +62,43 @@ angular.module('graph').controller('graphCtrl',
         }
 
         $scope.getGraphTree();
-
-        $scope.data = [{
-            'id': 1,
-            'title': 'node1',
-            'nodes': [
-                {
-                    'id': 11,
-                    'title': 'node1.1',
-                    'nodes': [
-                        {
-                            'id': 111,
-                            'title': 'node1.1.1',
-                            'nodes': []
-                        }
-                    ]
-                },
-                {
-                    'id': 12,
-                    'title': 'node1.2',
-                    'nodes': []
-                }
-            ]
-          }, {
-            'id': 2,
-            'title': 'node2',
-            'nodes': [
-                {
-                    'id': 21,
-                    'title': 'node2.1',
-                    'nodes': []
-                },
-                {
-                    'id': 22,
-                    'title': 'node2.2',
-                    'nodes': []
-                }
-            ]
-        }];
+        //
+        // $scope.data = [{
+        //     'id': 1,
+        //     'title': 'node1',
+        //     'nodes': [
+        //         {
+        //             'id': 11,
+        //             'title': 'node1.1',
+        //             'nodes': [
+        //                 {
+        //                     'id': 111,
+        //                     'title': 'node1.1.1',
+        //                     'nodes': []
+        //                 }
+        //             ]
+        //         },
+        //         {
+        //             'id': 12,
+        //             'title': 'node1.2',
+        //             'nodes': []
+        //         }
+        //     ]
+        //   }, {
+        //     'id': 2,
+        //     'title': 'node2',
+        //     'nodes': [
+        //         {
+        //             'id': 21,
+        //             'title': 'node2.1',
+        //             'nodes': []
+        //         },
+        //         {
+        //             'id': 22,
+        //             'title': 'node2.2',
+        //             'nodes': []
+        //         }
+        //     ]
+        // }];
 
     });

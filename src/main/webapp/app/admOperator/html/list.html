@@ -16,6 +16,7 @@
                                 <label class="control-label col-md-5">审核状态</label>
                                 <div class="col-md-7">
                                     <select class="form-control input-sm input-small input-inline"  ng-model="myPage.parameterMap.status">
+                                        <option value="">全部</option>
                                         <option value="wait">待审核</option>
                                         <option value="pass">审核通过</option>
                                         <option value="refuse">审核驳回</option>
@@ -25,18 +26,24 @@
                             <div class="form-group col-md-3">
                                 <label class="control-label col-md-5">爵位</label>
                                 <div class="col-md-7">
-                                    <select class="form-control input-sm input-small input-inline" ng-options="dic.dicCode as dic.dicName for dic in posts" ng-model="myPage.parameterMap.post"></select>
+                                    <select class="form-control input-sm input-small input-inline"  ng-model="myPage.parameterMap.post">
+                                        <option value="">全部</option>
+                                        <option ng-repeat="post in posts" value="{{post.dicCode}}">{{post.dicName}}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="control-label col-md-5">会员等级</label>
                                 <div class="col-md-7">
-                                    <select class="form-control input-sm input-small input-inline" ng-options="dic.dicCode as dic.dicName for dic in levels" ng-model="myPage.parameterMap.level"></select>
+                                    <select class="form-control input-sm input-small input-inline"  ng-model="myPage.parameterMap.level">
+                                        <option value="">全部</option>
+                                        <option ng-repeat="level in levels" value="{{level.dicCode}}">{{level.dicName}}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group col-md-1">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn green" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
+                                    <button type="button" class="btn blue-steel" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -64,8 +71,12 @@
                                     <td>{{ope.recommendName}}</td>
                                     <td>{{ope.status|StatusFilter}}</td>
                                     <td>
-                                        <button class="btn sbold input-circle green" ng-click="approval(ope.id,ope.memberId,'pass');" ng-if="ope.status=='wait'">审批通过</button>
-                                        <button class="btn sbold input-circle red" ng-click="approval(ope.id,ope.memberId,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>
+                                        <div class="btn-group btn-group-circle">
+                                            <button type="button" class="btn btn-outline green btn-sm" ng-click="approval(ope.id,ope.memberId,'pass');" ng-if="ope.status=='wait'">审批通过</button>
+                                            <button type="button" class="btn btn-outline red btn-sm" ng-click="approval(ope.id,ope.memberId,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>
+                                        </div>
+                                        <!--<button class="btn sbold input-circle blue-steel" ng-click="approval(ope.id,ope.memberId,'pass');" ng-if="ope.status=='wait'">审批通过</button>-->
+                                        <!--<button class="btn sbold input-circle red" ng-click="approval(ope.id,ope.memberId,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>-->
                                     </td>
                                 </tr>
                             </tbody>

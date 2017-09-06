@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn sbold green" ng-click="gotoAddPage()">创建分销订单
+                                <button id="sample_editable_1_new" class="btn sbold blue-steel" ng-click="gotoAddPage()">创建分销订单
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
@@ -18,39 +18,47 @@
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <form action="#" class="form-horizontal form-bordered">
                         <div class="form-body">
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">消费者手机号</label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control input-sm input-small input-inline" placeholder="请输入手机号" aria-controls="sample_1" maxlength="11" ng-model="myPage.parameterMap.phone">
+                            <div class="row col-md-12">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label col-md-5">消费者手机号</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control input-sm input-small input-inline" placeholder="请输入手机号" aria-controls="sample_1" maxlength="11" ng-model="myPage.parameterMap.phone">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="control-label col-md-5">报单状态</label>
-                                <div class="col-md-7">
-                                    <select class="form-control input-sm input-xsmall input-inline" ng-model="myPage.parameterMap.status">
-                                        <option value="Y">已激活</option>
-                                        <option value="N">未激活</option>
-                                    </select>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label col-md-5">报单状态</label>
+                                    <div class="col-md-7">
+                                        <select class="form-control input-sm input-xsmall input-inline" ng-model="myPage.parameterMap.status">
+                                            <option value="">全部</option>
+                                            <option value="Y">已激活</option>
+                                            <option value="N">未激活</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-3">报单时间</label>
-                                <div class="col-md-8">
-                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
-                                        <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime"> <span class="input-group-addon"> to </span> <input type="text" class="form-control" name="to" ng-model="myPage.parameterMap.endTime">
+                                <div class="form-group col-md-3">
+                                    <div class="col-md-12">
+                                        <label class="control-label check mt-checkbox mt-checkbox-outline">
+                                            <input type="checkbox" ng-model="myPage.parameterMap.myRecord"/>
+                                            <span style="margin-top: 8px;"></span>我的销售记录
+                                        </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-2">
-                                <div class="col-md-12">
-                                    <input type="checkbox" ng-model="myPage.parameterMap.myRecord"/>我的销售记录
+                            <div class="row col-md-12">
+                                <div class="form-group col-md-7">
+                                    <label class="control-label col-md-2">报单时间</label>
+                                    <div class="col-md-10">
+                                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                                            <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime"> <span class="input-group-addon"> to </span> <input type="text" class="form-control" name="to" ng-model="myPage.parameterMap.endTime">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group col-md-1">
-                                <div class="col-md-12">
-                                    <button type="button" class="btn green" ng-click="search();"><i class="fa fa-search"></i>查询</button>
+                                <div class="form-group col-md-2">
+                                    <div class="col-md-12">
+                                        <button type="button" class="btn blue-steel" ng-click="search();"><i class="fa fa-search"></i>查询</button>
+                                    </div>
                                 </div>
-                            </div>
+                          </div>
                         </div>
                     </form>
                     <div class="table-scrollable">

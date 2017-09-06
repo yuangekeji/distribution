@@ -40,35 +40,35 @@ public class ChinaPresidentBonusService {
             if (postLevel6MemberSize > 0) {
                 map.put("postLevel6MemberCount", postLevel6MemberSize);
                 DateBonusHistory dateBonusHistory = moreDateBonusHistoryMapper.getTotalSales(postLevel6MemberSize);
-                if (dateBonusHistory != null) {
+                if (dateBonusHistory == null) {
+                    map.put("bonusAmout", 0);
+                    map.put("status", "error");
+                }else {
                     bonusAmout = dateBonusHistory.getTotalSales();
                     map.put("bonusAmout", bonusAmout);
                     map.put("status", "success");
-                    Date date = new Date();
-                    for (int i = 0; i < postLevel6MemberSize; i++) {
-                        ChinaPresidentBonus chinaPresidentBonus = new ChinaPresidentBonus();
-                        chinaPresidentBonus.setMemberId(postLevel6MemberList.get(i).getId());
-                        chinaPresidentBonus.setBonusAmout(bonusAmout);
-                        chinaPresidentBonus.setBonusDate(date);
-                        chinaPresidentBonus.setStatus("0");
-                        chinaPresidentBonus.setCreateTime(date);
-                        chinaPresidentBonus.setCreateBy(0);
-                        chinaPresidentBonus.setUpdateTime(date);
-                        chinaPresidentBonus.setUpdateBy(0);
-                        int count = chinaPresidentBonusMapper.insert(chinaPresidentBonus);
-                        if (count == 0) {
-                            map.put("status", "error");
-                            throw new RuntimeException();
-                        }
+                }
+                Date date = new Date();
+                for (int i = 0; i < postLevel6MemberSize; i++) {
+                    ChinaPresidentBonus chinaPresidentBonus = new ChinaPresidentBonus();
+                    chinaPresidentBonus.setMemberId(postLevel6MemberList.get(i).getId());
+                    chinaPresidentBonus.setBonusAmout(bonusAmout);
+                    chinaPresidentBonus.setBonusDate(date);
+                    chinaPresidentBonus.setStatus("0");
+                    chinaPresidentBonus.setCreateTime(date);
+                    chinaPresidentBonus.setCreateBy(0);
+                    chinaPresidentBonus.setUpdateTime(date);
+                    chinaPresidentBonus.setUpdateBy(0);
+                    int count = chinaPresidentBonusMapper.insert(chinaPresidentBonus);
+                    if (count == 0) {
+                        map.put("status", "error");
+                        throw new RuntimeException();
                     }
-                } else {
-                    map.put("bonusAmout", 0);
-                    map.put("status", "error");
                 }
             } else {
                 map.put("postLevel6MemberCount", 0);
                 map.put("bonusAmout", 0);
-                map.put("status", "error");
+                map.put("status", "success");
             }
         }catch (Exception e){
             map.put("postLevel6MemberCount", postLevel6MemberSize);
@@ -79,7 +79,6 @@ public class ChinaPresidentBonusService {
         }finally {
             return map;
         }
-
     }
 
     public void jobLogs(Map map) {

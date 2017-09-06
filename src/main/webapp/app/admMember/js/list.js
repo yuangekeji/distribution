@@ -1,4 +1,4 @@
-angular.module('admMember').controller('admMemberCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admMember').controller('admMemberCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,ConfirmModal,Notify) {
     title.setTitle('会员管理');
     $scope.loadingFlag = true;
     $scope.notData = false;
@@ -11,7 +11,12 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         result: [],
         parameterMap: {}
     };
-
+    $scope.param = {
+        chargeAmt : "",
+        memberId:""
+    };
+    $scope.flag = true;
+    var e1 = $('.portlet');
     $scope.initDic = function () {
         $http.get(ctx + "/admMember/init").success(function (resp) {
             if(resp.successful){
@@ -54,10 +59,60 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
 
     /**翻页*/
     $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
         $scope.myPage.pageNo = num;
         $scope.onInit();
     };
+
+    /**
+     * 点击充值按钮
+     * @author Bright
+     * */
+    $scope.showTab = function(member){
+        $scope.param.memberId = member.id;
+        $scope.chargeMember  = member;
+        $scope.param.chargeAmt = "";
+        $("#add").modal("show");
+    };
+
+    /**
+     * 确认充值
+     * @author Bright
+     * */
+    $scope.ok = function () {
+        if($scope.flag) {
+            $scope.flag = false;
+            if (!/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test($scope.param.chargeAmt)) {
+                Notify.warning('请输入充值金额。');
+                $scope.flag = true;
+            } else {
+                App.blockUI({
+                    target: e1,
+                    animate: true,
+                    overlayColor: 'none'
+
+                });
+                $http.post(ctx + "/admMember/addAccount", $scope.param).success(function (resp) {
+                    $scope.flag = true;
+                    App.unblockUI(e1);
+                    if (resp.successful) {
+                        $("#add").modal("hide");
+                        $scope.param.chargeAmt = "";
+                        $scope.param.memberId = "";
+                        Notify.success('充值成功。');
+                    } else {
+                        Notify.error('充值失败。');
+                        console.log(resp);
+                    }
+                }).error(function (error) {
+                    $scope.flag = true;
+                    App.unblockUI(e1);
+                    Notify.error('充值失败。');
+                    console.error(error);
+                });
+            }
+        }
+    };
+
 });
 
 angular.module('admMember').filter("MemberLevelFilter",function () {

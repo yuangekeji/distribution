@@ -131,32 +131,34 @@ public class NodeService {
 	 * 处理会员晋升
 	 * 当会员生效时调用
 	 * @param nodeId 当前会员节点
-	 * @param orderAmount 订单金额
+	 * @param updateId 更新人
 	 * @author su
 	 */
-	public void processMemberPromotion(int nodeId,double orderAmount,int updateId){
+	public void processMemberPromotion(int nodeId,int updateId){
 		
 		//根据当前会员的nodeId查询其所有上级;
 		List<MemberNode> list = moreNodeMapper.findParentNodes(nodeId);
 		//对返回的字符串进行处理
 		if(null != list && list.size() > 0){
+			int promNodeId = 0;
 			for(MemberNode node : list){
 				//查询其下属所有节点的销售业绩
 				double total = moreNodeMapper.findTotalSalesByParentId(node.getId());
 				//判断是否符合主任晋升标准
 				if(total >= commonService.getPromotionStandard(BonusConstant.D10,BonusConstant.CODE_00)){
 			        //更新会员级别为主任，其上级中不是主任的都升为主任。
-					updateParentLevel(nodeId,BonusConstant.POST_LEVEL1,BonusConstant.POST_LEVEL2);
+					updateParentLevel(node.getId(),BonusConstant.POST_LEVEL1,BonusConstant.POST_LEVEL2);
+					promNodeId = node.getId();
 			        //主任晋升截止
 			        break;
 				}
 			}
-			//处理主任晋升为经理
-			processMemberPromotion(nodeId,BonusConstant.POST_LEVEL2,BonusConstant.POST_LEVEL3,updateId);
-            //处理经理晋升为总监
-            processMemberPromotion(nodeId,BonusConstant.POST_LEVEL3,BonusConstant.POST_LEVEL4,updateId);
-            //处理总监晋升为董事   
-            processMemberPromotion(nodeId,BonusConstant.POST_LEVEL4,BonusConstant.POST_LEVEL5,updateId);
+			//处理晋升节点所有上级主任晋升为经理
+			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL2,BonusConstant.POST_LEVEL3,updateId);
+            //处理晋升节点所有上级经理晋升为总监
+			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL3,BonusConstant.POST_LEVEL4,updateId);
+            //处理晋升节点所有上级总监晋升为董事   
+			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL4,BonusConstant.POST_LEVEL5,updateId);
 		}else{
 			return;
 		}
@@ -168,29 +170,31 @@ public class NodeService {
 	 * @param fromLevel
 	 * @param toLevel
 	 */
-	public List<Member> processMemberPromotion(int nodeId,String fromLevel,String toLevel,int updateId){
+	public void processMemberPromotion(int nodeId,String fromLevel,String toLevel,int updateId){
         
 		Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
 		//查找带左右子节点上级
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWhichHasTwoSubNodes(param);
-        List<Member> members = new ArrayList<Member>();
+        List<Integer> members = new ArrayList<Integer>();
         for(MoreMemberNode node:list){
         	//当前节点的左右子节点职务级别是否满足晋升条件
         	String leftLevel = node.getLeftLevel();
         	String rightLevel = node.getRightLevel();
         	//会员主键
-        	int promotionId = node.getId();
+        	int promotionId = node.getMemberId();
         	//如果左右的职务都大于等于父节点的职务，执行晋升。
         	if(convertLevel(leftLevel) >= convertLevel(fromLevel) && convertLevel(rightLevel) >= convertLevel(fromLevel)){
-        		Member member = new Member();
-        		member.setId(promotionId);
-        		member.setMemberLevel(toLevel);
-        		member.setUpdateTime(new Date());
-        		member.setUpdateId(updateId);
-        		members.add(member);
+        		members.add(promotionId);
         	}
         }
-        return members;
+        if(members.size() > 0){
+        	Map<String,Object> map = new HashMap<String,Object>();
+        	map.put("memberLevel", toLevel);
+        	map.put("updateId", updateId);
+        	map.put("updateTime", new Date());
+        	map.put("memberIds", members);
+        	updateMemberLevelBatch(map);
+        }
 	}
 	/**
 	 * 
@@ -213,9 +217,9 @@ public class NodeService {
 	 * @param nodeId
 	 * @param postLevel
 	 */
-	public void updateMemberLevelBatch(List<Member> member){
+	public void updateMemberLevelBatch(Map<String,Object> map){
 		
-		//moreMemberMapper.updateByPrimaryKeySelective(member);
+		moreMemberMapper.updateMemberLevelBatch(map);
 	}
 	/**
 	 * 封装参数

@@ -86,10 +86,10 @@
                                 <td>{{member.firstAgentCnt}}</td>
                                 <td>{{member.nodeName}}</td>
                                 <!--<td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>-->
-                                <td>{{admRecommend.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
+                                <td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
                                 <td>{{member.status|StatusFilter}}</td>
                                 <!--<td>{{member.expressAddress}}</td>-->
-                                <td><a href="javascript:;" class="btn btn-xs grey-cascade"> 充值</a>
+                                <td><a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs grey-cascade">充值</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -102,6 +102,35 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<div id="add" class="modal fade" style="z-index: 1030" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-blue-steel">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">
+                    <span id="lblAddTitle" style="font-weight:bold;color: white;">账号充值[{{chargeMember.memberName}},{{chargeMember.memberPhone}}]</span>
+                </h4>
+            </div>
+            <form class="form-horizontal form-bordered form-row-strippe" id="ffAdd" action="" data-toggle="validator" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                                <label class="control-label col-md-2" style="padding-left: 10px">充值金额</label>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" placeholder="请输入充值金额" ng-model="param.chargeAmt" maxlength="12">
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer bg-info">
+                    <button type="button" class="btn blue-steel" ng-click="ok();">确定</button>
+                    <button type="button" class="btn green" data-dismiss="modal">取消</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

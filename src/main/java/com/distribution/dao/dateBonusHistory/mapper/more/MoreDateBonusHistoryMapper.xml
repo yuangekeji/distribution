@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.dateBonusHistory.mapper.more.MoreDateBonusHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dateBonusHistory.model.DateBonusHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="total_sales" property="totalSales" jdbcType="DECIMAL" />
+    <result column="dividend_total" property="dividendTotal" jdbcType="DECIMAL" />
+    <result column="jd_bonus_total" property="jdBonusTotal" jdbcType="DECIMAL" />
+    <result column="use_dividend_total" property="useDividendTotal" jdbcType="DECIMAL" />
+    <result column="use_jd_bonus_total" property="useJdBonusTotal" jdbcType="DECIMAL" />
+    <result column="remain_dividend" property="remainDividend" jdbcType="DECIMAL" />
+    <result column="remain_jd_bonus" property="remainJdBonus" jdbcType="DECIMAL" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getTotalSales" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+      round(total_sales * 0.01/#{size},2) as total_sales
+    from date_bonus_history
+    where DATE_FORMAT(date,'%Y-%m-%d') = DATE_SUB(curdate(),INTERVAL 1 DAY)
+  </select>
+
+</mapper>

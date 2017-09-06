@@ -49,6 +49,7 @@ public class AdmAdvanceController extends BasicController {
             currentUser = (Admin) getCurrentUser(session);
         }
 
+        moreAdvance.setApproveDate(new Date());
         moreAdvance.setUpdateId(currentUser.getId());
         moreAdvance.setUpdateTime(new Date());
         String result = admAdvanceService.confirmAdvance(moreAdvance);

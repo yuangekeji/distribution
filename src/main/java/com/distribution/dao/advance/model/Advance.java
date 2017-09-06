@@ -26,6 +26,8 @@ public class Advance {
 
     private String statues;
 
+    private String remark;
+
     private Integer createId;
 
     private Date createTime;
@@ -120,6 +122,14 @@ public class Advance {
 
     public void setStatues(String statues) {
         this.statues = statues == null ? null : statues.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     public Integer getCreateId() {

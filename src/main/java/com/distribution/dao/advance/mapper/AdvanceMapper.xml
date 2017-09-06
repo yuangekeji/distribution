@@ -13,6 +13,7 @@
     <result column="request_date" property="requestDate" jdbcType="DATE" />
     <result column="approve_date" property="approveDate" jdbcType="DATE" />
     <result column="statues" property="statues" jdbcType="CHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_id" property="createId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
@@ -78,7 +79,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, member_id, bank_name, card_no, card_name, req_amt, act_amt, fee_amt, request_date, 
-    approve_date, statues, create_id, create_time, update_id, update_time
+    approve_date, statues, remark, create_id, create_time, update_id, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.advance.model.AdvanceExample" >
     select
@@ -115,15 +116,15 @@
     insert into advance (id, member_id, bank_name, 
       card_no, card_name, req_amt, 
       act_amt, fee_amt, request_date, 
-      approve_date, statues, create_id, 
-      create_time, update_id, update_time
-      )
+      approve_date, statues, remark, 
+      create_id, create_time, update_id, 
+      update_time)
     values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, 
       #{cardNo,jdbcType=VARCHAR}, #{cardName,jdbcType=VARCHAR}, #{reqAmt,jdbcType=DECIMAL}, 
       #{actAmt,jdbcType=DECIMAL}, #{feeAmt,jdbcType=DECIMAL}, #{requestDate,jdbcType=DATE}, 
-      #{approveDate,jdbcType=DATE}, #{statues,jdbcType=CHAR}, #{createId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{approveDate,jdbcType=DATE}, #{statues,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.advance.model.Advance" >
     insert into advance
@@ -160,6 +161,9 @@
       </if>
       <if test="statues != null" >
         statues,
+      </if>
+      <if test="remark != null" >
+        remark,
       </if>
       <if test="createId != null" >
         create_id,
@@ -207,6 +211,9 @@
       </if>
       <if test="statues != null" >
         #{statues,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="createId != null" >
         #{createId,jdbcType=INTEGER},
@@ -264,6 +271,9 @@
       <if test="record.statues != null" >
         statues = #{record.statues,jdbcType=CHAR},
       </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
       <if test="record.createId != null" >
         create_id = #{record.createId,jdbcType=INTEGER},
       </if>
@@ -294,6 +304,7 @@
       request_date = #{record.requestDate,jdbcType=DATE},
       approve_date = #{record.approveDate,jdbcType=DATE},
       statues = #{record.statues,jdbcType=CHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
       create_id = #{record.createId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_id = #{record.updateId,jdbcType=INTEGER},
@@ -335,6 +346,9 @@
       <if test="statues != null" >
         statues = #{statues,jdbcType=CHAR},
       </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="createId != null" >
         create_id = #{createId,jdbcType=INTEGER},
       </if>
@@ -362,6 +376,7 @@
       request_date = #{requestDate,jdbcType=DATE},
       approve_date = #{approveDate,jdbcType=DATE},
       statues = #{statues,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_id = #{updateId,jdbcType=INTEGER},

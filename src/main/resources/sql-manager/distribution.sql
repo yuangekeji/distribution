@@ -95,6 +95,7 @@ CREATE TABLE `advance` (
   `request_date` date NULL DEFAULT NULL COMMENT '申请提现日期',
   `approve_date` date NULL DEFAULT NULL COMMENT '审批日期',
   `statues` char(1) NULL DEFAULT NULL COMMENT '提现状态',
+  `remark` VARCHAR(200) NULL DEFAULT NULL COMMENT '备注',
   `create_id` int(11) NOT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_id` int(11) NOT NULL COMMENT '修改人',

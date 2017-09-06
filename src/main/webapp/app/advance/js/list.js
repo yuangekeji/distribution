@@ -1,4 +1,4 @@
-angular.module('advance').controller('advanceListCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('advance').controller('advanceListCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal) {
     title.setTitle('我的提现');
 
     $scope.myPage = {
@@ -13,6 +13,9 @@ angular.module('advance').controller('advanceListCtrl',function ($q, title, $sco
         }
     };
 
+    $scope.advanceRemark = {
+        remark : ''
+    }
     $scope.search = function(){
         $http.post(ctx + '/advance/list', $scope.myPage)
             .success(function (resp) {
@@ -28,6 +31,36 @@ angular.module('advance').controller('advanceListCtrl',function ($q, title, $sco
         });
     };
 
+    /**提现驳回备注*/
+    $scope.getRemark = function (remark) {
+        $scope.advanceRemark.remark = remark;
+        $scope.open(remark);
+    };
+
+    $scope.open = function(opt_attributes, remark)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "advanceRemark.html",
+                controller: "advanceRemarkCtrl",
+                size: opt_attributes,
+                resolve: {
+                    getDatas: function()
+                    {
+                        return $scope.advanceRemark;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            console.info('确认');
+        }, function()
+        {
+            console.info('取消');
+        });
+    };
 
     /**
      * 初始化
@@ -60,6 +93,19 @@ angular.module('advance').controller('advanceListCtrl',function ($q, title, $sco
 
     $scope.gotoAddPage = function () {
         $state.go("app.advanceAdd");
+    };
+});
+
+angular.module('advance').controller('advanceRemarkCtrl', function ($scope, $uibModalInstance,getDatas) {
+    $scope.datas = getDatas;
+
+    $scope.close = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
     };
 });
 

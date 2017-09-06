@@ -15,15 +15,9 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     };
 
     $scope.approvalRemark = {
-        pageNo: 1,
-        pageSize: 10,
-        totalCount: 0,
-        result: [],
-        parameterMap: {
             id: '',
             statues: '',
             remark: ''
-        }
     };
 
     $scope.search = function(){
@@ -74,14 +68,13 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
         }).error(function (resp) {
             console.log(resp);
         })
-
     };
 
     /**提现驳回*/
     $scope.rejectAdvance = function (id, statues) {
-        $scope.approvalRemark.parameterMap.id = id;
-        $scope.approvalRemark.parameterMap.statues = statues;
-        $scope.approvalRemark.parameterMap.remark = '';
+        $scope.approvalRemark.id = id;
+        $scope.approvalRemark.statues = statues;
+        $scope.approvalRemark.remark = '';
         $scope.open();
 
     };
@@ -95,13 +88,12 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
                 templateUrl: "admAdvanceApproval.html",
                 controller: "admAdvanceApprovalCtrl",
                 size: opt_attributes,
-                resolve:
+                resolve: {
+                    getDatas: function()
                     {
-                        getDatas: function()
-                        {
-                            return $scope.approvalRemark.result;
-                        }
+                        return $scope.approvalRemark;
                     }
+                }
             });
         out.result.then(function(value)
         {
@@ -123,6 +115,35 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
 
     $scope.gotoAddPage = function () {
         $state.go("app.advanceAdd");
+    };
+});
+
+angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {
+
+    $scope.datas = getDatas;
+
+    $scope.close = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    /**提现驳回*/
+    $scope.reject = function (id, statues, remark) {
+        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues,remark:remark}).success(function (resp) {
+            if(resp.successful){
+                alert("提现驳回完成。");
+                $uibModalInstance.close(true);
+                $scope.search();
+            }else{
+                console.log(resp);
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        })
     };
 });
 

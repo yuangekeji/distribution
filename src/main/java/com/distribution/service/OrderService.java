@@ -215,6 +215,9 @@ public class OrderService {
         Integer count = memberMapper.findMatchMemberQueryPwd(param);
 
         if(count != null  && count >0 ) {
+
+            //判断累计的订单金额 如果是超过3万 就更新为工销售部
+
             moreOrderMaster.setOrderCategory("2");
             moreOrderMaster.setDiscount(0);
             moreOrderMaster.setActAmt(moreOrderMaster.getOrderAmt());

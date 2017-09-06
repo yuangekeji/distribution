@@ -39,7 +39,7 @@
     <link href="${ctx}/static/metronic/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/layouts/layout2/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/layouts/layout2/css/themes/blue.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="${ctx}/static/metronic/layouts/layout2/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/metronic/layouts/layout2/css/custom.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/notify/notify.css" rel="stylesheet" type="text/css" />
     <!-- metronic  end -->
     <link href="${ctx}/static/angular-ui-tree/angular-ui-tree.css" rel="stylesheet" type="text/css"/>

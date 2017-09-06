@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-group col-md-1">
                                 <div class="col-md-12">
-                                    <button type="button" class="btn green" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
+                                    <button type="button" class="btn blue-steel" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                     <td>{{ope.recommendName}}</td>
                                     <td>{{ope.status|StatusFilter}}</td>
                                     <td>
-                                        <button class="btn sbold input-circle green" ng-click="approval(ope.id,ope.memberId,'pass');" ng-if="ope.status=='wait'">审批通过</button>
+                                        <button class="btn sbold input-circle blue-steel" ng-click="approval(ope.id,ope.memberId,'pass');" ng-if="ope.status=='wait'">审批通过</button>
                                         <button class="btn sbold input-circle red" ng-click="approval(ope.id,ope.memberId,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>
                                     </td>
                                 </tr>

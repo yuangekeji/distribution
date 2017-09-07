@@ -64,7 +64,7 @@ angular.module('account').controller('accountListCtrl',
         //校验转入账户是否存在，询问用户，是否正确
         //转账处理，判断密码是否正确，若正确正常转账，否则提示密码错误
        if( !$scope.validate()) {
-           Notify.warning('请填写完整的转账信息');
+           Notify.warning('请填写正确的转账信息');
            return false;
        }
 
@@ -92,7 +92,7 @@ angular.module('account').controller('accountListCtrl',
 
                     $http.post(ctx + '/transfer/insert',
                         {
-                            transferAmt:$scope.transfer.transferAmt,
+                            transferAmt:parseInt($scope.transfer.transferAmt),
                             receivePhone:$scope.transfer.receivePhone,
                             receiveName:$scope.transfer.receiveName,
                             payPassword:$scope.transfer.payPassword
@@ -152,15 +152,16 @@ angular.module('account').controller('accountListCtrl',
     }
     $scope.validateConditionArray = {
 
+        /*转账金额非0,正整数*/
         transferAmtError: function () {
             if (angular.isUndefined($scope.transfer.transferAmt) ||
-                $scope.transfer.transferAmt <= 0) {
+                $scope.transfer.transferAmt <= 0 || !(/^\+?[1-9][0-9]*$/.test($scope.transfer.transferAmt))) {
                 $scope.validateErrors.transferAmtError = true;
             }
         },
         receivePhoneError: function () {
             if (angular.isUndefined($scope.transfer.receivePhone) ||
-                $scope.transfer.receivePhone.length < 1) {
+                $scope.transfer.receivePhone.length < 1 ||!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.transfer.receivePhone))) {
                 $scope.validateErrors.receivePhoneError = true;
             }
         },
@@ -193,23 +194,25 @@ angular.module('account').controller('accountListCtrl',
         }
 
      $scope.reOrdervalidateConditionArray = {
-            transferAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.orderQty) ||
-                    $scope.reOrder.orderQty <= 0) {
+           /*非0,正整数*/
+           orderQtyError: function () {
+                if (angular.isUndefined($scope.reOrder.orderQty) || !(/^\+?[1-9][0-9]*$/.test($scope.reOrder.orderQty))) {
                     $scope.reOrdervalidateErrors.orderQtyError = true;
                 }
             },
-         seedAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.seedAmt) ) {
+          /*金额0和正整数*/
+           seedAmtError: function () {
+                if (angular.isUndefined($scope.reOrder.seedAmt)  || !(/^\d+$/.test($scope.reOrder.seedAmt)))  {
                     $scope.reOrdervalidateErrors.seedAmtError = true;
                 }
             },
-         bonusAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.bonusAmt) ) {
+          /*金额0和正整数*/
+           bonusAmtError: function () {
+                if (angular.isUndefined($scope.reOrder.bonusAmt)  || !(/^\d+$/.test($scope.reOrder.bonusAmt))) {
                     $scope.reOrdervalidateErrors.bonusAmtError = true;
                 }
             },
-         payPasswordError: function () {
+          payPasswordError: function () {
              if (angular.isUndefined($scope.reOrder.payPassword) ||
                  $scope.reOrder.payPassword.length <= 0) {
                  $scope.reOrdervalidateErrors.payPasswordError = true;
@@ -243,10 +246,10 @@ angular.module('account').controller('accountListCtrl',
 
          $http.post(ctx + '/order/reOrder',
              {
-                 orderQty:$scope.reOrder.orderQty,
-                 orderAmt:$scope.reOrder.orderAmt,
-                 seedAmt:$scope.reOrder.seedAmt,
-                 bonusAmt:$scope.reOrder.bonusAmt,
+                 orderQty:parseInt($scope.reOrder.orderQty),
+                 orderAmt:parseInt($scope.reOrder.orderAmt),
+                 seedAmt:parseInt($scope.reOrder.seedAmt),
+                 bonusAmt:parseInt($scope.reOrder.bonusAmt),
                  payPassword:$scope.reOrder.payPassword
              }).success(function (resp) {
 

@@ -60,4 +60,9 @@
     from admin
     <include refid="where"/>
   </select>
+
+  <!--通过手机号码查询-->
+  <select id="getAdminByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM admin WHERE mobile = #{mobile}
+  </select>
 </mapper>

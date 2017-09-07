@@ -52,7 +52,7 @@
   <select id="selectFailJobCount" resultType="java.lang.Integer">
      select count(0) as count
      from date_bonus_history
-     where alarm_status = 0
+     where alarm_status = 0  or  jd_alarm_status = 0
   </select>
   <select id="selectDateBonusHistoryList" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page" >
     select

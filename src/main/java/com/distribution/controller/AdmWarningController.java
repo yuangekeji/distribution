@@ -6,6 +6,7 @@ import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.member.model.Member;
 import com.distribution.service.AdmWarningService;
+import com.distribution.service.BonusPoolService;
 import com.distribution.service.BonusService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by jingxin on 2017/9/6.
@@ -29,6 +32,9 @@ public class AdmWarningController extends BasicController{
 
     @Autowired
     private AdmWarningService admWarningService;
+
+    @Autowired
+    private BonusPoolService bonusPoolService;
 
     @RequestMapping("/list")
     @ResponseBody
@@ -44,4 +50,14 @@ public class AdmWarningController extends BasicController{
         Integer failCnt = admWarningService.selectFailJobCount();
         return successMsg(failCnt);
     }
+
+    @RequestMapping("/getBonusPool")
+    @ResponseBody
+    public JsonMessage selectBonusPool(String poolType){
+        Map map = new HashMap<>();
+        map.put("bonusPoolAmt",bonusPoolService.getBonusPool(poolType).getTotalAmount());
+        map.put("bonusCachePoolAmt",bonusPoolService.getBonusCachePool(poolType).getTotalAmount());
+        return successMsg(map);
+    }
+
 }

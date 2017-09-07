@@ -62,9 +62,7 @@ angular.module('admin',[]);
 angular.module('admWarning',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initSidebar($state); // init sidebar
-    });
+
     $scope.currentUser = {};
     /**
      * description 退出
@@ -113,15 +111,13 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
 
     $scope.onInit();
     $scope.goUrl= function (url) {
-        $state.go(url);
-        $scope.dimension = function () {
-            var hasWidth = $('.navbar-collapse').hasClass('width')
-            return hasWidth ? 'width' : 'height'
-        }
+    $state.go(url);
 
-        $('.navbar-collapse')
+    var hasWidth = $('.navbar-collapse').hasClass('width')? 'width' : 'height'
+
+    $('.navbar-collapse')
             .removeClass('collapse in')
-            .addClass('collapse')[$scope.dimension](0)
+            .addClass('collapse')[hasWidth](0)
             .attr('aria-expanded', false)
     }
 });
@@ -150,6 +146,8 @@ App.controller('TplController', ['$state', '$scope','$rootScope','$http', '$sess
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Layout.initFooter(); // init footer
+        Layout.initSidebar(); // init sidebar
+        console.info('initlayout');
     });
     $scope.currentUser =  $sessionStorage.currentUser
 }]);

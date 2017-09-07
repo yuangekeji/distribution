@@ -147,7 +147,7 @@ App.controller('TplController', ['$state', '$scope','$rootScope','$http', '$sess
         Layout.initHeader(); // init header
         Layout.initFooter(); // init footer
         Layout.initSidebar(); // init sidebar
-        console.info('initlayout');
+        // console.info('initlayout');
     });
     $scope.currentUser =  $sessionStorage.currentUser
 }]);

@@ -23,7 +23,7 @@ angular.module('graph').controller('graphCtrl',
             });
             $http.post(ctx + "/node/tree").success(function (resp) {
                 if(resp.successful){
-                    console.info(JSON.stringify(resp.data));
+                    // console.info(JSON.stringify(resp.data));
                     $scope.handleSample2(resp.data);
 
                 }

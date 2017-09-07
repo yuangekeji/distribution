@@ -122,7 +122,7 @@
                 <tbody>
                 <tr ng-repeat="data in datas">
                     <td > {{data.memberName}} </td>
-                    <td > {{data.bonusType | StatusFilter}} </td>
+                    <td > {{data.bonusType | BonusTypeFilter}} </td>
                     <td > {{data.amoutTotal | number:2}}</td>
                     <td > {{data.manageFeeTotal | number:2}} </td>
                     <td > {{data.actualAmoutTotal  | number:2}} </td>

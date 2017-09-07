@@ -133,7 +133,7 @@ angular.module('bonus').filter("BonusTypeFilter",function () {
         if(input=='1'){return '一代奖'};
         if(input=='2'){return '二代奖'};
         if(input=='3'){return '分红包奖'};
-        if(input=='4'){return '见点奖'};
+        if(input=='4'){return '广告宣传奖'};
         if(input=='5'){return '级差奖'};
         if(input=='6'){return '全国董事奖'};
         if(input=='7'){return '工作室奖'};

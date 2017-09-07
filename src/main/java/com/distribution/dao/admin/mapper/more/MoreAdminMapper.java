@@ -28,4 +28,10 @@ public interface MoreAdminMapper {
      * @return
      */
     Integer getAdminListCount(Page page);
+
+    /**
+     * 通过手机号码查询
+     * @author Bright
+     * */
+    List<Admin> getAdminByMobile(String mobile);
 }

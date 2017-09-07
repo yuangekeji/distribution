@@ -6,7 +6,10 @@ package com.distribution.service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import com.distribution.dao.bonusCachePool.model.BonusCachePoolExample;
+import com.distribution.dao.bonusPool.model.BonusPoolExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -114,5 +117,29 @@ public class BonusPoolService {
 			total = pool.getTotalAmount();
 		}
 		return total;
+	}
+
+	public BonusPool getBonusPool(String poolType){
+		BonusPoolExample bonusPoolExample = new BonusPoolExample();
+		BonusPoolExample.Criteria bonusPoolCriteria = bonusPoolExample.createCriteria();
+		bonusPoolCriteria.andPoolTypeEqualTo(poolType);
+
+		List<BonusPool> bonusPools = bonusPoolMapper.selectByExample(bonusPoolExample);
+		if(bonusPools != null && bonusPools.size() >0)
+			return  bonusPools.get(0);
+		else
+	      return  new BonusPool();
+	}
+
+	public BonusCachePool getBonusCachePool(String poolType){
+		BonusCachePoolExample bonusCachePoolExample = new BonusCachePoolExample();
+		BonusCachePoolExample.Criteria bonusCachePoolCriteria = bonusCachePoolExample.createCriteria();
+		bonusCachePoolCriteria.andPoolTypeEqualTo(poolType);
+
+		List<BonusCachePool> bonusCachePools = bonusCachePoolMapper.selectByExample(bonusCachePoolExample);
+		if(bonusCachePools != null && bonusCachePools.size() >0)
+			return  bonusCachePools.get(0);
+		else
+			return  new BonusCachePool();
 	}
 }

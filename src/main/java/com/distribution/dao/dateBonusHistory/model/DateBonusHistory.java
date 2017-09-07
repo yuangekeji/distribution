@@ -32,6 +32,8 @@ public class DateBonusHistory {
 
     private Integer alarmStatus;
 
+    private Integer jdAlarmStatus;
+
     public Integer getId() {
         return id;
     }
@@ -142,5 +144,13 @@ public class DateBonusHistory {
 
     public void setAlarmStatus(Integer alarmStatus) {
         this.alarmStatus = alarmStatus;
+    }
+
+    public Integer getJdAlarmStatus() {
+        return jdAlarmStatus;
+    }
+
+    public void setJdAlarmStatus(Integer jdAlarmStatus) {
+        this.jdAlarmStatus = jdAlarmStatus;
     }
 }

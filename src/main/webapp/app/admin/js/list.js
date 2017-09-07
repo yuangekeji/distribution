@@ -70,6 +70,11 @@ angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $htt
         $state.go('app.admin-detail', {id: id});
     }
 
+    /**跳转到添加页面*/
+    $scope.gotoAddPage = function () {
+        $state.go("app.adminAdd");
+    };
+
 });
 
 angular.module('admin').filter("RoleFilter",function () {

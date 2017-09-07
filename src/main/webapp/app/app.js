@@ -107,6 +107,16 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         }).error(function (error) {
             alert('用户获取失败');
         });
+
+
+        $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
+            console.info(res);
+            if(res.successful){
+                $scope.failCnt = res.data;
+            }else{
+                $scope.failCnt = 0;
+            }
+        });
     }
 
     $scope.onInit();
@@ -147,9 +157,7 @@ App.controller('TplController', ['$state', '$scope','$rootScope','$http', '$sess
         Layout.initHeader(); // init header
         Layout.initFooter(); // init footer
         Layout.initSidebar(); // init sidebar
-        // console.info('initlayout');
-    });
-    $scope.currentUser =  $sessionStorage.currentUser
+});
 }]);
 
 

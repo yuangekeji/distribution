@@ -204,7 +204,7 @@ public class NodeService {
 	 * 根据nodeId更新其上级职务
 	 * @date 2017年9月2日 下午7:56:28
 	 * @param nodeId
-	 * @param postLevel
+	 * @param toLevel
 	 */
 	public void updateParentLevel(int nodeId,String fromLevel,String toLevel){
 		/**
@@ -217,8 +217,7 @@ public class NodeService {
 	/**
 	 * 
 	 * 根据nodeId更新当前会员职务
-	 * @param nodeId
-	 * @param postLevel
+	 * @param map
 	 */
 	public void updateMemberLevelBatch(Map<String,Object> map){
 		
@@ -292,36 +291,44 @@ public class NodeService {
 		map.put(root.getNodeId(), root);
 		//定义变量
 		CustomNode currentNode = null;
+		Map state = new HashMap();
+		state.put("checkbox_disabled",true);
+
 		//循环构建二叉树对象
 		for(MoreMemberNode m : list){
 			//取得缓存的节点对象
 			currentNode = map.get(m.getId());
 			if(null != currentNode){
 				//设置树节点对象属性
-				currentNode.setNodeName(m.getMemberName());
-				currentNode.setOrderAmount(m.getOrderAmount());
-				currentNode.setMobile(m.getMemberPhone());
-				currentNode.setCreateTime(m.getCreateTime());
-				List<CustomNode> nodes = null;
+//				currentNode.setNodeName(m.getMemberName());
+//				currentNode.setOrderAmount(m.getOrderAmount());
+				currentNode.setId(m.getMemberPhone());
+				String flag = currentNode.getFlag() == null ? "":"("+currentNode.getFlag()+") ";
+				currentNode.setText(flag + m.getMemberName() + " [" + m.getMemberPhone() + " , " + m.getOrderAmount()+"]");
+//				currentNode.setCreateTime(m.getCreateTime());
+				List<CustomNode> children = null;
 				if(null != m.getLeftId() || null != m.getRightId()){
-					nodes = new ArrayList<CustomNode>();
-					currentNode.setNodes(nodes);
+					children = new ArrayList<CustomNode>();
+					currentNode.setChildren(children);
 				}
 				if(null != m.getLeftId()){
 					CustomNode left = new CustomNode(m.getLeftId());
-					left.setFlag("left");
+					left.setFlag("左");
 					//currentNode.setLeft(left);
 					//计入缓存
 					map.put(m.getLeftId(), left);
-					nodes.add(left);
+					children.add(left);
 				}
 				if(null != m.getRightId()){
 					CustomNode right = new CustomNode(m.getRightId());
 					//currentNode.setRight(right);
-					right.setFlag("right");
+					right.setFlag("右");
 					//计入缓存
 					map.put(m.getRightId(), right);
-					nodes.add(right);
+					children.add(right);
+				}
+				if(currentNode.getChildren() != null && currentNode.getChildren().size() == 2 ){
+					currentNode.setState(state);
 				}
 			}else{
 				//输出日志当前节点为无效节点

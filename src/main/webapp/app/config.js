@@ -238,8 +238,9 @@ angular
                 name:'graph',
                 files: [
                     'app/graph/js/graph.js?v=' + version,
+                    'static/metronic/global/plugins/jstree/dist/themes/default/style.min.css',
+                    'static/metronic/global/plugins/jstree/dist/jstree.min.js',
                     'static/metronic/pages/css/graph.css'
-
                 ]
             }
         ]

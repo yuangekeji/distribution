@@ -59,5 +59,13 @@ public class AdmWarningController extends BasicController{
         map.put("bonusCachePoolAmt",bonusPoolService.getBonusCachePool(poolType).getTotalAmount());
         return successMsg(map);
     }
+    @RequestMapping("/payAmtProc")
+    @ResponseBody
+    public JsonMessage payAmtProc(Map map){
+        bonusPoolService.insertPayAmtProc(map);
+        return successMsg();
+    }
+
+
 
 }

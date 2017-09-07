@@ -46,7 +46,7 @@
   	select 
   	    <include refid="Base_Column_List" />
 		from date_bonus_history
-		where DATE(date) = #{date}C
+		where DATE(date) = #{date}
   </select>
 
   <select id="selectFailJobCount" resultType="java.lang.Integer">
@@ -68,4 +68,18 @@
     from date_bonus_history
     <include refid="where"/>
   </select>
+  <update id="updateBonusCachePool"  parameterType="java.util.Map">
+    update bonus_cache_pool
+    set total_amount = total_amount + #{payAmt},
+        update_by = #{createId},
+        update_time = now()
+     where pool_type = #{poolType}
+  </update>
+  <update id="updateBonusPool" parameterType="java.util.Map">
+    update bonus_pool
+    set total_amount = total_amount - #{payAmt},
+         update_by = #{createId},
+         update_time = now()
+    where pool_type = #{poolType}
+  </update>
 </mapper>

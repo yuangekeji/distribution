@@ -599,4 +599,18 @@ public class BonusService {
 		double v2 = bonus_percent;
 		System.out.println(multiply(v1,v2));
 	}*/
+
+	/**
+	 * 从资金池拨钱到发放池
+	 * @param map
+	 * @return
+     */
+	public boolean insertPayAmtProc(Map map){
+
+		int cnt1 = moreDateBonusHistoryMapper.updateBonusCachePool(map);
+		int cnt2 = moreDateBonusHistoryMapper.updateBonusPool(map);
+
+
+		return false;
+	}
 }

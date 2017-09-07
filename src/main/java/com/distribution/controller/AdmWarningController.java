@@ -34,6 +34,9 @@ public class AdmWarningController extends BasicController{
     private AdmWarningService admWarningService;
 
     @Autowired
+    private BonusService bonusService;
+
+    @Autowired
     private BonusPoolService bonusPoolService;
 
     @RequestMapping("/list")
@@ -62,7 +65,7 @@ public class AdmWarningController extends BasicController{
     @RequestMapping("/payAmtProc")
     @ResponseBody
     public JsonMessage payAmtProc(Map map){
-        bonusPoolService.insertPayAmtProc(map);
+        bonusService.insertPayAmtProc(map);
         return successMsg();
     }
 

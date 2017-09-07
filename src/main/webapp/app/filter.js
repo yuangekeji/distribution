@@ -127,7 +127,7 @@ angular.module('app').filter("dividendStatusFilter",function () {
     }
 });
 
-angular.module('bonus').filter("BonusTypeFilter",function () {
+angular.module('app').filter("BonusTypeFilter",function () {
     return function (input) {
         if(input=='0'){return '销售奖'};
         if(input=='1'){return '一代奖'};
@@ -143,9 +143,18 @@ angular.module('bonus').filter("BonusTypeFilter",function () {
 });
 
 
-angular.module('recommend').filter("recommendStatusFilter",function () {
+angular.module('app').filter("recommendStatusFilter",function () {
     return function (input) {
         if(input=='Y'){return '已激活'};
         if(input=='N'){return '未激活'};
     }
 });
+
+angular.module('app').filter("warningStatusFilter",function () {
+    return function (input) {
+        if(input==0){return '发放失败'};
+        if(input==1){return '发放成功'};
+    }
+});
+
+

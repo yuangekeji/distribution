@@ -28,14 +28,14 @@
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
                                 total-items="myPage.totalCount">
-                                <td>{{row.orderNo}}</td>
-                                <td>{{row.dividendCount}}</td>
-                                <td>{{row.orderAmount}}</td>
-                                <td>{{row.receivedAmount}}</td>
-                                <td>{{row.remainAmount}}</td>
-                                <td>{{row.dividendLimit}}</td>
-                                <td><span class="label label-sm label-success"> {{row.dividendStatus | StatusFilter}} </span></td>
-                                <td><a href="javascript:;" > 领取明细 </a></td>
+                                <td>{{row.date |expDate}}</td>
+                                <td>{{row.alarmStatus |warningStatusFilter}}</td>
+                                <td>{{row.jdAlarmStatus |warningStatusFilter}}</td>
+                                <td>{{row.totalSales |  number:2}} | {{row.dividendTotal |  number:2}} | {{row.jdBonusTotal |  number:2}}</td>
+                                <td>{{row.useDividendTotal |  number:2}}</td>
+                                <td>{{row.useJdBonusTotal  |  number:2}}</td>
+                                <td><a href="javascript:void(0);" ng-click="dividendProc(row);" class="btn btn-xs grey-cascade">补发分红包</a></td>
+                                <td><a href="javascript:void(0);" ng-click="jdProc(row);" class="btn btn-xs grey-cascade">补发广告宣传奖金</a></td>
                             </tr>
                             <tr ng-show= "notData" >
                                 <td colspan="8" class="text-center">无记录</td>

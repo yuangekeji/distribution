@@ -4,6 +4,7 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.service.AdminService;
+import com.distribution.service.BonusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,10 @@ public class AdminController extends BasicController {
     @Autowired
     private AdminService adminService;
 
+
+    @Autowired
+    private BonusService bonusService;
+
     /**
      * 查詢管理员列表
      */
@@ -32,4 +37,6 @@ public class AdminController extends BasicController {
         page = adminService.adminList(page);
         return successMsg(page);
     }
+
+
 }

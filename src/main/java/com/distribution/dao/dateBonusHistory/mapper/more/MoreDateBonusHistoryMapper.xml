@@ -15,10 +15,26 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="alarm_status" property="alarmStatus" jdbcType="INTEGER" />
+    <result column="jd_alarm_status" property="jdAlarmStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, date, total_sales, dividend_total, jd_bonus_total, use_dividend_total, use_jd_bonus_total, 
-    remain_dividend, remain_jd_bonus, create_id, create_time, update_id, update_time
+    remain_dividend, remain_jd_bonus, create_id, create_time, update_id, update_time,alarm_status,jd_alarm_status
+  </sql>
+  <sql id="where">
+      <where>
+        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+          AND create_time = #{parameterMap.createTime}
+        </if>
+      </where>
+  </sql>
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
   </sql>
   <select id="getTotalSales" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -30,6 +46,26 @@
   	select 
   	    <include refid="Base_Column_List" />
 		from date_bonus_history
-		where DATE(date) = #{date}
+		where DATE(date) = #{date}C
+  </select>
+
+  <select id="selectFailJobCount" resultType="java.lang.Integer">
+     select count(0) as count
+     from date_bonus_history
+     where alarm_status = 0
+  </select>
+  <select id="selectDateBonusHistoryList" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page" >
+    select
+    <include refid="Base_Column_List" />
+    from date_bonus_history
+    <include refid="where"/>
+    order by alarm_status asc ,create_time desc
+    <include refid="pageLimit"/>
+  </select>
+  <select id="selectDateBonusHistoryListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
+    select
+    count(0) as count
+    from date_bonus_history
+    <include refid="where"/>
   </select>
 </mapper>

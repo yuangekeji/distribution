@@ -63,10 +63,3 @@ angular.module('recommend').filter("MemberLevelFilter",function () {
         if(input=='member_level6'){return '黑金卡'};
     }
 });
-
-angular.module('recommend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='Y'){return '已激活'};
-        if(input=='N'){return '未激活'};
-    }
-});

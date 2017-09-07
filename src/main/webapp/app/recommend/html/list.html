@@ -20,7 +20,7 @@
                         <div class="form-body">
                             <div class="row col-md-12">
                                 <div class="form-group col-md-3">
-                                    <label class="control-label col-md-5">消费者手机号</label>
+                                    <label class="control-label col-md-5">消费者手机</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control input-sm input-small input-inline" placeholder="请输入手机号" aria-controls="sample_1" maxlength="11" ng-model="myPage.parameterMap.phone">
                                     </div>
@@ -86,7 +86,7 @@
                                     <td>{{member.orderAmount}}</td>
                                     <td>{{member.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
                                     <td>{{member.expressAddress}}</td>
-                                    <td>{{member.status|StatusFilter}}</td>
+                                    <td>{{member.status|recommendStatusFilter}}</td>
                                 </tr>
                             </tbody>
                         </table>

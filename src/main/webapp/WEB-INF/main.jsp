@@ -42,7 +42,6 @@
     <link href="${ctx}/static/metronic/layouts/layout2/css/custom.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/notify/notify.css" rel="stylesheet" type="text/css" />
     <!-- metronic  end -->
-    <link href="${ctx}/static/angular-ui-tree/angular-ui-tree.css" rel="stylesheet" type="text/css"/>
     <!-- BEGIN CORE JQUERY PLUGINS -->
     <!--[if lt IE 9]>
     <script src="${ctx}/static/metronic/global/plugins/respond.min.js"></script>
@@ -69,16 +68,6 @@
     <!-- END CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/notify/notify.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/main.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/controllers/handleCtrl.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/controllers/nodeCtrl.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/controllers/nodesCtrl.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/controllers/treeCtrl.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/directives/uiTree.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/directives/uiTreeHandle.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/directives/uiTreeNode.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/directives/uiTreeNodes.js" type="text/javascript"></script>
-    <script src="${ctx}/static/angular-ui-tree/services/helper.js" type="text/javascript"></script>
 
     <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>
     <script src="${ctx}/app/common/pagination/dirPagination.js" type="text/javascript" charset="utf-8"></script>
@@ -103,7 +92,7 @@
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="${ctx}/static/metronic/global/scripts/app.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/metronic/layouts/layout2/scripts/layout.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>

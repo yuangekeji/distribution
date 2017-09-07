@@ -23,6 +23,14 @@ angular
                 ]
             },
             {
+                name: 'adminAdd',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admin/js/add.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
+            },
+            {
                 name: 'recommend.list',
                 files: [
                         'static/metronic/global/plugins/datatables/datatables.min.css',
@@ -238,8 +246,9 @@ angular
                 name:'graph',
                 files: [
                     'app/graph/js/graph.js?v=' + version,
+                    'static/metronic/global/plugins/jstree/dist/themes/default/style.min.css',
+                    'static/metronic/global/plugins/jstree/dist/jstree.min.js',
                     'static/metronic/pages/css/graph.css'
-
                 ]
             }
         ]

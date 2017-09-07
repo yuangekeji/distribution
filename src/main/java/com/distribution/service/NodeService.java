@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.distribution.common.constant.BonusConstant;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
-import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.memberNode.model.more.CustomNode;
@@ -83,12 +82,11 @@ public class NodeService {
 	 * @author su
 	 * @date 2017年9月5日 下午1:00:07
 	 */
-	public List<NodeBonusHistory> generateMemberNodeBonus(int nodeId,int createId){
+	public void insertMemberNodeBonus(int nodeId,int createId){
 		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
         //查找当前节点的所有父节点，查找其直销的卡数是多少张。
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
-        //见点奖金额
-        double bonusPercent = commonService.getMaxPercent(BonusConstant.D03,BonusConstant.CODE_01);
+       
         for(MoreMemberNode m:list){
         	//忽略当前节点
         	if(m.getId().intValue() == nodeId){
@@ -99,12 +97,13 @@ public class NodeService {
         	if(null != salesNum && salesNum.intValue() > 0){
         		//取得当前会员可以领节点奖代数
         		int configNum = commonService.getRecommendCount(salesNum);
+        		//nodeId节点是当前父节点的代数
         		Integer nodeNum = m.getRownum();
         		//直销的卡数和后台的配置数据对比,在领取的代数范围内。
             	if(null != nodeNum && nodeNum.intValue() <= configNum){
             		//构建见点奖对象
             		NodeBonusHistory history = new NodeBonusHistory();
-            		history.setBonusAmount(bonusPercent);
+            		//history.setBonusAmount(bonusPercent);
             		history.setCreateBy(createId);
             		history.setCreateTime(new Date());
             		history.setFromNodeId(nodeId);
@@ -114,7 +113,9 @@ public class NodeService {
             	}
         	}
         }
-        return historyList;
+        if(historyList.size() > 0){
+        	saveNodeBonusHistoryBatch(historyList);
+        }
 	}
 	/**
 	 * 批量插入见点奖明细
@@ -123,9 +124,9 @@ public class NodeService {
 	 * @param historyList
 	 */
 	public void saveNodeBonusHistoryBatch(List<NodeBonusHistory> historyList){
-		if(historyList.size() > 0){
-			nodeBonusHistoryMapper.insertBatch(historyList);
-		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", historyList);
+		nodeBonusHistoryMapper.insertBatch(historyList);
 	}
 	/**
 	 * 处理会员晋升
@@ -201,7 +202,7 @@ public class NodeService {
 	 * 根据nodeId更新其上级职务
 	 * @date 2017年9月2日 下午7:56:28
 	 * @param nodeId
-	 * @param postLevel
+	 * @param toLevel
 	 */
 	public void updateParentLevel(int nodeId,String fromLevel,String toLevel){
 		/**
@@ -214,8 +215,7 @@ public class NodeService {
 	/**
 	 * 
 	 * 根据nodeId更新当前会员职务
-	 * @param nodeId
-	 * @param postLevel
+	 * @param map
 	 */
 	public void updateMemberLevelBatch(Map<String,Object> map){
 		
@@ -289,36 +289,44 @@ public class NodeService {
 		map.put(root.getNodeId(), root);
 		//定义变量
 		CustomNode currentNode = null;
+		Map state = new HashMap();
+		state.put("checkbox_disabled",true);
+
 		//循环构建二叉树对象
 		for(MoreMemberNode m : list){
 			//取得缓存的节点对象
 			currentNode = map.get(m.getId());
 			if(null != currentNode){
 				//设置树节点对象属性
-				currentNode.setNodeName(m.getMemberName());
-				currentNode.setOrderAmount(m.getOrderAmount());
-				currentNode.setMobile(m.getMemberPhone());
-				currentNode.setCreateTime(m.getCreateTime());
-				List<CustomNode> nodes = null;
+//				currentNode.setNodeName(m.getMemberName());
+//				currentNode.setOrderAmount(m.getOrderAmount());
+				currentNode.setId(m.getMemberPhone());
+				String flag = currentNode.getFlag() == null ? "":"("+currentNode.getFlag()+") ";
+				currentNode.setText(flag + m.getMemberName() + " [" + m.getMemberPhone() + " , " + m.getOrderAmount()+"]");
+//				currentNode.setCreateTime(m.getCreateTime());
+				List<CustomNode> children = null;
 				if(null != m.getLeftId() || null != m.getRightId()){
-					nodes = new ArrayList<CustomNode>();
-					currentNode.setNodes(nodes);
+					children = new ArrayList<CustomNode>();
+					currentNode.setChildren(children);
 				}
 				if(null != m.getLeftId()){
 					CustomNode left = new CustomNode(m.getLeftId());
-					left.setFlag("left");
+					left.setFlag("左");
 					//currentNode.setLeft(left);
 					//计入缓存
 					map.put(m.getLeftId(), left);
-					nodes.add(left);
+					children.add(left);
 				}
 				if(null != m.getRightId()){
 					CustomNode right = new CustomNode(m.getRightId());
 					//currentNode.setRight(right);
-					right.setFlag("right");
+					right.setFlag("右");
 					//计入缓存
 					map.put(m.getRightId(), right);
-					nodes.add(right);
+					children.add(right);
+				}
+				if(currentNode.getChildren() != null && currentNode.getChildren().size() == 2 ){
+					currentNode.setState(state);
 				}
 			}else{
 				//输出日志当前节点为无效节点
@@ -326,4 +334,35 @@ public class NodeService {
 		}
         return root;
     }
+	/**
+	 * 查询当前节点下的左节点与右节点下的人数与销售总额
+	 * @author su
+	 * @date 2017年9月7日 下午5:17:13
+	 * @param nodeId
+	 * @return
+	 */
+	public Map<String,String> getSubNodeNumberAndSales(int nodeId){
+		MemberNode node = moreNodeMapper.selectByPrimaryKey(nodeId);
+		//左节点的所有子节点
+		List<MoreMemberNode> leftNum = moreNodeMapper.listSubNodes(node.getLeftId());
+		//左节点的所有销售额，不包含折扣单
+		Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(node.getLeftId());
+		
+		//右节点的所有子节点
+		List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
+		//右节点的所有销售额，不包含折扣单
+		double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("leftNum", String.valueOf(leftNum.size()));
+		map.put("leftToalSales", String.valueOf(leftToalSales));
+		map.put("rightNum", String.valueOf(rightNum.size()));
+		map.put("rightToalSales", String.valueOf(rightToalSales));
+		return map;
+	}
+	public void updateNodeBonusHistory(String date,double nodeBonus){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("date", date);
+		map.put("nodeBonus", nodeBonus);
+		nodeBonusHistoryMapper.updateNodeBonusHistory(map);
+	}
 }

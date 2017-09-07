@@ -3,7 +3,9 @@ package com.distribution.controller;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
+import com.distribution.dao.admin.model.Admin;
 import com.distribution.service.AdminService;
+import com.distribution.service.BonusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +25,10 @@ public class AdminController extends BasicController {
     @Autowired
     private AdminService adminService;
 
+
+    @Autowired
+    private BonusService bonusService;
+
     /**
      * 查詢管理员列表
      */
@@ -32,4 +38,18 @@ public class AdminController extends BasicController {
         page = adminService.adminList(page);
         return successMsg(page);
     }
+
+    /**
+     * description 添加管理员
+     * @author Bright
+     * */
+    @RequestMapping("/insert")
+    @ResponseBody
+    public JsonMessage insertAdmin(@RequestBody Admin admin,HttpSession session){
+        Admin a = (Admin) getCurrentUser(session);
+        String str = adminService.insertAdmin(admin,a);
+        return successMsg(str);
+    }
+
+
 }

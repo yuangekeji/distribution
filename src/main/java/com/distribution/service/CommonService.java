@@ -30,6 +30,9 @@ public class CommonService {
 	private MoreBasicManageMapper moreBasicManageMapper;
     
     private static List<BasicManage> list = null;
+    
+    private static ArrayList<Integer> tep = null;
+	private static Map<String,Integer> map = null;
     /**
      * description 查询字典表方法
      * @author Bright
@@ -152,15 +155,17 @@ public class CommonService {
   		if(list == null){
   			refreshBasicManageList();
   		}
-  		ArrayList<Integer> tep = new ArrayList<Integer>();
-  		Map<String,Integer> map = new HashMap<String,Integer>();
-  		for(BasicManage basic : list){
-  			//判断是见点奖点位的放入tep中
-  			if(basic.getTypeCode().equals(BonusConstant.D04)){
-  				Integer recommend = basic.getRecommendCnt();
-  				if(null != recommend && recommend > 0){
-  					tep.add(recommend);
-  					map.put(recommend.toString(), basic.getRemainCnt());
+  		if(null == tep){
+  			tep = new ArrayList<Integer>();
+  			map = new HashMap<String,Integer>();
+  			for(BasicManage basic : list){
+  				//判断是见点奖点位的放入tep中
+  				if(basic.getTypeCode().equals(BonusConstant.D04)){
+  					Integer recommend = basic.getRecommendCnt();
+  					if(null != recommend && recommend.intValue() > 0){
+  						tep.add(recommend);
+  						map.put(recommend.toString(), basic.getRemainCnt());
+  					}
   				}
   			}
   		}
@@ -177,5 +182,25 @@ public class CommonService {
   			}
   		}
   		return result;
+  	}
+  	/**
+  	 * 获取basic manage的max amt
+  	 * @author su
+  	 * @param typeCode
+  	 * @param detailCode
+  	 * @return
+  	 */
+  	public double getMaxAmt(String typeCode,String detailCode){
+  		BigDecimal big = null;
+  		if(list == null){
+  			refreshBasicManageList();
+  		}
+  		for(BasicManage basic : list){
+  			if(basic.getTypeCode().equals(typeCode) && basic.getDetailCode().equals(detailCode)){
+				big = basic.getMaxAmt();
+				break;
+  			}
+  		}
+  		return big.doubleValue();
   	}
 }

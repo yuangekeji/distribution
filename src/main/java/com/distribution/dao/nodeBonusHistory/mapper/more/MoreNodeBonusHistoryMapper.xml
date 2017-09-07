@@ -74,19 +74,31 @@
     id, mebmer_id, bonus_amount, from_node_id, status, create_time, create_by, update_time, 
     update_by
   </sql>
-  <insert id="insertBatch" parameterType="java.util.List" >
+  <insert id="insertBatch" parameterType="java.util.Map" >
     insert into node_bonus_history 
-    (id, mebmer_id, bonus_amount, 
+    (mebmer_id, bonus_amount, 
       from_node_id, status, create_time, 
       create_by
     )
     values 
     <foreach collection="list" item="nodeHis" index="index" separator=",">
     (
-    	#{id,jdbcType=INTEGER}, #{nodeHis.mebmerId,jdbcType=INTEGER}, #{nodeHis.bonusAmount,jdbcType=DOUBLE}, 
+    	#{nodeHis.mebmerId,jdbcType=INTEGER}, #{nodeHis.bonusAmount,jdbcType=DOUBLE}, 
       	#{nodeHis.fromNodeId,jdbcType=INTEGER}, #{nodeHis.status,jdbcType=INTEGER}, #{nodeHis.createTime,jdbcType=TIMESTAMP}, 
       	#{nodeHis.createBy,jdbcType=INTEGER}
      )
     </foreach>
   </insert>
+  <select id="findCurrentDayNodeBonus" parameterType="java.lang.String" resultType="java.lang.Double">
+  		select SUM(bonus_amount) as totalBonus
+		from node_bonus_history
+		where DATE(create_time) = #{date}
+		and `status` = 0
+  </select>
+  <update id="updateNodeBonusHistory" parameterType="java.util.Map">
+  		update node_bonus_history
+		set bonus_amount = #{nodeBonus}
+		where DATE(create_time) = #{date}
+		and `status` = 0
+  </update>
 </mapper>

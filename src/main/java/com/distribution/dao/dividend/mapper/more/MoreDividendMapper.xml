@@ -58,4 +58,26 @@
     from dividend
     <include refid="where"/>
   </select>
+  <select id="listAllNeedSendDividends" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+	from dividend
+	where dividend_status != 2 and received_amount <![CDATA[ < ]]>  dividend_limit
+  </select>
+  <select id="getAllNeedSendDividendCount" resultType="java.lang.Integer">
+  	select sum(dividend_count) as totalAcount
+	from dividend
+	where dividend_status != 2 and received_amount <![CDATA[ < ]]> dividend_limit
+  </select>
+  <update id="updateAllNeedSendDividends" parameterType="java.util.Map">
+  	<foreach collection="list" item="record" index="index" separator=";">
+  	  update dividend
+  	  set 
+      received_amount = #{record.receivedAmount,jdbcType=DECIMAL},
+      remain_amount = #{record.remainAmount,jdbcType=DECIMAL},
+      dividend_status = #{record.dividendStatus,jdbcType=VARCHAR},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      where id = #{record.id,jdbcType=INTEGER}
+  	</foreach>
+  </update>
 </mapper>

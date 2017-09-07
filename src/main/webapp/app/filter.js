@@ -48,16 +48,6 @@ angular.module('app').filter('YYYYMMddFormat', function () {
         return new Date(param).Format("yyyy-MM-dd");
     }
 });
-angular.module('app').filter('StatusFilter', function () {
-    return function (param) {
-        if (param == "enabled") {
-            return '可用';
-        }
-        if (param == "disabled") {
-            return '不可用';
-        }
-    }
-});
 
 angular.module('app').filter('getLength', function () {
     return function (param) {
@@ -130,9 +120,41 @@ angular.module('app').filter('expDate', function ($filter) {
     }
 });
 
-angular.module('app').filter("StatusFilter",function () {
+angular.module('app').filter("dividendStatusFilter",function () {
     return function (input) {
         if(input=='1'){return '领取中'};
         if(input=='2'){return '领取完'};
     }
 });
+
+angular.module('app').filter("BonusTypeFilter",function () {
+    return function (input) {
+        if(input=='0'){return '销售奖'};
+        if(input=='1'){return '一代奖'};
+        if(input=='2'){return '二代奖'};
+        if(input=='3'){return '分红包奖'};
+        if(input=='4'){return '广告宣传奖'};
+        if(input=='5'){return '级差奖'};
+        if(input=='6'){return '全国董事奖'};
+        if(input=='7'){return '工作室奖'};
+        if(input=='8'){return '运营中心奖'};
+        if(input=='9'){return '运营中心扶持奖'};
+    }
+});
+
+
+angular.module('app').filter("recommendStatusFilter",function () {
+    return function (input) {
+        if(input=='Y'){return '已激活'};
+        if(input=='N'){return '未激活'};
+    }
+});
+
+angular.module('app').filter("warningStatusFilter",function () {
+    return function (input) {
+        if(input==0){return '发放失败'};
+        if(input==1){return '发放成功'};
+    }
+});
+
+

@@ -22,7 +22,7 @@ angular.module('app').config([
                 controller: 'recommendListCtrl'
          })
          .state('app.recommendAdd', {
-                url: '/recommendAdd',
+                url: '/recommendAdd/:mobile',
                 templateUrl: helper.basepath('recommend/html/add.html'),
                 resolve: helper.resolveFor('recommend.add'),
                 controller: 'recommendAddCtrl'
@@ -172,6 +172,12 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admin/html/list.html'),
                 resolve: helper.resolveFor('admin'),
                 controller: 'adminCtrl'
+            })
+            .state('app.adminAdd',{
+                url: '/adminAdd',
+                templateUrl: helper.basepath('admin/html/add.html'),
+                resolve: helper.resolveFor('adminAdd'),
+                controller: 'adminAddCtrl'
             })
             .state('app.admWarning',{
                 url: '/admWarning',

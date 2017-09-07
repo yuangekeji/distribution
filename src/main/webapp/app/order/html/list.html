@@ -96,7 +96,7 @@
                                     <td class="text-left">{{orderMaster.expressAddress}}</td>
                                     <td class="text-left">
                                         <div class="btn btn-circle">
-                                            <button type="button" class="btn btn-outline green btn-sm" ng-click="confirmOrder(orderMaster.id,'4')" ng-show="{{orderMaster.orderStatues == '3'}}">确认收货</button>
+                                            <button type="button" class="btn btn-outline green btn-xs" ng-click="confirmOrder(orderMaster.id,'4')" ng-show="{{orderMaster.orderStatues != '4'}}">确认收货</button>
                                         </div>
                                     </td>
                                 </tr>

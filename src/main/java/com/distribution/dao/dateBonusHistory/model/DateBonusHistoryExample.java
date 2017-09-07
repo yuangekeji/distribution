@@ -945,6 +945,66 @@ public class DateBonusHistoryExample {
             addCriterion("alarm_status not between", value1, value2, "alarmStatus");
             return (Criteria) this;
         }
+
+        public Criteria andJdAlarmStatusIsNull() {
+            addCriterion("jd_alarm_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusIsNotNull() {
+            addCriterion("jd_alarm_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusEqualTo(Integer value) {
+            addCriterion("jd_alarm_status =", value, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusNotEqualTo(Integer value) {
+            addCriterion("jd_alarm_status <>", value, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusGreaterThan(Integer value) {
+            addCriterion("jd_alarm_status >", value, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("jd_alarm_status >=", value, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusLessThan(Integer value) {
+            addCriterion("jd_alarm_status <", value, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("jd_alarm_status <=", value, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusIn(List<Integer> values) {
+            addCriterion("jd_alarm_status in", values, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusNotIn(List<Integer> values) {
+            addCriterion("jd_alarm_status not in", values, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusBetween(Integer value1, Integer value2) {
+            addCriterion("jd_alarm_status between", value1, value2, "jdAlarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andJdAlarmStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("jd_alarm_status not between", value1, value2, "jdAlarmStatus");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

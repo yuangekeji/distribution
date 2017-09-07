@@ -83,12 +83,12 @@ public class NodeService {
 	 * @author su
 	 * @date 2017年9月5日 下午1:00:07
 	 */
-	public List<NodeBonusHistory> generateMemberNodeBonus(int nodeId,int createId){
+	public void insertMemberNodeBonus(int nodeId,int createId){
 		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
         //查找当前节点的所有父节点，查找其直销的卡数是多少张。
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
         //见点奖金额
-        double bonusPercent = commonService.getMaxPercent(BonusConstant.D03,BonusConstant.CODE_01);
+        double bonusPercent = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
         for(MoreMemberNode m:list){
         	//忽略当前节点
         	if(m.getId().intValue() == nodeId){
@@ -99,6 +99,7 @@ public class NodeService {
         	if(null != salesNum && salesNum.intValue() > 0){
         		//取得当前会员可以领节点奖代数
         		int configNum = commonService.getRecommendCount(salesNum);
+        		//nodeId节点是当前父节点的代数
         		Integer nodeNum = m.getRownum();
         		//直销的卡数和后台的配置数据对比,在领取的代数范围内。
             	if(null != nodeNum && nodeNum.intValue() <= configNum){
@@ -114,7 +115,9 @@ public class NodeService {
             	}
         	}
         }
-        return historyList;
+        if(historyList.size() > 0){
+        	saveNodeBonusHistoryBatch(historyList);
+        }
 	}
 	/**
 	 * 批量插入见点奖明细
@@ -123,9 +126,9 @@ public class NodeService {
 	 * @param historyList
 	 */
 	public void saveNodeBonusHistoryBatch(List<NodeBonusHistory> historyList){
-		if(historyList.size() > 0){
-			nodeBonusHistoryMapper.insertBatch(historyList);
-		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", historyList);
+		nodeBonusHistoryMapper.insertBatch(historyList);
 	}
 	/**
 	 * 处理会员晋升

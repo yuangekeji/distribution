@@ -74,16 +74,16 @@
     id, mebmer_id, bonus_amount, from_node_id, status, create_time, create_by, update_time, 
     update_by
   </sql>
-  <insert id="insertBatch" parameterType="java.util.List" >
+  <insert id="insertBatch" parameterType="java.util.Map" >
     insert into node_bonus_history 
-    (id, mebmer_id, bonus_amount, 
+    (mebmer_id, bonus_amount, 
       from_node_id, status, create_time, 
       create_by
     )
     values 
     <foreach collection="list" item="nodeHis" index="index" separator=",">
     (
-    	#{id,jdbcType=INTEGER}, #{nodeHis.mebmerId,jdbcType=INTEGER}, #{nodeHis.bonusAmount,jdbcType=DOUBLE}, 
+    	#{nodeHis.mebmerId,jdbcType=INTEGER}, #{nodeHis.bonusAmount,jdbcType=DOUBLE}, 
       	#{nodeHis.fromNodeId,jdbcType=INTEGER}, #{nodeHis.status,jdbcType=INTEGER}, #{nodeHis.createTime,jdbcType=TIMESTAMP}, 
       	#{nodeHis.createBy,jdbcType=INTEGER}
      )

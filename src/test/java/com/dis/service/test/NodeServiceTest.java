@@ -59,4 +59,10 @@ public class NodeServiceTest extends SpringServiceTest{
 		int nodeId = 10;
 		nodeService.processMemberPromotion(nodeId, order.getCreateId());
 	}
+	@Test
+	public void insertMemberNodeBonus(){
+		int nodeId = 10;
+		int createId = 2;
+		nodeService.insertMemberNodeBonus(nodeId, createId);
+	}
 }

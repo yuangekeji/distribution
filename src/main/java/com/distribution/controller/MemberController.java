@@ -77,8 +77,9 @@ public class MemberController extends BasicController {
     @RequestMapping("/list")
     @ResponseBody
     public JsonMessage list(@RequestBody Page page,HttpSession session){
+        Member m = (Member) getCurrentUser(session);
+        page.getParameterMap().put("memberId",m.getId());
         if(null!=page.getParameterMap().get("myRecord") && (Boolean) page.getParameterMap().get("myRecord")){
-            Member m = (Member) getCurrentUser(session);
             page.getParameterMap().put("recommendId",m.getId());
         }else{
             page.getParameterMap().put("recommendId",null);

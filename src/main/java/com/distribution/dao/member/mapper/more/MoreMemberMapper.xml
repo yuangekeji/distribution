@@ -56,6 +56,9 @@
        <if test="parameterMap.recommendId!=null and parameterMap.recommendId!=''">
          AND recommend_id = #{parameterMap.recommendId}
        </if>
+       <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+         AND create_id = #{parameterMap.memberId}
+       </if>
 
        <if test="parameterMap.name!=null and parameterMap.name!=''">
          AND member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'

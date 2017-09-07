@@ -26,6 +26,8 @@ public class DividendHistory {
 
     private BigDecimal mgmtFee;
 
+    private Integer balanceStatus;
+
     public Integer getId() {
         return id;
     }
@@ -112,5 +114,13 @@ public class DividendHistory {
 
     public void setMgmtFee(BigDecimal mgmtFee) {
         this.mgmtFee = mgmtFee;
+    }
+
+    public Integer getBalanceStatus() {
+        return balanceStatus;
+    }
+
+    public void setBalanceStatus(Integer balanceStatus) {
+        this.balanceStatus = balanceStatus;
     }
 }

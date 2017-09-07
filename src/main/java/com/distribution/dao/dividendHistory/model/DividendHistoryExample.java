@@ -765,6 +765,66 @@ public class DividendHistoryExample {
             addCriterion("mgmt_fee not between", value1, value2, "mgmtFee");
             return (Criteria) this;
         }
+
+        public Criteria andBalanceStatusIsNull() {
+            addCriterion("balance_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusIsNotNull() {
+            addCriterion("balance_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusEqualTo(Integer value) {
+            addCriterion("balance_status =", value, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusNotEqualTo(Integer value) {
+            addCriterion("balance_status <>", value, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusGreaterThan(Integer value) {
+            addCriterion("balance_status >", value, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("balance_status >=", value, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusLessThan(Integer value) {
+            addCriterion("balance_status <", value, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("balance_status <=", value, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusIn(List<Integer> values) {
+            addCriterion("balance_status in", values, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusNotIn(List<Integer> values) {
+            addCriterion("balance_status not in", values, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusBetween(Integer value1, Integer value2) {
+            addCriterion("balance_status between", value1, value2, "balanceStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andBalanceStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("balance_status not between", value1, value2, "balanceStatus");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

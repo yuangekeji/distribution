@@ -1,6 +1,6 @@
 'use strict';
 angular
-    .module('app.lazyload')
+    .module('app.lazyLoad')
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(http|https|data):/);
     }])

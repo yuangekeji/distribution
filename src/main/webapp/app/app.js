@@ -2,7 +2,7 @@ var App = angular.module('app', [
     'ngSanitize',
     'ui.router',
     'oc.lazyLoad',
-    'app.lazyload',
+    'app.lazyLoad',
     'app.routes',
     'ngStorage',
     'ui.bootstrap',
@@ -34,7 +34,7 @@ var App = angular.module('app', [
     'admWarning'
 ]);
 
-angular.module('app.lazyload', []);
+angular.module('app.lazyLoad', []);
 angular.module('app.routes', []);
 angular.module('home', []);
 angular.module('recommend', []);

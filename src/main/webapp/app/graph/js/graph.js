@@ -1,6 +1,6 @@
 angular.module('graph').controller('graphCtrl',
     function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $log) {
-
+        title.setTitle('推荐网络图');
         var e1 = $('.portlet');
 
         $scope.collapseAll = function () {

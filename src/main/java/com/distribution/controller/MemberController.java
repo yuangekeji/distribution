@@ -12,6 +12,7 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.service.CommonService;
 import com.distribution.service.MemberService;
+import com.distribution.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,8 @@ public class MemberController extends BasicController {
     private CommonService commonService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private NodeService nodeService;
 
     @RequestMapping(value = "/jump")
     @IgnoreLoginCheck
@@ -144,6 +147,22 @@ public class MemberController extends BasicController {
         MoreMember moreMember = memberService.selectMemberInfo(id);
         List<Dictionary> list = commonService.selectDictionary("bank_name");
         Integer it = memberService.getByMemberId(id);
+        Map map = nodeService.getSubNodeNumberAndSales(moreMember.getNodeId());
+        Integer ln = !"null".equals(map.get("leftNum"))?Integer.valueOf(map.get("leftNum").toString()):0;
+        BigDecimal ls = !"null".equals(map.get("leftToalSales"))?new BigDecimal(map.get("leftToalSales").toString()):new BigDecimal(0);
+        Integer rn = !"null".equals(map.get("rightNum"))?Integer.valueOf(map.get("rightNum").toString()):0;
+        BigDecimal rs = !"null".equals(map.get("rightToalSales"))?new BigDecimal(map.get("rightToalSales").toString()):new BigDecimal(0);
+        if(ls.compareTo(rs)==1 || ls.compareTo(rs)==0){//ls >= rs
+            moreMember.setCityTotalAmount(ls);
+            moreMember.setCityTotalPeople(ln);
+            moreMember.setCountyTotalAmount(rs);
+            moreMember.setCityTotalPeople(rn);
+        }else if(rs.compareTo(ls)==1){//rs > ls
+            moreMember.setCityTotalAmount(rs);
+            moreMember.setCityTotalPeople(rn);
+            moreMember.setCountyTotalAmount(ls);
+            moreMember.setCountyTotalPeople(ln);
+        }
 
         Map result= new HashMap();
         result.put("member",moreMember);

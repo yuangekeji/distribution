@@ -19,6 +19,7 @@ import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
+import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
@@ -45,6 +46,8 @@ public class BonusService {
 	private CommonService commonService;
 	@Autowired
 	private NodeService nodeService;
+	@Autowired
+    private JobLogsMapper jobLogsMapper;
 	
 	
 	
@@ -73,32 +76,36 @@ public class BonusService {
 	 * @author su
 	 */
 	public void insertOrderBonus(OrderMaster order){
-	    //初始化计算所需配置中的变量
-		commonService.initBasicManageList();
 		//订单主人会员
 		Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
-		//当前订单的主人的推荐人
-		int recommendUser = owner.getRecommendId();
-		//订单主人的推荐人
-		Member ownerRecomend = memberMapper.selectByPrimaryKey(recommendUser);
-		//当前订单的主人对应的会员节点
-		int nodeId = owner.getNodeId();
-		//当前订单的主人对应的推荐人的推荐人
-		int recommendUserParent = ownerRecomend.getRecommendId();
-		//销售奖 订单的推荐人
-		insertSalseBonus(recommendUser,order);
-		//1代奖 订单的推荐人
-		insertFirstGenerationBonus(recommendUser,order);
-		//2代奖直推人的推荐人获得2代奖
-		insertSecondGenerationBonus(recommendUserParent,order);
-		//级差奖 当前节点所有上级
-		insertMemberLevelBonus(nodeId,order);
-		//分红包记录
-
-		//工作室&运营中心奖/扶持奖 当前节点的所有上级
-		insertWorkRoomAndOperatingCenterBonus(nodeId,order);
-		//处理会员晋升 当前节点的所有上级
-		nodeService.processMemberPromotion(nodeId,order.getCreateId());
+		//有推荐人才发奖
+		if(null != owner.getRecommendId() && owner.getRecommendId() > 0){
+			//初始化计算所需配置中的变量
+			commonService.initBasicManageList();
+			//当前订单的主人的推荐人
+			int recommendUser = owner.getRecommendId();
+			//订单主人的推荐人
+			Member ownerRecomend = memberMapper.selectByPrimaryKey(recommendUser);
+			//当前订单的主人对应的会员节点
+			int nodeId = owner.getNodeId();
+			//当前订单的主人对应的推荐人的推荐人
+			int recommendUserParent = ownerRecomend.getRecommendId();
+			//销售奖 订单的推荐人
+			insertSalseBonus(recommendUser,order);
+			//1代奖 订单的推荐人
+			insertFirstGenerationBonus(recommendUser,order);
+			//推荐人的上级存在才发奖
+			if(null != ownerRecomend.getRecommendId() && ownerRecomend.getRecommendId() > 0){
+				//2代奖直推人的推荐人获得2代奖
+				insertSecondGenerationBonus(recommendUserParent,order);
+			}
+			//级差奖 当前节点所有上级
+			insertMemberLevelBonus(nodeId,order);
+			//工作室&运营中心奖/扶持奖 当前节点的所有上级
+			insertWorkRoomAndOperatingCenterBonus(nodeId,order);
+			//处理会员晋升 当前节点的所有上级
+			nodeService.processMemberPromotion(nodeId,order.getCreateId());
+		}
 	}
 	/**
 	 * 销售奖计算

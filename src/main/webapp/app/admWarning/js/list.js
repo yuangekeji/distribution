@@ -1,7 +1,7 @@
 /**
  * Created by lijingx on 8/24/2017.
  */
-angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $scope, $http,$uibModal, Notify, $state, $stateParams, $sessionStorage) {
     title.setTitle('job奖金发放管理');
     $scope.notData = false;
     $scope.myPage = {
@@ -24,11 +24,12 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
 
                 } else {
-                    console.log(resp.errorMessage);
+                    Notify.error(resp.errorMessage);
                 }
 
             }).error(function (error) {
-            console.error(error);
+
+            Notify.error(error);
         });
     }
 
@@ -40,8 +41,9 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         $scope.search();
     };
 
-
     $scope.onInit();
+
+    $scope.bonusPool ={};
 
     /**
      * 查询按钮触发
@@ -62,4 +64,72 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+
+    $scope.bonusProc =function (poolType) {
+        $http.post(ctx + '/admWarning/getBonusPool?poolType='+poolType, {poolType:poolType})
+            .success(function (resp) {
+                if (resp.successful) {
+                   $scope.open(resp.data,poolType);
+                }else {
+                    Notify.error(resp.errorMessage);
+                }
+            }).error(function (error) {
+             Notify.error(error);
+        });
+    }
+
+    $scope.open = function(data,poolType)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "bonusProc.html",
+                controller: "bonusProcCtrl",
+                resolve:
+                {
+                    getDatas: function()
+                    {
+                        return data;
+                    },
+                    getPoolType:function () {
+                        return poolType;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            console.info('确认');
+
+        }, function()
+        {
+            console.info('取消');
+        });
+    };
 });
+
+angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify) {
+
+    $scope.datas = getDatas;
+    $scope.poolType = getPoolType;
+    $scope.payAmt = 0;
+
+    $scope.ok = function()
+    {
+        if (angular.isUndefined($scope.payAmt) || !(/^\+?[1-9][0-9]*$/.test($scope.payAmt))) {
+            Notify.warning('请输入正确的金额')
+            return false;
+        }
+        if ( $scope.datas.bonusPoolAmt < $scope.payAmt ) {
+            Notify.warning('资金池金额余额不足')
+            return false;
+        }
+        alert( $scope.payAmt );
+        // $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+

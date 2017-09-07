@@ -13,6 +13,7 @@
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="mgmt_fee" property="mgmtFee" jdbcType="DECIMAL" />
+    <result column="balance_status" property="balanceStatus" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List" >
     id, dividend_id, received_time, devidend_count, amount, total_received, create_id, 
-    create_time, update_id, update_time, mgmt_fee
+    create_time, update_id, update_time, mgmt_fee, balance_status
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.dividendHistory.model.DividendHistoryExample" >
     select
@@ -111,11 +112,13 @@
     insert into dividend_history (id, dividend_id, received_time, 
       devidend_count, amount, total_received, 
       create_id, create_time, update_id, 
-      update_time, mgmt_fee)
+      update_time, mgmt_fee, balance_status
+      )
     values (#{id,jdbcType=INTEGER}, #{dividendId,jdbcType=INTEGER}, #{receivedTime,jdbcType=TIMESTAMP}, 
       #{devidendCount,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{totalReceived,jdbcType=DECIMAL}, 
       #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{mgmtFee,jdbcType=DECIMAL})
+      #{updateTime,jdbcType=TIMESTAMP}, #{mgmtFee,jdbcType=DECIMAL}, #{balanceStatus,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.dividendHistory.model.DividendHistory" >
     insert into dividend_history
@@ -153,6 +156,9 @@
       <if test="mgmtFee != null" >
         mgmt_fee,
       </if>
+      <if test="balanceStatus != null" >
+        balance_status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -187,6 +193,9 @@
       </if>
       <if test="mgmtFee != null" >
         #{mgmtFee,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceStatus != null" >
+        #{balanceStatus,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -232,6 +241,9 @@
       <if test="record.mgmtFee != null" >
         mgmt_fee = #{record.mgmtFee,jdbcType=DECIMAL},
       </if>
+      <if test="record.balanceStatus != null" >
+        balance_status = #{record.balanceStatus,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -249,7 +261,8 @@
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_id = #{record.updateId,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      mgmt_fee = #{record.mgmtFee,jdbcType=DECIMAL}
+      mgmt_fee = #{record.mgmtFee,jdbcType=DECIMAL},
+      balance_status = #{record.balanceStatus,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -287,6 +300,9 @@
       <if test="mgmtFee != null" >
         mgmt_fee = #{mgmtFee,jdbcType=DECIMAL},
       </if>
+      <if test="balanceStatus != null" >
+        balance_status = #{balanceStatus,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -301,7 +317,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_id = #{updateId,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      mgmt_fee = #{mgmtFee,jdbcType=DECIMAL}
+      mgmt_fee = #{mgmtFee,jdbcType=DECIMAL},
+      balance_status = #{balanceStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

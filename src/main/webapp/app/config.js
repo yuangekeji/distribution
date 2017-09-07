@@ -1,6 +1,6 @@
 'use strict';
 angular
-    .module('app.lazyload')
+    .module('app.lazyLoad')
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(http|https|data):/);
     }])
@@ -19,6 +19,14 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admin/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
+            },
+            {
+                name: 'adminAdd',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admin/js/add.js?v=' + version,
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },

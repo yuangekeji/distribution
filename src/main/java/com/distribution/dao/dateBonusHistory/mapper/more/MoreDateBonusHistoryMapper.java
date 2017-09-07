@@ -2,6 +2,7 @@ package com.distribution.dao.dateBonusHistory.mapper.more;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dateBonusHistory.mapper.DateBonusHistoryMapper;
@@ -36,5 +37,19 @@ public interface MoreDateBonusHistoryMapper extends DateBonusHistoryMapper {
      * @return
      */
     Integer selectDateBonusHistoryListCount(Page page);
+
+    /**
+     * 更新发放池
+      * @param map
+     * @return
+     */
+    int updateBonusCachePool(Map map);
+
+    /**
+     * 更新资金池
+     * @param map
+     * @return
+     */
+    int updateBonusPool(Map map);
 
 }

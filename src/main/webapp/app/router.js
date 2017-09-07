@@ -173,6 +173,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admin'),
                 controller: 'adminCtrl'
             })
+            .state('app.adminAdd',{
+                url: '/adminAdd',
+                templateUrl: helper.basepath('admin/html/add.html'),
+                resolve: helper.resolveFor('adminAdd'),
+                controller: 'adminAddCtrl'
+            })
             .state('app.admWarning',{
                 url: '/admWarning',
                 templateUrl: helper.basepath('admWarning/html/list.html'),

@@ -22,7 +22,7 @@ angular.module('app').config([
                 controller: 'recommendListCtrl'
          })
          .state('app.recommendAdd', {
-                url: '/recommendAdd',
+                url: '/recommendAdd/:mobile',
                 templateUrl: helper.basepath('recommend/html/add.html'),
                 resolve: helper.resolveFor('recommend.add'),
                 controller: 'recommendAddCtrl'

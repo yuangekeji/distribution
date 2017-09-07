@@ -175,8 +175,7 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
             }
         },
         advanceAmtError: function () {
-            if (angular.isUndefined($scope.advance.reqAmt) ||
-                $scope.advance.reqAmt <= 0) {
+            if (angular.isUndefined($scope.advance.reqAmt) || !(/^\+?[1-9][0-9]*$/.test($scope.advance.reqAmt))) {
                 $scope.advanceValidateErrors.advanceAmtError = true;
             }
         },

@@ -2,7 +2,8 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     title.setTitle('创建分销订单');
     $scope.user = $sessionStorage.currentUser;
     $scope.member = {
-        recommendPhone:$sessionStorage.currentUser.memberPhone
+        recommendPhone:$sessionStorage.currentUser.memberPhone,
+        notePhone:$stateParams.mobile ? $stateParams.mobile : ''
     };
     $scope.confirmLoginPassword = "";
     $scope.dictionary = [];

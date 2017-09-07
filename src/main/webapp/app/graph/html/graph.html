@@ -15,7 +15,7 @@
                          {{node.nodeName}}&nbsp; [{{node.mobile }},&nbsp;{{node.orderAmount | number:2}}]
                          <div class="pull-left" ng-if="!node.nodes || node.nodes.length < 2">
                             <label class="mt-radio">
-                                <input type="radio" value="node.id" name="node">
+                                <input type="radio" value="node.id" name="node" ng-click="addMember(node.mobile)">
                                 <span></span>
                             </label>
                         </div>

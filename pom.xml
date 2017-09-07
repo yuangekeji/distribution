@@ -285,7 +285,7 @@
 
 
    <build>
-
+       <finalName>distribution</finalName>
       <plugins>
        <plugin>
               <groupId>org.apache.maven.plugins</groupId>

@@ -86,4 +86,8 @@ angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, 
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+
+    $scope.returnList = function () {
+        $state.go('app.dividend');
+    }
 });

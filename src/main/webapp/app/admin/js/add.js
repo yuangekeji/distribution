@@ -13,10 +13,10 @@ angular.module('admin').controller('adminAddCtrl',function ($q, title, $scope, $
                 $http.post(ctx + "/admin/insert",$scope.admin).success(function (resp) {
                 if(resp.successful){
                     if(resp.data=='PHONE_NULL'){
-                        Notify.warning("请输入手机号码(会员账号)。");
+                        Notify.warning("请输入手机号码(登录账号)。");
                         $scope.submitFlag = true;
                     }else if(resp.data=='PHONE_EXIST'){
-                        Notify.warning("手机号码(会员账号)已存在，请重新输入。");
+                        Notify.warning("改手机号码已被注册，请重新输入。");
                         $scope.submitFlag = true;
                     }else if(resp.data=='SUCCESS'){
                         $state.go("app.admin");
@@ -37,7 +37,7 @@ angular.module('admin').controller('adminAddCtrl',function ($q, title, $scope, $
             Notify.warning("请输入昵称。");
             $scope.submitFlag = true;
         }else if(!$scope.admin.mobile||!$scope.admin.mobile.trim()){
-            Notify.warning("请输入手机号码(会员账号)。");
+            Notify.warning("请输入手机号码(登录账号)。");
             $scope.submitFlag = true;
         }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.admin.mobile))){
             Notify.warning("手机号码(会员账号)有误，请重新输入。");

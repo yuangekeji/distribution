@@ -1,1 +1,1 @@
-<% response.sendRedirect("http://localhost:8080/distribution/index");%>
+<%response.sendRedirect("http://"+request.getServerName()+":"+request.getServerPort()+"/distribution/index");%>

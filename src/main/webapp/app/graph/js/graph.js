@@ -62,6 +62,21 @@ angular.module('graph').controller('graphCtrl',
         }
 
         $scope.getGraphTree();
+
+        $scope.addMember = function (mobile){
+
+            ConfirmModal.show({
+                text: '是否要添加新的节点？',
+                isCancel:true //false alert ,true confirm
+            }).then(function (sure) {
+                if (!sure) {
+                    return;
+                }
+                $state.go('app.recommendAdd',{mobile:mobile});
+            });
+
+        }
+
         //
         // $scope.data = [{
         //     'id': 1,

@@ -1,6 +1,6 @@
 angular.module('account').controller('accountListCtrl',
     function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal,Notify) {
-    title.setTitle('我的账户');
+    title.setTitle('账户管理');
     //账户信息
     $scope.accountInfo = {};
     $scope.validateErrors ={};
@@ -82,12 +82,12 @@ angular.module('account').controller('accountListCtrl',
                 $scope.transfer.receiveName = resp.data.member.memberName;
                 $scope.stopLoading();
                 ConfirmModal.show({
-                    text: '确定要转账给'+$scope.transfer.receiveName+'用户'+$scope.transfer.transferAmt+'吗？',
-                    isCancel:true //false alert ,true confirm
-                }).then(function (sure) {
-                    if (!sure) {
-                        return;
-                    }
+                        text: '确定要转账给'+$scope.transfer.receiveName+'用户'+$scope.transfer.transferAmt+'吗？',
+                        isCancel:true //false alert ,true confirm
+                    }).then(function (sure) {
+                        if (!sure) {
+                            return;
+                        }
                     $scope.startLoading();
 
                     $http.post(ctx + '/transfer/insert',

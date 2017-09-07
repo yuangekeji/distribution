@@ -6,6 +6,7 @@ package com.dis.service.test;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -64,5 +65,9 @@ public class NodeServiceTest extends SpringServiceTest{
 		int nodeId = 10;
 		int createId = 2;
 		nodeService.insertMemberNodeBonus(nodeId, createId);
+	}
+	@Test
+	public void getSubNodeNumberAndSales(){
+		Map<String,String> map = nodeService.getSubNodeNumberAndSales(1);
 	}
 }

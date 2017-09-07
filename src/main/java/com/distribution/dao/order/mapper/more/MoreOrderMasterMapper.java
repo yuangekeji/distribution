@@ -1,11 +1,13 @@
 package com.distribution.dao.order.mapper.more;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
 import com.distribution.common.utils.Page;
 import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface MoreOrderMasterMapper {
@@ -44,4 +46,10 @@ public interface MoreOrderMasterMapper {
      * @author WYN
      * */
     int confirmOrder(MoreOrderMaster moreOrderMaster);
+    
+    /**
+     * Description 查询当日的所有销售额
+     * @author su
+     */
+    double findCurrentDayOrderSales(String date);
 }

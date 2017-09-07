@@ -16,10 +16,6 @@ public class DividendBonusDayJob {
 
 	@Autowired
 	private BonusService bonusService;
-	@Autowired
-	private CommonService commonService;
-	@Autowired
-	private BonusPoolService bonusPoolService;
 	
 	/**
 	 * 发送分红包奖

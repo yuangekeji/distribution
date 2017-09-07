@@ -30,6 +30,8 @@ public class DateBonusHistory {
 
     private Date updateTime;
 
+    private Integer alarmStatus;
+
     public Integer getId() {
         return id;
     }
@@ -132,5 +134,13 @@ public class DateBonusHistory {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getAlarmStatus() {
+        return alarmStatus;
+    }
+
+    public void setAlarmStatus(Integer alarmStatus) {
+        this.alarmStatus = alarmStatus;
     }
 }

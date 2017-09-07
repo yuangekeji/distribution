@@ -6,19 +6,20 @@ package com.distribution.service;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.distribution.common.constant.BonusConstant;
+import com.distribution.common.utils.DateHelper;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
+import com.distribution.dao.dateBonusHistory.mapper.more.MoreDateBonusHistoryMapper;
+import com.distribution.dao.dateBonusHistory.model.DateBonusHistory;
 import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.model.Member;
@@ -26,8 +27,9 @@ import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
+import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper;
+import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
-import com.distribution.dao.order.model.more.MoreOrderMaster;
 
 @Service
 public class BonusService {
@@ -48,6 +50,14 @@ public class BonusService {
 	private NodeService nodeService;
 	@Autowired
     private JobLogsMapper jobLogsMapper;
+	@Autowired
+    private MoreDateBonusHistoryMapper moreDateBonusHistoryMapper;
+	@Autowired
+	MoreOrderMasterMapper moreOrderMasterMapper;
+	@Autowired
+	private MoreNodeBonusHistoryMapper nodeBonusHistoryMapper;
+	@Autowired
+	private BonusPoolService bonusPoolService;
 	
 	
 	
@@ -343,7 +353,150 @@ public class BonusService {
 		//记录账号资金出入情况
 		accountFlowHistoryMapper.insert(flow);
 	}
-	
+	/**
+	 * 查询当天营业额总数
+	 * 计算当天要发的奖金
+	 * @author su
+	 * @date 2017年9月7日 下午2:45:27
+	 * @return
+	 */
+	public DateBonusHistory findCurrentDayBonusHistory(String date){
+		DateBonusHistory history = moreDateBonusHistoryMapper.selectCurrentDaySalesAndBonus(date);
+		if(null == history){
+			history = new DateBonusHistory();
+			history.setCreateId(0);
+			history.setCreateTime(new Date());
+			history.setDate(new Date());
+			//设置营业额相关数据
+			double totalSales = moreOrderMasterMapper.findCurrentDayOrderSales(date);
+			double nodePercent = commonService.getMaxPercent(BonusConstant.D03, BonusConstant.CODE_01);
+			double dividendPercent = commonService.getMaxPercent(BonusConstant.D02, BonusConstant.CODE_01);
+			//总营业额
+			history.setTotalSales(new BigDecimal(totalSales));
+			//可用于分红包领取的金额
+			history.setDividendTotal(new BigDecimal(commonService.multiply(dividendPercent, totalSales)));
+			//可用于见点奖领取的金额
+			history.setJdBonusTotal(new BigDecimal(commonService.multiply(nodePercent, totalSales)));
+		}
+		return history;
+	}
+	/**
+	 * 统一处理发放见点奖
+	 * @author su
+	 * @date 2017年9月7日 下午2:34:28
+	 */
+	public void saveNodeBonusFromNodeHistory(){
+		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
+		DateBonusHistory history = findCurrentDayBonusHistory(date);
+        //当日需要发放的见点奖总数
+        double totalBonus = nodeBonusHistoryMapper.findCurrentDayNodeBonus(date);
+        //查找奖金发放池，奖金余额
+        double lessNodeBonus = bonusPoolService.getBonusCachePool(BonusConstant.POOL_ID_NODE); 
+        
+        //如果营业额+缓存池的钱大于等于要发放的奖金，则执行发放。
+        BigDecimal nowTotal = new BigDecimal(lessNodeBonus).add(history.getJdBonusTotal());
+        if(nowTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
+        	//见点奖金额
+            double bonusNum = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
+            //更新要发的见点奖列表，计入奖金金额；
+            nodeService.updateNodeBonusHistory(date,bonusNum);
+            //将发放剩余的奖金计入奖金池，并计入流水。
+            double rest = history.getJdBonusTotal().doubleValue()- totalBonus;
+            //如果营业额的10% 减去 要发的奖金，否则更新发放池。
+            if(rest > 0){
+            	//结果大于0，有余额计入奖金池。
+            	bonusPoolService.updatePool(new BigDecimal(rest),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+            	//10%剩余的见点奖金
+            	history.setRemainJdBonus(new BigDecimal(rest).longValue());
+            }else if(rest < 0){
+            	//结果小于0，钱不够，更新发放池。
+            	bonusPoolService.updateCachePool(new BigDecimal(rest),BonusConstant.POOL_TYPE_NODE, BonusConstant.POOL_BONUS_REDUCE);
+            }else{
+            }
+			//发放的见点奖
+			history.setUseJdBonusTotal(history.getJdBonusTotal().longValue());
+			history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
+       }else{
+    	    history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+            //更新今日营业额到奖金池，并计入奖金池流水。
+    	   bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+       }
+       history.setUpdateId(0);
+       history.setUpdateTime(new Date());
+       //设置状态
+       if(null != history.getId() && history.getId() > 0){
+    	   moreDateBonusHistoryMapper.updateByPrimaryKey(history);
+       }else{
+    	   moreDateBonusHistoryMapper.insert(history);
+       }
+	}
+	/**
+	 * 
+	 * Name: 
+	 * Description: 
+	 * @author su
+	 * @date 2017年9月7日 下午2:34:24
+	 */
+	public void balanceMemberNodeBonus(){
+        //查找所有昨天发放的见点奖
+       
+        //见点奖到账处理，所有见点奖入奖金表，计算管理费。
+        //更新账户
+       //更新账户流水
+       //更新见点奖为已结算
+	}
+	/**
+	 * 统一处理发放分红奖
+	 * @author su
+	 * @date 2017年9月7日 下午2:34:28
+	 */
+	public void saveDividendBonus(){
+		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
+		DateBonusHistory history = findCurrentDayBonusHistory(date);
+        //当日需要发放的见点奖总数
+        double totalBonus = nodeBonusHistoryMapper.findCurrentDayNodeBonus(date);
+        //查找奖金发放池，奖金余额
+        double lessNodeBonus = bonusPoolService.getBonusCachePool(BonusConstant.POOL_ID_NODE); 
+        
+        //如果营业额+缓存池的钱大于等于要发放的奖金，则执行发放。
+        BigDecimal nowTotal = new BigDecimal(lessNodeBonus).add(history.getJdBonusTotal());
+        if(nowTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
+        	//见点奖金额
+            double bonusNum = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
+            //List<dividend> list =.listAllDividend();
+            //OrderService.saveDivideOrderServicendBonus(list,amount);
+            //更新订单分红记录
+            //OrderService.updateDividend();
+            //将发放剩余的奖金计入奖金池，并计入流水。
+            double rest = history.getJdBonusTotal().doubleValue()- totalBonus;
+            //如果营业额的10% 减去 要发的奖金，否则更新发放池。
+            if(rest > 0){
+            	//结果大于0，有余额计入奖金池。
+            	bonusPoolService.updatePool(new BigDecimal(rest),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+            	//10%剩余的见点奖金
+            	history.setRemainJdBonus(new BigDecimal(rest).longValue());
+            }else if(rest < 0){
+            	//结果小于0，钱不够，更新发放池。
+            	bonusPoolService.updateCachePool(new BigDecimal(rest),BonusConstant.POOL_TYPE_NODE, BonusConstant.POOL_BONUS_REDUCE);
+            }else{
+            }
+			//发放的见点奖
+			history.setUseJdBonusTotal(history.getJdBonusTotal().longValue());
+			history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
+       }else{
+    	    history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+            //更新今日营业额到奖金池，并计入奖金池流水。
+    	   bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+       }
+       history.setUpdateId(0);
+       history.setUpdateTime(new Date());
+       //设置状态
+       if(null != history.getId() && history.getId() > 0){
+    	   moreDateBonusHistoryMapper.updateByPrimaryKey(history);
+       }else{
+    	   moreDateBonusHistoryMapper.insert(history);
+       }
+	}
 	
 	/*public static void main(String[] arg){
 		double v1 = 1.96;

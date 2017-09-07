@@ -15,10 +15,6 @@ import com.distribution.service.CommonService;
 public class NodeBonusDayJob {
 	@Autowired
 	private BonusService bonusService;
-	@Autowired
-	private CommonService commonService;
-	@Autowired
-	private BonusPoolService bonusPoolService;
 	
 	
 	/**
@@ -27,6 +23,7 @@ public class NodeBonusDayJob {
 	 * @date 2017年9月7日 上午11:05:16
 	 */
 	public void sendNodeBonusFromNodeHistory(){
+		bonusService.saveNodeBonusFromNodeHistory();
 		
 	}
 	/**
@@ -38,3 +35,10 @@ public class NodeBonusDayJob {
 		
 	}
 }
+
+
+
+
+
+
+

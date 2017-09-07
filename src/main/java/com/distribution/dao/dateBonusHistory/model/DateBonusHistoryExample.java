@@ -885,6 +885,66 @@ public class DateBonusHistoryExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andAlarmStatusIsNull() {
+            addCriterion("alarm_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusIsNotNull() {
+            addCriterion("alarm_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusEqualTo(Integer value) {
+            addCriterion("alarm_status =", value, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusNotEqualTo(Integer value) {
+            addCriterion("alarm_status <>", value, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusGreaterThan(Integer value) {
+            addCriterion("alarm_status >", value, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("alarm_status >=", value, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusLessThan(Integer value) {
+            addCriterion("alarm_status <", value, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("alarm_status <=", value, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusIn(List<Integer> values) {
+            addCriterion("alarm_status in", values, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusNotIn(List<Integer> values) {
+            addCriterion("alarm_status not in", values, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusBetween(Integer value1, Integer value2) {
+            addCriterion("alarm_status between", value1, value2, "alarmStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlarmStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("alarm_status not between", value1, value2, "alarmStatus");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

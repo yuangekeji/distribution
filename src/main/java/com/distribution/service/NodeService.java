@@ -87,8 +87,7 @@ public class NodeService {
 		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
         //查找当前节点的所有父节点，查找其直销的卡数是多少张。
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
-        //见点奖金额
-        double bonusPercent = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
+       
         for(MoreMemberNode m:list){
         	//忽略当前节点
         	if(m.getId().intValue() == nodeId){
@@ -105,7 +104,7 @@ public class NodeService {
             	if(null != nodeNum && nodeNum.intValue() <= configNum){
             		//构建见点奖对象
             		NodeBonusHistory history = new NodeBonusHistory();
-            		history.setBonusAmount(bonusPercent);
+            		//history.setBonusAmount(bonusPercent);
             		history.setCreateBy(createId);
             		history.setCreateTime(new Date());
             		history.setFromNodeId(nodeId);
@@ -336,4 +335,35 @@ public class NodeService {
 		}
         return root;
     }
+	/**
+	 * 查询当前节点下的左节点与右节点下的人数与销售总额
+	 * @author su
+	 * @date 2017年9月7日 下午5:17:13
+	 * @param nodeId
+	 * @return
+	 */
+	public Map<String,String> getSubNodeNumberAndSales(int nodeId){
+		MemberNode node = moreNodeMapper.selectByPrimaryKey(nodeId);
+		//左节点的所有子节点
+		List<MoreMemberNode> leftNum = moreNodeMapper.listSubNodes(node.getLeftId());
+		//左节点的所有销售额，不包含折扣单
+		double leftToalSales = moreNodeMapper.findTotalSalesByParentId(node.getLeftId());
+		
+		//右节点的所有子节点
+		List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
+		//右节点的所有销售额，不包含折扣单
+		double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("leftNum", String.valueOf(leftNum.size()));
+		map.put("leftToalSales", String.valueOf(leftToalSales));
+		map.put("rightNum", String.valueOf(rightNum.size()));
+		map.put("rightToalSales", String.valueOf(rightToalSales));
+		return map;
+	}
+	public void updateNodeBonusHistory(String date,double nodeBonus){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("date", date);
+		map.put("nodeBonus", nodeBonus);
+		nodeBonusHistoryMapper.updateNodeBonusHistory(map);
+	}
 }

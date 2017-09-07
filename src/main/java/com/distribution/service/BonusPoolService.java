@@ -32,7 +32,7 @@ public class BonusPoolService {
 	 * 更新奖金池
 	 * 更新的业务包括当日发奖剩余的营业额、管理员划拨奖金到缓存池；
 	 */
-	public void updatePool(BigDecimal amount,int poolType,int addOrReduce,int userId,String remarks){
+	public void updatePool(BigDecimal amount,int poolType,int addOrReduce){
 		//查询现有奖金次信息
 		BonusPool pool = null;
 		if(poolType == BonusConstant.POOL_TYPE_DIVIDEND){
@@ -53,7 +53,7 @@ public class BonusPoolService {
 		}
 		pool.setTotalAmount(bonusResult.doubleValue());
 		pool.setUpdateTime(new Date());
-		pool.setUpdateBy(userId);
+		pool.setUpdateBy(0);
 		//更新奖金池
 		bonusPoolMapper.updateByPrimaryKeySelective(pool);
 		//记录奖金流水池
@@ -61,10 +61,10 @@ public class BonusPoolService {
 		history.setPoolId(pool.getId());
 		history.setAddRemove(addOrReduce);
 		history.setAmout(amount.doubleValue());
-		history.setCreateBy(userId);
+		history.setCreateBy(0);
 		history.setCreateTime(new Date());
 		history.setOperateTime(new Date());
-		history.setRemarks(remarks);
+		//history.setRemarks(remarks);
 		bonusPoolHistoryMapper.insert(history);
 	}
 	/**
@@ -73,7 +73,7 @@ public class BonusPoolService {
 	 * 更新业务包括，发奖扣减缓存池、管理员划拨奖金到缓存池；
 	 * @date 2017年9月2日 下午1:35:51
 	 */
-	public void updateCachePool(BigDecimal amount,int poolType,int addOrReduce,int userId,String remarks){
+	public void updateCachePool(BigDecimal amount,int poolType,int addOrReduce){
 		//查询现有缓存池信息
 		BonusCachePool cachePool = null;
 		if(poolType == BonusConstant.POOL_TYPE_DIVIDEND){
@@ -94,8 +94,25 @@ public class BonusPoolService {
 		}
 		cachePool.setTotalAmount(bonusResult.doubleValue());
 		cachePool.setUpdateTime(new Date());
-		cachePool.setUpdateBy(userId);
+		cachePool.setUpdateBy(0);
 		//更新缓存池
 		bonusCachePoolMapper.updateByPrimaryKeySelective(cachePool);
+	}
+	/**
+	 * 
+	 * 根据缓存池id
+	 * 查询余额
+	 * @author su
+	 * @date 2017年9月7日 下午5:55:52
+	 * @param id
+	 * @return
+	 */
+	public double getBonusCachePool(int id){
+		double total = 0;
+		BonusCachePool pool = bonusCachePoolMapper.selectByPrimaryKey(id);
+		if(null != pool){
+			total = pool.getTotalAmount();
+		}
+		return total;
 	}
 }

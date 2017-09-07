@@ -148,5 +148,10 @@
                update_time = #{updateTime,jdbcType=TIMESTAMP}
          where id = #{id,jdbcType=INTEGER}
     </update>
-
+   <select id="findCurrentDayOrderSales" parameterType="java.lang.String" resultType="java.lang.Double">
+   		select SUM(order_amt) as total
+		from order_master
+		where DATE(create_time) = #{date}
+		and order_statues != 3
+   </select>
 </mapper>

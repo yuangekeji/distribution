@@ -89,4 +89,16 @@
      )
     </foreach>
   </insert>
+  <select id="findCurrentDayNodeBonus" parameterType="java.lang.String" resultType="java.lang.Double">
+  		select SUM(bonus_amount) as totalBonus
+		from node_bonus_history
+		where DATE(create_time) = #{date}
+		and `status` = 0
+  </select>
+  <update id="updateNodeBonusHistory" parameterType="java.util.Map">
+  		update node_bonus_history
+		set bonus_amount = #{nodeBonus}
+		where DATE(create_time) = #{date}
+		and `status` = 0
+  </update>
 </mapper>

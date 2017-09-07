@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.distribution.common.constant.BonusConstant;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
-import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.memberNode.model.more.CustomNode;

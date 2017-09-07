@@ -98,4 +98,6 @@ public class BonusConstant extends Constant{
 	public static int BONUS_STATUS_0 = 0;
 	//奖金状态已领取
 	public static int BONUS_STATUS_1 = 1;
+	//奖金状态领取结束
+	public static String BONUS_STATUS_2 = "2";
 }

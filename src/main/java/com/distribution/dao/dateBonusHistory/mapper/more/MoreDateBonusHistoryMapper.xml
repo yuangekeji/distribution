@@ -46,7 +46,27 @@
   	select 
   	    <include refid="Base_Column_List" />
 		from date_bonus_history
-		where DATE(date) = #{date}
+		where DATE(date) = #{date}C
+  </select>
+
+  <select id="selectFailJobCount" resultType="java.lang.Integer">
+     select count(0) as count
+     from date_bonus_history
+     where alarm_status = 0  or  jd_alarm_status = 0
+  </select>
+  <select id="selectDateBonusHistoryList" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page" >
+    select
+    <include refid="Base_Column_List" />
+    from date_bonus_history
+    <include refid="where"/>
+    order by alarm_status asc ,create_time desc
+    <include refid="pageLimit"/>
+  </select>
+  <select id="selectDateBonusHistoryListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
+    select
+    count(0) as count
+    from date_bonus_history
+    <include refid="where"/>
   </select>
 
   <select id="selectFailJobCount" resultType="java.lang.Integer">

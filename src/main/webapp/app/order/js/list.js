@@ -25,35 +25,6 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         });
     }
 
-    /**确认收货*/
-    /*$scope.confirmOrder = function (id, orderNo, orderStatues) {
-        $.ajax({
-            type: "POST",
-            url: ctx + "/order/confirmOrder",
-            data: {
-                id: id,
-                orderNo: orderNo,
-                orderStatues: orderStatues
-            },
-
-            dataType: "json",
-            success: function (resp) {
-                if (resp.successful) {
-                    //window.location.href = ctx + "/order/list";
-                    $scope.search();
-                } else{
-                    console.log("error==", error);
-                    //$(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户名或密码不正确，请重新输入");
-                }
-            },
-            error: function (error) {
-                console.log("error==", error);
-                //$(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("登录失败，请重新输入");
-            }
-        });
-
-    };*/
-
     $scope.confirmOrder = function (id, statues) {
         $http.post(ctx + "/order/confirmOrder",{id:id,orderStatues:statues}).success(function (resp) {
             if(resp.successful){

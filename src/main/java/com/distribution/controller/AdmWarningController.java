@@ -1,5 +1,7 @@
 package com.distribution.controller;
 
+import com.distribution.common.constant.BonusConstant;
+import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
@@ -14,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +36,9 @@ public class AdmWarningController extends BasicController{
 
     @Autowired
     private AdmWarningService admWarningService;
+
+    @Autowired
+    private BonusService bonusService;
 
     @Autowired
     private BonusPoolService bonusPoolService;
@@ -59,5 +66,14 @@ public class AdmWarningController extends BasicController{
         map.put("bonusCachePoolAmt",bonusPoolService.getBonusCachePool(poolType).getTotalAmount());
         return successMsg(map);
     }
+
+    @RequestMapping(value="/payAmtProc")
+    @ResponseBody
+    public JsonMessage payAmtProc(BigDecimal amount, Integer poolType){
+        boolean result = bonusPoolService.updatePayAmtPoolProc(amount,poolType);
+        return successMsg(result);
+    }
+
+
 
 }

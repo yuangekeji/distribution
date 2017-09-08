@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.distribution.dao.bonusPoolHistory.mapper.BonusPoolHistoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ import com.distribution.dao.dividend.mapper.more.MoreDividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
 import com.distribution.dao.dividendHistory.mapper.more.MoreDividendHistoryMapper;
 import com.distribution.dao.dividendHistory.model.DividendHistory;
-import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
+import com.distribution.dao.dividendHistory.model.more.MoreDividendHistory;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
@@ -35,6 +36,7 @@ import com.distribution.dao.memberBonus.model.MemberBonus;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper;
+import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
 
@@ -56,8 +58,6 @@ public class BonusService {
 	@Autowired
 	private NodeService nodeService;
 	@Autowired
-    private JobLogsMapper jobLogsMapper;
-	@Autowired
     private MoreDateBonusHistoryMapper moreDateBonusHistoryMapper;
 	@Autowired
 	MoreOrderMasterMapper moreOrderMasterMapper;
@@ -69,6 +69,8 @@ public class BonusService {
 	private MoreDividendMapper moreDividendMapper;
 	@Autowired
 	private MoreDividendHistoryMapper dividendHistoryMapper;
+	@Autowired
+	private BonusPoolHistoryMapper bonusPoolHistoryMapper;
 	
 	
 	
@@ -96,10 +98,13 @@ public class BonusService {
 	 * @param order 对象中必须包含订单的主体信息
 	 * @author su
 	 */
+    public void processOrderBonus(OrderMaster order){
+    	this.insertOrderBonus(order);
+    }
 	public void insertOrderBonus(OrderMaster order){
 		//订单主人会员
 		Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
-		//有推荐人才发奖
+		//订单主人推荐人不为空发奖
 		if(null != owner.getRecommendId() && owner.getRecommendId() > 0){
 			//初始化计算所需配置中的变量
 			commonService.initBasicManageList();
@@ -115,15 +120,20 @@ public class BonusService {
 			insertSalseBonus(recommendUser,order);
 			//1代奖 订单的推荐人
 			insertFirstGenerationBonus(recommendUser,order);
-			//推荐人的上级存在才发奖
-			if(null != ownerRecomend.getRecommendId() && ownerRecomend.getRecommendId() > 0){
-				//2代奖直推人的推荐人获得2代奖
-				insertSecondGenerationBonus(recommendUserParent,order);
+			//推荐人的上级不存在时，二代奖发给直接推荐人。
+			if(null == ownerRecomend.getRecommendId() || ownerRecomend.getRecommendId() == 0){
+				recommendUserParent = recommendUser;
 			}
+			//2代奖直推人的推荐人获得2代奖
+			insertSecondGenerationBonus(recommendUserParent,order);
 			//级差奖 当前节点所有上级
 			insertMemberLevelBonus(nodeId,order);
 			//工作室&运营中心奖/扶持奖 当前节点的所有上级
 			insertWorkRoomAndOperatingCenterBonus(nodeId,order);
+			//生成会员见点奖，只有报单有。订单类型（1.报单，2.复投， 3.折扣订单）
+			if(null != order.getOrderCategory() && order.getOrderCategory().equals(BonusConstant.ORDER_CATEGORY_1)){
+				nodeService.insertMemberNodeBonus(nodeId,order.getCreateId());
+			}
 			//处理会员晋升 当前节点的所有上级
 			nodeService.processMemberPromotion(nodeId,order.getCreateId());
 		}
@@ -426,9 +436,9 @@ public class BonusService {
             }
 			//发放的见点奖
 			history.setUseJdBonusTotal(history.getJdBonusTotal().longValue());
-			history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
+			history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_0);
        }else{
-    	    history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+    	    history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
             //更新今日营业额到奖金池，并计入奖金池流水。
     	   bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
        }
@@ -443,16 +453,23 @@ public class BonusService {
 	}
 	/**
 	 * 
-	 * Name: 
-	 * Description: 
+	 * 结算昨天发放的见点奖，并更新状态。
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:24
 	 */
-	public void balanceMemberNodeBonus(){
+	public void saveBalanceMemberNodeBonus(){
+		String yesterday = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
         //查找所有昨天发放的见点奖
-       
-        //见点奖到账处理，所有见点奖入奖金表，计算管理费。
-
+		List<NodeBonusHistory> list = nodeBonusHistoryMapper.listAllYesterdayNodeBonusHistory(yesterday);
+		//见点奖到账处理，所有见点奖入奖金表，计算管理费。
+        for(NodeBonusHistory history:list){
+        	OrderMaster order = new OrderMaster();
+        	order.setOrderAmt(new BigDecimal(history.getBonusAmount()));
+        	order.setUpdateId(0);
+        	order.setUpdateTime(new Date());
+        	insertAndSaveBonus(1,BonusConstant.BONUS_TYPE_4,history.getMebmerId(),order);
+        }
+		nodeBonusHistoryMapper.updateNodeBonusHistoryStatusEnd(yesterday);
         //更新见点奖为已结算
 	}
 	/**
@@ -581,17 +598,26 @@ public class BonusService {
         moreDividendMapper.updateAllNeedSendDividends(map);
 	}
 	/**
-	 * 
-	 * Name: 
-	 * Description: 
+	 * 分红包结算
 	 * @author su
 	 * @date 2017年9月7日 下午11:15:55
 	 */
-	public void balanceMemberDividendBonus(){
+	public void saveBalanceMemberDividendBonus(){
+		String yesterday = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
         //查找所有昨天发放的分红奖
-       
+		List<MoreDividendHistory> list = dividendHistoryMapper.listAllYesterdayDividendHistory(yesterday);
         //分红奖到账处理，入奖金表，计算管理费。
-        //更新见点奖为已结算
+		for(MoreDividendHistory history : list){
+			OrderMaster order = new OrderMaster();
+        	order.setOrderAmt(history.getAmount());
+        	order.setOrderNo(history.getOrderNo());
+        	order.setId(history.getOrderId());
+        	order.setUpdateId(0);
+        	order.setUpdateTime(new Date());
+        	insertAndSaveBonus(history.getDevidendCount(),BonusConstant.BONUS_TYPE_3,history.getMemberId(),order);
+		}
+        //更新分红奖为已结算
+		dividendHistoryMapper.updateAllYesterdayDividendHistory(yesterday);
 	}
 
 	/*public static void main(String[] arg){
@@ -599,4 +625,5 @@ public class BonusService {
 		double v2 = bonus_percent;
 		System.out.println(multiply(v1,v2));
 	}*/
+
 }

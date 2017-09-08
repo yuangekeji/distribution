@@ -7,6 +7,7 @@ package com.distribution.job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
 import com.distribution.service.BonusPoolService;
 import com.distribution.service.BonusService;
 import com.distribution.service.CommonService;
@@ -15,10 +16,11 @@ import com.distribution.service.CommonService;
 public class NodeBonusDayJob {
 	@Autowired
 	private BonusService bonusService;
-	
+	@Autowired
+    private JobLogsMapper jobLogsMapper;
 	
 	/**
-	 * 发送见点奖
+	 * 发放见点奖
 	 * @author su
 	 * @date 2017年9月7日 上午11:05:16
 	 */
@@ -32,7 +34,7 @@ public class NodeBonusDayJob {
 	 * @date 2017年9月7日 上午11:11:03
 	 */
 	public void balanceNodeBonus(){
-		
+		bonusService.saveBalanceMemberNodeBonus();
 	}
 }
 

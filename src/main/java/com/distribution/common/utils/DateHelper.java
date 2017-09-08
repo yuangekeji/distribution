@@ -337,7 +337,20 @@ public class DateHelper {
         Date nextDate=calendar.getTime();   
     	return nextDate;
     }
+    /**
+     * 获取昨天日期
+     * @author su
+     * @date 2017年9月8日 上午8:06:29
+     * @return
+     */
+    public static Date getYesterDay(){
+    	Calendar calendar=new GregorianCalendar(); 
+        calendar.setTime(new Date()); 
+        calendar.add(calendar.DATE,-1);
+        Date yesterday=calendar.getTime();
+        return yesterday;
+    }
     public static void main(String[] args) {
-		System.out.println(300/1000);
+		System.out.println(getYesterDay());
 	}
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.chinaPresidentBonus.mapper.more.MoreChinaPresidentBonusMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.chinaPresidentBonus.model.more.MoreChinaPresidentBonus" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="bonus_amout" property="bonusAmout" jdbcType="DECIMAL" />
+    <result column="manage_fee" property="manageFee" jdbcType="DECIMAL" />
+    <result column="actual_amout" property="actualAmout" jdbcType="DECIMAL" />
+    <result column="bonus_date" property="bonusDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="balance_time" property="balanceTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="selectBonusAmoutByMonth" resultMap="BaseResultMap" parameterType="com.distribution.dao.chinaPresidentBonus.model.ChinaPresidentBonus" >
+    select
+      member_id,
+      SUM(bonus_amout) as bonus_amout,
+      ROUND(SUM(bonus_amout) * 0.06) as manage_fee,
+      SUM(bonus_amout) - ROUND(SUM(bonus_amout) * 0.06) as actual_amout
+      from china_president_bonus
+      where DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL 1 MONTH),'%Y%m') = DATE_FORMAT(bonus_date,'%Y%m')
+      group by member_id, DATE_FORMAT(bonus_date,'%Y%m')
+  </select>
+
+  <update id="updateBalanceTime" parameterType="com.distribution.dao.chinaPresidentBonus.model.ChinaPresidentBonus">
+    update china_president_bonus
+      set status = #{status,jdbcType=VARCHAR},
+          balance_time = #{balanceTime,jdbcType=TIMESTAMP}
+    where DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL 1 MONTH),'%Y%m') = DATE_FORMAT(bonus_date,'%Y%m')
+  </update>
+
+</mapper>

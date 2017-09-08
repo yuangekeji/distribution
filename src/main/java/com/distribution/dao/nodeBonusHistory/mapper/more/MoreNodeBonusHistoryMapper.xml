@@ -97,8 +97,20 @@
   </select>
   <update id="updateNodeBonusHistory" parameterType="java.util.Map">
   		update node_bonus_history
-		set bonus_amount = #{nodeBonus}
+		set bonus_amount = #{nodeBonus},`status` = 1
 		where DATE(create_time) = #{date}
 		and `status` = 0
+  </update>
+  <select id="listAllYesterdayNodeBonusHistory" resultMap="BaseResultMap" parameterType="java.lang.String">
+  		select <include refid="Base_Column_List"/>
+		from node_bonus_history
+		where  `status` = 1
+		and DATE(create_time) = #{yesterday}
+  </select>
+  <update id="updateNodeBonusHistoryStatusEnd" parameterType="java.util.Map">
+  		update node_bonus_history
+		set `status` = 2
+		where DATE(create_time) = #{yesterday}
+		and `status` = 1
   </update>
 </mapper>

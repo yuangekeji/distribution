@@ -66,7 +66,7 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
     };
 
     $scope.bonusProc =function (poolType) {
-        $http.post(ctx + '/admWarning/getBonusPool?poolType='+poolType, {poolType:poolType})
+        $http.post(ctx + '/admWarning/getBonusPool?poolType='+poolType)
             .success(function (resp) {
                 if (resp.successful) {
                    $scope.open(resp.data,poolType);
@@ -108,7 +108,7 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
     };
 });
 
-angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify) {
+angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http) {
 
     $scope.datas = getDatas;
     $scope.poolType = getPoolType;
@@ -124,8 +124,19 @@ angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalI
             Notify.warning('资金池金额余额不足')
             return false;
         }
-        alert( $scope.payAmt );
-        // $uibModalInstance.close(true);
+
+        $http.post(ctx + '/admWarning/payAmtProc?poolType='+$scope.poolType+'&amount='+$scope.payAmt)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $uibModalInstance.close(true);
+                    Notify.success('补发成功');
+
+                }else {
+                    Notify.error(resp.errorMessage);
+                }
+            }).error(function (error) {
+            Notify.error(error);
+        });
     };
     $scope.cancel = function()
     {

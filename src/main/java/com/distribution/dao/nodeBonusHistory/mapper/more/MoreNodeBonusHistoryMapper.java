@@ -11,4 +11,6 @@ public interface MoreNodeBonusHistoryMapper extends NodeBonusHistoryMapper{
     int insertBatch(List<NodeBonusHistory> list);
     double findCurrentDayNodeBonus(String date);
     int updateNodeBonusHistory(Map<String,Object> map);
+    List<NodeBonusHistory> listAllYesterdayNodeBonusHistory(String yesterday);
+    int updateNodeBonusHistoryStatusEnd(String yesterday);
 }

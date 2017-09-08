@@ -27,7 +27,6 @@ var App = angular.module('app', [
     'admMember',
     'admOperator',
     'admOrder',
-    'admPermission',
     'admProduct',
     'admin',
     'admBonus',
@@ -55,7 +54,6 @@ angular.module('admDividend', []);
 angular.module('admMember', []);
 angular.module('admOperator', []);
 angular.module('admOrder', []);
-angular.module('admPermission', []);
 angular.module('admProduct', []);
 angular.module('admBonus', []);
 angular.module('admin',[]);

@@ -188,13 +188,13 @@ public class MemberService {
     public Integer updateActivation(Member member){
         member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
-        if(member.getOrderAmount().compareTo(new BigDecimal(30000))==1){
+        if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
             member.setIsSalesDept("Y");
         }
         Integer it = memberMapper.updateByPrimaryKeySelective(member);
         //给推荐人的一代个数中 +1
         Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
-        m.setFirstAgentCnt(null!=member.getFirstAgentCnt()?(member.getFirstAgentCnt()+1):1);
+        m.setFirstAgentCnt(null!=m.getFirstAgentCnt()?(m.getFirstAgentCnt()+1):1);
         memberMapper.updateByPrimaryKeySelective(m);
 
         MoreOrderMaster order = new MoreOrderMaster();

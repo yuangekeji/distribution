@@ -63,7 +63,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX" dir-paginate="ope in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
+                                <tr class="odd gradeX" dir-paginate="ope in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                     <td>{{ope.memberName}}</td>
                                     <td>{{ope.totalOrderAmount}}</td>
                                     <td>{{ope.memberLevel|MemberLevelFilter}}</td>

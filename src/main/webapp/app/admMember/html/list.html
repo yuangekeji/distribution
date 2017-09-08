@@ -77,9 +77,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
+                                <tr class="odd gradeX" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                 <td>{{member.memberName}}</td>
-                                <td>{{member.memberLevel|MemberLevelFilter}}</td>
+                                <td>{{member.memberLevel|MemberLevelFilter}}({{member.orderAmount}})</td>
                                 <td>{{member.memberPhone}}</td>
                                 <td>{{member.memberPost|PostLevelFilter}}</td>
                                 <td>{{member.recommendName}}</td>
@@ -111,7 +111,7 @@
             <div class="modal-header bg-blue-steel">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">
-                    <span id="lblAddTitle" style="font-weight:bold;color: white;">账号充值[{{chargeMember.memberName}},{{chargeMember.memberPhone}}]</span>
+                    <span id="lblAddTitle" style="font-weight:bold;color: white;">账号充值[{{chargeMember.memberName}},{{chargeMember.memberPhone}}]（只能输入整数）</span>
                 </h4>
             </div>
             <form class="form-horizontal form-bordered form-row-strippe" id="ffAdd" action="" data-toggle="validator" enctype="multipart/form-data">

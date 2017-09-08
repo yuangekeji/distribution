@@ -115,7 +115,7 @@
     </if>
       member.recommend_id,
       member.recommend_name,
-      member.order_amount,
+      mb.order_amount,
       mb.amout_total,
       mb.manage_fee_total,
       mb.actual_amout_total
@@ -125,6 +125,7 @@
           mb.order_id,
           mb.order_no,
           mb.order_date order_date,
+          om.order_amt AS order_amount,
           sum(mb.amout) AS amout_total,
           sum(mb.manage_fee) AS manage_fee_total,
           sum(mb.actual_amout) AS actual_amout_total
@@ -139,6 +140,7 @@
         order_id,
         order_no,
         NULL order_date,
+        NULL order_amount,
         amout AS amout_total,
         manage_fee AS manage_fee_total,
         actual_amout AS actual_amout_total

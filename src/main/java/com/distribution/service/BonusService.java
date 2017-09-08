@@ -434,9 +434,9 @@ public class BonusService {
             }
 			//发放的见点奖
 			history.setUseJdBonusTotal(history.getJdBonusTotal().longValue());
-			history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
+			history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_0);
        }else{
-    	    history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+    	    history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
             //更新今日营业额到奖金池，并计入奖金池流水。
     	   bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
        }
@@ -596,9 +596,7 @@ public class BonusService {
         moreDividendMapper.updateAllNeedSendDividends(map);
 	}
 	/**
-	 * 
-	 * Name: 
-	 * Description: 
+	 * 分红包结算
 	 * @author su
 	 * @date 2017年9月7日 下午11:15:55
 	 */

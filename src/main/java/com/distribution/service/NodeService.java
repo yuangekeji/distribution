@@ -343,20 +343,26 @@ public class NodeService {
 	 */
 	public Map<String,String> getSubNodeNumberAndSales(int nodeId){
 		MemberNode node = moreNodeMapper.selectByPrimaryKey(nodeId);
+		Map<String,String> map = new HashMap<String,String>();
+		if(null == node){
+			return map;
+		}
 		//左节点的所有子节点
 		List<MoreMemberNode> leftNum = moreNodeMapper.listSubNodes(node.getLeftId());
-		//左节点的所有销售额，不包含折扣单
-		Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(node.getLeftId());
-		
+		if(null != leftNum && leftNum.size() > 0){
+			//左节点的所有销售额，不包含折扣单
+			Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(node.getLeftId());
+			map.put("leftNum", String.valueOf(leftNum.size()));
+			map.put("leftToalSales", String.valueOf(leftToalSales));
+		}
 		//右节点的所有子节点
 		List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
-		//右节点的所有销售额，不包含折扣单
-		double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
-		Map<String,String> map = new HashMap<String,String>();
-		map.put("leftNum", String.valueOf(leftNum.size()));
-		map.put("leftToalSales", String.valueOf(leftToalSales));
-		map.put("rightNum", String.valueOf(rightNum.size()));
-		map.put("rightToalSales", String.valueOf(rightToalSales));
+		if(null != rightNum && rightNum.size() > 0){
+			//右节点的所有销售额，不包含折扣单
+			double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
+			map.put("rightNum", String.valueOf(rightNum.size()));
+			map.put("rightToalSales", String.valueOf(rightToalSales));
+		}
 		return map;
 	}
 	public void updateNodeBonusHistory(String date,double nodeBonus){

@@ -70,14 +70,14 @@
                                     <th>消费者电话</th>
                                     <th>放置销售节点</th>
                                     <th>会员卡级别</th>
-                                    <th>订单金额</th>
+                                    <th>注册金额</th>
                                     <th>报单时间</th>
                                     <th>收货地址</th>
                                     <th>状态</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
+                                <tr class="odd gradeX" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                     <td>{{member.recommendName}}</td>
                                     <td>{{member.memberName}}</td>
                                     <td>{{member.memberPhone}}</td>

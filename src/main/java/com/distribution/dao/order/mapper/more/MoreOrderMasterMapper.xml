@@ -31,23 +31,21 @@
   </sql>
 
    <sql id="where">
-     <where>
        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-          AND member_id = #{parameterMap.memberId}
+           AND a.member_id = #{parameterMap.memberId}
        </if>
        <if test="parameterMap.orderStatus!=null and parameterMap.orderStatus!=''">
-          AND order_statues = #{parameterMap.orderStatus}
+           AND a.order_statues = #{parameterMap.orderStatus}
        </if>
        <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-          AND order_no = #{parameterMap.orderNo}
+           AND a.order_no = #{parameterMap.orderNo}
        </if>
        <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
-          AND order_category = #{parameterMap.orderCategory}
+           AND a.order_category = #{parameterMap.orderCategory}
        </if>
        <if test="parameterMap.start!=null and parameterMap.start!=''">
-          AND create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+           AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
        </if>
-     </where>
    </sql>
 
   <sql id="pageLimit">
@@ -90,22 +88,7 @@
         ON b.goods_cd = c.id
       LEFT JOIN member d
         ON a.member_id = d.id
-      WHERE 1 = 1
-        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-            AND a.member_id = #{parameterMap.memberId}
-        </if>
-        <if test="parameterMap.orderStatus!=null and parameterMap.orderStatus!=''">
-            AND a.order_statues = #{parameterMap.orderStatus}
-        </if>
-        <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-            AND a.order_no = #{parameterMap.orderNo}
-        </if>
-        <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
-            AND a.order_category = #{parameterMap.orderCategory}
-        </if>
-        <if test="parameterMap.start!=null and parameterMap.start!=''">
-            AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
-        </if>
+      <include refid="where"/>
       <include refid="pageLimit"/>
   </select>
 

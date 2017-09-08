@@ -164,7 +164,6 @@
          update_time = now(),
          update_id = #{memberId}
     where id = #{memberId}
-     and  is_sales_dept ='N';
   </update>
 
 </mapper>

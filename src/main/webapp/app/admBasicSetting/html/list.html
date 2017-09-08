@@ -28,7 +28,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-show= "{{basicManage.typeCode == 'D01' && basicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="basicManage in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
+                                                <tr ng-show= "{{basicManage.typeCode == 'D01' && basicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="basicManage in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                                     <td class="text-left">{{basicManage.detailNm}}</td>
                                                     <td class="text-left">{{basicManage.buyAmt|number:2}}</td>
                                                     <td class="text-left">{{basicManage.buyQty}}</td>

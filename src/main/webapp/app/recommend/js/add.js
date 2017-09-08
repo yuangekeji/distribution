@@ -45,12 +45,16 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
                         Notify.warning("该节点右区已存在，请从新选择节点区域。");
                         $scope.submitFlag = true;
                     }else{
+                        Notify.success('添加成功，返回列表页面。');
                         $state.go("app.recommend");
                         $scope.submitFlag = true;
                     }
+                }else{
+                    Notify.error('添加失败，请重新尝试。');
                 }
                 }).error(function (resp) {
                     console.log(resp);
+
                     $scope.submitFlag = true;
                 });
             }

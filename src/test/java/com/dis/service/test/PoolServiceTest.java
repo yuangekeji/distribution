@@ -20,9 +20,9 @@ public class PoolServiceTest extends SpringServiceTest{
 	@Test
 	public void updateCachePoolTest(){
 		BigDecimal amount = new BigDecimal(365);
-		int poolType = BonusConstant.POOL_TYPE_DIVIDEND;
-		//int poolType = BonusConstant.POOL_TYPE_NODE;
-		int addOrReduce = BonusConstant.POOL_BONUS_ADD;
+		//int poolType = BonusConstant.POOL_TYPE_DIVIDEND;
+		int poolType = BonusConstant.POOL_TYPE_NODE;
+		int addOrReduce = BonusConstant.POOL_BONUS_REDUCE;
 		poolServie.updateCachePool(amount, poolType, addOrReduce);
 	}
 	@Test

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.distribution.dao.bonusPoolHistory.mapper.BonusPoolHistoryMapper;
-import com.distribution.dao.bonusPoolHistory.model.BonusPoolHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,6 @@ import com.distribution.dao.dividend.model.Dividend;
 import com.distribution.dao.dividendHistory.mapper.more.MoreDividendHistoryMapper;
 import com.distribution.dao.dividendHistory.model.DividendHistory;
 import com.distribution.dao.dividendHistory.model.more.MoreDividendHistory;
-import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
@@ -132,6 +130,10 @@ public class BonusService {
 			insertMemberLevelBonus(nodeId,order);
 			//工作室&运营中心奖/扶持奖 当前节点的所有上级
 			insertWorkRoomAndOperatingCenterBonus(nodeId,order);
+			//生成会员见点奖，只有报单有。订单类型（1.报单，2.复投， 3.折扣订单）
+			if(null != order.getOrderCategory() && order.getOrderCategory().equals(BonusConstant.ORDER_CATEGORY_1)){
+				nodeService.insertMemberNodeBonus(nodeId,order.getCreateId());
+			}
 			//处理会员晋升 当前节点的所有上级
 			nodeService.processMemberPromotion(nodeId,order.getCreateId());
 		}

@@ -98,9 +98,11 @@ public class BonusConstant extends Constant{
 	public static int BONUS_STATUS_0 = 0;
 	//奖金状态已领取
 	public static int BONUS_STATUS_1 = 1;
+	//奖金状态已领取
+	public static int BONUS_STATUS_END_2 = 2;
 	//奖金状态领取结束
 	public static String BONUS_STATUS_2 = "2";
-	
+	//订单类型订单类型（1.报单，2.复投， 3.折扣订单）
 	public static String ORDER_CATEGORY_1 = "1";
 	public static String ORDER_CATEGORY_2 = "2";
 	public static String ORDER_CATEGORY_3 = "3";

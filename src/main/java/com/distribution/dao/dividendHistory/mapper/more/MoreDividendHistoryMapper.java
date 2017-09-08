@@ -9,7 +9,7 @@ import com.distribution.dao.dividendHistory.model.more.MoreDividendHistory;
 
 public interface MoreDividendHistoryMapper extends DividendHistoryMapper{
 	int insertDividendHistoryBatch(Map<String,Object> map);
-	int updateAllYesterdayDividendHistory(String yesterday);
+	int updateAllYesterdayDividendHistory(Map<String,Object> map);
 	List<MoreDividendHistory> listAllYesterdayDividendHistory(String yesterday);
 	
 }

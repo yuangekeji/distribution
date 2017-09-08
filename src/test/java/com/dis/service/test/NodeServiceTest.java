@@ -62,9 +62,15 @@ public class NodeServiceTest extends SpringServiceTest{
 	}
 	@Test
 	public void insertMemberNodeBonus(){
+		OrderMaster order = new OrderMaster();
+		order.setOrderAmt(new BigDecimal(9000));
+		order.setId(8);
+		order.setCreateId(8);
+		order.setOrderNo(new Long("1701230"));
+		order.setCreateTime(new Date());
+		order.setMemberId(9);
 		int nodeId = 10;
-		int createId = 2;
-		nodeService.insertMemberNodeBonus(nodeId, createId);
+		nodeService.insertMemberNodeBonus(nodeId, order);
 	}
 	@Test
 	public void getSubNodeNumberAndSales(){

@@ -4,6 +4,8 @@
   */
 package com.distribution.dao.dividendHistory.model.more;
 
+import java.util.Date;
+
 import com.distribution.dao.dividendHistory.model.DividendHistory;
 
  /**
@@ -21,6 +23,16 @@ public class MoreDividendHistory extends DividendHistory{
     private Long orderNo;
     
     private Integer memberId;
+    
+	private Date orderTime;
+
+	public Date getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Date orderTime) {
+		this.orderTime = orderTime;
+	}
 
 	public Integer getMemberId() {
 		return memberId;

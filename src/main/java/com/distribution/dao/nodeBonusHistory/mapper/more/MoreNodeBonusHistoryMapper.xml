@@ -11,6 +11,9 @@
     <result column="create_by" property="createBy" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,45 +75,64 @@
   </sql>
   <sql id="Base_Column_List" >
     id, mebmer_id, bonus_amount, from_node_id, status, create_time, create_by, update_time, 
-    update_by
+    update_by,order_id, order_no, order_date
   </sql>
   <insert id="insertBatch" parameterType="java.util.Map" >
     insert into node_bonus_history 
     (mebmer_id, bonus_amount, 
       from_node_id, status, create_time, 
-      create_by
+      create_by,order_id, order_no, order_date
     )
     values 
     <foreach collection="list" item="nodeHis" index="index" separator=",">
     (
     	#{nodeHis.mebmerId,jdbcType=INTEGER}, #{nodeHis.bonusAmount,jdbcType=DOUBLE}, 
       	#{nodeHis.fromNodeId,jdbcType=INTEGER}, #{nodeHis.status,jdbcType=INTEGER}, #{nodeHis.createTime,jdbcType=TIMESTAMP}, 
-      	#{nodeHis.createBy,jdbcType=INTEGER}
+      	#{nodeHis.createBy,jdbcType=INTEGER},#{nodeHis.orderId,jdbcType=INTEGER}, 
+      	#{nodeHis.orderNo,jdbcType=BIGINT}, #{nodeHis.orderDate,jdbcType=TIMESTAMP}
      )
     </foreach>
   </insert>
   <select id="findCurrentDayNodeBonus" parameterType="java.lang.String" resultType="java.lang.Double">
   		select SUM(bonus_amount) as totalBonus
 		from node_bonus_history
-		where DATE(create_time) = #{date}
+		where DATE_FORMAT(create_time,'%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{date},'%Y-%m-%d')
+		and `status` = 0
+  </select>
+  <select id="listCurrentDayNodeBonus" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select <include refid="Base_Column_List"/>
+		from node_bonus_history
+		where DATE_FORMAT(create_time,'%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{date},'%Y-%m-%d')
 		and `status` = 0
   </select>
   <update id="updateNodeBonusHistory" parameterType="java.util.Map">
   		update node_bonus_history
-		set bonus_amount = #{nodeBonus},`status` = 1
-		where DATE(create_time) = #{date}
-		and `status` = 0
+		set 
+		bonus_amount = #{nodeBonus},
+		`status` = #{bonusStatus},
+		update_time = #{updateTime},
+        update_by = #{updateBy}
+		where id in
+		<foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+		  #{ids.id}
+		</foreach>
+		
   </update>
   <select id="listAllYesterdayNodeBonusHistory" resultMap="BaseResultMap" parameterType="java.lang.String">
   		select <include refid="Base_Column_List"/>
 		from node_bonus_history
 		where  `status` = 1
-		and DATE(create_time) = #{yesterday}
+		and DATE(create_time) <![CDATA[<=]]> #{yesterday}
   </select>
   <update id="updateNodeBonusHistoryStatusEnd" parameterType="java.util.Map">
   		update node_bonus_history
-		set `status` = 2
-		where DATE(create_time) = #{yesterday}
-		and `status` = 1
+		set 
+		`status` = #{bonusStatus},
+		update_time = #{updateTime},
+        update_by = #{updateBy}
+		where id in
+		<foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+		  #{ids.id}
+		</foreach>
   </update>
 </mapper>

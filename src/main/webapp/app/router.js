@@ -161,12 +161,7 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admBasicSetting'),
                 controller: 'admBasicSettingCtrl'
             })
-            .state('app.admPermission',{
-                url: '/admPermission',
-                templateUrl: helper.basepath('admPermission/html/list.html'),
-                resolve: helper.resolveFor('admPermission'),
-                controller: 'admPermissionCtrl'
-            })
+
             .state('app.admin',{
                 url: '/admin',
                 templateUrl: helper.basepath('admin/html/list.html'),

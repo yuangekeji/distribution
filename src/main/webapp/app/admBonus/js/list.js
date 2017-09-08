@@ -57,8 +57,6 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
     $scope.searchByParam =function () {
 
         $scope.myPage.pageNo = 1;
-        $scope.myPage.totalCount = 0;
-
         $scope.search();
 
     }

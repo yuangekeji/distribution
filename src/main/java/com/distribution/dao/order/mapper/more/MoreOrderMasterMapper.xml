@@ -134,9 +134,8 @@
          where id = #{id,jdbcType=INTEGER}
     </update>
    <select id="findCurrentDayOrderSales" parameterType="java.lang.String" resultType="java.lang.Double">
-   		select SUM(order_amt) as total
+   		select IFNULL(SUM(order_amt),0) as total
 		from order_master
-		where DATE(create_time) = #{date}
-		and order_statues != 3
+		where DATE(create_time) = #{date} and order_category != 3 and order_statues != 1
    </select>
 </mapper>

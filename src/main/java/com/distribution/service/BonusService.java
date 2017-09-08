@@ -408,24 +408,26 @@ public class BonusService {
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:28
 	 */
-	public void saveNodeBonusFromNodeHistory(){
+	public Map<String,Object> saveNodeBonusFromNodeHistory(Map<String,Object> result){
 		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
+		result.put("date", date);
 		DateBonusHistory history = findCurrentDayBonusHistory(date);
-        //当日需要发放的见点奖总数,所有奖金生成日期小于等于今天未发放的数据。
-        double totalBonus = nodeBonusHistoryMapper.findCurrentDayNodeBonus(date);
-        //如果奖金数不大于0，直接返回。
-        if(totalBonus <= 0){
-        	return;
-        }
+		result.put("totalSalesAmount", history.getTotalSales());
+		result.put("nodeBonusAmount", history.getJdBonusTotal());
+        //double totalBonus = nodeBonusHistoryMapper.findCurrentDayNodeBonus(date);
+		//所有奖金生成日期小于等于今天未发放的数据
+		List<NodeBonusHistory> list = nodeBonusHistoryMapper.listCurrentDayNodeBonus(date);
+		//见点奖金额
+		double bonusNum = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
+		//待发放的奖金总数（数量乘以单价）
+		double totalBonus = commonService.multiply(list.size(), bonusNum);
+		result.put("toBeSentTotalNodeBonus", totalBonus);
         //查找奖金发放池，奖金余额
         double lessNodeBonus = bonusPoolService.getBonusCachePool(BonusConstant.POOL_ID_NODE); 
-        
+        result.put("cachePoolRestAmount", lessNodeBonus);
         //如果营业额+缓存池的钱大于等于要发放的奖金，则执行发放。
-        BigDecimal nowTotal = new BigDecimal(lessNodeBonus).add(history.getJdBonusTotal());
-        if(totalBonus > 0 && nowTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
-        	List<NodeBonusHistory> list = nodeBonusHistoryMapper.listCurrentDayNodeBonus(date);
-        	//见点奖金额
-            double bonusNum = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
+        BigDecimal nowPoolTotal = new BigDecimal(lessNodeBonus).add(history.getJdBonusTotal());
+        if(list.size() > 0 && nowPoolTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
             //更新要发的见点奖列表，计入奖金金额，更新发放状态，记入时间。
             nodeService.updateNodeBonusHistory(list,bonusNum);
             //将发放剩余的奖金计入奖金池，并计入流水。
@@ -436,20 +438,27 @@ public class BonusService {
             	bonusPoolService.updatePool(new BigDecimal(rest),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
             	//10%剩余的见点奖金
             	history.setRemainJdBonus(new BigDecimal(rest).longValue());
+            	result.put("sendRestAmountAddToPool", rest);
             }else if(rest < 0){
             	//结果小于0，钱不够，更新发放池。
-            	bonusPoolService.updateCachePool(new BigDecimal(rest),BonusConstant.POOL_TYPE_NODE, BonusConstant.POOL_BONUS_REDUCE);
+            	bonusPoolService.updateCachePool(new BigDecimal(rest).abs(),BonusConstant.POOL_TYPE_NODE, BonusConstant.POOL_BONUS_REDUCE);
+            	result.put("sendRestAmountReduceFromCachePool", rest);
             }else{
             }
 			//发放的见点奖
-			history.setUseJdBonusTotal(history.getJdBonusTotal().longValue());
+			history.setUseJdBonusTotal(new BigDecimal(totalBonus).longValue());
 			//更新发放状态成功
 			history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
+			result.put("result", "Send bonus ok!");
        }else{
     	    //更新发放状态失败
     	    history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_0);
-            //更新今日营业额到奖金池，并计入奖金池流水。
-    	    bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+    	    if(history.getJdBonusTotal().doubleValue() > 0){
+    	    	result.put("nodeBonusAmountAddToPool", history.getJdBonusTotal());
+    	    	//更新今日营业额到奖金池，并计入奖金池流水。
+    	    	bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+    	    }
+    	    result.put("result", "Donot send bonus!");
        }
        history.setUpdateId(0);
        history.setUpdateTime(new Date());
@@ -458,6 +467,7 @@ public class BonusService {
        }else{
     	   moreDateBonusHistoryMapper.insert(history);
        }
+       return result;
 	}
 	/**
 	 * 

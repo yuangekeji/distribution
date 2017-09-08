@@ -32,7 +32,9 @@ public class NodeBonusDayJob {
 	public void sendNodeBonusFromNodeHistory(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时发放见点奖/NodeBonusDayJob/sendNodeBonusFromNodeHistory");
-		bonusService.saveNodeBonusFromNodeHistory();
+		result = bonusService.saveNodeBonusFromNodeHistory(result);
+		System.out.println(result.toString());
+		this.saveNodeBonusFromNodeHistoryLog(result);
 		
 	}
 	/**
@@ -42,8 +44,9 @@ public class NodeBonusDayJob {
 	 */
 	public void balanceNodeBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
-		result.put("jobName", "定时见点奖结算/NodeBonusDayJob/balanceNodeBonus");
+		result.put("jobName", "定时结算见点奖/NodeBonusDayJob/balanceNodeBonus");
 		bonusService.saveBalanceMemberNodeBonus();
+		saveBalanceMemberNodeBonusLog(result);
 	}
 	/**
 	 * 保存分红包发放执行记录 
@@ -77,7 +80,7 @@ public class NodeBonusDayJob {
 		job.setCreateBy(0);
 		job.setCreateTime(new Date());
 		job.setJobName(map.get("jobName").toString());
-		job.setRemarks(map.get("remarks").toString());
+		job.setRemarks(map.toString());
 		job.setResult(map.get("result").toString());
 		job.setRunTime(new Date());
 		return job;

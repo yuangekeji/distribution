@@ -145,23 +145,13 @@ public class OrderService {
         //报单，复投分红包处理
         if("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory())){
             Dividend dividend = new Dividend();
+            BigDecimal divideCount = moreOrderMaster.getOrderAmt().divide(new BigDecimal(600));
+
             dividend.setOrderId(orderId);
             dividend.setOrderNo(orderNo);
             dividend.setOrderAmount(moreOrderMaster.getOrderAmt());
             dividend.setMemberId(moreOrderMaster.getMemberId());
-            if(new BigDecimal(600).compareTo(moreOrderMaster.getOrderAmt()) == 0){
-                dividend.setDividendCount(new Integer(1));
-            }else if(new BigDecimal(1800).compareTo(moreOrderMaster.getOrderAmt()) == 0){
-                dividend.setDividendCount(new Integer(3));
-            }else if(new BigDecimal(3000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
-                dividend.setDividendCount(new Integer(5));
-            }else if(new BigDecimal(9000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
-                dividend.setDividendCount(new Integer(15));
-            }else if(new BigDecimal(30000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
-                dividend.setDividendCount(new Integer(50));
-            }else if(new BigDecimal(60000).compareTo(moreOrderMaster.getOrderAmt()) == 0){
-                dividend.setDividendCount(new Integer(100));
-            }
+            dividend.setDividendCount(divideCount.intValue());
             dividend.setDividendLimit(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
             dividend.setDividendStatus("1");
             dividend.setMgmtFee(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)).multiply(new BigDecimal(0.06)));

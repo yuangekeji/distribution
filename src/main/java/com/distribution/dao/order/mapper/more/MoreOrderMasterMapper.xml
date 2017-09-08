@@ -31,6 +31,7 @@
   </sql>
 
    <sql id="where">
+       <where>
        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
            AND a.member_id = #{parameterMap.memberId}
        </if>
@@ -46,6 +47,7 @@
        <if test="parameterMap.start!=null and parameterMap.start!=''">
            AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
        </if>
+       </where>
    </sql>
 
   <sql id="pageLimit">
@@ -57,7 +59,7 @@
   </sql>
 
   <select id="getOrderListCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM order_master <include refid="where"/>
+    SELECT COUNT(*) FROM order_master a   <include refid="where"/>
   </select>
   
   <select id="getOrderList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">

@@ -188,7 +188,7 @@ public class MemberService {
     public Integer updateActivation(Member member){
         member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
-        if(member.getOrderAmount().compareTo(new BigDecimal(30000))==1){
+        if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
             member.setIsSalesDept("Y");
         }
         Integer it = memberMapper.updateByPrimaryKeySelective(member);

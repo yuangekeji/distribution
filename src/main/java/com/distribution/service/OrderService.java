@@ -176,7 +176,7 @@ public class OrderService {
             if(cnt6 ==0){
                 throw new RuntimeException();
             }
-            bonusService.insertOrderBonus(moreOrderMaster);
+            bonusService.processOrderBonus(moreOrderMaster);
         }
 
         return "success";

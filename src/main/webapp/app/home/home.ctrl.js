@@ -160,7 +160,7 @@ angular.module('home').controller('homeCtrl',
             render(typePattern);
         };
         /** @type {number} */
-        $scope.imgNames =['b1.png','p1.png','p2.png','p3.png','p4.png'];
+        $scope.imgNames =['p4.png','p2.png','p3.png','p1.png'];
 
         for ( var i = 0; i < $scope.imgNames.length; i++)
         {

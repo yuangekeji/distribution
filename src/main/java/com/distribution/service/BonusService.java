@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.distribution.dao.bonusPoolHistory.mapper.BonusPoolHistoryMapper;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,7 @@ import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
+import com.distribution.dao.bonusPoolHistory.mapper.BonusPoolHistoryMapper;
 import com.distribution.dao.dateBonusHistory.mapper.more.MoreDateBonusHistoryMapper;
 import com.distribution.dao.dateBonusHistory.model.DateBonusHistory;
 import com.distribution.dao.dividend.mapper.more.MoreDividendMapper;
@@ -42,6 +43,7 @@ import com.distribution.dao.order.model.OrderMaster;
 
 @Service
 public class BonusService {
+	private static Logger logs = Logger.getLogger(BonusService.class);
 	
 	@Autowired
 	private MoreMemberBonusMapper moreMemberBonusMapper;
@@ -132,7 +134,7 @@ public class BonusService {
 			insertWorkRoomAndOperatingCenterBonus(nodeId,order);
 			//生成会员见点奖，只有报单有。订单类型（1.报单，2.复投， 3.折扣订单）
 			if(null != order.getOrderCategory() && order.getOrderCategory().equals(BonusConstant.ORDER_CATEGORY_1)){
-				nodeService.insertMemberNodeBonus(nodeId,order.getCreateId());
+				nodeService.insertMemberNodeBonus(nodeId,order);
 			}
 			//处理会员晋升 当前节点的所有上级
 			nodeService.processMemberPromotion(nodeId,order.getCreateId());
@@ -402,25 +404,30 @@ public class BonusService {
 		return history;
 	}
 	/**
-	 * 统一处理发放见点奖
+	 * Job统一处理发放见点奖
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:28
 	 */
 	public void saveNodeBonusFromNodeHistory(){
 		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
 		DateBonusHistory history = findCurrentDayBonusHistory(date);
-        //当日需要发放的见点奖总数
+        //当日需要发放的见点奖总数,所有奖金生成日期小于等于今天未发放的数据。
         double totalBonus = nodeBonusHistoryMapper.findCurrentDayNodeBonus(date);
+        //如果奖金数不大于0，直接返回。
+        if(totalBonus <= 0){
+        	return;
+        }
         //查找奖金发放池，奖金余额
         double lessNodeBonus = bonusPoolService.getBonusCachePool(BonusConstant.POOL_ID_NODE); 
         
         //如果营业额+缓存池的钱大于等于要发放的奖金，则执行发放。
         BigDecimal nowTotal = new BigDecimal(lessNodeBonus).add(history.getJdBonusTotal());
-        if(nowTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
+        if(totalBonus > 0 && nowTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
+        	List<NodeBonusHistory> list = nodeBonusHistoryMapper.listCurrentDayNodeBonus(date);
         	//见点奖金额
             double bonusNum = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
-            //更新要发的见点奖列表，计入奖金金额；
-            nodeService.updateNodeBonusHistory(date,bonusNum);
+            //更新要发的见点奖列表，计入奖金金额，更新发放状态，记入时间。
+            nodeService.updateNodeBonusHistory(list,bonusNum);
             //将发放剩余的奖金计入奖金池，并计入流水。
             double rest = history.getJdBonusTotal().doubleValue()- totalBonus;
             //如果营业额的10% 减去 要发的奖金，否则更新发放池。
@@ -436,30 +443,31 @@ public class BonusService {
             }
 			//发放的见点奖
 			history.setUseJdBonusTotal(history.getJdBonusTotal().longValue());
-			history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_0);
+			//更新发放状态成功
+			history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
        }else{
-    	    history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
+    	    //更新发放状态失败
+    	    history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_0);
             //更新今日营业额到奖金池，并计入奖金池流水。
-    	   bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+    	    bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
        }
        history.setUpdateId(0);
        history.setUpdateTime(new Date());
-       //设置状态
        if(null != history.getId() && history.getId() > 0){
-    	   moreDateBonusHistoryMapper.updateByPrimaryKey(history);
+    	   moreDateBonusHistoryMapper.updateByPrimaryKeySelective(history);
        }else{
     	   moreDateBonusHistoryMapper.insert(history);
        }
 	}
 	/**
 	 * 
-	 * 结算昨天发放的见点奖，并更新状态。
+	 * Job结算昨天发放的见点奖，并更新状态。
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:24
 	 */
 	public void saveBalanceMemberNodeBonus(){
 		String yesterday = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
-        //查找所有昨天发放的见点奖
+        //查找所有昨天发放的见点奖,包括以前没有结算的。
 		List<NodeBonusHistory> list = nodeBonusHistoryMapper.listAllYesterdayNodeBonusHistory(yesterday);
 		//见点奖到账处理，所有见点奖入奖金表，计算管理费。
         for(NodeBonusHistory history:list){
@@ -467,20 +475,24 @@ public class BonusService {
         	order.setOrderAmt(new BigDecimal(history.getBonusAmount()));
         	order.setUpdateId(0);
         	order.setUpdateTime(new Date());
+        	order.setId(history.getOrderId());
+        	order.setOrderNo(history.getOrderNo());
+        	order.setCreateTime(history.getOrderDate());
         	insertAndSaveBonus(1,BonusConstant.BONUS_TYPE_4,history.getMebmerId(),order);
         }
-		nodeBonusHistoryMapper.updateNodeBonusHistoryStatusEnd(yesterday);
         //更新见点奖为已结算
+        nodeService.updateNodeBonusHistoryStatusEnd(list);
 	}
 	/**
-	 * 统一处理发放分红奖
+	 * Job统一处理发放分红奖
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:28
 	 */
-	public void saveDividendBonus(){
+	public Map<String,Object> saveDividendBonus(Map<String,Object> result){
+		StringBuffer remarks = new StringBuffer();
 		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
 		DateBonusHistory history = findCurrentDayBonusHistory(date);
-        //当日需要发放的分红奖总数
+        //当日需要发放的分红包总数
 		int totalDividend = moreDividendMapper.getAllNeedSendDividendCount();
         //分红包奖金额
         double bonusNum = commonService.getMaxAmt(BonusConstant.D02,BonusConstant.CODE_00);
@@ -492,6 +504,10 @@ public class BonusService {
         //如果营业额+缓存池的钱大于等于要发放的奖金，则执行发放。
         BigDecimal nowTotal = new BigDecimal(lessNodeBonus).add(history.getDividendTotal());
         //判断有奖需要发，并且钱够
+        remarks.append("date=").append(date).append("&DateBonusHistory=").append(history.getId());
+        remarks.append("&totalDividend=").append(totalDividend).append("&分红包奖金额bonusNum=").append(bonusNum);
+        remarks.append("需要发分红奖金totalBonus=").append(totalBonus).append("奖金发放池，奖金余额lessNodeBonus=");
+        remarks.append(lessNodeBonus);
         if(totalDividend > 0 && nowTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
             List<Dividend> list = moreDividendMapper.listAllNeedSendDividends();
             //生成分红包记录
@@ -504,7 +520,7 @@ public class BonusService {
             if(rest > 0){
             	//结果大于0，有余额计入奖金池。
             	bonusPoolService.updatePool(new BigDecimal(rest),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
-            	//10%剩余的见点奖金
+            	//20%剩余的分红包奖金
             	history.setRemainDividend(new BigDecimal(rest).longValue());
             }else if(rest < 0){
             	//结果小于0，钱不够，更新发放池。
@@ -513,20 +529,25 @@ public class BonusService {
             }
 			//发放的见点奖
 			history.setUseDividendTotal(history.getDividendTotal());
+			//发放成功
 			history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+			result.put("result", "发放成功");
        }else{
+    	    //发放失败
     	    history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
             //更新今日营业额到奖金池，并计入奖金池流水。
     	    bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
+    	    result.put("result", "发放失败");
        }
        history.setUpdateId(0);
        history.setUpdateTime(new Date());
-       //设置状态
        if(null != history.getId() && history.getId() > 0){
-    	   moreDateBonusHistoryMapper.updateByPrimaryKey(history);
+    	   moreDateBonusHistoryMapper.updateByPrimaryKeySelective(history);
        }else{
     	   moreDateBonusHistoryMapper.insert(history);
        }
+       result.put("remarks", remarks.toString());
+       return result;
 	}
 	/**
 	 * 生成分红包明细表 
@@ -598,13 +619,14 @@ public class BonusService {
         moreDividendMapper.updateAllNeedSendDividends(map);
 	}
 	/**
-	 * 分红包结算
+	 * Job分红包结算
 	 * @author su
 	 * @date 2017年9月7日 下午11:15:55
 	 */
-	public void saveBalanceMemberDividendBonus(){
+	public Map<String,Object> saveBalanceMemberDividendBonus(Map<String,Object> result){
+		
 		String yesterday = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
-        //查找所有昨天发放的分红奖
+        //查找所有昨天发放的分红奖,包括历史发放未结算的
 		List<MoreDividendHistory> list = dividendHistoryMapper.listAllYesterdayDividendHistory(yesterday);
         //分红奖到账处理，入奖金表，计算管理费。
 		for(MoreDividendHistory history : list){
@@ -612,12 +634,18 @@ public class BonusService {
         	order.setOrderAmt(history.getAmount());
         	order.setOrderNo(history.getOrderNo());
         	order.setId(history.getOrderId());
-        	order.setUpdateId(0);
-        	order.setUpdateTime(new Date());
+        	order.setCreateId(0);
+        	order.setCreateTime(history.getOrderTime());
         	insertAndSaveBonus(history.getDevidendCount(),BonusConstant.BONUS_TYPE_3,history.getMemberId(),order);
 		}
         //更新分红奖为已结算
-		dividendHistoryMapper.updateAllYesterdayDividendHistory(yesterday);
+		Map<String,Object> map = new HashMap<String,Object>();
+        map.put("list", list);
+        map.put("balanceStatus", BonusConstant.BONUS_STATUS_1);
+		map.put("updateId", 0);
+		map.put("updateTime", new Date());
+		dividendHistoryMapper.updateAllYesterdayDividendHistory(map);
+		return result;
 	}
 
 	/*public static void main(String[] arg){

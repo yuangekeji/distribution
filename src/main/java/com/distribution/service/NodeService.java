@@ -22,6 +22,7 @@ import com.distribution.dao.memberNode.model.more.CustomNode;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper;
 import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
+import com.distribution.dao.order.model.OrderMaster;
 
 @Service
 public class NodeService {
@@ -83,7 +84,7 @@ public class NodeService {
 	 * @author su
 	 * @date 2017年9月5日 下午1:00:07
 	 */
-	public void insertMemberNodeBonus(int nodeId,int createId){
+	public void insertMemberNodeBonus(int nodeId,OrderMaster order){
 		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
         //查找当前节点的所有父节点，查找其直销的卡数是多少张。
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
@@ -105,11 +106,14 @@ public class NodeService {
             		//构建见点奖对象
             		NodeBonusHistory history = new NodeBonusHistory();
             		//history.setBonusAmount(bonusPercent);
-            		history.setCreateBy(createId);
+            		history.setCreateBy(order.getCreateId());
             		history.setCreateTime(new Date());
             		history.setFromNodeId(nodeId);
             		history.setMebmerId(m.getMemberId());
             		history.setStatus(BonusConstant.BONUS_STATUS_0);
+            		history.setOrderId(order.getId());
+            		history.setOrderNo(order.getOrderNo());
+            		history.setOrderDate(order.getCreateTime());
             		historyList.add(history);
             	}
         	}
@@ -378,10 +382,37 @@ public class NodeService {
 		}
 		return map;
 	}
-	public void updateNodeBonusHistory(String date,double nodeBonus){
+	/**
+	 * 更新要发放的见点奖明细信息
+	 * @author su
+	 * @date 2017年9月8日 下午2:41:42
+	 * @param date
+	 * @param nodeBonus
+	 */
+	public void updateNodeBonusHistory(List<NodeBonusHistory> list,double nodeBonus){
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("date", date);
+		map.put("list", list);
 		map.put("nodeBonus", nodeBonus);
+		//更新状态为已领取
+		map.put("bonusStatus", BonusConstant.BONUS_STATUS_1);
+		map.put("updateBy", 0);
+		map.put("updateTime", new Date());
 		nodeBonusHistoryMapper.updateNodeBonusHistory(map);
+	}
+	/**
+	 * 更新发放完的见点奖明细信息
+	 * @author su
+	 * @date 2017年9月8日 下午2:41:42
+	 * @param date
+	 * @param nodeBonus
+	 */
+	public void updateNodeBonusHistoryStatusEnd(List<NodeBonusHistory> list){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("list", list);
+		//更新状态为已结算
+		map.put("bonusStatus", BonusConstant.BONUS_STATUS_2);
+		map.put("updateBy", 0);
+		map.put("updateTime", new Date());
+		nodeBonusHistoryMapper.updateNodeBonusHistoryStatusEnd(map);
 	}
 }

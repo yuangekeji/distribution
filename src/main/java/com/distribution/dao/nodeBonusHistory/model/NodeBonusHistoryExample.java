@@ -644,6 +644,186 @@ public class NodeBonusHistoryExample {
             addCriterion("update_by not between", value1, value2, "updateBy");
             return (Criteria) this;
         }
+
+        public Criteria andOrderIdIsNull() {
+            addCriterion("order_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdIsNotNull() {
+            addCriterion("order_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdEqualTo(Integer value) {
+            addCriterion("order_id =", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotEqualTo(Integer value) {
+            addCriterion("order_id <>", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdGreaterThan(Integer value) {
+            addCriterion("order_id >", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("order_id >=", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLessThan(Integer value) {
+            addCriterion("order_id <", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdLessThanOrEqualTo(Integer value) {
+            addCriterion("order_id <=", value, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdIn(List<Integer> values) {
+            addCriterion("order_id in", values, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotIn(List<Integer> values) {
+            addCriterion("order_id not in", values, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdBetween(Integer value1, Integer value2) {
+            addCriterion("order_id between", value1, value2, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("order_id not between", value1, value2, "orderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoIsNull() {
+            addCriterion("order_no is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoIsNotNull() {
+            addCriterion("order_no is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoEqualTo(Long value) {
+            addCriterion("order_no =", value, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoNotEqualTo(Long value) {
+            addCriterion("order_no <>", value, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoGreaterThan(Long value) {
+            addCriterion("order_no >", value, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoGreaterThanOrEqualTo(Long value) {
+            addCriterion("order_no >=", value, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoLessThan(Long value) {
+            addCriterion("order_no <", value, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoLessThanOrEqualTo(Long value) {
+            addCriterion("order_no <=", value, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoIn(List<Long> values) {
+            addCriterion("order_no in", values, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoNotIn(List<Long> values) {
+            addCriterion("order_no not in", values, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoBetween(Long value1, Long value2) {
+            addCriterion("order_no between", value1, value2, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderNoNotBetween(Long value1, Long value2) {
+            addCriterion("order_no not between", value1, value2, "orderNo");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateIsNull() {
+            addCriterion("order_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateIsNotNull() {
+            addCriterion("order_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateEqualTo(Date value) {
+            addCriterion("order_date =", value, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateNotEqualTo(Date value) {
+            addCriterion("order_date <>", value, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateGreaterThan(Date value) {
+            addCriterion("order_date >", value, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("order_date >=", value, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateLessThan(Date value) {
+            addCriterion("order_date <", value, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateLessThanOrEqualTo(Date value) {
+            addCriterion("order_date <=", value, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateIn(List<Date> values) {
+            addCriterion("order_date in", values, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateNotIn(List<Date> values) {
+            addCriterion("order_date not in", values, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateBetween(Date value1, Date value2) {
+            addCriterion("order_date between", value1, value2, "orderDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderDateNotBetween(Date value1, Date value2) {
+            addCriterion("order_date not between", value1, value2, "orderDate");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

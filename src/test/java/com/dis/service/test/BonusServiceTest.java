@@ -17,6 +17,7 @@ import com.distribution.service.BonusService;
 
 public class BonusServiceTest extends SpringServiceTest{
 	private static Logger log = Logger.getLogger(BonusServiceTest.class);
+	
 	@Autowired
 	private BonusService bonusService;
 	

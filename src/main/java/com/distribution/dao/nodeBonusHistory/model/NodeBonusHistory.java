@@ -21,6 +21,12 @@ public class NodeBonusHistory {
 
     private Integer updateBy;
 
+    private Integer orderId;
+
+    private Long orderNo;
+
+    private Date orderDate;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +97,29 @@ public class NodeBonusHistory {
 
     public void setUpdateBy(Integer updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Long getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(Long orderNo) {
+        this.orderNo = orderNo;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
 }

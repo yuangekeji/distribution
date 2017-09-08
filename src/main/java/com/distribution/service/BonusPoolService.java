@@ -45,6 +45,7 @@ public class BonusPoolService {
 		}else{
 			return;
 		}
+		double oldAmount = pool.getTotalAmount();
 		BigDecimal bonusResult;
 		//计算奖金
 		if(addOrReduce == BonusConstant.POOL_BONUS_ADD){
@@ -63,7 +64,9 @@ public class BonusPoolService {
 		BonusPoolHistory history = new BonusPoolHistory();
 		history.setPoolId(pool.getId());
 		history.setAddRemove(addOrReduce);
+		history.setOldAmout(oldAmount);
 		history.setAmout(amount.doubleValue());
+		history.setNewAmout(bonusResult.doubleValue());
 		history.setCreateBy(0);
 		history.setCreateTime(new Date());
 		history.setOperateTime(new Date());

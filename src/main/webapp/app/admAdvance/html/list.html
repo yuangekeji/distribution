@@ -73,8 +73,8 @@
                                 <td class="text-left">{{advance.statues|AdvanceStatuesFilter}}</td>
                                 <td class="text-left">
                                     <div class="btn-group btn-group-circle">
-                                        <button type="button" class="btn btn-outline green btn-sm"  ng-click="confirmAdvance(advance.id,'2')" ng-show="{{advance.statues == '1'}}">批准</button>
-                                        <button type="button" class="btn btn-outline red btn-sm" ng-click="rejectAdvance(advance.id,'3')" ng-show="{{advance.statues == '1'}}">驳回</button>
+                                        <button type="button" class="btn btn-outline green btn-sm"  ng-click="confirmAdvance(advance.id, advance.reqAmt, '2')" ng-show="{{advance.statues == '1'}}">批准</button>
+                                        <button type="button" class="btn btn-outline red btn-sm" ng-click="rejectAdvance(advance.id, '3')" ng-show="{{advance.statues == '1'}}">驳回</button>
                                     </div>
                                     <!--<a href="javascript:" ng-click="confirmAdvance(advance.id,'2')" ng-show="{{advance.statues == '1'}}">批准</a>-->
                                     <!--<a href="javascript:" ng-click="rejectAdvance(advance.id,'3')" ng-show="{{advance.statues == '1'}}">驳回</a>-->

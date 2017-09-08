@@ -79,60 +79,68 @@ public class OrderService {
         Long orderNo = this.getOrderNo();
         moreOrderMaster.setOrderNo(orderNo);
         //order_master insert
+        //复投订单状态直接为订单完成
+        if("2".equals(moreOrderMaster.getOrderCategory())){
+            moreOrderMaster.setOrderStatues("4");
+        }
         cnt1 = moreOrderMasterMapper.insertOrder(moreOrderMaster);
         if(cnt1 == 0){
             throw new RuntimeException();
         }
 
         int orderId = moreOrderMaster.getId();
-            //order_detail_inser
-        moreOrderMaster.setGoodsCd(1);
-        cnt2 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
+        //order_detail_inser(复投没有商品不插入订单详细表)
+        if(!"2".equals(moreOrderMaster.getOrderCategory())) {
+            moreOrderMaster.setGoodsCd(1);
+            cnt2 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
+        }else{
+            cnt2 = 1;
+        }
         if(cnt2 == 0){
            throw new RuntimeException();
          }
 
         //扣款登记 account_manager
 
-            AccountManager accountManager = new AccountManager();
+        AccountManager accountManager = new AccountManager();
 
-            accountManager.setMemberId(moreOrderMaster.getMemberId());
-            accountManager.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
-            accountManager.setBonusAmt(moreOrderMaster.getBonusAmt() ==null ? new BigDecimal(0):moreOrderMaster.getBonusAmt());
-            accountManager.setCreateId(moreOrderMaster.getCreateId());
-            accountManager.setCreateTime(new Date());
-            accountManager.setUpdateId(moreOrderMaster.getCreateId());
-            accountManager.setUpdateTime(new Date());
+        accountManager.setMemberId(moreOrderMaster.getMemberId());
+        accountManager.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
+        accountManager.setBonusAmt(moreOrderMaster.getBonusAmt() ==null ? new BigDecimal(0):moreOrderMaster.getBonusAmt());
+        accountManager.setCreateId(moreOrderMaster.getCreateId());
+        accountManager.setCreateTime(new Date());
+        accountManager.setUpdateId(moreOrderMaster.getCreateId());
+        accountManager.setUpdateTime(new Date());
 
-            cnt3 = moreAccountManagerMapper.updateAccountManager(accountManager);
-           if(cnt3 == 0){
-              throw new RuntimeException();
-           }
+        cnt3 = moreAccountManagerMapper.updateAccountManager(accountManager);
+        if(cnt3 == 0){
+            throw new RuntimeException();
+        }
 
         //账户流水登记account_flow_history
 
-            AccountFlowHistory accountFlowHistory = new AccountFlowHistory();
+        AccountFlowHistory accountFlowHistory = new AccountFlowHistory();
 
-            accountFlowHistory.setMemberId(moreOrderMaster.getMemberId());
-            accountFlowHistory.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
-            accountFlowHistory.setBonusAmt(moreOrderMaster.getBonusAmt());
-            accountFlowHistory.setCreateId(moreOrderMaster.getCreateId());
-            accountFlowHistory.setCreateTime(new Date());
-            accountFlowHistory.setTotalAmt(accountFlowHistory.getSeedAmt().add(moreOrderMaster.getBonusAmt()));
-            accountFlowHistory.setType("1");
-            if("1".equals(moreOrderMaster.getOrderCategory())){
-                accountFlowHistory.setFlowType(Constant.MEMBERORDER);
-            }else if("2".equals(moreOrderMaster.getOrderCategory())){
-                accountFlowHistory.setFlowType(Constant.REORDER);
-            }else if("3".equals(moreOrderMaster.getOrderCategory())){
-                accountFlowHistory.setFlowType(Constant.DISCOUNTORDER);
-            }
+        accountFlowHistory.setMemberId(moreOrderMaster.getMemberId());
+        accountFlowHistory.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
+        accountFlowHistory.setBonusAmt(moreOrderMaster.getBonusAmt());
+        accountFlowHistory.setCreateId(moreOrderMaster.getCreateId());
+        accountFlowHistory.setCreateTime(new Date());
+        accountFlowHistory.setTotalAmt(accountFlowHistory.getSeedAmt().add(moreOrderMaster.getBonusAmt()));
+        accountFlowHistory.setType("1");
+        if("1".equals(moreOrderMaster.getOrderCategory())){
+            accountFlowHistory.setFlowType(Constant.MEMBERORDER);
+        }else if("2".equals(moreOrderMaster.getOrderCategory())){
+            accountFlowHistory.setFlowType(Constant.REORDER);
+        }else if("3".equals(moreOrderMaster.getOrderCategory())){
+            accountFlowHistory.setFlowType(Constant.DISCOUNTORDER);
+        }
 
-            cnt4 = accountFlowHistoryMapper.insert(accountFlowHistory);
+        cnt4 = accountFlowHistoryMapper.insert(accountFlowHistory);
 
-            if(cnt4 == 0){
-                throw new RuntimeException();
-            }
+        if(cnt4 == 0){
+            throw new RuntimeException();
+        }
 
         //报单，复投分红包处理
         if("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory())){

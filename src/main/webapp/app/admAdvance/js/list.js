@@ -57,16 +57,19 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     }
 
     /**提现批准*/
-    $scope.confirmAdvance = function (id, statues) {
-        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues}).success(function (resp) {
+    $scope.confirmAdvance = function (id, reqAmt, statues) {
+        $scope.startLoading();
+        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, reqAmt: reqAmt, statues:statues}).success(function (resp) {
             if(resp.successful){
                 Notify.success("提现审批完成。");
                 $scope.search();
             }else{
                 Notify.error(resp.error());
             }
+            $scope.stopLoading();
         }).error(function (error) {
             Notify.error(error);
+            $scope.stopLoading();
         });
     };
 
@@ -133,6 +136,7 @@ angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, 
 
     /**提现驳回*/
     $scope.reject = function (id, statues, remark) {
+        $scope.startLoading();
         $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues,remark:remark}).success(function (resp) {
             if(resp.successful){
                 Notify.success("提现驳回完成。");
@@ -141,8 +145,10 @@ angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, 
             }else{
                 Notify.error(resp);
             }
+            $scope.stopLoading();
         }).error(function (error) {
             Notify.error(error);
+            $scope.stopLoading();
         })
     };
 });

@@ -26,6 +26,7 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
     }
 
     $scope.confirmOrder = function (id, statues) {
+        $scope.startLoading();
         $http.post(ctx + "/order/confirmOrder",{id:id,orderStatues:statues}).success(function (resp) {
             if(resp.successful){
                 Notify.success("确认收货完成。");
@@ -33,8 +34,10 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
             }else{
                 Notify.error(resp.error());
             }
+            $scope.stopLoading();
         }).error(function (error) {
             Notify.error(error);
+            $scope.stopLoading();
         });
     };
 

@@ -116,29 +116,27 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
                 actAmt      : $scope.advance.actAmt,
                 payPassword : $scope.advance.payPassword
             }).success(function (resp) {
+                //处理完成后重新获取账户信息，个人信息
+                $scope.onInit();
+                if(resp.successful) {
+                    //$scope.msg = "";
+                    if (resp.data.result == 'success') {
+                        Notify.success("提现成功");
+                    } else if (resp.data.result == 'pwdWrong') {
+                        Notify.error("支付密码错误");
+                    } else if (resp.data.result == 'fail') {
+                        Notify.error("提现失败，请重新尝试");
+                    }
+                    $scope.stopLoading();
+                    //ConfirmModal.show({text: $scope.msg, isCancel: false});
+                    $scope.go("app.advance");
 
-            $scope.stopLoading();
-            //处理完成后重新获取账户信息，个人信息
-            $scope.onInit();
-            if(resp.successful) {
-                //$scope.msg = "";
-                if (resp.data.result == 'success') {
-                    Notify.success("提现成功");
-                } else if (resp.data.result == 'pwdWrong') {
-                    Notify.error("支付密码错误");
-                } else if (resp.data.result == 'fail') {
-                    Notify.error("提现失败，请重新尝试");
+                }else{
+                    Notify.error("提现失败，请稍后再试");
+                    //失败后停止loading，刷新页面
+                    $scope.stopLoading();
+                    $window.location.reload();
                 }
-
-                //ConfirmModal.show({text: $scope.msg, isCancel: false});
-                $scope.go("app.advance");
-
-            }else{
-                Notify.error("提现失败，请稍后再试");
-                //失败后停止loading，刷新页面
-                $scope.stopLoading();
-                $window.location.reload();
-            }
         });
     }
 

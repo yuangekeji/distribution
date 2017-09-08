@@ -116,6 +116,7 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
 
     /**确认发货提交*/
     $scope.submit = function (id, statues, expressAddress) {
+        $scope.startLoading();
         $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderStatues:statues, expressAddress:expressAddress}).success(function (resp) {
             if(resp.successful){
                 Notify.success("确认发货完成");
@@ -124,8 +125,10 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
             }else{
                 Notify.error(resp);
             }
+            $scope.stopLoading();
         }).error(function (error) {
             Notify.error(error);
+            $scope.stopLoading();
         })
     };
 });

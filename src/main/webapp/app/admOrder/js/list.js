@@ -100,6 +100,18 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
 
 angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, Notify) {
 
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
     $scope.datas = getDatas;
 
     $scope.close = function()
@@ -114,6 +126,7 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
 
     /**确认发货提交*/
     $scope.submit = function (id, statues, expressAddress) {
+        $scope.startLoading();
         $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderStatues:statues, expressAddress:expressAddress}).success(function (resp) {
             if(resp.successful){
                 Notify.success("确认发货完成");
@@ -122,8 +135,10 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
             }else{
                 Notify.error(resp);
             }
+            $scope.stopLoading();
         }).error(function (error) {
             Notify.error(error);
+            $scope.stopLoading();
         })
     };
 });

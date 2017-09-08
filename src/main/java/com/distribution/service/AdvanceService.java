@@ -106,7 +106,7 @@ public class AdvanceService {
                 throw new RuntimeException();
             }
 
-            advanceAccount.setBonusAmt(advanceAccount.getBonusAmt().subtract(moreAdvance.getReqAmt()));//从奖金币中扣除提现申请金额（提现申请金额=实际提现金额+手续费）
+            /*advanceAccount.setBonusAmt(advanceAccount.getBonusAmt().subtract(moreAdvance.getReqAmt()));//从奖金币中扣除提现申请金额（提现申请金额=实际提现金额+手续费）
             advanceAccount.setTotalBonus(advanceAccount.getBonusAmt().add(advanceAccount.getSeedAmt()));//计算总奖金字段
             advanceAccount.setAdvanceAmt(advanceAccount.getAdvanceAmt().add(moreAdvance.getReqAmt()));//提现总额 = 原提现总额 + 实际提现金额
             advanceAccount.setUpdateId(moreAdvance.getMemberId());
@@ -122,17 +122,17 @@ public class AdvanceService {
             historyout.setFlowType(Constant.ADVANCE); //提现
             historyout.setBonusAmt(moreAdvance.getReqAmt());
             historyout.setTotalAmt(moreAdvance.getReqAmt());
-
+            */
 
             //step 3) 插入提现明细表，账户表，账户流水表
             int  cnt1 = advanceMapper.insert(advance);
 
-            int  cnt2 = moreAccountManagerMapper.updateAccountManagerAmt(advanceAccount);
+            //int  cnt2 = moreAccountManagerMapper.updateAccountManagerAmt(advanceAccount);
 
-            int  cnt3= accountFlowHistoryMapper.insert(historyout);
+           // int  cnt3= accountFlowHistoryMapper.insert(historyout);
 
-            if(cnt1 >0 && cnt2 >0 && cnt3>0){
-                //提现成功
+            if(cnt1 >0){
+                //提现申请成功
                 return "success";
             }else{
                 throw new RuntimeException();

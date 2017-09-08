@@ -1,4 +1,4 @@
-angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal,Notify) {
+angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log, ConfirmModal, Notify) {
     title.setTitle('申请提现');
     $scope.user = $sessionStorage.currentUser;
     //定义提现model
@@ -104,9 +104,17 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
             return false;
         }
 
-        $scope.startLoading();
+        ConfirmModal.show({
+            text: '确定要申请提现吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
 
-        $http.post(ctx + '/advance/insertAdvance',
+            $scope.startLoading();
+
+            $http.post(ctx + '/advance/insertAdvance',
             {
                 bankName    : $scope.MemberInfo.bankName,
                 cardName    : $scope.MemberInfo.bankUserName,
@@ -116,29 +124,29 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
                 actAmt      : $scope.advance.actAmt,
                 payPassword : $scope.advance.payPassword
             }).success(function (resp) {
+                //处理完成后重新获取账户信息，个人信息
+                $scope.onInit();
+                if(resp.successful) {
+                    //$scope.msg = "";
+                    if (resp.data.result == 'success') {
+                        Notify.success("提现成功");
+                    } else if (resp.data.result == 'pwdWrong') {
+                        Notify.error("支付密码错误");
+                    } else if (resp.data.result == 'fail') {
+                        Notify.error("提现失败，请重新尝试");
+                    }
+                    $scope.stopLoading();
+                    //ConfirmModal.show({text: $scope.msg, isCancel: false});
+                    //$scope.go("app.advance");
+                    $state.go("app.advance", {}, {reload: true});
 
-            $scope.stopLoading();
-            //处理完成后重新获取账户信息，个人信息
-            $scope.onInit();
-            if(resp.successful) {
-                //$scope.msg = "";
-                if (resp.data.result == 'success') {
-                    Notify.success("提现成功");
-                } else if (resp.data.result == 'pwdWrong') {
-                    Notify.error("支付密码错误");
-                } else if (resp.data.result == 'fail') {
-                    Notify.error("提现失败，请重新尝试");
+                }else{
+                    Notify.error("提现失败，请稍后再试");
+                    //失败后停止loading，刷新页面
+                    $scope.stopLoading();
+                    $window.location.reload();
                 }
-
-                //ConfirmModal.show({text: $scope.msg, isCancel: false});
-                $scope.go("app.advance");
-
-            }else{
-                Notify.error("提现失败，请稍后再试");
-                //失败后停止loading，刷新页面
-                $scope.stopLoading();
-                $window.location.reload();
-            }
+            });
         });
     }
 

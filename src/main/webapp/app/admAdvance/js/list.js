@@ -1,4 +1,4 @@
-angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal, Notify) {
+angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal, ConfirmModal, Notify) {
     title.setTitle('提现管理');
 
     $scope.myPage = {
@@ -19,6 +19,18 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
         statues: '',
         remark: ''
     };
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
 
     $scope.search = function(){
         $http.post(ctx + '/admAdvance/list', $scope.myPage)
@@ -57,16 +69,19 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     }
 
     /**提现批准*/
-    $scope.confirmAdvance = function (id, statues) {
-        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues}).success(function (resp) {
+    $scope.confirmAdvance = function (id, memberId, reqAmt, statues) {
+        $scope.startLoading();
+        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, memberId:memberId, reqAmt: reqAmt, statues:statues}).success(function (resp) {
             if(resp.successful){
                 Notify.success("提现审批完成。");
                 $scope.search();
             }else{
                 Notify.error(resp.error());
             }
+            $scope.stopLoading();
         }).error(function (error) {
             Notify.error(error);
+            $scope.stopLoading();
         });
     };
 
@@ -118,7 +133,19 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     };
 });
 
-angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas,Notify) {
+angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, ConfirmModal, Notify) {
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
 
     $scope.datas = getDatas;
 
@@ -133,6 +160,7 @@ angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, 
 
     /**提现驳回*/
     $scope.reject = function (id, statues, remark) {
+        $scope.startLoading();
         $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues,remark:remark}).success(function (resp) {
             if(resp.successful){
                 Notify.success("提现驳回完成。");
@@ -141,8 +169,10 @@ angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, 
             }else{
                 Notify.error(resp);
             }
+            $scope.stopLoading();
         }).error(function (error) {
             Notify.error(error);
+            $scope.stopLoading();
         })
     };
 });

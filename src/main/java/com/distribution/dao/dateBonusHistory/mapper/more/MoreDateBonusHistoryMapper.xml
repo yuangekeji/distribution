@@ -68,19 +68,4 @@
     from date_bonus_history
     <include refid="where"/>
   </select>
-
-  <update id="updateBonusCachePool"  parameterType="java.util.Map">
-    update bonus_cache_pool
-    set total_amount = total_amount + #{payAmt},
-        update_by = #{createId},
-        update_time = now()
-     where pool_type = #{poolType}
-  </update>
-  <update id="updateBonusPool" parameterType="java.util.Map">
-    update bonus_pool
-    set total_amount = total_amount - #{payAmt},
-         update_by = #{createId},
-         update_time = now()
-    where pool_type = #{poolType}
-  </update>
 </mapper>

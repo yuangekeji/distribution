@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.distribution.dao.bonusPoolHistory.mapper.BonusPoolHistoryMapper;
+import com.distribution.dao.bonusPoolHistory.model.BonusPoolHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,6 +71,8 @@ public class BonusService {
 	private MoreDividendMapper moreDividendMapper;
 	@Autowired
 	private MoreDividendHistoryMapper dividendHistoryMapper;
+	@Autowired
+	private BonusPoolHistoryMapper bonusPoolHistoryMapper;
 	
 	
 	
@@ -600,17 +604,4 @@ public class BonusService {
 		System.out.println(multiply(v1,v2));
 	}*/
 
-	/**
-	 * 从资金池拨钱到发放池
-	 * @param map
-	 * @return
-     */
-	public boolean insertPayAmtProc(Map map){
-
-		int cnt1 = moreDateBonusHistoryMapper.updateBonusCachePool(map);
-		int cnt2 = moreDateBonusHistoryMapper.updateBonusPool(map);
-
-
-		return false;
-	}
 }

@@ -119,6 +119,11 @@ public class BonusPoolService {
 		return total;
 	}
 
+	/**
+	 * 获取资金池数据
+	 * @param poolType
+	 * @return
+     */
 	public BonusPool getBonusPool(String poolType){
 		BonusPoolExample bonusPoolExample = new BonusPoolExample();
 		BonusPoolExample.Criteria bonusPoolCriteria = bonusPoolExample.createCriteria();
@@ -131,6 +136,11 @@ public class BonusPoolService {
 	      return  new BonusPool();
 	}
 
+	/**
+	 * 获取缓存池数据
+	 * @param poolType
+	 * @return
+     */
 	public BonusCachePool getBonusCachePool(String poolType){
 		BonusCachePoolExample bonusCachePoolExample = new BonusCachePoolExample();
 		BonusCachePoolExample.Criteria bonusCachePoolCriteria = bonusCachePoolExample.createCriteria();
@@ -141,5 +151,11 @@ public class BonusPoolService {
 			return  bonusCachePools.get(0);
 		else
 			return  new BonusCachePool();
+	}
+
+	public boolean updatePayAmtPoolProc(BigDecimal amount,int poolType){
+		this.updateCachePool(amount,poolType,BonusConstant.POOL_BONUS_ADD);
+		this.updatePool(amount,poolType,BonusConstant.POOL_BONUS_REDUCE);
+		return true;
 	}
 }

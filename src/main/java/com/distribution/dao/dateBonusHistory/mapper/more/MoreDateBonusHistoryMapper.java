@@ -38,18 +38,4 @@ public interface MoreDateBonusHistoryMapper extends DateBonusHistoryMapper {
      */
     Integer selectDateBonusHistoryListCount(Page page);
 
-    /**
-     * 更新发放池
-      * @param map
-     * @return
-     */
-    int updateBonusCachePool(Map map);
-
-    /**
-     * 更新资金池
-     * @param map
-     * @return
-     */
-    int updateBonusPool(Map map);
-
 }

@@ -140,13 +140,13 @@ angular.module('home').controller('homeCtrl',
         /**
          * @return {undefined}
          */
-        $scope.addSlide = function()
+        $scope.addSlide = function(imgName)
         {
             /** @type {number} */
             var newWidth = 600 + values.length + 1;
             values.push(
                 {
-                    image: $scope.settings.layoutPath+"/img/bg-pc.jpg",
+                    image: $scope.settings.layoutPath+"/img/"+imgName,
                     text: ["Nice image", "Awesome photograph", "That is so cool", "I love that"][values.length % 4],
                     id: l++
                 });
@@ -160,10 +160,11 @@ angular.module('home').controller('homeCtrl',
             render(typePattern);
         };
         /** @type {number} */
-        var i = 0;
-        for (; i < 4; i++)
+        $scope.imgNames =['b1.png','p1.png','p2.png','p3.png','p4.png'];
+
+        for ( var i = 0; i < $scope.imgNames.length; i++)
         {
-            $scope.addSlide();
+            $scope.addSlide($scope.imgNames[i]);
         }
 
 });

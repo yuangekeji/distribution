@@ -220,14 +220,7 @@ angular
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
-            {
-                name:'admPermission',
-                files: [
-                    'static/metronic/global/plugins/datatables/datatables.min.css',
-                    'app/admPermission/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
-                ]
-            },
+
             {
                 name:'admWarning',
                 files: [

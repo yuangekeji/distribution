@@ -28,7 +28,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-show= "{{basicManage.typeCode == 'D01' && basicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="basicManage in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
+                                                <tr ng-show= "{{basicManage.typeCode == 'D01' && basicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="basicManage in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                                     <td class="text-left">{{basicManage.detailNm}}</td>
                                                     <td class="text-left">{{basicManage.buyAmt|number:2}}</td>
                                                     <td class="text-left">{{basicManage.buyQty}}</td>
@@ -93,15 +93,15 @@
                             </uib-tab>
 
                             <!-----------见点奖设置------------------------>
-                            <uib-tab index="3" heading="见点奖">
+                            <uib-tab index="3" heading="广告宣传奖">
                                 <form role="form" action="#">
                                     <div class="form-group"  ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'} |filter : {detailCode : '00'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
-                                        <label class="control-label" >见点奖金额(元)</label>
-                                        <input type="number" ng-model="jdBasic.maxAmt" placeholder="见点奖金额" class="form-control input-circle input-large"/>
+                                        <label class="control-label" >广告宣传奖金额(元)</label>
+                                        <input type="number" ng-model="jdBasic.maxAmt" placeholder="广告宣传奖金额" class="form-control input-circle input-large"/>
                                     </div>
                                     <div class="form-group" ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'} |filter : {detailCode : '01'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
-                                        <label class="control-label">见点奖占用营业额比例(%)</label>
-                                        <input type="number" ng-model="jdBasic.maxPercent" placeholder="见点奖占用营业额比例" class="form-control input-circle input-large" />
+                                        <label class="control-label">广告宣传奖占用营业额比例(%)</label>
+                                        <input type="number" ng-model="jdBasic.maxPercent" placeholder="广告宣传奖占用营业额比例" class="form-control input-circle input-large" />
                                     </div>
                                     <div class="margiv-top-10">
                                         <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>

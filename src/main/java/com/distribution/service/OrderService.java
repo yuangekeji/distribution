@@ -235,16 +235,6 @@ public class OrderService {
 
         if(count != null  && count >0 ) {
 
-            if(currentUser.getIsSalesDept() !=null && "N".equals(currentUser.getIsSalesDept())){
-                //判断累计的订单金额 如果是超过3万 就更新为工销售部
-                Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(currentUser.getId());
-
-                if(orderTotalAmount >= 30000){
-                    //更新为工作室
-                    memberMapper.updateMemberSalesDept(currentUser.getId());
-                }
-            }
-
             moreOrderMaster.setOrderCategory("2");
             moreOrderMaster.setDiscount(0);
             moreOrderMaster.setActAmt(moreOrderMaster.getOrderAmt());
@@ -259,6 +249,15 @@ public class OrderService {
             moreOrderMaster.setUpdateId(currentUser.getId());
             moreOrderMaster.setUpdateTime(new Date());
             String result = this.insertOrder(moreOrderMaster);
+
+           if(currentUser.getIsSalesDept() ==null || !"Y".equals(currentUser.getIsSalesDept())){
+                //判断累计的订单金额 如果是超过3万 就更新为工销售部
+                Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(currentUser.getId());
+                if(orderTotalAmount >= 30000){
+                    //更新为工作室
+                    memberMapper.updateMemberSalesDept(currentUser.getId());
+                }
+           }
 
             return result;
         }

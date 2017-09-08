@@ -63,7 +63,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="advance in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.PageNo" total-items="myPage.totalCount">
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="advance in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                 <td class="text-left">{{advance.memberName}}</td>
                                 <td class="text-left">{{advance.reqAmt | number:2}}</td>
                                 <td class="text-left">{{advance.feeAmt | number:2}}</td>

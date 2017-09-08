@@ -194,7 +194,7 @@ public class MemberService {
         Integer it = memberMapper.updateByPrimaryKeySelective(member);
         //给推荐人的一代个数中 +1
         Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
-        m.setFirstAgentCnt(null!=member.getFirstAgentCnt()?(member.getFirstAgentCnt()+1):1);
+        m.setFirstAgentCnt(null!=m.getFirstAgentCnt()?(m.getFirstAgentCnt()+1):1);
         memberMapper.updateByPrimaryKeySelective(m);
 
         MoreOrderMaster order = new MoreOrderMaster();

@@ -22,5 +22,5 @@ public class Constant {
     public static final String BONUS = "6";
     public static final String MEMBERORDER = "7";
     public static final String DISCOUNTORDER = "8";
-
+    public static final String MEMBERCHARGE = "9";
 }

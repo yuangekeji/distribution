@@ -74,7 +74,7 @@ angular.module('graph').controller('graphCtrl',
 
             if(data.node.state.selected){
                 ConfirmModal.show({
-                    text: '是否要添加新的节点？',
+                    text: '是否要给 '+data.node.text+' 添加新的节点？',
                     isCancel:true //false alert ,true confirm
                 }).then(function (sure) {
                     if (!sure) {

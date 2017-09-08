@@ -81,8 +81,9 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
     $scope.ok = function () {
         if($scope.flag) {
             $scope.flag = false;
+
             if (!/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test($scope.param.chargeAmt)) {
-                Notify.warning('请输入充值金额。');
+                Notify.warning('请正确输入充值金额。');
                 $scope.flag = true;
             } else {
                 App.blockUI({

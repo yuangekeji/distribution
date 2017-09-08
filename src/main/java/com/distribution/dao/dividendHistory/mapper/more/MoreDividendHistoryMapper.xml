@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.distribution.dao.dividendHistory.mapper.more.MoreDividendHistoryMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.dividendHistory.model.DividendHistory" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dividendHistory.model.more.MoreDividendHistory" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="dividend_id" property="dividendId" jdbcType="INTEGER" />
     <result column="received_time" property="receivedTime" jdbcType="TIMESTAMP" />
@@ -13,6 +13,9 @@
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="mgmt_fee" property="mgmtFee" jdbcType="DECIMAL" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, dividend_id, received_time, devidend_count, amount, total_received, create_id, 
@@ -33,18 +36,17 @@
      )
      </foreach>
   </insert>
-  <update id="updateDividendHistoryBatch" parameterType="java.util.Map">
-    update dividend_history
-    set dividend_id = #{dividendId,jdbcType=INTEGER},
-      received_time = #{receivedTime,jdbcType=TIMESTAMP},
-      devidend_count = #{devidendCount,jdbcType=INTEGER},
-      amount = #{amount,jdbcType=DECIMAL},
-      total_received = #{totalReceived,jdbcType=DECIMAL},
-      create_id = #{createId,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_id = #{updateId,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      mgmt_fee = #{mgmtFee,jdbcType=DECIMAL}
-    where id = #{id,jdbcType=INTEGER}
+  <select id="listAllYesterdayDividendHistory" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	 select h.*,d.order_id,d.order_no,d.member_id
+	 from dividend_history h
+	 left join dividend d on h.dividend_id = d.id
+	 and DATE(h.create_time) = #{yesterday}
+	 and h.balance_status = 0
+  </select>
+  <update id="updateAllYesterdayDividendHistory" parameterType="java.lang.String">
+    	update dividend_history h
+		set h.balance_status = 1
+		and DATE(h.create_time) = #{yesterday}
+		and h.balance_status = 0
   </update>
 </mapper>

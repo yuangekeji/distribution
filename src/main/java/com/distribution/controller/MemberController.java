@@ -156,7 +156,7 @@ public class MemberController extends BasicController {
             moreMember.setCityTotalAmount(ls);
             moreMember.setCityTotalPeople(ln);
             moreMember.setCountyTotalAmount(rs);
-            moreMember.setCityTotalPeople(rn);
+            moreMember.setCountyTotalPeople(rn);
         }else if(rs.compareTo(ls)==1){//rs > ls
             moreMember.setCityTotalAmount(rs);
             moreMember.setCityTotalPeople(rn);

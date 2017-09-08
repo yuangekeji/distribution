@@ -4,6 +4,7 @@
   */
 package com.distribution.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -348,20 +349,32 @@ public class NodeService {
 			return map;
 		}
 		//左节点的所有子节点
-		List<MoreMemberNode> leftNum = moreNodeMapper.listSubNodes(node.getLeftId());
-		if(null != leftNum && leftNum.size() > 0){
-			//左节点的所有销售额，不包含折扣单
-			Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(node.getLeftId());
-			map.put("leftNum", String.valueOf(leftNum.size()));
-			map.put("leftToalSales", String.valueOf(leftToalSales));
+		if(node.getLeftId()!=null && !"".equals(node.getLeftId())){
+
+			List<MoreMemberNode> leftNum = moreNodeMapper.listSubNodes(node.getLeftId());
+			if(null != leftNum && leftNum.size() > 0){
+				//左节点的所有销售额，不包含折扣单
+				Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(node.getLeftId());
+				map.put("leftNum", String.valueOf(leftNum.size()));
+				map.put("leftToalSales", String.valueOf(leftToalSales));
+			}
+		}else{
+			map.put("leftNum", "0");
+			map.put("leftToalSales","0");
 		}
-		//右节点的所有子节点
-		List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
-		if(null != rightNum && rightNum.size() > 0){
-			//右节点的所有销售额，不包含折扣单
-			double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
-			map.put("rightNum", String.valueOf(rightNum.size()));
-			map.put("rightToalSales", String.valueOf(rightToalSales));
+
+		if(node.getRightId()!=null && !"".equals(node.getRightId())) {
+			//右节点的所有子节点
+			List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
+			if (null != rightNum && rightNum.size() > 0) {
+				//右节点的所有销售额，不包含折扣单
+				double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
+				map.put("rightNum", String.valueOf(rightNum.size()));
+				map.put("rightToalSales", String.valueOf(rightToalSales));
+			}
+		}else{
+			map.put("rightNum", "0");
+			map.put("rightToalSales","0");
 		}
 		return map;
 	}

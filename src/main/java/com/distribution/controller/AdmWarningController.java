@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -66,9 +67,9 @@ public class AdmWarningController extends BasicController{
         return successMsg(map);
     }
 
-    @RequestMapping("/payAmtProc")
+    @RequestMapping(value="/payAmtProc")
     @ResponseBody
-    public JsonMessage payAmtProc(BigDecimal amount, int poolType){
+    public JsonMessage payAmtProc(BigDecimal amount, Integer poolType){
         boolean result = bonusPoolService.updatePayAmtPoolProc(amount,poolType);
         return successMsg(result);
     }

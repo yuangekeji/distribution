@@ -1,4 +1,4 @@
-angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage,Notify) {
+angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage, ConfirmModal, Notify) {
     title.setTitle('我的订单');
     $scope.myPage = {
         pageNo: 1,
@@ -7,6 +7,19 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         result: [],
         parameterMap: {}
     };
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
     $scope.search = function(){
 
         $http.post(ctx + '/order/list', $scope.myPage)
@@ -26,18 +39,26 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
     }
 
     $scope.confirmOrder = function (id, statues) {
-        $scope.startLoading();
-        $http.post(ctx + "/order/confirmOrder",{id:id,orderStatues:statues}).success(function (resp) {
-            if(resp.successful){
-                Notify.success("确认收货完成。");
-                $scope.search();
-            }else{
-                Notify.error(resp.error());
+        ConfirmModal.show({
+            text: '确定要收货吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
             }
-            $scope.stopLoading();
-        }).error(function (error) {
-            Notify.error(error);
-            $scope.stopLoading();
+            $scope.startLoading();
+            $http.post(ctx + "/order/confirmOrder", {id: id, orderStatues: statues}).success(function (resp) {
+                if (resp.successful) {
+                    Notify.success("确认收货完成。");
+                    $scope.search();
+                } else {
+                    Notify.error(resp.error());
+                }
+                $scope.stopLoading();
+            }).error(function (error) {
+                Notify.error(error);
+                $scope.stopLoading();
+            });
         });
     };
 

@@ -100,6 +100,18 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
 
 angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, Notify) {
 
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
     $scope.datas = getDatas;
 
     $scope.close = function()

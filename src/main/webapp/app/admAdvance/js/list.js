@@ -1,4 +1,4 @@
-angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal, Notify) {
+angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModal, ConfirmModal, Notify) {
     title.setTitle('提现管理');
 
     $scope.myPage = {
@@ -19,6 +19,18 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
         statues: '',
         remark: ''
     };
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
 
     $scope.search = function(){
         $http.post(ctx + '/admAdvance/list', $scope.myPage)
@@ -57,9 +69,9 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     }
 
     /**提现批准*/
-    $scope.confirmAdvance = function (id, reqAmt, statues) {
+    $scope.confirmAdvance = function (id, memberId, reqAmt, statues) {
         $scope.startLoading();
-        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, reqAmt: reqAmt, statues:statues}).success(function (resp) {
+        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, memberId:memberId, reqAmt: reqAmt, statues:statues}).success(function (resp) {
             if(resp.successful){
                 Notify.success("提现审批完成。");
                 $scope.search();
@@ -121,7 +133,19 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     };
 });
 
-angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas,Notify) {
+angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, ConfirmModal, Notify) {
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
 
     $scope.datas = getDatas;
 

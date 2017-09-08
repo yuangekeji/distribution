@@ -26,12 +26,6 @@ public class AdmAdvanceService {
     @Autowired
     private AccountFlowHistoryMapper accountFlowHistoryMapper;
 
-    @Autowired
-    private MoreMemberMapper moreMemberMapper;
-
-    @Autowired
-    private AdvanceMapper advanceMapper;
-
     /**
      * description 提现列表
      * @author WYN

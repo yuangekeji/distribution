@@ -39,7 +39,7 @@
            AND a.order_statues = #{parameterMap.orderStatus}
        </if>
        <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-           AND a.order_no = #{parameterMap.orderNo}
+           AND a.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
        </if>
        <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
            AND a.order_category = #{parameterMap.orderCategory}

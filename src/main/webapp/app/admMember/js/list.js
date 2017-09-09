@@ -86,8 +86,8 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
             if (!/^\+?[1-9][0-9]*$/.test($scope.param.chargeAmt)) {
                 Notify.warning('充值金额只能为正整数，请重新输入。');
                 $scope.flag = true;
-            } else if($scope.param.chargeAmt>5000){
-                Notify.warning('充值金额不能大于5000，请重新输入。');
+            } else if($scope.param.chargeAmt>50000){
+                Notify.warning('充值金额不能大于50000，请重新输入。');
                 $scope.flag = true;
             } else {
                 App.blockUI({

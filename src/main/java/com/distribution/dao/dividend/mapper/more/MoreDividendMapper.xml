@@ -32,7 +32,7 @@
         AND dividend_status = #{parameterMap.dividendStatus}
       </if>
       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-        AND order_no = #{parameterMap.orderNo}
+        AND order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
       </if>
     </where>
   </sql>

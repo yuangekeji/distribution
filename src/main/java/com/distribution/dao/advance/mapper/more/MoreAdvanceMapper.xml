@@ -82,7 +82,7 @@
             AND a.member_id = #{parameterMap.memberId}
         </if>
         <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
-            AND b.member_name LIKE '${parameterMap.memberName}%'
+            AND b.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
         </if>
         <if test="parameterMap.statues!=null and parameterMap.statues!=''">
             AND a.statues = #{parameterMap.statues}
@@ -108,7 +108,7 @@
             AND a.member_id = #{parameterMap.memberId}
         </if>
         <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
-            AND b.member_name LIKE '${parameterMap.memberName}%'
+            AND b.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
         </if>
         <if test="parameterMap.statues!=null and parameterMap.statues!=''">
             AND a.statues = #{parameterMap.statues}

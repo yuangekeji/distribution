@@ -33,6 +33,24 @@ public class JobTest extends SpringServiceTest{
 	}
 	@Test
 	public void balanceNodeBonusTest(){
-		
+		nodeJob.balanceNodeBonus();
+	}
+	@Test
+	public void sendDividendBonusTest(){
+		/*	
+		1.有奖要发，无营业额，缓存池没有钱
+		2.有奖要发，无营业额，缓存池钱够用
+		3.无奖要发，有营业额 ok
+		4.无奖要发，也没有营业额 ok
+		5.要发的奖金大于营业额可用钱数
+		6.要发的奖等于 营业额可用的钱数
+		7.要发的奖小于营业额的钱数 
+		8.要发的奖大于营业额钱，不够的钱小于缓存池 
+		*/
+		dividendJob.sendDividendBonus();
+	}
+	@Test
+	public void balanceDividendBonusTest(){
+		dividendJob.balanceDividendBonus();
 	}
 }

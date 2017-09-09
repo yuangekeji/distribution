@@ -45,7 +45,7 @@ public class NodeBonusDayJob {
 	public void balanceNodeBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时结算见点奖/NodeBonusDayJob/balanceNodeBonus");
-		bonusService.saveBalanceMemberNodeBonus();
+		result = bonusService.saveBalanceMemberNodeBonus(result);
 		saveBalanceMemberNodeBonusLog(result);
 	}
 	/**

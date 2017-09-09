@@ -125,6 +125,7 @@
           mb.order_id,
           mb.order_no,
           mb.order_date order_date,
+          max(mb.create_date) create_date,
           om.order_amt AS order_amount,
           sum(mb.amout) AS amout_total,
           sum(mb.manage_fee) AS manage_fee_total,
@@ -137,9 +138,10 @@
       union all
       select
         member_id member_id,
-        order_id,
-        order_no,
+        null order_id,
+        null order_no,
         NULL order_date,
+        create_date,
         NULL order_amount,
         amout AS amout_total,
         manage_fee AS manage_fee_total,
@@ -152,7 +154,7 @@
       </if>
       ) mb, member member
       where mb.member_id = member.id
-      order by mb.order_id, mb.member_id
+      order by mb.member_id desc, mb.create_date desc
     <include refid="pageLimit"/>
   </select>
   <select id="selectMemberBonusListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >

@@ -71,7 +71,7 @@
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
                                 total-items="myPage.totalCount">
-                                <td>{{row.date |expDate}}</td>
+                                <td>{{row.date |date:'yyyy-MM-dd'}}</td>
                                 <td>
                                     <span class="label label-sm " ng-class="{'label-danger': row.alarmStatus ==0,  'label-success': row.alarmStatus ==1}">
                                          {{row.alarmStatus |warningStatusFilter}}

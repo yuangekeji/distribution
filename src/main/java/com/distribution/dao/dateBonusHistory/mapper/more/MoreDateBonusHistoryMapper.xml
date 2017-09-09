@@ -25,10 +25,10 @@
   <sql id="where">
       <where>
         <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
-          <![CDATA[AND create_time >= #{parameterMap.startTime}]]>
+          <![CDATA[AND DATE_FORMAT(date, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
         </if>
         <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
-          <![CDATA[AND create_time <=#{parameterMap.endTime}]]>
+          <![CDATA[AND DATE_FORMAT(date, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
         </if>
       </where>
   </sql>

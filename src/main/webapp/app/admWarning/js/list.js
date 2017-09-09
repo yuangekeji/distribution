@@ -13,7 +13,7 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         }
     };
 
-    var e1 = $('.portlet');
+    var e1 = $('.full-view');
     $scope.startLoading=function () {
         App.blockUI({
             target: e1,

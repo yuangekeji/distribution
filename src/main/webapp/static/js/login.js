@@ -2,7 +2,15 @@
  * description 用户登录
  * @author Bright
  * */
+
+//休息时间true,正常false
+var offTime = false;
+
 function login() {
+	if(offTime){
+		alert('很抱歉现在属于维护时间，系统不能使用，明日上午9点后可恢复，给您带来不便深感歉意。');
+		return false;
+	}
 	if(check()) {
         $.ajax({
             type: "POST",

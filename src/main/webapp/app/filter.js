@@ -136,7 +136,7 @@ angular.module('app').filter("BonusTypeFilter",function () {
         if(input=='4'){return '广告宣传奖'};
         if(input=='5'){return '级差奖'};
         if(input=='6'){return '全国董事奖'};
-        if(input=='7'){return '工作室奖'};
+        if(input=='7'){return '销售部奖'};
         if(input=='8'){return '运营中心奖'};
         if(input=='9'){return '运营中心扶持奖'};
     }

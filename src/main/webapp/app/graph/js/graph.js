@@ -50,6 +50,10 @@ angular.module('graph').controller('graphCtrl',
                         data
                     ]
                 },
+                checkbox: {
+                    three_state: false,
+                    cascade: "none"
+                },
                 "types" : {
                     "default" : {
                         "icon" : "fa fa-folder icon-state-warning icon-lg"

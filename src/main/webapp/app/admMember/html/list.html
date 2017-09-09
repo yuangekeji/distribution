@@ -77,7 +77,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                <tr class="odd gradeX" ng-show= "!notData" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                 <td>{{member.memberName}}</td>
                                 <td>{{member.memberLevel|MemberLevelFilter}}({{member.orderAmount}})</td>
                                 <td>{{member.memberPhone}}</td>
@@ -91,6 +91,9 @@
                                 <!--<td>{{member.expressAddress}}</td>-->
                                 <td><a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs grey-cascade">充值</a>
                                 </td>
+                            </tr>
+                            <tr ng-show= "notData" >
+                                <td colspan="10" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>

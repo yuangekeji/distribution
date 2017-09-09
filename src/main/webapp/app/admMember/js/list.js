@@ -16,7 +16,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         memberId:""
     };
     $scope.flag = true;
-    var e1 = $('.portlet');
+    var e1 = $('.full-view');
     $scope.initDic = function () {
         $http.get(ctx + "/admMember/init").success(function (resp) {
             if(resp.successful){
@@ -37,6 +37,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
                 $scope.myPage = resp.data;
                 $scope.loadingFlag = false;
                 $scope.notData = false;
+                if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
             } else {
                 console.log(resp.errorMessage);
             }
@@ -82,8 +83,11 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         if($scope.flag) {
             $scope.flag = false;
 
-            if (!/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test($scope.param.chargeAmt)) {
-                Notify.warning('请正确输入充值金额。');
+            if (!/^\+?[1-9][0-9]*$/.test($scope.param.chargeAmt)) {
+                Notify.warning('充值金额只能为正整数，请重新输入。');
+                $scope.flag = true;
+            } else if($scope.param.chargeAmt>50000){
+                Notify.warning('充值金额不能大于50000，请重新输入。');
                 $scope.flag = true;
             } else {
                 App.blockUI({

@@ -67,6 +67,7 @@
     <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
     <!-- END CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/notify/notify.js" type="text/javascript"></script>
 
     <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>
@@ -88,7 +89,7 @@
     <div class="bounce3"></div>
 </div>
 <!-- END PAGE SPINNER -->
-<div ui-view></div>
+<div ui-view class="full-view"></div>
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="${ctx}/static/metronic/global/scripts/app.js" type="text/javascript"></script>

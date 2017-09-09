@@ -89,7 +89,7 @@
           and mb.member_id = #{parameterMap.memberId}
       </if>
       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-          and mb.order_no = #{parameterMap.orderNo}
+          and mb.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
       </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
           and DATE_FORMAT(mb.order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')

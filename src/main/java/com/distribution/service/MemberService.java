@@ -57,10 +57,10 @@ public class MemberService {
      * @author Bright
      * */
     public Page findList(Page page){
-        if(null!=page.getParameterMap().get("startTime"))
-            page.getParameterMap().put("start",page.getParameterMap().get("startTime").toString()+" 00:00:00");
-        if(null!=page.getParameterMap().get("endTime"))
-            page.getParameterMap().put("end",page.getParameterMap().get("endTime").toString()+" 23:59:59");
+        /*if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
+            page.getParameterMap().put("startTime",page.getParameterMap().get("startTime").toString()+" 00:00:00");
+        if(null!=page.getParameterMap().get("endTime") && !"".equals(page.getParameterMap().get("endTime")))
+            page.getParameterMap().put("endTime",page.getParameterMap().get("endTime").toString()+" 23:59:59");*/
         page.setTotalCount(moreMemberMapper.getMemberCount(page));
         page.setResult(moreMemberMapper.list(page));
         return page;
@@ -128,7 +128,7 @@ public class MemberService {
                             member.setOrderAmount(new BigDecimal(60000));
                         }
                         if (null == member.getRecommendId())
-                            member.setRecommendId(currentUser.getId());
+                            member.setRecommendId(recommendMember.getId());
                         moreMemberMapper.insert(member);
 
                         //创建账户信息
@@ -191,7 +191,10 @@ public class MemberService {
         if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
             member.setIsSalesDept("Y");
         }
+        member.setUpdateId(member.getId());
+        member.setUpdateTime(new Date());
         Integer it = memberMapper.updateByPrimaryKeySelective(member);
+        member = memberMapper.selectByPrimaryKey(member.getId());
         //给推荐人的一代个数中 +1
         Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
         m.setFirstAgentCnt(null!=m.getFirstAgentCnt()?(m.getFirstAgentCnt()+1):1);

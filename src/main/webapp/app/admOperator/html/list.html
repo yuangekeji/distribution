@@ -63,7 +63,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX" dir-paginate="ope in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                <tr class="odd gradeX" ng-show= "!notData" dir-paginate="ope in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                     <td>{{ope.memberName}}</td>
                                     <td>{{ope.totalOrderAmount}}</td>
                                     <td>{{ope.memberLevel|MemberLevelFilter}}</td>
@@ -78,6 +78,9 @@
                                         <!--<button class="btn sbold input-circle blue-steel" ng-click="approval(ope.id,ope.memberId,'pass');" ng-if="ope.status=='wait'">审批通过</button>-->
                                         <!--<button class="btn sbold input-circle red" ng-click="approval(ope.id,ope.memberId,'refuse');" ng-if="ope.status=='wait'">审批驳回</button>-->
                                     </td>
+                                </tr>
+                                <tr ng-show= "notData" >
+                                    <td colspan="7" class="text-center">无记录</td>
                                 </tr>
                             </tbody>
                         </table>

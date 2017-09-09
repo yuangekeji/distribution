@@ -77,7 +77,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                <tr class="odd gradeX" ng-show= "!notData" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                     <td>{{member.recommendName}}</td>
                                     <td>{{member.memberName}}</td>
                                     <td>{{member.memberPhone}}</td>
@@ -87,6 +87,9 @@
                                     <td>{{member.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
                                     <td>{{member.expressAddress}}</td>
                                     <td>{{member.status|recommendStatusFilter}}</td>
+                                </tr>
+                                <tr ng-show= "notData" >
+                                    <td colspan="9" class="text-center">无记录</td>
                                 </tr>
                             </tbody>
                         </table>

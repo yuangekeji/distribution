@@ -7,48 +7,11 @@
         <div style="height: 500px">
             <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
                 <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-                        <img ng-src="{{slide.image}}" style="margin:auto;height: 500px">
+                    <img ng-src="{{slide.image}}" style="margin:auto;height: 500px">
                 </uib-slide>
             </uib-carousel>
         </div>
-        <!--<button type="button" class="btn btn-default" ng-click="test()">test!</button>-->
-        <!-- BEGIN: ACCORDION DEMO -->
-        <!--<div class="portlet light bordered">-->
-            <!--<div class="portlet-title">-->
-                <!--<div class="caption font-green-sharp">-->
-                    <!--<i class="icon-settings font-green-sharp"></i>-->
-                    <!--<span class="caption-subject bold uppercase">Page Portlet</span>-->
-                    <!--<span class="caption-helper hide"></span>-->
-                <!--</div>-->
-              <!---->
-            <!--</div>-->
-            <!--<div class="portlet-body">-->
-                <!--&lt;!&ndash; BEGIN MAIN JS &ndash;&gt;-->
-                <!--<div >-->
-                    <!---->
 
-                    <!--<script type="text/ng-template" id="myModalContent.html">-->
-                        <!--<div class="modal-header">-->
-                            <!--<h3 class="modal-title">提示信息</h3>-->
-                        <!--</div>-->
-                        <!--<div class="modal-body">-->
-                            <!--<p>{{ msg }}</p>-->
-                        <!--</div>-->
-                        <!--<div class="modal-footer">-->
-                            <!--<button class="btn btn-primary" type="button" ng-click="ok()">确认</button>-->
-                            <!--<button class="btn btn-warning" ng-if="type == 'confirm'" type="button" ng-click="cancel()">取消</button>-->
-                        <!--</div>-->
-                    <!--</script>-->
-
-                    <!--&lt;!&ndash;&ndash;&gt;-->
-                    <!--&lt;!&ndash;&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="open()">Open me!</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="test()">test!</button>&ndash;&gt;-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </div>
 <!-- END MAIN CONTENT -->

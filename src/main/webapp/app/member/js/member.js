@@ -1,4 +1,4 @@
-angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify) {
+angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify,ConfirmModal) {
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
@@ -37,17 +37,26 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 Notify.warning("您已提交过成为运营中心申请，请耐心等待");
                 $scope.applyFlag = true;
             }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it==0){
-                $http.post(ctx + '/member/apply', {
-                    totalOrderAmount: $scope.MemberInfo.orderTotalAmount,
-                    memberId: $scope.MemberInfo.id
-                }).success(function (resp) {
-                    if (resp.successful) {
-                        $scope.it = 1;
+                ConfirmModal.show({
+                    text: '您确定要申请成为运营中心吗？',
+                    isCancel:true //false alert ,true confirm
+                }).then(function (sure) {
+                    if (!sure) {
                         $scope.applyFlag = true;
-                    } else {
-                        console.log(resp);
-                        $scope.applyFlag = true;
+                        return;
                     }
+                    $http.post(ctx + '/member/apply', {
+                        totalOrderAmount: $scope.MemberInfo.orderTotalAmount,
+                        memberId: $scope.MemberInfo.id
+                    }).success(function (resp) {
+                        if (resp.successful) {
+                            $scope.it = 1;
+                            $scope.applyFlag = true;
+                        } else {
+                            console.log(resp);
+                            $scope.applyFlag = true;
+                        }
+                    });
                 });
             }
         }

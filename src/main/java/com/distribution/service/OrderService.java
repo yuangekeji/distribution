@@ -53,10 +53,10 @@ public class OrderService {
      * @author WYN
      * */
     public Page orderList(Page page){
-        if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
-            page.getParameterMap().put("start",page.getParameterMap().get("startTime").toString()+" 00:00:00");
+        /*if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
+            page.getParameterMap().put("startTime",page.getParameterMap().get("startTime").toString()+" 00:00:00");
         if(null!=page.getParameterMap().get("endTime") && !"".equals(page.getParameterMap().get("endTime")))
-            page.getParameterMap().put("end",page.getParameterMap().get("endTime").toString()+" 23:59:59");
+            page.getParameterMap().put("endTime",page.getParameterMap().get("endTime").toString()+" 23:59:59");*/
 
         page.setTotalCount(moreOrderMasterMapper.getOrderListCount(page));
         page.setResult(moreOrderMasterMapper.getOrderList(page));
@@ -152,14 +152,14 @@ public class OrderService {
             dividend.setMemberId(moreOrderMaster.getMemberId());
             dividend.setDividendCount(divideCount.intValue());
             dividend.setDividendLimit(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
+            dividend.setRemainAmount(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
+            dividend.setReceivedAmount(new BigDecimal(0)); //已领取金额给个0
             dividend.setDividendStatus("1");
             dividend.setMgmtFee(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)).multiply(new BigDecimal(0.06)));
             dividend.setCreateId(moreOrderMaster.getCreateId());
             dividend.setCreateTime(new Date());
             dividend.setUpdateId(moreOrderMaster.getCreateId());
             dividend.setUpdateTime(new Date());
-            dividend.setReceivedAmount(new BigDecimal(0)); //已领取金额给个0
-            dividend.setRemainAmount(new BigDecimal(0));   //还未领取金额个0
 
            cnt5 = dividendMapper.insert(dividend);
            if(cnt5 == 0){

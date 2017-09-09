@@ -24,8 +24,11 @@
   </sql>
   <sql id="where">
       <where>
-        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-          AND create_time = #{parameterMap.createTime}
+        <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+          <![CDATA[AND DATE_FORMAT(date, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+        </if>
+        <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+          <![CDATA[AND DATE_FORMAT(date, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
         </if>
       </where>
   </sql>
@@ -46,7 +49,7 @@
   	select 
   	    <include refid="Base_Column_List" />
 		from date_bonus_history
-		where DATE(date) = #{date}C
+		where DATE(date) = #{date}
   </select>
 
   <select id="selectFailJobCount" resultType="java.lang.Integer">

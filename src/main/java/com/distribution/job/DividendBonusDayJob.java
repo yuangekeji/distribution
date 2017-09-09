@@ -31,7 +31,7 @@ public class DividendBonusDayJob {
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时发放分红包奖/DividendBonusDayJob/sendDividendBonus");
 		result = bonusService.saveDividendBonus(result);
-		saveDividendBonusLog(result);
+		this.saveDividendBonusLog(result);
 	}
 	/**
 	 * 结算分红包奖
@@ -76,7 +76,7 @@ public class DividendBonusDayJob {
 		job.setCreateBy(0);
 		job.setCreateTime(new Date());
 		job.setJobName(map.get("jobName").toString());
-		job.setRemarks(map.get("remarks").toString());
+		job.setRemarks(map.toString());
 		job.setResult(map.get("result").toString());
 		job.setRunTime(new Date());
 		return job;

@@ -10,10 +10,21 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         totalCount: 0,
         result: [],
         parameterMap: {
-            orderNo:'',
-            dividendStatus:''
         }
     };
+
+    var e1 = $('.full-view');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
     $scope.search = function(){
 
         $http.post(ctx + '/admWarning/list', $scope.myPage)
@@ -94,6 +105,12 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
                     },
                     getPoolType:function () {
                         return poolType;
+                    },
+                    startLoading:function () {
+                        return $scope.startLoading;
+                    },
+                    stopLoading:function () {
+                        return $scope.stopLoading;
                     }
                 }
             });
@@ -106,13 +123,15 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
             console.info('取消');
         });
     };
+
 });
 
-angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http) {
+angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http,startLoading,stopLoading) {
 
     $scope.datas = getDatas;
     $scope.poolType = getPoolType;
     $scope.payAmt = 0;
+
 
     $scope.ok = function()
     {
@@ -124,7 +143,7 @@ angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalI
             Notify.warning('资金池金额余额不足')
             return false;
         }
-
+        startLoading();
         $http.post(ctx + '/admWarning/payAmtProc?poolType='+$scope.poolType+'&amount='+$scope.payAmt)
             .success(function (resp) {
                 if (resp.successful) {
@@ -134,8 +153,10 @@ angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalI
                 }else {
                     Notify.error(resp.errorMessage);
                 }
+                stopLoading();
             }).error(function (error) {
             Notify.error(error);
+            stopLoading();
         });
     };
     $scope.cancel = function()

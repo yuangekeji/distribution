@@ -38,10 +38,12 @@ public class AdmOperatorService {
      * */
     public Integer approval(OperationApply apply){
         Integer it = operationApplyMapper.updateByPrimaryKeySelective(apply);
-        Member m = new Member();
-        m.setId(apply.getMemberId());
-        m.setIsOperator("Y");
-        memberMapper.updateByPrimaryKeySelective(m);
+        if("pass".equals(apply.getStatus())) {
+            Member m = new Member();
+            m.setId(apply.getMemberId());
+            m.setIsOperator("Y");
+            memberMapper.updateByPrimaryKeySelective(m);
+        }
         return it;
     }
 }

@@ -36,6 +36,9 @@ public class BonusPoolService {
 	 * 更新的业务包括当日发奖剩余的营业额、管理员划拨奖金到缓存池；
 	 */
 	public void updatePool(BigDecimal amount,int poolType,int addOrReduce){
+		if(amount.doubleValue() <= 0){
+			return;
+		}
 		//查询现有奖金次信息
 		BonusPool pool = null;
 		if(poolType == BonusConstant.POOL_TYPE_DIVIDEND){
@@ -80,6 +83,9 @@ public class BonusPoolService {
 	 * @date 2017年9月2日 下午1:35:51
 	 */
 	public void updateCachePool(BigDecimal amount,int poolType,int addOrReduce){
+		if(amount.doubleValue() <= 0){
+			return;
+		}
 		//查询现有缓存池信息
 		BonusCachePool cachePool = null;
 		if(poolType == BonusConstant.POOL_TYPE_DIVIDEND){

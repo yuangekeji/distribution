@@ -194,6 +194,7 @@ public class MemberService {
         member.setUpdateId(member.getId());
         member.setUpdateTime(new Date());
         Integer it = memberMapper.updateByPrimaryKeySelective(member);
+        member = memberMapper.selectByPrimaryKey(member.getId());
         //给推荐人的一代个数中 +1
         Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
         m.setFirstAgentCnt(null!=m.getFirstAgentCnt()?(m.getFirstAgentCnt()+1):1);

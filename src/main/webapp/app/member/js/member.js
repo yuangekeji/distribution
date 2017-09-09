@@ -42,6 +42,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                     isCancel:true //false alert ,true confirm
                 }).then(function (sure) {
                     if (!sure) {
+                        $scope.applyFlag = true;
                         return;
                     }
                     $http.post(ctx + '/member/apply', {

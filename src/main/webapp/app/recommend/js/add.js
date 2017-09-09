@@ -27,34 +27,42 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         if($scope.submitFlag){
             $scope.submitFlag = false;
             if($scope.check()){
+                $scope.startLoading();
                 $http.post(ctx + "/member/insert",$scope.member).success(function (resp) {
                 if(resp.successful){
                     if(resp.data=='NO_RECOMMENDER'){
+                        $scope.stopLoading();
                         Notify.warning("推荐人不存在，请重新输入。");
                         $scope.submitFlag = true;
                     }else if(resp.data=='PHONE_EXISTENCE'){
+                        $scope.stopLoading();
                         Notify.warning("会员账号已存在，请重新输入。");
                         $scope.submitFlag = true;
                     }else if(resp.data=='NO_NODE_MEMBER'){
+                        $scope.stopLoading();
                         Notify.warning("节点不存在，请重新输入。");
                         $scope.submitFlag = true;
                     }else if(resp.data=='LEFT_NOTE_FULL'){
+                        $scope.stopLoading();
                         Notify.warning("该节点左区已存在，请从新选择节点区域。");
                         $scope.submitFlag = true;
                     }else if(resp.data=='RIGHT_NOTE_FULL'){
+                        $scope.stopLoading();
                         Notify.warning("该节点右区已存在，请从新选择节点区域。");
                         $scope.submitFlag = true;
                     }else{
+                        $scope.stopLoading();
                         Notify.success('添加成功，返回列表页面。');
                         $state.go("app.recommend");
                         $scope.submitFlag = true;
                     }
                 }else{
+                    $scope.stopLoading();
                     Notify.error('添加失败，请重新尝试。');
                 }
                 }).error(function (resp) {
                     console.log(resp);
-
+                    $scope.stopLoading();
                     $scope.submitFlag = true;
                 });
             }
@@ -108,5 +116,19 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else{
             return true;
         }
+    };
+
+    /**loading*/
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    };
+
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
     };
  });

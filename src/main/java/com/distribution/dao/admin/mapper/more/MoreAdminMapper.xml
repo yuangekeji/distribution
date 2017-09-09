@@ -19,7 +19,7 @@
         AND id = #{parameterMap.id}
       </if>
       <if test="parameterMap.name!=null and parameterMap.name!=''">
-        AND name = #{parameterMap.name}
+        AND name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'
       </if>
       <if test="parameterMap.mobile!=null and parameterMap.mobile!=''">
         AND mobile = #{parameterMap.mobile}

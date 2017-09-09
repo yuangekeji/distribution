@@ -25,6 +25,7 @@
       from china_president_bonus
       where DATE_FORMAT(DATE_SUB(CURDATE(),INTERVAL 1 MONTH),'%Y%m') = DATE_FORMAT(bonus_date,'%Y%m')
       group by member_id, DATE_FORMAT(bonus_date,'%Y%m')
+      having bonus_amout > 0
   </select>
 
   <update id="updateBalanceTime" parameterType="com.distribution.dao.chinaPresidentBonus.model.ChinaPresidentBonus">

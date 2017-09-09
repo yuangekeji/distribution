@@ -71,8 +71,8 @@
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
                                 total-items="myPage.totalCount">
-                                <td ng-show="row.orderNo==0" >全国董事奖</td>
-                                <td ng-show="row.orderNo!=0" >{{row.orderNo}}</td>
+                                <td ng-show="row.orderNo==null" >全国董事奖</td>
+                                <td ng-show="row.orderNo!=null" >{{row.orderNo}}</td>
                                 <td >{{row.recommendName}}</td>
                                 <td >{{row.memberName}}</td>
                                 <td >{{row.orderAmount | number:2}}</td>
@@ -81,8 +81,8 @@
                                 <td >{{row.amoutTotal | number:2}}</td>
                                 <td >{{row.manageFeeTotal | number:2}}</td>
                                 <td >{{row.actualAmoutTotal | number:2}}</td>
-                                <td  ng-show="row.orderNo!=0"><a href="javascript:" ng-click="searchBonusDetail(row.orderNo, row.orderStartDate, row.orderEndDate)">分销记录明细</a></td>
-                                <td  !ng-show="row.orderNo=0"></td>
+                                <td  ng-show="row.orderNo!=null"><a href="javascript:" ng-click="searchBonusDetail(row.orderNo, row.orderStartDate, row.orderEndDate)">分销记录明细</a></td>
+                                <td  !ng-show="row.orderNo=null"></td>
                             </tr>
                             <tr ng-show= "notData" >
                                 <td class="text-center" colspan="10">无记录</td>

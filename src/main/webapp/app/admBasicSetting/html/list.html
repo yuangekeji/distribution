@@ -29,15 +29,15 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-show= "{{basicManage.typeCode == 'D01' && basicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="basicManage in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
-                                                    <td class="text-left">{{basicManage.detailNm}}</td>
-                                                    <td class="text-left">{{basicManage.buyAmt|number:2}}</td>
-                                                    <td class="text-left">{{basicManage.buyQty}}</td>
-                                                    <td class="text-left">{{basicManage.devidendCnt}}</td>
-                                                    <td class="text-left">{{basicManage.salesBonusPer}}%</td>
-                                                    <td class="text-left">{{basicManage.salesBonusPer1}}%</td>
-                                                    <td class="text-left">{{basicManage.salesBonusPer2}}%</td>
-                                                    <td class="text-left">{{basicManage.profitPer}}%</td>
-                                                    <td class="text-left">{{basicManage.discount}}%</td>
+                                                    <td class="text-center">{{basicManage.detailNm}}</td>
+                                                    <td class="text-center">{{basicManage.buyAmt|number:2}}</td>
+                                                    <td class="text-center">{{basicManage.buyQty}}</td>
+                                                    <td class="text-center">{{basicManage.devidendCnt}}</td>
+                                                    <td class="text-center">{{basicManage.salesBonusPer}}%</td>
+                                                    <td class="text-center">{{basicManage.salesBonusPer1}}%</td>
+                                                    <td class="text-center">{{basicManage.salesBonusPer2}}%</td>
+                                                    <td class="text-center">{{basicManage.profitPer}}%</td>
+                                                    <td class="text-center">{{basicManage.discount}}%</td>
                                                 </tr>
                                                 <tr ng-show= "notData">
                                                     <td colspan="9" class="text-center">无记录</td>
@@ -70,8 +70,8 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-show= "{{jdBasicManage.typeCode == 'D04' && jdBasicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="jdBasicManage in myPage.result | filter: 'D04' | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
-                                                    <td class="text-left">{{jdBasicManage.recommendCnt}}个</td>
-                                                    <td class="text-left">{{jdBasicManage.remainCnt}}代</td>
+                                                    <td class="text-center">{{jdBasicManage.recommendCnt}}个</td>
+                                                    <td class="text-center">{{jdBasicManage.remainCnt}}代</td>
 
                                                 </tr>
                                                 <tr ng-show= "notData">
@@ -98,11 +98,12 @@
                                     </div>
                                     <div class="form-group" ng-repeat="advanceBasic in myPage.result| filter:{typeCode : 'D08'} |filter : {detailCode : '00'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">提现手续费(%)</label>
-                                        <input type="number" ng-model="advanceBasic.maxPercent" placeholder="提现手续费" class="form-control input-circle input-large" />
+                                        <input type="number" ng-model="advanceBasic.maxPercent" placeholder="提现手续费" class="form-control input-circle input-large"/>
                                     </div>
+                                    <!--todo 2次开发
                                     <div class="margiv-top-10">
                                         <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>
-                                    </div>
+                                    </div>-->
                                 </form>
                             </uib-tab>
 
@@ -115,15 +116,16 @@
                                     </div>
                                     <div class="form-group" ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '01'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">当日分红包占用营业额比例(%)</label>
-                                        <input type="number" ng-model="dividendBasic.maxPercent" placeholder="当日分红包占用营业额比例" class="form-control input-circle input-large" />
+                                        <input type="number" ng-model="dividendBasic.maxPercent" placeholder="当日分红包占用营业额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
                                     <div class="form-group" ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '02'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">分红包满额比例(%)</label>
-                                        <input type="number" ng-model="dividendBasic.maxPercent" placeholder="分红包满额比例" class="form-control input-circle input-large" />
+                                        <input type="number" ng-model="dividendBasic.maxPercent" placeholder="分红包满额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
+                                    <!--todo 二次开发
                                     <div class="margiv-top-10">
                                         <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>
-                                    </div>
+                                    </div>-->
                                 </form>
                             </uib-tab>
 
@@ -136,11 +138,12 @@
                                     </div>
                                     <div class="form-group" ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'} |filter : {detailCode : '01'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">广告宣传奖占用营业额比例(%)</label>
-                                        <input type="number" ng-model="jdBasic.maxPercent" placeholder="广告宣传奖占用营业额比例" class="form-control input-circle input-large" />
+                                        <input type="number" ng-model="jdBasic.maxPercent" placeholder="广告宣传奖占用营业额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
+                                    <!--todo 二次开发
                                     <div class="margiv-top-10">
                                         <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>
-                                    </div>
+                                    </div>-->
                                 </form>
                             </uib-tab>
 
@@ -149,26 +152,23 @@
                                 <form role="form" action="#">
                                     <div class="form-group"  ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '01'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
                                         <label class="control-label" >主任(%)</label>
-                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="主任" class="form-control input-circle input-large"/>
+                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="主任" class="form-control input-circle input-large" readonly/>
                                     </div>
                                     <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '02'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">经理(%)</label>
-                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="经理" class="form-control input-circle input-large" />
+                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="经理" class="form-control input-circle input-large" readonly/>
                                     </div>
                                     <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '03'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">总监(%)</label>
-                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="总监" class="form-control input-circle input-large" />
+                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="总监" class="form-control input-circle input-large" readonly/>
                                     </div>
                                     <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '04'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">董事(%)</label>
-                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="董事" class="form-control input-circle input-large" />
+                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="董事" class="form-control input-circle input-large" readonly/>
                                     </div>
                                     <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '05'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">全国董事(%)</label>
-                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="全国董事" class="form-control input-circle input-large" />
-                                    </div>
-                                    <div class="margiv-top-10">
-                                        <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>
+                                        <input type="number" ng-model="rankBasic.maxPercent" placeholder="全国董事" class="form-control input-circle input-large" readonly/>
                                     </div>
                                 </form>
                             </uib-tab>

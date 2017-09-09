@@ -128,7 +128,7 @@ public class MemberService {
                             member.setOrderAmount(new BigDecimal(60000));
                         }
                         if (null == member.getRecommendId())
-                            member.setRecommendId(currentUser.getId());
+                            member.setRecommendId(recommendMember.getId());
                         moreMemberMapper.insert(member);
 
                         //创建账户信息

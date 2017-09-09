@@ -70,8 +70,8 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-show= "{{jdBasicManage.typeCode == 'D04' && jdBasicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="jdBasicManage in myPage.result | filter: 'D04' | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
-                                                    <td class="text-left">{{jdBasicManage.recommendCnt}}</td>
-                                                    <td class="text-left">{{jdBasicManage.remainCnt}}</td>
+                                                    <td class="text-left">{{jdBasicManage.recommendCnt}}个</td>
+                                                    <td class="text-left">{{jdBasicManage.remainCnt}}代</td>
 
                                                 </tr>
                                                 <tr ng-show= "notData">

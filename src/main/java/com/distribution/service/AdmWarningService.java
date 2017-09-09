@@ -28,10 +28,10 @@ public class AdmWarningService {
      * @return
      */
     public Page selectDateBonusHistoryList(Page page){
-        if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
+        /*if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
             page.getParameterMap().put("startTime",page.getParameterMap().get("startTime").toString()+" 00:00:00");
         if(null!=page.getParameterMap().get("endTime") && !"".equals(page.getParameterMap().get("endTime")))
-            page.getParameterMap().put("endTime",page.getParameterMap().get("endTime").toString()+" 23:59:59");
+            page.getParameterMap().put("endTime",page.getParameterMap().get("endTime").toString()+" 23:59:59");*/
 
         page.setTotalCount(dateBonusHistoryMapper.selectDateBonusHistoryListCount(page));
         page.setResult(dateBonusHistoryMapper.selectDateBonusHistoryList(page));

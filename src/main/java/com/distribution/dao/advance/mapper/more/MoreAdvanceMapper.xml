@@ -87,8 +87,11 @@
         <if test="parameterMap.statues!=null and parameterMap.statues!=''">
             AND a.statues = #{parameterMap.statues}
         </if>
-        <if test="parameterMap.start!=null and parameterMap.start!=''">
-            AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+        <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+        </if>
+        <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
         </if>
         order by id desc
         <include refid="pageLimit"/>
@@ -113,8 +116,11 @@
         <if test="parameterMap.statues!=null and parameterMap.statues!=''">
             AND a.statues = #{parameterMap.statues}
         </if>
-        <if test="parameterMap.start!=null and parameterMap.start!=''">
-            AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+        <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+        </if>
+        <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
         </if>
     </select>
 

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
@@ -29,6 +30,7 @@ public class NodeBonusDayJob {
 	 * @author su
 	 * @date 2017年9月7日 上午11:05:16
 	 */
+	@Scheduled(cron ="0 10 1 * * ?" )//每天早上1点钟执行
 	public void sendNodeBonusFromNodeHistory(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时发放见点奖/NodeBonusDayJob/sendNodeBonusFromNodeHistory");
@@ -38,10 +40,11 @@ public class NodeBonusDayJob {
 		
 	}
 	/**
-	 * 见点奖结算
+	 * 见点奖结算，结算昨天的见点奖。
 	 * @author su
 	 * @date 2017年9月7日 上午11:11:03
 	 */
+	@Scheduled(cron ="0 0 22 * * ?" )//每天22点钟执行
 	public void balanceNodeBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时结算见点奖/NodeBonusDayJob/balanceNodeBonus");

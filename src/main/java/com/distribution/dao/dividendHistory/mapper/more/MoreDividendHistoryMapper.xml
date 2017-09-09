@@ -29,7 +29,7 @@
       create_id, create_time,update_id, update_time
      )
      values
-     <foreach collection="list" item="his" index="index" separator=",">
+     <foreach collection="hisList" item="his" index="index" separator=",">
      (
       #{his.dividendId,jdbcType=INTEGER}, #{his.receivedTime,jdbcType=TIMESTAMP}, 
       #{his.devidendCount,jdbcType=INTEGER}, #{his.amount,jdbcType=DECIMAL}, #{his.totalReceived,jdbcType=DECIMAL}, 
@@ -47,6 +47,7 @@
   </select>
   <update id="updateAllYesterdayDividendHistory" parameterType="java.util.Map">
     	update dividend_history
+    	set
 		update_id = #{updateId,jdbcType=INTEGER},
         update_time = #{updateTime,jdbcType=TIMESTAMP},
         balance_status = #{balanceStatus,jdbcType=INTEGER}

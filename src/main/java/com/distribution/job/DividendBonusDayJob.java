@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
@@ -27,6 +28,7 @@ public class DividendBonusDayJob {
 	 * @author su
 	 * @date 2017年9月7日 上午11:13:42
 	 */
+	@Scheduled(cron ="0 30 1 * * ?" )//每天早上1点30分钟执行
 	public void sendDividendBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时发放分红包奖/DividendBonusDayJob/sendDividendBonus");
@@ -34,15 +36,16 @@ public class DividendBonusDayJob {
 		this.saveDividendBonusLog(result);
 	}
 	/**
-	 * 结算分红包奖
+	 * 结算分红包奖，结算昨天的分红包。
 	 * @author su
 	 * @date 2017年9月7日 上午11:14:03
 	 */
+	@Scheduled(cron ="0 0 23 * * ?" )//每天23点钟执行
 	public void balanceDividendBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时结算分红包奖/DividendBonusDayJob/balanceDividendBonus");
 		result = bonusService.saveBalanceMemberDividendBonus(result);
-		saveBlanceDividendBonusLog(result);
+		this.saveBlanceDividendBonusLog(result);
 	}
 	/**
 	 * 保存分红包发放执行记录 

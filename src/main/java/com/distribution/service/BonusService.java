@@ -472,8 +472,10 @@ public class BonusService {
     	    //更新发放状态
     	    if(list.size() > 0){
     	    	history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_0);
+    	    	result.put("result", "Donot send bonus,the rest money is less then needs.");
     	    }else{
     	    	history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
+    	    	result.put("result", "Donot send bonus,no bonus to send.");
     	    }
     	    if(history.getJdBonusTotal().doubleValue() > 0){
     	    	result.put("nodeBonusAmountAddToPool", history.getJdBonusTotal());
@@ -481,7 +483,6 @@ public class BonusService {
     	    	bonusPoolService.updatePool(history.getJdBonusTotal(),BonusConstant.POOL_TYPE_NODE,BonusConstant.POOL_BONUS_ADD);
     	    }
     	    history.setRemainJdBonus(history.getJdBonusTotal().longValue());
-    	    result.put("result", "Donot send bonus!");
        }
        history.setUpdateId(0);
        history.setUpdateTime(new Date());
@@ -572,14 +573,22 @@ public class BonusService {
 			history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
 			result.put("result", "Send bonus ok!");
        }else{
-    	    //发放失败
-    	    history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
+    	    
+    	    if(totalBonus.doubleValue() > 0){
+    	    	//发放失败钱不够
+    	    	history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
+    	    	result.put("result", "Donot send bonus,the rest money is less then needs.");
+    	    }else{
+    	    	//不需要发奖
+    	    	history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+    	    	result.put("result", "Donot send bonus,no bonus to send.");
+    	    }
     	    if(history.getDividendTotal().doubleValue() > 0){
     	    	result.put("nodeBonusAmountAddToPool", history.getDividendTotal());
     	    	//更新今日营业额到奖金池，并计入奖金池流水。
     	    	bonusPoolService.updatePool(history.getDividendTotal(),BonusConstant.POOL_TYPE_DIVIDEND,BonusConstant.POOL_BONUS_ADD);
     	    }
-    	    result.put("result", "Donot send bonus!");
+    	    history.setRemainDividend(history.getDividendTotal().longValue());
        }
        history.setUpdateId(0);
        history.setUpdateTime(new Date());
@@ -678,26 +687,30 @@ public class BonusService {
 		String yesterday = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
         //查找所有昨天发放的分红奖,包括历史发放未结算的
 		List<MoreDividendHistory> list = dividendHistoryMapper.listAllYesterdayDividendHistory(yesterday);
-		result.put("toBeBalanceItemsAcount", list.size());
-        //分红奖到账处理，入奖金表，计算管理费。
-		for(MoreDividendHistory history : list){
-			OrderMaster order = new OrderMaster();
-			//实际收到的分红奖
-        	order.setOrderAmt(history.getTotalReceived());
-        	order.setOrderNo(history.getOrderNo());
-        	order.setId(history.getOrderId());
-        	order.setCreateId(0);
-        	order.setCreateTime(history.getOrderTime());
-        	insertAndSaveBonus(1,BonusConstant.BONUS_TYPE_3,history.getMemberId(),order);
+		if(null != list && list.size() > 0){
+			result.put("toBeBalanceItemsAcount", list.size());
+	        //分红奖到账处理，入奖金表，计算管理费。
+			for(MoreDividendHistory history : list){
+				OrderMaster order = new OrderMaster();
+				//实际收到的分红奖
+	        	order.setOrderAmt(history.getTotalReceived());
+	        	order.setOrderNo(history.getOrderNo());
+	        	order.setId(history.getOrderId());
+	        	order.setCreateId(0);
+	        	order.setCreateTime(history.getOrderTime());
+	        	insertAndSaveBonus(1,BonusConstant.BONUS_TYPE_3,history.getMemberId(),order);
+			}
+	        //更新分红奖为已结算
+			Map<String,Object> map = new HashMap<String,Object>();
+	        map.put("list", list);
+	        map.put("balanceStatus", BonusConstant.BONUS_STATUS_1);
+			map.put("updateId", 0);
+			map.put("updateTime", new Date());
+			result.put("result", "success");
+			dividendHistoryMapper.updateAllYesterdayDividendHistory(map);
+		}else{
+			result.put("result", "No bonus need to balance");
 		}
-        //更新分红奖为已结算
-		Map<String,Object> map = new HashMap<String,Object>();
-        map.put("list", list);
-        map.put("balanceStatus", BonusConstant.BONUS_STATUS_1);
-		map.put("updateId", 0);
-		map.put("updateTime", new Date());
-		result.put("result", "success");
-		dividendHistoryMapper.updateAllYesterdayDividendHistory(map);
 		return result;
 	}
 

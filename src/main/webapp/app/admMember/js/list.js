@@ -16,7 +16,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         memberId:""
     };
     $scope.flag = true;
-    var e1 = $('.portlet');
+    var e1 = $('.full-view');
     $scope.initDic = function () {
         $http.get(ctx + "/admMember/init").success(function (resp) {
             if(resp.successful){

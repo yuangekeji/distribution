@@ -24,8 +24,11 @@
   </sql>
   <sql id="where">
       <where>
-        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-          AND create_time = #{parameterMap.createTime}
+        <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+          <![CDATA[AND create_time >= #{parameterMap.startTime}]]>
+        </if>
+        <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+          <![CDATA[AND create_time <=#{parameterMap.endTime}]]>
         </if>
       </where>
   </sql>

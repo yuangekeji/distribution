@@ -10,8 +10,6 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         totalCount: 0,
         result: [],
         parameterMap: {
-            orderNo:'',
-            dividendStatus:''
         }
     };
 

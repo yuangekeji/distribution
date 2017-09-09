@@ -4,44 +4,46 @@ var ComponentsDateTimePickers = function () {
 
         if (jQuery().datepicker) {
             $('.date-picker').datepicker({
-                rtl: App.isRTL(),
+                language: "zh-CN",
                 orientation: "left",
-                autoclose: true
-            });
-            //$('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
-        }
+                autoclose: true,
+                clearBtn:true
 
-        /* Workaround to restrict daterange past date select: http://stackoverflow.com/questions/11933173/how-to-restrict-the-selectable-date-ranges-in-bootstrap-datepicker */
-    
-        // Workaround to fix datepicker position on window scroll
-        $( document ).scroll(function(){
-            $('#form_modal2 .date-picker').datepicker('place'); //#modal is the id of the modal
         });
-    }
+//$('body').removeClass("modal-open"); // fix bug when inline picker is used in modal
+}
 
-    var handleTimePickers = function () {
+/* Workaround to restrict daterange past date select: http://stackoverflow.com/questions/11933173/how-to-restrict-the-selectable-date-ranges-in-bootstrap-datepicker */
 
-        if (jQuery().timepicker) {
-            $('.timepicker-default').timepicker({
-                autoclose: true,
-                showSeconds: true,
-                minuteStep: 1
-            });
+// Workaround to fix datepicker position on window scroll
+$( document ).scroll(function(){
+    $('#form_modal2 .date-picker').datepicker('place'); //#modal is the id of the modal
+});
+}
 
-            $('.timepicker-no-seconds').timepicker({
-                autoclose: true,
-                minuteStep: 5,
-                defaultTime: false
-            });
+var handleTimePickers = function () {
 
-            $('.timepicker-24').timepicker({
-                autoclose: true,
-                minuteStep: 5,
-                showSeconds: false,
-                showMeridian: false
-            });
+    if (jQuery().timepicker) {
+        $('.timepicker-default').timepicker({
+            autoclose: true,
+            showSeconds: true,
+            minuteStep: 1
+        });
 
-            // handle input group button click
+        $('.timepicker-no-seconds').timepicker({
+            autoclose: true,
+            minuteStep: 5,
+            defaultTime: false
+        });
+
+        $('.timepicker-24').timepicker({
+            autoclose: true,
+            minuteStep: 5,
+            showSeconds: false,
+            showMeridian: false
+        });
+
+        // handle input group button click
             $('.timepicker').parent('.input-group').on('click', '.input-group-btn', function(e){
                 e.preventDefault();
                 $(this).parent('.input-group').find('.timepicker').timepicker('showWidget');
@@ -233,10 +235,10 @@ var ComponentsDateTimePickers = function () {
         //main function to initiate the module
         init: function () {
             handleDatePickers();
-            handleTimePickers();
-            handleDatetimePicker();
-            handleDateRangePickers();
-            handleClockfaceTimePickers();
+            // handleTimePickers();
+            // handleDatetimePicker();
+            // handleDateRangePickers();
+            // handleClockfaceTimePickers();
         }
     };
 

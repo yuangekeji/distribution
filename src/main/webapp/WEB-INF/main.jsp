@@ -67,6 +67,7 @@
     <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
     <!-- END CORE ANGULARJS PLUGINS -->
     <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/notify/notify.js" type="text/javascript"></script>
 
     <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>

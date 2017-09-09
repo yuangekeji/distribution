@@ -1,4 +1,4 @@
-angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, $scope, $http,  $state, Notify, $sessionStorage) {
     title.setTitle('运营中心管理');
     $scope.loadingFlag = true;
     $scope.notData = false;
@@ -63,7 +63,7 @@ angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, 
     $scope.approval = function (id,memberId,status) {
         $http.post(ctx + "/admOperator/approval",{id:id,memberId:memberId,status:status}).success(function (resp) {
             if(resp.successful){
-                alert("审批完成。");
+                Notify.warning('审批完成。');
                 $scope.search();
             }else{
                 console.log(resp);

@@ -35,7 +35,7 @@ public class ChinaPresidentBonusJob {
      * @date 2017.09.07
      */
     //@Scheduled(cron = "0/30 * * * * *")  //测试用
-    @Scheduled(cron ="0 0 1 1 * ?" )//每月1号早上1点钟执行
+    @Scheduled(cron ="0 0 2 1 * ?" )//每月1号早上1点钟执行
     public void addChinaPresidentBonusByMonth() {
         Map map = chinaPresidentBonusService.addChinaPresidentBonusByMonth();
         chinaPresidentBonusService.jobLogsByMonth(map);

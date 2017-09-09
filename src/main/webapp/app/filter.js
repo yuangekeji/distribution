@@ -112,13 +112,13 @@ angular.module("app").filter("emoticonFilter",function(){
     };
 });
 
-/*angular.module('app').filter('expDate', function ($filter) {
+angular.module('app').filter('expDate', function ($filter) {
     return function (data) {
         var sub = new Date(data);
         sub.setMonth(sub.getMonth() + 2);
         return $filter('date')(sub, 'yyyy-MM-dd');
     }
-});*/
+});
 
 angular.module('app').filter("dividendStatusFilter",function () {
     return function (input) {

@@ -4,7 +4,30 @@
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet light bordered">
-
+            <script type="text/ng-template" id="bonusProc.html">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 ng-show="poolType == '1'" class="modal-title">补发分红包(从资金池拨资金到发放池)</h3>
+                    <h3 ng-show="poolType == '2'" class="modal-title">补发广告宣传奖(从资金池拨资金到发放池)</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="note note-info note-bordered">
+                                <h4>资金池金额:{{datas.bonusPoolAmt}}</h4>
+                                <h4>发放池金额:{{datas.bonusCachePoolAmt}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="number" class="form-control" ng-model="payAmt">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn blue-steel" type="button" ng-click="ok()">确认补发</button>
+                    <button type="button"  class="btn default"  ng-click="cancel()">取消</button>
+                </div>
+            </script>
             <div class="portlet-body">
                 <div class="table-toolbar">
                 </div>
@@ -83,31 +106,9 @@
         </div>
         <!-- END EXAMPLE TABLE PORTLET-->
     </div>
+
 </div>
-<script type="text/ng-template" id="bonusProc.html">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h3 ng-show="poolType == '1'" class="modal-title">补发分红包(从资金池拨资金到发放池)</h3>
-        <h3 ng-show="poolType == '2'" class="modal-title">补发广告宣传奖(从资金池拨资金到发放池)</h3>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="note note-info note-bordered">
-                    <h4>资金池金额:{{datas.bonusPoolAmt}}</h4>
-                    <h4>发放池金额:{{datas.bonusCachePoolAmt}}</h4>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <input type="number" class="form-control" ng-model="payAmt">
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn blue-steel" type="button" ng-click="ok()">确认补发</button>
-        <button type="button"  class="btn default"  ng-click="cancel()">取消</button>
-    </div>
-</script>
+
 <!-- END MAIN CONTENT -->
 <script>
     ComponentsDateTimePickers.init(); // init todo page

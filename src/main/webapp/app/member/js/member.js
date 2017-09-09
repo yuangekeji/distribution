@@ -28,22 +28,22 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
      * 申请成为运营中心
      * */
     $scope.apply = function () {
-        ConfirmModal.show({
-            text: '您确定要申请成为运营中心吗？',
-            isCancel:true //false alert ,true confirm
-        }).then(function (sure) {
-            if (!sure) {
-                return;
-            }
-            if($scope.applyFlag) {
-                $scope.applyFlag = false;
-                if($scope.MemberInfo.orderTotalAmount<30000){
-                    Notify.warning("订单金额累计达到3万可申请成为运营中心,您的订单累计金额为"+$scope.MemberInfo.orderTotalAmount);
-                    $scope.applyFlag = true;
-                }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it>0){
-                    Notify.warning("您已提交过成为运营中心申请，请耐心等待");
-                    $scope.applyFlag = true;
-                }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it==0){
+        if($scope.applyFlag) {
+            $scope.applyFlag = false;
+            if($scope.MemberInfo.orderTotalAmount<30000){
+                Notify.warning("订单金额累计达到3万可申请成为运营中心,您的订单累计金额为"+$scope.MemberInfo.orderTotalAmount);
+                $scope.applyFlag = true;
+            }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it>0){
+                Notify.warning("您已提交过成为运营中心申请，请耐心等待");
+                $scope.applyFlag = true;
+            }else if($scope.MemberInfo.orderTotalAmount>=30000 && $scope.it==0){
+                ConfirmModal.show({
+                    text: '您确定要申请成为运营中心吗？',
+                    isCancel:true //false alert ,true confirm
+                }).then(function (sure) {
+                    if (!sure) {
+                        return;
+                    }
                     $http.post(ctx + '/member/apply', {
                         totalOrderAmount: $scope.MemberInfo.orderTotalAmount,
                         memberId: $scope.MemberInfo.id
@@ -56,9 +56,9 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                             $scope.applyFlag = true;
                         }
                     });
-                }
+                });
             }
-        });
+        }
     };
     //Bright End
 

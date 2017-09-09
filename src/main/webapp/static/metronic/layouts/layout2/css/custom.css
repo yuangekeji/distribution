@@ -9,3 +9,7 @@
 form{
     margin-bottom: 0px !important;
 }
+
+.blockOverlay{
+    z-index: 160000 !important;
+}

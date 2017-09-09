@@ -11,8 +11,8 @@ public interface MoreMemberNodeMapper extends MemberNodeMapper{
 	int insertBackId(MemberNode record);
 	List<MemberNode> findParentNodes(int nodeId);
 	Double findTotalSalesByParentId(int parentId);
-	int updateParentLevel(Map<String,String> map);
-	List<MoreMemberNode> listParentNodesWhichHasTwoSubNodes(Map<String,String> map);
+	int updateParentLevel(Map<String,Object> map);
+	List<MoreMemberNode> listParentNodesWhichHasTwoSubNodes(Map<String,Object> map);
 	List<MoreMemberNode> listParentIsManageLevelNodes(int nodeId);
 	List<MoreMemberNode> listSubNodes(int nodeId);
 	List<MoreMemberNode> listParentNodesWithMemberInfo(int nodeId);

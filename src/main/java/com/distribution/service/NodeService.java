@@ -184,7 +184,7 @@ public class NodeService {
 	 */
 	public void processMemberPromotion(int nodeId,String fromLevel,String toLevel,int updateId){
         
-		Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
+		Map<String,Object> param = setParamMap(nodeId,fromLevel,toLevel);
 		//查找带左右子节点上级
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWhichHasTwoSubNodes(param);
         List<Integer> members = new ArrayList<Integer>();
@@ -221,8 +221,12 @@ public class NodeService {
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
-			Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
-			moreNodeMapper.updateParentLevel(param);
+			List<MemberNode> list = moreNodeMapper.findParentNodes(nodeId);
+			if(null != list && list.size() > 0){
+				Map<String,Object> param = setParamMap(nodeId,fromLevel,toLevel);
+				param.put("list", list);
+				moreNodeMapper.updateParentLevel(param);
+			}
 			txManager.commit(txStatus);
 		} catch (Exception e) {
 			txManager.rollback(txStatus);
@@ -253,8 +257,8 @@ public class NodeService {
 	 * @param toLevel
 	 * @return
 	 */
-	private Map<String,String> setParamMap(int nodeId,String fromLevel,String toLevel){
-		Map<String,String> param = new HashMap<String,String>();
+	private Map<String,Object> setParamMap(int nodeId,String fromLevel,String toLevel){
+		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("nodeId", String.valueOf(nodeId));
 		param.put("fromLevel", fromLevel);
 		param.put("toLevel", toLevel);

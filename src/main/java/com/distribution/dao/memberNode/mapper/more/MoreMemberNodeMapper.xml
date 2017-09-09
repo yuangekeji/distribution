@@ -127,7 +127,11 @@
   <update id="updateParentLevel" parameterType="map">
   		update member 
   		set member_post = #{toLevel}
-		where FIND_IN_SET(node_id,getParentList(#{nodeId})) and member_post = #{fromLevel}
+		where member_post = #{fromLevel} 
+		and node_id in 
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+		  #{ids.id}
+		</foreach>
   </update>
   
 </mapper>

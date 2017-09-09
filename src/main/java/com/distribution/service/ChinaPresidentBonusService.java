@@ -227,7 +227,7 @@ public class ChinaPresidentBonusService {
                     //设置入账
                     flow.setSeedAmt(new BigDecimal(seedBonus));
                     flow.setBonusAmt(new BigDecimal(bonusRest));
-                    flow.setTotalAmt(new BigDecimal(bonusAmout));
+                    flow.setTotalAmt(new BigDecimal(actualAmout));
                     flow.setType(BonusConstant.ACCOUNT_TYPE_IN);
                     //记录账号资金出入情况
                     int countHistory = accountFlowHistoryMapper.insert(flow);

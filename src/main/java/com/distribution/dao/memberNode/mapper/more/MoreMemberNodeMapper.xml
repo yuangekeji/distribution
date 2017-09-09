@@ -36,7 +36,7 @@
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
     <result column="left_level" property="leftLevel" jdbcType="VARCHAR" />
     <result column="right_level" property="rightLevel" jdbcType="VARCHAR" />
-    
+    <result column="member_post" property="memberPost" jdbcType="VARCHAR" />
     <result column="is_operator" property="isOperator" jdbcType="VARCHAR" />
     <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
   </resultMap>
@@ -68,8 +68,8 @@
   </select>
   <select id="listParentNodesWhichHasTwoSubNodes" resultMap="MoreResultMap" parameterType="map">
   		SELECT tep.*,
-  			rt.member_level as right_level,
-  			lt.member_level as left_level
+  			rt.member_post as right_level,
+  			lt.member_post as left_level
 		from 
 		(
 			SELECT 
@@ -80,7 +80,7 @@
 			from member m
 			LEFT JOIN member_node n on m.node_id = n.id
 			where FIND_IN_SET(node_id,getParentList(#{nodeId})) 
-			and member_level = #{fromLevel}
+			and member_post = #{fromLevel}
 			and n.left_id > 0
 			and n.right_id > 0
 			order by node_id desc
@@ -89,13 +89,13 @@
 		LEFT JOIN member rt on rt.node_id = tep.right_id
   </select>
   <select id="listParentIsManageLevelNodes" resultMap="MoreResultMap" parameterType="java.lang.Integer">
-  		select max(id) as member_id,member_level
+  		select max(id) as member_id,member_post
 		from 
-		(select m.id,m.member_level
+		(select m.id,m.member_post
 		from member m
 		where FIND_IN_SET(node_id,getParentList(#{nodeId}))
 		order by node_id desc)tem
-		group by member_level
+		group by member_post
   </select>
   <select id="listSubNodes" resultMap="MoreResultMap" parameterType="java.lang.Integer">
   		select 
@@ -125,8 +125,9 @@
 		order by m.node_id desc
   </select>
   <update id="updateParentLevel" parameterType="map">
-  		update member set member_level = #{toLevel}
-		where FIND_IN_SET(node_id,getParentList(#{nodeId})) and member_level = #{fromLevel}
+  		update member 
+  		set member_post = #{toLevel}
+		where FIND_IN_SET(node_id,getParentList(#{nodeId})) and member_post = #{fromLevel}
   </update>
   
 </mapper>

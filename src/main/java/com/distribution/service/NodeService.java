@@ -4,7 +4,6 @@
   */
 package com.distribution.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.distribution.common.constant.BonusConstant;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
@@ -34,6 +38,8 @@ public class NodeService {
 	private MoreNodeBonusHistoryMapper nodeBonusHistoryMapper;
 	@Autowired
 	private CommonService commonService;
+	@Autowired
+	private DataSourceTransactionManager txManager;
 	
 	/**
 	 * 通过父节点和左右分区标识来判断是否存在
@@ -210,12 +216,17 @@ public class NodeService {
 	 * @param toLevel
 	 */
 	public void updateParentLevel(int nodeId,String fromLevel,String toLevel){
-		/**
-		 * update member set member_level = 'toLevel'
-			where FIND_IN_SET(node_id,getParentList(10)) and member_level = 'fromLevel'
-		 */
-		Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
-		moreNodeMapper.updateParentLevel(param);
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setName("NodeService_updateParentLevel_txmanager");
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		TransactionStatus txStatus = txManager.getTransaction(def);
+		try {
+			Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
+			moreNodeMapper.updateParentLevel(param);
+			txManager.commit(txStatus);
+		} catch (Exception e) {
+			txManager.rollback(txStatus);
+		}
 	}
 	/**
 	 * 
@@ -223,8 +234,16 @@ public class NodeService {
 	 * @param map
 	 */
 	public void updateMemberLevelBatch(Map<String,Object> map){
-		
-		moreMemberMapper.updateMemberLevelBatch(map);
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setName("NodeService_updateMemberLevelBatch_txmanager");
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		TransactionStatus txStatus = txManager.getTransaction(def);
+		try {
+			moreMemberMapper.updateMemberLevelBatch(map);
+			txManager.commit(txStatus);
+		} catch (Exception e) {
+			txManager.rollback(txStatus);
+		}
 	}
 	/**
 	 * 封装参数

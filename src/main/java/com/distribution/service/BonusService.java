@@ -101,11 +101,23 @@ public class BonusService {
 	 * @author su
 	 */
     public void processOrderBonus(OrderMaster order){
-    	this.insertOrderBonus(order);
+    	//订单主人会员
+    	Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
+    	//当前订单的主人对应的会员节点
+		int nodeId = owner.getNodeId();
+    	this.insertOrderBonus(order,owner);
+    	//处理会员晋升 当前节点的所有上级
+		nodeService.processMemberPromotion(nodeId,order.getCreateId());
     }
-	public void insertOrderBonus(OrderMaster order){
-		//订单主人会员
-		Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
+    /**
+     * 
+     * 奖金计算处理方法，独立分组可以进行手动事务控制。
+     * @author su
+     * @date 2017年9月9日 下午10:14:59
+     * @param order
+     * @param owner
+     */
+	public void insertOrderBonus(OrderMaster order,Member owner){
 		//订单主人推荐人不为空发奖
 		if(null != owner.getRecommendId() && owner.getRecommendId() > 0){
 			//初始化计算所需配置中的变量
@@ -136,8 +148,6 @@ public class BonusService {
 			if(null != order.getOrderCategory() && order.getOrderCategory().equals(BonusConstant.ORDER_CATEGORY_1)){
 				nodeService.insertMemberNodeBonus(nodeId,order);
 			}
-			//处理会员晋升 当前节点的所有上级
-			nodeService.processMemberPromotion(nodeId,order.getCreateId());
 		}
 	}
 	/**
@@ -192,27 +202,27 @@ public class BonusService {
         List<MoreMemberNode> list = moreNodeMapper.listParentIsManageLevelNodes(nodeId);
         for(MoreMemberNode m : list){
         	//当前节点不参与奖金计算
-        	if(null != m.getId() && m.getId().intValue() == nodeId){
+        	int memberId = m.getMemberId();
+        	if(order.getMemberId().intValue() == memberId){
         		continue;
         	}
-        	int memberId = m.getMemberId();
-        	String memberLevel = m.getMemberLevel();
-            if(memberLevel.equals(BonusConstant.POST_LEVEL2)){
+        	String memberPost = m.getMemberPost();
+            if(memberPost.equals(BonusConstant.POST_LEVEL2)){
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_01);
             	//计算主任奖金
         		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
-            }else if(memberLevel.equals(BonusConstant.POST_LEVEL3)){
+            }else if(memberPost.equals(BonusConstant.POST_LEVEL3)){
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_02);
             	//计算经理奖金
         		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
-            }else if(memberLevel.equals(BonusConstant.POST_LEVEL4)){
+            }else if(memberPost.equals(BonusConstant.POST_LEVEL4)){
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_03);
             	//计算总监奖金
         		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_5,memberId,order);
-            }else if(memberLevel.equals(BonusConstant.POST_LEVEL5)){
+            }else if(memberPost.equals(BonusConstant.POST_LEVEL5)){
             	//奖金比例
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D05,BonusConstant.CODE_04);
             	//计算董事奖金
@@ -270,13 +280,14 @@ public class BonusService {
 		for(int i=num;i<list.size();i++){
 			MoreMemberNode m = list.get(i);
         	//如果是工作室循环继续下一次
-        	if(null != m.getIsSalesDept() && m.getIsSalesDept().equalsIgnoreCase("Y")){
-        		continue;
-        	}else if(null != m.getIsOperator() && m.getIsOperator().equalsIgnoreCase("Y")){
+        	if(null != m.getIsOperator() && m.getIsOperator().equalsIgnoreCase("Y")){
         		//如果是运营中心发运营中心扶持奖，发奖结束。
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_02);
         		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_9,m.getMemberId(),order);
         		break;
+        		
+        	}else if(null != m.getIsSalesDept() && m.getIsSalesDept().equalsIgnoreCase("Y")){
+        		continue;
         	}else{
         		//非工作室，非运营中心，即是普通会员，发奖结束。
         		break;

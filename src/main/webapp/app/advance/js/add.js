@@ -130,6 +130,7 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
                     //$scope.msg = "";
                     if (resp.data.result == 'success') {
                         Notify.success("提现成功");
+                        $state.go("app.advance", {}, {reload: true});
                     } else if (resp.data.result == 'pwdWrong') {
                         Notify.error("支付密码错误");
                     } else if (resp.data.result == 'fail') {
@@ -138,7 +139,7 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
                     $scope.stopLoading();
                     //ConfirmModal.show({text: $scope.msg, isCancel: false});
                     //$scope.go("app.advance");
-                    $state.go("app.advance", {}, {reload: true});
+
 
                 }else{
                     Notify.error("提现失败，请稍后再试");

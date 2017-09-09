@@ -73,9 +73,11 @@ angular.module('home').controller('homeCtrl',
         }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
             Notify.warning("三级密码和三级密码确认不同,请重新输入。");
         }else{
+            $scope.startLoading();
             $scope.currentUser.status='Y';
             $http.post(ctx + "/member/activation",$scope.currentUser).success(function (resp) {
                 if(resp.successful){
+                    $scope.stopLoading();
                     $("#add").modal("hide");
                     $window.location.reload();
                 }
@@ -166,6 +168,20 @@ angular.module('home').controller('homeCtrl',
         {
             $scope.addSlide($scope.imgNames[i]);
         }
+
+        /**loading*/
+        var e1 = $('.portlet');
+        $scope.startLoading=function () {
+            App.blockUI({
+                target: e1,
+                animate: true,
+                overlayColor: 'none'
+            });
+        };
+
+        $scope.stopLoading=function () {
+            App.unblockUI(e1);
+        };
 
 });
 angular.module('home').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, getMsg,getType) {

@@ -37,6 +37,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
                 $scope.myPage = resp.data;
                 $scope.loadingFlag = false;
                 $scope.notData = false;
+                if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
             } else {
                 console.log(resp.errorMessage);
             }

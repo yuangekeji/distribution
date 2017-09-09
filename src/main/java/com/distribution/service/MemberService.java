@@ -191,6 +191,8 @@ public class MemberService {
         if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
             member.setIsSalesDept("Y");
         }
+        member.setUpdateId(member.getId());
+        member.setUpdateTime(new Date());
         Integer it = memberMapper.updateByPrimaryKeySelective(member);
         //给推荐人的一代个数中 +1
         Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());

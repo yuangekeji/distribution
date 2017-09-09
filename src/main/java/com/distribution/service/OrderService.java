@@ -73,7 +73,6 @@ public class OrderService {
         int cnt3 = 0;
         int cnt4 = 0;
         int cnt5 = 0;
-        int cnt6 = 0;
 
         //BigInteger orderNo = this.getOrderNo();
         Long orderNo = this.getOrderNo();
@@ -171,10 +170,7 @@ public class OrderService {
 
         //报单，复投做奖金处理
         if("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory())){
-            cnt6 = 1; //todo 奖金接口调用 order
-            if(cnt6 ==0){
-                throw new RuntimeException();
-            }
+
             bonusService.processOrderBonus(moreOrderMaster);
         }
 

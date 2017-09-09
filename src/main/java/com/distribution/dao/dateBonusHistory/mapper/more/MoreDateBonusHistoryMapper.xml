@@ -46,7 +46,7 @@
   	select 
   	    <include refid="Base_Column_List" />
 		from date_bonus_history
-		where DATE(date) = #{date}C
+		where DATE(date) = #{date}
   </select>
 
   <select id="selectFailJobCount" resultType="java.lang.Integer">

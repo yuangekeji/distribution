@@ -78,6 +78,7 @@ angular.module('home').controller('homeCtrl',
             $http.post(ctx + "/member/activation",$scope.currentUser).success(function (resp) {
                 if(resp.successful){
                     $scope.stopLoading();
+                    Notify.warning("激活成功。");
                     $("#add").modal("hide");
                     $window.location.reload();
                 }

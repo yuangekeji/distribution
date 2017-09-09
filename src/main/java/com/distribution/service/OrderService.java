@@ -153,6 +153,7 @@ public class OrderService {
             dividend.setMemberId(moreOrderMaster.getMemberId());
             dividend.setDividendCount(divideCount.intValue());
             dividend.setDividendLimit(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
+            dividend.setRemainAmount(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
             dividend.setDividendStatus("1");
             dividend.setMgmtFee(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)).multiply(new BigDecimal(0.06)));
             dividend.setCreateId(moreOrderMaster.getCreateId());

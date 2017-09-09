@@ -44,8 +44,11 @@
        <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
            AND a.order_category = #{parameterMap.orderCategory}
        </if>
-       <if test="parameterMap.start!=null and parameterMap.start!=''">
-           AND a.create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+       <if test="parameterMap.start != null and parameterMap.start != ''">
+           <![CDATA[AND create_time >= #{parameterMap.start}]]>
+       </if>
+       <if test="parameterMap.end != null and parameterMap.end != ''">
+           <![CDATA[AND create_time <=#{parameterMap.end}]]>
        </if>
        </where>
    </sql>

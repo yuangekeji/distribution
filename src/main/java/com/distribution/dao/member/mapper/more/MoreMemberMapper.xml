@@ -50,8 +50,11 @@
        <if test="parameterMap.status!=null and parameterMap.status!=''">
          AND status = #{parameterMap.status}
        </if>
-       <if test="parameterMap.start!=null and parameterMap.start!=''">
-         AND create_time BETWEEN #{parameterMap.start} AND #{parameterMap.end}
+       <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+         <![CDATA[AND DATE_FORMAT(create_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+       </if>
+       <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+         <![CDATA[AND DATE_FORMAT(create_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
        </if>
        <if test="parameterMap.recommendId!=null and parameterMap.recommendId!=''">
          AND recommend_id = #{parameterMap.recommendId}

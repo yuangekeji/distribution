@@ -19,10 +19,10 @@ public class AdmOrderService {
      * @author WYN
      * */
     public Page orderList(Page page){
-        if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
-            page.getParameterMap().put("start",page.getParameterMap().get("startTime").toString()+" 00:00:00");
+        /*if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
+            page.getParameterMap().put("startTime",page.getParameterMap().get("startTime").toString()+" 00:00:00");
         if(null!=page.getParameterMap().get("endTime") && !"".equals(page.getParameterMap().get("endTime")))
-            page.getParameterMap().put("end",page.getParameterMap().get("endTime").toString()+" 23:59:59");
+            page.getParameterMap().put("endTime",page.getParameterMap().get("endTime").toString()+" 23:59:59");*/
 
         page.setTotalCount(moreOrderMasterMapper.getOrderListCount(page));
         page.setResult(moreOrderMasterMapper.getOrderList(page));

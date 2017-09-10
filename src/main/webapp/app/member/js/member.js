@@ -2,7 +2,16 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
+    $scope.param = {
+        loginPasswordConfirm:"",
+        loginPasswordConfirm:"",
+        payPasswordConfirm:""
+    };
+    $scope.pwdMember ={
+        id:$sessionStorage.currentUser.id
+    };
     $scope.applyFlag = true;
+    $scope.saveFlag = true;
     if($scope.user.memberPost){
         var str = $scope.user.memberPost.toString().substr($scope.user.memberPost.toString().length-1,$scope.user.memberPost.toString().length);
         if(Number(str)&&Number(str)!=6){
@@ -61,7 +70,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
             }
         }
     };
-    /**保存密码*/
+    /**保存用户信息*/
     $scope.saveInfo = function () {
         if(!$scope.MemberInfo.idNumber||!$scope.MemberInfo.idNumber.trim()){
             Notify.warning("请输入身份证号码。");
@@ -85,6 +94,163 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
             }).error(function (resp) {
                 console.log(resp);
             });
+        }
+    };
+
+    /**修改密码*/
+    $scope.savePwd = function (flag) {
+        if($scope.saveFlag) {
+            $scope.saveFlag = false;
+            if ("login" == flag) {
+                if (!$scope.pwdMember.oldLoginPwd){
+                    Notify.warning("请输入原始登录密码。");
+                    $scope.saveFlag = true;
+                }else if (!$scope.pwdMember.loginPassword){
+                    Notify.warning("请输入新登录密码。");
+                    $scope.saveFlag = true;
+                }else if ($scope.pwdMember.oldLoginPwd==$scope.pwdMember.loginPassword){
+                    Notify.warning("原始登录密码与新登录密码不能相同，请重新输入。");
+                    $scope.saveFlag = true;
+                }else if (!$scope.param.loginPasswordConfirm){
+                    Notify.warning("请输入确认密码。");
+                    $scope.saveFlag = true;
+                }else if ($scope.pwdMember.loginPassword!=$scope.param.loginPasswordConfirm){
+                    Notify.warning("确认密码与新密码不一致，请重新输入。");
+                    $scope.saveFlag = true;
+                }else{
+                    ConfirmModal.show({
+                        text: '您确定要修改登录密码吗？',
+                        isCancel:true //false alert ,true confirm
+                    }).then(function (sure) {
+                        if (!sure) {
+                            $scope.saveFlag = true;
+                            return;
+                        }
+                        $scope.startLoading();
+                        $scope.pwdMember.pwdFlag = flag;
+                        $http.post(ctx + "/member/updatePwd",$scope.pwdMember).success(function (resp) {
+                            if(resp.successful){
+                                $scope.saveFlag = true;
+                                $scope.stopLoading();
+                                if("SUCCESS"==resp.data){
+                                    Notify.warning("登录密码修改成功。");
+                                }
+                                if("OLD_PWD_ERROR"==resp.data){
+                                    Notify.warning("原始登录密码错误，修改失败。");
+                                }
+                            }else{
+                                $scope.stopLoading();
+                                $scope.saveFlag = true;
+                                Notify.warning("登录密码修改失败。");
+                            }
+                        }).error(function (resp) {
+                            $scope.stopLoading();
+                            $scope.saveFlag = true;
+                            console.log(resp);
+                        })
+                    });
+                }
+            }
+            if ("query" == flag) {
+                if (!$scope.pwdMember.oldQueryPwd){
+                    Notify.warning("请输入原始查询密码。");
+                    $scope.saveFlag = true;
+                }else if (!$scope.pwdMember.queryPassword){
+                    Notify.warning("请输入新查询密码。");
+                    $scope.saveFlag = true;
+                }else if ($scope.pwdMember.oldQueryPwd==$scope.pwdMember.queryPassword){
+                    Notify.warning("原始查询密码与新查询密码不能相同，请重新输入。");
+                    $scope.saveFlag = true;
+                }else if (!$scope.param.queryPasswordConfirm){
+                    Notify.warning("请输入确认密码。");
+                    $scope.saveFlag = true;
+                }else if ($scope.pwdMember.queryPassword!=$scope.param.queryPasswordConfirm){
+                    Notify.warning("确认密码与新密码不一致，请重新输入。");
+                    $scope.saveFlag = true;
+                }else{
+                    ConfirmModal.show({
+                        text: '您确定要修改查询密码吗？',
+                        isCancel:true //false alert ,true confirm
+                    }).then(function (sure) {
+                        if (!sure) {
+                            $scope.saveFlag = true;
+                            return;
+                        }
+                        $scope.startLoading();
+                        $scope.pwdMember.pwdFlag = flag;
+                        $http.post(ctx + "/member/updatePwd",$scope.pwdMember).success(function (resp) {
+                            if(resp.successful){
+                                $scope.stopLoading();
+                                $scope.saveFlag = true;
+                                if("SUCCESS"==resp.data){
+                                    Notify.warning("查询密码修改成功。");
+                                }
+                                if("OLD_PWD_ERROR"==resp.data){
+                                    Notify.warning("原始查询密码错误，修改失败。");
+                                }
+                            }else{
+                                $scope.stopLoading();
+                                $scope.saveFlag = true;
+                                Notify.warning("查询密码修改失败。");
+                            }
+                        }).error(function (resp) {
+                            $scope.stopLoading();
+                            $scope.saveFlag = true;
+                            console.log(resp);
+                        })
+                    });
+                }
+            }
+            if ("pay" == flag) {
+                if (!$scope.pwdMember.oldPayPwd){
+                    Notify.warning("请输入原始支付密码。");
+                    $scope.saveFlag = true;
+                }else if (!$scope.pwdMember.payPassword){
+                    Notify.warning("请输入新支付密码。");
+                    $scope.saveFlag = true;
+                }else if ($scope.pwdMember.oldPayPwd==$scope.pwdMember.payPassword){
+                    Notify.warning("原始支付密码与新支付密码不能相同，请重新输入。");
+                    $scope.saveFlag = true;
+                }else if (!$scope.param.payPasswordConfirm){
+                    Notify.warning("请输入确认密码。");
+                    $scope.saveFlag = true;
+                }else if ($scope.pwdMember.payPassword!=$scope.param.payPasswordConfirm){
+                    Notify.warning("确认密码与新密码不一致，请重新输入。");
+                    $scope.saveFlag = true;
+                }else{
+                    ConfirmModal.show({
+                        text: '您确定要修改支付密码吗？',
+                        isCancel:true //false alert ,true confirm
+                    }).then(function (sure) {
+                        if (!sure) {
+                            $scope.saveFlag = true;
+                            return;
+                        }
+                        $scope.startLoading();
+                        $scope.pwdMember.pwdFlag = flag;
+                        $http.post(ctx + "/member/updatePwd",$scope.pwdMember).success(function (resp) {
+                            if(resp.successful){
+                                $scope.stopLoading();
+                                $scope.saveFlag = true;
+                                if("SUCCESS"==resp.data){
+                                    Notify.warning("支付密码修改成功。");
+                                }
+                                if("OLD_PWD_ERROR"==resp.data){
+                                    Notify.warning("原始支付密码错误，修改失败。");
+                                }
+                            }else{
+                                $scope.stopLoading();
+                                $scope.saveFlag = true;
+                                Notify.warning("支付密码修改失败。");
+                            }
+                        }).error(function (resp) {
+                            $scope.stopLoading();
+                            $scope.saveFlag = true;
+                            console.log(resp);
+                        })
+                    });
+                }
+            }
         }
     };
 

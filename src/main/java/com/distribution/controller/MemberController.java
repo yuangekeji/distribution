@@ -185,4 +185,19 @@ public class MemberController extends BasicController {
         else
             return failMsg();
     }
+
+    /**
+     * description 修改会员信息
+     * @author Bright
+     * */
+    @RequestMapping("/updateMember")
+    @ResponseBody
+    public JsonMessage updateMember(@RequestBody MoreMember moreMember){
+        Integer it = memberService.updateMember(moreMember);
+        if(it>0){
+            return successMsg();
+        }else{
+            return failMsg();
+        }
+    }
 }

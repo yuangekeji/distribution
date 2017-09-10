@@ -7,12 +7,12 @@
                 </div>
                 <div class="actions">
                     <div class="btn-group btn-group-devided" data-toggle="buttons">
-                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active"
-                               data-target="#tab_1_1" data-toggle="tab">
-                            <input type="radio" name="options" class="toggle" id="option1">个人信息</label>
-                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm " data-target="#tab_1_2" ng-show="false"
-                               data-toggle="tab">
-                            <input type="radio" name="options" class="toggle" id="option2">修改密码</label>
+                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active" data-target="#tab_1_1" data-toggle="tab">
+                            <input type="radio" name="options" class="toggle" id="option1">个人信息
+                        </label>
+                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm " ng-show="false" data-target="#tab_1_2" data-toggle="tab">
+                            <input type="radio" name="options" class="toggle" id="option2">修改密码
+                        </label>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,10 @@
                                 <label class="control-label">银行卡号</label>
                                 <input type="text" placeholder="请输入银行卡号" class="form-control" ng-model="MemberInfo.cardNumber" maxlength="20"/>
                             </div>
-
+                            <div class="margin-top-10">
+                                <a href="javascript:void(0);" ng-click="saveInfo();" class="btn blue-steel">保存</a>
+                                <a href="javascript:void(0);" ng-show="false" class="btn default">取消</a>
+                            </div>
                         </form>
                     </div>
                     <div class="tab-pane" id="tab_1_2">

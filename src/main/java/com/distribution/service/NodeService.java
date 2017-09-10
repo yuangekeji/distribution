@@ -395,7 +395,7 @@ public class NodeService {
 			List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
 			if (null != rightNum && rightNum.size() > 0) {
 				//右节点的所有销售额，不包含折扣单
-				double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
+				Double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
 				map.put("rightNum", String.valueOf(rightNum.size()));
 				map.put("rightToalSales", String.valueOf(rightToalSales));
 			}

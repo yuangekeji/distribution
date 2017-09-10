@@ -59,8 +59,8 @@
        <if test="parameterMap.recommendId!=null and parameterMap.recommendId!=''">
          AND recommend_id = #{parameterMap.recommendId}
        </if>
-       <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-         AND create_id = #{parameterMap.memberId}
+       <if test="(parameterMap.recommendId!=null or parameterMap.recommendId!='') and parameterMap.memberId!=null and parameterMap.memberId!=''">
+         AND create_id = #{parameterMap.memberId} OR recommend_id = #{parameterMap.memberId}
        </if>
 
        <if test="parameterMap.name!=null and parameterMap.name!=''">

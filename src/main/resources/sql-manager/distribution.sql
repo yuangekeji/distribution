@@ -578,3 +578,6 @@ ADD PRIMARY KEY (`id`, `member_phone`);
 --Bright 2017年9月10日09:50:40
 ALTER TABLE `member`
 ADD COLUMN `linkman_phone`  varchar(255) NULL COMMENT '联系人电话' AFTER `node_name`;
+
+ALTER TABLE `goods`
+ADD COLUMN `info`  varchar(5000) NULL COMMENT '介绍';

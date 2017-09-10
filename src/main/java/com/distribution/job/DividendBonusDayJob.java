@@ -28,7 +28,7 @@ public class DividendBonusDayJob {
 	 * @author su
 	 * @date 2017年9月7日 上午11:13:42
 	 */
-	@Scheduled(cron ="0 30 1 * * ?" )//每天早上1点30分钟执行
+	@Scheduled(cron ="0 20 11 * * ?" )//每天早上1点30分钟执行
 	public void sendDividendBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时发放分红包奖/DividendBonusDayJob/sendDividendBonus");

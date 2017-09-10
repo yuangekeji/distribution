@@ -394,7 +394,9 @@ public class BonusService {
 	 * @date 2017年9月7日 下午2:45:27
 	 * @return
 	 */
-	public DateBonusHistory findCurrentDayBonusHistory(String date){
+	public DateBonusHistory findCurrentDayBonusHistory(String yesterday){
+		//查找同一天的执行记录
+		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
 		DateBonusHistory history = moreDateBonusHistoryMapper.selectCurrentDaySalesAndBonus(date);
 		if(null == history){
 			history = new DateBonusHistory();
@@ -402,7 +404,7 @@ public class BonusService {
 			history.setCreateTime(new Date());
 			history.setDate(new Date());
 			//设置营业额相关数据
-			double totalSales = moreOrderMasterMapper.findCurrentDayOrderSales(date);
+			double totalSales = moreOrderMasterMapper.findCurrentDayOrderSales(yesterday);
 			double nodePercent = commonService.getMaxPercent(BonusConstant.D03, BonusConstant.CODE_01);
 			double dividendPercent = commonService.getMaxPercent(BonusConstant.D02, BonusConstant.CODE_01);
 			//总营业额
@@ -420,8 +422,8 @@ public class BonusService {
 	 * @date 2017年9月7日 下午2:34:28
 	 */
 	public Map<String,Object> saveNodeBonusFromNodeHistory(Map<String,Object> result){
+		//数据查询范围昨天
 		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
-		//String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
 		result.put("date", date);
 		DateBonusHistory history = findCurrentDayBonusHistory(date);
 		//如果标识为成功，直接返回。
@@ -527,7 +529,9 @@ public class BonusService {
 	 * @date 2017年9月7日 下午2:34:28
 	 */
 	public Map<String,Object> saveDividendBonus(Map<String,Object> result){
-		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
+		//数据查询范围昨天
+		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+		//String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
 		result.put("date", date);
 		DateBonusHistory history = findCurrentDayBonusHistory(date);
 		//如果标识为成功，直接返回。

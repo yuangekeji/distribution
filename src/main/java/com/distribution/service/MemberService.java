@@ -274,4 +274,14 @@ public class MemberService {
             return list.size();
         }
     }
+
+    /**
+     * description 修改会员信息
+     * @author Bright
+     * */
+    public Integer updateMember(MoreMember moreMember){
+        Member member = new Member();
+        BeanUtils.copyProperties(moreMember,member);
+        return memberMapper.updateByPrimaryKeySelective(member);
+    }
 }

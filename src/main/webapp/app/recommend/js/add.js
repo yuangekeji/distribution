@@ -3,9 +3,10 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.user = $sessionStorage.currentUser;
     $scope.member = {
         recommendPhone:$sessionStorage.currentUser.memberPhone,
-        notePhone:$stateParams.mobile ? $stateParams.mobile : ''
+        notePhone:$stateParams.mobile ? $stateParams.mobile : '',
+        loginPassword:'111111'
     };
-    $scope.confirmLoginPassword = "";
+    $scope.confirmLoginPassword = "111111";
     $scope.dictionary = [];
     $scope.onInit = function () {
         $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
@@ -86,6 +87,12 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
             Notify.warning("会员账号有误，会员账号为手机号码。");
             $scope.submitFlag = true;
+        }else if(!$scope.member.linkmanPhone||!$scope.member.linkmanPhone.trim()){
+            Notify.warning("请输入联系人手机号。");
+            $scope.submitFlag = true;
+        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.linkmanPhone))){
+            Notify.warning("联系人手机号有误，请重新输入。");
+            $scope.submitFlag = true;
         }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
             Notify.warning("请输入登录密码。");
             $scope.submitFlag = true;
@@ -107,13 +114,15 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if(!$scope.member.memberLevel){
             Notify.warning("请选择会员等级。");
             $scope.submitFlag = true;
-        }else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
+        }
+        /*else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
             Notify.warning("请输入收货人姓名。");
             $scope.submitFlag = true;
         }else if(!$scope.member.expressAddress||!$scope.member.expressAddress.trim()){
             Notify.warning("请输入收货地址。");
             $scope.submitFlag = true;
-        }else{
+        }*/
+        else{
             return true;
         }
     };

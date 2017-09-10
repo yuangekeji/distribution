@@ -61,6 +61,46 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
             }
         }
     };
+    /**保存密码*/
+    $scope.saveInfo = function () {
+        if(!$scope.MemberInfo.idNumber||!$scope.MemberInfo.idNumber.trim()){
+            Notify.warning("请输入身份证号码。");
+        }else if(!/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test($scope.MemberInfo.idNumber.trim())){
+            Notify.warning("身份证号码格式有误，请重新输入。");
+        }else if(!$scope.MemberInfo.bankName){
+            Notify.warning("请选择开户行。");
+        }else if(!$scope.MemberInfo.bankUserName||!$scope.MemberInfo.bankUserName.trim()){
+            Notify.warning("请输入开户人姓名。");
+        }else if(!$scope.MemberInfo.cardNumber||!$scope.MemberInfo.cardNumber.trim()){
+            Notify.warning("请输入银行卡号。");
+        }else if(!/^[0-9]*$/.test($scope.MemberInfo.cardNumber)){
+            Notify.warning("银行卡号只能为纯数字，请重新输入。");
+        }else{
+            $scope.startLoading();
+            $http.post(ctx + "/member/updateMember",$scope.MemberInfo).success(function (resp) {
+                if(resp.successful){
+                    Notify.warning("修改成功。");
+                    $scope.stopLoading();
+                }
+            }).error(function (resp) {
+                console.log(resp);
+            });
+        }
+    };
+
+    /**loading*/
+    var e1 = $('.full-view');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    };
+
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    };
     //Bright End
 
     $scope.$on('$viewContentLoaded', function() {

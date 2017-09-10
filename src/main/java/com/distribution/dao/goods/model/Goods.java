@@ -42,6 +42,8 @@ public class Goods {
 
     private String deleteFlag;
 
+    private String info;
+
     public Integer getId() {
         return id;
     }
@@ -192,5 +194,13 @@ public class Goods {
 
     public void setDeleteFlag(String deleteFlag) {
         this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info == null ? null : info.trim();
     }
 }

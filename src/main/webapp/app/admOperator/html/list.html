@@ -58,6 +58,7 @@
                                     <th>会员等级</th>
                                     <th>爵位</th>
                                     <th>推荐人</th>
+                                    <th>申请时间</th>
                                     <th>审核状态</th>
                                     <th>操作</th>
                                 </tr>
@@ -69,6 +70,7 @@
                                     <td>{{ope.memberLevel|MemberLevelFilter}}</td>
                                     <td>{{ope.memberPost|PostLevelFilter}}</td>
                                     <td>{{ope.recommendName}}</td>
+                                    <td>{{ope.createTime |date:'yyyy-MM-dd'}}</td>
                                     <td>{{ope.status|StatusFilter}}</td>
                                     <td>
                                         <div class="btn-group btn-group-circle">

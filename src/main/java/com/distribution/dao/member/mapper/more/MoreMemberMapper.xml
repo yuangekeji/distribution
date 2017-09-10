@@ -150,10 +150,10 @@
     from member
     where member_post = 'post_level6'
   </select>
-  <update id="updateMemberLevelBatch" parameterType="java.util.Map"  >
+  <update id="updateMemberPostLevelBatch" parameterType="java.util.Map"  >
     update member
     set
-      member_level = #{memberLevel,jdbcType=VARCHAR},
+      member_post = #{memberPost,jdbcType=VARCHAR},
       update_id = #{updateId,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id in

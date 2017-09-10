@@ -49,7 +49,7 @@
   	select 
   	    <include refid="Base_Column_List" />
 		from date_bonus_history
-		where DATE(date) = #{date}
+		where DATE(create_time) = #{date}
   </select>
 
   <select id="selectFailJobCount" resultType="java.lang.Integer">
@@ -71,4 +71,18 @@
     from date_bonus_history
     <include refid="where"/>
   </select>
+  <update id="updateDateBonusHistorySuccess" parameterType="java.util.Map">
+  	update
+		date_bonus_history
+	set 
+		<if test="alarmStatus != null">
+		alarm_status=#{alarmStatus},
+		</if>
+		<if test="jdAlarmStatus != null">
+		jd_alarm_status=#{jdAlarmStatus},
+		</if>
+		update_id=#{updateId}, 
+		update_time=#{updateTime}
+	<![CDATA[where DATE_FORMAT(date, '%Y-%m-%d') <= #{date}]]>
+  </update>
 </mapper>

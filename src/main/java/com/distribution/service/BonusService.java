@@ -283,7 +283,11 @@ public class BonusService {
         		Map<String,Object> map = moreNodeMapper.getSubNodesIsSalesDept(m.getId());
         		String leftSalesDept = map.get("left_sales_dept")==null?"":map.get("left_sales_dept").toString();
         		String rightSalesDept = map.get("right_sales_dept")==null?"":map.get("right_sales_dept").toString();
-        		if(leftSalesDept.equalsIgnoreCase("Y") && rightSalesDept.equalsIgnoreCase("Y")){
+        		//左工作室右边空，左空右工作室，左右都是工作室
+        		if((leftSalesDept.equalsIgnoreCase("Y") && rightSalesDept.equalsIgnoreCase("Y"))
+        			||(null == map.get("left_id") && rightSalesDept.equalsIgnoreCase("Y"))
+        			||(null == map.get("right_id") && leftSalesDept.equalsIgnoreCase("Y"))
+        		  ){
         			double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_02);
         			insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_9,m.getMemberId(),order);
         			break;
@@ -407,7 +411,8 @@ public class BonusService {
 			history = new DateBonusHistory();
 			history.setCreateId(0);
 			history.setCreateTime(new Date());
-			history.setDate(new Date());
+			//设置奖金时间
+			history.setDate(DateHelper.getYesterDay());
 			//设置营业额相关数据
 			double totalSales = moreOrderMasterMapper.findCurrentDayOrderSales(yesterday);
 			double nodePercent = commonService.getMaxPercent(BonusConstant.D03, BonusConstant.CODE_01);
@@ -474,6 +479,8 @@ public class BonusService {
 			history.setUseJdBonusTotal(new BigDecimal(totalBonus).longValue());
 			//更新发放状态成功
 			history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
+			//更新历史所有失败的见点奖记录
+			updateDateBonusHistorySuccess(date,"jd");
 			result.put("result", "Send bonus ok!");
        }else{
     	    //更新发放状态
@@ -500,6 +507,18 @@ public class BonusService {
        }
        return result;
 	}
+	public void updateDateBonusHistorySuccess(String date,String flag){
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("date", date);
+		param.put("updateId", 0);
+		param.put("updateTime", new Date());
+		if(flag.equals("jd")){
+			param.put("jdAlarmStatus", BonusConstant.BONUS_STATUS_1);
+		}else{
+			param.put("alarmStatus", BonusConstant.BONUS_STATUS_1);
+		}
+		moreDateBonusHistoryMapper.updateDateBonusHistorySuccess(param);
+	}
 	/**
 	 * 
 	 * Job结算昨天发放的见点奖，并更新状态。
@@ -524,8 +543,10 @@ public class BonusService {
         //更新见点奖为已结算
         if(list.size() > 0){
         	nodeService.updateNodeBonusHistoryStatusEnd(list);
+        	result.put("result", "success");
+        }else{
+        	result.put("result", "No bonus need to balance.");
         }
-        result.put("result", "success");
         return result;
 	}
 	/**
@@ -547,7 +568,7 @@ public class BonusService {
 		result.put("totalSalesAmount", history.getTotalSales());
 		result.put("dividendBonusAmount", history.getDividendTotal());
 		//计算奖金并生成分红包明细
-        Map<String,Object> map = calculateDividendHistoryBonus();
+        Map<String,Object> map = calculateDividendHistoryBonus(date);
         BigDecimal totalBonus = new BigDecimal(map.get("actualBonus").toString());
         result.put("toBeSentTotalDividendBonus", totalBonus.doubleValue());
         //查找奖金发放池，奖金余额
@@ -580,9 +601,10 @@ public class BonusService {
 			result.put("sendActualTotalBonus", totalBonus);
 			//发放成功
 			history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+			//更新历史所有失败的见点奖记录
+			updateDateBonusHistorySuccess(date,"div");
 			result.put("result", "Send bonus ok!");
        }else{
-    	    
     	    if(totalBonus.doubleValue() > 0){
     	    	//发放失败钱不够
     	    	history.setAlarmStatus(BonusConstant.BONUS_STATUS_0);
@@ -615,12 +637,12 @@ public class BonusService {
 	 * @param list
 	 * @param bonusNum
 	 */
-	public Map<String,Object> calculateDividendHistoryBonus(){
+	public Map<String,Object> calculateDividendHistoryBonus(String date){
 		//定义实际需要发送奖金
 	    BigDecimal actualBonus = new BigDecimal(0);
 		List<DividendHistory> hisList = new ArrayList<DividendHistory>();
-		//需要的分红奖金列表
-        List<Dividend> list = moreDividendMapper.listAllNeedSendDividends();
+		//需要的分红奖金列表,小于等于昨天的所有数据
+        List<Dividend> list = moreDividendMapper.listAllNeedSendDividends(date);
 		 //分红包奖金额
         double bonusNum = commonService.getMaxAmt(BonusConstant.D02,BonusConstant.CODE_00);
 		for(Dividend div : list){

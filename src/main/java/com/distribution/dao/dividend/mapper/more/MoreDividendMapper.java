@@ -27,7 +27,7 @@ public interface MoreDividendMapper extends DividendMapper{
     
     Integer getAllNeedSendDividendCount();
     
-    List<Dividend>listAllNeedSendDividends();
+    List<Dividend>listAllNeedSendDividends(String date);
     
     int updateAllNeedSendDividends(Map<String,Object> map);
 }

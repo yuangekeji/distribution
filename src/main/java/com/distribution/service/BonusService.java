@@ -101,13 +101,8 @@ public class BonusService {
 	 * @author su
 	 */
     public void processOrderBonus(OrderMaster order){
-    	//订单主人会员
-    	Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
-    	//当前订单的主人对应的会员节点
-		int nodeId = owner.getNodeId();
-    	this.insertOrderBonus(order,owner);
-    	//处理会员晋升 当前节点的所有上级
-		nodeService.processMemberPromotion(nodeId,order.getCreateId());
+    	
+    	this.insertOrderBonus(order);
     }
     /**
      * 
@@ -117,7 +112,9 @@ public class BonusService {
      * @param order
      * @param owner
      */
-	public void insertOrderBonus(OrderMaster order,Member owner){
+	public void insertOrderBonus(OrderMaster order){
+		//订单主人会员
+    	Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
 		//订单主人推荐人不为空发奖
 		if(null != owner.getRecommendId() && owner.getRecommendId() > 0){
 			//初始化计算所需配置中的变量
@@ -628,8 +625,8 @@ public class BonusService {
 			divHis.setDevidendCount(div.getDividendCount());
 			//订单分红包id
 			divHis.setDividendId(div.getId());
-			//领取时间
-			divHis.setReceivedTime(new Date());
+			//领取时间,Job执行时间的昨天
+			divHis.setReceivedTime(DateHelper.getYesterDay());
 			//本次领取金额
 			double total = commonService.multiply(bonusNum, div.getDividendCount().doubleValue());
 			//如果已经领取的值 大于余额，那么只能领取余额。

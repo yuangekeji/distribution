@@ -42,7 +42,7 @@
   	 select h.*,d.order_id,d.order_no,d.member_id,d.create_time as order_time
 	 from dividend_history h
 	 left join dividend d on h.dividend_id = d.id
-	 where DATE(h.create_time) <![CDATA[<=]]> #{yesterday}
+	 where DATE(h.received_time) <![CDATA[<=]]> #{yesterday}
 	 and h.balance_status = 0
   </select>
   <update id="updateAllYesterdayDividendHistory" parameterType="java.util.Map">

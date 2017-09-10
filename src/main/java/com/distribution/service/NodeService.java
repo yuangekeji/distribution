@@ -154,8 +154,8 @@ public class NodeService {
 		if(null != list && list.size() > 0){
 			int promNodeId = 0;
 			for(MemberNode node : list){
-				//查询其下属所有节点的销售业绩
-				double total = moreNodeMapper.findTotalSalesByParentId(node.getId());
+				//查询其下属所有节点的销售业绩,不包括自己。
+				double total = moreNodeMapper.findTotalSalesByParentIdNotIncludeCurrentNode(node.getId());
 				//判断是否符合主任晋升标准
 				if(total >= commonService.getPromotionStandard(BonusConstant.D10,BonusConstant.CODE_00)){
 			        //更新会员级别为主任，其上级中不是主任的都升为主任。

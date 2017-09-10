@@ -62,9 +62,16 @@
 		order by id desc
   </select>
   <select id="findTotalSalesByParentId" resultType="java.lang.Double" parameterType="java.lang.Integer">
-  		select sum(o.order_amt) as total_sales from member m
+  		select ifnull(sum(o.order_amt),0) as total_sales from member m
 		left join order_master o on m.id = o.member_id
 		where find_in_set(m.node_id,getChildList(#{parentId})) and (o.order_category = 1 or o.order_category = 2)
+  </select>
+  <select id="findTotalSalesByParentIdNotIncludeCurrentNode" resultType="java.lang.Double" parameterType="java.lang.Integer">
+  		select ifnull(sum(o.order_amt),0) as total_sales from member m
+		left join order_master o on m.id = o.member_id
+		where find_in_set(m.node_id,getChildList(#{parentId})) 
+		and (o.order_category = 1 or o.order_category = 2)
+		and m.node_id != #{parentId}
   </select>
   <select id="listParentNodesWhichHasTwoSubNodes" resultMap="MoreResultMap" parameterType="map">
   		SELECT tep.*,

@@ -11,8 +11,8 @@ angular.module('home').controller('homeCtrl',
         $rootScope.settings.layout.pageBodySolid = false;
         $rootScope.settings.layout.pageSidebarClosed = false;
     });
-     $scope.queryPasswordConfirm = '';
-     $scope.payPasswordConfirm = '';
+     $scope.queryPasswordConfirm = '222222';
+     $scope.payPasswordConfirm = '333333';
     $scope.currentUser = $sessionStorage.currentUser;
 
     $scope.test =function () {
@@ -35,6 +35,8 @@ angular.module('home').controller('homeCtrl',
                     if($scope.dictionary){
                         $scope.currentUser.bankName = $scope.dictionary[0].dicCode;
                     }
+                    $scope.currentUser.queryPassword = "222222";
+                    $scope.currentUser.payPassword = "333333";
                 }else{
                     console.log(resp);
                 }

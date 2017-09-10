@@ -108,13 +108,15 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if(!$scope.member.memberLevel){
             Notify.warning("请选择会员等级。");
             $scope.submitFlag = true;
-        }else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
+        }
+        /*else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
             Notify.warning("请输入收货人姓名。");
             $scope.submitFlag = true;
         }else if(!$scope.member.expressAddress||!$scope.member.expressAddress.trim()){
             Notify.warning("请输入收货地址。");
             $scope.submitFlag = true;
-        }else{
+        }*/
+        else{
             return true;
         }
     };

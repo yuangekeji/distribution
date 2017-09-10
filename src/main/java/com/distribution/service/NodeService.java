@@ -201,7 +201,7 @@ public class NodeService {
         }
         if(members.size() > 0){
         	Map<String,Object> map = new HashMap<String,Object>();
-        	map.put("memberLevel", toLevel);
+        	map.put("memberPost", toLevel);
         	map.put("updateId", updateId);
         	map.put("updateTime", new Date());
         	map.put("memberIds", members);
@@ -243,7 +243,7 @@ public class NodeService {
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
-			moreMemberMapper.updateMemberLevelBatch(map);
+			moreMemberMapper.updateMemberPostLevelBatch(map);
 			txManager.commit(txStatus);
 		} catch (Exception e) {
 			txManager.rollback(txStatus);

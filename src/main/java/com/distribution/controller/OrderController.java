@@ -88,7 +88,10 @@ public class OrderController extends BasicController{
             currentUser = (Member) getCurrentUser(session);
         }
         String result = orderService.insertReOrder(moreOrderMaster,currentUser);
-        nodeService.processMemberPromotion(currentUser.getNodeId(), currentUser.getId());
+        if("success".equals(result)){
+        	//处理会员晋升
+        	nodeService.processMemberPromotion(currentUser.getNodeId(), currentUser.getId());
+        }
         return successMsg("result",result);
 
     }

@@ -3,9 +3,10 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     $scope.user = $sessionStorage.currentUser;
     $scope.member = {
         recommendPhone:$sessionStorage.currentUser.memberPhone,
-        notePhone:$stateParams.mobile ? $stateParams.mobile : ''
+        notePhone:$stateParams.mobile ? $stateParams.mobile : '',
+        loginPassword:'111111'
     };
-    $scope.confirmLoginPassword = "";
+    $scope.confirmLoginPassword = "111111";
     $scope.dictionary = [];
     $scope.onInit = function () {
         $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {

@@ -64,6 +64,8 @@ public class Member {
 
     private String nodeName;
 
+    private String linkmanPhone;
+
     public Integer getId() {
         return id;
     }
@@ -302,5 +304,13 @@ public class Member {
 
     public void setNodeName(String nodeName) {
         this.nodeName = nodeName == null ? null : nodeName.trim();
+    }
+
+    public String getLinkmanPhone() {
+        return linkmanPhone;
+    }
+
+    public void setLinkmanPhone(String linkmanPhone) {
+        this.linkmanPhone = linkmanPhone == null ? null : linkmanPhone.trim();
     }
 }

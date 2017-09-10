@@ -16,4 +16,5 @@ public interface MoreMemberNodeMapper extends MemberNodeMapper{
 	List<MoreMemberNode> listParentIsManageLevelNodes(int nodeId);
 	List<MoreMemberNode> listSubNodes(int nodeId);
 	List<MoreMemberNode> listParentNodesWithMemberInfo(int nodeId);
+	Map<String,Object> getSubNodesIsSalesDept(int nodeId);
 }

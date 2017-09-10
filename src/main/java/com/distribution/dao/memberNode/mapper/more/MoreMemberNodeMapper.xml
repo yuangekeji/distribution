@@ -133,5 +133,18 @@
 		  #{ids.id}
 		</foreach>
   </update>
-  
+  <select id="getSubNodesIsSalesDept" resultType="java.util.Map" parameterType="java.lang.Integer">
+  		select 
+			n.id as node_id,
+			n.left_id,
+			mlt.id as left_member_id,
+			mlt.is_sales_dept as left_sales_dept,
+			n.right_id,
+			rlt.id as right_member_id,
+			rlt.is_sales_dept as right_sales_dept
+		from member_node n
+		left join member mlt on n.left_id = mlt.node_id
+		left join member rlt on n.right_id = rlt.node_id
+		where n.id = #{nodeId}
+  </select>
 </mapper>

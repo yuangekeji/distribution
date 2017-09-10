@@ -35,6 +35,7 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
+import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper;
 import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
@@ -101,13 +102,8 @@ public class BonusService {
 	 * @author su
 	 */
     public void processOrderBonus(OrderMaster order){
-    	//订单主人会员
-    	Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
-    	//当前订单的主人对应的会员节点
-		int nodeId = owner.getNodeId();
-    	this.insertOrderBonus(order,owner);
-    	//处理会员晋升 当前节点的所有上级
-		nodeService.processMemberPromotion(nodeId,order.getCreateId());
+    	
+    	this.insertOrderBonus(order);
     }
     /**
      * 
@@ -117,7 +113,9 @@ public class BonusService {
      * @param order
      * @param owner
      */
-	public void insertOrderBonus(OrderMaster order,Member owner){
+	public void insertOrderBonus(OrderMaster order){
+		//订单主人会员
+    	Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
 		//订单主人推荐人不为空发奖
 		if(null != owner.getRecommendId() && owner.getRecommendId() > 0){
 			//初始化计算所需配置中的变量
@@ -279,14 +277,21 @@ public class BonusService {
 	    //接着刚才循环的节点继续向上找
 		for(int i=num;i<list.size();i++){
 			MoreMemberNode m = list.get(i);
-        	//如果是工作室循环继续下一次
+			//如果是运营中心发运营中心扶持奖，发奖结束。
         	if(null != m.getIsOperator() && m.getIsOperator().equalsIgnoreCase("Y")){
-        		//如果是运营中心发运营中心扶持奖，发奖结束。
-        		double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_02);
-        		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_9,m.getMemberId(),order);
-        		break;
-        		
+        		//判断左右分支是否都是工作室，如果都是才可以得到扶持奖。
+        		Map<String,Object> map = moreNodeMapper.getSubNodesIsSalesDept(m.getId());
+        		String leftSalesDept = map.get("left_sales_dept")==null?"":map.get("left_sales_dept").toString();
+        		String rightSalesDept = map.get("right_sales_dept")==null?"":map.get("right_sales_dept").toString();
+        		if(leftSalesDept.equalsIgnoreCase("Y") && rightSalesDept.equalsIgnoreCase("Y")){
+        			double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_02);
+        			insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_9,m.getMemberId(),order);
+        			break;
+        		}else{
+        			break;
+        		}
         	}else if(null != m.getIsSalesDept() && m.getIsSalesDept().equalsIgnoreCase("Y")){
+        		//如果是工作室循环继续下一次
         		continue;
         	}else{
         		//非工作室，非运营中心，即是普通会员，发奖结束。
@@ -628,8 +633,8 @@ public class BonusService {
 			divHis.setDevidendCount(div.getDividendCount());
 			//订单分红包id
 			divHis.setDividendId(div.getId());
-			//领取时间
-			divHis.setReceivedTime(new Date());
+			//领取时间,Job执行时间的昨天
+			divHis.setReceivedTime(DateHelper.getYesterDay());
 			//本次领取金额
 			double total = commonService.multiply(bonusNum, div.getDividendCount().doubleValue());
 			//如果已经领取的值 大于余额，那么只能领取余额。

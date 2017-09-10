@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : distribution
-Source Server Version : 50173
-Source Host           : 59.110.12.140:3306
+Source Server         : product_dist
+Source Server Version : 50719
+Source Host           : 59.110.42.11:3303
 Source Database       : distribution
 
 Target Server Type    : MYSQL
-Target Server Version : 50173
+Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2017-09-08 10:14:17
+Date: 2017-09-10 17:41:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,13 +47,14 @@ CREATE TABLE `account_manager` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `member_id` (`member_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='账户管理表master';
 
 -- ----------------------------
 -- Records of account_manager
 -- ----------------------------
-INSERT INTO `account_manager` VALUES ('1', '1', '0.00', '0.00', '0.00', '0.00', '1', '2017-08-30 20:43:18', '1', '2017-09-07 19:07:35');
+INSERT INTO `account_manager` VALUES ('1', '1', '0.00', '0.00', '0.00', '0.00', '1', '2017-09-10 15:43:18', '1', '2017-09-10 17:16:51');
 
 -- ----------------------------
 -- Table structure for admin
@@ -75,7 +76,7 @@ CREATE TABLE `admin` (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', '1775867319', '小薇', '670B14728AD9902AECBA32E22FA4F6BD', '1', '2017-08-26 14:10:39', '1', '2017-08-26 14:10:50', '2');
+INSERT INTO `admin` VALUES ('1', '1775867319', '李晓伟', '96E79218965EB72C92A549DD5A330112', '1', '2017-09-10 14:10:39', '1', '2017-09-10 14:10:50', '2');
 
 -- ----------------------------
 -- Table structure for advance
@@ -145,7 +146,7 @@ INSERT INTO `basic_manage` VALUES ('7', 'D01', '06', '黑金卡', '60000.00', '1
 INSERT INTO `basic_manage` VALUES ('8', 'D02', '00', '分红包奖励', null, null, null, null, null, null, null, null, null, null, '5.00', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('9', 'D02', '01', '当日分红包比例', null, null, null, null, null, null, null, null, '20.00', null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('10', 'D02', '02', '分红包满额比例', null, null, null, null, null, null, null, null, '75.00', null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('11', 'D03', '00', '见点奖', null, null, null, null, null, null, null, null, null, null, '8.00', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('11', 'D03', '00', '见点奖', null, null, null, null, null, null, null, null, null, null, '4.00', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('12', 'D03', '01', '当日见点奖比例', null, null, null, null, null, null, null, null, '10.00', null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('13', 'D04', '00', '见点奖点位', null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('14', 'D04', '01', '销售会员个数0', null, null, null, null, null, null, null, null, null, null, null, null, '0', '0', '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
@@ -213,8 +214,8 @@ CREATE TABLE `bonus_pool` (
 -- ----------------------------
 -- Records of bonus_pool
 -- ----------------------------
-INSERT INTO `bonus_pool` VALUES ('1', '分红包池', '0.00', '1', '内置数据', '2017-09-07 22:40:24', '1', '2017-09-08 10:03:16', '0');
-INSERT INTO `bonus_pool` VALUES ('2', '见点奖池', '0.00', '2', '内置数据', '2017-09-07 22:40:24', '1', '2017-09-08 10:03:16', '0');
+INSERT INTO `bonus_pool` VALUES ('1', '分红包池', '0.00', '1', '内置数据', '2017-09-10 22:40:24', '1', '2017-09-10 14:50:00', '0');
+INSERT INTO `bonus_pool` VALUES ('2', '见点奖池', '0.00', '2', '内置数据', '2017-09-10 22:40:24', '1', '2017-09-10 14:53:00', '0');
 
 -- ----------------------------
 -- Table structure for bonus_pool_history
@@ -234,7 +235,7 @@ CREATE TABLE `bonus_pool_history` (
   `update_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资金池出入明细表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='资金池出入明细表';
 
 
 -- ----------------------------
@@ -253,8 +254,11 @@ CREATE TABLE `china_president_bonus` (
   `update_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='全国董事人均日奖金明细';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='全国董事人均日奖金明细';
 
+-- ----------------------------
+-- Records of china_president_bonus
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for date_bonus_history
@@ -277,7 +281,7 @@ CREATE TABLE `date_bonus_history` (
   `alarm_status` int(1) DEFAULT '0' COMMENT '分红包发放状态',
   `jd_alarm_status` int(1) DEFAULT '0' COMMENT '见点奖发放状态',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='日分红包和见点奖奖金发放明细';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='日分红包和见点奖奖金发放明细';
 
 -- ----------------------------
 -- Table structure for dictionary
@@ -338,7 +342,11 @@ CREATE TABLE `dividend` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分红包表';
 
-INSERT INTO `dividend` VALUES ('1', '1', '1', '170908131258099', '600.00', '1', '0.00', '0.00', '800.00', '1', '36.00', '1', '2017-09-08 12:18:28', '1', '2017-09-08 12:18:28');
+-- ----------------------------
+-- Records of dividend
+-- ----------------------------
+INSERT INTO `dividend` VALUES ('1', '1', '1', '170910131258099', '600.00', '1', '0.00', '0.00', '800.00', '1', '48.00', '1', '2017-09-08 12:18:28', '0', '2017-09-10 14:50:00');
+
 
 -- ----------------------------
 -- Table structure for dividend_history
@@ -358,11 +366,7 @@ CREATE TABLE `dividend_history` (
   `mgmt_fee` decimal(15,2) DEFAULT NULL COMMENT '管理费',
   `balance_status` int(1) DEFAULT '0' COMMENT '0-未结算，1-已结算',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分红包领取明细表';
-
--- ----------------------------
--- Records of dividend_history
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分红包领取明细表';
 
 -- ----------------------------
 -- Table structure for goods
@@ -397,10 +401,6 @@ CREATE TABLE `goods` (
 INSERT INTO `goods` VALUES ('1', '瑶酿通補 6支装/盒', '100', '600.00', '2017-08-28 23:57:18', '01', null, null, null, null, null, null, null, null, null, null, null, '2017-08-28 23:58:12', 'N');
 
 -- ----------------------------
--- Records of invest
--- ----------------------------
-
--- ----------------------------
 -- Table structure for job_logs
 -- ----------------------------
 DROP TABLE IF EXISTS `job_logs`;
@@ -409,14 +409,13 @@ CREATE TABLE `job_logs` (
   `job_name` varchar(255) DEFAULT NULL,
   `run_time` datetime DEFAULT NULL,
   `result` varchar(255) DEFAULT NULL,
-  `remarks` varchar(255) DEFAULT NULL,
+  `remarks` varchar(4000) DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `create_by` int(11) DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='job执行记录表';
-
 
 -- ----------------------------
 -- Table structure for member
@@ -453,13 +452,17 @@ CREATE TABLE `member` (
   `first_agent_cnt` int(11) DEFAULT NULL COMMENT '一代个数',
   `recommend_name` varchar(255) DEFAULT NULL COMMENT '推荐人名',
   `node_name` varchar(255) DEFAULT NULL COMMENT '放置节点名',
-  PRIMARY KEY (`id`)
+  `linkman_phone` varchar(255) DEFAULT NULL COMMENT '联系人电话',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `member_phone` (`member_phone`),
+  UNIQUE KEY `node_id` (`node_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES ('1', '1775867319', '670B14728AD9902AECBA32E22FA4F6BD', '670B14728AD9902AECBA32E22FA4F6BD', '670B14728AD9902AECBA32E22FA4F6BD', '0', '1', '李晓伟', 'member_level1', '232331198810030626', '大连市', 'Y', 'N', '1', 'post_level1', '0', '2017-08-26 14:28:06', '1', '2017-09-06 17:41:49', '600.00', '李晓伟', 'Y', '工商银行', '李晓伟', '6225162637263723', 'N', 'N', '0', 'ADMIN', 'ADMIN');
+INSERT INTO `member` VALUES ('1', '1775867319', '96E79218965EB72C92A549DD5A330112', 'E3CEB5881A0A1FDAAD01296D7554868D', '1A100D2C0DAB19C4430E7D73762B3423', '0', '1', '李晓伟', 'member_level1', '232331198810030626', '大连市', 'Y', 'N', '1', 'post_level1', '0', '2017-09-10 14:28:06', '1', '2017-09-10 17:16:54', '600.00', '李晓伟''', 'Y', '工商银行', '李晓伟', '6225162637263723', 'N', 'N', '0', 'ADMIN', 'ADMIN', null);
+
 
 -- ----------------------------
 -- Table structure for member_bonus
@@ -484,7 +487,6 @@ CREATE TABLE `member_bonus` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员奖金表';
 
-
 -- ----------------------------
 -- Table structure for member_charge
 -- ----------------------------
@@ -497,8 +499,6 @@ CREATE TABLE `member_charge` (
   `create_time` datetime DEFAULT NULL COMMENT '充值时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员充值表（管理员操作的）';
-
-
 
 -- ----------------------------
 -- Table structure for member_node
@@ -521,7 +521,8 @@ CREATE TABLE `member_node` (
 -- ----------------------------
 -- Records of member_node
 -- ----------------------------
-INSERT INTO `member_node` VALUES ('1', null, null, '0', '2017-09-08 21:01:19', '1', '2017-09-03 18:11:02', '1', '0', '0');
+INSERT INTO `member_node` VALUES ('1', null, null, '0', '2017-09-10 21:01:19', '1', '2017-09-10 20:12:52', '1', '0', '0');
+
 -- ----------------------------
 -- Table structure for menu
 -- ----------------------------
@@ -568,13 +569,14 @@ INSERT INTO `menu` VALUES ('28', null, '推荐网络图', '1', 'app.graph', 'ico
 
 -- ----------------------------
 -- Table structure for node_bonus_history
+-- ----------------------------
 DROP TABLE IF EXISTS `node_bonus_history`;
 CREATE TABLE `node_bonus_history` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `mebmer_id` int(11) DEFAULT NULL COMMENT '奖金所有人',
   `bonus_amount` double(10,2) DEFAULT NULL COMMENT '奖金数量',
   `from_node_id` int(11) DEFAULT NULL COMMENT '获得奖金来源节点',
-  `status` int(1) DEFAULT NULL COMMENT '0-未领取，1-已领取',
+  `status` int(1) DEFAULT NULL COMMENT '0-未领取，1-已领取，2-已结算。',
   `create_time` datetime DEFAULT NULL,
   `create_by` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
@@ -603,6 +605,7 @@ CREATE TABLE `operation_apply` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+
 -- ----------------------------
 -- Table structure for order_detail
 -- ----------------------------
@@ -620,7 +623,7 @@ CREATE TABLE `order_detail` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单管理表detail';
 
-INSERT INTO `order_detail` VALUES ('1', '170908131258099', '1', '600.00', '1', '1', '2017-09-08 12:38:02', '1', '2017-09-08 12:38:02');
+INSERT INTO `order_detail` VALUES ('1', '170910131258099', '1', '600.00', '1', '1', '2017-09-10 12:38:02', '1', '2017-09-10 12:38:02');
 -- ----------------------------
 -- Table structure for order_master
 -- ----------------------------
@@ -643,10 +646,15 @@ CREATE TABLE `order_master` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_no` (`order_no`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单master';
 
-INSERT INTO `order_master` VALUES ('1', '170908131258099', '1', '600.00', '1', '0', '600.00', '0.00', '1', '李晓伟', '大连市', 'member_level5', '2', '1', '2017-09-08 13:12:59', '1', '2017-09-08 13:12:59');
+-- ----------------------------
+-- Records of order_master
+-- ----------------------------
+INSERT INTO `order_master` VALUES ('1', '170910131258099', '1', '600.00', '1', '0', '600.00', '0.00', '1', '李晓伟', '大连市', 'member_level5', '2', '1', '2017-09-10 13:12:59', '1', '2017-09-10 20:52:57');
+
 
 -- ----------------------------
 -- Table structure for role
@@ -731,7 +739,6 @@ CREATE TABLE `transfer` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='转账表master';
 
-
 -- ----------------------------
 -- Function structure for getChildList
 -- ----------------------------
@@ -777,15 +784,7 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS v
   END
 ;;
 DELIMITER ;
--- 添加索引
-ALTER TABLE `account_manager` ADD UNIQUE ( `member_id` ) ;
-ALTER TABLE `member` ADD UNIQUE ( `node_id` ) ;
-ALTER TABLE `member` ADD UNIQUE ( `member_phone` ) ;
-ALTER TABLE `order_master` ADD UNIQUE ( `order_no` ) ;
 
--- 添加联系人
-ALTER TABLE `member`
-  ADD COLUMN `linkman_phone`  varchar(255) NULL COMMENT '联系人电话' AFTER `node_name`;
 -- 商品添加字段
 ALTER TABLE `goods`
 ADD COLUMN `info`  varchar(5000) NULL COMMENT '介绍';

@@ -54,7 +54,8 @@ angular.module('home').controller('homeCtrl',
             Notify.warning("请输入身份证号码。");
         }else if(!/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test($scope.currentUser.idNumber.trim())){
             Notify.warning("身份证号码格式有误，请重新输入。");
-        }else if(!$scope.currentUser.bankName){
+        }
+        /*else if(!$scope.currentUser.bankName){
             Notify.warning("请选择开户行。");
         }else if(!$scope.currentUser.bankUserName||!$scope.currentUser.bankUserName.trim()){
             Notify.warning("请输入开户人姓名。");
@@ -62,7 +63,8 @@ angular.module('home').controller('homeCtrl',
             Notify.warning("请输入银行卡号。");
         }else if(!/^[0-9]*$/.test($scope.currentUser.cardNumber)){
             Notify.warning("银行卡号只能为纯数字，请重新输入。");
-        }else if(!$scope.currentUser.queryPassword||!$scope.currentUser.queryPassword.trim()){
+        }*/
+        else if(!$scope.currentUser.queryPassword||!$scope.currentUser.queryPassword.trim()){
             Notify.warning("请输入二级密码。");
         }else if(!$scope.queryPasswordConfirm||!$scope.queryPasswordConfirm.trim()){
             Notify.warning("请确认二级密码。");

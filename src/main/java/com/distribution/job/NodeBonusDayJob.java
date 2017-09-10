@@ -30,7 +30,7 @@ public class NodeBonusDayJob {
 	 * @author su
 	 * @date 2017年9月7日 上午11:05:16
 	 */
-	@Scheduled(cron ="0 10 1 * * ?" )//每天早上1点钟执行
+	@Scheduled(cron ="0 27 10 * * ?" )//每天早上1点钟执行
 	public void sendNodeBonusFromNodeHistory(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时发放见点奖/NodeBonusDayJob/sendNodeBonusFromNodeHistory");

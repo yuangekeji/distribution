@@ -87,6 +87,12 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
             Notify.warning("会员账号有误，会员账号为手机号码。");
             $scope.submitFlag = true;
+        }else if(!$scope.member.linkmanPhone||!$scope.member.linkmanPhone.trim()){
+            Notify.warning("请输入联系人手机号。");
+            $scope.submitFlag = true;
+        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.linkmanPhone))){
+            Notify.warning("联系人手机号有误，请重新输入。");
+            $scope.submitFlag = true;
         }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
             Notify.warning("请输入登录密码。");
             $scope.submitFlag = true;

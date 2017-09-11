@@ -171,6 +171,8 @@ public class NodeService {
 			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL3,BonusConstant.POST_LEVEL4,updateId);
             //处理晋升节点所有上级总监晋升为董事   
 			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL4,BonusConstant.POST_LEVEL5,updateId);
+			//处理晋升节点所有上级董事晋升为全国董事   
+			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL5,BonusConstant.POST_LEVEL6,updateId);
 		}else{
 			return;
 		}

@@ -45,7 +45,7 @@ public class NodeServiceTest extends SpringServiceTest{
 	}
 	@Test
 	public void buildNodeTreeByNodeTest(){
-		int nodeId = 2;
+		int nodeId = 39;
 		nodeService.buildNodeTreeByNode(nodeId);
 	}
 	@Test
@@ -57,7 +57,7 @@ public class NodeServiceTest extends SpringServiceTest{
 		order.setOrderNo(new Long("1701230"));
 		order.setCreateTime(new Date());
 		order.setMemberId(9);
-		int nodeId = 13;
+		int nodeId = 144;
 		nodeService.processMemberPromotion(nodeId, order.getCreateId());
 	}
 	@Test
@@ -74,6 +74,6 @@ public class NodeServiceTest extends SpringServiceTest{
 	}
 	@Test
 	public void getSubNodeNumberAndSales(){
-		Map<String,String> map = nodeService.getSubNodeNumberAndSales(1);
+		Map<String,String> map = nodeService.getSubNodeNumberAndSales(39);
 	}
 }

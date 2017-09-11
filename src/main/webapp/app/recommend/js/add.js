@@ -128,7 +128,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     };
 
     /**loading*/
-    var e1 = $('.portlet');
+    var e1 = $('.full-view');
     $scope.startLoading=function () {
         App.blockUI({
             target: e1,

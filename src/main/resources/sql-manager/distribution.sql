@@ -53,7 +53,7 @@ CREATE TABLE `account_manager` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `member_id` (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='账户管理表master';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='账户管理表master';
 
 -- ----------------------------
 -- Records of account_manager
@@ -75,7 +75,7 @@ CREATE TABLE `admin` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='管理员';
 
 -- ----------------------------
 -- Records of admin
@@ -138,7 +138,7 @@ CREATE TABLE `basic_manage` (
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`,`type_code`,`detail_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='基本配置管理表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='基本配置管理表';
 
 -- ----------------------------
 -- Records of basic_manage
@@ -193,7 +193,7 @@ CREATE TABLE `bonus_cache_pool` (
   `update_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='资金发放池表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='资金发放池表';
 
 -- ----------------------------
 -- Records of bonus_cache_pool
@@ -216,7 +216,7 @@ CREATE TABLE `bonus_pool` (
   `update_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='资金池表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='资金池表';
 
 -- ----------------------------
 -- Records of bonus_pool
@@ -308,7 +308,7 @@ CREATE TABLE `dictionary` (
   `dic_type` varchar(255) DEFAULT NULL COMMENT '所属模块',
   `dic_des` varchar(255) DEFAULT NULL COMMENT '字典描述',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dictionary
@@ -354,7 +354,7 @@ CREATE TABLE `dividend` (
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='分红包表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分红包表';
 
 -- ----------------------------
 -- Records of dividend
@@ -411,7 +411,7 @@ CREATE TABLE `goods` (
   `delete_flag` varchar(255) DEFAULT 'N' COMMENT '删除标志(Y:已删除,N:未删除)',
   `info` varchar(5000) DEFAULT NULL COMMENT '介绍',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='商品表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- ----------------------------
 -- Records of goods
@@ -478,7 +478,7 @@ CREATE TABLE `member` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `member_phone` (`member_phone`),
   UNIQUE KEY `node_id` (`node_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
 -- Records of member
@@ -545,7 +545,7 @@ CREATE TABLE `member_node` (
   `member_total` int(255) unsigned DEFAULT '0' COMMENT '备用下级数量,废弃字段',
   `sales_total` double(10,0) DEFAULT '0' COMMENT '备用销售业绩总数，废弃字段',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会员节点二叉树表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员节点二叉树表';
 
 -- ----------------------------
 -- Records of member_node
@@ -564,7 +564,7 @@ CREATE TABLE `menu` (
   `menu_link` varchar(255) DEFAULT NULL COMMENT '连接url',
   `menu_icon` varchar(255) DEFAULT NULL COMMENT '图标',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='菜单表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='菜单表';
 
 -- ----------------------------
 -- Records of menu
@@ -655,7 +655,7 @@ CREATE TABLE `order_detail` (
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='订单管理表detail';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单管理表detail';
 
 -- ----------------------------
 -- Records of order_detail
@@ -686,7 +686,7 @@ CREATE TABLE `order_master` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_no` (`order_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='订单master';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单master';
 
 -- ----------------------------
 -- Records of order_master
@@ -701,7 +701,7 @@ CREATE TABLE `role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL COMMENT '角色名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Records of role

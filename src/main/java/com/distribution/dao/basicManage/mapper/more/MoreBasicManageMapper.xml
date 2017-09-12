@@ -93,5 +93,13 @@
     <include refid="Base_Column_List" />
     from basic_manage
   </select>
-  
+
+  <update id="updateBasicSetting" parameterType="com.distribution.dao.basicManage.model.BasicManage" >
+      update basic_manage
+         set max_percent = #{maxPercent,jdbcType=DECIMAL},
+             max_amt = #{maxAmt,jdbcType=DECIMAL},
+             min_amt = #{minAmt,jdbcType=DECIMAL}
+       where detail_code = #{detailCode,jdbcType=VARCHAR}
+         and type_code = #{typeCode,jdbcType=VARCHAR}
+  </update>
 </mapper>

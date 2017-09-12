@@ -69,6 +69,40 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
     };
 
     /**
+     * excel download
+     */
+    $scope.download = function() {
+        var blob = new Blob([document.getElementById('orderList').innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        saveAs(blob, "订单列表.xls");
+
+       /* $scope.datetime.startTime=$scope.year+"-"+ $scope.lastmounth+"-"+$scope.lastday;
+        $scope.datetime.endTime=$scope.yearD+"-"+ $scope.mounthD+"-"+"25";
+        $scope.datetime.type= $scope.selectway;*/
+        /*$http({
+            url: ctx + '/admOrder/download',
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            params: $scope.myPage.parameterMap,
+            responseType: 'arraybuffer'
+        }).success(function (data) {
+            var blob = new Blob([data], {type: "application/vnd.ms-excel"});
+            var objectUrl = URL.createObjectURL(blob);
+            var filename="报表.xls";
+            if (window.navigator.msSaveOrOpenBlob) {// For IE:
+                navigator.msSaveBlob(blob, filename);
+            }else{ // For other browsers:
+                URL.revokeObjectURL(objectUrl);
+            }
+        }).error(function(data){
+            alert(data.message);
+        });*/
+    }
+
+    /**
      * 初始化
      */
     $scope.onInit = function () {

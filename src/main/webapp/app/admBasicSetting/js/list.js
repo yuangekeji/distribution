@@ -1,4 +1,4 @@
-angular.module('admBasicSetting').controller('admBasicSettingCtrl', function (title, $scope, $http, $state, $sessionStorage,Notify) {
+angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log, ConfirmModal, Notify) {
     title.setTitle('基本配置');
     $scope.myPage = {
         pageNo: 1,
@@ -7,6 +7,41 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function (ti
         result: [],
         parameterMap: {}
     };
+
+    /*$scope.advanceMinAmt = {
+        typeCode: '',
+        detailCode: '',
+        minAmt: 0,
+        maxAmt:0,
+        maxPercent:0
+    };
+    $scope.dividendBasic = {
+        typeCode: '',
+        detailCode: '',
+        minAmt: 0,
+        maxAmt:0,
+        maxPercent:0
+    };
+    $scope.jdBasic = {
+        typeCode: '',
+        detailCode: '',
+        minAmt: 0,
+        maxAmt:0,
+        maxPercent:0
+    };*/
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
     $scope.search = function(){
         $http.post(ctx + '/admBasicSetting/list', $scope.myPage)
             .success(function (resp) {
@@ -16,7 +51,7 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function (ti
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
 
                 } else {
-                    console.log(resp.errorMessage);
+                    console.log(resp.errors());
                 }
 
             }).error(function (error) {
@@ -24,9 +59,35 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function (ti
         });
     }
 
-    $scope.saveBasic = function () {
-        Notify.warning("基本设置修改功能正在开发中，敬请期待。");
+    //提现，分红包，见点奖设置修改
+    $scope.saveBasic = function (typeCode, detailCode, minAmt, maxAmt, maxPercent) {
+        alert(minAmt);
+        /*$scope.startLoading();
+        $http.post(ctx + '/admBasicSetting/updateBasicSetting',
+        {
+            typeCode    : typeCode,
+            detailCode  : detailCode,
+            minAmt      : minAmt,
+            maxAmt      : maxAmt,
+            maxPercent  : maxPercent
+        }).success(function (resp) {
+            if(resp.successful) {
+                //$scope.msg = "";
+                if (resp.data.result == 'success') {
+                    Notify.success("基本设置修改成功。");
+                }else {
+                    Notify.error("基本设置修改失败，请重新尝试");
+                }
+                $scope.stopLoading();
+            }else{
+                Notify.error("基本设置修改失败，请稍后再试");
+                //失败后停止loading，刷新页面
+                $scope.stopLoading();
+                $window.location.reload();
+            }
+        });*/
     }
+
     /**
      * 初始化
      */

@@ -23,7 +23,7 @@ public class ChinaPresidentBonusJob {
      * @date 2017.09.05
      */
     //@Scheduled(cron = "0/30 * * * * *")  //测试用
-    @Scheduled(cron ="0 0 1 * * ?" )//每天早上1点钟执行
+    @Scheduled(cron ="0 0 3 * * ?" )//每天早上3点钟执行
     public void addChinaPresidentBonusByDay() {
         Map map = chinaPresidentBonusService.addChinaPresidentBonusByDay();
         chinaPresidentBonusService.jobLogsByDay(map);
@@ -35,7 +35,7 @@ public class ChinaPresidentBonusJob {
      * @date 2017.09.07
      */
     //@Scheduled(cron = "0/30 * * * * *")  //测试用
-    @Scheduled(cron ="0 0 1 1 * ?" )//每月1号早上1点钟执行
+    @Scheduled(cron ="0 0 4 1 * ?" )//每月1号早上4点钟执行
     public void addChinaPresidentBonusByMonth() {
         Map map = chinaPresidentBonusService.addChinaPresidentBonusByMonth();
         chinaPresidentBonusService.jobLogsByMonth(map);

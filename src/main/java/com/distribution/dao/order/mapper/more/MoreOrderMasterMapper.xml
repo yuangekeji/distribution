@@ -94,6 +94,7 @@
       LEFT JOIN member d
         ON a.member_id = d.id
       <include refid="where"/>
+      order by a.id desc
       <include refid="pageLimit"/>
   </select>
 

@@ -27,7 +27,14 @@ public class MoreMemberNode extends MemberNode{
 	private String rightLevel;
 	private String isOperator;
 	private String isSalesDept;
+	private String memberPost;
 	
+	public String getMemberPost() {
+		return memberPost;
+	}
+	public void setMemberPost(String memberPost) {
+		this.memberPost = memberPost;
+	}
 	public String getMemberName() {
 		return memberName;
 	}

@@ -40,7 +40,7 @@ public class DividendBonusDayJob {
 	 * @author su
 	 * @date 2017年9月7日 上午11:14:03
 	 */
-	@Scheduled(cron ="0 0 23 * * ?" )//每天23点钟执行
+	@Scheduled(cron ="0 30 2 * * ?" )//每天2点30钟执行
 	public void balanceDividendBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时结算分红包奖/DividendBonusDayJob/balanceDividendBonus");

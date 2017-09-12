@@ -4,7 +4,6 @@
   */
 package com.distribution.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.distribution.common.constant.BonusConstant;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
@@ -34,6 +38,8 @@ public class NodeService {
 	private MoreNodeBonusHistoryMapper nodeBonusHistoryMapper;
 	@Autowired
 	private CommonService commonService;
+	@Autowired
+	private DataSourceTransactionManager txManager;
 	
 	/**
 	 * 通过父节点和左右分区标识来判断是否存在
@@ -148,8 +154,8 @@ public class NodeService {
 		if(null != list && list.size() > 0){
 			int promNodeId = 0;
 			for(MemberNode node : list){
-				//查询其下属所有节点的销售业绩
-				double total = moreNodeMapper.findTotalSalesByParentId(node.getId());
+				//查询其下属所有节点的销售业绩,不包括自己。
+				double total = moreNodeMapper.findTotalSalesByParentIdNotIncludeCurrentNode(node.getId());
 				//判断是否符合主任晋升标准
 				if(total >= commonService.getPromotionStandard(BonusConstant.D10,BonusConstant.CODE_00)){
 			        //更新会员级别为主任，其上级中不是主任的都升为主任。
@@ -165,6 +171,8 @@ public class NodeService {
 			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL3,BonusConstant.POST_LEVEL4,updateId);
             //处理晋升节点所有上级总监晋升为董事   
 			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL4,BonusConstant.POST_LEVEL5,updateId);
+			//处理晋升节点所有上级董事晋升为全国董事   
+			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL5,BonusConstant.POST_LEVEL6,updateId);
 		}else{
 			return;
 		}
@@ -178,7 +186,7 @@ public class NodeService {
 	 */
 	public void processMemberPromotion(int nodeId,String fromLevel,String toLevel,int updateId){
         
-		Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
+		Map<String,Object> param = setParamMap(nodeId,fromLevel,toLevel);
 		//查找带左右子节点上级
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWhichHasTwoSubNodes(param);
         List<Integer> members = new ArrayList<Integer>();
@@ -195,7 +203,7 @@ public class NodeService {
         }
         if(members.size() > 0){
         	Map<String,Object> map = new HashMap<String,Object>();
-        	map.put("memberLevel", toLevel);
+        	map.put("memberPost", toLevel);
         	map.put("updateId", updateId);
         	map.put("updateTime", new Date());
         	map.put("memberIds", members);
@@ -210,12 +218,21 @@ public class NodeService {
 	 * @param toLevel
 	 */
 	public void updateParentLevel(int nodeId,String fromLevel,String toLevel){
-		/**
-		 * update member set member_level = 'toLevel'
-			where FIND_IN_SET(node_id,getParentList(10)) and member_level = 'fromLevel'
-		 */
-		Map<String,String> param = setParamMap(nodeId,fromLevel,toLevel);
-		moreNodeMapper.updateParentLevel(param);
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setName("NodeService_updateParentLevel_txmanager");
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		TransactionStatus txStatus = txManager.getTransaction(def);
+		try {
+			List<MemberNode> list = moreNodeMapper.findParentNodes(nodeId);
+			if(null != list && list.size() > 0){
+				Map<String,Object> param = setParamMap(nodeId,fromLevel,toLevel);
+				param.put("list", list);
+				moreNodeMapper.updateParentLevel(param);
+			}
+			txManager.commit(txStatus);
+		} catch (Exception e) {
+			txManager.rollback(txStatus);
+		}
 	}
 	/**
 	 * 
@@ -223,8 +240,16 @@ public class NodeService {
 	 * @param map
 	 */
 	public void updateMemberLevelBatch(Map<String,Object> map){
-		
-		moreMemberMapper.updateMemberLevelBatch(map);
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setName("NodeService_updateMemberLevelBatch_txmanager");
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		TransactionStatus txStatus = txManager.getTransaction(def);
+		try {
+			moreMemberMapper.updateMemberPostLevelBatch(map);
+			txManager.commit(txStatus);
+		} catch (Exception e) {
+			txManager.rollback(txStatus);
+		}
 	}
 	/**
 	 * 封装参数
@@ -234,8 +259,8 @@ public class NodeService {
 	 * @param toLevel
 	 * @return
 	 */
-	private Map<String,String> setParamMap(int nodeId,String fromLevel,String toLevel){
-		Map<String,String> param = new HashMap<String,String>();
+	private Map<String,Object> setParamMap(int nodeId,String fromLevel,String toLevel){
+		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("nodeId", String.valueOf(nodeId));
 		param.put("fromLevel", fromLevel);
 		param.put("toLevel", toLevel);
@@ -372,7 +397,7 @@ public class NodeService {
 			List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
 			if (null != rightNum && rightNum.size() > 0) {
 				//右节点的所有销售额，不包含折扣单
-				double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
+				Double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
 				map.put("rightNum", String.valueOf(rightNum.size()));
 				map.put("rightToalSales", String.valueOf(rightToalSales));
 			}

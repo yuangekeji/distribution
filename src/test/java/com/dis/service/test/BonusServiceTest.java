@@ -69,12 +69,12 @@ public class BonusServiceTest extends SpringServiceTest{
 	@Test
 	public void insertWorkRoomAndOperatingCenterBonusTest(){
 		OrderMaster order = new OrderMaster();
-		order.setOrderAmt(new BigDecimal(3000));
-		order.setId(6);
-		order.setCreateId(6);
-		order.setOrderNo(new Long("1701238"));
+		order.setOrderAmt(new BigDecimal(1800));
+		order.setId(40);
+		order.setCreateId(29);
+		order.setOrderNo(new Long("170909192814050"));
 		order.setCreateTime(new Date());
-		int nodeId = 10;
+		int nodeId = 144;
 		bonusService.insertWorkRoomAndOperatingCenterBonus(nodeId, order);
 	}
 	@Test
@@ -86,6 +86,6 @@ public class BonusServiceTest extends SpringServiceTest{
 		order.setOrderNo(new Long("1701230"));
 		order.setCreateTime(new Date());
 		order.setMemberId(9);
-		bonusService.insertOrderBonus(order);
+		//bonusService.insertOrderBonus(order);
 	}
 }

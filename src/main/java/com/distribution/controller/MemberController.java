@@ -130,6 +130,9 @@ public class MemberController extends BasicController {
     public JsonMessage activation(@RequestBody Member member,HttpSession session){
         Integer it = memberService.updateActivation(member);
         if(it>0) {
+        	MoreMember m = memberService.selectMemberInfo(member.getId());
+        	//处理会员晋升 当前节点的所有上级
+    		nodeService.processMemberPromotion(m.getNodeId(),member.getId());
             session.setAttribute(Constant.SESSION_CURRENT_USER,member);
             return successMsg();
         }else {
@@ -184,5 +187,20 @@ public class MemberController extends BasicController {
             return successMsg();
         else
             return failMsg();
+    }
+
+    /**
+     * description 修改会员信息
+     * @author Bright
+     * */
+    @RequestMapping("/updateMember")
+    @ResponseBody
+    public JsonMessage updateMember(@RequestBody MoreMember moreMember){
+        Integer it = memberService.updateMember(moreMember);
+        if(it>0){
+            return successMsg();
+        }else{
+            return failMsg();
+        }
     }
 }

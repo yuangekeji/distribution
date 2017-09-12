@@ -36,7 +36,7 @@
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
     <result column="left_level" property="leftLevel" jdbcType="VARCHAR" />
     <result column="right_level" property="rightLevel" jdbcType="VARCHAR" />
-    
+    <result column="member_post" property="memberPost" jdbcType="VARCHAR" />
     <result column="is_operator" property="isOperator" jdbcType="VARCHAR" />
     <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
   </resultMap>
@@ -62,14 +62,21 @@
 		order by id desc
   </select>
   <select id="findTotalSalesByParentId" resultType="java.lang.Double" parameterType="java.lang.Integer">
-  		select sum(o.order_amt) as total_sales from member m
+  		select ifnull(sum(o.order_amt),0) as total_sales from member m
 		left join order_master o on m.id = o.member_id
 		where find_in_set(m.node_id,getChildList(#{parentId})) and (o.order_category = 1 or o.order_category = 2)
   </select>
+  <select id="findTotalSalesByParentIdNotIncludeCurrentNode" resultType="java.lang.Double" parameterType="java.lang.Integer">
+  		select ifnull(sum(o.order_amt),0) as total_sales from member m
+		left join order_master o on m.id = o.member_id
+		where find_in_set(m.node_id,getChildList(#{parentId})) 
+		and (o.order_category = 1 or o.order_category = 2)
+		and m.node_id != #{parentId}
+  </select>
   <select id="listParentNodesWhichHasTwoSubNodes" resultMap="MoreResultMap" parameterType="map">
   		SELECT tep.*,
-  			rt.member_level as right_level,
-  			lt.member_level as left_level
+  			rt.member_post as right_level,
+  			lt.member_post as left_level
 		from 
 		(
 			SELECT 
@@ -80,7 +87,7 @@
 			from member m
 			LEFT JOIN member_node n on m.node_id = n.id
 			where FIND_IN_SET(node_id,getParentList(#{nodeId})) 
-			and member_level = #{fromLevel}
+			and member_post = #{fromLevel}
 			and n.left_id > 0
 			and n.right_id > 0
 			order by node_id desc
@@ -89,13 +96,13 @@
 		LEFT JOIN member rt on rt.node_id = tep.right_id
   </select>
   <select id="listParentIsManageLevelNodes" resultMap="MoreResultMap" parameterType="java.lang.Integer">
-  		select max(id) as member_id,member_level
+  		select max(id) as member_id,member_post
 		from 
-		(select m.id,m.member_level
+		(select m.id,m.member_post
 		from member m
 		where FIND_IN_SET(node_id,getParentList(#{nodeId}))
 		order by node_id desc)tem
-		group by member_level
+		group by member_post
   </select>
   <select id="listSubNodes" resultMap="MoreResultMap" parameterType="java.lang.Integer">
   		select 
@@ -125,8 +132,26 @@
 		order by m.node_id desc
   </select>
   <update id="updateParentLevel" parameterType="map">
-  		update member set member_level = #{toLevel}
-		where FIND_IN_SET(node_id,getParentList(#{nodeId})) and member_level = #{fromLevel}
+  		update member 
+  		set member_post = #{toLevel}
+		where member_post = #{fromLevel} 
+		and node_id in 
+        <foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+		  #{ids.id}
+		</foreach>
   </update>
-  
+  <select id="getSubNodesIsSalesDept" resultType="java.util.Map" parameterType="java.lang.Integer">
+  		select 
+			n.id as node_id,
+			n.left_id,
+			mlt.id as left_member_id,
+			mlt.is_sales_dept as left_sales_dept,
+			n.right_id,
+			rlt.id as right_member_id,
+			rlt.is_sales_dept as right_sales_dept
+		from member_node n
+		left join member mlt on n.left_id = mlt.node_id
+		left join member rlt on n.right_id = rlt.node_id
+		where n.id = #{nodeId}
+  </select>
 </mapper>

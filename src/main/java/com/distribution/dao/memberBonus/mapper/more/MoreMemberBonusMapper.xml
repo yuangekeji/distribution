@@ -97,7 +97,7 @@
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
           and DATE_FORMAT(mb.order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
       </if>
-          and mb.bonus_type not in ('6')
+          and mb.bonus_type not in ('6','3')
     </where>
   </sql>
   <select id="selectMemberBonusList" resultMap="MemberBonusListResultMap" parameterType="com.distribution.common.utils.Page" >
@@ -205,7 +205,7 @@
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
         and DATE_FORMAT(mb.order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
       </if>
-      and bonus_type not in ('6')
+      and bonus_type not in ('6','3')
     </where>
   </sql>
   <select id="selectMemberBonusDetail" resultMap="MemberBonusDetailResultMap" parameterType="com.distribution.common.utils.Page" >

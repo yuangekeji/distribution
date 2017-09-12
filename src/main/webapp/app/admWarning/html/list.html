@@ -59,6 +59,7 @@
                             <thead>
                                 <tr >
                                     <th>发放日期</th>
+                                    <th>操作日期</th>
                                     <th>分红包发放状态</th>
                                     <th>广告宣传奖发放状态</th>
                                     <th>营业额|营业额20%|营业额10%</th>
@@ -72,6 +73,7 @@
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
                                 total-items="myPage.totalCount">
                                 <td>{{row.date |date:'yyyy-MM-dd'}}</td>
+                                <td>{{row.createTime |date:'yyyy-MM-dd'}}</td>
                                 <td>
                                     <span class="label label-sm " ng-class="{'label-danger': row.alarmStatus ==0,  'label-success': row.alarmStatus ==1}">
                                          {{row.alarmStatus |warningStatusFilter}}

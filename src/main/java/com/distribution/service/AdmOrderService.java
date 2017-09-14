@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdmOrderService {
@@ -54,17 +55,15 @@ public class AdmOrderService {
         }
     }
 
-    public void exportData(Page page, HttpServletResponse response) throws IOException, InvocationTargetException {
-        List<MoreOrderMaster> result = moreOrderMasterMapper.getOrderList(page);
+    public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
+        List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList(map);
         //定义表头
         String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单状态", "物流信息"};
 
-        if (null != result) {
-            this.exportExcel("abc", excelHeader, result, response.getOutputStream());
-        }
+        return  this.exportExcel("abc", excelHeader, result, response.getOutputStream());
     }
 
-    public void exportExcel(String title, String[] headers, List<MoreOrderMaster> list, OutputStream out) throws InvocationTargetException {
+    public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreOrderMaster> list, OutputStream out) throws InvocationTargetException {
         // 声明一个工作薄
         XSSFWorkbook workbook = new XSSFWorkbook();
         // 生成一个表格
@@ -110,11 +109,12 @@ public class AdmOrderService {
             bodyRow.createCell(8).setCellValue(this.orderStatusFilter(list.get(j).getOrderStatues()));
             bodyRow.createCell(9).setCellValue(list.get(j).getExpressAddress());
         }
-        try {
-            workbook.write(out);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            workbook.write(out);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        return  workbook;
     }
 
     public String orderCategoryFilter(String orderCategory){

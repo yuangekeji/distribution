@@ -83,10 +83,10 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
      * excel download
      */
     $scope.excelDownload = function() {
-        window.open(ctx + "/admOrder/excelDownload" );
-
-        //location.href=ctx + "/admOrder/excelDownload"
-        /*$scope.startLoading();
+       // window.open(ctx + "/admOrder/excelDownload" );
+        //window.location.href="evalute/exportData?name="+this.page.parameterMap.name+"&phone="+this.page.parameterMap.phone+"&goodsType="+this.page.parameterMap.goodsType+"&status="+this.page.parameterMap.status;
+        window.location.href=ctx + "/admOrder/excelDownload";
+      /*  $scope.startLoading();
         $http.post(ctx + "/admOrder/excelDownload", $scope.myPage).success(function (resp) {
             if(resp.successful){
                 Notify.success("excel下载完成");
@@ -110,11 +110,11 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         /*$scope.datetime.startTime=$scope.year+"-"+ $scope.lastmounth+"-"+$scope.lastday;
         $scope.datetime.endTime=$scope.yearD+"-"+ $scope.mounthD+"-"+"25";
         $scope.datetime.type= $scope.selectway;*/
-        $http({
+  /*      $http({
             url: ctx + '/admOrder/excelDownload',
             method: "POST",
             headers: {
-                'Content-type': 'application/octet-stream'
+                'Content-type': 'application/json'
             },
             params: $scope.myPage.parameterMap,
             responseType: 'arraybuffer'
@@ -129,7 +129,7 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             }
         }).error(function(data){
             alert(data.message);
-        });
+        });*/
     }
 
     /**

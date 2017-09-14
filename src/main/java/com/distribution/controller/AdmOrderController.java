@@ -49,9 +49,17 @@ public class AdmOrderController extends BasicController{
      * description 订单列表下载
      * @author WYN
      * */
-    @RequestMapping(value = "/excelDownload", method = RequestMethod.GET)
+    @RequestMapping(value = "/excelDownload",method = {RequestMethod.GET,RequestMethod.POST}, produces="application/octet-stream")
     @ResponseBody
     public void excelDownload(@RequestBody Page page, HttpSession session, HttpServletResponse response) throws IOException, InvocationTargetException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment;filename=" + new String("订单列表".getBytes("GBK"), "iso8859-1") + ".xlsx");
+
+     /*   Pagination pagination = new Pagination();
+        pagination.getParameterMap().put("name", name);
+        pagination.getParameterMap().put("phone", phone);
+        pagination.getParameterMap().put("goodsType", goodsType);
+        pagination.getParameterMap().put("status", status);*/
         admOrderService.exportData(page,response);
     }
 

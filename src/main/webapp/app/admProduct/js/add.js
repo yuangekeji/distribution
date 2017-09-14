@@ -2,6 +2,20 @@ angular.module('admProduct').controller('admProductAddCtrl',function ($q, title,
     title.setTitle('添加商品');
     $scope.goods = {};
     $scope.submitFlag = true;
+    $scope.goodsTypes = [];
+
+    $scope.initParams = function () {
+        $http.get(ctx + "/admGoods/findGoodsTypes").success(function (resp) {
+            if(resp.successful){
+                $scope.goodsTypes = resp.data;
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        });
+    };
+
+    $scope.initParams();
+
     $scope.add = function () {
         if($scope.submitFlag) {
             $scope.submitFlag = false;

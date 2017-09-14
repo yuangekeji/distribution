@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label>商品类型</label>
                             <select class="form-control spinner input-circle" type="text" ng-model="goods.goodsType">
-                                <option value="保健品">保健品</option>
+                                <option ng-repeat="gt in goodsTypes" value="{{gt.dicCode}}">{{gt.dicName}}</option>
                             </select>
                         </div>
                         <div class="form-group">

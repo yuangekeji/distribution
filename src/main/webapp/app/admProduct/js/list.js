@@ -11,6 +11,18 @@ angular.module('admProduct').controller('admProductCtrl',function ($q, title, $s
         parameterMap: {}
     };
 
+    $scope.initParams = function () {
+        $http.get(ctx + "/admGoods/findGoodsTypes").success(function (resp) {
+            if(resp.successful){
+                $scope.goodsTypes = resp.data;
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        });
+    };
+
+    $scope.initParams();
+
     $scope.onInit = function () {
         $http.post(ctx + '/admGoods/list', $scope.myPage).success(function (resp) {
             if (resp.successful) {
@@ -49,3 +61,8 @@ angular.module('admProduct').controller('admProductCtrl',function ($q, title, $s
     };
 });
 
+angular.module('admProduct').filter("GoodsTypesFilter",function () {
+    return function (input) {
+        if(input=='01'){return '保健品'};
+    }
+});

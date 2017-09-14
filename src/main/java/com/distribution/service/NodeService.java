@@ -154,8 +154,8 @@ public class NodeService {
 		if(null != list && list.size() > 0){
 			int promNodeId = 0;
 			for(MemberNode node : list){
-				//查询其下属所有节点的销售业绩
-				double total = moreNodeMapper.findTotalSalesByParentId(node.getId());
+				//查询其下属所有节点的销售业绩,不包括自己。
+				double total = moreNodeMapper.findTotalSalesByParentIdNotIncludeCurrentNode(node.getId());
 				//判断是否符合主任晋升标准
 				if(total >= commonService.getPromotionStandard(BonusConstant.D10,BonusConstant.CODE_00)){
 			        //更新会员级别为主任，其上级中不是主任的都升为主任。
@@ -171,6 +171,8 @@ public class NodeService {
 			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL3,BonusConstant.POST_LEVEL4,updateId);
             //处理晋升节点所有上级总监晋升为董事   
 			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL4,BonusConstant.POST_LEVEL5,updateId);
+			//处理晋升节点所有上级董事晋升为全国董事   
+			processMemberPromotion(promNodeId,BonusConstant.POST_LEVEL5,BonusConstant.POST_LEVEL6,updateId);
 		}else{
 			return;
 		}
@@ -201,7 +203,7 @@ public class NodeService {
         }
         if(members.size() > 0){
         	Map<String,Object> map = new HashMap<String,Object>();
-        	map.put("memberLevel", toLevel);
+        	map.put("memberPost", toLevel);
         	map.put("updateId", updateId);
         	map.put("updateTime", new Date());
         	map.put("memberIds", members);
@@ -243,7 +245,7 @@ public class NodeService {
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
-			moreMemberMapper.updateMemberLevelBatch(map);
+			moreMemberMapper.updateMemberPostLevelBatch(map);
 			txManager.commit(txStatus);
 		} catch (Exception e) {
 			txManager.rollback(txStatus);

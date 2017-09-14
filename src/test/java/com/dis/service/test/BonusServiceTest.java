@@ -74,7 +74,7 @@ public class BonusServiceTest extends SpringServiceTest{
 		order.setCreateId(29);
 		order.setOrderNo(new Long("170909192814050"));
 		order.setCreateTime(new Date());
-		int nodeId = 29;
+		int nodeId = 144;
 		bonusService.insertWorkRoomAndOperatingCenterBonus(nodeId, order);
 	}
 	@Test

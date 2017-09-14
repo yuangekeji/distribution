@@ -51,7 +51,7 @@ public interface MoreMemberMapper extends MemberMapper{
     /**
      * 批量更新会员爵位级别
      */
-    int updateMemberLevelBatch(Map<String,Object> map);
+    int updateMemberPostLevelBatch(Map<String,Object> map);
 
     int updateMemberSalesDept(Integer memberId);
 

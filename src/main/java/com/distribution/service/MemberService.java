@@ -284,4 +284,45 @@ public class MemberService {
         BeanUtils.copyProperties(moreMember,member);
         return memberMapper.updateByPrimaryKeySelective(member);
     }
+
+    /**
+     * description 修改密码
+     * @author Bright
+     * */
+    public String updatePwd(MoreMember moreMember){
+        String pwdFlag = moreMember.getPwdFlag();
+        String result = "SUCCESS";
+        if("login".equals(pwdFlag)){
+            moreMember.setOldLoginPwd(CryptoUtil.md5ByHex(moreMember.getOldLoginPwd()));
+            if(null==moreMemberMapper.checkLoginPwd(moreMember)){
+                result = "OLD_PWD_ERROR";
+            }else{
+                Member m = new Member();
+                m.setId(moreMember.getId());
+                m.setLoginPassword(CryptoUtil.md5ByHex(moreMember.getLoginPassword()));
+                memberMapper.updateByPrimaryKeySelective(m);
+            }
+        }else if("query".equals(pwdFlag)){
+            moreMember.setOldQueryPwd(CryptoUtil.md5ByHex(moreMember.getOldQueryPwd()));
+            if(null==moreMemberMapper.checkQueryPwd(moreMember)){
+                result = "OLD_PWD_ERROR";
+            }else{
+                Member m = new Member();
+                m.setId(moreMember.getId());
+                m.setQueryPassword(CryptoUtil.md5ByHex(moreMember.getQueryPassword()));
+                memberMapper.updateByPrimaryKeySelective(m);
+            }
+        }else if("pay".equals(pwdFlag)){
+            moreMember.setOldPayPwd(CryptoUtil.md5ByHex(moreMember.getOldPayPwd()));
+            if(null==moreMemberMapper.checkPayPwd(moreMember)){
+                result = "OLD_PWD_ERROR";
+            }else{
+                Member m = new Member();
+                m.setId(moreMember.getId());
+                m.setPayPassword(CryptoUtil.md5ByHex(moreMember.getPayPassword()));
+                memberMapper.updateByPrimaryKeySelective(m);
+            }
+        }
+        return result;
+    }
 }

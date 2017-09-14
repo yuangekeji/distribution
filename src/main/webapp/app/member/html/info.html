@@ -10,7 +10,7 @@
                         <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active" data-target="#tab_1_1" data-toggle="tab">
                             <input type="radio" name="options" class="toggle" id="option1">个人信息
                         </label>
-                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm " ng-show="false" data-target="#tab_1_2" data-toggle="tab">
+                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm " data-target="#tab_1_2" data-toggle="tab">
                             <input type="radio" name="options" class="toggle" id="option2">修改密码
                         </label>
                     </div>
@@ -88,19 +88,76 @@
                     </div>
                     <div class="tab-pane" id="tab_1_2">
                         <form action="#">
-                            <div class="form-group">
-                                <label class="control-label">Current Password</label>
-                                <input type="password" class="form-control"/></div>
-                            <div class="form-group">
-                                <label class="control-label">New Password</label>
-                                <input type="password" class="form-control"/></div>
-                            <div class="form-group">
-                                <label class="control-label">Re-type New Password</label>
-                                <input type="password" class="form-control"/></div>
-                            <div class="margin-top-10">
-                                <a href="#" class="btn blue-steel"> Change Password </a>
-                                <a href="#" class="btn default"> Cancel </a>
-                            </div>
+                            <uib-tabset>
+                                <uib-tab index="0" heading="修改登录密码">
+                                    <div class="portlet-body">
+                                        <div class="form-group">
+                                            <label class="control-label">原始登录密码</label>
+                                            <input type="password" class="form-control" ng-model="pwdMember.oldLoginPwd"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">新登录密码</label>
+                                            <input type="password" class="form-control" ng-model="pwdMember.loginPassword"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">密码确认</label>
+                                            <input type="password" class="form-control" ng-model="param.loginPasswordConfirm"/>
+                                        </div>
+                                        <div class="margin-top-10">
+                                            <a href="javascript:void(0);" ng-click="savePwd('login');" class="btn blue-steel">保存</a>
+                                            <!--<a href="javascript:void(0);" class="btn default"> Cancel </a>-->
+                                        </div>
+                                    </div>
+                                </uib-tab>
+
+                                <!-----------见点奖点位------------------------>
+                                <uib-tab index="1" heading="修改查询密码">
+                                    <div class="portlet-body">
+                                        <div class="portlet-body">
+                                            <div class="form-group">
+                                                <label class="control-label">原始查询密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.oldQueryPwd"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">新查询密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.queryPassword"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">密码确认</label>
+                                                <input type="password" class="form-control" ng-model="param.queryPasswordConfirm"/>
+                                            </div>
+                                            <div class="margin-top-10">
+                                                <a href="javascript:void(0);" ng-click="savePwd('query');" class="btn blue-steel">保存</a>
+                                                <!--<a href="javascript:void(0);" class="btn default"> Cancel </a>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+
+                                <!-----------提现设置------------------------>
+                                <uib-tab index="2" heading="修改支付密码">
+                                    <div class="portlet-body">
+                                        <div class="portlet-body">
+                                            <div class="form-group">
+                                                <label class="control-label">原始支付密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.oldPayPwd"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">新支付密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.payPassword"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">密码确认</label>
+                                                <input type="password" class="form-control" ng-model="param.payPasswordConfirm"/>
+                                            </div>
+                                            <div class="margin-top-10">
+                                                <a href="javascript:void(0);" ng-click="savePwd('pay');" class="btn blue-steel">保存</a>
+                                                <!--<a href="javascript:void(0);" class="btn default"> Cancel </a>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                            </uib-tabset>
                         </form>
                     </div>
                 </div>

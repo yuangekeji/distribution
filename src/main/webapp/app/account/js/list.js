@@ -161,7 +161,7 @@ angular.module('account').controller('accountListCtrl',
         },
         receivePhoneError: function () {
             if (angular.isUndefined($scope.transfer.receivePhone) ||
-                $scope.transfer.receivePhone.length < 1 ||!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.transfer.receivePhone))) {
+                $scope.transfer.receivePhone.length < 1 ||!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.transfer.receivePhone))) {
                 $scope.validateErrors.receivePhoneError = true;
             }
         },

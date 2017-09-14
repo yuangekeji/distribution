@@ -207,6 +207,14 @@ angular
                 ]
             },
             {
+                name:'admProductAdd',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admProduct/js/add.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
                 name:'product',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',

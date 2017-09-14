@@ -203,4 +203,15 @@ public class MemberController extends BasicController {
             return failMsg();
         }
     }
+
+    /**
+     * description 修改密码
+     * @author Bright
+     * */
+    @RequestMapping("/updatePwd")
+    @ResponseBody
+    public JsonMessage updatePwd(@RequestBody MoreMember moreMember){
+        String str = memberService.updatePwd(moreMember);
+        return successMsg(str);
+    }
 }

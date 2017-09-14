@@ -475,8 +475,7 @@ public class BonusService {
             	history.setRemainJdBonus(new BigDecimal(0).longValue());
             }else{
             }
-			//发放的见点奖
-			history.setUseJdBonusTotal(new BigDecimal(totalBonus).longValue());
+			
 			//更新发放状态成功
 			history.setJdAlarmStatus(BonusConstant.BONUS_STATUS_1);
 			//更新历史所有失败的见点奖记录
@@ -498,6 +497,8 @@ public class BonusService {
     	    }
     	    history.setRemainJdBonus(history.getJdBonusTotal().longValue());
        }
+       //发放的见点奖
+       history.setUseJdBonusTotal(new BigDecimal(totalBonus).longValue());
        history.setUpdateId(0);
        history.setUpdateTime(new Date());
        if(null != history.getId() && history.getId() > 0){
@@ -596,8 +597,7 @@ public class BonusService {
             	history.setRemainDividend(new BigDecimal(0).longValue());
             }else{
             }
-			//发放的分红奖数量
-			history.setUseDividendTotal(totalBonus);
+			
 			result.put("sendActualTotalBonus", totalBonus);
 			//发放成功
 			history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
@@ -621,6 +621,8 @@ public class BonusService {
     	    }
     	    history.setRemainDividend(history.getDividendTotal().longValue());
        }
+       //发放的分红奖数量
+       history.setUseDividendTotal(totalBonus);
        history.setUpdateId(0);
        history.setUpdateTime(new Date());
        if(null != history.getId() && history.getId() > 0){

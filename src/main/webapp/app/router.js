@@ -155,6 +155,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admProduct'),
                 controller: 'admProductCtrl'
             })
+            .state('app.admProductAdd',{
+                url: '/admProductAdd',
+                templateUrl: helper.basepath('admProduct/html/add.html'),
+                resolve: helper.resolveFor('admProductAdd'),
+                controller: 'admProductAddCtrl'
+            })
             .state('app.admBasicSetting',{
                 url: '/admBasicSetting',
                 templateUrl: helper.basepath('admBasicSetting/html/list.html'),

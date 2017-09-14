@@ -6,6 +6,7 @@ import java.util.Map;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.model.Member;
+import com.distribution.dao.member.model.more.MoreMember;
 
 public interface MoreMemberMapper extends MemberMapper{
     /**
@@ -53,4 +54,19 @@ public interface MoreMemberMapper extends MemberMapper{
     int updateMemberPostLevelBatch(Map<String,Object> map);
 
     int updateMemberSalesDept(Integer memberId);
+
+    /**
+     * 验证登录密码
+     * */
+    Member checkLoginPwd(MoreMember moreMember);
+
+    /**
+     * 验证查询密码
+     * */
+    Member checkQueryPwd(MoreMember moreMember);
+
+    /**
+     * 验证支付密码
+     * */
+    Member checkPayPwd(MoreMember moreMember);
 }

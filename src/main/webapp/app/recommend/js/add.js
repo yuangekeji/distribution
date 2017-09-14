@@ -75,7 +75,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         if(!$scope.member.recommendPhone||!$scope.member.recommendPhone.trim()){
             Notify.warning("请输入推荐人手机号码");
             $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.recommendPhone))){
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.recommendPhone))){
             Notify.warning("推荐人手机号有误，请重新输入。");
             $scope.submitFlag = true;
         }else if(!$scope.member.memberName||!$scope.member.memberName.trim()){
@@ -84,13 +84,13 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if(!$scope.member.memberPhone||!$scope.member.memberPhone.trim()){
             Notify.warning("请输入会员账号。");
             $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
             Notify.warning("会员账号有误，会员账号为手机号码。");
             $scope.submitFlag = true;
         }else if(!$scope.member.linkmanPhone||!$scope.member.linkmanPhone.trim()){
             Notify.warning("请输入联系人手机号。");
             $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.linkmanPhone))){
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.linkmanPhone))){
             Notify.warning("联系人手机号有误，请重新输入。");
             $scope.submitFlag = true;
         }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
@@ -108,7 +108,7 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if(!$scope.member.area){
             Notify.warning("请选择节点区域。");
             $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
             Notify.warning("节点手机号有误，请重新输入。");
             $scope.submitFlag = true;
         }else if(!$scope.member.memberLevel){

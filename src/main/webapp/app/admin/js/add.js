@@ -39,7 +39,7 @@ angular.module('admin').controller('adminAddCtrl',function ($q, title, $scope, $
         }else if(!$scope.admin.mobile||!$scope.admin.mobile.trim()){
             Notify.warning("请输入手机号码(登录账号)。");
             $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.admin.mobile))){
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.admin.mobile))){
             Notify.warning("手机号码(会员账号)有误，请重新输入。");
             $scope.submitFlag = true;
         }else if(!$scope.admin.roleId){

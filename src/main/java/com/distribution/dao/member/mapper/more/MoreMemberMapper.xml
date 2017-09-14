@@ -169,4 +169,14 @@
     where id = #{memberId}
   </update>
 
+
+  <select id="checkLoginPwd" parameterType="com.distribution.dao.member.model.more.MoreMember" resultMap="BaseResultMap">
+    SELECT id,login_password FROM member WHERE id = #{id} AND login_password = #{oldLoginPwd}
+  </select>
+  <select id="checkQueryPwd" parameterType="com.distribution.dao.member.model.more.MoreMember" resultMap="BaseResultMap">
+    SELECT id,query_password FROM member WHERE id = #{id} AND query_password = #{oldQueryPwd}
+  </select>
+  <select id="checkPayPwd" parameterType="com.distribution.dao.member.model.more.MoreMember" resultMap="BaseResultMap">
+    SELECT id,pay_password FROM member WHERE id = #{id} AND pay_password = #{oldPayPwd}
+  </select>
 </mapper>

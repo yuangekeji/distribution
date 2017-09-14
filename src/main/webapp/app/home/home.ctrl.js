@@ -52,9 +52,10 @@ angular.module('home').controller('homeCtrl',
     $scope.activation = function () {
         if(!$scope.currentUser.idNumber||!$scope.currentUser.idNumber.trim()){
             Notify.warning("请输入身份证号码。");
-        }else if(!/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test($scope.currentUser.idNumber.trim())){
-            Notify.warning("身份证号码格式有误，请重新输入。");
         }
+        // else if(!/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test($scope.currentUser.idNumber.trim())){
+        //     Notify.warning("身份证号码格式有误，请重新输入。");
+        // }
         /*else if(!$scope.currentUser.bankName){
             Notify.warning("请选择开户行。");
         }else if(!$scope.currentUser.bankUserName||!$scope.currentUser.bankUserName.trim()){
@@ -77,6 +78,7 @@ angular.module('home').controller('homeCtrl',
         }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
             Notify.warning("三级密码和三级密码确认不同,请重新输入。");
         }else{
+
             $scope.startLoading();
             $scope.currentUser.status='Y';
             $http.post(ctx + "/member/activation",$scope.currentUser).success(function (resp) {

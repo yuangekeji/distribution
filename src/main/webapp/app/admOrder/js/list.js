@@ -84,7 +84,8 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
      */
     $scope.excelDownload = function() {
        // window.open(ctx + "/admOrder/excelDownload" );
-        //window.location.href="evalute/exportData?name="+this.page.parameterMap.name+"&phone="+this.page.parameterMap.phone+"&goodsType="+this.page.parameterMap.goodsType+"&status="+this.page.parameterMap.status;
+       //  window.location.href=ctx + "/admOrder/excelDownload?name="+this.page.parameterMap.name+"&phone="+this.page.parameterMap.phone+
+       //                                          "&goodsType="+this.page.parameterMap.goodsType+"&status="+this.page.parameterMap.status;
         window.location.href=ctx + "/admOrder/excelDownload";
       /*  $scope.startLoading();
         $http.post(ctx + "/admOrder/excelDownload", $scope.myPage).success(function (resp) {

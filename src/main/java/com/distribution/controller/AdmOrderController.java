@@ -8,14 +8,22 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
 import com.distribution.service.AdmOrderService;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by WIYN on 2017/8/27.
@@ -35,6 +43,16 @@ public class AdmOrderController extends BasicController{
     public JsonMessage orderList(@RequestBody Page page, HttpSession session){
         page = admOrderService.orderList(page);
         return successMsg(page);
+    }
+
+    /**
+     * description 订单列表下载
+     * @author WYN
+     * */
+    @RequestMapping(value = "/excelDownload", method = RequestMethod.GET)
+    @ResponseBody
+    public void excelDownload(@RequestBody Page page, HttpSession session, HttpServletResponse response) throws IOException, InvocationTargetException {
+        admOrderService.exportData(page,response);
     }
 
     /**

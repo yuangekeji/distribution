@@ -263,8 +263,14 @@
           <artifactId>guava</artifactId>
           <version>${guava.version}</version>
         </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-ooxml</artifactId>
+           <version>3.5-FINAL</version>
+       </dependency>
 
-        <dependency>
+
+       <dependency>
           <groupId>org.appfuse.plugins</groupId>
           <artifactId>maven-warpath-plugin</artifactId>
           <version>3.0.0</version>

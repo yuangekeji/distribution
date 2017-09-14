@@ -21,7 +21,7 @@ public interface MoreOrderMasterMapper {
      * @author WYN
      * */
 
-    List<OrderMaster> getOrderList(Page page);
+    List<MoreOrderMaster> getOrderList(Page page);
 
     /**
      * description 订单插入

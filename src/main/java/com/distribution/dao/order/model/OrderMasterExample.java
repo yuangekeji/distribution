@@ -796,6 +796,146 @@ public class OrderMasterExample {
             return (Criteria) this;
         }
 
+        public Criteria andRecevivePhoneIsNull() {
+            addCriterion("recevive_phone is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneIsNotNull() {
+            addCriterion("recevive_phone is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneEqualTo(String value) {
+            addCriterion("recevive_phone =", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneNotEqualTo(String value) {
+            addCriterion("recevive_phone <>", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneGreaterThan(String value) {
+            addCriterion("recevive_phone >", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("recevive_phone >=", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneLessThan(String value) {
+            addCriterion("recevive_phone <", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneLessThanOrEqualTo(String value) {
+            addCriterion("recevive_phone <=", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneLike(String value) {
+            addCriterion("recevive_phone like", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneNotLike(String value) {
+            addCriterion("recevive_phone not like", value, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneIn(List<String> values) {
+            addCriterion("recevive_phone in", values, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneNotIn(List<String> values) {
+            addCriterion("recevive_phone not in", values, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneBetween(String value1, String value2) {
+            addCriterion("recevive_phone between", value1, value2, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecevivePhoneNotBetween(String value1, String value2) {
+            addCriterion("recevive_phone not between", value1, value2, "recevivePhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIsNull() {
+            addCriterion("remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIsNotNull() {
+            addCriterion("remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkEqualTo(String value) {
+            addCriterion("remark =", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotEqualTo(String value) {
+            addCriterion("remark <>", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThan(String value) {
+            addCriterion("remark >", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("remark >=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThan(String value) {
+            addCriterion("remark <", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThanOrEqualTo(String value) {
+            addCriterion("remark <=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLike(String value) {
+            addCriterion("remark like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLike(String value) {
+            addCriterion("remark not like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIn(List<String> values) {
+            addCriterion("remark in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotIn(List<String> values) {
+            addCriterion("remark not in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkBetween(String value1, String value2) {
+            addCriterion("remark between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotBetween(String value1, String value2) {
+            addCriterion("remark not between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
         public Criteria andMemberLevelIsNull() {
             addCriterion("member_level is null");
             return (Criteria) this;

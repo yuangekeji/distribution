@@ -154,13 +154,15 @@
         insert into order_master (order_no, order_category, order_amt,
         order_qty, discount, act_amt,
         express_fee, member_id, receive_name,
-        express_address, member_level, order_statues,
+        express_address, recevive_phone,
+        remark, member_level, order_statues,
         create_id, create_time, update_id,
         update_time)
         values (#{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
         #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{actAmt,jdbcType=DECIMAL},
         #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR},
-        #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},
+        #{expressAddress,jdbcType=VARCHAR}, #{recevivePhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
+        #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},
         #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER},
         #{updateTime,jdbcType=TIMESTAMP})
     </insert>

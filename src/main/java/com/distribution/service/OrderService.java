@@ -9,12 +9,16 @@ import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.dividend.mapper.DividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
+import com.distribution.dao.goods.mapper.GoodsMapper;
+import com.distribution.dao.goods.mapper.more.MoreGoodsMapper;
+import com.distribution.dao.goods.model.Goods;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.order.mapper.OrderMasterMapper;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +52,12 @@ public class OrderService {
     
     @Autowired
     private BonusService bonusService;
+
+    @Autowired
+    private MoreGoodsMapper moreGoodsMapper;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
     /**
      * description 订单列表查询
      * @author WYN
@@ -73,6 +83,7 @@ public class OrderService {
         int cnt3 = 0;
         int cnt4 = 0;
         int cnt5 = 0;
+        int cnt6 = 0;
 
         //BigInteger orderNo = this.getOrderNo();
         Long orderNo = this.getOrderNo();
@@ -97,7 +108,21 @@ public class OrderService {
         }
         if(cnt2 == 0){
            throw new RuntimeException();
-         }
+        }
+
+        //商品库存处理
+        if(!"2".equals(moreOrderMaster.getOrderCategory())) {
+            Goods goods = new Goods();
+            goods.setId(moreOrderMaster.getGoodsCd());
+            goods.setGoodsNum(moreOrderMaster.getOrderQty());
+            //减少库存updateByPrimaryKeySelective
+            cnt3 = moreGoodsMapper.updateGoodsQty(goods);
+        }else{
+            cnt3 = 1;
+        }
+        if(cnt3 == 0){
+            throw new RuntimeException();
+        }
 
         //扣款登记 account_manager
 
@@ -111,8 +136,8 @@ public class OrderService {
         accountManager.setUpdateId(moreOrderMaster.getCreateId());
         accountManager.setUpdateTime(new Date());
 
-        cnt3 = moreAccountManagerMapper.updateAccountManager(accountManager);
-        if(cnt3 == 0){
+        cnt4 = moreAccountManagerMapper.updateAccountManager(accountManager);
+        if(cnt4 == 0){
             throw new RuntimeException();
         }
 
@@ -122,10 +147,10 @@ public class OrderService {
 
         accountFlowHistory.setMemberId(moreOrderMaster.getMemberId());
         accountFlowHistory.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
-        accountFlowHistory.setBonusAmt(moreOrderMaster.getBonusAmt());
+        accountFlowHistory.setBonusAmt(moreOrderMaster.getBonusAmt() ==null ? new BigDecimal(0):moreOrderMaster.getBonusAmt());
         accountFlowHistory.setCreateId(moreOrderMaster.getCreateId());
         accountFlowHistory.setCreateTime(new Date());
-        accountFlowHistory.setTotalAmt(accountFlowHistory.getSeedAmt().add(moreOrderMaster.getBonusAmt()));
+        accountFlowHistory.setTotalAmt(accountFlowHistory.getSeedAmt().add(accountFlowHistory.getBonusAmt()));
         accountFlowHistory.setType("1");
         if("1".equals(moreOrderMaster.getOrderCategory())){
             accountFlowHistory.setFlowType(Constant.MEMBERORDER);
@@ -135,9 +160,9 @@ public class OrderService {
             accountFlowHistory.setFlowType(Constant.DISCOUNTORDER);
         }
 
-        cnt4 = accountFlowHistoryMapper.insert(accountFlowHistory);
+        cnt5 = accountFlowHistoryMapper.insert(accountFlowHistory);
 
-        if(cnt4 == 0){
+        if(cnt5 == 0){
             throw new RuntimeException();
         }
 
@@ -161,8 +186,8 @@ public class OrderService {
             dividend.setUpdateId(moreOrderMaster.getCreateId());
             dividend.setUpdateTime(new Date());
 
-           cnt5 = dividendMapper.insert(dividend);
-           if(cnt5 == 0){
+           cnt6 = dividendMapper.insert(dividend);
+           if(cnt6 == 0){
                 throw new RuntimeException();
             }
         }
@@ -250,6 +275,44 @@ public class OrderService {
 
         return "pwdWrong";
 
+    }
+
+    public String insertDisOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
+            moreOrderMaster.setOrderCategory("3");
+            moreOrderMaster.setDiscount(40);
+            moreOrderMaster.setOrderAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())));
+            moreOrderMaster.setActAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())).multiply(new BigDecimal(0.4)));
+            moreOrderMaster.setBonusAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())).multiply(new BigDecimal(0.4)));
+            moreOrderMaster.setExpressFee(new BigDecimal(0));
+            moreOrderMaster.setMemberId(currentUser.getId());
+            moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
+            moreOrderMaster.setOrderStatues("1");
+            moreOrderMaster.setCreateId(currentUser.getId());
+            moreOrderMaster.setCreateTime(new Date());
+            moreOrderMaster.setUpdateId(currentUser.getId());
+            moreOrderMaster.setUpdateTime(new Date());
+
+            //step 1)库存查询
+            Goods goods = new Goods();
+            goods = goodsMapper.selectByPrimaryKey(moreOrderMaster.getGoodsCd());
+
+            //判断如果库存小于购买数量就失败
+            if(goods.getGoodsNum().compareTo(moreOrderMaster.getOrderQty()) == -1){
+                throw new RuntimeException();
+            }
+
+            //step 2)账户余额查询
+            AccountManager accountManager = new AccountManager();
+            accountManager.setMemberId(currentUser.getId());
+
+            accountManager = moreAccountManagerMapper.selectAccountManager(accountManager);
+
+            //判断如果账户余额小于购买金额就失败
+            if(accountManager.getBonusAmt().compareTo(moreOrderMaster.getActAmt()) == -1){
+                throw new RuntimeException();
+            }
+
+            return this.insertOrder(moreOrderMaster);
     }
 
     /**

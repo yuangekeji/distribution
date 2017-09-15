@@ -26,6 +26,10 @@ public class OrderMaster {
 
     private String expressAddress;
 
+    private String recevivePhone;
+
+    private String remark;
+
     private String memberLevel;
 
     private String orderStatues;
@@ -124,6 +128,22 @@ public class OrderMaster {
 
     public void setExpressAddress(String expressAddress) {
         this.expressAddress = expressAddress == null ? null : expressAddress.trim();
+    }
+
+    public String getRecevivePhone() {
+        return recevivePhone;
+    }
+
+    public void setRecevivePhone(String recevivePhone) {
+        this.recevivePhone = recevivePhone == null ? null : recevivePhone.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     public String getMemberLevel() {

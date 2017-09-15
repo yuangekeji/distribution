@@ -16,4 +16,6 @@ public interface MoreGoodsMapper {
      * @author Bright
      * */
     List<Goods> list(Page page);
+
+    int updateGoodsQty(Goods goods);
 }

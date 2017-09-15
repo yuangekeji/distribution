@@ -1,7 +1,6 @@
 package com.distribution.dao.order.model.more;
 
 import com.distribution.dao.order.model.OrderMaster;
-import org.aspectj.weaver.ast.Or;
 
 import java.math.BigDecimal;
 
@@ -19,6 +18,10 @@ public class MoreOrderMaster extends OrderMaster{
     private Integer createId;
 
     private String payPassword;
+
+    private Integer goodsNum;
+
+    private BigDecimal goodsPrice;
 
     public Integer getGoodsCd() {
         return goodsCd;
@@ -76,6 +79,22 @@ public class MoreOrderMaster extends OrderMaster{
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    public Integer getGoodsNum() {
+        return goodsNum;
+    }
+
+    public void setGoodsNum(Integer goodsNum) {
+        this.goodsNum = goodsNum;
+    }
+
+    public BigDecimal getGoodsPrice() {
+        return goodsPrice;
+    }
+
+    public void setGoodsPrice(BigDecimal goodsPrice) {
+        this.goodsPrice = goodsPrice;
     }
 }
 

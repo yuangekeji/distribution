@@ -95,4 +95,24 @@ public class OrderController extends BasicController{
         return successMsg("result",result);
 
     }
+
+    /**
+     * description 折扣订单
+     * @author WYN
+     * */
+    @RequestMapping("/disOrder")
+    @ResponseBody
+    public JsonMessage disOrder(@RequestBody MoreOrderMaster moreOrderMaster, HttpSession session, HttpServletRequest request) {
+        Member currentUser = null;
+        if (getCurrentUser(session) instanceof Member) {
+            currentUser = (Member) getCurrentUser(session);
+        }
+        String result = orderService.insertDisOrder(moreOrderMaster,currentUser);
+        if("success".equals(result)){
+            //处理会员晋升
+            nodeService.processMemberPromotion(currentUser.getNodeId(), currentUser.getId());
+        }
+        return successMsg("result",result);
+
+    }
 }

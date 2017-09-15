@@ -7,12 +7,12 @@ package com.dis.service.test;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.distribution.dao.order.model.OrderMaster;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dis.junit.test.SpringServiceTest;
-import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.service.BonusService;
 
 public class BonusServiceTest extends SpringServiceTest{

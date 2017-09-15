@@ -13,6 +13,8 @@
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
     <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
     <result column="order_statues" property="orderStatues" jdbcType="CHAR" />
     <result column="create_id" property="createId" jdbcType="INTEGER" />
@@ -80,8 +82,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, order_no, order_category, order_amt, order_qty, discount, act_amt, express_fee, 
-    member_id, receive_name, express_address, member_level, order_statues, create_id, 
-    create_time, update_id, update_time
+    member_id, receive_name, express_address, recevive_phone, remark, member_level, order_statues, 
+    create_id, create_time, update_id, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.order.model.OrderMasterExample" >
     select
@@ -118,15 +120,17 @@
     insert into order_master (id, order_no, order_category, 
       order_amt, order_qty, discount, 
       act_amt, express_fee, member_id, 
-      receive_name, express_address, member_level, 
-      order_statues, create_id, create_time, 
-      update_id, update_time)
+      receive_name, express_address, recevive_phone, 
+      remark, member_level, order_statues, 
+      create_id, create_time, update_id, 
+      update_time)
     values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, 
       #{orderAmt,jdbcType=DECIMAL}, #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, 
       #{actAmt,jdbcType=DECIMAL}, #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, 
-      #{receiveName,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, 
-      #{orderStatues,jdbcType=CHAR}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+      #{receiveName,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{recevivePhone,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.order.model.OrderMaster" >
     insert into order_master
@@ -163,6 +167,12 @@
       </if>
       <if test="expressAddress != null" >
         express_address,
+      </if>
+      <if test="recevivePhone != null" >
+        recevive_phone,
+      </if>
+      <if test="remark != null" >
+        remark,
       </if>
       <if test="memberLevel != null" >
         member_level,
@@ -216,6 +226,12 @@
       </if>
       <if test="expressAddress != null" >
         #{expressAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="recevivePhone != null" >
+        #{recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
       </if>
       <if test="memberLevel != null" >
         #{memberLevel,jdbcType=VARCHAR},
@@ -279,6 +295,12 @@
       <if test="record.expressAddress != null" >
         express_address = #{record.expressAddress,jdbcType=VARCHAR},
       </if>
+      <if test="record.recevivePhone != null" >
+        recevive_phone = #{record.recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
       <if test="record.memberLevel != null" >
         member_level = #{record.memberLevel,jdbcType=VARCHAR},
       </if>
@@ -315,6 +337,8 @@
       member_id = #{record.memberId,jdbcType=INTEGER},
       receive_name = #{record.receiveName,jdbcType=VARCHAR},
       express_address = #{record.expressAddress,jdbcType=VARCHAR},
+      recevive_phone = #{record.recevivePhone,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
       member_level = #{record.memberLevel,jdbcType=VARCHAR},
       order_statues = #{record.orderStatues,jdbcType=CHAR},
       create_id = #{record.createId,jdbcType=INTEGER},
@@ -358,6 +382,12 @@
       <if test="expressAddress != null" >
         express_address = #{expressAddress,jdbcType=VARCHAR},
       </if>
+      <if test="recevivePhone != null" >
+        recevive_phone = #{recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="memberLevel != null" >
         member_level = #{memberLevel,jdbcType=VARCHAR},
       </if>
@@ -391,6 +421,8 @@
       member_id = #{memberId,jdbcType=INTEGER},
       receive_name = #{receiveName,jdbcType=VARCHAR},
       express_address = #{expressAddress,jdbcType=VARCHAR},
+      recevive_phone = #{recevivePhone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       member_level = #{memberLevel,jdbcType=VARCHAR},
       order_statues = #{orderStatues,jdbcType=CHAR},
       create_id = #{createId,jdbcType=INTEGER},

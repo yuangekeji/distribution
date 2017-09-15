@@ -33,7 +33,7 @@
                                 <div class="col-md-7">
                                     <select class="form-control input-sm input-xsmall input-inline" ng-model="myPage.parameterMap.goodsType">
                                         <option value="">全部</option>
-                                        <option value="保健品">保健品</option>
+                                        <option ng-repeat="gt in goodsTypes" value="{{gt.dicCode}}">{{gt.dicName}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                         <tbody>
                         <tr class="odd gradeX" ng-show= "!notData" dir-paginate="goods in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                             <td>{{goods.goodsName}}</td>
-                            <td>{{goods.goodsType}}</td>
+                            <td>{{goods.goodsType|GoodsTypesFilter}}</td>
                             <td>{{goods.goodsPrice|number:2}}</td>
                             <td>{{goods.goodsNum}}</td>
                             <td>{{goods.goodsName}}</td>

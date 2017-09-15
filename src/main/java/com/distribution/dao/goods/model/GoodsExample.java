@@ -1455,6 +1455,146 @@ public class GoodsExample {
             addCriterion("info not between", value1, value2, "info");
             return (Criteria) this;
         }
+
+        public Criteria andImgeUrlIsNull() {
+            addCriterion("imge_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlIsNotNull() {
+            addCriterion("imge_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlEqualTo(String value) {
+            addCriterion("imge_url =", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlNotEqualTo(String value) {
+            addCriterion("imge_url <>", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlGreaterThan(String value) {
+            addCriterion("imge_url >", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("imge_url >=", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlLessThan(String value) {
+            addCriterion("imge_url <", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlLessThanOrEqualTo(String value) {
+            addCriterion("imge_url <=", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlLike(String value) {
+            addCriterion("imge_url like", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlNotLike(String value) {
+            addCriterion("imge_url not like", value, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlIn(List<String> values) {
+            addCriterion("imge_url in", values, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlNotIn(List<String> values) {
+            addCriterion("imge_url not in", values, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlBetween(String value1, String value2) {
+            addCriterion("imge_url between", value1, value2, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andImgeUrlNotBetween(String value1, String value2) {
+            addCriterion("imge_url not between", value1, value2, "imgeUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(String value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(String value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(String value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(String value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLike(String value) {
+            addCriterion("status like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotLike(String value) {
+            addCriterion("status not like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<String> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<String> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(String value1, String value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(String value1, String value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

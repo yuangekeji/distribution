@@ -829,3 +829,12 @@ DELIMITER ;
 -- 商品添加字段
 ALTER TABLE `goods`
 ADD COLUMN `info`  varchar(5000) NULL COMMENT '介绍';
+
+--添加字段表基础数据
+insert into dictionary(dic_code,dic_name,dic_type,dic_des) values('01','保健品','goods_type','商品名称');
+
+ALTER TABLE `goods`
+ADD COLUMN `imge_url`  varchar(5000) NULL COMMENT '图片路径';
+
+ALTER TABLE `goods`
+ADD COLUMN `status`  varchar(255) NULL COMMENT '状态(Y:上架,N:下架)';

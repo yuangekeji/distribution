@@ -44,6 +44,8 @@ public class Goods {
 
     private String info;
 
+    private String imgeUrl;
+
     public Integer getId() {
         return id;
     }
@@ -202,5 +204,13 @@ public class Goods {
 
     public void setInfo(String info) {
         this.info = info == null ? null : info.trim();
+    }
+
+    public String getImgeUrl() {
+        return imgeUrl;
+    }
+
+    public void setImgeUrl(String imgeUrl) {
+        this.imgeUrl = imgeUrl == null ? null : imgeUrl.trim();
     }
 }

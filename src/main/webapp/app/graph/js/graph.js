@@ -24,7 +24,13 @@ angular.module('graph').controller('graphCtrl',
             $http.post(ctx + "/node/tree").success(function (resp) {
                 if(resp.successful){
                     // console.info(JSON.stringify(resp.data));
-                    $scope.handleSample2(resp.data);
+                    $scope.handleSample2({nodeId:0,
+                        flag:null,
+                        id:'0',
+                        text:"总公司",
+                        state:{checkbox_disabled:true},
+                        children:[resp.data]
+                    });
 
                 }
                 App.unblockUI(e1);
@@ -38,6 +44,8 @@ angular.module('graph').controller('graphCtrl',
         $scope.getGraphTree();
 
         $scope.handleSample2 = function (data) {
+
+            console.info(data);
 
             $('#tree_2').jstree({
                 'plugins': ["checkbox"],

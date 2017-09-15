@@ -2,6 +2,7 @@ package com.distribution.dao.order.mapper.more;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -21,8 +22,8 @@ public interface MoreOrderMasterMapper {
      * @author WYN
      * */
 
-    List<OrderMaster> getOrderList(Page page);
-
+    List<MoreOrderMaster> getOrderList(Page page);
+    List<MoreOrderMaster> getExcelOrderList(Map map);
     /**
      * description 订单插入
      * @author WYN

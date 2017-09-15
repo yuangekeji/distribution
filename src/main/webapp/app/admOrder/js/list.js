@@ -1,11 +1,17 @@
-angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope, $http, $state, $stateParams, $sessionStorage, $uibModal,Notify) {
+angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope, $http, $state, $stateParams, $sessionStorage, Notify, $uibModal) {
     title.setTitle('订单管理');
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {}
+        parameterMap: {
+            orderNo: "",
+            orderCategory: "",
+            orderStatus: "",
+            startTime: "",
+            endTime: ""
+        }
     };
 
     $scope.orderExpress = {
@@ -14,6 +20,17 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         expressAddress: ''
     };
 
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
     /**
      * 查询订单列表
      */
@@ -67,6 +84,19 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             console.info('取消');
         });
     };
+
+    /**
+     * excel download
+     */
+    $scope.excelDownload = function() {
+
+        window.location.href=ctx + "/admOrder/excelDownload?orderNo="+this.myPage.parameterMap.orderNo+"&orderCategory="+this.myPage.parameterMap.orderCategory+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
+
+        /*var blob = new Blob([document.getElementById('orderList').innerHTML], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+        });
+        saveAs(blob, "订单列表.xls");*/
+    }
 
     /**
      * 初始化

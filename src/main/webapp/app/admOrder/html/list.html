@@ -39,6 +39,7 @@
                             <div class="form-group col-md-4">
                                 <div class="col-md-12">
                                     <button type="button" class="btn green" ng-click="searchByParam();"><i class="fa fa-search"></i>查询</button>
+                                    <button type="button" class="btn green" ng-click="excelDownload();"><i class="fa fa-download"></i>下载</button>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +73,7 @@
                         </div>
                     </form>
                     <!-- END FORM-->
-                    <div class="table-scrollable">
+                    <div class="table-scrollable" id="orderList">
                         <table class="table table-striped table-bordered table-hover "
                                id="sample_1">
                             <thead>

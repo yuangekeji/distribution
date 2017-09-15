@@ -4,8 +4,21 @@ import com.distribution.common.utils.Page;
 import com.distribution.dao.order.mapper.OrderMasterMapper;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdmOrderService {
@@ -41,5 +54,142 @@ public class AdmOrderService {
         }else{
             throw new RuntimeException();
         }
+    }
+
+    public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
+        List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList(map);
+        //定义表头
+        String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息"};
+
+        return  this.exportExcel("abc", excelHeader, result, response.getOutputStream());
+    }
+
+    public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreOrderMaster> list, OutputStream out) throws InvocationTargetException {
+        // 声明一个工作薄
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        // 生成一个表格
+        XSSFSheet sheet = workbook.createSheet(title);
+        //定义字体
+        XSSFFont font = workbook.createFont();
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+        font.setFontHeightInPoints((short) 12);
+        //定义样式
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+        style.setFont(font);
+        // 产生表格标题行
+        XSSFRow row = sheet.createRow(0);
+        for (int i = 0; i < headers.length; i++){
+            XSSFCell cell = row.createCell(i);
+            cell.setCellStyle(style);
+            cell.setCellValue(headers[i]);
+        }
+        //设置表格宽度
+        sheet.setColumnWidth(0, 18 * 256);
+        sheet.setColumnWidth(1, 20 * 256);
+        sheet.setColumnWidth(2, 12 * 256);
+        sheet.setColumnWidth(3, 22 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 30 * 256);
+        sheet.setColumnWidth(6, 30 * 256);
+        sheet.setColumnWidth(7, 30 * 256);
+        sheet.setColumnWidth(8, 30 * 256);
+        sheet.setColumnWidth(9, 30 * 256);
+        sheet.setColumnWidth(10, 30 * 256);
+
+        //构建表体
+        for(int j=0;j<list.size();j++){
+            XSSFRow bodyRow = sheet.createRow(j + 1);
+            String goods = "";
+            if(list.get(j).getGoodsNm() != null && !"".equals(list.get(j).getGoodsNm())){
+                goods = goods + list.get(j).getGoodsNm();
+            }
+            if(list.get(j).getOrderQty() != null && !"".equals(list.get(j).getOrderQty())){
+                goods = goods + "," + list.get(j).getOrderQty() + "个";
+            }
+
+            bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo());
+            bodyRow.createCell(1).setCellValue(this.orderCategoryFilter(list.get(j).getOrderCategory()));
+            bodyRow.createCell(2).setCellValue(list.get(j).getMemberName());
+            bodyRow.createCell(3).setCellValue(this.memberLevelFilter(list.get(j).getMemberLevel()));
+            bodyRow.createCell(4).setCellValue(String.valueOf(list.get(j).getOrderAmt()));
+            bodyRow.createCell(5).setCellValue(String.valueOf(list.get(j).getActAmt()));
+            bodyRow.createCell(6).setCellValue(String.valueOf(list.get(j).getExpressFee()));
+            bodyRow.createCell(7).setCellValue(goods);
+            bodyRow.createCell(8).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getCreateTime()));
+            bodyRow.createCell(9).setCellValue(this.orderStatusFilter(list.get(j).getOrderStatues()));
+            bodyRow.createCell(10).setCellValue(list.get(j).getExpressAddress());
+        }
+
+        return  workbook;
+    }
+
+    public String orderCategoryFilter(String orderCategory){
+        String result;
+        switch (orderCategory){
+            case "1":
+                result = "报单";
+                break;
+            case "2":
+                result = "复投";
+                break;
+            case "3":
+                result = "折扣单";
+                break;
+            default:
+                result = "";
+                break;
+        }
+        return result;
+    }
+
+    public String memberLevelFilter(String memberLevel){
+        String result;
+        switch (memberLevel){
+            case "member_level1":
+                result = "普卡";
+                break;
+            case "member_level2":
+                result = "铜卡";
+                break;
+            case "member_level3":
+                result = "银卡";
+                break;
+            case "member_level4":
+                result = "金卡";
+                break;
+            case "member_level5":
+                result = "白金卡";
+                break;
+            case "member_level6":
+                result = "黑金卡";
+                break;
+            default:
+                result = "";
+                break;
+        }
+        return result;
+    }
+
+    public String orderStatusFilter(String orderStatus){
+        String result;
+        switch (orderStatus){
+            case "1":
+                result = "待支付";
+                break;
+            case "2":
+                result = "待发货";
+                break;
+            case "3":
+                result = "待收货";
+                break;
+            case "4":
+                result = "订单完成";
+                break;
+            default:
+                result = "";
+                break;
+        }
+        return result;
     }
 }

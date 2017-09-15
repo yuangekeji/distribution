@@ -70,6 +70,7 @@
      <logging.version>1.1.1</logging.version>
       <quartz.version>2.2.0</quartz.version>
       <logback.version>1.1.2</logback.version>
+      <poi.version>3.8</poi.version>
   </properties>
   <repositories>
 	    <repository>
@@ -263,8 +264,31 @@
           <artifactId>guava</artifactId>
           <version>${guava.version}</version>
         </dependency>
+       <!-- @@@@@@@@@@@@@@@ POI begin @@@@@@@@@@@@@@@ -->
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-scratchpad</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-ooxml</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-ooxml-schemas</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <!-- @@@@@@@@@@@@@@@ POI end @@@@@@@@@@@@@@@ -->
 
-        <dependency>
+
+       <dependency>
           <groupId>org.appfuse.plugins</groupId>
           <artifactId>maven-warpath-plugin</artifactId>
           <version>3.0.0</version>

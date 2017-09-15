@@ -7,4 +7,6 @@ import com.distribution.dao.basicManage.model.BasicManage;
 
 public interface MoreBasicManageMapper extends BasicManageMapper{
 	List<BasicManage> listAll();
+
+    int updateBasicSetting(BasicManage basicManage);
 }

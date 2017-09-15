@@ -185,7 +185,9 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admOrder/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js',
+                    'app/FileSaver.js',
+                    'app/FileSaver.min.js'
                 ]
             },
             {
@@ -217,6 +219,14 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/product/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'productDetail',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/product/js/detail.js?v=' + version,
                     'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },

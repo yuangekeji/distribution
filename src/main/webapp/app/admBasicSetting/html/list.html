@@ -91,20 +91,23 @@
 
                             <!-----------提现设置------------------------>
                             <uib-tab index="2" heading="提现设置">
-                                <form role="form" action="#">
-                                    <div class="form-group"  ng-repeat="advanceBasic in myPage.result| filter:{typeCode : 'D09'} |filter : {detailCode : '00'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
-                                        <label class="control-label" >每次提现最小金额(元)</label>
-                                        <input type="number" ng-model="advanceBasic.minAmt" placeholder="提现最小金额" class="form-control input-circle input-large"/>
-                                    </div>
-                                    <div class="form-group" ng-repeat="advanceBasic in myPage.result| filter:{typeCode : 'D08'} |filter : {detailCode : '00'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
-                                        <label class="control-label">提现手续费(%)</label>
-                                        <input type="number" ng-model="advanceBasic.maxPercent" placeholder="提现手续费" class="form-control input-circle input-large"/>
-                                    </div>
-                                    <!--todo 2次开发
-                                    <div class="margiv-top-10">
-                                        <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>
-                                    </div>-->
-                                </form>
+                                <div class="portlet-body form">
+                                    <form role="form">
+                                        <div class="form-body">
+                                            <div class="form-group"  ng-repeat="advanceBasic in myPage.result | filter:{typeCode : 'D08'} |filter : {detailCode : '00'}" >
+                                                <label class="control-label" >每次提现最小金额(元)</label>
+                                                <input type="number" id="advanceMinAmt" value="{{advanceBasic.minAmt|number:2}}" ng-model="$parent.advanceMinAmt" placeholder="提现最小金额" class="form-control input-circle input-large" maxlength="15"/>
+                                            </div>
+                                            <div class="form-group" ng-repeat="advanceBasic in myPage.result| filter:{typeCode : 'D08'} |filter : {detailCode : '00'}" >
+                                                <label class="control-label">提现手续费(%)</label>
+                                                <input type="number" id="advanceMaxPercent" value="{{advanceBasic.maxPercent}}" ng-model="$parent.advanceMaxPercent" placeholder="提现手续费" class="form-control input-circle input-large" maxlength="5"/>
+                                            </div>
+                                            <div class="margiv-top-10">
+                                                <a href="#" ng-click="saveBasic('D08', '00', advanceMinAmt, 0, advanceMaxPercent)" class="btn blue-steel">保存</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </uib-tab>
 
                             <!-----------分红包设置------------------------>
@@ -112,20 +115,19 @@
                                 <form role="form" action="#">
                                     <div class="form-group"  ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '00'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
                                         <label class="control-label" >分红包金额(元)</label>
-                                        <input type="number" ng-model="dividendBasic.maxAmt" placeholder="分红包金额" class="form-control input-circle input-large"/>
+                                        <input type="number" value={{dividendBasic.maxAmt|number:2}} ng-model="$parent.dividendMaxAmt" placeholder="分红包金额" class="form-control input-circle input-large" maxlength="15"/>
                                     </div>
                                     <div class="form-group" ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '01'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">当日分红包占用营业额比例(%)</label>
-                                        <input type="number" ng-model="dividendBasic.maxPercent" placeholder="当日分红包占用营业额比例" class="form-control input-circle input-large" readonly/>
+                                        <input type="number" value={{dividendBasic.maxPercent|number:2}} placeholder="当日分红包占用营业额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
                                     <div class="form-group" ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '02'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">分红包满额比例(%)</label>
-                                        <input type="number" ng-model="dividendBasic.maxPercent" placeholder="分红包满额比例" class="form-control input-circle input-large" readonly/>
+                                        <input type="number" value={{dividendBasic.maxPercent|number:2}} placeholder="分红包满额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <!--todo 二次开发
                                     <div class="margiv-top-10">
-                                        <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>
-                                    </div>-->
+                                        <a href="#" ng-click="saveBasic('D02', '00', 0, dividendMaxAmt, 0)" class="btn blue-steel">保存</a>
+                                    </div>
                                 </form>
                             </uib-tab>
 
@@ -134,16 +136,15 @@
                                 <form role="form" action="#">
                                     <div class="form-group"  ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'} |filter : {detailCode : '00'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
                                         <label class="control-label" >广告宣传奖金额(元)</label>
-                                        <input type="number" ng-model="jdBasic.maxAmt" placeholder="广告宣传奖金额" class="form-control input-circle input-large"/>
+                                        <input type="number" value={{jdBasic.maxAmt|number:2}} ng-model="$parent.jdMaxAmt" placeholder="广告宣传奖金额" class="form-control input-circle input-large" maxlength="15"/>
                                     </div>
                                     <div class="form-group" ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'} |filter : {detailCode : '01'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
                                         <label class="control-label">广告宣传奖占用营业额比例(%)</label>
-                                        <input type="number" ng-model="jdBasic.maxPercent" placeholder="广告宣传奖占用营业额比例" class="form-control input-circle input-large" readonly/>
+                                        <input type="number" value={{jdBasic.maxPercent}} placeholder="广告宣传奖占用营业额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <!--todo 二次开发
                                     <div class="margiv-top-10">
-                                        <a href="#" ng-click="saveBasic()" class="btn blue-steel">保存</a>
-                                    </div>-->
+                                        <a href="#" ng-click="saveBasic('D03', '00', 0, jdMaxAmt, 0)" class="btn blue-steel">保存</a>
+                                    </div>
                                 </form>
                             </uib-tab>
 

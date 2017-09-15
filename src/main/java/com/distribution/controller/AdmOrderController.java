@@ -8,14 +8,25 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
 import com.distribution.service.AdmOrderService;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by WIYN on 2017/8/27.
@@ -36,6 +47,37 @@ public class AdmOrderController extends BasicController{
         page = admOrderService.orderList(page);
         return successMsg(page);
     }
+
+    /**
+     * description 订单列表下载
+     * @author WYN
+     * */
+    @RequestMapping(value = "/excelDownload")
+    public void excelDownload(@RequestParam(value = "orderNo", required = false) String orderNo,
+                              @RequestParam(value = "orderCategory", required = false) String orderCategory,
+                              @RequestParam(value = "orderStatus", required = false) String orderStatus,
+                              @RequestParam(value = "startTime", required = false) String startTime,
+                              @RequestParam(value = "endTime", required = false) String endTime,
+                              HttpServletResponse response) throws IOException, InvocationTargetException {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("orderNo", orderNo);
+        map.put("orderCategory", orderCategory);
+        map.put("orderStatus", orderStatus);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+
+
+        XSSFWorkbook wb = admOrderService.exportData(map,response);
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("订单列表", "UTF-8") + ".xlsx");
+        OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
+        wb.write(outStream); // 输出数据
+        outStream.flush();
+        outStream.close();
+
+    }
+
 
     /**
      * description 确认发货

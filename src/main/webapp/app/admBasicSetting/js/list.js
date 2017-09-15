@@ -8,28 +8,6 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
         parameterMap: {}
     };
 
-    /*$scope.advanceMinAmt = {
-        typeCode: '',
-        detailCode: '',
-        minAmt: 0,
-        maxAmt:0,
-        maxPercent:0
-    };
-    $scope.dividendBasic = {
-        typeCode: '',
-        detailCode: '',
-        minAmt: 0,
-        maxAmt:0,
-        maxPercent:0
-    };
-    $scope.jdBasic = {
-        typeCode: '',
-        detailCode: '',
-        minAmt: 0,
-        maxAmt:0,
-        maxPercent:0
-    };*/
-
     var e1 = $('.portlet');
     $scope.startLoading=function () {
         App.blockUI({
@@ -50,6 +28,8 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
                     $scope.notData = false;
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
 
+                    $scope.myPage.filter()
+
                 } else {
                     console.log(resp.errors());
                 }
@@ -59,18 +39,30 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
         });
     }
 
+    $scope.currenttypeCode = '';
+    $scope.currentdetailCode = '';
+    $scope.filterCodeList = function(array){
+        return array.typeCode == $scope.currenttypeCode && array.detailCode ==$scope.currentdetailCode;
+    }
+
     //提现，分红包，见点奖设置修改
-    $scope.saveBasic = function (typeCode, detailCode, minAmt, maxAmt, maxPercent) {
-        alert(minAmt);
-        /*$scope.startLoading();
+    $scope.saveBasic = function (typeCode, detailCode) {
+
+         $scope.currenttypeCode = typeCode;
+         $scope.currentdetailCode= detailCode;
+         $scope.modifyResult = $scope.myPage.result.filter($scope.filterCodeList)[0];
+
+        $scope.startLoading();
+
+
         $http.post(ctx + '/admBasicSetting/updateBasicSetting',
-        {
-            typeCode    : typeCode,
-            detailCode  : detailCode,
-            minAmt      : minAmt,
-            maxAmt      : maxAmt,
-            maxPercent  : maxPercent
-        }).success(function (resp) {
+            {
+                typeCode    : typeCode,
+                detailCode  : detailCode,
+                minAmt      : $scope.modifyResult.minAmt,
+                maxAmt      : $scope.modifyResult.maxAmt,
+                maxPercent  : $scope.modifyResult.maxPercent
+            }).success(function (resp) {
             if(resp.successful) {
                 //$scope.msg = "";
                 if (resp.data.result == 'success') {
@@ -85,7 +77,7 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
                 $scope.stopLoading();
                 $window.location.reload();
             }
-        });*/
+        });
     }
 
     /**

@@ -81,6 +81,8 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
          $scope.modifyResult = $scope.myPage.result.filter($scope.filterCodeList)[0];
 
         $scope.startLoading();
+
+
         $http.post(ctx + '/admBasicSetting/updateBasicSetting',
             {
                 typeCode    : typeCode,

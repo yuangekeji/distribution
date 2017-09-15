@@ -150,7 +150,7 @@ angular.module('app').config([
                 controller: 'productCtrl'
             })
             .state('app.productDetail',{
-                url: '/productDetail',
+                url: '/productDetail/:id',
                 templateUrl: helper.basepath('product/html/detail.html'),
                 resolve: helper.resolveFor('productDetail'),
                 controller: 'productDetailCtrl'

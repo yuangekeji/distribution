@@ -4,5 +4,8 @@
 angular.module('product').controller('productCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('商品列表');
 
+    $scope.detail = function () {
+        $state.go('app.productDetail', {id: 1});
+    };
 });
 

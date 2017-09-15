@@ -1,11 +1,11 @@
-angular.module('product').controller('productDetailCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, Notify) {
+angular.module('product').controller('productAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, Notify) {
     title.setTitle('商品详情');
 
     $scope.notData = false;
     $scope.goods = {};
 
     $scope.search = function(){
-        $http.get(ctx + '/goods/details/'+$stateParams.id).success(function (resp) {
+        $http.get(ctx + '/goods/add/'+$stateParams.id).success(function (resp) {
             if(resp.successful){
                 $scope.goods = resp.data.goods;
             }else{

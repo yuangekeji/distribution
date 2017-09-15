@@ -5,7 +5,13 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         pageSize: 10,
         totalCount: 0,
         result: [],
-        parameterMap: {}
+        parameterMap: {
+            orderNo: "",
+            orderCategory: "",
+            orderStatus: "",
+            startTime: "",
+            endTime: ""
+        }
     };
 
     $scope.orderExpress = {
@@ -83,54 +89,13 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
      * excel download
      */
     $scope.excelDownload = function() {
-       // window.open(ctx + "/admOrder/excelDownload" );
-       //  window.location.href=ctx + "/admOrder/excelDownload?name="+this.page.parameterMap.name+"&phone="+this.page.parameterMap.phone+
-       //                                          "&goodsType="+this.page.parameterMap.goodsType+"&status="+this.page.parameterMap.status;
-        window.location.href=ctx + "/admOrder/excelDownload";
-      /*  $scope.startLoading();
-        $http.post(ctx + "/admOrder/excelDownload", $scope.myPage).success(function (resp) {
-            if(resp.successful){
-                Notify.success("excel下载完成");
-               // $state.go("app.admOrder", {}, {reload: true});
-            }else{
-                console.log(resp.error);
-                Notify.error(resp);
-            }
-            $scope.stopLoading();
-        }).error(function (error) {
-            console.log(error);
-            //Notify.error(error);
-            $scope.stopLoading();
-        })*/
+
+        window.location.href=ctx + "/admOrder/excelDownload?orderNo="+this.myPage.parameterMap.orderNo+"&orderCategory="+this.myPage.parameterMap.orderCategory+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
 
         /*var blob = new Blob([document.getElementById('orderList').innerHTML], {
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
         saveAs(blob, "订单列表.xls");*/
-
-        /*$scope.datetime.startTime=$scope.year+"-"+ $scope.lastmounth+"-"+$scope.lastday;
-        $scope.datetime.endTime=$scope.yearD+"-"+ $scope.mounthD+"-"+"25";
-        $scope.datetime.type= $scope.selectway;*/
-  /*      $http({
-            url: ctx + '/admOrder/excelDownload',
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            params: $scope.myPage.parameterMap,
-            responseType: 'arraybuffer'
-        }).success(function (data) {
-            var blob = new Blob([data], {type: "application/vnd.ms-excel"});
-            var objectUrl = URL.createObjectURL(blob);
-            var filename="报表.xls";
-            if (window.navigator.msSaveOrOpenBlob) {// For IE:
-                navigator.msSaveBlob(blob, filename);
-            }else{ // For other browsers:
-                URL.revokeObjectURL(objectUrl);
-            }
-        }).error(function(data){
-            alert(data.message);
-        });*/
     }
 
     /**

@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,23 +53,17 @@ public class AdmOrderController extends BasicController{
      * @author WYN
      * */
     @RequestMapping(value = "/excelDownload")
-    public void excelDownload(@RequestParam(value = "memberId", required = false) Integer memberId,
+    public void excelDownload(@RequestParam(value = "orderNo", required = false) String orderNo,
+                              @RequestParam(value = "orderCategory", required = false) String orderCategory,
                               @RequestParam(value = "orderStatus", required = false) String orderStatus,
-                              @RequestParam(value = "orderNo", required = false) String orderNo,
                               @RequestParam(value = "startTime", required = false) String startTime,
                               @RequestParam(value = "endTime", required = false) String endTime,
                               HttpServletResponse response) throws IOException, InvocationTargetException {
 
-     /*   Pagination pagination = new Pagination();
-        pagination.getParameterMap().put("name", name);
-        pagination.getParameterMap().put("phone", phone);
-        pagination.getParameterMap().put("goodsType", goodsType);
-        pagination.getParameterMap().put("status", status);*/
-
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("memberId", memberId);
-        map.put("orderStatus", orderStatus);
         map.put("orderNo", orderNo);
+        map.put("orderCategory", orderCategory);
+        map.put("orderStatus", orderStatus);
         map.put("startTime", startTime);
         map.put("endTime", endTime);
 

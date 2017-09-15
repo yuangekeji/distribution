@@ -32,12 +32,20 @@
                         <div class="form-group">
                             <label>商品类型</label>
                             <select class="form-control spinner input-circle" type="text" ng-model="goods.goodsType">
-                                <option value="保健品">保健品</option>
+                                <option ng-repeat="gt in goodsTypes" value="{{gt.dicCode}}">{{gt.dicName}}</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>商品图片</label>
-                            <input type="password" class="form-control input-circle" ng-model="goods.goodsNum" maxlength="24">
+                            <div>
+                                <input type="file" ng-if="!goods.imgeUrl" id="one-input" src="static/image/icon_add.svg" accept="image/*" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
+                                <div ng-repeat="item in thumb">
+                                    <label>
+                                        <img ng-src="{{item.imgSrc}}" style="max-width: 50%;max-height: 50%"/>
+                                    </label>
+                                    <span ng-if="item.imgSrc" ng-click="img_del($index)"></span>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>商品介绍</label>

@@ -1,84 +1,100 @@
 <h4 class="page-title">商品详情</h4>
-<div class="row">
-    <div class="col-md-offset-1 col-md-10 ">
-        <div class="portlet box blue-steel ">
-            <div class="portlet-title">
-                <div class="caption ">
-                    <i class="icon-settings"></i>
-                    <span class="caption-subject bold uppercase">商品详情</span>
+<div class="page-group bg_white">
+    <div class="page page-current">
+        <nav class="bar bar-tab bar_btn">
+            <div class="row no-gutter">
+                <div class="col-100 ng-cloak" ng-show="!goodsList || !goodsList.length || goodsList.length==0" ng-cloak>
+                    <a class="button button-light button-big external" ng-click="lastPage()">取消</a>
+                </div>
+                <div class="col-50 ng-cloak" ng-show="goodsList.length>0" ng-cloak>
+                    <a class="button button-light button-big external" ng-click="lastPage()">取消</a>
+                </div>
+                <div class="col-50 ng-cloak" ng-show="goodsList.length>0" ng-cloak>
+                    <a class="button button-big button-fill button-danger" ng-click="ok()">提交</a>
                 </div>
             </div>
-            <div class="portlet-body form">
-                <form role="form">
-                    <div class="form-body">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <image ></image>
-                                <input type="image" class="form-control input-circle-left" ng-model="member.recommendPhone" maxlength="11">
+        </nav>
+        <div class="content">
+            <div class="pt15">
+                <div class="lh14 pb15">
+                    <div class="mt10 pl15 pr15 font12"><span class="color_red">友情提示：</span><br><span class="pl20">估价仅供参考，最终价格以为实物鉴定、检测评估结果为准。</span></div>
+                    <div class="pl20 pr20" style="height:20px"></div>
+                </div>
+                <div class="pb20 ng-cloak" ng-show="goodsList.length>0" ng-cloak>
+                    <div class="title_a">
+                        <span ng-show="goodsType=='3'">{{goodsList[0].name1}}({{goodsList.length}})</span>
+                        <span ng-show="goodsType=='1'">房产({{goodsList.length}})</span>
+                        <span ng-show="goodsType=='2'">汽车({{goodsList.length}})</span>
+                    </div>
+                    <div class="detail_content row_b" ng-repeat="goods in goodsList track by $index">
+                        <div class="col_100 row_a text_overflow">
+                            <div class="col_flex font16 text_overflow" ng-show="goods.goodsType=='3'" ng-bind="goods.name2"></div>
+                            <div ng-show="goods.goodsType=='3'" class="col_50 text_overflow font16"><span class="pl10">{{goods.name3}}</span></div>
+                            <div class="col_flex font16 text_overflow" ng-show="goods.goodsType=='1'" ng-bind="goods.house.communityName"></div>
+                            <div class="col_flex font16" ng-show="goods.goodsType=='1'" ng-bind="goods.house.constructYear?goods.house.constructYear+'年 建筑':'年 建筑'"></div>
+                            <div class="col_flex font16 text_overflow" ng-show="goods.goodsType=='2'" ng-bind="goods.car.brandModel"></div>
+                            <div class="icons">
+                                <span class="icon icon-edit" ng-click="editGoods($index)"></span>
+                                <span class="icon icon-remove" ng-click="removeGoods($index)"></span>
                             </div>
-                            <div class="input-icon right">
-                                <i class="fa fa-microphone"></i>
-                                <input type="text" class="form-control input-circle" placeholder="请输入会员姓名" ng-model="member.memberName" maxlength="50">
+                        </div>
+                        <!--<div ng-show="goods.goodsType=='3'" class="col_50 text_overflow"><span class="pl10">{{goods.name3}}</span></div>-->
+                        <!--<div ng-show="goods.goodsType=='3'" class="col_50 text_right text_overflow">{{goods.name3}}</div>-->
+                        <div class="col_100 pt5 pb10">
+                            <div class="pb5" ng-show="goods.goodsType=='3'">物品附件</div>
+                            <div class="pb5" ng-show="goods.goodsType=='1'">房产证</div>
+                            <div class="pb5" ng-show="goods.goodsType=='2'">行驶证</div>
+                            <div class="row_b list_c">
+                                <div class="item" ng-repeat="material in goods.materialIds track by $index"
+                                     ng-click="previewImage(material.url,goods.materialIds)">
+                                    <figure class="thumb thumb_11 bg">
+                                        <a>
+                                            <!--<img ng-src="{{material.url}}">-->
+                                            <img ng-src="C:\Users\Public\Pictures\Sample Pictures\Koala.jpg">
+                                        </a>
+                                    </figure>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>会员姓名</label>
-                            <div class="input-icon right">
-                                <i class="fa fa-microphone"></i>
-                                <input type="text" class="form-control input-circle" placeholder="请输入会员姓名" ng-model="member.memberName" maxlength="50">
-                            </div>
+                        <div class="col_100" ng-show="goods.buyAmount">
+                            <span class="pb5 color_black">购买金额:</span>
+                            <span class="pb5"
+                                  ng-bind="(goods.buyAmount?((goods.buyAmount | number:2)+'元'):'')"></span>
                         </div>
-                        <div class="form-group">
-                            <label>会员账号(手机号)</label>
-                            <input class="form-control spinner input-circle" type="text" placeholder="请输入会员账号" ng-model="member.memberPhone" maxlength="11"/>
+                        <div class="col_100 text_overflow">
+                            <span class="pb5" ng-show="goods.goodsType=='3'">物品描述:</span>
+                            <span class="pb5" ng-show="goods.goodsType=='3'">{{goods.description}}</span>
+                            <span class="pb5" ng-show="goods.goodsType=='1'">房产描述:</span>
+                            <span class="pb5"
+                                  ng-show="goods.goodsType=='1'">{{goods.house.description}}</span>
                         </div>
-                        <div class="form-group">
-                            <label>联系人手机号</label>
-                            <input class="form-control spinner input-circle" type="text" placeholder="请输入会员账号" ng-model="member.linkmanPhone" maxlength="11"/>
+                        <div class="col_100 text_overflow" ng-show="goods.goodsType=='2'">发动机燃油<span
+                                class="pl10">{{goods.car.fuel}}</span></div>
+                        <div class="col_100 text_overflow" ng-show="goods.goodsType=='2'">行驶里程
+                            <span class="pl10">{{goods.car.mileage}}{{goods.car.unit}}</span>
                         </div>
-                        <div class="form-group">
-                            <label>登录密码</label>
-                            <input type="password" class="form-control input-circle" ng-model="member.loginPassword" maxlength="24">
+                        <div class="col_100 text_overflow" ng-show="goods.goodsType=='2'">登记日期<span
+                                class="pl10">{{goods.car.productionTime | date:'yyyy-MM-dd'}}</span>
                         </div>
-                        <div class="form-group">
-                            <label>确认密码</label>
-                            <input type="password" class="form-control input-circle" ng-model="confirmLoginPassword" maxlength="24">
-                        </div>
-                        <div class="form-group">
-                            <label>放置会员节点（请填写放置的节点手机号）</label>
-                            <input type="text" class="form-control input-circle" placeholder="请输入会员节点" ng-model="member.notePhone" maxlength="11">
-                        </div>
-                        <!--<div class="form-group">-->
-                        <!--<button id="sample_editable_1_new" class="btn sbold blue-steel">选择要放置的节点-->
-                        <!--<i class="fa fa-plus"></i>-->
-                        <!--</button>-->
-                        <!--</div>-->
-                        <div class="form-group">
-                            <label>请选择会员节点放置的区域</label>
-                            <select class="form-control input-circle" ng-model="member.area">
-                                <option value="left">左区</option>
-                                <option value="right">右区</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>会员等级</label>
-                            <select class="form-control input-circle" ng-model="member.memberLevel" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>收货人姓名</label>
-                            <input type="text" class="form-control input-circle" placeholder="请输入收货人姓名" ng-model="member.consignee" maxlength="50">
-                        </div>
-                        <div class="form-group">
-                            <label>收货地址</label>
-                            <input type="text" class="form-control input-circle" placeholder="请输入收货人地址" ng-model="member.expressAddress" maxlength="200">
+                        <div class="col_100 text_overflow" ng-show="goods.goodsType=='2'">出厂日期<span
+                                class="pl10">{{goods.car.registrationTime | date:'yyyy-MM-dd'}}</span>
                         </div>
                     </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn blue-steel" ng-click="submit();">提交</button>
-                        <button type="button" class="btn default" ui-sref="app.recommend">返回</button>
-                    </div>
-                </form>
+                </div>
+                <div class="pl20 pr20 mt20" ng-click="gotoAddPage2()">
+                    <a class="btn_add">
+                        <span class="a1"><img ng-src="{{ctx+'/resources/brt/images/icon_cross.svg'}}"></span>
+                        <span class="a2">添加物品</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $(".select > div").click(function () {
+                $(this).addClass("active").siblings().removeClass("active");
+            });
+        });
+    </script>
 </div>

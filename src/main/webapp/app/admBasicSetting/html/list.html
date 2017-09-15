@@ -28,7 +28,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-show= "{{basicManage.typeCode == 'D01' && basicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="basicManage in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                                <tr  class="odd gradeX"  ng-repeat="basicManage in myPage.result | filter:{typeCode : 'D01'} " ng-if="basicManage.detailCode != '00'">
                                                     <td class="text-center">{{basicManage.detailNm}}</td>
                                                     <td class="text-center">{{basicManage.buyAmt|number:2}}</td>
                                                     <td class="text-center">{{basicManage.buyQty}}</td>
@@ -39,16 +39,8 @@
                                                     <td class="text-center">{{basicManage.profitPer}}%</td>
                                                     <td class="text-center">{{basicManage.discount}}%</td>
                                                 </tr>
-                                                <tr ng-show= "notData">
-                                                    <td colspan="9" class="text-center">无记录</td>
-                                                </tr>
                                                 </tbody>
                                             </table>
-                                            <div class="other-controller">
-                                                <div class="text-center">
-                                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -69,21 +61,14 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-show= "{{jdBasicManage.typeCode == 'D04' && jdBasicManage.detailCode != '00'}}" class="odd gradeX" dir-paginate="jdBasicManage in myPage.result | filter: 'D04' | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                                <tr  class="odd gradeX" ng-repeat="jdBasicManage in myPage.result | filter:{typeCode : 'D04'} "  ng-if="jdBasicManage.detailCode != '00'">
                                                     <td class="text-center">{{jdBasicManage.recommendCnt}}个</td>
                                                     <td class="text-center">{{jdBasicManage.remainCnt}}代</td>
+                                                </tr>
 
-                                                </tr>
-                                                <tr ng-show= "notData">
-                                                    <td colspan="2" class="text-center">无记录</td>
-                                                </tr>
                                                 </tbody>
                                             </table>
-                                            <div class="other-controller">
-                                                <div class="text-center">
-                                                    <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -93,18 +78,21 @@
                             <uib-tab index="2" heading="提现设置">
                                 <div class="portlet-body form">
                                     <form role="form">
-                                        <div class="form-body">
-                                            <div class="form-group"  ng-repeat="advanceBasic in myPage.result | filter:{typeCode : 'D08'} |filter : {detailCode : '00'}" >
+                                        <div class="form-body" ng-repeat="advanceBasic in myPage.result | filter:{typeCode : 'D08'}" >
+                                            <div class="form-group"   >
                                                 <label class="control-label" >每次提现最小金额(元)</label>
-                                                <input type="number" id="advanceMinAmt" value="{{advanceBasic.minAmt|number:2}}" ng-model="$parent.advanceMinAmt" placeholder="提现最小金额" class="form-control input-circle input-large" maxlength="15"/>
+                                                <input type="number" id="advanceMinAmt" name="advanceBasic.minAmt" ng-model="advanceBasic.minAmt" value="{{advanceBasic.minAmt|number:2}}"  placeholder="提现最小金额"
+                                                       class="form-control input-circle input-large" maxlength="15"/>
                                             </div>
-                                            <div class="form-group" ng-repeat="advanceBasic in myPage.result| filter:{typeCode : 'D08'} |filter : {detailCode : '00'}" >
+                                            <div class="form-group"  >
                                                 <label class="control-label">提现手续费(%)</label>
-                                                <input type="number" id="advanceMaxPercent" value="{{advanceBasic.maxPercent}}" ng-model="$parent.advanceMaxPercent" placeholder="提现手续费" class="form-control input-circle input-large" maxlength="5"/>
+                                                <input type="number" id="advanceMaxPercent"  name="advanceBasic.maxPercent" ng-model="advanceBasic.maxPercent"
+                                                       value="{{advanceBasic.maxPercent}}"  placeholder="提现手续费"
+                                                       class="form-control input-circle input-large" maxlength="5"/>
                                             </div>
-                                            <div class="margiv-top-10">
-                                                <a href="#" ng-click="saveBasic('D08', '00', advanceMinAmt, 0, advanceMaxPercent)" class="btn blue-steel">保存</a>
-                                            </div>
+                                        </div>
+                                        <div class="margiv-top-10">
+                                            <a href="#" ng-click="saveBasic('D08', '00')" class="btn blue-steel">保存</a>
                                         </div>
                                     </form>
                                 </div>
@@ -112,62 +100,63 @@
 
                             <!-----------分红包设置------------------------>
                             <uib-tab index="3" heading="分红包设置">
-                                <form role="form" action="#">
-                                    <div class="form-group"  ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '00'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
+                                <form role="form"   ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'}" >
+                                    <div class="form-group" ng-if="dividendBasic.detailCode =='00'" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
                                         <label class="control-label" >分红包金额(元)</label>
-                                        <input type="number" value={{dividendBasic.maxAmt|number:2}} ng-model="$parent.dividendMaxAmt" placeholder="分红包金额" class="form-control input-circle input-large" maxlength="15"/>
+                                        <input type="number" value={{dividendBasic.maxAmt|number:2}} ng-model="dividendBasic.maxAmt" placeholder="分红包金额" class="form-control input-circle input-large" maxlength="15"/>
                                     </div>
-                                    <div class="form-group" ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '01'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                    <div class="form-group" ng-if="dividendBasic.detailCode =='01'"  >
                                         <label class="control-label">当日分红包占用营业额比例(%)</label>
                                         <input type="number" value={{dividendBasic.maxPercent|number:2}} placeholder="当日分红包占用营业额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <div class="form-group" ng-repeat="dividendBasic in myPage.result| filter:{typeCode : 'D02'} |filter : {detailCode : '02'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                    <div class="form-group" ng-if="dividendBasic.detailCode =='02'"  >
                                         <label class="control-label">分红包满额比例(%)</label>
                                         <input type="number" value={{dividendBasic.maxPercent|number:2}} placeholder="分红包满额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <div class="margiv-top-10">
-                                        <a href="#" ng-click="saveBasic('D02', '00', 0, dividendMaxAmt, 0)" class="btn blue-steel">保存</a>
-                                    </div>
+
                                 </form>
+                                <div class="margiv-top-10">
+                                    <a href="#" ng-click="saveBasic('D02', '00')" class="btn blue-steel">保存</a>
+                                </div>
                             </uib-tab>
 
                             <!-----------见点奖设置------------------------>
                             <uib-tab index="4" heading="广告宣传奖设置">
-                                <form role="form" action="#">
-                                    <div class="form-group"  ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'} |filter : {detailCode : '00'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
+                                <form role="form" action="#" ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'}" >
+                                    <div class="form-group"  ng-if="jdBasic.detailCode =='00'" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
                                         <label class="control-label" >广告宣传奖金额(元)</label>
-                                        <input type="number" value={{jdBasic.maxAmt|number:2}} ng-model="$parent.jdMaxAmt" placeholder="广告宣传奖金额" class="form-control input-circle input-large" maxlength="15"/>
+                                        <input type="number" value={{jdBasic.maxAmt|number:2}} ng-model="jdBasic.maxAmt" placeholder="广告宣传奖金额" class="form-control input-circle input-large" maxlength="15"/>
                                     </div>
-                                    <div class="form-group" ng-repeat="jdBasic in myPage.result| filter:{typeCode : 'D03'} |filter : {detailCode : '01'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                    <div class="form-group"  ng-if="jdBasic.detailCode =='01'" >
                                         <label class="control-label">广告宣传奖占用营业额比例(%)</label>
                                         <input type="number" value={{jdBasic.maxPercent}} placeholder="广告宣传奖占用营业额比例" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <div class="margiv-top-10">
-                                        <a href="#" ng-click="saveBasic('D03', '00', 0, jdMaxAmt, 0)" class="btn blue-steel">保存</a>
-                                    </div>
                                 </form>
+                                <div class="margiv-top-10">
+                                    <a href="#" ng-click="saveBasic('D03', '00')" class="btn blue-steel">保存</a>
+                                </div>
                             </uib-tab>
 
                             <!-----------级差奖设置------------------------>
                             <uib-tab index="5" heading="级差奖设置">
-                                <form role="form" action="#">
-                                    <div class="form-group"  ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '01'}" ng-class="{'has-error':validateErrors.minAdvanceAmtError}">
+                                <form role="form" action="#" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'}">
+                                    <div class="form-group"  ng-if="rankBasic.detailCode =='01'" >
                                         <label class="control-label" >主任(%)</label>
                                         <input type="number" ng-model="rankBasic.maxPercent" placeholder="主任" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '02'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                    <div class="form-group" ng-if="rankBasic.detailCode =='02'" >
                                         <label class="control-label">经理(%)</label>
                                         <input type="number" ng-model="rankBasic.maxPercent" placeholder="经理" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '03'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                    <div class="form-group"  ng-if="rankBasic.detailCode =='03'" >
                                         <label class="control-label">总监(%)</label>
                                         <input type="number" ng-model="rankBasic.maxPercent" placeholder="总监" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '04'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                    <div class="form-group" ng-if="rankBasic.detailCode =='04'">
                                         <label class="control-label">董事(%)</label>
                                         <input type="number" ng-model="rankBasic.maxPercent" placeholder="董事" class="form-control input-circle input-large" readonly/>
                                     </div>
-                                    <div class="form-group" ng-repeat="rankBasic in myPage.result| filter:{typeCode : 'D05'} |filter : {detailCode : '05'}"  ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                    <div class="form-group" ng-if="rankBasic.detailCode =='05'">
                                         <label class="control-label">全国董事(%)</label>
                                         <input type="number" ng-model="rankBasic.maxPercent" placeholder="全国董事" class="form-control input-circle input-large" readonly/>
                                     </div>

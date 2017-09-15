@@ -7,34 +7,6 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
         result: [],
         parameterMap: {}
     };
-    $scope.advance ={
-        advanceMinAmt:0,
-        advanceMaxPercent:0
-    }
-
-    $scope.advanceMinAmt = {
-     typeCode: '',
-     detailCode: '',
-     minAmt: 0,
-     maxAmt:0,
-     maxPercent:0
-     };
-
-     $scope.dividendBasic = {
-     typeCode: '',
-     detailCode: '',
-     minAmt: 0,
-     maxAmt:0,
-     maxPercent:0
-     };
-
-     $scope.jdBasic = {
-     typeCode: '',
-     detailCode: '',
-     minAmt: 0,
-     maxAmt:0,
-     maxPercent:0
-     };
 
     var e1 = $('.portlet');
     $scope.startLoading=function () {

@@ -2,6 +2,7 @@ package com.distribution.controller;
 
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
+import com.distribution.common.utils.ImageUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.common.utils.PropertiesUtil;
 import com.distribution.dao.dictionary.model.Dictionary;
@@ -18,11 +19,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,4 +72,12 @@ public class GoodsController extends BasicController{
         return successMsg(page);
     }
 
+
+    /**
+     * description 显示图片
+     * */
+    @RequestMapping(value = "/showPic")
+    public void showPic(String picUrl, HttpServletResponse response) throws IOException {
+        ImageUtil.showPic(picUrl,response,"contentPic");
+    }
 }

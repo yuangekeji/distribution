@@ -41,6 +41,20 @@ angular.module('product').controller('productCtrl',function ($q, title, $scope, 
     };
     $scope.onInit();
 
+    /**查询*/
+    $scope.search = function () {
+        $scope.myPage.pageNo = 1;
+        $scope.myPage.totalCount = 0;
+        $scope.onInit();
+        /*$http.post(ctx + '/goods/list', $scope.myPage).success(function (resp) {
+            if (resp.successful) {
+                $scope.myPage = resp.data;
+            } else {
+                console.log(resp.errorMessage);
+            }
+        });*/
+    };
+
     $scope.detail = function () {
         $state.go('app.productDetail', {id: 1});
     };

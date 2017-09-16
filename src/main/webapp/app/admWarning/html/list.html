@@ -87,8 +87,8 @@
                                 <td>{{row.totalSales |  number:2}} | {{row.dividendTotal |  number:2}} | {{row.jdBonusTotal |  number:2}}</td>
                                 <td>{{row.useDividendTotal |  number:2}}</td>
                                 <td>{{row.useJdBonusTotal  |  number:2}}</td>
-                                <td><a href="javascript:void(0);" ng-click="bonusProc('1');" class="btn btn-xs grey-cascade">补发分红包</a></td>
-                                <td><a href="javascript:void(0);" ng-click="bonusProc('2');" class="btn btn-xs grey-cascade">补发广告宣传奖金</a></td>
+                                <td><a href="javascript:void(0);" ng-if="row.alarmStatus==0" ng-click="bonusProc('1');" class="btn btn-xs grey-cascade">补发分红包</a></td>
+                                <td><a href="javascript:void(0);" ng-if="row.jdAlarmStatus==0" ng-click="bonusProc('2');" class="btn btn-xs grey-cascade">补发广告宣传奖金</a></td>
                             </tr>
                             <tr ng-show= "notData" >
                                 <td colspan="8" class="text-center">无记录</td>

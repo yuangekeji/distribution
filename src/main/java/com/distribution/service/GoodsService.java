@@ -29,4 +29,15 @@ public class GoodsService {
         Goods goods = goodsMapper.selectByPrimaryKey(id);
         return goods;
     }
+
+    /**
+     * description 商品列表查询
+     * @author Bright
+     * */
+    public Page findList(Page page){
+        page.getParameterMap().put("status","Y");
+        page.setTotalCount(moreGoodsMapper.getGoodsCount(page));
+        page.setResult(moreGoodsMapper.list(page));
+        return page;
+    }
 }

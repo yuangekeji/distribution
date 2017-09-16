@@ -22,6 +22,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
     <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="imge_url" property="imgeUrl" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="pageLimit">
@@ -34,6 +36,11 @@
 
   <sql id="where">
     <where>
+      <if test="parameterMap.status!=null and parameterMap.status!=''">
+        AND status = "Y"
+      </if>
+
+
       <if test="parameterMap.goodsName!=null and parameterMap.goodsName!=''">
         AND goods_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.goodsName}))),'%') ESCAPE '*'
       </if>

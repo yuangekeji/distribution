@@ -17,6 +17,30 @@ angular.module('product').controller('productCtrl',function ($q, title, $scope, 
 
     $scope.initParams();
 
+    $scope.loadingFlag = true;
+    $scope.notData = false;
+    $scope.myPage = {
+        pageNo: 1,
+        pageSize: 8,
+        totalCount: 0,
+        result: [],
+        parameterMap: {}
+    };
+
+    $scope.onInit = function () {
+        $http.post(ctx + '/goods/list', $scope.myPage).success(function (resp) {
+            if (resp.successful) {
+                $scope.myPage = resp.data;
+                $scope.loadingFlag = false;
+                $scope.notData = false;
+                if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
+            } else {
+                console.log(resp.errorMessage);
+            }
+        });
+    };
+    $scope.onInit();
+
     $scope.detail = function () {
         $state.go('app.productDetail', {id: 1});
     };

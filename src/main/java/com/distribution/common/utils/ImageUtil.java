@@ -68,7 +68,8 @@ public class ImageUtil {
             fileName = "wechat";
         }
         try {
-            String filePath =PropertiesUtil.INSTANCE.getLocalFileRootDir() + File.separator +  picUrl;
+//            String filePath =PropertiesUtil.INSTANCE.getLocalFileRootDir() + File.separator +  picUrl;
+            String filePath = picUrl;
             File file = new File(filePath);
             if(!file.exists()) {
                 filePath = PropertiesUtil.INSTANCE.getLocalFileRootDir() + File.separator + "default.jpg";

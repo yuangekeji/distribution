@@ -62,4 +62,15 @@ public class GoodsController extends BasicController{
         return successMsg(list);
     }
 
+    /**
+     * description 查询商品列表 8条
+     * @author Bright
+     * */
+    @RequestMapping("/list")
+    @ResponseBody
+    public JsonMessage selectList(@RequestBody Page page){
+        page = goodsService.findList(page);
+        return successMsg(page);
+    }
+
 }

@@ -4,6 +4,19 @@
 angular.module('product').controller('productCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('商品列表');
 
+    /**loading*/
+    var e1 = $('.full-view');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    };
+
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    };
 
     $scope.initParams = function () {
         $http.get(ctx + "/goods/findGoodsTypes").success(function (resp) {
@@ -28,13 +41,15 @@ angular.module('product').controller('productCtrl',function ($q, title, $scope, 
     };
 
     $scope.onInit = function () {
+        $scope.startLoading();
         $http.post(ctx + '/goods/list', $scope.myPage).success(function (resp) {
             if (resp.successful) {
                 $scope.myPage = resp.data;
-                $scope.loadingFlag = false;
+                $scope.stopLoading();
                 $scope.notData = false;
                 if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
             } else {
+                $scope.stopLoading();
                 console.log(resp.errorMessage);
             }
         });
@@ -46,14 +61,14 @@ angular.module('product').controller('productCtrl',function ($q, title, $scope, 
         $scope.myPage.pageNo = 1;
         $scope.myPage.totalCount = 0;
         $scope.onInit();
-        /*$http.post(ctx + '/goods/list', $scope.myPage).success(function (resp) {
-            if (resp.successful) {
-                $scope.myPage = resp.data;
-            } else {
-                console.log(resp.errorMessage);
-            }
-        });*/
     };
+
+    /**翻页*/
+    $scope.pageChangeHandler = function(num) {
+        $scope.myPage.pageNo = num;
+        $scope.onInit();
+    };
+
 
     $scope.detail = function () {
         $state.go('app.productDetail', {id: 1});

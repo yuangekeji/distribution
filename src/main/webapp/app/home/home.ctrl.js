@@ -31,6 +31,7 @@ angular.module('home').controller('homeCtrl',
             $http.get(ctx + "/member/getDictionary/bank_name").success(function (resp) {
                 if(resp.successful){
                     $scope.dictionary = resp.data.list;
+                    $scope.dictionary.unshift({dicCode:"",dicName:"请选择"});
                     $scope.moreMember = resp.data.moreMember;
                     if($scope.dictionary){
                         $scope.currentUser.bankName = $scope.dictionary[0].dicCode;

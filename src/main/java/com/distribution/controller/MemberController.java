@@ -212,9 +212,14 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/updateMember")
     @ResponseBody
-    public JsonMessage updateMember(@RequestBody MoreMember moreMember){
+    public JsonMessage updateMember(@RequestBody MoreMember moreMember,HttpSession session){
+        Member m = (Member)getCurrentUser(session);
         Integer it = memberService.updateMember(moreMember);
         if(it>0){
+            if(null!=moreMember.getLinkmanPhone() && !"".equals(moreMember.getLinkmanPhone())) {
+                m.setLinkmanPhone(moreMember.getLinkmanPhone());
+            }
+            session.setAttribute(Constant.SESSION_CURRENT_USER,m);
             return successMsg();
         }else{
             return failMsg();

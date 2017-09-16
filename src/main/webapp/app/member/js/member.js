@@ -91,6 +91,9 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
             Notify.warning("请选择开户行。");
         }else if(!$scope.MemberInfo.bankUserName||!$scope.MemberInfo.bankUserName.trim()){
             Notify.warning("请输入开户人姓名。");
+        }
+        else if($scope.MemberInfo.linkmanPhone && !(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.MemberInfo.linkmanPhone))){
+            Notify.warning("联系人手机号有误，请重新输入。");
         }else if(!$scope.MemberInfo.cardNumber||!$scope.MemberInfo.cardNumber.trim()){
             Notify.warning("请输入银行卡号。");
         }else if(!/^[0-9]*$/.test($scope.MemberInfo.cardNumber)){

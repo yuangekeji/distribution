@@ -1,6 +1,7 @@
-angular.module('admProduct').controller('admProductAddCtrl',function ($q, title, $scope, $http,  $state, Notify, $sessionStorage) {
+angular.module('admProduct').controller('admProductAddCtrl',function ($q, title, $scope, $http,  $state, Notify, $stateParams) {
     title.setTitle('添加商品');
     $scope.goods = {
+        id:$stateParams.id,
         imgeUrl:""
     };
     $scope.submitFlag = true;
@@ -17,6 +18,18 @@ angular.module('admProduct').controller('admProductAddCtrl',function ($q, title,
     };
 
     $scope.initParams();
+
+    if($scope.goods.id){
+        $http.get(ctx + "/admGoods/getGoodsById?id="+$scope.goods.id).success(function (resp) {
+            if(resp.successful){
+                $scope.goods = resp.data;
+            }else{
+                console.log(resp);
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        })
+    }
 
     $scope.add = function () {
         if($scope.submitFlag) {

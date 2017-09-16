@@ -131,4 +131,30 @@ public class AdmGoodsController extends BasicController{
         }
     }
 
+    /**
+     * description 修改上架下架
+     * @author Bright
+     * */
+    @RequestMapping("/handle")
+    @ResponseBody
+    public JsonMessage handle(@RequestBody Goods goods){
+        Integer it = admGoodsService.handle(goods);
+        if(it>0){
+            return successMsg();
+        }else{
+            return failMsg();
+        }
+    }
+
+    /**
+     * description 根据ID查询物品
+     * @author Bright
+     * */
+    @RequestMapping("/getGoodsById")
+    @ResponseBody
+    public JsonMessage getGoodsById(Integer id){
+        Goods goods = admGoodsService.getGoodsById(id);
+        return successMsg(goods);
+    }
+
 }

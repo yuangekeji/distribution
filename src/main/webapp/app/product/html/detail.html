@@ -52,7 +52,7 @@
                         商品名称 : {{datas.goodsName}}
                     </div>
                     <div class="form-group">
-                        商品价格 : ¥{{datas.goodsPrice|number:2}} * 40%
+                        商品价格 : ¥{{(datas.goodsPrice * datas.orderQty * 0.4 )|number:2}}
                     </div>
                     <div class="form-group">
                         购买数量 : {{datas.orderQty}} 个

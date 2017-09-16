@@ -78,7 +78,7 @@
                                     <td class="text-left">{{orderMaster.orderNo}}</td>
                                     <td class="text-left">{{orderMaster.orderAmt | number:2}}</td>
                                     <td class="text-left">{{orderMaster.orderCategory|OrderCategoryFilter}}</td>
-                                    <td class="text-left">{{orderMaster.discount}}</td>
+                                    <td class="text-left">{{orderMaster.discount >0 ? orderMaster.discount+'%' : 0}}</td>
                                     <td class="text-left">{{orderMaster.actAmt | number:2}}</td>
                                     <td class="text-left">{{orderMaster.expressFee | number:2}}</td>
                                     <td class="text-left">

@@ -209,6 +209,7 @@ public class MemberService {
         order.setExpressFee(new BigDecimal(0));
         order.setMemberId(member.getId());
         order.setReceiveName(member.getConsignee());
+        order.setRecevivePhone(member.getLinkmanPhone());
         order.setExpressAddress(member.getExpressAddress());
         order.setMemberLevel(member.getMemberLevel());
         order.setOrderStatues("2");

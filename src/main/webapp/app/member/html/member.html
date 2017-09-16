@@ -8,7 +8,7 @@
                     <img src="{{settings.assetsPath}}/pages/media/profile/profile_user.jpg" style="height: 150px" class="img-responsive" alt=""> </div>
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">{{user.memberName}}</div>
-                    <div class="profile-usertitle-job">我的晋升目标:{{user.nextMemberPost|PostLevelFilter}}</div>
+                    <div class="profile-usertitle-job" ng-if="user.nextMemberPost">我的晋升目标:{{user.nextMemberPost|PostLevelFilter}}</div>
                 </div>
                 <div class="profile-userbuttons">
                     <button type="button" class="btn btn-circle green-haze btn-sm">{{user.memberPost|PostLevelFilter}}</button>

@@ -59,7 +59,7 @@ public class AdmOrderService {
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList(map);
         //定义表头
-        String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息"};
+        String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
         return  this.exportExcel("abc", excelHeader, result, response.getOutputStream());
     }
@@ -96,7 +96,8 @@ public class AdmOrderService {
         sheet.setColumnWidth(8, 30 * 256);
         sheet.setColumnWidth(9, 30 * 256);
         sheet.setColumnWidth(10, 30 * 256);
-
+        sheet.setColumnWidth(11, 12 * 256);
+        sheet.setColumnWidth(12, 20 * 256);
         //构建表体
         for(int j=0;j<list.size();j++){
             XSSFRow bodyRow = sheet.createRow(j + 1);
@@ -119,6 +120,8 @@ public class AdmOrderService {
             bodyRow.createCell(8).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getCreateTime()));
             bodyRow.createCell(9).setCellValue(this.orderStatusFilter(list.get(j).getOrderStatues()));
             bodyRow.createCell(10).setCellValue(list.get(j).getExpressAddress());
+            bodyRow.createCell(11).setCellValue(list.get(j).getReceiveName());
+            bodyRow.createCell(12).setCellValue(list.get(j).getRecevivePhone());
         }
 
         return  workbook;

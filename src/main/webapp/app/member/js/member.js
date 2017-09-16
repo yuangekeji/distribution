@@ -10,6 +10,17 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
     $scope.pwdMember ={
         id:$sessionStorage.currentUser.id
     };
+
+    $scope.initParam = function () {
+        $scope.param = {
+            loginPasswordConfirm:"",
+            loginPasswordConfirm:"",
+            payPasswordConfirm:""
+        };
+        $scope.pwdMember ={
+            id:$sessionStorage.currentUser.id
+        };
+    }
     $scope.applyFlag = true;
     $scope.saveFlag = true;
     if($scope.user.memberPost){
@@ -134,6 +145,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                                 $scope.stopLoading();
                                 if("SUCCESS"==resp.data){
                                     Notify.warning("登录密码修改成功。");
+                                   $scope.initParam();
                                 }
                                 if("OLD_PWD_ERROR"==resp.data){
                                     Notify.warning("原始登录密码错误，修改失败。");
@@ -184,6 +196,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                                 $scope.saveFlag = true;
                                 if("SUCCESS"==resp.data){
                                     Notify.warning("查询密码修改成功。");
+                                    $scope.initParam();
                                 }
                                 if("OLD_PWD_ERROR"==resp.data){
                                     Notify.warning("原始查询密码错误，修改失败。");
@@ -234,6 +247,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                                 $scope.saveFlag = true;
                                 if("SUCCESS"==resp.data){
                                     Notify.warning("支付密码修改成功。");
+                                    $scope.initParam();
                                 }
                                 if("OLD_PWD_ERROR"==resp.data){
                                     Notify.warning("原始支付密码错误，修改失败。");

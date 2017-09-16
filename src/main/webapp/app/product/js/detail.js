@@ -38,7 +38,7 @@ angular.module('product').controller('productDetailCtrl',function ($q, title, $s
      */
     $scope.getMemberInfo = function () {
         $scope.startLoading();
-        $http.get(ctx + '/member/getMemberInfo/'+$scope.user.id).success(function (resp) {
+        $http.get(ctx + '/member/getMemberInfoById/'+$scope.user.id).success(function (resp) {
             if(resp.successful){
                 $scope.MemberInfo = resp.data.member;
             }else{

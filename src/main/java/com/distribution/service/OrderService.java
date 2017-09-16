@@ -233,7 +233,12 @@ public class OrderService {
         return orderNo;
     }
 
-
+    /**
+     *
+     * @param moreOrderMaster
+     * @param currentUser
+     * @return
+     */
     public String insertReOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
 
         //根据member_id 和 paypwd 查询会员是否存在
@@ -251,8 +256,9 @@ public class OrderService {
             moreOrderMaster.setActAmt(moreOrderMaster.getOrderAmt());
             moreOrderMaster.setExpressFee(new BigDecimal(0));
             moreOrderMaster.setMemberId(currentUser.getId());
-            moreOrderMaster.setReceiveName(currentUser.getConsignee());
-            moreOrderMaster.setExpressAddress(currentUser.getExpressAddress());
+//            moreOrderMaster.setReceiveName(currentUser.getConsignee());
+//            moreOrderMaster.setRecevivePhone(currentUser.getMemberPhone());
+//            moreOrderMaster.setExpressAddress(currentUser.getExpressAddress());
             moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
             moreOrderMaster.setOrderStatues("2");
             moreOrderMaster.setCreateId(currentUser.getId());
@@ -277,6 +283,12 @@ public class OrderService {
 
     }
 
+    /**
+     * 折扣订单处理
+     * @param moreOrderMaster
+     * @param currentUser
+     * @return
+     */
     public String insertDisOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
             moreOrderMaster.setOrderCategory("3");
             moreOrderMaster.setDiscount(40);
@@ -286,7 +298,7 @@ public class OrderService {
             moreOrderMaster.setExpressFee(new BigDecimal(0));
             moreOrderMaster.setMemberId(currentUser.getId());
             moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
-            moreOrderMaster.setOrderStatues("1");
+            moreOrderMaster.setOrderStatues("2");
             moreOrderMaster.setCreateId(currentUser.getId());
             moreOrderMaster.setCreateTime(new Date());
             moreOrderMaster.setUpdateId(currentUser.getId());

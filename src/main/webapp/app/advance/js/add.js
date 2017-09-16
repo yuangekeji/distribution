@@ -54,7 +54,7 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
      */
     $scope.getMemberInfo = function () {
        $scope.startLoading();
-        $http.get(ctx + '/member/getMemberInfo/'+$scope.user.id).success(function (resp) {
+        $http.get(ctx + '/member/getMemberInfoById/'+$scope.user.id).success(function (resp) {
             if(resp.successful){
                 $scope.MemberInfo = resp.data.member;
                 $scope.banks = resp.data.list;

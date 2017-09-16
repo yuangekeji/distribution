@@ -22,6 +22,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+   <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -54,11 +55,9 @@
    </sql>
     <sql id="excel_where">
         <where>
+             a.order_statues = '2'
             <if test="memberId!=null and memberId!=''">
                 AND a.member_id = #{memberId}
-            </if>
-            <if test="orderStatus!=null and orderStatus!=''">
-                AND a.order_statues = #{orderStatus}
             </if>
             <if test="orderNo!=null and orderNo!=''">
                 AND a.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{orderNo}))),'%') ESCAPE '*'
@@ -140,6 +139,7 @@
         , a.create_time
         , a.update_id
         , a.update_time
+        , a.recevive_phone
         FROM order_master a
         LEFT JOIN order_detail b
         ON a.order_no = b.order_no

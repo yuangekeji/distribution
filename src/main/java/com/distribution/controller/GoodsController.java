@@ -34,7 +34,8 @@ public class GoodsController extends BasicController{
 
     @Autowired
     private GoodsService goodsService;
-
+    @Autowired
+    private CommonService commonService;
     /**
      * description 查询商品详情
      * @author wyn
@@ -48,6 +49,17 @@ public class GoodsController extends BasicController{
         result.put("goods",goods);
 
         return successMsg(result);
+    }
+
+    /**
+     * description 查询商品类型
+     * @author Bright
+     * */
+    @RequestMapping("/findGoodsTypes")
+    @ResponseBody
+    public JsonMessage findGoodsTypes(){
+        List<Dictionary> list = commonService.selectDictionary("goods_type");
+        return successMsg(list);
     }
 
 }

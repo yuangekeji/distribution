@@ -69,6 +69,17 @@
         <mvc:mapping path="/dividend/**"/>
         <mvc:mapping path="/member/**"/>
         <mvc:mapping path="/transfer/**"/>
+        <mvc:mapping path="/admAdvance/**"/>
+        <mvc:mapping path="/admBasicSetting/**"/>
+        <mvc:mapping path="/admGoods/**"/>
+        <mvc:mapping path="/adminBonus/**"/>
+        <mvc:mapping path="/admMember/**"/>
+        <mvc:mapping path="/admOperator/**"/>
+        <mvc:mapping path="/admOrder/**"/>
+        <mvc:mapping path="/admRecommend/**"/>
+        <mvc:mapping path="/admWarning/**"/>
+        <mvc:mapping path="/advance/**"/>
+        <mvc:mapping path="/goods/**"/>
         <mvc:exclude-mapping path="/member/jump"/>
         <mvc:exclude-mapping path="/member/login"/>
         <mvc:exclude-mapping path="/member/logout"/>

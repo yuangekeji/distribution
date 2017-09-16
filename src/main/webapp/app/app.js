@@ -83,6 +83,18 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         $http.get(ctx + '/role/getUserRole').success(function (res) {
             $sessionStorage.currentUser = res.currentUser;
             $scope.currentUser = res.currentUser;
+
+            if(res.currentUser.roleId  != '1'){
+                $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
+                    console.info(res);
+                    if(res.successful){
+                        $scope.failCnt = res.data;
+                    }else{
+                        $scope.failCnt = 0;
+                    }
+                });
+            }
+
             $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
                 $rootScope.menu = res.data.menus;
                 // console.info($rootScope.menu );
@@ -107,14 +119,7 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         });
 
 
-        $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
-            console.info(res);
-            if(res.successful){
-                $scope.failCnt = res.data;
-            }else{
-                $scope.failCnt = 0;
-            }
-        });
+
     }
 
     $scope.onInit();

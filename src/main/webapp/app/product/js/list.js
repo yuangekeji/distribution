@@ -70,8 +70,8 @@ angular.module('product').controller('productCtrl',function ($q, title, $scope, 
     };
 
 
-    $scope.detail = function () {
-        $state.go('app.productDetail', {id: 1});
+    $scope.detail = function (id) {
+        $state.go('app.productDetail', {id: id});
     };
 });
 

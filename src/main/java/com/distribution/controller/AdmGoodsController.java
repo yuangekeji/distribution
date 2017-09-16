@@ -121,7 +121,7 @@ public class AdmGoodsController extends BasicController{
             }
             os.close();
             is.close();
-            return successMsg(sbRealPath.toString());
+            return successMsg(uuid+"."+fileEnd);
         }catch (Exception e) {
             //提示错误:比如文件大小
             e.printStackTrace();

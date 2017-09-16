@@ -74,7 +74,7 @@ angular.module('admProduct').controller('admProductCtrl',function ($q, title, $s
 
     /**修改商品信息*/
     $scope.jumpAdd = function (id) {
-        $state.go("app.admProductAdd",{id:id});
+        $state.go("app.admProductAdd",{id:id,flag:'update'});
     }
 });
 

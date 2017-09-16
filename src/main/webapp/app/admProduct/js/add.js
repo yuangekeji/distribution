@@ -1,5 +1,8 @@
 angular.module('admProduct').controller('admProductAddCtrl',function ($q, title, $scope, $http,  $state, Notify, $stateParams) {
     title.setTitle('添加商品');
+    $scope.temp = {
+        flag:$stateParams.flag
+    };
     $scope.goods = {
         id:$stateParams.id,
         imgeUrl:""
@@ -56,21 +59,24 @@ angular.module('admProduct').controller('admProductAddCtrl',function ($q, title,
           if(!$scope.goods.goodsName||!$scope.goods.goodsName.trim()){
               $scope.submitFlag = true;
               Notify.warning("请输入商品名称。");
-          }else if(!$scope.goods.goodsPrice||!$scope.goods.goodsPrice.trim()){
+          }else if(!$scope.goods.goodsPrice||!$scope.goods.goodsPrice.toString().trim()){
               $scope.submitFlag = true;
               Notify.warning("请输入商品价格。");
-          }else if(!/^\+?[1-9][0-9]*$/.test($scope.goods.goodsPrice.trim())){
+          }else if(!/^\+?[1-9][0-9]*$/.test($scope.goods.goodsPrice.toString().trim())){
               $scope.submitFlag = true;
               Notify.warning("商品价格只能为正整数，请重新输入。");
-          }else if(!$scope.goods.goodsNum||!$scope.goods.goodsNum.trim()){
+          }else if(!$scope.goods.goodsNum||!$scope.goods.goodsNum.toString().trim()){
               $scope.submitFlag = true;
               Notify.warning("请输入商品库存。");
-          }else if(!/^\+?[1-9][0-9]*$/.test($scope.goods.goodsNum.trim())){
+          }else if(!/^\+?[1-9][0-9]*$/.test($scope.goods.goodsNum.toString().trim())){
               $scope.submitFlag = true;
               Notify.warning("商品库存只能为正整数，请重新输入。");
           }else if(!$scope.goods.goodsType){
               $scope.submitFlag = true;
               Notify.warning("请选择商品类型。");
+          }else if(!$scope.goods.imgeUrl){
+              $scope.submitFlag = true;
+              Notify.warning("请上传商品图片。");
           }else if(!$scope.goods.info||!$scope.goods.info.trim()){
               $scope.submitFlag = true;
               Notify.warning("请输入商品介绍。");
@@ -91,6 +97,11 @@ angular.module('admProduct').controller('admProductAddCtrl',function ($q, title,
 
     $scope.stopLoading=function () {
         App.unblockUI(e1);
+    };
+
+    $scope.deleteImg = function () {
+        $scope.goods.imgeUrl = "";
+        $scope.temp.flag = "";
     };
 
     /**图片上传start*/
@@ -142,6 +153,8 @@ angular.module('admProduct').controller('admProductAddCtrl',function ($q, title,
         }
         delete $scope.thumb[guidArr[key]];
         delete $scope.form.image[guidArr[key]];
+        $scope.goods.imgeUrl = "";
+        $scope.temp.flag = "";
     };
     /**图片上传end*/
 });

@@ -22,12 +22,16 @@ public class AdmGoodsService {
      * description 添加商品
      * @author Bright
      * */
-    public Integer insertGoods(Goods goods){
-        goods.setListTime(new Date());
-        goods.setCreateTime(new Date());
-        goods.setDeleteFlag("N");
-        goods.setStatus("N");
-        return goodsMapper.insert(goods);
+    public Integer insertOrUpdateGoods(Goods goods){
+        if(null==goods.getId()) {
+            goods.setListTime(new Date());
+            goods.setCreateTime(new Date());
+            goods.setDeleteFlag("N");
+            goods.setStatus("N");
+            return goodsMapper.insert(goods);
+        }else{
+            return goodsMapper.updateByPrimaryKeySelective(goods);
+        }
     }
 
     /**

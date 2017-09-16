@@ -51,7 +51,7 @@ public class AdmGoodsController extends BasicController{
     @RequestMapping("/insert")
     @ResponseBody
     public JsonMessage insertGoods(@RequestBody Goods goods){
-        if(admGoodsService.insertGoods(goods)>0){
+        if(admGoodsService.insertOrUpdateGoods(goods)>0){
             return successMsg();
         }else{
             return failMsg();

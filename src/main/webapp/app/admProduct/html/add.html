@@ -37,15 +37,29 @@
                         </div>
                         <div class="form-group">
                             <label>商品图片</label>
-                            <div>
-                                <input type="file" ng-if="!goods.imgeUrl" id="one-input" src="static/image/icon_add.svg" accept="image/*" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
-                                <div ng-repeat="item in thumb">
-                                    <label>
-                                        <img ng-src="{{item.imgSrc}}" style="max-width: 50%;max-height: 50%"/>
-                                    </label>
-                                    <span ng-if="item.imgSrc" ng-click="img_del($index)"></span>
-                                </div>
-                            </div>
+                            <!--<div class="mt-element-overlay">-->
+                                <!--<div class="mt-overlay-1" style="max-width: 50%;max-height: 50%">-->
+                                    <input type="file" ng-show="!goods.imgeUrl" id="one-input" src="static/image/icon_add.svg" accept="image/*" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
+                                    <div ng-show="!temp.flag" ng-repeat="item in thumb">
+                                        <label>
+                                            <a  ng-click="img_del($index)" class="btn red btn-outline"  style="float:right">
+                                                <i class="fa fa-remove"></i>
+                                            </a>
+                                            <img ng-src="{{item.imgSrc}}" style="max-width: 90%;max-height: 90%"/>
+                                        </label>
+                                        <!--<span ng-if="item.imgSrc" ng-click="img_del($index)"></span>-->
+                                    </div>
+                                    <div ng-show="temp.flag && goods.imgeUrl">
+                                        <label>
+                                            <a  ng-click="deleteImg();" class="btn red btn-outline"  style="float:right">
+                                                <i class="fa fa-remove"></i>
+                                            </a>
+                                            <img ng-if="goods.imgeUrl" ng-src="{{'admGoods/showPic?picUrl='+goods.imgeUrl}}" style="max-width: 90%;max-height: 90%">
+                                        </label>
+                                    </div>
+
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                         <div class="form-group">
                             <label>商品介绍</label>

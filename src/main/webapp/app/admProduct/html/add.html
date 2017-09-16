@@ -39,7 +39,7 @@
                             <label>商品图片</label>
                             <!--<div class="mt-element-overlay">-->
                                 <!--<div class="mt-overlay-1" style="max-width: 50%;max-height: 50%">-->
-                                    <input type="file" ng-show="!goods.imgeUrl" id="one-input" src="static/image/icon_add.svg" accept="image/*" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
+                                    <input type="file" ng-show="!goods.imgeUrl" id="one-input" src="static/image/icon_add.svg" accept="image/jpg,image/jpeg,image/png,image/bmp" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
                                     <div ng-show="!temp.flag" ng-repeat="item in thumb">
                                         <label>
                                             <a  ng-click="img_del($index)" class="btn red btn-outline"  style="float:right">

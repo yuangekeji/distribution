@@ -1,4 +1,4 @@
-angular.module('admProduct').controller('admProductCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admProduct').controller('admProductCtrl',function ($q, title, $scope, $http,  $state, Notify, $sessionStorage) {
     title.setTitle('商品管理');
 
     $scope.loadingFlag = true;
@@ -59,10 +59,34 @@ angular.module('admProduct').controller('admProductCtrl',function ($q, title, $s
             }
         });
     };
+
+    /**上架下架操作*/
+    $scope.handle = function (id,status) {
+        $http.post(ctx + "/admGoods/handle",{id:id,status:status}).success(function (resp) {
+            if(resp.successful){
+                Notify.warning("操作成功。");
+                $scope.search();
+            }else{
+                Notify.warning("操作失败。");
+            }
+        })
+    }
+
+    /**修改商品信息*/
+    $scope.jumpAdd = function (id) {
+        $state.go("app.admProductAdd",{id:id});
+    }
 });
 
 angular.module('admProduct').filter("GoodsTypesFilter",function () {
     return function (input) {
         if(input=='01'){return '保健品'};
+    }
+});
+
+angular.module('admProduct').filter("statusFilter",function () {
+    return function (input) {
+        if(input=='Y'){return '上架'};
+        if(input=='N'){return '下架'};
     }
 });

@@ -61,8 +61,12 @@
                             <td>{{goods.goodsType|GoodsTypesFilter}}</td>
                             <td>{{goods.goodsPrice|number:2}}</td>
                             <td>{{goods.goodsNum}}</td>
-                            <td>{{goods.goodsName}}</td>
-                            <td></td>
+                            <td>{{goods.status|statusFilter}}</td>
+                            <td>
+                                <button type="button" class="btn btn-outline green btn-sm" ng-click="handle(goods.id,'Y');" ng-if="goods.status=='N'">上架</button>
+                                <button type="button" class="btn btn-outline red btn-sm" ng-click="handle(goods.id,'N');" ng-if="goods.status=='Y'">下架</button>
+                                <button type="button" class="btn btn-outline green btn-sm" ng-click="jumpAdd(goods.id);">修改</button>
+                            </td>
                         </tr>
                         <tr ng-show= "notData" >
                             <td colspan="6" class="text-center">无记录</td>

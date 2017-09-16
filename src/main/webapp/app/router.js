@@ -162,7 +162,7 @@ angular.module('app').config([
                 controller: 'admProductCtrl'
             })
             .state('app.admProductAdd',{
-                url: '/admProductAdd',
+                url: '/admProductAdd/:id',
                 templateUrl: helper.basepath('admProduct/html/add.html'),
                 resolve: helper.resolveFor('admProductAdd'),
                 controller: 'admProductAddCtrl'

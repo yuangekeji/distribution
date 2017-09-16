@@ -26,6 +26,7 @@ public class AdmGoodsService {
         goods.setListTime(new Date());
         goods.setCreateTime(new Date());
         goods.setDeleteFlag("N");
+        goods.setStatus("N");
         return goodsMapper.insert(goods);
     }
 
@@ -37,5 +38,21 @@ public class AdmGoodsService {
         page.setTotalCount(moreGoodsMapper.getGoodsCount(page));
         page.setResult(moreGoodsMapper.list(page));
         return page;
+    }
+
+    /**
+     * description 修改上架下架
+     * @author Bright
+     * */
+    public Integer handle(Goods goods){
+        return goodsMapper.updateByPrimaryKeySelective(goods);
+    }
+
+    /**
+     * description 根据ID查询物品
+     * @author Bright
+     * */
+    public Goods getGoodsById(Integer id){
+        return goodsMapper.selectByPrimaryKey(id);
     }
 }

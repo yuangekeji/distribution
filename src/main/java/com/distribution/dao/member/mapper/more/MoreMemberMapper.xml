@@ -123,7 +123,10 @@
     member_name, member_level, express_address, status, role_id,
     member_post, create_time, order_amount, consignee,
     money_status, is_operator, is_sales_dept,
-    first_agent_cnt, recommend_name,parent_id FROM member WHERE member_phone = #{userName} AND login_password = #{password}
+    first_agent_cnt, recommend_name,
+    parent_id ,
+    linkman_phone
+    FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
   <select id="findMatchMemberQueryPwd" parameterType="java.util.Map" resultType="java.lang.Integer">
     SELECT count(0) as count

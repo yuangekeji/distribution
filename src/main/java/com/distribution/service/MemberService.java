@@ -214,11 +214,9 @@ public class MemberService {
         order.setMemberId(member.getId());
         //1 自提 2-邮寄
         order.setSendbypostyn(_member.getSendbypostyn());
-        if("2".equals(_member.getSendbypostyn())){
-            order.setReceiveName(_member.getReceiveName());
-            order.setRecevivePhone(_member.getRecevivePhone());
-            order.setExpressAddress(_member.getReceviveAddress());
-        }
+        order.setReceiveName(_member.getReceiveName());
+        order.setRecevivePhone(_member.getRecevivePhone());
+        order.setExpressAddress(_member.getReceviveAddress());
         order.setMemberLevel(member.getMemberLevel());
         order.setOrderStatues("2");
         order.setCreateId(member.getId());

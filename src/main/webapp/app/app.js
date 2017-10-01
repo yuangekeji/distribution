@@ -82,12 +82,11 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         $scope.ctx = window['ctx'];
         $http.get(ctx + '/role/getUserRole').success(function (res) {
             $sessionStorage.currentUser = res.currentUser;
-            console.info($sessionStorage.currentUser);
             $scope.currentUser = res.currentUser;
 
             if(res.currentUser.roleId  != '1'){
                 $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
-                    console.info(res);
+
                     if(res.successful){
                         $scope.failCnt = res.data;
                     }else{

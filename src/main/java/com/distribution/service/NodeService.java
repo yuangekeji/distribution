@@ -69,7 +69,7 @@ public class NodeService {
 	 * @author su
 	 * @return
 	 */
-	public int saveNode(MemberNode node){
+	public MemberNode saveNode(MemberNode node){
 		//推荐人的节点Id
 		Integer recommendNodeId = node.getParentId();
 		MemberNode parentNode = getParentNode(recommendNodeId);
@@ -85,7 +85,7 @@ public class NodeService {
 		parentNode.setUpdateTime(new Date());
 		parentNode.setUpdateBy(node.getCreateBy());
 		moreNodeMapper.updateByPrimaryKeySelective(parentNode);
-		return node.getId();
+		return node;
 	}
 	/**
 	 * 

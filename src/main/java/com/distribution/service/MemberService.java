@@ -79,24 +79,24 @@ public class MemberService {
             if(null!=historyMember){//查询手机号是否被注册，是则报错
                 return "PHONE_EXISTENCE";
             } else {
-                Member noteMember = moreMemberMapper.getMemberByPhone(moreMember.getNotePhone());
-                if(null==noteMember){//查询节点是否存在，否则报错
-                    return "NO_NODE_MEMBER";
-                } else {
-                    Integer it = nodeService.findNodeByParentNode(noteMember.getNodeId(),moreMember.getArea());
-                    if(it.intValue()!=0){//判断节点是否还可以放一代，否则报错
-                        if("left".equals(moreMember.getArea()))
-                            return "LEFT_NOTE_FULL";
-                        else
-                            return "RIGHT_NOTE_FULL";
-                    }else {
+//                Member noteMember = moreMemberMapper.getMemberByPhone(moreMember.getNotePhone());
+//                if(null==noteMember){//查询节点是否存在，否则报错
+//                    return "NO_NODE_MEMBER";
+//                } else {
+//                    Integer it = nodeService.findNodeByParentNode(noteMember.getNodeId(),moreMember.getArea());
+//                    if(it.intValue()!=0){//判断节点是否还可以放一代，否则报错
+//                        if("left".equals(moreMember.getArea()))
+//                            return "LEFT_NOTE_FULL";
+//                        else
+//                            return "RIGHT_NOTE_FULL";
+//                    }else {
                         //保存节点信息
                         MemberNode memberNode = new MemberNode();
                         memberNode.setCreateBy(currentUser.getId());
-                        memberNode.setCreateTime(new Date());
-                        memberNode.setParentId(noteMember.getNodeId());
-                        memberNode.setUpdateBy(currentUser.getId());
-                        memberNode.setUpdateTime(new Date());
+//                        memberNode.setCreateTime(new Date());
+                        memberNode.setParentId(recommendMember.getNodeId());
+//                        memberNode.setUpdateBy(currentUser.getId());
+//                        memberNode.setUpdateTime(new Date());
                         Integer noteId = nodeService.saveNode(memberNode,moreMember.getArea());
 
                         //保存报单信息
@@ -113,7 +113,8 @@ public class MemberService {
                         member.setMoneyStatus("N");
                         member.setRecommendName(recommendMember.getMemberName());
                         member.setNodeId(noteId);
-                        member.setNodeName(noteMember.getMemberName());
+                        member.setParentId(0);
+//                        member.setNodeName(noteMember.getMemberName());
                         if ("member_level1".equals(member.getMemberLevel())) {
                             member.setOrderAmount(new BigDecimal(600));
                         } else if ("member_level2".equals(member.getMemberLevel())) {
@@ -145,8 +146,8 @@ public class MemberService {
                         accountManagerMapper.insert(accountManager);
 
                         return "SUCCESS";
-                    }
-                }
+//                    }
+//                }
             }
         }
     }

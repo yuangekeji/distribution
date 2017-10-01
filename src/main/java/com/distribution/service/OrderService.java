@@ -1,5 +1,6 @@
 package com.distribution.service;
 
+import com.distribution.common.constant.BonusConstant;
 import com.distribution.common.constant.Constant;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
@@ -58,6 +59,10 @@ public class OrderService {
 
     @Autowired
     private GoodsMapper goodsMapper;
+
+    @Autowired
+    private CommonService commonService;
+
     /**
      * description 订单列表查询
      * @author WYN
@@ -168,6 +173,10 @@ public class OrderService {
 
         //报单，复投分红包处理
         if("1".equals(moreOrderMaster.getOrderCategory()) || "2".equals(moreOrderMaster.getOrderCategory())){
+
+            //领取分红包 600 -> 760 ，从百分比75%更换到固定数额
+            double dividendLimitPercent = commonService.getMaxAmt(BonusConstant.D02,BonusConstant.CODE_02);
+
             Dividend dividend = new Dividend();
             BigDecimal divideCount = moreOrderMaster.getOrderAmt().divide(new BigDecimal(600));
 
@@ -176,11 +185,11 @@ public class OrderService {
             dividend.setOrderAmount(moreOrderMaster.getOrderAmt());
             dividend.setMemberId(moreOrderMaster.getMemberId());
             dividend.setDividendCount(divideCount.intValue());
-            dividend.setDividendLimit(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
-            dividend.setRemainAmount(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)));
+            dividend.setDividendLimit(new BigDecimal(dividendLimitPercent).multiply(divideCount));
+            dividend.setRemainAmount(dividend.getDividendLimit());
             dividend.setReceivedAmount(new BigDecimal(0)); //已领取金额给个0
             dividend.setDividendStatus("1");
-            dividend.setMgmtFee(moreOrderMaster.getOrderAmt().divide(new BigDecimal(0.75)).multiply(new BigDecimal(0.06)));
+            dividend.setMgmtFee(dividend.getDividendLimit().multiply(new BigDecimal(0.06)));
             dividend.setCreateId(moreOrderMaster.getCreateId());
             dividend.setCreateTime(new Date());
             dividend.setUpdateId(moreOrderMaster.getCreateId());

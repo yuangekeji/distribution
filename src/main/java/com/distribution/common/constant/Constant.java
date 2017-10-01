@@ -31,4 +31,5 @@ public class Constant {
     public static final String ADMINHANDLETYPE_ADDACCOUNT = "0";//会员管理-会员充值
     public static final String ADMINHANDLETYPE_APPLYSTATUS= "1";//运营中心管理-审批通过/审批驳回
     public static final String ADMINHANDLETYPE_APPLYORDER= "2";//订单管理-确认发货、下载
+    public static final String ADMINHANDLETYPE_APPLYADVANCE= "3";//提现管理-批准、驳回
 }

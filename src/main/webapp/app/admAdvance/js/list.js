@@ -17,7 +17,10 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     $scope.approvalRemark = {
         id: '',
         statues: '',
-        remark: ''
+        remark: '',
+        memberId: '',
+        memberName: '',
+        reqAmt: ''
     };
 
     var e1 = $('.portlet');
@@ -69,9 +72,9 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     }
 
     /**提现批准*/
-    $scope.confirmAdvance = function (id, memberId, reqAmt, statues) {
+    $scope.confirmAdvance = function (id, memberId, memberName, reqAmt, statues) {
         $scope.startLoading();
-        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, memberId:memberId, reqAmt: reqAmt, statues:statues}).success(function (resp) {
+        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, memberId:memberId, memberName:memberName, reqAmt: reqAmt, statues:statues}).success(function (resp) {
             if(resp.successful){
                 Notify.success("提现审批完成。");
                 $scope.search();
@@ -86,8 +89,11 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     };
 
     /**提现驳回*/
-    $scope.rejectAdvance = function (id, statues) {
+    $scope.rejectAdvance = function (id, memberId, memberName, reqAmt, statues) {
         $scope.approvalRemark.id = id;
+        $scope.approvalRemark.memberId = memberId;
+        $scope.approvalRemark.memberName = memberName;
+        $scope.approvalRemark.reqAmt = reqAmt;
         $scope.approvalRemark.statues = statues;
         $scope.approvalRemark.remark = '';
         $scope.open();
@@ -159,9 +165,9 @@ angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, 
     };
 
     /**提现驳回*/
-    $scope.reject = function (id, statues, remark) {
+    $scope.reject = function (id, memberId, memberName, reqAmt, statues, remark) {
         $scope.startLoading();
-        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,statues:statues,remark:remark}).success(function (resp) {
+        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id,memberId:memberId, memberName:memberName, reqAmt:reqAmt, statues:statues,remark:remark}).success(function (resp) {
             if(resp.successful){
                 Notify.success("提现驳回完成。");
                 $uibModalInstance.close(true);

@@ -80,12 +80,13 @@ public class BonusServiceTest extends SpringServiceTest{
 	@Test
 	public void insertOrderBonusTest(){
 		OrderMaster order = new OrderMaster();
-		order.setOrderAmt(new BigDecimal(9000));
-		order.setId(8);
+		order.setOrderAmt(new BigDecimal(1800));
+		order.setId(57);
 		order.setCreateId(8);
-		order.setOrderNo(new Long("1701230"));
+		order.setOrderNo(new Long("170910121833031"));
 		order.setCreateTime(new Date());
-		order.setMemberId(9);
-		//bonusService.insertOrderBonus(order);
+		order.setMemberId(41);
+		order.setOrderCategory("2");
+		bonusService.insertOrderBonus(order);
 	}
 }

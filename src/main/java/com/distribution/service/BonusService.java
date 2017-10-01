@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.distribution.dao.order.model.OrderMaster;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,9 @@ import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper;
 import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
+import com.distribution.dao.nodeBonusHistory.model.more.MoreNodeBonusHistory;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
+import com.distribution.dao.order.model.OrderMaster;
 
 @Service
 public class BonusService {
@@ -115,34 +116,43 @@ public class BonusService {
 	public void insertOrderBonus(OrderMaster order){
 		//订单主人会员
     	Member owner = memberMapper.selectByPrimaryKey(order.getMemberId());
+    	//订单主人的推荐人
+    	Member ownerRecomend = memberMapper.selectByPrimaryKey(owner.getRecommendId());
 		//订单主人推荐人不为空发奖
-		if(null != owner.getRecommendId() && owner.getRecommendId() > 0){
+		if(null != ownerRecomend){
 			//初始化计算所需配置中的变量
 			commonService.initBasicManageList();
-			//当前订单的主人的推荐人
-			int recommendUser = owner.getRecommendId();
-			//订单主人的推荐人
-			Member ownerRecomend = memberMapper.selectByPrimaryKey(recommendUser);
 			//当前订单的主人对应的会员节点
 			int nodeId = owner.getNodeId();
-			//当前订单的主人对应的推荐人的推荐人
-			int recommendUserParent = ownerRecomend.getRecommendId();
-			//销售奖 订单的推荐人
-			insertSalseBonus(recommendUser,order);
 			//1代奖 订单的推荐人
-			insertFirstGenerationBonus(recommendUser,order);
-			//推荐人的上级不存在时，二代奖发给直接推荐人。
-			if(null == ownerRecomend.getRecommendId() || ownerRecomend.getRecommendId() == 0){
-				recommendUserParent = recommendUser;
+			insertSalseBonus(ownerRecomend.getId(),order);
+			//订单主人二级推荐人
+			Member recomend_2 = memberMapper.selectByPrimaryKey(ownerRecomend.getRecommendId());
+			if(null != recomend_2){
+				//2代奖 订单二级推荐人
+				insertFirstGenerationBonus(recomend_2.getId(),order);
+				//订单主人的3级推荐人
+				Member recomend_3 = memberMapper.selectByPrimaryKey(recomend_2.getRecommendId());
+				//三级推荐人不为空时
+				if(null != recomend_3){
+					//3代奖 订单三级推荐人
+					insertSecondGenerationBonus(recomend_3.getId(),order);
+				}else{
+					//推荐人的上级不存在时，三代奖发给二代推荐人。
+				}
+			}else{
+				//推荐人的上级不存在时，二代奖发给直接推荐人。
 			}
-			//2代奖直推人的推荐人获得2代奖
-			insertSecondGenerationBonus(recommendUserParent,order);
 			//级差奖 当前节点所有上级
 			insertMemberLevelBonus(nodeId,order);
 			//工作室&运营中心奖/扶持奖 当前节点的所有上级
 			insertWorkRoomAndOperatingCenterBonus(nodeId,order);
 			//生成会员见点奖，只有报单有。订单类型（1.报单，2.复投， 3.折扣订单）
-			if(null != order.getOrderCategory() && order.getOrderCategory().equals(BonusConstant.ORDER_CATEGORY_1)){
+			/*if(null != order.getOrderCategory() && order.getOrderCategory().equals(BonusConstant.ORDER_CATEGORY_1)){
+				nodeService.insertMemberNodeBonus(nodeId,order);
+			}*/
+			//20170930 调整为复投也计算见点奖(1.报单，2.复投)
+			if(null != order.getOrderCategory() && !order.getOrderCategory().equals(BonusConstant.ORDER_CATEGORY_3)){
 				nodeService.insertMemberNodeBonus(nodeId,order);
 			}
 		}
@@ -243,15 +253,17 @@ public class BonusService {
         	if(m.getId().intValue() == nodeId){
         		continue;
         	}
+        	//20170930 去掉工作室奖
         	//如果是工作室发工作室奖，然后继续向上发运营中心奖。
-        	if(null != m.getIsSalesDept() && m.getIsSalesDept().equalsIgnoreCase("Y")){
+        	/*if(null != m.getIsSalesDept() && m.getIsSalesDept().equalsIgnoreCase("Y")){
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_03);
         		//发工作室奖
         		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_7,m.getMemberId(),order);
         		//发运营中心扶持奖，从当前节点开始向上找，遇到普通会员结束，遇到运营中心发奖。
         		insertOperatingCenterHelpBonus(list,i+1,order);
         		break;
-        	}else if(null != m.getIsOperator() && m.getIsOperator().equalsIgnoreCase("Y")){
+        	}else*/ 
+        	if(null != m.getIsOperator() && m.getIsOperator().equalsIgnoreCase("Y")){
         		//如果是运营中心发运营中心奖，发奖结束。
         		double bonusPercent = commonService.getMaxPercent(BonusConstant.D06,BonusConstant.CODE_01);
         		insertAndSaveBonus(bonusPercent,BonusConstant.BONUS_TYPE_8,m.getMemberId(),order);
@@ -444,11 +456,13 @@ public class BonusService {
 		result.put("nodeBonusAmount", history.getJdBonusTotal());
         //double totalBonus = nodeBonusHistoryMapper.findCurrentDayNodeBonus(date);
 		//所有奖金生成日期小于等于今天未发放的数据
-		List<NodeBonusHistory> list = nodeBonusHistoryMapper.listCurrentDayNodeBonus(date);
+		List<MoreNodeBonusHistory> list = nodeBonusHistoryMapper.listCurrentDayNodeBonus(date);
 		//见点奖金额
 		double bonusNum = commonService.getMaxAmt(BonusConstant.D03,BonusConstant.CODE_00);
 		//待发放的奖金总数（数量乘以单价）
-		double totalBonus = commonService.multiply(list.size(), bonusNum);
+		//double totalBonus = commonService.multiply(list.size(), bonusNum);
+		//20170930 调整见点奖金为分红数量乘以奖金金额
+		double totalBonus = nodeService.calculateNodeBonusAmount(list,bonusNum);
 		result.put("toBeSentTotalNodeBonus", totalBonus);
         //查找奖金发放池，奖金余额
         double lessNodeBonus = bonusPoolService.getBonusCachePool(BonusConstant.POOL_ID_NODE); 
@@ -457,7 +471,7 @@ public class BonusService {
         BigDecimal nowPoolTotal = new BigDecimal(lessNodeBonus).add(history.getJdBonusTotal());
         if(list.size() > 0 && nowPoolTotal.compareTo(new BigDecimal(totalBonus)) >= 0){
             //更新要发的见点奖列表，计入奖金金额，更新发放状态，记入时间。
-            nodeService.updateNodeBonusHistory(list,bonusNum);
+            nodeService.updateNodeBonusHistory(list);
             //将发放剩余的奖金计入奖金池，并计入流水。
             double rest = history.getJdBonusTotal().doubleValue()- totalBonus;
             //如果营业额的10% 减去 要发的奖金，否则更新发放池。

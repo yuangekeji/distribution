@@ -7,10 +7,11 @@ package com.distribution.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
-import com.distribution.dao.order.model.OrderMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ import com.distribution.dao.memberNode.model.more.CustomNode;
 import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper;
 import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
+import com.distribution.dao.nodeBonusHistory.model.more.MoreNodeBonusHistory;
+import com.distribution.dao.order.model.OrderMaster;
 
 @Service
 public class NodeService {
@@ -57,6 +60,78 @@ public class NodeService {
 			result = node.getLeftId()==null?0:node.getLeftId();
 		}else{
 			result = node.getRightId()==null?0:node.getRightId();
+		}
+		return result;
+	}
+	/**
+	 * 系统动态排单，策略为等级优先，先上后下，先左后右
+	 * @param node node对象
+	 * @author su
+	 * @return
+	 */
+	public int saveNode(MemberNode node){
+		//推荐人的节点Id
+		Integer recommendNodeId = node.getParentId();
+		MemberNode parentNode = getParentNode(recommendNodeId);
+		node.setParentId(parentNode.getId());
+		node.setCreateTime(new Date());
+		moreNodeMapper.insertBackId(node);
+		//如果左边为空，先放到左边，否则放右边。
+		if(null == parentNode.getLeftId() || parentNode.getLeftId() <= 0){
+			parentNode.setLeftId(node.getId());
+		}else{
+			parentNode.setRightId(node.getId());
+		}
+		parentNode.setUpdateTime(new Date());
+		parentNode.setUpdateBy(node.getCreateBy());
+		moreNodeMapper.updateByPrimaryKeySelective(parentNode);
+		return node.getId();
+	}
+	/**
+	 * 
+	 * 根据根节点找到可以新增节点的位置
+	 * @param root
+	 * @return MemberNode
+	 */
+	public MemberNode getParentNode(int recommendNodeId){
+		MemberNode result = null;
+		//查询结果中的节点ID从小到大排列，不能人为调整节点主键值。
+		List<MemberNode> list = moreNodeMapper.listSubNodesByRecommendNode(recommendNodeId);
+		Queue<MemberNode> q = new LinkedList<MemberNode>();
+		q.add(list.get(0));
+		while(!q.isEmpty()){
+			MemberNode node = q.poll();
+			if(null == node.getLeftId()){
+				result = node;
+				break;
+			}else{
+				//左子节点入队
+				q.add(findNode(list,node.getLeftId()));
+			}
+			if(null == node.getRightId()){
+				result = node;
+				break;
+			}else{
+				//右子节点入队
+				q.add(findNode(list,node.getRightId()));
+			}
+		}
+		return result;
+	}
+	/**
+	 * 
+	 * 通过id找到MemberNode
+	 * @param list
+	 * @param nodeId
+	 * @return
+	 */
+	public MemberNode findNode(List<MemberNode> list,int nodeId){
+		MemberNode result = null;
+		for(MemberNode node:list){
+			if(node.getId().intValue() == nodeId){
+				result = node;
+				break;
+			}
 		}
 		return result;
 	}
@@ -413,10 +488,10 @@ public class NodeService {
 	 * @param date
 	 * @param nodeBonus
 	 */
-	public void updateNodeBonusHistory(List<NodeBonusHistory> list,double nodeBonus){
+	public void updateNodeBonusHistory(List<MoreNodeBonusHistory> list){
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("list", list);
-		map.put("nodeBonus", nodeBonus);
+		//map.put("nodeBonus", nodeBonus);
 		//更新状态为已领取
 		map.put("bonusStatus", BonusConstant.BONUS_STATUS_1);
 		map.put("updateBy", 0);
@@ -438,5 +513,19 @@ public class NodeService {
 		map.put("updateBy", 0);
 		map.put("updateTime", new Date());
 		nodeBonusHistoryMapper.updateNodeBonusHistoryStatusEnd(map);
+	}
+	/**
+	 * 调整见点奖金为分红数量乘以奖金金额
+	 * @param list
+	 * @param nodeBonus
+	 * @return
+	 */
+	public double calculateNodeBonusAmount(List<MoreNodeBonusHistory> list,double nodeBonus){
+		double total = 0;
+		for(MoreNodeBonusHistory m:list){
+			total = total + m.getOrderQty() * nodeBonus;
+			m.setBonusAmount(m.getOrderQty() * nodeBonus);
+		}
+		return total;
 	}
 }

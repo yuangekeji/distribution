@@ -62,9 +62,9 @@ public class Member {
 
     private String recommendName;
 
-    private String nodeName;
-
     private String linkmanPhone;
+
+    private Integer parentId;
 
     public Integer getId() {
         return id;
@@ -298,19 +298,19 @@ public class Member {
         this.recommendName = recommendName == null ? null : recommendName.trim();
     }
 
-    public String getNodeName() {
-        return nodeName;
-    }
-
-    public void setNodeName(String nodeName) {
-        this.nodeName = nodeName == null ? null : nodeName.trim();
-    }
-
     public String getLinkmanPhone() {
         return linkmanPhone;
     }
 
     public void setLinkmanPhone(String linkmanPhone) {
         this.linkmanPhone = linkmanPhone == null ? null : linkmanPhone.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 }

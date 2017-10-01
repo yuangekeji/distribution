@@ -843,3 +843,20 @@ ADD COLUMN `status`  varchar(255) NULL COMMENT '状态(Y:上架,N:下架)';
 ALTER TABLE `order_master`
 	ADD COLUMN `recevive_phone` VARCHAR(255) NULL DEFAULT NULL COMMENT '收货人电话' AFTER `express_address`,
 	ADD COLUMN `remark` VARCHAR(255) NULL DEFAULT NULL COMMENT '备注' AFTER `recevive_phone`;
+-- ------------------------------------------- 一期 end ---------------------------------------------------------
+
+-- ------------------------------------------- 二期sql管理 start ------------------------------------
+-- 更改分红包领取比例-》固额
+update basic_manage
+set max_percent = null , max_amt = 760 , detail_nm= '分红包领满数额'
+where type_code ='D02' and detail_code ='02';
+
+-- 去掉黑金卡
+DELETE from dictionary where dic_code ='member_level6';
+
+-- 放置节点ID
+ALTER TABLE `member`
+ADD COLUMN `parent_id`  int(15) NULL COMMENT '放置节点ID';
+
+-- 删除节点
+ALTER TABLE `member` DROP  COLUMN node_name;

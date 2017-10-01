@@ -5,6 +5,7 @@ angular.module('account').controller('accountListCtrl',
     $scope.accountInfo = {};
     $scope.validateErrors ={};
     $scope.reOrdervalidateErrors={};
+    $scope.user = $sessionStorage.currentUser;
 
     //定义转账model
     $scope.transfer = {};
@@ -55,7 +56,11 @@ angular.module('account').controller('accountListCtrl',
             amt:0.00,
             orderAmt:0.00,
             payPassword:'',
-            bonusType:'1'
+            bonusType:'1',
+            sendbypostyn : '1',
+            receiveName: $scope.user.consignee,
+            expressAddress:$scope.user.expressAddress,
+            recevivePhone:$scope.user.linkmanPhone
         }
     }
     $scope.onInit();
@@ -217,7 +222,23 @@ angular.module('account').controller('accountListCtrl',
                  $scope.reOrder.payPassword.length <= 0) {
                  $scope.reOrdervalidateErrors.payPasswordError = true;
              }
+         },
+         receiveNameError:function () {
+             if($scope.reOrder.sendbypostyn == '2' && (!$scope.reOrder.receiveName||!$scope.reOrder.receiveName.trim())){
+                 $scope.reOrdervalidateErrors.receiveNameError = true;
+             }
+         },
+         expressAddressError:function () {
+             if($scope.reOrder.sendbypostyn == '2' && (!$scope.reOrder.expressAddress||!$scope.reOrder.expressAddress.trim())){
+                 $scope.reOrdervalidateErrors.expressAddressError = true;
+             }
+         },
+         recevivePhoneError:function () {
+             if($scope.reOrder.sendbypostyn == '2' && (!$scope.reOrder.recevivePhone||!$scope.reOrder.recevivePhone.trim())){
+                 $scope.reOrdervalidateErrors.recevivePhoneError = true;
+             }
          }
+
         }
 
      $scope.reOrderCommit= function () {
@@ -243,6 +264,7 @@ angular.module('account').controller('accountListCtrl',
              return false;
          }
 
+
          $scope.startLoading();
 
          $http.post(ctx + '/order/reOrder',
@@ -251,7 +273,12 @@ angular.module('account').controller('accountListCtrl',
                  orderAmt:parseInt($scope.reOrder.orderAmt),
                  bonusType:$scope.reOrder.bonusType,
                  amt:parseInt($scope.reOrder.amt),
-                 payPassword:$scope.reOrder.payPassword
+                 payPassword:$scope.reOrder.payPassword,
+                 sendbypostyn:$scope.reOrder.sendbypostyn,
+                 receiveName:$scope.reOrder.receiveName,
+                 expressAddress:$scope.reOrder.expressAddress,
+                 recevivePhone:$scope.reOrder.recevivePhone
+
              }).success(function (resp) {
 
              $scope.stopLoading();

@@ -15,7 +15,6 @@ angular.module('home').controller('homeCtrl',
      $scope.payPasswordConfirm = '333333';
      $scope.currentUser = $sessionStorage.currentUser;
 
-        console.info('home',$sessionStorage.currentUser);
      $scope.currentUser.sendbypostyn= "1" ;//默认自提
      $scope.currentUser.receiveName = $scope.currentUser.consignee;
      $scope.currentUser.receviveAddress =  $scope.currentUser.expressAddress;

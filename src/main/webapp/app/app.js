@@ -30,7 +30,8 @@ var App = angular.module('app', [
     'admProduct',
     'admin',
     'admBonus',
-    'admWarning'
+    'admWarning',
+    'admTreeMember'
 ]);
 
 angular.module('app.lazyLoad', []);
@@ -58,6 +59,7 @@ angular.module('admProduct', []);
 angular.module('admBonus', []);
 angular.module('admin',[]);
 angular.module('admWarning',[]);
+angular.module('admTreeMember',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
@@ -82,12 +84,11 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         $scope.ctx = window['ctx'];
         $http.get(ctx + '/role/getUserRole').success(function (res) {
             $sessionStorage.currentUser = res.currentUser;
-            console.info($sessionStorage.currentUser);
             $scope.currentUser = res.currentUser;
 
             if(res.currentUser.roleId  != '1'){
                 $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
-                    console.info(res);
+
                     if(res.successful){
                         $scope.failCnt = res.data;
                     }else{

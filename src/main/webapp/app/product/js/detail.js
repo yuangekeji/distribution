@@ -82,9 +82,9 @@ angular.module('product').controller('productDetailCtrl',function ($q, title, $s
         $scope.goodsOrder.goodsName      =  $scope.goods.goodsName;
         $scope.goodsOrder.goodsPrice     =  $scope.goods.goodsPrice;
         $scope.goodsOrder.orderQty       =  $scope.orderQty;
-        $scope.goodsOrder.receiveName    =  $scope.MemberInfo.memberName;
-        $scope.goodsOrder.expressAddress =  $scope.MemberInfo.expressAddress;
-        $scope.goodsOrder.recevivePhone  =  $scope.MemberInfo.memberPhone;
+        $scope.goodsOrder.receiveName    =  $scope.user.consignee;
+        $scope.goodsOrder.expressAddress =  $scope.user.expressAddress;
+        $scope.goodsOrder.recevivePhone  =  $scope.user.linkmanPhone;
 
         $scope.open();
     }
@@ -106,10 +106,10 @@ angular.module('product').controller('productDetailCtrl',function ($q, title, $s
             });
         out.result.then(function(value)
         {
-            console.info('确认');
+            // console.info('确认');
         }, function()
         {
-            console.info('取消');
+            // console.info('取消');
         });
     }
 
@@ -167,6 +167,7 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
     }
 
     $scope.datas = getDatas;
+    $scope.datas.sendbypostyn ='1';
 
     $scope.close = function()
     {
@@ -195,7 +196,8 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
             receiveName : $scope.datas.receiveName,
             expressAddress : $scope.datas.expressAddress,
             recevivePhone  : $scope.datas.recevivePhone,
-            remark         : $scope.datas.remark,
+            remark         :  $scope.datas.remark,
+            sendbypostyn:    $scope.datas.sendbypostyn,
             orderCategory  : "3" //折扣订单
         }).success(function (resp) {
             if(resp.successful){
@@ -227,23 +229,22 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
     }
 
     $scope.orderValidateConditionArray = {
+
         receiveNameError: function () {
-            if (angular.isUndefined($scope.datas.receiveName) ||
-                $scope.datas.receiveName.length <= 0) {
+            if ($scope.datas.sendbypostyn =='2' && (!$scope.datas.receiveName || angular.isUndefined($scope.datas.receiveName) ||
+                $scope.datas.receiveName.length <= 0)) {
                 $scope.orderValidateErrors.receiveNameError = true;
             }
         },
-
         expressAddressError : function () {
-            if (angular.isUndefined($scope.datas.expressAddress) ||
-                $scope.datas.expressAddress.length <= 0) {
+            if ($scope.datas.sendbypostyn =='2' && (!$scope.datas.expressAddress || angular.isUndefined($scope.datas.expressAddress) ||
+                $scope.datas.expressAddress.length <= 0)) {
                 $scope.orderValidateErrors.expressAddressError = true;
             }
         },
-
         recevivePhoneError : function () {
-            if (angular.isUndefined($scope.datas.recevivePhone) ||
-                $scope.datas.recevivePhone.length <= 0) {
+            if ($scope.datas.sendbypostyn =='2' && (!$scope.datas.recevivePhone || angular.isUndefined($scope.datas.recevivePhone) ||
+                $scope.datas.recevivePhone.length <= 0)) {
                 $scope.orderValidateErrors.recevivePhoneError = true;
             }
         }

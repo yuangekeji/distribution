@@ -45,7 +45,7 @@ angular.module('graph').controller('graphCtrl',
 
         $scope.handleSample2 = function (data) {
 
-            console.info(data);
+            // console.info(data);
 
             $('#tree_2').jstree({
                 'plugins': ["checkbox"],

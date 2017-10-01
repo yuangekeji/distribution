@@ -106,6 +106,13 @@ public class OrderService {
             moreOrderMaster.setBonusAccountType(Constant.BONUSACCOUNTTYPE_BONUS); //奖金币
         }
 
+        //自提的话不填写地址
+        if(!reOrderSeed && "1".equals(moreOrderMaster.getSendbypostyn())){
+            moreOrderMaster.setReceiveName(null);
+            moreOrderMaster.setRecevivePhone(null);
+            moreOrderMaster.setExpressAddress(null);
+        }
+
         cnt1 = moreOrderMasterMapper.insertOrder(moreOrderMaster);
 
         if(cnt1 == 0){
@@ -284,9 +291,6 @@ public class OrderService {
             moreOrderMaster.setActAmt(moreOrderMaster.getOrderAmt());
             moreOrderMaster.setExpressFee(new BigDecimal(0));
             moreOrderMaster.setMemberId(currentUser.getId());
-//            moreOrderMaster.setReceiveName(currentUser.getConsignee());
-//            moreOrderMaster.setRecevivePhone(currentUser.getMemberPhone());
-//            moreOrderMaster.setExpressAddress(currentUser.getExpressAddress());
             moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
             moreOrderMaster.setOrderStatues("2");
             moreOrderMaster.setCreateId(currentUser.getId());
@@ -331,6 +335,12 @@ public class OrderService {
             moreOrderMaster.setCreateTime(new Date());
             moreOrderMaster.setUpdateId(currentUser.getId());
             moreOrderMaster.setUpdateTime(new Date());
+
+            if("1".equals(moreOrderMaster.getSendbypostyn())){
+                moreOrderMaster.setRecevivePhone(null);
+                moreOrderMaster.setReceiveName(null);
+                moreOrderMaster.setExpressAddress(null);
+            }
 
             //step 1)库存查询
             Goods goods = new Goods();

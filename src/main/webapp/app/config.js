@@ -259,6 +259,14 @@ angular
                     'static/metronic/global/plugins/jstree/dist/jstree.min.js',
                     'static/metronic/pages/css/graph.css'
                 ]
+            },
+            {
+                name:'admTreeMember',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admTreeMember/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
             }
         ]
     });

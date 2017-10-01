@@ -164,9 +164,9 @@ public class AdmOrderService {
             case "member_level5":
                 result = "白金卡";
                 break;
-            case "member_level6":
-                result = "黑金卡";
-                break;
+//            case "member_level6":
+//                result = "黑金卡";
+//                break;
             default:
                 result = "";
                 break;

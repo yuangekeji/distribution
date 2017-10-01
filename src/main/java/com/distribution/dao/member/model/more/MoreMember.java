@@ -24,6 +24,8 @@ public class MoreMember extends Member{
 
     private String pwdFlag;                 //密码修改标识位
 
+    private String parentMemberName;
+
     public String getRecommendPhone() {
         return recommendPhone;
     }
@@ -142,5 +144,13 @@ public class MoreMember extends Member{
 
     public void setPwdFlag(String pwdFlag) {
         this.pwdFlag = pwdFlag;
+    }
+
+    public String getParentMemberName() {
+        return parentMemberName;
+    }
+
+    public void setParentMemberName(String parentMemberName) {
+        this.parentMemberName = parentMemberName;
     }
 }

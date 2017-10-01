@@ -85,15 +85,15 @@ angular.module('graph').controller('graphCtrl',
     $('#tree_2').on("changed.jstree", function (e, data) {
 
             if(data.node.state.selected){
-                ConfirmModal.show({
-                    text: '是否要给 '+data.node.text+' 添加新的节点？',
-                    isCancel:true //false alert ,true confirm
-                }).then(function (sure) {
-                    if (!sure) {
-                        return;
-                    }
-                    $state.go('app.recommendAdd',{mobile:data.node.id});
-                });
+                // ConfirmModal.show({
+                //     text: '是否要给 '+data.node.text+' 添加新的节点？',
+                //     isCancel:true //false alert ,true confirm
+                // }).then(function (sure) {
+                //     if (!sure) {
+                //         return;
+                //     }
+                //     $state.go('app.recommendAdd',{mobile:data.node.id});
+                // });
             }
        });
 

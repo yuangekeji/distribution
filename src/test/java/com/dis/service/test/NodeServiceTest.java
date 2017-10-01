@@ -86,7 +86,7 @@ public class NodeServiceTest extends SpringServiceTest{
 		MemberNode node = new MemberNode();
 		node.setParentId(3);
 		node.setCreateBy(3);
-		int nodeId = nodeService.saveNode(node);
-		System.out.println("============ " + nodeId);
+		MemberNode memberNode = nodeService.saveNode(node);
+		System.out.println("============ " + memberNode.getId());
 	}
 }

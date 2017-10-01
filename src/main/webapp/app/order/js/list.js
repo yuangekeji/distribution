@@ -112,3 +112,10 @@ angular.module('order').filter("OrderCategoryFilter",function () {
         if(input=='3'){return '折扣单'};
     }
 });
+
+angular.module('order').filter("bonusAccountTypeFilter",function () {
+    return function (input) {
+        if(input=='1'){return '种子币'};
+        if(input=='2'){return '奖金币'};
+    }
+});

@@ -1385,6 +1385,76 @@ public class OrderMasterExample {
             addCriterion("sendByPostYN not between", value1, value2, "sendbypostyn");
             return (Criteria) this;
         }
+
+        public Criteria andBonusAccountTypeIsNull() {
+            addCriterion("bonus_account_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeIsNotNull() {
+            addCriterion("bonus_account_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeEqualTo(String value) {
+            addCriterion("bonus_account_type =", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeNotEqualTo(String value) {
+            addCriterion("bonus_account_type <>", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeGreaterThan(String value) {
+            addCriterion("bonus_account_type >", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("bonus_account_type >=", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeLessThan(String value) {
+            addCriterion("bonus_account_type <", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeLessThanOrEqualTo(String value) {
+            addCriterion("bonus_account_type <=", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeLike(String value) {
+            addCriterion("bonus_account_type like", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeNotLike(String value) {
+            addCriterion("bonus_account_type not like", value, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeIn(List<String> values) {
+            addCriterion("bonus_account_type in", values, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeNotIn(List<String> values) {
+            addCriterion("bonus_account_type not in", values, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeBetween(String value1, String value2) {
+            addCriterion("bonus_account_type between", value1, value2, "bonusAccountType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBonusAccountTypeNotBetween(String value1, String value2) {
+            addCriterion("bonus_account_type not between", value1, value2, "bonusAccountType");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

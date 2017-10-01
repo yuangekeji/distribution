@@ -23,4 +23,7 @@ public class Constant {
     public static final String MEMBERORDER = "7";
     public static final String DISCOUNTORDER = "8";
     public static final String MEMBERCHARGE = "9";
+
+    public static final String BONUSACCOUNTTYPE_SEED ="1";//种子币
+    public static final String BONUSACCOUNTTYPE_BONUS ="2";//奖金币
 }

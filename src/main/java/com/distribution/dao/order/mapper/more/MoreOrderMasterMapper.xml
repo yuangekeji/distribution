@@ -24,12 +24,13 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
     <result column="sendByPostYN" property="sendbypostyn" jdbcType="CHAR" />
+    <result column="bonus_account_type" property="bonusAccountType" jdbcType="CHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
       order_no, order_category, order_amt, order_qty, discount, act_amt, express_fee, member_id,
       receive_name, express_address, member_level, order_statues, create_id, create_time,
-      update_id, update_time
+      update_id, update_time,bonus_account_type
   </sql>
 
    <sql id="where">
@@ -110,6 +111,7 @@
          , a.update_id
          , a.update_time
          , a.sendByPostYN
+         , a.bonus_account_type
       FROM order_master a
       LEFT JOIN order_detail b
         ON a.order_no = b.order_no
@@ -160,14 +162,14 @@
         express_address, recevive_phone,
         remark, member_level, order_statues,
         create_id, create_time, update_id,
-        update_time, sendByPostYN)
+        update_time, sendByPostYN, bonus_account_type)
         values (#{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
         #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{actAmt,jdbcType=DECIMAL},
         #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR},
         #{expressAddress,jdbcType=VARCHAR}, #{recevivePhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
         #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},
         #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER},
-        #{updateTime,jdbcType=TIMESTAMP}, #{sendbypostyn,jdbcType=CHAR})
+        #{updateTime,jdbcType=TIMESTAMP}, #{sendbypostyn,jdbcType=CHAR}, #{bonusAccountType,jdbcType=CHAR})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="com.distribution.dao.order.model.more.MoreOrderMaster" >

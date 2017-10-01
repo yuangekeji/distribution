@@ -22,6 +22,7 @@
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="sendByPostYN" property="sendbypostyn" jdbcType="CHAR" />
+    <result column="bonus_account_type" property="bonusAccountType" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -84,7 +85,7 @@
   <sql id="Base_Column_List" >
     id, order_no, order_category, order_amt, order_qty, discount, act_amt, express_fee, 
     member_id, receive_name, express_address, recevive_phone, remark, member_level, order_statues, 
-    create_id, create_time, update_id, update_time, sendByPostYN
+    create_id, create_time, update_id, update_time, sendByPostYN, bonus_account_type
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.order.model.OrderMasterExample" >
     select
@@ -124,14 +125,16 @@
       receive_name, express_address, recevive_phone, 
       remark, member_level, order_statues, 
       create_id, create_time, update_id, 
-      update_time, sendByPostYN)
+      update_time, sendByPostYN, bonus_account_type
+      )
     values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, 
       #{orderAmt,jdbcType=DECIMAL}, #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, 
       #{actAmt,jdbcType=DECIMAL}, #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, 
       #{receiveName,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{recevivePhone,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR}, 
       #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{sendbypostyn,jdbcType=CHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{sendbypostyn,jdbcType=CHAR}, #{bonusAccountType,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.order.model.OrderMaster" >
     insert into order_master
@@ -196,6 +199,9 @@
       <if test="sendbypostyn != null" >
         sendByPostYN,
       </if>
+      <if test="bonusAccountType != null" >
+        bonus_account_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -257,6 +263,9 @@
       </if>
       <if test="sendbypostyn != null" >
         #{sendbypostyn,jdbcType=CHAR},
+      </if>
+      <if test="bonusAccountType != null" >
+        #{bonusAccountType,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -329,6 +338,9 @@
       <if test="record.sendbypostyn != null" >
         sendByPostYN = #{record.sendbypostyn,jdbcType=CHAR},
       </if>
+      <if test="record.bonusAccountType != null" >
+        bonus_account_type = #{record.bonusAccountType,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -355,7 +367,8 @@
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_id = #{record.updateId,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      sendByPostYN = #{record.sendbypostyn,jdbcType=CHAR}
+      sendByPostYN = #{record.sendbypostyn,jdbcType=CHAR},
+      bonus_account_type = #{record.bonusAccountType,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -420,6 +433,9 @@
       <if test="sendbypostyn != null" >
         sendByPostYN = #{sendbypostyn,jdbcType=CHAR},
       </if>
+      <if test="bonusAccountType != null" >
+        bonus_account_type = #{bonusAccountType,jdbcType=CHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -443,7 +459,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_id = #{updateId,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      sendByPostYN = #{sendbypostyn,jdbcType=CHAR}
+      sendByPostYN = #{sendbypostyn,jdbcType=CHAR},
+      bonus_account_type = #{bonusAccountType,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

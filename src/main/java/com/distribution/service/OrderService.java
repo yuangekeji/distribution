@@ -95,12 +95,15 @@ public class OrderService {
         moreOrderMaster.setOrderNo(orderNo);
 
         //判断是否是种子币复投
-        boolean reOrderSeed = ("2".equals(moreOrderMaster.getOrderCategory()) && "1".equals(moreOrderMaster.getBonusType())) ? true :false ;
+        boolean reOrderSeed = ("2".equals(moreOrderMaster.getOrderCategory()) && Constant.BONUSACCOUNTTYPE_SEED.equals(moreOrderMaster.getBonusType())) ? true :false ;
 
         //order_master insert
         //复投订单状态并用种子币支付的直接为订单完成（奖金币支付除外）
         if(reOrderSeed){
             moreOrderMaster.setOrderStatues("4");
+            moreOrderMaster.setBonusAccountType(Constant.BONUSACCOUNTTYPE_SEED); //种子币
+        }else{
+            moreOrderMaster.setBonusAccountType(Constant.BONUSACCOUNTTYPE_BONUS); //奖金币
         }
 
         cnt1 = moreOrderMasterMapper.insertOrder(moreOrderMaster);

@@ -871,4 +871,4 @@ ADD COLUMN `sendByPostYN`  CHAR(1) NULL COMMENT '是否邮寄 1-自提，2-邮�
 
 -- 复投账户类型
 ALTER TABLE `order_master`
-  ADD COLUMN `bonusType`  CHAR(1) NULL COMMENT '复投账户 1-种子币，2奖金币';
+  ADD COLUMN `bonus_account_type`  CHAR(1) NULL COMMENT '复投账户 1-种子币，2奖金币';

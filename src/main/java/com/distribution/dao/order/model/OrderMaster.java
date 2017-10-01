@@ -44,6 +44,8 @@ public class OrderMaster {
 
     private String sendbypostyn;
 
+    private String bonusAccountType;
+
     public Integer getId() {
         return id;
     }
@@ -202,5 +204,13 @@ public class OrderMaster {
 
     public void setSendbypostyn(String sendbypostyn) {
         this.sendbypostyn = sendbypostyn == null ? null : sendbypostyn.trim();
+    }
+
+    public String getBonusAccountType() {
+        return bonusAccountType;
+    }
+
+    public void setBonusAccountType(String bonusAccountType) {
+        this.bonusAccountType = bonusAccountType == null ? null : bonusAccountType.trim();
     }
 }

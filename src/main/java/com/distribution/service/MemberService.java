@@ -97,7 +97,8 @@ public class MemberService {
                         memberNode.setParentId(recommendMember.getNodeId());
 //                        memberNode.setUpdateBy(currentUser.getId());
 //                        memberNode.setUpdateTime(new Date());
-                        Integer noteId = nodeService.saveNode(memberNode,moreMember.getArea());
+
+                        MemberNode _memberNode = nodeService.saveNode(memberNode);
 
                         //保存报单信息
                         Member member = new Member();
@@ -112,8 +113,8 @@ public class MemberService {
                         member.setUpdateTime(new Date());
                         member.setMoneyStatus("N");
                         member.setRecommendName(recommendMember.getMemberName());
-                        member.setNodeId(noteId);
-                        member.setParentId(0);
+                        member.setNodeId(_memberNode.getId());
+                        member.setParentId(_memberNode.getParentId());
 //                        member.setNodeName(noteMember.getMemberName());
                         if ("member_level1".equals(member.getMemberLevel())) {
                             member.setOrderAmount(new BigDecimal(600));
@@ -189,9 +190,9 @@ public class MemberService {
     public Integer updateActivation(Member member){
         member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
-        if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
-            member.setIsSalesDept("Y");
-        }
+//        if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
+//            member.setIsSalesDept("Y");
+//        }
         member.setUpdateId(member.getId());
         member.setUpdateTime(new Date());
         Integer it = memberMapper.updateByPrimaryKeySelective(member);

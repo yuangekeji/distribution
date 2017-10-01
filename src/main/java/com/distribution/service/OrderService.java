@@ -93,30 +93,39 @@ public class OrderService {
         //BigInteger orderNo = this.getOrderNo();
         Long orderNo = this.getOrderNo();
         moreOrderMaster.setOrderNo(orderNo);
+
+        //判断是否是种子币复投
+        boolean reOrderSeed = ("2".equals(moreOrderMaster.getOrderCategory()) && "1".equals(moreOrderMaster.getBonusType())) ? true :false ;
+
         //order_master insert
-        //复投订单状态直接为订单完成
-        if("2".equals(moreOrderMaster.getOrderCategory())){
+        //复投订单状态并用种子币支付的直接为订单完成（奖金币支付除外）
+        if(reOrderSeed){
             moreOrderMaster.setOrderStatues("4");
         }
+
         cnt1 = moreOrderMasterMapper.insertOrder(moreOrderMaster);
+
         if(cnt1 == 0){
-            throw new RuntimeException();
+            throw new RuntimeException("Order insert Error");
         }
 
         int orderId = moreOrderMaster.getId();
+
+        //奖金币复投有产品，种子币复投没有产品
         //order_detail_inser(复投没有商品不插入订单详细表)
-        if(!"2".equals(moreOrderMaster.getOrderCategory())) {
+        if(!reOrderSeed) {
             moreOrderMaster.setGoodsCd(1);
             cnt2 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
         }else{
             cnt2 = 1;
         }
+
         if(cnt2 == 0){
            throw new RuntimeException();
         }
 
         //商品库存处理
-        if(!"2".equals(moreOrderMaster.getOrderCategory())) {
+        if(!reOrderSeed) {
             Goods goods = new Goods();
             goods.setId(moreOrderMaster.getGoodsCd());
             goods.setGoodsNum(moreOrderMaster.getOrderQty());
@@ -130,9 +139,7 @@ public class OrderService {
         }
 
         //扣款登记 account_manager
-
         AccountManager accountManager = new AccountManager();
-
         accountManager.setMemberId(moreOrderMaster.getMemberId());
         accountManager.setSeedAmt(moreOrderMaster.getSeedAmt() == null ? new BigDecimal(0):moreOrderMaster.getSeedAmt());
         accountManager.setBonusAmt(moreOrderMaster.getBonusAmt() ==null ? new BigDecimal(0):moreOrderMaster.getBonusAmt());
@@ -260,6 +267,15 @@ public class OrderService {
 
         if(count != null  && count >0 ) {
 
+            if("1".equals(moreOrderMaster.getBonusType())) {
+                moreOrderMaster.setSeedAmt(moreOrderMaster.getOrderAmt());
+            }else  if("2".equals(moreOrderMaster.getBonusType())){
+                moreOrderMaster.setBonusAmt(moreOrderMaster.getOrderAmt());
+            }else{
+                throw new RuntimeException("ERROR bonusType is null,memberId="+currentUser.getId());
+            }
+
+
             moreOrderMaster.setOrderCategory("2");
             moreOrderMaster.setDiscount(0);
             moreOrderMaster.setActAmt(moreOrderMaster.getOrderAmt());
@@ -276,14 +292,14 @@ public class OrderService {
             moreOrderMaster.setUpdateTime(new Date());
             String result = this.insertOrder(moreOrderMaster);
 
-           if(currentUser.getIsSalesDept() ==null || !"Y".equals(currentUser.getIsSalesDept())){
-                //判断累计的订单金额 如果是超过3万 就更新为工销售部
-                Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(currentUser.getId());
-                if(orderTotalAmount >= 30000){
-                    //更新为工作室
-                    memberMapper.updateMemberSalesDept(currentUser.getId());
-                }
-           }
+//           if(currentUser.getIsSalesDept() ==null || !"Y".equals(currentUser.getIsSalesDept())){
+//                //判断累计的订单金额 如果是超过3万 就更新为工销售部
+//                Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(currentUser.getId());
+//                if(orderTotalAmount >= 30000){
+//                    //更新为工作室
+//                    memberMapper.updateMemberSalesDept(currentUser.getId());
+//                }
+//           }
 
             return result;
         }

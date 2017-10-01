@@ -9,6 +9,10 @@ public class MoreOrderMaster extends OrderMaster{
 
     private String goodsNm;
 
+    private BigDecimal amt;
+
+    private String bonusType;
+
     private BigDecimal seedAmt;
 
     private BigDecimal bonusAmt;
@@ -95,6 +99,22 @@ public class MoreOrderMaster extends OrderMaster{
 
     public void setGoodsPrice(BigDecimal goodsPrice) {
         this.goodsPrice = goodsPrice;
+    }
+
+    public BigDecimal getAmt() {
+        return amt;
+    }
+
+    public void setAmt(BigDecimal amt) {
+        this.amt = amt;
+    }
+
+    public String getBonusType() {
+        return bonusType;
+    }
+
+    public void setBonusType(String bonusType) {
+        this.bonusType = bonusType;
     }
 }
 

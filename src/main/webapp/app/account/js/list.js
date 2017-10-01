@@ -52,10 +52,10 @@ angular.module('account').controller('accountListCtrl',
         $scope.reOrder={
             orderQty: 0,
             price:600,
-            seedAmt:0.00,
-            bonusAmt:0.00,
+            amt:0.00,
             orderAmt:0.00,
-            payPassword:''
+            payPassword:'',
+            bonusType:'1'
         }
     }
     $scope.onInit();
@@ -201,17 +201,17 @@ angular.module('account').controller('accountListCtrl',
                 }
             },
           /*金额0和正整数*/
-           seedAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.seedAmt)  || !(/^\d+$/.test($scope.reOrder.seedAmt)))  {
-                    $scope.reOrdervalidateErrors.seedAmtError = true;
+           amtError: function () {
+                if (angular.isUndefined($scope.reOrder.amt)  || !(/^\d+$/.test($scope.reOrder.amt)))  {
+                    $scope.reOrdervalidateErrors.amtError = true;
                 }
             },
-          /*金额0和正整数*/
-           bonusAmtError: function () {
-                if (angular.isUndefined($scope.reOrder.bonusAmt)  || !(/^\d+$/.test($scope.reOrder.bonusAmt))) {
-                    $scope.reOrdervalidateErrors.bonusAmtError = true;
-                }
-            },
+          // /*金额0和正整数*/
+          //  bonusAmtError: function () {
+          //       if (angular.isUndefined($scope.reOrder.bonusAmt)  || !(/^\d+$/.test($scope.reOrder.bonusAmt))) {
+          //           $scope.reOrdervalidateErrors.bonusAmtError = true;
+          //       }
+          //   },
           payPasswordError: function () {
              if (angular.isUndefined($scope.reOrder.payPassword) ||
                  $scope.reOrder.payPassword.length <= 0) {
@@ -227,17 +227,18 @@ angular.module('account').controller('accountListCtrl',
              return false;
          }
 
-         if($scope.reOrder.bonusAmt > $scope.accountInfo.bonusAmt){
+         if($scope.reOrder.bonusType == 1 && $scope.reOrder.amt > $scope.accountInfo.seedAmt){
+             Notify.warning('扣除的种子币金额不能大于账户种子币余额');
+             return false;
+         }
+
+         if($scope.reOrder.bonusType == 2 && $scope.reOrder.amt > $scope.accountInfo.bonusAmt){
              Notify.warning('扣除的奖金币金额不能大于账户奖金币余额');
              return false;
          }
 
-         if($scope.reOrder.seedAmt > $scope.accountInfo.seedAmt){
-             Notify.warning('扣除的种子币金额不能大于账户种子币余额');
-             return false;
-         }
          $scope.reOrder.orderAmt = $scope.reOrder.orderQty * $scope.reOrder.price;
-         if($scope.reOrder.orderAmt != ( $scope.reOrder.seedAmt +$scope.reOrder.bonusAmt)  ){
+         if($scope.reOrder.orderAmt != $scope.reOrder.amt  ){
              Notify.warning('请确认输入的金额和复投单金额是否匹配');
              return false;
          }
@@ -248,8 +249,8 @@ angular.module('account').controller('accountListCtrl',
              {
                  orderQty:parseInt($scope.reOrder.orderQty),
                  orderAmt:parseInt($scope.reOrder.orderAmt),
-                 seedAmt:parseInt($scope.reOrder.seedAmt),
-                 bonusAmt:parseInt($scope.reOrder.bonusAmt),
+                 bonusType:$scope.reOrder.bonusType,
+                 amt:parseInt($scope.reOrder.amt),
                  payPassword:$scope.reOrder.payPassword
              }).success(function (resp) {
 

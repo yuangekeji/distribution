@@ -843,3 +843,7 @@ ADD COLUMN `status`  varchar(255) NULL COMMENT '状态(Y:上架,N:下架)';
 ALTER TABLE `order_master`
 	ADD COLUMN `recevive_phone` VARCHAR(255) NULL DEFAULT NULL COMMENT '收货人电话' AFTER `express_address`,
 	ADD COLUMN `remark` VARCHAR(255) NULL DEFAULT NULL COMMENT '备注' AFTER `recevive_phone`;
+
+-- admin添加字段:管理员禁用/启用功能
+ALTER TABLE `admin`
+	ADD COLUMN `delete_flag` VARCHAR(255) NULL DEFAULT 'Y' COMMENT '管理员禁用/启用(启用:Y; 禁用: N)' AFTER `role_id`;

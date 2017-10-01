@@ -25,10 +25,6 @@ public class AdminController extends BasicController {
     @Autowired
     private AdminService adminService;
 
-
-    @Autowired
-    private BonusService bonusService;
-
     /**
      * 查詢管理员列表
      */
@@ -51,5 +47,20 @@ public class AdminController extends BasicController {
         return successMsg(str);
     }
 
+    /**
+     * description 管理员禁用/启用功能操作
+     * @author shiqing.dong
+     * */
+    @RequestMapping("/updateAdminDeleteFlag")
+    @ResponseBody
+    public JsonMessage updateAdminDeleteFlag(@RequestBody Admin admin, HttpSession session){
+        Admin a = (Admin) getCurrentUser(session);
+        Integer it = adminService.updateAdminDeleteFlag(admin, a);
+        if(it>0){
+            return successMsg();
+        }else{
+            return failMsg();
+        }
+    }
 
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.distribution.dao.nodeBonusHistory.mapper.NodeBonusHistoryMapper;
 import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
+import com.distribution.dao.nodeBonusHistory.model.more.MoreNodeBonusHistory;
 
 public interface MoreNodeBonusHistoryMapper extends NodeBonusHistoryMapper{
 
@@ -22,5 +23,5 @@ public interface MoreNodeBonusHistoryMapper extends NodeBonusHistoryMapper{
     int updateNodeBonusHistory(Map<String,Object> map);
     List<NodeBonusHistory> listAllYesterdayNodeBonusHistory(String yesterday);
     int updateNodeBonusHistoryStatusEnd(Map<String,Object> map);
-    List<NodeBonusHistory> listCurrentDayNodeBonus(String date);
+    List<MoreNodeBonusHistory> listCurrentDayNodeBonus(String date);
 }

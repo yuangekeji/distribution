@@ -76,4 +76,17 @@ public class NodeServiceTest extends SpringServiceTest{
 	public void getSubNodeNumberAndSales(){
 		Map<String,String> map = nodeService.getSubNodeNumberAndSales(39);
 	}
+	@Test
+	public void getParentNodeTest(){
+		MemberNode node = nodeService.getParentNode(3);
+		System.out.println(node.getId());
+	}
+	@Test
+	public void saveNodeAutoTest(){
+		MemberNode node = new MemberNode();
+		node.setParentId(3);
+		node.setCreateBy(3);
+		int nodeId = nodeService.saveNode(node);
+		System.out.println("============ " + nodeId);
+	}
 }

@@ -860,3 +860,7 @@ ADD COLUMN `parent_id`  int(15) NULL COMMENT '放置节点ID';
 
 -- 删除节点
 ALTER TABLE `member` DROP  COLUMN node_name;
+
+-- admin添加字段:管理员禁用/启用功能
+ALTER TABLE `admin`
+	ADD COLUMN `delete_flag` VARCHAR(255) NULL COMMENT '管理员禁用/启用(启用:Y; 禁用: N)' AFTER `role_id`;

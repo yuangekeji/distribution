@@ -39,19 +39,21 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
                         $scope.stopLoading();
                         Notify.warning("会员账号已存在，请重新输入。");
                         $scope.submitFlag = true;
-                    }else if(resp.data=='NO_NODE_MEMBER'){
-                        $scope.stopLoading();
-                        Notify.warning("节点不存在，请重新输入。");
-                        $scope.submitFlag = true;
-                    }else if(resp.data=='LEFT_NOTE_FULL'){
-                        $scope.stopLoading();
-                        Notify.warning("该节点左区已存在，请从新选择节点区域。");
-                        $scope.submitFlag = true;
-                    }else if(resp.data=='RIGHT_NOTE_FULL'){
-                        $scope.stopLoading();
-                        Notify.warning("该节点右区已存在，请从新选择节点区域。");
-                        $scope.submitFlag = true;
-                    }else{
+                    }
+                    // else if(resp.data=='NO_NODE_MEMBER'){
+                    //     $scope.stopLoading();
+                    //     Notify.warning("节点不存在，请重新输入。");
+                    //     $scope.submitFlag = true;
+                    // }else if(resp.data=='LEFT_NOTE_FULL'){
+                    //     $scope.stopLoading();
+                    //     Notify.warning("该节点左区已存在，请从新选择节点区域。");
+                    //     $scope.submitFlag = true;
+                    // }else if(resp.data=='RIGHT_NOTE_FULL'){
+                    //     $scope.stopLoading();
+                    //     Notify.warning("该节点右区已存在，请从新选择节点区域。");
+                    //     $scope.submitFlag = true;
+                    // }
+                    else{
                         $scope.stopLoading();
                         Notify.success('添加成功，返回列表页面。');
                         $state.go("app.recommend");
@@ -102,16 +104,20 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         }else if($scope.member.loginPassword!=$scope.confirmLoginPassword){
             Notify.warning("登录密码与确认密码不一致，请重新输入。");
             $scope.submitFlag = true;
-        }else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
-            Notify.warning("请输入节点手机号码。");
-            $scope.submitFlag = true;
-        }else if(!$scope.member.area){
-            Notify.warning("请选择节点区域。");
-            $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
-            Notify.warning("节点手机号有误，请重新输入。");
-            $scope.submitFlag = true;
-        }else if(!$scope.member.memberLevel){
+        }
+        // else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
+        //     Notify.warning("请输入节点手机号码。");
+        //     $scope.submitFlag = true;
+        // }
+        // else if(!$scope.member.area){
+        //     Notify.warning("请选择节点区域。");
+        //     $scope.submitFlag = true;
+        // }
+        // else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
+        //     Notify.warning("节点手机号有误，请重新输入。");
+        //     $scope.submitFlag = true;
+        // }
+        else if(!$scope.member.memberLevel){
             Notify.warning("请选择会员等级。");
             $scope.submitFlag = true;
         }

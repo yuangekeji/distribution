@@ -13,13 +13,14 @@ angular.module('home').controller('homeCtrl',
     });
      $scope.queryPasswordConfirm = '222222';
      $scope.payPasswordConfirm = '333333';
-    $scope.currentUser = $sessionStorage.currentUser;
+     $scope.currentUser = $sessionStorage.currentUser;
 
-    $scope.test =function () {
-        Notify.warning('请填写完整的转账信息');
-        Notify.success('请填写完整的转账信息');
-        Notify.error('请填写完整的转账信息');
-    }
+        console.info('home',$sessionStorage.currentUser);
+     $scope.currentUser.sendbypostyn= "1" ;//默认自提
+     $scope.currentUser.receiveName = $scope.currentUser.consignee;
+     $scope.currentUser.receviveAddress =  $scope.currentUser.expressAddress;
+     $scope.currentUser.recevivePhone =  $scope.currentUser.linkmanPhone;
+
     /**
      * description 激活弹出窗
      * @author Bright
@@ -78,6 +79,14 @@ angular.module('home').controller('homeCtrl',
             Notify.warning("请确认三级密码。");
         }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
             Notify.warning("三级密码和三级密码确认不同,请重新输入。");
+        }else if($scope.currentUser.sendbypostyn == '2'){
+            if(!$scope.currentUser.receiveName||!$scope.currentUser.receiveName.trim()){
+                 Notify.warning("请输入收货人姓名。");
+             }else if(!$scope.currentUser.receviveAddress||!$scope.currentUser.receviveAddress.trim()){
+                 Notify.warning("请输入收货地址。");
+             }else if(!$scope.currentUser.recevivePhone||!$scope.currentUser.recevivePhone.trim()){
+                Notify.warning("请输入收货人电话。");
+            }
         }else{
 
             $scope.startLoading();

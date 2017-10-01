@@ -42,6 +42,8 @@ public class OrderMaster {
 
     private Date updateTime;
 
+    private String sendbypostyn;
+
     public Integer getId() {
         return id;
     }
@@ -192,5 +194,13 @@ public class OrderMaster {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSendbypostyn() {
+        return sendbypostyn;
+    }
+
+    public void setSendbypostyn(String sendbypostyn) {
+        this.sendbypostyn = sendbypostyn == null ? null : sendbypostyn.trim();
     }
 }

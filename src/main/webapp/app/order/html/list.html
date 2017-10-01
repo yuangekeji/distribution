@@ -93,7 +93,9 @@
                                         {{orderMaster.orderStatues|OrderStatuesFilter}}
                                         </span>
                                     </td>
-                                    <td class="text-left"><span ng-show="orderMaster.orderCategory != '2'">{{orderMaster.expressAddress}}</span></td>
+                                    <td class="text-left">
+                                          {{orderMaster.sendbypostyn == '1' ? "自提": orderMaster.expressAddress}}
+                                    </td>
                                     <td class="text-left">
                                         <div class="btn btn-circle">
                                             <button type="button" class="btn btn-outline green btn-xs" ng-click="confirmOrder(orderMaster.id,'4')" ng-show="{{orderMaster.orderStatues == '3'}}">确认收货</button>

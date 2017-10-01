@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">身份证号码</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="请输入身份证号码" ng-model="currentUser.idNumber" maxlength="18">
+                                    <input type="text" class="form-control input-circle" placeholder="请输入身份证号码" ng-model="currentUser.idNumber" maxlength="18">
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                 <label class="control-label col-md-3">开户行</label>
                                 <div class="col-md-9">
                                     <!--<input type="text" class="form-control" placeholder="请输入开户行" ng-model="currentUser.bankName" maxlength="20">-->
-                                    <select class="form-control" ng-model="currentUser.bankName" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
+                                    <select class="form-control input-circle" ng-model="currentUser.bankName" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">开户人姓名</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="请输入开户人姓名" ng-model="currentUser.bankUserName" maxlength="20">
+                                    <input type="text" class="form-control input-circle" placeholder="请输入开户人姓名" ng-model="currentUser.bankUserName" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">银行卡号</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="请输入银行卡号" ng-model="currentUser.cardNumber" maxlength="20">
+                                    <input type="text" class="form-control input-circle" placeholder="请输入银行卡号" ng-model="currentUser.cardNumber" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">二级密码(查询密码)</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="二级密码" ng-model="currentUser.queryPassword" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="二级密码" ng-model="currentUser.queryPassword" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">二级密码确认</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="二级密码确认" ng-model="queryPasswordConfirm" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="二级密码确认" ng-model="queryPasswordConfirm" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">三级密码(支付密码)</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="三级密码" ng-model="currentUser.payPassword" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="三级密码" ng-model="currentUser.payPassword" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -100,11 +100,45 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">三级密码确认</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="三级密码确认" ng-model="payPasswordConfirm" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="三级密码确认" ng-model="payPasswordConfirm" maxlength="20">
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-md-12">
+                            <div class="form-group" >
+                                <label class="control-label col-md-3">产品邮寄方式</label>
+                                <div class="col-md-9">
+                                    <select name="sendbypostyn" ng-model="currentUser.sendbypostyn" class="form-control input-circle" >
+                                        <option value="1">自提</option>
+                                        <option value="2">快递邮寄</option>
+                                    </select>
+                                </div>
+                            </div>
+                      </div>
+                       <div class="col-md-12" ng-if="currentUser.sendbypostyn=='2'">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">收货人</label>
+                                <div class="col-md-9">
+                                   <input type="text" class="form-control input-circle" placeholder="请输入收货人姓名" ng-model=currentUser.receiveName" maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-if="currentUser.sendbypostyn=='2'">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">收货地址</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control input-circle" placeholder="请输入收货人地址" ng-model="currentUser.receviveAddress" maxlength="200">
+                               </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-if="currentUser.sendbypostyn=='2'">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">收货电话</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control input-circle" placeholder="请输入收货电话" ng-model="currentUser.recevivePhone" maxlength="200">
+                                </div>
+                            </div>
+                       </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-info">

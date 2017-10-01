@@ -10,6 +10,7 @@ import com.distribution.dao.apply.model.OperationApply;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
+import com.distribution.dao.member.model.more.MoreMemberVO;
 import com.distribution.service.CommonService;
 import com.distribution.service.MemberService;
 import com.distribution.service.NodeService;
@@ -127,7 +128,7 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/activation")
     @ResponseBody
-    public JsonMessage activation(@RequestBody Member member,HttpSession session){
+    public JsonMessage activation(@RequestBody MoreMemberVO member, HttpSession session){
         Integer it = memberService.updateActivation(member);
         if(it>0) {
         	MoreMember m = memberService.selectMemberInfo(member.getId());

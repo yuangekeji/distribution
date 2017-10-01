@@ -22,7 +22,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-   <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
+    <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
+    <result column="sendByPostYN" property="sendbypostyn" jdbcType="CHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -55,7 +56,8 @@
    </sql>
     <sql id="excel_where">
         <where>
-             a.order_statues = '2'
+                a.order_statues = '2'
+            and a.sendByPostYN = '2'
             <if test="memberId!=null and memberId!=''">
                 AND a.member_id = #{memberId}
             </if>
@@ -107,6 +109,7 @@
          , a.create_time
          , a.update_id
          , a.update_time
+         , a.sendByPostYN
       FROM order_master a
       LEFT JOIN order_detail b
         ON a.order_no = b.order_no
@@ -157,14 +160,14 @@
         express_address, recevive_phone,
         remark, member_level, order_statues,
         create_id, create_time, update_id,
-        update_time)
+        update_time, sendByPostYN)
         values (#{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, #{orderAmt,jdbcType=DECIMAL},
         #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, #{actAmt,jdbcType=DECIMAL},
         #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, #{receiveName,jdbcType=VARCHAR},
         #{expressAddress,jdbcType=VARCHAR}, #{recevivePhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
         #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR},
         #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER},
-        #{updateTime,jdbcType=TIMESTAMP})
+        #{updateTime,jdbcType=TIMESTAMP}, #{sendbypostyn,jdbcType=CHAR})
     </insert>
 
     <insert id="insertOrderDetail" parameterType="com.distribution.dao.order.model.more.MoreOrderMaster" >

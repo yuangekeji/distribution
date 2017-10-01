@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.distribution.dao.member.mapper.more.MoreMemberMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.member.model.more.MoreMember" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.member.model.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="query_password" property="queryPassword" jdbcType="VARCHAR" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+    <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
+    <result column="node_id" property="nodeId" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
+    <result column="ID_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="member_post" property="memberPost" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="money_status" property="moneyStatus" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_user_name" property="bankUserName" jdbcType="VARCHAR" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="is_operator" property="isOperator" jdbcType="VARCHAR" />
+    <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
+    <result column="first_agent_cnt" property="firstAgentCnt" jdbcType="INTEGER" />
+    <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
+    <result column="linkman_phone" property="linkmanPhone" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="MoreBaseResultMap" type="com.distribution.dao.member.model.more.MoreMember" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
     <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
@@ -90,7 +123,7 @@
     member_name, member_level, express_address, status, role_id,
     member_post, create_time, order_amount, consignee,
     money_status, is_operator, is_sales_dept,
-    first_agent_cnt, recommend_name FROM member WHERE member_phone = #{userName} AND login_password = #{password}
+    first_agent_cnt, recommend_name,parent_id FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
   <select id="findMatchMemberQueryPwd" parameterType="java.util.Map" resultType="java.lang.Integer">
     SELECT count(0) as count
@@ -107,13 +140,14 @@
     SELECT COUNT(*) FROM member m  , member p <include refid="where"/>
   </select>
   
-  <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+  <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="MoreBaseResultMap">
     SELECT
       m.id, m.member_phone, m.recommend_id, m.node_id,
       m.member_name, m.member_level, m.express_address, m.status, m.role_id,
       m.member_post, m.create_time, m.order_amount, m.consignee,
       m.money_status, m.is_operator, m.is_sales_dept,
       m.first_agent_cnt, m.recommend_name ,
+      m.parent_id,
       p.member_name as parentMemberName
     FROM member m , member p
   <include refid="where"/>ORDER BY m.id DESC <include refid="pageLimit"/>

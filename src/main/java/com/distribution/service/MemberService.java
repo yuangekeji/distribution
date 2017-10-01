@@ -16,6 +16,7 @@ import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
+import com.distribution.dao.member.model.more.MoreMemberVO;
 import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
@@ -187,7 +188,8 @@ public class MemberService {
      * 创建账户信息；
      * @author Bright
      * */
-    public Integer updateActivation(Member member){
+    public Integer updateActivation(MoreMemberVO _member){
+        Member member = _member;
         member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
 //        if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
@@ -210,9 +212,13 @@ public class MemberService {
         order.setActAmt(member.getOrderAmount());
         order.setExpressFee(new BigDecimal(0));
         order.setMemberId(member.getId());
-        order.setReceiveName(member.getConsignee());
-        order.setRecevivePhone(member.getLinkmanPhone());
-        order.setExpressAddress(member.getExpressAddress());
+        //1 自提 2-邮寄
+        order.setSendbypostyn(_member.getSendbypostyn());
+        if("2".equals(_member.getSendbypostyn())){
+            order.setReceiveName(_member.getReceiveName());
+            order.setRecevivePhone(_member.getRecevivePhone());
+            order.setExpressAddress(_member.getReceviveAddress());
+        }
         order.setMemberLevel(member.getMemberLevel());
         order.setOrderStatues("2");
         order.setCreateId(member.getId());

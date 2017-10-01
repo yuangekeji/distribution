@@ -1315,6 +1315,76 @@ public class OrderMasterExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andSendbypostynIsNull() {
+            addCriterion("sendByPostYN is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynIsNotNull() {
+            addCriterion("sendByPostYN is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynEqualTo(String value) {
+            addCriterion("sendByPostYN =", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynNotEqualTo(String value) {
+            addCriterion("sendByPostYN <>", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynGreaterThan(String value) {
+            addCriterion("sendByPostYN >", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynGreaterThanOrEqualTo(String value) {
+            addCriterion("sendByPostYN >=", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynLessThan(String value) {
+            addCriterion("sendByPostYN <", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynLessThanOrEqualTo(String value) {
+            addCriterion("sendByPostYN <=", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynLike(String value) {
+            addCriterion("sendByPostYN like", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynNotLike(String value) {
+            addCriterion("sendByPostYN not like", value, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynIn(List<String> values) {
+            addCriterion("sendByPostYN in", values, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynNotIn(List<String> values) {
+            addCriterion("sendByPostYN not in", values, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynBetween(String value1, String value2) {
+            addCriterion("sendByPostYN between", value1, value2, "sendbypostyn");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendbypostynNotBetween(String value1, String value2) {
+            addCriterion("sendByPostYN not between", value1, value2, "sendbypostyn");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

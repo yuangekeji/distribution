@@ -872,3 +872,22 @@ ADD COLUMN `sendByPostYN`  CHAR(1) NULL COMMENT '是否邮寄 1-自提，2-邮�
 -- 复投账户类型
 ALTER TABLE `order_master`
   ADD COLUMN `bonus_account_type`  CHAR(1) NULL COMMENT '复投账户 1-种子币，2奖金币';
+
+-- ----------------------------
+-- admin_handle_history
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_handle_history`;
+CREATE TABLE `admin_handle_history` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `admin_id` int(11) DEFAULT NULL COMMENT '管理员ID',
+  `admin_mobile` varchar(255) NOT NULL COMMENT '管理员电话',
+  `admin_name` varchar(255) NOT NULL COMMENT '管理员名字',
+  `admin_role_Id` int(11) DEFAULT NULL COMMENT '管理员角色ID',
+  `handle_id` varchar(255) DEFAULT NULL COMMENT '操作对象ID',
+  `handle_type` varchar(255) NOT NULL COMMENT '操作类型：',
+  `handle_comment` varchar(4000) NOT NULL COMMENT '操作说明',
+  `handle_time` datetime DEFAULT NULL COMMENT '操作时间',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_id` int(11) DEFAULT NULL COMMENT '创建ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,18 +1,21 @@
 package com.distribution.controller;
 
 
+import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.memberCharge.model.MemberCharge;
+import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.AdmMemberService;
 import com.distribution.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -33,6 +36,8 @@ public class AdmMemberController extends BasicController{
     private AdmMemberService admMemberService;
     @Autowired
     private CommonService commonService;
+    @Autowired
+    private AdmHandleHistoryService admHandleHistoryService;
 
     /**
      * description 页面初始化，查询下俩列表数据
@@ -66,9 +71,15 @@ public class AdmMemberController extends BasicController{
      * */
     @RequestMapping("/addAccount")
     @ResponseBody
-    public JsonMessage addAccount(@RequestBody MemberCharge memberCharge, HttpSession session){
+    public JsonMessage addAccount(@RequestBody MemberCharge memberCharge,@RequestParam String memberName, HttpSession session){
         Admin admin = (Admin) getCurrentUser(session);
         admMemberService.addAccount(memberCharge,admin);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_ADDACCOUNT);
+        map.put("handleId", memberCharge.getMemberId());
+        map.put("handleComment", "会员名称: " + memberName + ", 充值金额: " + memberCharge.getChargeAmt());
+        admHandleHistoryService.addAdminHandleHistory(admin, map);
         return successMsg();
     }
 }

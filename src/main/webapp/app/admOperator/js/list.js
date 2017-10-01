@@ -60,8 +60,8 @@ angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, 
         $scope.onInit();
     };
 
-    $scope.approval = function (id,memberId,status) {
-        $http.post(ctx + "/admOperator/approval",{id:id,memberId:memberId,status:status}).success(function (resp) {
+    $scope.approval = function (id,memberId,memberName,status) {
+        $http.post(ctx + "/admOperator/approval?memberName="+memberName,{id:id,memberId:memberId,status:status}).success(function (resp) {
             if(resp.successful){
                 Notify.warning('审批完成。');
                 $scope.search();

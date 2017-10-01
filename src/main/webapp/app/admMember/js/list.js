@@ -96,7 +96,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
                     overlayColor: 'none'
 
                 });
-                $http.post(ctx + "/admMember/addAccount", $scope.param).success(function (resp) {
+                $http.post(ctx + "/admMember/addAccount?memberName="+$scope.chargeMember.memberName, $scope.param).success(function (resp) {
                     $scope.flag = true;
                     App.unblockUI(e1);
                     if (resp.successful) {

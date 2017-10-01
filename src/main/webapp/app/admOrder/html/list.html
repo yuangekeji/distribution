@@ -116,7 +116,7 @@
                                 <td class="text-left"><span ng-show="orderMaster.orderCategory != '2'">{{orderMaster.expressAddress}}</span></td>
                                 <td class="text-left">
                                     <div class="btn btn-circle">
-                                        <button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="confirmOrder(orderMaster.id,'3',orderMaster.expressAddress)" ng-show="{{orderMaster.orderStatues == '2'}}">确认发货</button>
+                                        <button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="confirmOrder(orderMaster.id,orderMaster.orderNo,'3',orderMaster.expressAddress)" ng-show="{{orderMaster.orderStatues == '2'}}">确认发货</button>
                                     </div>
                                 </td>
 
@@ -152,7 +152,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn blue-steel" ng-click="submit(datas.id, datas.statues, datas.expressAddress);">提交</button>
+        <button type="button" class="btn blue-steel" ng-click="submit(datas.id, datas.orderNo, datas.statues, datas.expressAddress);">提交</button>
         <button type="button" class="btn default" ng-click="close()">取消</button>
     </div>
 </script>

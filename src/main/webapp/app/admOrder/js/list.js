@@ -16,6 +16,7 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
 
     $scope.orderExpress = {
         id: '',
+        orderNo: '',
         statues: '',
         expressAddress: ''
     };
@@ -52,8 +53,9 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
     }
 
     /**确认发货*/
-    $scope.confirmOrder = function (id, statues, expressAddress) {
+    $scope.confirmOrder = function (id, orderNo, statues, expressAddress) {
         $scope.orderExpress.id = id;
+        $scope.orderExpress.orderNo = orderNo;
         $scope.orderExpress.statues = statues;
         $scope.orderExpress.expressAddress = expressAddress;
         $scope.open();
@@ -155,9 +157,9 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
 
 
     /**确认发货提交*/
-    $scope.submit = function (id, statues, expressAddress) {
+    $scope.submit = function (id, orderNo, statues, expressAddress) {
         $scope.startLoading();
-        $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderStatues:statues, expressAddress:expressAddress}).success(function (resp) {
+        $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderNo:orderNo, orderStatues:statues, expressAddress:expressAddress}).success(function (resp) {
             if(resp.successful){
                 Notify.success("确认发货完成");
                 $uibModalInstance.close(true);

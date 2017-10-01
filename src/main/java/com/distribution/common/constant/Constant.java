@@ -26,4 +26,9 @@ public class Constant {
 
     public static final String BONUSACCOUNTTYPE_SEED ="1";//种子币
     public static final String BONUSACCOUNTTYPE_BONUS ="2";//奖金币
+
+    //管理员操作管理
+    public static final String ADMINHANDLETYPE_ADDACCOUNT = "0";//会员管理-会员充值
+    public static final String ADMINHANDLETYPE_APPLYSTATUS= "1";//运营中心管理-审批通过/审批驳回
+    public static final String ADMINHANDLETYPE_APPLYORDER= "2";//订单管理-确认发货、下载
 }

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.adminHandleHistory.mapper.AdminHandleHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.adminHandleHistory.model.AdminHandleHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="admin_mobile" property="adminMobile" jdbcType="VARCHAR" />
+    <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
+    <result column="admin_role_Id" property="adminRoleId" jdbcType="INTEGER" />
+    <result column="handle_id" property="handleId" jdbcType="VARCHAR" />
+    <result column="handle_type" property="handleType" jdbcType="VARCHAR" />
+    <result column="handle_comment" property="handleComment" jdbcType="VARCHAR" />
+    <result column="handle_time" property="handleTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, admin_id, admin_mobile, admin_name, admin_role_Id, handle_id, handle_type, handle_comment, 
+    handle_time, create_time, create_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.adminHandleHistory.model.AdminHandleHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from admin_handle_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin_handle_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from admin_handle_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.adminHandleHistory.model.AdminHandleHistoryExample" >
+    delete from admin_handle_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.adminHandleHistory.model.AdminHandleHistory" >
+    insert into admin_handle_history (id, admin_id, admin_mobile, 
+      admin_name, admin_role_Id, handle_id, 
+      handle_type, handle_comment, handle_time, 
+      create_time, create_id)
+    values (#{id,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, #{adminMobile,jdbcType=VARCHAR}, 
+      #{adminName,jdbcType=VARCHAR}, #{adminRoleId,jdbcType=INTEGER}, #{handleId,jdbcType=VARCHAR}, 
+      #{handleType,jdbcType=VARCHAR}, #{handleComment,jdbcType=VARCHAR}, #{handleTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.adminHandleHistory.model.AdminHandleHistory" >
+    insert into admin_handle_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="adminMobile != null" >
+        admin_mobile,
+      </if>
+      <if test="adminName != null" >
+        admin_name,
+      </if>
+      <if test="adminRoleId != null" >
+        admin_role_Id,
+      </if>
+      <if test="handleId != null" >
+        handle_id,
+      </if>
+      <if test="handleType != null" >
+        handle_type,
+      </if>
+      <if test="handleComment != null" >
+        handle_comment,
+      </if>
+      <if test="handleTime != null" >
+        handle_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="adminMobile != null" >
+        #{adminMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null" >
+        #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRoleId != null" >
+        #{adminRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="handleId != null" >
+        #{handleId,jdbcType=VARCHAR},
+      </if>
+      <if test="handleType != null" >
+        #{handleType,jdbcType=VARCHAR},
+      </if>
+      <if test="handleComment != null" >
+        #{handleComment,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null" >
+        #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.adminHandleHistory.model.AdminHandleHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from admin_handle_history
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update admin_handle_history
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.adminId != null" >
+        admin_id = #{record.adminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.adminMobile != null" >
+        admin_mobile = #{record.adminMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminName != null" >
+        admin_name = #{record.adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminRoleId != null" >
+        admin_role_Id = #{record.adminRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.handleId != null" >
+        handle_id = #{record.handleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleType != null" >
+        handle_type = #{record.handleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleComment != null" >
+        handle_comment = #{record.handleComment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleTime != null" >
+        handle_time = #{record.handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update admin_handle_history
+    set id = #{record.id,jdbcType=INTEGER},
+      admin_id = #{record.adminId,jdbcType=INTEGER},
+      admin_mobile = #{record.adminMobile,jdbcType=VARCHAR},
+      admin_name = #{record.adminName,jdbcType=VARCHAR},
+      admin_role_Id = #{record.adminRoleId,jdbcType=INTEGER},
+      handle_id = #{record.handleId,jdbcType=VARCHAR},
+      handle_type = #{record.handleType,jdbcType=VARCHAR},
+      handle_comment = #{record.handleComment,jdbcType=VARCHAR},
+      handle_time = #{record.handleTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_id = #{record.createId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.adminHandleHistory.model.AdminHandleHistory" >
+    update admin_handle_history
+    <set >
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="adminMobile != null" >
+        admin_mobile = #{adminMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="adminName != null" >
+        admin_name = #{adminName,jdbcType=VARCHAR},
+      </if>
+      <if test="adminRoleId != null" >
+        admin_role_Id = #{adminRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="handleId != null" >
+        handle_id = #{handleId,jdbcType=VARCHAR},
+      </if>
+      <if test="handleType != null" >
+        handle_type = #{handleType,jdbcType=VARCHAR},
+      </if>
+      <if test="handleComment != null" >
+        handle_comment = #{handleComment,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null" >
+        handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.adminHandleHistory.model.AdminHandleHistory" >
+    update admin_handle_history
+    set admin_id = #{adminId,jdbcType=INTEGER},
+      admin_mobile = #{adminMobile,jdbcType=VARCHAR},
+      admin_name = #{adminName,jdbcType=VARCHAR},
+      admin_role_Id = #{adminRoleId,jdbcType=INTEGER},
+      handle_id = #{handleId,jdbcType=VARCHAR},
+      handle_type = #{handleType,jdbcType=VARCHAR},
+      handle_comment = #{handleComment,jdbcType=VARCHAR},
+      handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

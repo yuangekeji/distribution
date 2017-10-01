@@ -863,7 +863,7 @@ ALTER TABLE `member` DROP  COLUMN node_name;
 
 -- admin添加字段:管理员禁用/启用功能
 ALTER TABLE `admin`
-	ADD COLUMN `delete_flag` VARCHAR(255) NULL COMMENT '管理员禁用/启用(启用:Y; 禁用: N)' AFTER `role_id`;
+ADD COLUMN `delete_flag` VARCHAR(255) NULL COMMENT '管理员禁用/启用(启用:Y; 禁用: N)' AFTER `role_id`;
 
 -- 放置节点ID
 ALTER TABLE `order_master`
@@ -871,4 +871,14 @@ ADD COLUMN `sendByPostYN`  CHAR(1) NULL COMMENT '是否邮寄 1-自提，2-邮�
 
 -- 复投账户类型
 ALTER TABLE `order_master`
-  ADD COLUMN `bonus_account_type`  CHAR(1) NULL COMMENT '复投账户 1-种子币，2奖金币';
+ADD COLUMN `bonus_account_type`  CHAR(1) NULL COMMENT '复投账户 1-种子币，2奖金币';
+
+-- 多分支
+insert into menu(id,no,name,parent_menu ,menu_link,menu_icon) VALUES(
+  '',null,'分支管理',25,'app.admTreeMember',null);
+insert into role_menu(role_id, menu_id) values(2,29);
+
+-- 操作记录
+insert into menu(id,no,name,parent_menu ,menu_link,menu_icon) VALUES(
+  '',null,'操作记录',25,'app.admDoHistory',null);
+insert into role_menu(role_id, menu_id) values(2,30);

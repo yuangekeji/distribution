@@ -198,4 +198,10 @@ angular.module('app').config([
                 resolve: helper.resolveFor('authFail'),
                 controller: 'authFailCtrl'
             })
+            .state('app.admTreeMember', {
+                url: '/admTreeMember',
+                templateUrl: helper.basepath('admTreeMember/list/list.html'),
+                resolve: helper.resolveFor('admTreeMember'),
+                controller: 'admTreeMemberCtrl'
+            })
     }]);

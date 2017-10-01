@@ -78,10 +78,10 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             });
         out.result.then(function(value)
         {
-            console.info('确认');
+            // console.info('确认');
         }, function()
         {
-            console.info('取消');
+            // console.info('取消');
         });
     };
 

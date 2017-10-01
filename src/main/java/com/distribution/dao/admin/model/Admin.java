@@ -21,6 +21,8 @@ public class Admin {
 
     private Integer roleId;
 
+    private String deleteFlag;
+
     public Integer getId() {
         return id;
     }
@@ -91,5 +93,13 @@ public class Admin {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public String getDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 }

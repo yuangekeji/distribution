@@ -42,6 +42,7 @@ public class AdminService {
                 return "PHONE_EXIST";
             }else{
                 admin.setPassword(CryptoUtil.md5ByHex(admin.getPassword()));
+                admin.setDeleteFlag("Y");
                 admin.setCreateId(a.getId());
                 admin.setCreateTime(new Date());
                 admin.setUpdateId(a.getId());
@@ -50,5 +51,16 @@ public class AdminService {
                 return "SUCCESS";
             }
         }
+    }
+
+    /**
+     * description 管理员禁用/启用功能操作
+     * @author shiqing.dong
+     * */
+    public Integer updateAdminDeleteFlag(Admin admin, Admin a){
+
+        admin.setUpdateId(a.getId());
+        admin.setUpdateTime(new Date());
+        return adminMapper.updateByPrimaryKeySelective(admin);
     }
 }

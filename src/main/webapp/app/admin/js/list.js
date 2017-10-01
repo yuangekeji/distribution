@@ -1,6 +1,8 @@
-angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $http,  $state, Notify, $stateParams, $sessionStorage, ConfirmModal) {
     title.setTitle('管理员列表');
     $scope.notData = false;
+    $scope.currentUser = $sessionStorage.currentUser;
+
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,
@@ -75,11 +77,43 @@ angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $htt
         $state.go("app.adminAdd");
     };
 
+    /**管理员禁用/启用功能操作*/
+    $scope.updateAdminDeleteFlag = function (id, name, rowName, deleteFlag) {
+        $scope.deleteFlagName = "";
+        if (deleteFlag == "Y") {
+            $scope.deleteFlagName = "启用";
+        }else {
+            $scope.deleteFlagName = "禁用";
+        }
+        ConfirmModal.show({
+            text: '确定要' + $scope.deleteFlagName + rowName + name +'吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $http.post(ctx + "/admin/updateAdminDeleteFlag",{id: id, deleteFlag: deleteFlag}).success(function (resp) {
+                if(resp.successful){
+                    Notify.success("操作成功。");
+                    $scope.search();
+                }else{
+                    Notify.warning("操作失败。");
+                }
+            })
+        });
+    }
 });
 
 angular.module('admin').filter("RoleFilter",function () {
     return function (input) {
         if(input=='2'){return '系统管理员'};
         if(input=='3'){return '财务'};
+    }
+});
+
+angular.module('admin').filter("DeleteFlagFilter",function () {
+    return function (input) {
+        if(input=='Y'){return '启用'};
+        if(input=='N'){return '禁用'};
     }
 });

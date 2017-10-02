@@ -891,3 +891,13 @@ CREATE TABLE `admin_handle_history` (
   `create_id` int(11) DEFAULT NULL COMMENT '创建ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 多分支
+insert into menu(id,no,name,parent_menu ,menu_link,menu_icon) VALUES(
+  '',null,'分支管理',25,'app.admTreeMember',null);
+insert into role_menu(role_id, menu_id) values(2,29);
+
+-- 操作记录
+insert into menu(id,no,name,parent_menu ,menu_link,menu_icon) VALUES(
+  '',null,'操作记录',25,'app.admDoHistory',null);
+insert into role_menu(role_id, menu_id) values(2,30);

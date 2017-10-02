@@ -269,6 +269,12 @@ angular
                 ]
             },
             {
+                name:'admTreeMemberAdd',
+                files: [
+                    'app/admTreeMember/js/add.js?v=' + version
+                ]
+            },
+            {
                 name: 'admHandleHistory',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',

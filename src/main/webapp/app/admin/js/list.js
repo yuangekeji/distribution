@@ -92,7 +92,7 @@ angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $htt
             if (!sure) {
                 return;
             }
-            $http.post(ctx + "/admin/updateAdminDeleteFlag",{id: id, deleteFlag: deleteFlag}).success(function (resp) {
+            $http.post(ctx + "/admin/updateAdminDeleteFlag",{id: id, name:name, deleteFlag: deleteFlag}).success(function (resp) {
                 if(resp.successful){
                     Notify.success("操作成功。");
                     $scope.search();

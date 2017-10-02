@@ -61,8 +61,8 @@ angular.module('admProduct').controller('admProductCtrl',function ($q, title, $s
     };
 
     /**上架下架操作*/
-    $scope.handle = function (id,status) {
-        $http.post(ctx + "/admGoods/handle",{id:id,status:status}).success(function (resp) {
+    $scope.handle = function (id,goodsName,status) {
+        $http.post(ctx + "/admGoods/handle",{id:id,goodsName:goodsName,status:status}).success(function (resp) {
             if(resp.successful){
                 Notify.warning("操作成功。");
                 $scope.search();

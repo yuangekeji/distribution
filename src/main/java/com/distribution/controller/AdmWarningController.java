@@ -1,12 +1,11 @@
 package com.distribution.controller;
 
-import com.distribution.common.constant.BonusConstant;
 import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
-import com.distribution.dao.member.model.Member;
+import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.AdmWarningService;
 import com.distribution.service.BonusPoolService;
 import com.distribution.service.BonusService;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -38,10 +36,10 @@ public class AdmWarningController extends BasicController{
     private AdmWarningService admWarningService;
 
     @Autowired
-    private BonusService bonusService;
+    private BonusPoolService bonusPoolService;
 
     @Autowired
-    private BonusPoolService bonusPoolService;
+    private AdmHandleHistoryService admHandleHistoryService;
 
     @RequestMapping("/list")
     @ResponseBody
@@ -69,8 +67,20 @@ public class AdmWarningController extends BasicController{
 
     @RequestMapping(value="/payAmtProc")
     @ResponseBody
-    public JsonMessage payAmtProc(BigDecimal amount, Integer poolType){
+    public JsonMessage payAmtProc(BigDecimal amount, Integer poolType, HttpSession session){
+        Admin admin = (Admin) getCurrentUser(session);
         boolean result = bonusPoolService.updatePayAmtPoolProc(amount,poolType);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_PAYAMTPROC);
+        if (poolType == 1) {
+            map.put("handleId", "补发分红包");
+            map.put("handleComment", "补发分红包(从资金池拨资金到发放池), 补发金额: " + amount);
+        }else {
+            map.put("handleId", "补发广告宣传奖");
+            map.put("handleComment", "补发广告宣传奖(从资金池拨资金到发放池), 补发金额: " + amount);
+        }
+        admHandleHistoryService.addAdminHandleHistory(admin, map);
         return successMsg(result);
     }
 

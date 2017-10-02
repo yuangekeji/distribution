@@ -96,7 +96,6 @@
        <if test="(parameterMap.recommendId!=null or parameterMap.recommendId!='') and parameterMap.memberId!=null and parameterMap.memberId!=''">
          AND (m.create_id = #{parameterMap.memberId} OR m.recommend_id = #{parameterMap.memberId})
        </if>
-
        <if test="parameterMap.name!=null and parameterMap.name!=''">
          AND m.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'
        </if>
@@ -106,7 +105,6 @@
        <if test="parameterMap.level!=null and parameterMap.level!=''">
          AND m.member_level = #{parameterMap.level}
        </if>
-         AND p.id = m.parent_id
      </where>
    </sql>
 
@@ -140,7 +138,7 @@
   </select>
 
   <select id="getMemberCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM member m  , member p <include refid="where"/>
+    SELECT COUNT(*) FROM member m  <include refid="where"/>
   </select>
   
   <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="MoreBaseResultMap">
@@ -152,8 +150,8 @@
       m.first_agent_cnt, m.recommend_name ,
       m.parent_id,
       p.member_name as parentMemberName
-    FROM member m , member p
-  <include refid="where"/>ORDER BY m.id DESC <include refid="pageLimit"/>
+    FROM member m LEFT JOIN	member p ON p.id = m.parent_id
+    <include refid="where"/>ORDER BY m.id DESC <include refid="pageLimit"/>
   </select>
   <update id="updateMemberMoneyStatusY" parameterType="java.lang.Integer">
        update member

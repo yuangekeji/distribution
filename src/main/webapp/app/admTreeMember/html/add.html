@@ -1,0 +1,58 @@
+<h4 class="page-title">创建分支</h4>
+<div class="row">
+    <div class="col-md-offset-1 col-md-10 ">
+        <div class="portlet box blue-steel ">
+            <div class="portlet-title">
+                <div class="caption ">
+                    <i class="icon-settings"></i>
+                    <span class="caption-subject bold uppercase"> 填写分支信息</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>会员姓名</label>
+                            <div class="input-icon right">
+                                <i class="fa fa-microphone"></i>
+                                <input type="text" class="form-control input-circle" placeholder="请输入会员姓名" ng-model="member.memberName" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>会员账号(手机号)</label>
+                            <input class="form-control spinner input-circle" type="text" placeholder="请输入会员账号" ng-model="member.memberPhone" maxlength="11"/>
+                        </div>
+                        <div class="form-group">
+                            <label>联系人手机号</label>
+                            <input class="form-control spinner input-circle" type="text" placeholder="请输入会员账号" ng-model="member.linkmanPhone" maxlength="11"/>
+                        </div>
+                        <div class="form-group">
+                            <label>登录密码</label>
+                            <input type="password" class="form-control input-circle" ng-model="member.loginPassword" maxlength="24">
+                        </div>
+                        <div class="form-group">
+                            <label>确认密码</label>
+                            <input type="password" class="form-control input-circle" ng-model="confirmLoginPassword" maxlength="24">
+                        </div>
+                        <div class="form-group">
+                            <label>会员等级</label>
+                            <select class="form-control input-circle" ng-model="member.memberLevel" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>收货人姓名</label>
+                            <input type="text" class="form-control input-circle" placeholder="请输入收货人姓名" ng-model="member.consignee" maxlength="50">
+                        </div>
+                        <div class="form-group">
+                            <label>收货地址</label>
+                            <input type="text" class="form-control input-circle" placeholder="请输入收货人地址" ng-model="member.expressAddress" maxlength="200">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn blue-steel" ng-click="submit();">提交</button>
+                        <button type="button" class="btn default" ui-sref="app.admTreeMember">返回</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.treeMember.mapper.TreeMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.member.model.Member" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="login_password" property="loginPassword" jdbcType="VARCHAR" />
+    <result column="query_password" property="queryPassword" jdbcType="VARCHAR" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+    <result column="recommend_id" property="recommendId" jdbcType="INTEGER" />
+    <result column="node_id" property="nodeId" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
+    <result column="ID_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="member_post" property="memberPost" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+    <result column="money_status" property="moneyStatus" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_user_name" property="bankUserName" jdbcType="VARCHAR" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="is_operator" property="isOperator" jdbcType="VARCHAR" />
+    <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
+    <result column="first_agent_cnt" property="firstAgentCnt" jdbcType="INTEGER" />
+    <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
+    <result column="linkman_phone" property="linkmanPhone" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+  <sql id="where">
+    <where>
+      <if test="parameterMap.phone!=null and parameterMap.phone!=''">
+        AND m.member_phone LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.phone}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.status!=null and parameterMap.status!=''">
+        AND m.status = #{parameterMap.status}
+      </if>
+      <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+        <![CDATA[AND DATE_FORMAT(m.create_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+      </if>
+      <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+        <![CDATA[AND DATE_FORMAT(m.create_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
+      </if>
+      <if test="parameterMap.name!=null and parameterMap.name!=''">
+        AND m.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.post!=null and parameterMap.post!=''">
+        AND m.member_post = #{parameterMap.post}
+      </if>
+      <if test="parameterMap.level!=null and parameterMap.level!=''">
+        AND m.member_level = #{parameterMap.level}
+      </if>
+      AND EXISTS (SELECT 1 FROM member_node n WHERE m.node_id = n.id AND n.parent_id = 0 )
+      AND recommend_id = 0
+    </where>
+  </sql>
+  <select id="findTreeMember" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT
+        id, member_phone, recommend_id, node_id,
+        member_name, member_level, express_address, status, role_id,
+        member_post, create_time, order_amount, consignee,
+        money_status, is_operator, is_sales_dept,
+        first_agent_cnt, recommend_name,
+        parent_id ,
+        linkman_phone
+     FROM member m
+    <include refid="where"/>
+     ORDER BY m.id DESC
+    <include refid="pageLimit"/>
+  </select>
+
+  <select id="findTreeMemberCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    SELECT  count(*)
+    FROM   member m
+    <include refid="where"/>
+  </select>
+</mapper>

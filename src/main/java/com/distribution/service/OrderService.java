@@ -113,6 +113,11 @@ public class OrderService {
             moreOrderMaster.setExpressAddress(null);
         }
 
+        //自提的话直接发货完成
+        if("1".equals(moreOrderMaster.getSendbypostyn())){
+            moreOrderMaster.setOrderStatues("3");//待收货
+        }
+
         cnt1 = moreOrderMasterMapper.insertOrder(moreOrderMaster);
 
         if(cnt1 == 0){

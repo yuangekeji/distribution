@@ -200,8 +200,14 @@ angular.module('app').config([
             })
             .state('app.admTreeMember', {
                 url: '/admTreeMember',
-                templateUrl: helper.basepath('admTreeMember/list/list.html'),
+                templateUrl: helper.basepath('admTreeMember/html/list.html'),
                 resolve: helper.resolveFor('admTreeMember'),
-                controller: 'admTreeMemberCtrl'
+                controller: 'admTreeMemberListCtrl'
+            })
+            .state('app.admTreeMemberAdd', {
+                url: '/admTreeMember-add',
+                templateUrl: helper.basepath('admTreeMember/html/add.html'),
+                resolve: helper.resolveFor('admTreeMemberAdd'),
+                controller: 'admTreeMemberAddCtrl'
             })
     }]);

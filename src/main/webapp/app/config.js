@@ -267,6 +267,12 @@ angular
                     'app/admTreeMember/js/list.js?v=' + version,
                     'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
+            },
+            {
+                name:'admTreeMemberAdd',
+                files: [
+                    'app/admTreeMember/js/add.js?v=' + version
+                ]
             }
         ]
     });

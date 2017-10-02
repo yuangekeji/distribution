@@ -204,4 +204,10 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admTreeMember'),
                 controller: 'admTreeMemberCtrl'
             })
+            .state('app.admHandleHistory',{
+                url: '/admHandleHistory',
+                templateUrl: helper.basepath('admHandleHistory/html/list.html'),
+                resolve: helper.resolveFor('admHandleHistory'),
+                controller: 'admHandleHistoryCtrl'
+            })
     }]);

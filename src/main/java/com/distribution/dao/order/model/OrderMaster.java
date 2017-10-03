@@ -34,6 +34,8 @@ public class OrderMaster {
 
     private String orderStatues;
 
+    private String expressNo;
+
     private Integer createId;
 
     private Date createTime;
@@ -164,6 +166,14 @@ public class OrderMaster {
 
     public void setOrderStatues(String orderStatues) {
         this.orderStatues = orderStatues == null ? null : orderStatues.trim();
+    }
+
+    public String getExpressNo() {
+        return expressNo;
+    }
+
+    public void setExpressNo(String expressNo) {
+        this.expressNo = expressNo == null ? null : expressNo.trim();
     }
 
     public Integer getCreateId() {

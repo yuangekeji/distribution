@@ -18,7 +18,13 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         id: '',
         orderNo: '',
         statues: '',
-        expressAddress: ''
+        expressNo: ''
+    };
+    $scope.expressMessage = {
+        expressNo: '',
+        expressAddress: '',
+        sendbypostyn: '',
+        orderStatues: ''
     };
 
     var e1 = $('.portlet');
@@ -53,11 +59,11 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
     }
 
     /**确认发货*/
-    $scope.confirmOrder = function (id, orderNo, statues, expressAddress) {
+    $scope.confirmOrder = function (id, orderNo, statues, expressNo) {
         $scope.orderExpress.id = id;
         $scope.orderExpress.orderNo = orderNo;
         $scope.orderExpress.statues = statues;
-        $scope.orderExpress.expressAddress = expressAddress;
+        $scope.orderExpress.expressNo = expressNo;
         $scope.open();
 
     };
@@ -75,6 +81,41 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
                     getDatas: function()
                     {
                         return $scope.orderExpress;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            // console.info('确认');
+        }, function()
+        {
+            // console.info('取消');
+        });
+    };
+
+    /**物流信息查询*/
+    $scope.expressMessageSearch = function (expressNo, expressAddress, sendbypostyn, orderStatues) {
+        $scope.expressMessage.expressNo = expressNo;
+        $scope.expressMessage.expressAddress = expressAddress;
+        $scope.expressMessage.sendbypostyn = sendbypostyn;
+        $scope.expressMessage.orderStatues = orderStatues;
+        $scope.openexpressMessage();
+
+    };
+
+    $scope.openexpressMessage = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "admExpressMessage.html",
+                controller: "admExpressMessageCtrl",
+                size: opt_attributes,
+                resolve: {
+                    getDatas: function()
+                    {
+                        return $scope.expressMessage;
                     }
                 }
             });
@@ -157,9 +198,9 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
 
 
     /**确认发货提交*/
-    $scope.submit = function (id, orderNo, statues, expressAddress) {
+    $scope.submit = function (id, orderNo, statues, expressNo) {
         $scope.startLoading();
-        $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderNo:orderNo, orderStatues:statues, expressAddress:expressAddress}).success(function (resp) {
+        $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderNo:orderNo, orderStatues:statues, expressNo:expressNo}).success(function (resp) {
             if(resp.successful){
                 Notify.success("确认发货完成");
                 $uibModalInstance.close(true);
@@ -174,7 +215,31 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
         })
     };
 });
+angular.module('admOrder').controller('admExpressMessageCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {
 
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
+    $scope.datasExpressMessage = getDatas;
+
+    $scope.close = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
 angular.module('admOrder').filter("OrderStatuesFilter",function () {
     return function (input) {
         if(input=='1'){return '待支付'};
@@ -200,5 +265,11 @@ angular.module('admOrder').filter("MemberLevelFilter",function () {
         if(input=='member_level4'){return '金卡'};
         if(input=='member_level5'){return '白金卡'};
         if(input=='member_level6'){return '黑金卡'};
+    }
+});
+angular.module('admOrder').filter("bonusAccountTypeFilter",function () {
+    return function (input) {
+        if(input=='1'){return '种子币'};
+        if(input=='2'){return '奖金币'};
     }
 });

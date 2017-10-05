@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 	<!-- 使用绝对路径替换为本地的jar位置 -->
-	<classPathEntry  location="C:\DEV\MavenRepository\maven_jar\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar" />
+	<classPathEntry  location="C:\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 
 		<commentGenerator>

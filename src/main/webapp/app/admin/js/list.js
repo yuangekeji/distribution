@@ -81,9 +81,9 @@ angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $htt
     $scope.updateAdminDeleteFlag = function (id, name, rowName, deleteFlag) {
         $scope.deleteFlagName = "";
         if (deleteFlag == "Y") {
-            $scope.deleteFlagName = "启用";
-        }else {
             $scope.deleteFlagName = "禁用";
+        }else {
+            $scope.deleteFlagName = "启用";
         }
         ConfirmModal.show({
             text: '确定要' + $scope.deleteFlagName + rowName + name +'吗？',
@@ -113,7 +113,7 @@ angular.module('admin').filter("RoleFilter",function () {
 
 angular.module('admin').filter("DeleteFlagFilter",function () {
     return function (input) {
-        if(input=='Y'){return '启用'};
-        if(input=='N'){return '禁用'};
+        if(input=='N'){return '启用'};
+        if(input=='Y'){return '禁用'};
     }
 });

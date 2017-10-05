@@ -863,7 +863,7 @@ ALTER TABLE `member` DROP  COLUMN node_name;
 
 -- admin添加字段:管理员禁用/启用功能
 ALTER TABLE `admin`
-	ADD COLUMN `delete_flag` VARCHAR(255) NULL COMMENT '管理员禁用/启用(启用:Y; 禁用: N)' AFTER `role_id`;
+	ADD COLUMN `delete_flag` VARCHAR(255) DEFAULT 'N' COMMENT '管理员禁用/启用(启用:N; 禁用: Y)' AFTER `role_id`;
 
 -- 放置节点ID
 ALTER TABLE `order_master`

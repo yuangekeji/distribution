@@ -42,7 +42,7 @@ public class AdminService {
                 return "PHONE_EXIST";
             }else{
                 admin.setPassword(CryptoUtil.md5ByHex(admin.getPassword()));
-                admin.setDeleteFlag("Y");
+                admin.setDeleteFlag("N");
                 admin.setCreateId(a.getId());
                 admin.setCreateTime(new Date());
                 admin.setUpdateId(a.getId());

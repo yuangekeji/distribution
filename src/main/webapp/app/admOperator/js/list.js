@@ -1,4 +1,4 @@
-angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, $scope, $http,  $state, Notify, $sessionStorage) {
+angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, $scope, $http,  $state, Notify, $sessionStorage, ConfirmModal) {
     title.setTitle('运营中心管理');
     $scope.loadingFlag = true;
     $scope.notData = false;
@@ -55,22 +55,35 @@ angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, 
 
     /**翻页*/
     $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
         $scope.myPage.pageNo = num;
         $scope.onInit();
     };
 
     $scope.approval = function (id,memberId,memberName,status) {
-        $http.post(ctx + "/admOperator/approval?memberName="+memberName,{id:id,memberId:memberId,status:status}).success(function (resp) {
-            if(resp.successful){
-                Notify.warning('审批完成。');
-                $scope.search();
-            }else{
-                console.log(resp);
+        $scope.textMessage = "";
+        if (status == "pass") {
+            $scope.textMessage = "确定审核通过会员" + memberName + "成为运营中心？";
+        } else {
+            $scope.textMessage = "确定审核驳回会员" + memberName + "成为运营中心？";
+        }
+        ConfirmModal.show({
+            text: $scope.textMessage,
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
             }
-        }).error(function (resp) {
-            console.log(resp);
-        })
+            $http.post(ctx + "/admOperator/approval?memberName="+memberName,{id:id,memberId:memberId,status:status}).success(function (resp) {
+                if(resp.successful){
+                    Notify.warning('操作完成。');
+                    $scope.search();
+                }else{
+                    console.log(resp);
+                }
+            }).error(function (resp) {
+                console.log(resp);
+            })
+        });
     }
 });
 

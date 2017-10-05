@@ -45,7 +45,7 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
 
     $scope.confirmOrder = function (id, statues) {
         ConfirmModal.show({
-            text: '确定要收货吗？',
+            text: '确定已经收到商品了吗？',
             isCancel:true //false alert ,true confirm
         }).then(function (sure) {
             if (!sure) {

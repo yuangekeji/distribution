@@ -56,11 +56,6 @@ CREATE TABLE `account_manager` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='账户管理表master';
 
 -- ----------------------------
--- Records of account_manager
--- ----------------------------
-INSERT INTO `account_manager` VALUES ('1', '1', '0.00', '0.00', '0.00', '0.00', '1', '2017-09-10 15:43:18', '1', '2017-09-10 17:16:51');
-
--- ----------------------------
 -- Table structure for admin
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
@@ -81,7 +76,7 @@ CREATE TABLE `admin` (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', '17758674319', '李晓伟', '96E79218965EB72C92A549DD5A330112', '1', '2017-09-10 14:10:39', '1', '2017-09-10 14:10:50', '2', 'N');
+INSERT INTO `admin` VALUES ('1', '17758674319', '李晓伟', '96E79218965EB72C92A549DD5A330112', '1', '2017-10-05 14:10:39', '1', '2017-10-05 14:10:50', '2', 'N');
 
 -- ----------------------------
 -- Table structure for admin_handle_history
@@ -376,11 +371,6 @@ CREATE TABLE `dividend` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分红包表';
 
 -- ----------------------------
--- Records of dividend
--- ----------------------------
-INSERT INTO `dividend` VALUES ('1', '1', '1', '170910131258099', '600.00', '1', '0.00', '0.00', '800.00', '1', '48.00', '1', '2017-09-08 12:18:28', '0', '2017-09-10 14:50:00');
-
--- ----------------------------
 -- Table structure for dividend_history
 -- ----------------------------
 DROP TABLE IF EXISTS `dividend_history`;
@@ -433,11 +423,6 @@ CREATE TABLE `goods` (
   `status` varchar(255) DEFAULT NULL COMMENT '状态(Y:上架,N:下架)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='商品表';
-
--- ----------------------------
--- Records of goods
--- ----------------------------
-INSERT INTO `goods` VALUES ('1', '瑶酿通補 6支装/盒', '99999999', '600.00', '2017-08-28 23:57:18', '01', null, null, null, null, null, null, null, null, null, null, null, '2017-08-28 23:58:12', 'N', '瑶酿通補6支装/盒', '49b4103e-0e5c-4231-b571-c55ee09d54b6.png', 'Y');
 
 -- ----------------------------
 -- Table structure for job_logs
@@ -502,11 +487,6 @@ CREATE TABLE `member` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员表';
 
 -- ----------------------------
--- Records of member
--- ----------------------------
-INSERT INTO `member` VALUES ('1', '17758674319', '96E79218965EB72C92A549DD5A330112', 'E3CEB5881A0A1FDAAD01296D7554868D', '1A100D2C0DAB19C4430E7D73762B3423', '0', '1', '李晓伟', 'member_level1', '41293019730515042X', '广西南宁市青秀区民族大道127号铂宫国际19楼1913号', 'Y', 'N', '1', 'post_level1', '0', '2017-09-10 14:28:06', '1', '2017-09-10 17:16:54', '600.00', '李晓伟', 'Y', '招商银行', '李晓伟', '6214857718962972', 'N', 'N', '0', 'ADMIN', null, null);
-
--- ----------------------------
 -- Table structure for member_bonus
 -- ----------------------------
 DROP TABLE IF EXISTS `member_bonus`;
@@ -567,11 +547,6 @@ CREATE TABLE `member_node` (
   `sales_total` double(10,0) DEFAULT '0' COMMENT '备用销售业绩总数，废弃字段',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员节点二叉树表';
-
--- ----------------------------
--- Records of member_node
--- ----------------------------
-INSERT INTO `member_node` VALUES ('1', null, null, '0', '2017-09-10 21:01:19', '1', '2017-09-10 20:12:52', '1', '0', '0');
 
 -- ----------------------------
 -- Table structure for menu
@@ -681,11 +656,6 @@ CREATE TABLE `order_detail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单管理表detail';
 
 -- ----------------------------
--- Records of order_detail
--- ----------------------------
-INSERT INTO `order_detail` VALUES ('1', '170910131258099', '1', '600.00', '1', '1', '2017-09-10 12:38:02', '1', '2017-09-10 12:38:02');
-
--- ----------------------------
 -- Table structure for order_master
 -- ----------------------------
 DROP TABLE IF EXISTS `order_master`;
@@ -715,11 +685,6 @@ CREATE TABLE `order_master` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_no` (`order_no`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单master';
-
--- ----------------------------
--- Records of order_master
--- ----------------------------
-INSERT INTO `order_master` VALUES ('1', '170910131258099', '1', '600.00', '1', '0', '600.00', '0.00', '1', null, null, null, null, 'member_level5', '2', null, '1', '2017-09-10 13:12:59', '1', '2017-09-10 20:52:57', '1','2');
 
 -- ----------------------------
 -- Table structure for role

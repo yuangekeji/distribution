@@ -44,7 +44,7 @@
     SELECT id,mobile,name,role_id FROM admin
     WHERE mobile = #{userName}
       AND password = #{password}
-      AND delete_flag = 'Y'
+      AND delete_flag = 'N'
   </select>
 
   <!--查詢管理员列表-->

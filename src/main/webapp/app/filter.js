@@ -129,9 +129,9 @@ angular.module('app').filter("dividendStatusFilter",function () {
 
 angular.module('app').filter("BonusTypeFilter",function () {
     return function (input) {
-        if(input=='0'){return '销售奖'};
-        if(input=='1'){return '一代奖'};
-        if(input=='2'){return '二代奖'};
+        if(input=='0'){return '一代奖'};
+        if(input=='1'){return '二代奖'};
+        if(input=='2'){return '三代奖'};
         if(input=='3'){return '分红包奖'};
         if(input=='4'){return '广告宣传奖'};
         if(input=='5'){return '级差奖'};

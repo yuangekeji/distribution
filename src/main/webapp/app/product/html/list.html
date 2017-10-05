@@ -67,6 +67,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="row"  ng-show= "notData">
+                    <div class="col-md-12 text-center" >无商品数据</div>
+                </div>
                 <div class="other-controller">
                     <div class="text-center">
                         <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>

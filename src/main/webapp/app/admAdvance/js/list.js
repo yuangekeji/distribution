@@ -73,19 +73,34 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
 
     /**提现批准*/
     $scope.confirmAdvance = function (id, memberId, memberName, reqAmt, statues) {
-        $scope.startLoading();
-        $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, memberId:memberId, memberName:memberName, reqAmt: reqAmt, statues:statues}).success(function (resp) {
-            if(resp.successful){
-                Notify.success("提现审批完成。");
-                $scope.search();
-            }else{
-                Notify.error(resp.error());
+        $scope.textMessage = "";
+        if (statues == "2") {
+            $scope.textMessage = "确定已执行该提现申请了吗？";
+        } else {
+            $scope.textMessage = "确定要驳回该提现申请吗？";
+        }
+        ConfirmModal.show({
+            text: $scope.textMessage,
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
             }
-            $scope.stopLoading();
-        }).error(function (error) {
-            Notify.error(error);
-            $scope.stopLoading();
+            $scope.startLoading();
+            $http.post(ctx + "/admAdvance/confirmAdvance",{id:id, memberId:memberId, memberName:memberName, reqAmt: reqAmt, statues:statues}).success(function (resp) {
+                if(resp.successful){
+                    Notify.success("提现审批完成。");
+                    $scope.search();
+                }else{
+                    Notify.error(resp.error());
+                }
+                $scope.stopLoading();
+            }).error(function (error) {
+                Notify.error(error);
+                $scope.stopLoading();
+            });
         });
+
     };
 
     /**提现驳回*/

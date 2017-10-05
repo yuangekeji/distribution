@@ -5,7 +5,6 @@ angular.module('home').controller('homeCtrl',
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components
         App.initAjax();
-
         // set default layout mode
         $rootScope.settings.layout.pageContentWhite = true;
         $rootScope.settings.layout.pageBodySolid = false;
@@ -25,9 +24,12 @@ angular.module('home').controller('homeCtrl',
      * @author Bright
      * */
     $timeout(function(){
+
         if(!$scope.currentUser)
             $scope.currentUser = $sessionStorage.currentUser;
+
         if($scope.currentUser.moneyStatus=='Y' && $scope.currentUser.status=='N'){
+
             $http.get(ctx + "/member/getDictionary/bank_name").success(function (resp) {
                 if(resp.successful){
                     $scope.dictionary = resp.data.list;
@@ -78,14 +80,12 @@ angular.module('home').controller('homeCtrl',
             Notify.warning("请确认三级密码。");
         }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
             Notify.warning("三级密码和三级密码确认不同,请重新输入。");
-        }else if($scope.currentUser.sendbypostyn == '2'){
-            if(!$scope.currentUser.receiveName||!$scope.currentUser.receiveName.trim()){
-                 Notify.warning("请输入收货人姓名。");
-             }else if(!$scope.currentUser.receviveAddress||!$scope.currentUser.receviveAddress.trim()){
-                 Notify.warning("请输入收货地址。");
-             }else if(!$scope.currentUser.recevivePhone||!$scope.currentUser.recevivePhone.trim()){
-                Notify.warning("请输入收货人电话。");
-            }
+        }else if($scope.currentUser.sendbypostyn == '2' && (!$scope.currentUser.receiveName||!$scope.currentUser.receiveName.trim())){
+            Notify.warning("请输入收货人姓名。");
+        }else if($scope.currentUser.sendbypostyn == '2' && (!$scope.currentUser.receviveAddress||!$scope.currentUser.receviveAddress.trim())){
+            Notify.warning("请输入收货地址。");
+        }else if($scope.currentUser.sendbypostyn == '2' && (!$scope.currentUser.recevivePhone||!$scope.currentUser.recevivePhone.trim())){
+            Notify.warning("请输入收货人电话。");
         }else{
 
             $scope.startLoading();

@@ -1,4 +1,4 @@
-angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify,ConfirmModal) {
+angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify,ConfirmModal,$window) {
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
@@ -104,6 +104,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 if(resp.successful){
                     Notify.warning("修改成功。");
                     $scope.stopLoading();
+                    $window.location.reload();
                 }
             }).error(function (resp) {
                 console.log(resp);

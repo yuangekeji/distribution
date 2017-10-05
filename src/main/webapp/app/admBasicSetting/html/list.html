@@ -78,13 +78,13 @@
                             <uib-tab index="2" heading="提现设置">
                                 <div class="portlet-body form">
                                     <form role="form">
-                                        <div class="form-body" ng-repeat="advanceBasic in myPage.result | filter:{typeCode : 'D08'}" >
-                                            <div class="form-group"   >
+                                        <div class="form-body">
+                                            <div class="form-group" ng-repeat="advanceBasic in myPage.result | filter:{typeCode : 'D09'}"  >
                                                 <label class="control-label" >每次提现最小金额(元)</label>
-                                                <input type="number" id="advanceMinAmt" name="advanceBasic.minAmt" ng-model="advanceBasic.minAmt" value="{{advanceBasic.minAmt|number:2}}"  placeholder="提现最小金额"
+                                                <input type="number" readonly id="advanceMinAmt" name="advanceBasic.minAmt" ng-model="advanceBasic.minAmt" value="{{advanceBasic.minAmt}}"  placeholder="提现最小金额"
                                                        class="form-control input-circle input-large" maxlength="15"/>
                                             </div>
-                                            <div class="form-group"  >
+                                            <div class="form-group" ng-repeat="advanceBasic in myPage.result | filter:{typeCode : 'D08'}" >
                                                 <label class="control-label">提现手续费(%)</label>
                                                 <input type="number" id="advanceMaxPercent"  name="advanceBasic.maxPercent" ng-model="advanceBasic.maxPercent"
                                                        value="{{advanceBasic.maxPercent}}"  placeholder="提现手续费"

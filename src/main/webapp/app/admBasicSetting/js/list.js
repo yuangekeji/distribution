@@ -28,8 +28,6 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
                     $scope.notData = false;
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
 
-                    $scope.myPage.filter()
-
                 } else {
                     console.log(resp.errors());
                 }
@@ -52,7 +50,7 @@ angular.module('admBasicSetting').controller('admBasicSettingCtrl', function ($q
          $scope.currentdetailCode= detailCode;
          $scope.modifyResult = $scope.myPage.result.filter($scope.filterCodeList)[0];
 
-        $scope.startLoading();
+         $scope.startLoading();
 
 
         $http.post(ctx + '/admBasicSetting/updateBasicSetting',

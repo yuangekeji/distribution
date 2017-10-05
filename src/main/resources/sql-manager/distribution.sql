@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : product_dist
 Source Server Version : 50719
 Source Host           : 59.110.42.11:3303
-Source Database       : distribution_prod
+Source Database       : distribution
 
 Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2017-09-10 22:50:03
+Date: 2017-10-05 16:04:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -74,13 +74,33 @@ CREATE TABLE `admin` (
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
+  `delete_flag` varchar(255) DEFAULT NULL COMMENT '管理员禁用/启用(启用:Y; 禁用: N)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='管理员';
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', '17758674319', '李晓伟', '96E79218965EB72C92A549DD5A330112', '1', '2017-09-10 14:10:39', '1', '2017-09-10 14:10:50', '2');
+INSERT INTO `admin` VALUES ('1', '17758674319', '李晓伟', '96E79218965EB72C92A549DD5A330112', '1', '2017-09-10 14:10:39', '1', '2017-09-10 14:10:50', '2', 'N');
+
+-- ----------------------------
+-- Table structure for admin_handle_history
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_handle_history`;
+CREATE TABLE `admin_handle_history` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `admin_id` int(11) DEFAULT NULL COMMENT '管理员ID',
+  `admin_mobile` varchar(255) NOT NULL COMMENT '管理员电话',
+  `admin_name` varchar(255) NOT NULL COMMENT '管理员名字',
+  `admin_role_Id` int(11) DEFAULT NULL COMMENT '管理员角色ID',
+  `handle_id` varchar(255) DEFAULT NULL COMMENT '操作对象ID',
+  `handle_type` varchar(255) NOT NULL COMMENT '操作类型：',
+  `handle_comment` varchar(4000) NOT NULL COMMENT '操作说明',
+  `handle_time` datetime DEFAULT NULL COMMENT '操作时间',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_id` int(11) DEFAULT NULL COMMENT '创建ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for advance
@@ -144,15 +164,14 @@ CREATE TABLE `basic_manage` (
 -- Records of basic_manage
 -- ----------------------------
 INSERT INTO `basic_manage` VALUES ('1', 'D01', '00', '会员奖励', null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('2', 'D01', '01', '普卡', '600.00', '1', '1', '18.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('3', 'D01', '02', '铜卡', '1800.00', '3', '3', '18.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('4', 'D01', '03', '银卡', '3000.00', '5', '5', '18.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('5', 'D01', '04', '金卡', '9000.00', '15', '15', '18.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('6', 'D01', '05', '白金卡', '30000.00', '50', '50', '18.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('7', 'D01', '06', '黑金卡', '60000.00', '100', '100', '18.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('2', 'D01', '01', '普卡', '600.00', '1', '1', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('3', 'D01', '02', '铜卡', '1800.00', '3', '3', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('4', 'D01', '03', '银卡', '3000.00', '5', '5', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('5', 'D01', '04', '金卡', '9000.00', '15', '15', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('6', 'D01', '05', '白金卡', '30000.00', '50', '50', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('8', 'D02', '00', '分红包奖励', null, null, null, null, null, null, null, null, null, null, '5.00', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('9', 'D02', '01', '当日分红包比例', null, null, null, null, null, null, null, null, '20.00', null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('10', 'D02', '02', '分红包满额比例', null, null, null, null, null, null, null, null, '75.00', null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('10', 'D02', '02', '分红包领满数额', null, null, null, null, null, null, null, null, null, null, '760.00', null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('11', 'D03', '00', '见点奖', null, null, null, null, null, null, null, null, null, null, '4.00', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('12', 'D03', '01', '当日见点奖比例', null, null, null, null, null, null, null, null, '10.00', null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('13', 'D04', '00', '见点奖点位', null, null, null, null, null, null, null, null, null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
@@ -318,7 +337,7 @@ INSERT INTO `dictionary` VALUES ('2', 'member_level2', '铜卡(1800)', 'member_l
 INSERT INTO `dictionary` VALUES ('3', 'member_level3', '银卡(3000)', 'member_level', '会员级别');
 INSERT INTO `dictionary` VALUES ('4', 'member_level4', '金卡(9000)', 'member_level', '会员级别');
 INSERT INTO `dictionary` VALUES ('5', 'member_level5', '白金卡(30000)', 'member_level', '会员级别');
-INSERT INTO `dictionary` VALUES ('6', 'member_level6', '黑金卡(60000)', 'member_level', '会员级别');
+INSERT INTO `dictionary` VALUES ('24', '01', '保健品', 'goods_type', '商品名称');
 INSERT INTO `dictionary` VALUES ('9', 'post_level1', '普通会员', 'post_level', '爵位(职务等级)');
 INSERT INTO `dictionary` VALUES ('10', 'post_level2', '主任', 'post_level', '爵位(职务等级)');
 INSERT INTO `dictionary` VALUES ('11', 'post_level3', '经理', 'post_level', '爵位(职务等级)');
@@ -410,13 +429,15 @@ CREATE TABLE `goods` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `delete_flag` varchar(255) DEFAULT 'N' COMMENT '删除标志(Y:已删除,N:未删除)',
   `info` varchar(5000) DEFAULT NULL COMMENT '介绍',
+  `imge_url` varchar(5000) DEFAULT NULL COMMENT '图片路径',
+  `status` varchar(255) DEFAULT NULL COMMENT '状态(Y:上架,N:下架)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='商品表';
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', '瑶酿通補 6支装/盒', '100', '600.00', '2017-08-28 23:57:18', '01', null, null, null, null, null, null, null, null, null, null, null, '2017-08-28 23:58:12', 'N', null);
+INSERT INTO `goods` VALUES ('1', '瑶酿通補 6支装/盒', '99999999', '600.00', '2017-08-28 23:57:18', '01', null, null, null, null, null, null, null, null, null, null, null, '2017-08-28 23:58:12', 'N', '瑶酿通補6支装/盒', '49b4103e-0e5c-4231-b571-c55ee09d54b6.png', 'Y');
 
 -- ----------------------------
 -- Table structure for job_logs
@@ -473,8 +494,8 @@ CREATE TABLE `member` (
   `is_sales_dept` varchar(255) DEFAULT NULL COMMENT '是否是销售部（工作中心）',
   `first_agent_cnt` int(11) DEFAULT NULL COMMENT '一代个数',
   `recommend_name` varchar(255) DEFAULT NULL COMMENT '推荐人名',
-  `node_name` varchar(255) DEFAULT NULL COMMENT '放置节点名',
   `linkman_phone` varchar(255) DEFAULT NULL COMMENT '联系人电话',
+  `parent_id` int(15) DEFAULT NULL COMMENT '放置节点ID',
   PRIMARY KEY (`id`),
   UNIQUE KEY `member_phone` (`member_phone`),
   UNIQUE KEY `node_id` (`node_id`)
@@ -483,7 +504,7 @@ CREATE TABLE `member` (
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES ('1', '17758674319', '96E79218965EB72C92A549DD5A330112', 'E3CEB5881A0A1FDAAD01296D7554868D', '1A100D2C0DAB19C4430E7D73762B3423', '0', '1', '李晓伟', 'member_level1', '41293019730515042X', '广西南宁市青秀区民族大道127号铂宫国际19楼1913号', 'Y', 'N', '1', 'post_level1', '0', '2017-09-10 14:28:06', '1', '2017-09-10 17:16:54', '600.00', '李晓伟', 'Y', '招商银行', '李晓伟', '6214857718962972', 'N', 'N', '0', 'ADMIN', 'ADMIN', null);
+INSERT INTO `member` VALUES ('1', '17758674319', '96E79218965EB72C92A549DD5A330112', 'E3CEB5881A0A1FDAAD01296D7554868D', '1A100D2C0DAB19C4430E7D73762B3423', '0', '1', '李晓伟', 'member_level1', '41293019730515042X', '广西南宁市青秀区民族大道127号铂宫国际19楼1913号', 'Y', 'N', '1', 'post_level1', '0', '2017-09-10 14:28:06', '1', '2017-09-10 17:16:54', '600.00', '李晓伟', 'Y', '招商银行', '李晓伟', '6214857718962972', 'N', 'N', '0', 'ADMIN', null, null);
 
 -- ----------------------------
 -- Table structure for member_bonus
@@ -595,6 +616,8 @@ INSERT INTO `menu` VALUES ('25', '5', '权限管理', '0', '', 'icon-lock');
 INSERT INTO `menu` VALUES ('26', null, '管理员列表', '25', 'app.admin', null);
 INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.account', null);
 INSERT INTO `menu` VALUES ('28', null, '推荐网络图', '1', 'app.graph', 'icon-graph');
+INSERT INTO `menu` VALUES ('29', null, '分支管理', '25', 'app.admTreeMember', null);
+INSERT INTO `menu` VALUES ('30', null, '操作记录', '25', 'app.admHandleHistory', null);
 
 -- ----------------------------
 -- Table structure for node_bonus_history
@@ -678,12 +701,17 @@ CREATE TABLE `order_master` (
   `member_id` int(11) DEFAULT NULL COMMENT '会员id',
   `receive_name` varchar(50) DEFAULT NULL COMMENT '收货人姓名',
   `express_address` varchar(500) DEFAULT NULL COMMENT '收货地址',
+  `recevive_phone` varchar(255) DEFAULT NULL COMMENT '收货人电话',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `member_level` varchar(100) DEFAULT NULL COMMENT '会员等级',
   `order_statues` char(1) DEFAULT NULL COMMENT '订单状态（1.待支付\n2.待发货\n3.待收货\n4.订单完成）',
+  `express_no` varchar(255) DEFAULT NULL COMMENT '物流编号',
   `create_id` int(11) NOT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
+  `sendByPostYN` char(1) DEFAULT NULL COMMENT '是否邮寄 1-自提，2-邮寄',
+  `bonus_account_type` char(1) DEFAULT NULL COMMENT '复投账户 1-种子币，2奖金币',
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_no` (`order_no`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单master';
@@ -691,7 +719,7 @@ CREATE TABLE `order_master` (
 -- ----------------------------
 -- Records of order_master
 -- ----------------------------
-INSERT INTO `order_master` VALUES ('1', '170910131258099', '1', '600.00', '1', '0', '600.00', '0.00', '1', '李晓伟', '大连市', 'member_level5', '2', '1', '2017-09-10 13:12:59', '1', '2017-09-10 20:52:57');
+INSERT INTO `order_master` VALUES ('1', '170910131258099', '1', '600.00', '1', '0', '600.00', '0.00', '1', '李晓伟', '大连市', null, null, 'member_level5', '2', null, '1', '2017-09-10 13:12:59', '1', '2017-09-10 20:52:57', null, null);
 
 -- ----------------------------
 -- Table structure for role
@@ -756,6 +784,8 @@ INSERT INTO `role_menu` VALUES ('3', '20');
 INSERT INTO `role_menu` VALUES ('1', '27');
 INSERT INTO `role_menu` VALUES ('1', '28');
 INSERT INTO `role_menu` VALUES ('2', '21');
+INSERT INTO `role_menu` VALUES ('2', '29');
+INSERT INTO `role_menu` VALUES ('2', '30');
 
 -- ----------------------------
 -- Table structure for transfer
@@ -825,85 +855,3 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS v
   END
 ;;
 DELIMITER ;
-
--- 商品添加字段
-ALTER TABLE `goods`
-ADD COLUMN `info`  varchar(5000) NULL COMMENT '介绍';
-
--- 添加字段表基础数据
-insert into dictionary(dic_code,dic_name,dic_type,dic_des) values('01','保健品','goods_type','商品名称');
-
-ALTER TABLE `goods`
-ADD COLUMN `imge_url`  varchar(5000) NULL COMMENT '图片路径';
-
-ALTER TABLE `goods`
-ADD COLUMN `status`  varchar(255) NULL COMMENT '状态(Y:上架,N:下架)';
-
--- 订单添加字段
-ALTER TABLE `order_master`
-	ADD COLUMN `recevive_phone` VARCHAR(255) NULL DEFAULT NULL COMMENT '收货人电话' AFTER `express_address`,
-	ADD COLUMN `remark` VARCHAR(255) NULL DEFAULT NULL COMMENT '备注' AFTER `recevive_phone`;
--- ------------------------------------------- 一期 end ---------------------------------------------------------
-
--- ------------------------------------------- 二期sql管理 start ------------------------------------
--- 更改分红包领取比例-》固额
-update basic_manage
-set max_percent = null , max_amt = 760 , detail_nm= '分红包领满数额'
-where type_code ='D02' and detail_code ='02';
-
--- 去掉黑金卡
-DELETE from dictionary where dic_code ='member_level6';
-
--- 放置节点ID
-ALTER TABLE `member`
-ADD COLUMN `parent_id`  int(15) NULL COMMENT '放置节点ID';
-
--- 删除节点
-ALTER TABLE `member` DROP  COLUMN node_name;
-
--- admin添加字段:管理员禁用/启用功能
-ALTER TABLE `admin`
-	ADD COLUMN `delete_flag` VARCHAR(255) DEFAULT 'N' COMMENT '管理员禁用/启用(启用:N; 禁用: Y)' AFTER `role_id`;
-
--- 放置节点ID
-ALTER TABLE `order_master`
-ADD COLUMN `sendByPostYN`  CHAR(1) NULL COMMENT '是否邮寄 1-自提，2-邮寄';
-
--- 复投账户类型
-ALTER TABLE `order_master`
-  ADD COLUMN `bonus_account_type`  CHAR(1) NULL COMMENT '复投账户 1-种子币，2奖金币';
-
--- ----------------------------
--- admin_handle_history
--- ----------------------------
-DROP TABLE IF EXISTS `admin_handle_history`;
-CREATE TABLE `admin_handle_history` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `admin_id` int(11) DEFAULT NULL COMMENT '管理员ID',
-  `admin_mobile` varchar(255) NOT NULL COMMENT '管理员电话',
-  `admin_name` varchar(255) NOT NULL COMMENT '管理员名字',
-  `admin_role_Id` int(11) DEFAULT NULL COMMENT '管理员角色ID',
-  `handle_id` varchar(255) DEFAULT NULL COMMENT '操作对象ID',
-  `handle_type` varchar(255) NOT NULL COMMENT '操作类型：',
-  `handle_comment` varchar(4000) NOT NULL COMMENT '操作说明',
-  `handle_time` datetime DEFAULT NULL COMMENT '操作时间',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `create_id` int(11) DEFAULT NULL COMMENT '创建ID',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 多分支
-insert into menu(id,no,name,parent_menu ,menu_link,menu_icon) VALUES(
-  '',null,'分支管理',25,'app.admTreeMember',null);
-insert into role_menu(role_id, menu_id) values(2,29);
-
--- 操作记录
-insert into menu(id,no,name,parent_menu ,menu_link,menu_icon) VALUES(
-  '',null,'操作记录',25,'app.admDoHistory',null);
-insert into role_menu(role_id, menu_id) values(2,30);
-
--- 订单添加字段
-ALTER TABLE `order_master`
-	ADD COLUMN `express_no` VARCHAR(255) NULL DEFAULT NULL COMMENT '物流编号' AFTER `order_statues`;
--- 三级分销
-update basic_manage set sales_bonus_per = 16 , sales_bonus_per1 = 5 , sales_bonus_per2 = 8  where sales_bonus_per  = 18;

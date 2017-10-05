@@ -55,9 +55,9 @@ public class AdmOperatorController extends BasicController{
             map.put("handleType", Constant.ADMINHANDLETYPE_APPLYSTATUS);
             map.put("handleId", apply.getMemberId());
             if ("pass".equals(apply.getStatus())) {
-                map.put("handleComment", "会员名称: " + memberName + ", 操作: 审批通过");
+                map.put("handleComment", "会员名称: " + memberName + ", 操作: 审核通过");
             }else {
-                map.put("handleComment", "会员名称: " + memberName + ", 操作: 审批驳回");
+                map.put("handleComment", "会员名称: " + memberName + ", 操作: 审核驳回");
             }
             admHandleHistoryService.addAdminHandleHistory(admin, map);
             return successMsg();

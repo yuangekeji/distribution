@@ -50,7 +50,7 @@ angular.module('product').controller('productCtrl',function ($q, title, $scope, 
                 if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
             } else {
                 $scope.stopLoading();
-                console.log(resp.errorMessage);
+
             }
         });
     };

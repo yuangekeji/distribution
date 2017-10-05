@@ -74,9 +74,9 @@ public class AdminController extends BasicController {
             map.put("handleType", Constant.ADMINHANDLETYPE_ADMINSETTING);
             map.put("handleId", admin.getId());
             if ("Y".equals(admin.getDeleteFlag())) {
-                map.put("handleComment", "管理员名称: " + admin.getName() + ", 操作: 启用");
-            }else {
                 map.put("handleComment", "管理员名称: " + admin.getName() + ", 操作: 禁用");
+            }else {
+                map.put("handleComment", "管理员名称: " + admin.getName() + ", 操作: 启用");
             }
             admHandleHistoryService.addAdminHandleHistory(a, map);
             return successMsg();

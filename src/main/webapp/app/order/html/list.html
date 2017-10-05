@@ -98,8 +98,10 @@
                                     <td class="text-left">
                                         <div class="btn btn-circle">
                                             <button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="confirmOrder(orderMaster.id,'4')" ng-show="{{orderMaster.orderStatues == '3'}}">确认收货</button>
-                                            <button type="button" class="btn btn-outline green-steel btn-xs" ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)" ng-show="orderMaster.orderCategory != '2' || orderMaster.bonusAccountType == '2'">物流信息</button>
+                                            <button type="button" class="btn btn-outline green-steel btn-xs" ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)" ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn != '1'">物流信息</button>
                                         </div>
+                                        <span ng-show="orderMaster.sendbypostyn == '1'">自提</span>
+
                                     </td>
                                 </tr>
                                 <tr class="text-center" ng-show= "notData">
@@ -136,7 +138,7 @@
                     <div class="form-group col-md-12">
                         <label class="control-label col-md-3">物流详情:</label>
                         <div class="col-md-9">
-                            {{datas.sendbypostyn == '1' ? "自提": datas.expressAddress}}
+                            {{datas.expressAddress}}
                         </div>
                     </div>
                 </div>

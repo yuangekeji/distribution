@@ -273,6 +273,14 @@ angular
                 files: [
                     'app/admTreeMember/js/add.js?v=' + version
                 ]
+            },
+            {
+                name: 'admHandleHistory',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admHandleHistory/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
             }
         ]
     });

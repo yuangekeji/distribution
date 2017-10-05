@@ -14,9 +14,7 @@
             <properties>
                 <env>dev</env>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault><!--默认启用的是dev环境配置-->
-            </activation>
+
         </profile>
      <!-- 测试环境-->
         <profile>
@@ -24,6 +22,9 @@
             <properties>
                 <env>test</env>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault><!--默认启用的是dev环境配置-->
+            </activation>
         </profile>
         <!-- 生产 -->
         <profile>

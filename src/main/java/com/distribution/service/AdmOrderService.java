@@ -61,7 +61,7 @@ public class AdmOrderService {
         //定义表头
         String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
-        return  this.exportExcel("abc", excelHeader, result, response.getOutputStream());
+        return  this.exportExcel("发货列表", excelHeader, result, response.getOutputStream());
     }
 
     public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreOrderMaster> list, OutputStream out) throws InvocationTargetException {

@@ -31,7 +31,8 @@ var App = angular.module('app', [
     'admin',
     'admBonus',
     'admWarning',
-    'admTreeMember'
+    'admTreeMember',
+    'admHandleHistory'
 ]);
 
 angular.module('app.lazyLoad', []);
@@ -60,6 +61,7 @@ angular.module('admBonus', []);
 angular.module('admin',[]);
 angular.module('admWarning',[]);
 angular.module('admTreeMember',[]);
+angular.module('admHandleHistory',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 

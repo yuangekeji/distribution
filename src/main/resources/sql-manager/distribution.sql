@@ -901,5 +901,9 @@ insert into role_menu(role_id, menu_id) values(2,29);
 insert into menu(id,no,name,parent_menu ,menu_link,menu_icon) VALUES(
   '',null,'操作记录',25,'app.admDoHistory',null);
 insert into role_menu(role_id, menu_id) values(2,30);
+
+-- 订单添加字段
+ALTER TABLE `order_master`
+	ADD COLUMN `express_no` VARCHAR(255) NULL DEFAULT NULL COMMENT '物流编号' AFTER `order_statues`;
 -- 三级分销
 update basic_manage set sales_bonus_per = 16 , sales_bonus_per1 = 5 , sales_bonus_per2 = 8  where sales_bonus_per  = 18;

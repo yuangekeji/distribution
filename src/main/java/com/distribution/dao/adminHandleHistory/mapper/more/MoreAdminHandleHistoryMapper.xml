@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.adminHandleHistory.mapper.more.MoreAdminHandleHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.adminHandleHistory.model.AdminHandleHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="admin_mobile" property="adminMobile" jdbcType="VARCHAR" />
+    <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
+    <result column="admin_role_Id" property="adminRoleId" jdbcType="INTEGER" />
+    <result column="handle_id" property="handleId" jdbcType="VARCHAR" />
+    <result column="handle_type" property="handleType" jdbcType="VARCHAR" />
+    <result column="handle_comment" property="handleComment" jdbcType="VARCHAR" />
+    <result column="handle_time" property="handleTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, admin_id, admin_mobile, admin_name, admin_role_Id, handle_id, handle_type, handle_comment,
+    handle_time
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="parameterMap.adminName!=null and parameterMap.adminName!=''">
+        AND admin_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.adminName}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.adminRoleId!=null and parameterMap.adminRoleId!=''">
+        AND admin_role_Id = #{parameterMap.adminRoleId}
+      </if>
+      <if test="parameterMap.handleType!=null and parameterMap.handleType!=''">
+        AND handle_type = #{parameterMap.handleType}
+      </if>
+      <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+        <![CDATA[AND DATE_FORMAT(handle_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+      </if>
+      <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+        <![CDATA[AND DATE_FORMAT(handle_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
+      </if>
+    </where>
+  </sql>
+
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+
+
+  <!--查詢管理员操作记录列表-->
+  <select id="getAdmHandleHistoryList" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page">
+    select
+    <include refid="Base_Column_List" />
+    from admin_handle_history
+    <include refid="where"/>
+    order by handle_time desc
+    <include refid="pageLimit"/>
+  </select>
+
+  <!--查詢管理员操作记录总数-->
+  <select id="getAdmHandleHistoryCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
+    select
+    count(0) as count
+    from admin_handle_history
+    <include refid="where"/>
+  </select>
+</mapper>

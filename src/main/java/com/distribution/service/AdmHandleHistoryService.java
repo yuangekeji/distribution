@@ -1,7 +1,9 @@
 package com.distribution.service;
 
+import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.adminHandleHistory.mapper.AdminHandleHistoryMapper;
+import com.distribution.dao.adminHandleHistory.mapper.more.MoreAdminHandleHistoryMapper;
 import com.distribution.dao.adminHandleHistory.model.AdminHandleHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import java.util.Map;
 public class AdmHandleHistoryService {
     @Autowired
     private AdminHandleHistoryMapper adminHandleHistoryMapper;
+    @Autowired
+    private MoreAdminHandleHistoryMapper moreAdminHandleHistoryMapper;
 
     /**
      * description 管理员操作管理
@@ -40,5 +44,15 @@ public class AdmHandleHistoryService {
         }else{
             throw new RuntimeException();
         }
+    }
+    /**
+     * description 查詢管理员操作记录列表
+     * @author sijeong
+     * */
+    public Page admHandleHistoryList(Page page){
+
+        page.setTotalCount(moreAdminHandleHistoryMapper.getAdmHandleHistoryCount(page));
+        page.setResult( moreAdminHandleHistoryMapper.getAdmHandleHistoryList(page));
+        return page;
     }
 }

@@ -1,4 +1,4 @@
-angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage, ConfirmModal, Notify) {
+angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage, $uibModal, ConfirmModal, Notify) {
     title.setTitle('我的订单');
     $scope.myPage = {
         pageNo: 1,
@@ -7,7 +7,12 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         result: [],
         parameterMap: {}
     };
-
+    $scope.expressMessage = {
+        expressNo: '',
+        expressAddress: '',
+        sendbypostyn: '',
+        orderStatues: ''
+    };
     var e1 = $('.portlet');
     $scope.startLoading=function () {
         App.blockUI({
@@ -86,6 +91,41 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
 
     }
 
+    /**物流信息查询*/
+    $scope.expressMessageSearch = function (expressNo, expressAddress, sendbypostyn, orderStatues) {
+        $scope.expressMessage.expressNo = expressNo;
+        $scope.expressMessage.expressAddress = expressAddress;
+        $scope.expressMessage.sendbypostyn = sendbypostyn;
+        $scope.expressMessage.orderStatues = orderStatues;
+        $scope.open();
+
+    };
+
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "expressMessage.html",
+                controller: "expressMessageCtrl",
+                size: opt_attributes,
+                resolve: {
+                    getDatas: function()
+                    {
+                        return $scope.expressMessage;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            // console.info('确认');
+        }, function()
+        {
+            // console.info('取消');
+        });
+    };
+
     /**
      * 分页触发
      * @param num
@@ -93,6 +133,32 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
     $scope.pageChangeHandler = function(num) {
         $scope.myPage.pageNo = num;
         $scope.search();
+    };
+});
+
+angular.module('order').controller('expressMessageCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
+    $scope.datas = getDatas;
+
+    $scope.close = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
     };
 });
 

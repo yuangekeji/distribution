@@ -1,5 +1,6 @@
 package com.distribution.controller;
 
+import com.distribution.common.constant.BonusConstant;
 import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
@@ -57,19 +58,19 @@ public class AdmBasicSettingController extends BasicController {
         Map map = new HashMap();
         map.put("handleType", Constant.ADMINHANDLETYPE_BASICSETTING);
         //提现设置
-        if ("D08".equals(basicManage.getTypeCode()) && "00".equals(basicManage.getDetailCode())) {
+        if (BonusConstant.D08.equals(basicManage.getTypeCode()) && BonusConstant.CODE_00.equals(basicManage.getDetailCode())) {
             map.put("handleId", "提现设置");
             map.put("handleComment", "提现设置: 每次提现最小金额(元): " + basicManage.getMinAmt() + ", 提现手续费(%): " + basicManage.getMaxPercent());
             admHandleHistoryService.addAdminHandleHistory(currentUser, map);
         }
         //分红包设置
-        if ("D02".equals(basicManage.getTypeCode()) && "00".equals(basicManage.getDetailCode())) {
+        if (BonusConstant.D02.equals(basicManage.getTypeCode()) && BonusConstant.CODE_00.equals(basicManage.getDetailCode())) {
             map.put("handleId", "分红包设置");
             map.put("handleComment", "分红包设置: 分红包金额(元): " + basicManage.getMaxAmt());
             admHandleHistoryService.addAdminHandleHistory(currentUser, map);
         }
         //广告宣传奖设置
-        if ("D03".equals(basicManage.getTypeCode()) && "00".equals(basicManage.getDetailCode())) {
+        if (BonusConstant.D03.equals(basicManage.getTypeCode()) && BonusConstant.CODE_00.equals(basicManage.getDetailCode())) {
             map.put("handleId", "广告宣传奖设置");
             map.put("handleComment", "广告宣传奖设置: 广告宣传奖金额(元): " + basicManage.getMaxAmt());
             admHandleHistoryService.addAdminHandleHistory(currentUser, map);

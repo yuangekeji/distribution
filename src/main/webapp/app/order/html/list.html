@@ -62,16 +62,17 @@
                             <thead>
                             <tr >
                                 <th class="text-center" width="10%">订单号</th>
-                                <th class="text-center" width="6%">订单金额</th>
-                                <th class="text-center" width="6%">订单类型</th>
+                                <th class="text-center" width="5%">订单金额</th>
+                                <th class="text-center" width="5%">订单类型</th>
                                 <th class="text-center" width="5%">支付类型</th>
-                                <th class="text-center" width="4%">折扣</th>
-                                <th class="text-center" width="6%">实付金额</th>
-                                <th class="text-center" width="6%">快递费</th>
-                                <th class="text-center">商品名信息</th>
-                                <th class="text-center" width="12%">订单时间</th>
-                                <th class="text-center" width="6%">订单状态</th>
-                                <th class="text-center" width="3%">操作</th>
+                                <th class="text-center" width="5%">折扣</th>
+                                <th class="text-center" width="5%">实付金额</th>
+                                <th class="text-center" width="5%">快递费</th>
+                                <th class="text-center" width="25%">商品名信息</th>
+                                <th class="text-center" width="10%">订单时间</th>
+                                <th class="text-center" width="5%">订单状态</th>
+                                <th class="text-center" width="10%">物流信息</th>
+                                <th class="text-center" width="10%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -89,18 +90,20 @@
                                         {{orderMaster.orderQty}}
                                         <span ng-show="orderMaster.orderQty != null">个</span>
                                     </td>
-                                    <td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd'}}</td>
                                     <td class="text-left">
                                         <span class="label label-sm " ng-class="{'label-default': orderMaster.orderStatues == '1', 'label-info': orderMaster.orderStatues == '2', 'label-primary': orderMaster.orderStatues == '3', 'label-success': orderMaster.orderStatues == '4'}">
                                         {{orderMaster.orderStatues|OrderStatuesFilter}}
                                         </span>
                                     </td>
                                     <td class="text-left">
+                                        <button type="button" class="btn btn-outline green-steel btn-xs" ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)" ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn != '1'">物流信息</button>
+                                        <span ng-show="orderMaster.sendbypostyn == '1'">自提</span>
+                                    </td>
+                                    <td class="text-left">
                                         <!--<div class="btn btn-circle">-->
                                             <button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="confirmOrder(orderMaster.id,'4')" ng-show="{{orderMaster.orderStatues == '3'}}">确认收货</button>
-                                            <button type="button" class="btn btn-outline green-steel btn-xs" ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)" ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn != '1'">物流信息</button>
                                         <!--</div>-->
-                                        <span ng-show="orderMaster.sendbypostyn == '1'">自提</span>
                                     </td>
                                 </tr>
                                 <tr class="text-center" ng-show= "notData">

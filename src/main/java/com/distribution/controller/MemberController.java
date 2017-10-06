@@ -190,7 +190,7 @@ public class MemberController extends BasicController {
         Map result= new HashMap();
         result.put("member",moreMember);
         result.put("list",list);
-        result.put("maxPercent", maxPercent * 100);
+        result.put("maxPercent", BigDecimal.valueOf(maxPercent).multiply(new BigDecimal(100)));
 
         return successMsg(result);
     }

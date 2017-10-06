@@ -60,7 +60,7 @@ public class AdmBasicSettingController extends BasicController {
         //提现设置
         if (BonusConstant.D08.equals(basicManage.getTypeCode()) && BonusConstant.CODE_00.equals(basicManage.getDetailCode())) {
             map.put("handleId", "提现设置");
-            map.put("handleComment", "提现设置: 每次提现最小金额(元): " + basicManage.getMinAmt() + ", 提现手续费(%): " + basicManage.getMaxPercent());
+            map.put("handleComment", "提现设置: 提现手续费(%): " + basicManage.getMaxPercent());
             admHandleHistoryService.addAdminHandleHistory(currentUser, map);
         }
         //分红包设置

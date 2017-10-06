@@ -8,6 +8,7 @@ import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.basicManage.model.BasicManage;
 import com.distribution.service.AdmBasicSettingService;
 import com.distribution.service.AdmHandleHistoryService;
+import com.distribution.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,8 @@ public class AdmBasicSettingController extends BasicController {
     private AdmBasicSettingService admBasicSettingService;
     @Autowired
     private AdmHandleHistoryService admHandleHistoryService;
-
+    @Autowired
+    private CommonService commonService;
     /**
      * description 基本配置会员奖励
      * @author WYN
@@ -72,6 +74,9 @@ public class AdmBasicSettingController extends BasicController {
             map.put("handleComment", "广告宣传奖设置: 广告宣传奖金额(元): " + basicManage.getMaxAmt());
             admHandleHistoryService.addAdminHandleHistory(currentUser, map);
         }
+
+        //刷新缓存中的静态变量
+        commonService.refreshBasicManageList();
         return successMsg("result",result);
     }
 

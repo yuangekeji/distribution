@@ -93,7 +93,8 @@ public class CommonService {
   				break;
   			}
   		}
-  		return big.doubleValue()/100;
+  		return big.multiply(new BigDecimal(0.01)).doubleValue();
+  		//return big.doubleValue()/100;
   	}
   	/**
   	 * 获取销售奖比例

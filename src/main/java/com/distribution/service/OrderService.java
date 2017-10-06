@@ -364,7 +364,8 @@ public class OrderService {
 
             //判断如果账户余额小于购买金额就失败
             if(accountManager.getBonusAmt().compareTo(moreOrderMaster.getActAmt()) == -1){
-                throw new RuntimeException();
+                //throw new RuntimeException();
+                return "cannotBuy";
             }
 
             return this.insertOrder(moreOrderMaster);

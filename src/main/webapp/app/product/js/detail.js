@@ -201,11 +201,16 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
             orderCategory  : "3" //折扣订单
         }).success(function (resp) {
             if(resp.successful){
-                Notify.success("商品订单提交成功。");
-                $uibModalInstance.close(true);
-                $state.go("app.admOrder", {}, {reload: true});
-                $state.go('app.productDetail', {id: $scope.datas.goodsCd}, {reload: true});
-            }else{
+                if (resp.data.result == "cannotBuy") {
+                    Notify.error("当前账户奖金币余额不足，请充值后购买!");
+                }else {
+                    Notify.success("商品订单提交成功。");
+                    $uibModalInstance.close(true);
+                    $state.go("app.admOrder", {}, {reload: true});
+                    $state.go('app.productDetail', {id: $scope.datas.goodsCd}, {reload: true});
+                }
+            }
+            else{
                 Notify.error(resp);
             }
             $scope.stopLoading();

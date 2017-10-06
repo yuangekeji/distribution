@@ -58,6 +58,7 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
             if(resp.successful){
                 $scope.MemberInfo = resp.data.member;
                 $scope.banks = resp.data.list;
+                $scope.maxPercent = resp.data.maxPercent;
             }else{
                 Notify.error("获取个人信息错误，请重新尝试");
             }
@@ -202,7 +203,7 @@ angular.module('advance').controller('advanceAddCtrl',function ($q, title, $scop
     }
 
     $scope.changeReqAmt = function () {
-        $scope.advance.feeAmt = ($scope.advance.reqAmt * 0.06).toFixed(2);
+        $scope.advance.feeAmt = ($scope.advance.reqAmt * $scope.maxPercent * 0.01).toFixed(2);
         $scope.advance.actAmt = $scope.advance.reqAmt - $scope.advance.feeAmt;
     }
 });

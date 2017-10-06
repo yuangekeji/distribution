@@ -1,5 +1,6 @@
 package com.distribution.controller;
 
+import com.distribution.common.constant.BonusConstant;
 import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
@@ -185,9 +186,11 @@ public class MemberController extends BasicController {
     public JsonMessage getMemberInfoById(@PathVariable Integer id){
         MoreMember moreMember = memberService.selectMemberInfo(id);
         List<Dictionary> list = commonService.selectDictionary("bank_name");
+        double maxPercent = commonService.getMaxPercent(BonusConstant.D08,BonusConstant.CODE_00);
         Map result= new HashMap();
         result.put("member",moreMember);
         result.put("list",list);
+        result.put("maxPercent", maxPercent * 100);
 
         return successMsg(result);
     }

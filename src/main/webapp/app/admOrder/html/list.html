@@ -78,18 +78,19 @@
                                id="sample_1">
                             <thead>
                             <tr >
-                                <th class="text-center" width="8%">订单号</th>
+                                <th class="text-center" width="10%">订单号</th>
                                 <th class="text-center" width="5%">订单来源</th>
-                                <th class="text-center" width="10%">会员</th>
+                                <th class="text-center" width="5%">会员</th>
                                 <th class="text-center" width="5%">会员级别</th>
                                 <th class="text-center" width="4%">订单金额</th>
                                 <th class="text-center" width="4%">支付金额</th>
                                 <th class="text-center" width="5%">支付类型</th>
                                 <th class="text-center" width="5%">快递费</th>
-                                <th class="text-center" width="20%">商品名信息</th>
-                                <th class="text-center" width="25%">订单时间</th>
+                                <th class="text-center" width="25%">商品名信息</th>
+                                <th class="text-center" width="11%">订单时间</th>
                                 <th class="text-center" width="5%">订单状态</th>
-                                <th class="text-center" width="3%">操作</th>
+                                <th class="text-center" width="8%">物流信息</th>
+                                <th class="text-center" width="8%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -114,14 +115,24 @@
                                     {{orderMaster.orderStatues|OrderStatuesFilter}}
                                     </span>
                                 </td>
-                                <td class="text-left">
-                                    <div class="btn btn-circle">
-                                        <button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="confirmOrder(orderMaster.id,orderMaster.orderNo,'3',orderMaster.expressNo)" ng-show="{{orderMaster.orderStatues == '2'}}">确认发货</button>
-                                        <button type="button" class="btn btn-outline green-steel btn-xs" ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)" ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn != '1'">物流信息</button>
-                                    </div>
+                                <td>
+                                    <!--<div class="btn btn-circle" >-->
+                                           <button type="button"
+                                                   class="btn btn-outline green-steel btn-xs"
+                                                   ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn == '2'"
+                                                   ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)">物流信息
+                                           </button>
+                                    <!--</div>-->
                                     <span ng-show="orderMaster.sendbypostyn == '1'">自提</span>
                                 </td>
-
+                                <td class="text-left">
+                                    <!--<div class="btn btn-circle" >-->
+                                        <button type="button"
+                                                ng-show="{{orderMaster.orderStatues == '2'}}"
+                                                class="btn btn-outline blue-steel btn-xs"
+                                                ng-click="confirmOrder(orderMaster.id,orderMaster.orderNo,'3',orderMaster.expressNo)">确认发货</button>
+                                    <!--</div>-->
+                                </td>
                             </tr>
                             <tr ng-show= "notData">
                                 <td colspan="13" class="text-center">无记录</td>
@@ -142,14 +153,12 @@
 <script type="text/ng-template" id="admOrderExpress.html">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h3 class="modal-title">填写物流编号信息</h3>
+        <h3 class="modal-title">请填写快递信息</h3>
     </div>
     <div class="modal-body">
         <div class="portlet-body form">
             <form role="form">
-                <div class="form-body">
                     <textarea class="form-control" ng-model="datas.expressNo" maxlength="100" style="width: 100%;" rows="2"></textarea>
-                </div>
             </form>
         </div>
     </div>
@@ -161,20 +170,20 @@
 <script type="text/ng-template" id="admExpressMessage.html">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h3 class="modal-title">物流信息详情</h3>
+        <h3 class="modal-title">物流信息</h3>
     </div>
     <div class="modal-body">
         <div class="portlet-body form">
             <form role="form">
                 <div class="form-body">
                     <div class="form-group col-md-12" ng-show="datasExpressMessage.expressNo != null">
-                        <label class="control-label col-md-3">物流单号:</label>
+                        <label class="control-label col-md-3">快递信息:</label>
                         <div class="col-md-9">
                             {{datasExpressMessage.expressNo}}
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <label class="control-label col-md-3">物流详情:</label>
+                        <label class="control-label col-md-3">收货地址:</label>
                         <div class="col-md-9">
                             {{datasExpressMessage.expressAddress}}
                         </div>

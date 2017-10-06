@@ -202,7 +202,7 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
         }).success(function (resp) {
             if(resp.successful){
                 if (resp.data.result == "cannotBuy") {
-                    Notify.error("当前账户奖金币余额不足，请充值后购买!");
+                    Notify.error("当前账户余额不足，请充值后购买。");
                 }else {
                     Notify.success("商品订单提交成功。");
                     $uibModalInstance.close(true);

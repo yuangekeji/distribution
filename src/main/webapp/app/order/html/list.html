@@ -90,21 +90,20 @@
                                         {{orderMaster.orderQty}}
                                         <span ng-show="orderMaster.orderQty != null">个</span>
                                     </td>
-                                    <td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                                    <td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd'}}</td>
                                     <td class="text-left">
                                         <span class="label label-sm " ng-class="{'label-default': orderMaster.orderStatues == '1', 'label-info': orderMaster.orderStatues == '2', 'label-primary': orderMaster.orderStatues == '3', 'label-success': orderMaster.orderStatues == '4'}">
                                         {{orderMaster.orderStatues|OrderStatuesFilter}}
                                         </span>
                                     </td>
                                     <td class="text-left">
-
+                                        <button type="button" class="btn btn-outline green-steel btn-xs" ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)" ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn != '1'">物流信息</button>
+                                        <span ng-show="orderMaster.sendbypostyn == '1'">自提</span>
                                     </td>
                                     <td class="text-left">
                                         <!--<div class="btn btn-circle">-->
                                             <button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="confirmOrder(orderMaster.id,'4')" ng-show="{{orderMaster.orderStatues == '3'}}">确认收货</button>
-                                            <button type="button" class="btn btn-outline green-steel btn-xs" ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)" ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn != '1'">物流信息</button>
                                         <!--</div>-->
-
                                     </td>
                                 </tr>
                                 <tr class="text-center" ng-show= "notData">

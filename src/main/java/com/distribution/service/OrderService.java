@@ -104,18 +104,17 @@ public class OrderService {
             moreOrderMaster.setBonusAccountType(Constant.BONUSACCOUNTTYPE_SEED); //种子币
         }else{
             moreOrderMaster.setBonusAccountType(Constant.BONUSACCOUNTTYPE_BONUS); //奖金币
+            //自提的话直接发货完成
+            if("1".equals(moreOrderMaster.getSendbypostyn())){
+                moreOrderMaster.setOrderStatues("3");//待收货
+            }
         }
 
         //自提的话不填写地址
-        if(!reOrderSeed && "1".equals(moreOrderMaster.getSendbypostyn())){
+        if("1".equals(moreOrderMaster.getSendbypostyn())){
             moreOrderMaster.setReceiveName(null);
             moreOrderMaster.setRecevivePhone(null);
             moreOrderMaster.setExpressAddress(null);
-        }
-
-        //自提的话直接发货完成
-        if("1".equals(moreOrderMaster.getSendbypostyn())){
-            moreOrderMaster.setOrderStatues("3");//待收货
         }
 
         cnt1 = moreOrderMasterMapper.insertOrder(moreOrderMaster);

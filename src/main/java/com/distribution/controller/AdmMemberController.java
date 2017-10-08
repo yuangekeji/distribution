@@ -7,6 +7,7 @@ import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.dictionary.model.Dictionary;
+import com.distribution.dao.member.model.Member;
 import com.distribution.dao.memberCharge.model.MemberCharge;
 import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.AdmMemberService;
@@ -79,6 +80,25 @@ public class AdmMemberController extends BasicController{
         map.put("handleType", Constant.ADMINHANDLETYPE_ADDACCOUNT);
         map.put("handleId", memberCharge.getMemberId());
         map.put("handleComment", "会员名称: " + memberName + ", 充值金额: " + memberCharge.getChargeAmt());
+        admHandleHistoryService.addAdminHandleHistory(admin, map);
+        return successMsg();
+    }
+
+    /**
+     * 会员密码初始化
+     * @author sijeong
+     * */
+    @RequestMapping("/initMemberPassword")
+    @ResponseBody
+    public JsonMessage initMemberPassword(@RequestBody Member member, HttpSession session){
+        Admin admin = (Admin) getCurrentUser(session);
+
+        admMemberService.initMemberPassword(member, admin);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_ADDACCOUNT);
+        map.put("handleId", member.getId());
+        map.put("handleComment", "会员名称: " + member.getMemberName() + ", 操作: 密码初始化");
         admHandleHistoryService.addAdminHandleHistory(admin, map);
         return successMsg();
     }

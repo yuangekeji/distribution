@@ -2,6 +2,7 @@ package com.distribution.service;
 
 
 import com.distribution.common.constant.Constant;
+import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
@@ -92,5 +93,23 @@ public class AdmMemberService {
         }
 
         return am1 + me1 + af1;
+    }
+
+    /**
+     * 会员密码初始化
+     * @author sijeong
+     * */
+
+    public Integer initMemberPassword(Member m, Admin admin){
+
+        Member member = new Member();
+        member.setId(m.getId());
+        member.setLoginPassword(CryptoUtil.md5ByHex("111111"));
+        member.setQueryPassword(CryptoUtil.md5ByHex("222222"));
+        member.setPayPassword(CryptoUtil.md5ByHex("333333"));
+        member.setUpdateId(admin.getId());
+        member.setUpdateTime(new Date());
+        Integer count = memberMapper.updateByPrimaryKeySelective(member);
+        return count;
     }
 }

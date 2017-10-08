@@ -90,6 +90,7 @@
                                 <td>{{member.status|recommendStatusFilter}}</td>
                                 <!--<td>{{member.expressAddress}}</td>-->
                                 <td><a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs grey-cascade">充值</a>
+                                <td><a href="javascript:void(0);" ng-click="initMemberPassword(member.id, member.memberName);" class="btn btn-xs grey-cascade">密码初始化</a>
                                 </td>
                             </tr>
                             <tr ng-show= "notData" >

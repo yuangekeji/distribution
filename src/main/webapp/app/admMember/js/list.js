@@ -12,8 +12,8 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
         parameterMap: {}
     };
     $scope.param = {
-        chargeAmt : "",
-        memberId:""
+        chargeAmt: "",
+        memberId: ""
     };
     $scope.flag = true;
     var e1 = $('.full-view');
@@ -117,6 +117,29 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
             }
         }
     };
+
+    /**
+     * 会员密码初始化功能操作
+     * @author sijeong
+     * */
+    $scope.initMemberPassword = function (id, memberName) {
+        ConfirmModal.show({
+            text: '确定要初始化会员' + memberName +'的密码吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $http.post(ctx + "/admMember/initMemberPassword",{id: id, memberName: memberName }).success(function (resp) {
+                if(resp.successful){
+                    Notify.success("密码初始化操作成功。");
+                    $scope.search();
+                }else{
+                    Notify.warning("密码初始化操作失败。");
+                }
+            })
+        });
+    }
 
 });
 

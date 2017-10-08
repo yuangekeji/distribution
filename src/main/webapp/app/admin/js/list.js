@@ -102,6 +102,28 @@ angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $htt
             })
         });
     }
+    /**
+     * 管理员密码初始化功能操作
+     * @author sijeong
+     * */
+    $scope.initAdminPassword = function (id, name, rowName) {
+        ConfirmModal.show({
+            text: '确定要初始' + rowName + name +'的密码吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $http.post(ctx + "/admin/initAdminPassword",{id: id, name: name }).success(function (resp) {
+                if(resp.successful){
+                    Notify.success("密码初始化操作成功。");
+                    $scope.search();
+                }else{
+                    Notify.warning("密码初始化操作失败。");
+                }
+            })
+        });
+    }
 });
 
 angular.module('admin').filter("RoleFilter",function () {

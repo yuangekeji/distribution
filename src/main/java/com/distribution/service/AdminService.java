@@ -63,4 +63,20 @@ public class AdminService {
         admin.setUpdateTime(new Date());
         return adminMapper.updateByPrimaryKeySelective(admin);
     }
+
+    /**
+     * 管理员密码初始化
+     * @author sijeong
+     * */
+
+    public Integer initAdminPassword(Admin ad, Admin a){
+
+        Admin admin = new Admin();
+        admin.setId(ad.getId());
+        admin.setPassword(CryptoUtil.md5ByHex("111111"));
+        admin.setUpdateId(a.getId());
+        admin.setUpdateTime(new Date());
+        Integer count = adminMapper.updateByPrimaryKeySelective(admin);
+        return count;
+    }
 }

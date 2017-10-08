@@ -84,5 +84,22 @@ public class AdminController extends BasicController {
             return failMsg();
         }
     }
+    /**
+     * 管理员密码初始化
+     * @author sijeong
+     * */
+    @RequestMapping("/initAdminPassword")
+    @ResponseBody
+    public JsonMessage initAdminPassword(@RequestBody Admin admin, HttpSession session){
+        Admin a = (Admin) getCurrentUser(session);
 
+        adminService.initAdminPassword(admin, a);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_ADMINSETTING);
+        map.put("handleId", admin.getId());
+        map.put("handleComment", "管理员名称: " + admin.getName() + ", 操作: 密码初始化");
+        admHandleHistoryService.addAdminHandleHistory(a, map);
+        return successMsg();
+    }
 }

@@ -72,8 +72,10 @@
                                 <td class="text-center">{{row.mobile}}</td>
                                 <td class="text-center">{{row.deleteFlag | DeleteFlagFilter}}</td>
                                 <td class="text-center">
-                                    <a href="javascript:"  ng-click="updateAdminDeleteFlag(row.id, row.name, row.roleId | RoleFilter, 'Y')" ng-show="{{currentUser.id != row.id && row.deleteFlag == 'N'}}"> 禁用 </a>
-                                    <a href="javascript:"  ng-click="updateAdminDeleteFlag(row.id, row.name, row.roleId | RoleFilter, 'N')" ng-show="{{currentUser.id != row.id && row.deleteFlag == 'Y'}}"> 启用 </a>
+                                    <a href="javascript:void(0);"  ng-click="updateAdminDeleteFlag(row.id, row.name, row.roleId | RoleFilter, 'Y')" ng-show="{{currentUser.id != row.id && row.deleteFlag == 'N'}}" class="btn btn-xs grey-cascade"> 禁用 </a>
+                                    <a href="javascript:void(0);"  ng-click="updateAdminDeleteFlag(row.id, row.name, row.roleId | RoleFilter, 'N')" ng-show="{{currentUser.id != row.id && row.deleteFlag == 'Y'}}" class="btn btn-xs grey-cascade"> 启用 </a>
+                                    <a href="javascript:void(0);" ng-click="initAdminPassword(row.id, row.name, row.roleId | RoleFilter);" ng-show="{{currentUser.id != row.id}}" class="btn btn-xs grey-cascade">密码初始化</a>
+                                    <a href="javascript:void(0);" ng-click="updateAdminPassword(row.id, row.name, row.roleId | RoleFilter);" ng-show="{{currentUser.id == row.id}}" class="btn btn-xs grey-cascade">修改密码</a>
                                 </td>
                             </tr>
                             <tr ng-show= "notData" >

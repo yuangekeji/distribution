@@ -186,6 +186,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('adminAdd'),
                 controller: 'adminAddCtrl'
             })
+            .state('app.adminInfo',{
+                url: '/adminInfo',
+                templateUrl: helper.basepath('admin/html/info.html'),
+                resolve: helper.resolveFor('adminInfo'),
+                controller: 'adminInfoCtrl'
+            })
             .state('app.admWarning',{
                 url: '/admWarning',
                 templateUrl: helper.basepath('admWarning/html/list.html'),

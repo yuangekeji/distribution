@@ -5,9 +5,9 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
+import com.distribution.dao.admin.model.more.MoreAdmin;
 import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.AdminService;
-import com.distribution.service.BonusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -101,5 +101,24 @@ public class AdminController extends BasicController {
         map.put("handleComment", "管理员名称: " + admin.getName() + ", 操作: 密码初始化");
         admHandleHistoryService.addAdminHandleHistory(a, map);
         return successMsg();
+    }
+
+    /**
+     * 修改密码
+     * @author sijeong
+     * */
+    @RequestMapping("/updatePwd")
+    @ResponseBody
+    public JsonMessage updatePwd(@RequestBody MoreAdmin moreAdmin, HttpSession session){
+        String str = adminService.updatePwd(moreAdmin);
+        Admin admin = (Admin) getCurrentUser(session);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_ADMINSETTING);
+        map.put("handleId", admin.getId());
+        map.put("handleComment", "管理员名称: " + admin.getName() + ", 操作: 密码修改");
+        admHandleHistoryService.addAdminHandleHistory(admin, map);
+
+        return successMsg(str);
     }
 }

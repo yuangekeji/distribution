@@ -5,6 +5,7 @@ import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.mapper.AdminMapper;
 import com.distribution.dao.admin.mapper.more.MoreAdminMapper;
 import com.distribution.dao.admin.model.Admin;
+import com.distribution.dao.admin.model.more.MoreAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,5 +79,24 @@ public class AdminService {
         admin.setUpdateTime(new Date());
         Integer count = adminMapper.updateByPrimaryKeySelective(admin);
         return count;
+    }
+    /**
+     * description 修改密码
+     * @author sijeong
+     * */
+    public String updatePwd(MoreAdmin moreAdmin){
+
+        String result = "SUCCESS";
+        moreAdmin.setOldLoginPwd(CryptoUtil.md5ByHex(moreAdmin.getOldLoginPwd()));
+        if(null == moreAdminMapper.checkLoginPwd(moreAdmin)){
+            result = "OLD_PWD_ERROR";
+        }else{
+            Admin admin = new Admin();
+            admin.setId(moreAdmin.getId());
+            admin.setPassword(CryptoUtil.md5ByHex(moreAdmin.getPassword()));
+            admin.setUpdateTime(new Date());
+            adminMapper.updateByPrimaryKeySelective(admin);
+        }
+        return result;
     }
 }

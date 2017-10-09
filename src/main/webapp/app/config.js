@@ -31,6 +31,14 @@ angular
                 ]
             },
             {
+                name: 'adminInfo',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admin/js/info.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
                 name: 'recommend.list',
                 files: [
                         'static/metronic/global/plugins/datatables/datatables.min.css',

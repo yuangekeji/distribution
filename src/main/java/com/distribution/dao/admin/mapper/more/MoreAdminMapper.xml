@@ -69,4 +69,8 @@
   <select id="getAdminByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
     SELECT * FROM admin WHERE mobile = #{mobile}
   </select>
+
+  <select id="checkLoginPwd" parameterType="com.distribution.dao.admin.model.more.MoreAdmin" resultMap="BaseResultMap">
+    SELECT id,password FROM admin WHERE id = #{id} AND password = #{oldLoginPwd}
+  </select>
 </mapper>

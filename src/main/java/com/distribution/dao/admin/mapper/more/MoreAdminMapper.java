@@ -2,6 +2,7 @@ package com.distribution.dao.admin.mapper.more;
 
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
+import com.distribution.dao.admin.model.more.MoreAdmin;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,4 +35,8 @@ public interface MoreAdminMapper {
      * @author Bright
      * */
     List<Admin> getAdminByMobile(String mobile);
+    /**
+     * 验证登录密码
+     * */
+    Admin checkLoginPwd(MoreAdmin moreAdmin);
 }

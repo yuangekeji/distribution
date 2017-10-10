@@ -158,3 +158,13 @@ angular.module('app').filter("warningStatusFilter",function () {
 });
 
 
+angular.module('app').filter("PostLevelFilter",function () {
+    return function (input) {
+        if(input=='post_level1'){return '普通会员'};
+        if(input=='post_level2'){return '主任'};
+        if(input=='post_level3'){return '经理'};
+        if(input=='post_level4'){return '总监'};
+        if(input=='post_level5'){return '董事'};
+        if(input=='post_level6'){return '全国董事'};
+    }
+});

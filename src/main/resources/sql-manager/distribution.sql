@@ -458,7 +458,7 @@ CREATE TABLE `member` (
   `recommend_id` int(11) NOT NULL COMMENT '推荐人ID',
   `node_id` int(11) DEFAULT NULL COMMENT '放置节点的会员ID',
   `member_name` varchar(255) DEFAULT NULL COMMENT '会员姓名',
-  `member_level` varchar(255) NOT NULL COMMENT '会员等级',
+  `member_level` varchar(255) DEFAULT NULL COMMENT '会员等级',
   `ID_number` varchar(255) DEFAULT NULL COMMENT '身份证号码',
   `express_address` varchar(255) DEFAULT NULL COMMENT '收货地址',
   `status` varchar(255) NOT NULL DEFAULT 'N' COMMENT '激活状态(Y:已激活,N:未激活)',

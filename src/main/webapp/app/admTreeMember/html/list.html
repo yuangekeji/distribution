@@ -56,7 +56,7 @@
                             <thead>
                             <tr >
                                 <th>姓名</th>
-                                <th>会员等级</th>
+                                <th>报单金额</th>
                                 <th>电话</th>
                                 <th>爵位</th>
                                 <!--<th>推荐人</th>-->
@@ -70,7 +70,7 @@
                             <tbody>
                             <tr class="odd gradeX" ng-show= "!notData" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                 <td>{{member.memberName}}</td>
-                                <td>{{member.memberLevel|MemberLevelFilter}}({{member.orderAmount}})</td>
+                                <td>{{member.orderAmount | number:2}}</td>
                                 <td>{{member.memberPhone}}</td>
                                 <td>{{member.memberPost|PostLevelFilter}}</td>
                                 <td>{{member.firstAgentCnt}}</td>

@@ -16,23 +16,23 @@
                                                    id="sample_1">
                                                 <thead>
                                                 <tr >
-                                                    <th class="text-center" width="10%">会员等级</th>
-                                                    <th class="text-center" width="15%">购买产品金额</th>
-                                                    <th class="text-center" width="10%">产品数量</th>
-                                                    <th class="text-center" width="10%">分红包</th>
-                                                    <th class="text-center" width="10%">销售奖</th>
+                                                    <!--<th class="text-center" width="10%">会员等级</th>-->
+                                                    <!--<th class="text-center" width="15%">购买产品金额</th>-->
+                                                    <!--<th class="text-center" width="10%">产品数量</th>-->
+                                                    <!--<th class="text-center" width="10%">分红包</th>-->
                                                     <th class="text-center" width="10%">1代</th>
                                                     <th class="text-center" width="10%">2代</th>
+                                                    <th class="text-center" width="10%">3代</th>
                                                     <th class="text-center" width="10%">公司分红</th>
                                                     <th class="text-center" width="15%">现金充值消费</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr  class="odd gradeX"  ng-repeat="basicManage in myPage.result | filter:{typeCode : 'D01'} " ng-if="basicManage.detailCode != '00'">
-                                                    <td class="text-center">{{basicManage.detailNm}}</td>
-                                                    <td class="text-center">{{basicManage.buyAmt|number:2}}</td>
-                                                    <td class="text-center">{{basicManage.buyQty}}</td>
-                                                    <td class="text-center">{{basicManage.devidendCnt}}</td>
+                                                <tr  class="odd gradeX"  ng-repeat="basicManage in myPage.result | filter:{typeCode : 'D01'} " ng-if="basicManage.detailCode == '01'">
+                                                    <!--<td class="text-center">{{basicManage.detailNm}}</td>-->
+                                                    <!--<td class="text-center">{{basicManage.buyAmt|number:2}}</td>-->
+                                                    <!--<td class="text-center">{{basicManage.buyQty}}</td>-->
+                                                    <!--<td class="text-center">{{basicManage.devidendCnt}}</td>-->
                                                     <td class="text-center">{{basicManage.salesBonusPer}}%</td>
                                                     <td class="text-center">{{basicManage.salesBonusPer1}}%</td>
                                                     <td class="text-center">{{basicManage.salesBonusPer2}}%</td>

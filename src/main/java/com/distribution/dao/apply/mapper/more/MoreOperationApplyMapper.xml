@@ -14,6 +14,7 @@
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
     <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
     <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
   </resultMap>
 
   <sql id="where">
@@ -45,7 +46,7 @@
     SELECT COUNT(*) FROM operation_apply oa INNER JOIN member m ON oa.member_id = m.id <include refid="where"/>
   </select>
   <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
-    SELECT oa.*,m.member_name,m.member_post,m.member_level,m.recommend_name FROM operation_apply oa INNER JOIN member m ON oa.member_id = m.id <include refid="where"/> ORDER BY id DESC <include refid="pageLimit"/>
+    SELECT oa.*,m.member_name,m.member_post,m.member_level,m.recommend_name, m.order_amount FROM operation_apply oa INNER JOIN member m ON oa.member_id = m.id <include refid="where"/> ORDER BY id DESC <include refid="pageLimit"/>
   </select>
   <select id="getByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT * FROM operation_apply WHERE member_id = #{memberId} AND `status` = 'wait'

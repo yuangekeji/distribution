@@ -1,26 +1,35 @@
 angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, Notify) {
     title.setTitle('创建分销订单');
     $scope.user = $sessionStorage.currentUser;
+    $scope.confirmLoginPassword = "111111";
+    $scope.orderAmounts = [];
+
+    $scope.onInit = function () {
+        var MIN = 600;
+        var MAX = 30000;
+
+        for(var i = 1 ; i<= MAX/MIN ; i++ ){
+            $scope.orderAmounts.push({value: i * MIN , name :  i * MIN +".00 ( "+i+"单 )"});
+        }
+        $scope.orderAmounts.unshift({value:"",name:"请选择报单金额"});
+        // $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
+        //     if(resp.successful){
+        //         $scope.dictionary = resp.data.list;
+        //         if($scope.dictionary){
+        //             $scope.member.memberLevel = $scope.dictionary[0].dicCode;
+        //         }
+        //     }else{
+        //         console.log(resp);
+        //     }
+        // });
+    };
+    $scope.onInit();
     $scope.member = {
         recommendPhone:$sessionStorage.currentUser.memberPhone,
         notePhone:$stateParams.mobile ? $stateParams.mobile : '',
-        loginPassword:'111111'
+        loginPassword:'111111',
+        orderAmount:""
     };
-    $scope.confirmLoginPassword = "111111";
-    $scope.dictionary = [];
-    $scope.onInit = function () {
-        $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
-            if(resp.successful){
-                $scope.dictionary = resp.data.list;
-                if($scope.dictionary){
-                    $scope.member.memberLevel = $scope.dictionary[0].dicCode;
-                }
-            }else{
-                console.log(resp);
-            }
-        });
-    };
-    $scope.onInit();
     $scope.submitFlag = true;
 
     /**提交*/
@@ -117,8 +126,8 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         //     Notify.warning("节点手机号有误，请重新输入。");
         //     $scope.submitFlag = true;
         // }
-        else if(!$scope.member.memberLevel){
-            Notify.warning("请选择会员等级。");
+        else if(!$scope.member.orderAmount){
+            Notify.warning("请选择报单金额。");
             $scope.submitFlag = true;
         }
         /*else if(!$scope.member.consignee||!$scope.member.consignee.trim()){

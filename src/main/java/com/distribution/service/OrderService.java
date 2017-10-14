@@ -331,7 +331,8 @@ public class OrderService {
             moreOrderMaster.setOrderAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())));
             moreOrderMaster.setActAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())).multiply(new BigDecimal(0.4)));
             moreOrderMaster.setBonusAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())).multiply(new BigDecimal(0.4)));
-            moreOrderMaster.setExpressFee(new BigDecimal(0));
+            int compareValue = moreOrderMaster.getActAmt().compareTo(new BigDecimal(600));
+            moreOrderMaster.setExpressFee((compareValue > -1) ? new BigDecimal(0) : new BigDecimal(10));
             moreOrderMaster.setMemberId(currentUser.getId());
             moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
             moreOrderMaster.setOrderStatues("2");

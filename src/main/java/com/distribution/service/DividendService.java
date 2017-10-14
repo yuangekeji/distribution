@@ -7,6 +7,7 @@ import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,12 +66,12 @@ public class DividendService {
             }
 
         }
-        int validDividendCount    = map.containsKey("validDividendCount")   ?  Integer.parseInt((String) map.get("validDividendCount")) :  0;
-        int inValidDividendCount  = map.containsKey("inValidDividendCount") ? Integer.parseInt((String) map.get("inValidDividendCount")) : 0;
+        BigDecimal validDividendCount    = map.containsKey("validDividendCount")   ?  (BigDecimal)map.get("validDividendCount") :   new BigDecimal(0);
+        BigDecimal inValidDividendCount  = map.containsKey("inValidDividendCount") ?  (BigDecimal) map.get("inValidDividendCount") : new BigDecimal(0);
 
         map.put("validDividendCount", validDividendCount );
         map.put("inValidDividendCount",inValidDividendCount);
-        map.put("totalDividendCount", validDividendCount + inValidDividendCount );
+        map.put("totalDividendCount", validDividendCount.add(inValidDividendCount) );
         return map;
     }
 }

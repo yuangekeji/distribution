@@ -1,4 +1,4 @@
-angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify,ConfirmModal,$window) {
+angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify,ConfirmModal,$window,$timeout) {
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
@@ -30,6 +30,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         }
     }
     $scope.MemberInfo = {};
+    $scope.dividendMap = {};
 
     $scope.onInit = function () {
         $http.get(ctx + '/member/getMemberInfo/'+$scope.user.id).success(function (resp) {
@@ -39,21 +40,38 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 console.log(resp);
             }
         });
-        $http.get(ctx + '/member/getBankName/'+$scope.user.id).success(function (resp) {
+
+        $http.get(ctx + '/member/getMemberDividendCount/'+$scope.user.id).success(function (resp) {
             if(resp.successful){
-                $scope.banks = resp.data.list;
+               $scope.dividendMap =  resp.data;
+                console.info($scope.dividendMap);
             }else{
                 console.log(resp);
             }
         });
-        $http.get(ctx + '/member/getIt/'+$scope.user.id).success(function (resp) {
-            if(resp.successful){
-                $scope.it = resp.data.it;
-            }else{
-                console.log(resp);
-            }
-        });
+
+
+
+        var a = $timeout(function(){
+            $http.get(ctx + '/member/getIt/'+$scope.user.id).success(function (resp) {
+                if(resp.successful){
+                    $scope.it = resp.data.it;
+                }else{
+                    console.log(resp);
+                }
+            });
+
+            $http.get(ctx + '/member/getBankName/'+$scope.user.id).success(function (resp) {
+                if(resp.successful){
+                    $scope.banks = resp.data.list;
+                }else{
+                    console.log(resp);
+                }
+            });
+        },2000);
+
     };
+
     $scope.onInit();
 
     /**

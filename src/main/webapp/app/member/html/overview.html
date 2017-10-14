@@ -39,17 +39,17 @@
                             <td class="black-font">
                                 分红包个数
                             </td>
-                            <td class="black-font">{{MemberInfo.seedAmount | number:2}}</td>
+                            <td class="black-font">{{dividendMap.totalDividendCount }}个</td>
                         </tr>
                         <tr>
                             <td class="black-font">
                                 出局分红包
                             </td>
-                            <td class="black-font">{{MemberInfo.bonusAmount | number:2}}</td>
+                            <td class="black-font">{{dividendMap.inValidDividendCount}}个</td>
                             <td class="black-font">
                                 未出局分红包
                             </td>
-                            <td class="black-font">{{MemberInfo.seedAmount | number:2}}</td>
+                            <td class="black-font">{{dividendMap.validDividendCount}}个</td>
                         </tr>
                         <tr>
                             <td class="black-font">

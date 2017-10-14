@@ -35,7 +35,19 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         $http.get(ctx + '/member/getMemberInfo/'+$scope.user.id).success(function (resp) {
             if(resp.successful){
                 $scope.MemberInfo = resp.data.member;
+            }else{
+                console.log(resp);
+            }
+        });
+        $http.get(ctx + '/member/getBankName/'+$scope.user.id).success(function (resp) {
+            if(resp.successful){
                 $scope.banks = resp.data.list;
+            }else{
+                console.log(resp);
+            }
+        });
+        $http.get(ctx + '/member/getIt/'+$scope.user.id).success(function (resp) {
+            if(resp.successful){
                 $scope.it = resp.data.it;
             }else{
                 console.log(resp);

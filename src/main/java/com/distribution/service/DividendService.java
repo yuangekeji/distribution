@@ -1,10 +1,15 @@
 package com.distribution.service;
 
+import com.distribution.common.constant.BonusConstant;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dividend.mapper.more.MoreDividendMapper;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lijingx on 8/28/2017.
@@ -42,5 +47,30 @@ public class DividendService {
         page.setTotalCount(memberBonusMapper.getDividendDetailsCount(page));
         page.setResult( memberBonusMapper.getDividendDetails(page));
         return page;
+    }
+
+    public Map memberDividendCount(Integer memberId){
+        Map map = new HashMap();
+
+        List<Map> dividendCount = dividendMapper.memberDividendCount(memberId);
+
+        for(Map dc : dividendCount){
+
+            if("1".equals(dc.get("dividendStatus"))){
+                map.put("validDividendCount",dc.get("dividendCount"));
+                break;
+            }else if("2".equals(dc.get("dividendStatus"))){
+                map.put("inValidDividendCount",dc.get("dividendCount"));
+                break;
+            }
+
+        }
+        int validDividendCount    = map.containsKey("validDividendCount")   ?  Integer.parseInt((String) map.get("validDividendCount")) :  0;
+        int inValidDividendCount  = map.containsKey("inValidDividendCount") ? Integer.parseInt((String) map.get("inValidDividendCount")) : 0;
+
+        map.put("validDividendCount", validDividendCount );
+        map.put("inValidDividendCount",inValidDividendCount);
+        map.put("totalDividendCount", validDividendCount + inValidDividendCount );
+        return map;
     }
 }

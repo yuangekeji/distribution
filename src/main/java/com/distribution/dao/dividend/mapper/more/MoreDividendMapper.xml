@@ -82,4 +82,12 @@
       where id = #{record.id,jdbcType=INTEGER}
   	</foreach>
   </update>
+  <select id="memberDividendCount" parameterType="java.lang.Integer"  resultType="java.util.Map">
+     select
+       dividend_status      as dividendStatus,
+       sum(dividend_count)  as dividendCount
+      from dividend
+      where member_id = #{memberId}
+      GROUP BY dividend_status
+   </select>
 </mapper>

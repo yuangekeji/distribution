@@ -13,6 +13,7 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.member.model.more.MoreMemberVO;
 import com.distribution.service.CommonService;
+import com.distribution.service.DividendService;
 import com.distribution.service.MemberService;
 import com.distribution.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,8 @@ public class MemberController extends BasicController {
     private MemberService memberService;
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private DividendService dividendService;
 
     @RequestMapping(value = "/jump")
     @IgnoreLoginCheck
@@ -169,6 +172,15 @@ public class MemberController extends BasicController {
 
         Map result= new HashMap();
         result.put("member",moreMember);
+        return successMsg(result);
+    }
+
+
+    @RequestMapping("/getMemberDividendCount/{memberId}")
+    @ResponseBody
+    public JsonMessage getMemberDividendCount(@PathVariable Integer memberId){
+        Map result= new HashMap();
+        result= dividendService.memberDividendCount(memberId);
         return successMsg(result);
     }
 

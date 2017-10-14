@@ -298,13 +298,13 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
 
 });
 
-angular.module('member').filter("MemberLevelFilter",function () {
-    return function (input) {
-        if(input=='member_level1'){return '普卡 (600)'};
-        if(input=='member_level2'){return '铜卡 (1800)'};
-        if(input=='member_level3'){return '银卡 (3000)'};
-        if(input=='member_level4'){return '金卡 (9000)'};
-        if(input=='member_level5'){return '白金卡 (30000)'};
-        if(input=='member_level6'){return '黑金卡 (60000)'};
-    }
-});
+// angular.module('member').filter("MemberLevelFilter",function () {
+//     return function (input) {
+//         if(input=='member_level1'){return '普卡 (600)'};
+//         if(input=='member_level2'){return '铜卡 (1800)'};
+//         if(input=='member_level3'){return '银卡 (3000)'};
+//         if(input=='member_level4'){return '金卡 (9000)'};
+//         if(input=='member_level5'){return '白金卡 (30000)'};
+//         if(input=='member_level6'){return '黑金卡 (60000)'};
+//     }
+// });

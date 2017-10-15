@@ -68,10 +68,15 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
         $state.go('app.admDividend-detail', {memberId: memberId, orderNo: orderNo});
     }
 
+    $scope.show = function () {
+        $("#show").modal("show");
+    };
+
     /**
      * excel download
      */
     $scope.excelDownload = function() {
-        window.location.href=ctx + "/adminDividend/excelDownload?dividendStatus="+this.myPage.parameterMap.dividendStatus+"&orderNo="+this.myPage.parameterMap.orderNo;
+        window.location.href=ctx + "/adminDividend/excelDownload?startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
+        $("#show").modal("hide");
     }
 });

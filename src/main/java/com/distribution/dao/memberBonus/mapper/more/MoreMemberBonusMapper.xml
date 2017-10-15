@@ -223,4 +223,23 @@
     group by mb.member_id, mb.order_id, mb.order_no,mb.bonus_type
       order by mb.member_id desc
   </select>
+
+  <select id="getExcelMemberBonusList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT
+    m.*
+    FROM
+    dividend d
+    INNER JOIN
+    member_bonus m
+    ON d.member_id = m.member_id
+    AND d.order_no = m.order_no
+    AND m.bonus_type = 3
+    <if test="startTime != null and startTime != ''">
+      <![CDATA[AND DATE_FORMAT(m.bonus_date, '%Y-%m-%d') >= #{startTime}]]>
+    </if>
+    <if test="endTime != null and endTime != ''">
+      <![CDATA[AND DATE_FORMAT(m.bonus_date, '%Y-%m-%d') <= #{endTime}]]>
+    </if>
+    ORDER BY d.id DESC,m.bonus_date DESC
+  </select>
 </mapper>

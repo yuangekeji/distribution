@@ -7,6 +7,7 @@ import com.distribution.dao.memberBonus.model.more.MoreMemberBonus;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface MoreMemberBonusMapper extends MemberBonusMapper {
 
@@ -41,4 +42,6 @@ public interface MoreMemberBonusMapper extends MemberBonusMapper {
      * @return
      */
     List<MoreMemberBonus> selectMemberBonusDetail(Page page);
+
+    List<MemberBonus> getExcelMemberBonusList(Map map);
 }

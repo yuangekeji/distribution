@@ -71,19 +71,9 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
      * description 退出
      * @author Bright
      * */
-    $scope.logOut = function () {
-        $http.post(ctx + "/member/logout").success(function (resp) {
-            if(resp.successful){
-                if($sessionStorage && $sessionStorage.currentUser)
-                    $sessionStorage.currentUser = null;
-                window.location.href = ctx;
-            }
-        }).error(function (resp) {
-            console.log(resp);
-        });
-    };
 
     $scope.onInit = function () {
+
         $scope.ctx = window['ctx'];
         $http.get(ctx + '/role/getUserRole').success(function (res) {
             $sessionStorage.currentUser = res.currentUser;
@@ -132,6 +122,19 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
     }
 
     $scope.onInit();
+    $scope.logOut = function () {
+        $http.post(ctx + "/member/logout").success(function (resp) {
+            if(resp.successful){
+                if($sessionStorage && $sessionStorage.currentUser)
+                    $sessionStorage.currentUser = null;
+                window.location.href = ctx;
+            }
+        }).error(function (resp) {
+            console.log(resp);
+        });
+    };
+
+
     $scope.goUrl= function (url) {
     $state.go(url);
 

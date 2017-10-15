@@ -12,41 +12,42 @@ angular.module('home').controller('homeCtrl',
     });
      $scope.queryPasswordConfirm = '222222';
      $scope.payPasswordConfirm = '333333';
-     $scope.currentUser = $sessionStorage.currentUser;
 
-     $scope.currentUser.sendbypostyn= "1" ;//默认自提
-     $scope.currentUser.receiveName = $scope.currentUser.consignee;
-     $scope.currentUser.receviveAddress =  $scope.currentUser.expressAddress;
-     $scope.currentUser.recevivePhone =  $scope.currentUser.linkmanPhone;
+     /**
+      * description 激活弹出窗
+      * @author Bright
+      * */
+        $timeout(function(){
 
-    /**
-     * description 激活弹出窗
-     * @author Bright
-     * */
-    $timeout(function(){
+              $scope.currentUser = $sessionStorage.currentUser;
 
-        if(!$scope.currentUser)
-            $scope.currentUser = $sessionStorage.currentUser;
+             //当登录用户为会员的时候，并且激活状态为N，到款状态为Y
+             if($scope.currentUser && $scope.currentUser.roleId == '1' && $scope.currentUser.status=='N' && $scope.currentUser.moneyStatus=='Y'){
 
-        if($scope.currentUser.moneyStatus=='Y' && $scope.currentUser.status=='N'){
+                    $scope.currentUser.sendbypostyn= "1" ;//默认自提
+                    $scope.currentUser.receiveName = $scope.currentUser.consignee;
+                    $scope.currentUser.receviveAddress =  $scope.currentUser.expressAddress;
+                    $scope.currentUser.recevivePhone =  $scope.currentUser.linkmanPhone;
 
-            $http.get(ctx + "/member/getDictionary/bank_name").success(function (resp) {
-                if(resp.successful){
-                    $scope.dictionary = resp.data.list;
-                    $scope.dictionary.unshift({dicCode:"",dicName:"请选择"});
-                    $scope.moreMember = resp.data.moreMember;
-                    if($scope.dictionary){
-                        $scope.currentUser.bankName = $scope.dictionary[0].dicCode;
-                    }
-                    $scope.currentUser.queryPassword = "222222";
-                    $scope.currentUser.payPassword = "333333";
-                }else{
-                    console.log(resp);
+                    $http.get(ctx + "/member/getDictionary/bank_name").success(function (resp) {
+                        if(resp.successful){
+                            $scope.dictionary = resp.data.list;
+                            $scope.dictionary.unshift({dicCode:"",dicName:"请选择"});
+                            $scope.moreMember = resp.data.moreMember;
+                            if($scope.dictionary){
+                                $scope.currentUser.bankName = $scope.dictionary[0].dicCode;
+                            }
+                            $scope.currentUser.queryPassword = "222222";
+                            $scope.currentUser.payPassword = "333333";
+                        }else{
+                            console.log(resp);
+                        }
+                    });
+                    $("#add").modal("show");
                 }
-            });
-            $("#add").modal("show");
-        }
-    },1500);
+
+        },1500);
+
 
     /**
      * description 激活账户
@@ -164,7 +165,7 @@ angular.module('home').controller('homeCtrl',
             var newWidth = 600 + values.length + 1;
             values.push(
                 {
-                    image: $scope.settings.layoutPath+"/img/"+imgName,
+                    image: "static/metronic/layouts/layout2/img/"+imgName,
                     text: ["Nice image", "Awesome photograph", "That is so cool", "I love that"][values.length % 4],
                     id: l++
                 });

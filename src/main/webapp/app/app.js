@@ -49,6 +49,7 @@ angular.module('order', []);
 angular.module('operator',[]);
 angular.module('auth',[]);
 angular.module('product',[]);
+angular.module('notice',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);
@@ -62,6 +63,7 @@ angular.module('admin',[]);
 angular.module('admWarning',[]);
 angular.module('admTreeMember',[]);
 angular.module('admHandleHistory',[]);
+angular.module('admNotice',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 

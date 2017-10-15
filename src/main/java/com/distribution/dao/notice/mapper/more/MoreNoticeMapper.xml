@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.notice.mapper.more.MoreNoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.notice.model.more.MoreNotice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="publishing_state" property="publishingState" jdbcType="VARCHAR" />
+    <result column="detele_flag" property="deteleFlag" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="notice_time" property="noticeTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    n.id, n.title, n.content, n.`level`, n.publishing_state, n.detele_flag, n.create_by, n.create_time,
+    n.update_by, n.update_time, n.notice_time, a.`name`
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="parameterMap.title!=null and parameterMap.title!=''">
+        AND n.title LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.title}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.level!=null and parameterMap.level!=''">
+        AND n.level = #{parameterMap.level}
+      </if>
+      <if test="parameterMap.name!=null and parameterMap.name!=''">
+        AND a.name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'
+      </if>
+    </where>
+  </sql>
+
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+
+  <select id="getNoticeCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM notice n LEFT JOIN admin a ON n.create_by = a.id <include refid="where"/>
+  </select>
+
+  <select id="list" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM notice n LEFT JOIN admin a ON n.create_by = a.id <include refid="where"/>
+    ORDER BY n.level DESC , n.id DESC <include refid="pageLimit"/>
+  </select>
+</mapper>

@@ -61,10 +61,18 @@ public class AdmOrderService {
         //定义表头
         String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
-        return  this.exportExcel("发货列表", excelHeader, result, response.getOutputStream());
+        return  this.exportExcel("待发货列表", excelHeader, result, response.getOutputStream(), "待发货商品数量:");
     }
 
-    public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreOrderMaster> list, OutputStream out) throws InvocationTargetException {
+    public XSSFWorkbook exportData1(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
+        List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList1(map);
+        //定义表头
+        String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
+
+        return  this.exportExcel("已发货列表", excelHeader, result, response.getOutputStream(), "已出库商品数量:");
+    }
+
+    public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreOrderMaster> list, OutputStream out, String str) throws InvocationTargetException {
         // 声明一个工作薄
         XSSFWorkbook workbook = new XSSFWorkbook();
         // 生成一个表格
@@ -111,11 +119,12 @@ public class AdmOrderService {
                 goods = goods + "," + list.get(j).getOrderQty() + "个";
             }
 
-            p+=list.get(j).getOrderQty();
+            p+=(null!=list.get(j)?(null!=list.get(j).getOrderQty()?list.get(j).getOrderQty():0):0);
+            System.out.println(j);
             bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
             bodyRow.createCell(1).setCellValue(this.orderCategoryFilter(list.get(j).getOrderCategory()));
             bodyRow.createCell(2).setCellValue(list.get(j).getMemberName());
-            bodyRow.createCell(3).setCellValue(this.memberLevelFilter(list.get(j).getMemberLevel()));
+            bodyRow.createCell(3).setCellValue(this.memberLevelFilter(null!=list.get(j).getMemberLevel()?list.get(j).getMemberLevel():""));
             bodyRow.createCell(4).setCellValue(String.valueOf(list.get(j).getOrderAmt()));
             bodyRow.createCell(5).setCellValue(String.valueOf(list.get(j).getActAmt()));
             bodyRow.createCell(6).setCellValue(String.valueOf(list.get(j).getExpressFee()));
@@ -127,13 +136,13 @@ public class AdmOrderService {
             bodyRow.createCell(12).setCellValue(list.get(j).getRecevivePhone());
             t=j;
         }
-        XSSFRow bodyRow = sheet.createRow(t + 5);
+        XSSFRow bodyRow = sheet.createRow(t + 2);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
         style.setFont(font);
 
         XSSFCell cel1 = bodyRow.createCell(0);
         cel1.setCellStyle(style);
-        cel1.setCellValue("待发货商品数量:");
+        cel1.setCellValue(str);
         XSSFCell cel2 = bodyRow.createCell(1);
         cel2.setCellStyle(style);
         cel2.setCellValue(p+"个");

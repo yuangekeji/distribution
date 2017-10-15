@@ -66,7 +66,49 @@ public class AdmOrderController extends BasicController{
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = admOrderService.exportData(map,response);
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("发货列表", "UTF-8") + ".xlsx");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("待发货列表", "UTF-8") + ".xlsx");
+        OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
+        wb.write(outStream); // 输出数据
+        outStream.flush();
+        outStream.close();
+
+        //管理员操作记录
+        Map mapHandle = new HashMap();
+        String orderNoHandle = orderNo;
+        if (orderNo.isEmpty() || "".equals(orderNo)) {
+            orderNoHandle = "全部";
+        }
+        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
+        mapHandle.put("handleId", orderNoHandle);
+        mapHandle.put("handleComment", "订单号: " + orderNoHandle + ", 操作: 订单下载");
+        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
+
+    }
+
+    /**
+     * description 订单列表下载
+     * @author WYN
+     * */
+    @RequestMapping(value = "/excelDownload1")
+    public void excelDownload1(@RequestParam(value = "orderNo", required = false) String orderNo,
+                              @RequestParam(value = "orderCategory", required = false) String orderCategory,
+                              @RequestParam(value = "orderStatus", required = false) String orderStatus,
+                              @RequestParam(value = "startTime", required = false) String startTime,
+                              @RequestParam(value = "endTime", required = false) String endTime,
+                              HttpSession session,
+                              HttpServletResponse response) throws IOException, InvocationTargetException {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("orderNo", orderNo);
+        map.put("orderCategory", orderCategory);
+        map.put("orderStatus", orderStatus);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+
+        Admin admin = (Admin) getCurrentUser(session);
+        XSSFWorkbook wb = admOrderService.exportData1(map,response);
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("已出库列表", "UTF-8") + ".xlsx");
         OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
         wb.write(outStream); // 输出数据
         outStream.flush();

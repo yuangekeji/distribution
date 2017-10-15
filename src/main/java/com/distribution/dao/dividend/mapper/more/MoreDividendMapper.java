@@ -32,4 +32,6 @@ public interface MoreDividendMapper extends DividendMapper{
     int updateAllNeedSendDividends(Map<String,Object> map);
 
     List memberDividendCount(Integer memberId);
+
+    List<Dividend> getExcelDividendList(Map map);
 }

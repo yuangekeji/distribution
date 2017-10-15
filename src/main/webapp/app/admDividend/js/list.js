@@ -67,4 +67,11 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
     $scope.searchDividendDetails = function (memberId, orderNo) {
         $state.go('app.admDividend-detail', {memberId: memberId, orderNo: orderNo});
     }
+
+    /**
+     * excel download
+     */
+    $scope.excelDownload = function() {
+        window.location.href=ctx + "/adminDividend/excelDownload?dividendStatus="+this.myPage.parameterMap.dividendStatus+"&orderNo="+this.myPage.parameterMap.orderNo;
+    }
 });

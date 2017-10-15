@@ -45,7 +45,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         $http.get(ctx + '/member/getMemberDividendCount/'+$scope.user.id).success(function (resp) {
             if(resp.successful){
                $scope.dividendMap =  resp.data;
-                console.info($scope.dividendMap);
+                // console.info($scope.dividendMap);
             }else{
                 console.log(resp);
             }

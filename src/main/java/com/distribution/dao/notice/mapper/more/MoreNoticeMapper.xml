@@ -59,4 +59,15 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM notice n LEFT JOIN admin a ON n.create_by = a.id WHERE n.id = #{id}
   </select>
+
+  <insert id="insert" parameterType="com.distribution.dao.notice.model.Notice" useGeneratedKeys="true" keyProperty="id">
+    insert into notice (id, title, content,
+    `level`, publishing_state, detele_flag,
+    create_by, create_time, update_by,
+    update_time, notice_time)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+    #{level,jdbcType=VARCHAR}, #{publishingState,jdbcType=VARCHAR}, #{deteleFlag,jdbcType=VARCHAR},
+    #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+    #{updateTime,jdbcType=TIMESTAMP}, #{noticeTime,jdbcType=TIMESTAMP})
+  </insert>
 </mapper>

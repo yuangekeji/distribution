@@ -820,3 +820,20 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS v
   END
 ;;
 DELIMITER ;
+
+--添加公告表
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE `notice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `content` varchar(5000) DEFAULT NULL COMMENT '内容',
+  `level` varchar(255) DEFAULT '1' COMMENT '优先级别(2:紧急，1:一般)',
+  `publishing_state` varchar(255) DEFAULT 'N' COMMENT '发布状态(Y:已发布，N:未发布)',
+  `detele_flag` varchar(255) DEFAULT 'N' COMMENT '删除状态',
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `notice_time` datetime DEFAULT NULL COMMENT '公告激活时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;

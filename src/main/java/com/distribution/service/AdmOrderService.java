@@ -111,6 +111,7 @@ public class AdmOrderService {
                 goods = goods + "," + list.get(j).getOrderQty() + "个";
             }
 
+            p+=list.get(j).getOrderQty();
             bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
             bodyRow.createCell(1).setCellValue(this.orderCategoryFilter(list.get(j).getOrderCategory()));
             bodyRow.createCell(2).setCellValue(list.get(j).getMemberName());
@@ -124,7 +125,6 @@ public class AdmOrderService {
             bodyRow.createCell(10).setCellValue(list.get(j).getExpressAddress());
             bodyRow.createCell(11).setCellValue(list.get(j).getReceiveName());
             bodyRow.createCell(12).setCellValue(list.get(j).getRecevivePhone());
-            p+=list.get(j).getActAmt().intValue();
             t=j;
         }
         XSSFRow bodyRow = sheet.createRow(t + 5);
@@ -133,10 +133,10 @@ public class AdmOrderService {
 
         XSSFCell cel1 = bodyRow.createCell(0);
         cel1.setCellStyle(style);
-        cel1.setCellValue("出库商品数量:");
+        cel1.setCellValue("待发货商品数量:");
         XSSFCell cel2 = bodyRow.createCell(1);
         cel2.setCellStyle(style);
-        cel2.setCellValue(p/600+"个");
+        cel2.setCellValue(p+"个");
 
         return  workbook;
     }

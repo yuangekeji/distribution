@@ -58,7 +58,7 @@
    </sql>
     <sql id="excel_where">
         <where>
-                a.order_statues = '2'
+                a.order_statues IN ('3','4')
             and a.sendByPostYN = '2'
             <if test="memberId!=null and memberId!=''">
                 AND a.member_id = #{memberId}

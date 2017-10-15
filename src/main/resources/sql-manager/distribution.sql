@@ -593,7 +593,8 @@ INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.account', null)
 INSERT INTO `menu` VALUES ('28', null, '推荐网络图', '1', 'app.graph', 'icon-graph');
 INSERT INTO `menu` VALUES ('29', null, '分支管理', '25', 'app.admTreeMember', null);
 INSERT INTO `menu` VALUES ('30', null, '操作记录', '25', 'app.admHandleHistory', null);
-
+INSERT INTO `menu` VALUES ('31', null, '充值管理', '1', 'app.memberCharge', 'icon-diamond');
+INSERT INTO `menu` VALUES ('34', null, '充值管理', '15', 'app.admMemberCharge', 'icon-diamond');
 -- ----------------------------
 -- Table structure for node_bonus_history
 -- ----------------------------
@@ -751,6 +752,9 @@ INSERT INTO `role_menu` VALUES ('1', '28');
 INSERT INTO `role_menu` VALUES ('2', '21');
 INSERT INTO `role_menu` VALUES ('2', '29');
 INSERT INTO `role_menu` VALUES ('2', '30');
+INSERT INTO `role_menu` VALUES ('1', '31');
+INSERT INTO `role_menu` VALUES ('2', '34');
+INSERT INTO `role_menu` VALUES ('3', '34');
 
 -- ----------------------------
 -- Table structure for transfer
@@ -820,3 +824,26 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS v
   END
 ;;
 DELIMITER ;
+
+-- ----------------------------
+-- Table structure for member_charge_apply
+-- ----------------------------
+DROP TABLE IF EXISTS `member_charge_apply`;
+CREATE TABLE `member_charge_apply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
+  `member_id` int(11) DEFAULT NULL COMMENT '会员ID',
+  `status` varchar(255) DEFAULT '0' COMMENT '充值申请状态(''0'':财务审核中，''1'':待充值，''2'':审核驳回，''3'':充值成功)',
+  `charge_request_time` datetime DEFAULT NULL COMMENT '申请时间',
+  `pay_money_type` varchar(255) DEFAULT NULL COMMENT '打款方式',
+  `pay_money_time` datetime DEFAULT NULL COMMENT '打款时间',
+  `charge_amt` decimal(15,2) DEFAULT NULL COMMENT '充值金额',
+  `charge_apply_time` datetime DEFAULT NULL COMMENT '审批时间',
+  `charge_time` datetime DEFAULT NULL COMMENT '充值时间',
+	`apply_info` varchar(5000) DEFAULT NULL COMMENT '申请备注',
+  `remarks` varchar(5000) DEFAULT NULL COMMENT '审批备注',
+  `create_id` int(11) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) DEFAULT NULL COMMENT '修改人',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

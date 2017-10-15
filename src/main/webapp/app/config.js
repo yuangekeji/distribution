@@ -149,6 +149,22 @@ angular
                 ]
             },
             {
+                name:'memberCharge.list',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/memberCharge/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'memberCharge.add',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/memberCharge/js/add.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
                 name:'admMember',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
@@ -287,6 +303,14 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admHandleHistory/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'admMemberCharge.list',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admMemberCharge/js/list.js?v=' + version,
                     'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             }

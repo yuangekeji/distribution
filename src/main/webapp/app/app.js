@@ -20,6 +20,7 @@ var App = angular.module('app', [
     'operator',
     'auth',
     'product',
+    'memberCharge',
     //后台业务模块
     'admAdvance',
     'admBasicSetting',
@@ -32,7 +33,8 @@ var App = angular.module('app', [
     'admBonus',
     'admWarning',
     'admTreeMember',
-    'admHandleHistory'
+    'admHandleHistory',
+    'admMemberCharge'
 ]);
 
 angular.module('app.lazyLoad', []);
@@ -49,6 +51,7 @@ angular.module('order', []);
 angular.module('operator',[]);
 angular.module('auth',[]);
 angular.module('product',[]);
+angular.module('memberCharge',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);
@@ -62,6 +65,7 @@ angular.module('admin',[]);
 angular.module('admWarning',[]);
 angular.module('admTreeMember',[]);
 angular.module('admHandleHistory',[]);
+angular.module('admMemberCharge',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 

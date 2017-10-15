@@ -100,6 +100,18 @@ angular.module('app').config([
                 resolve: helper.resolveFor('operator'),
                 controller: 'operatorCtrl'
             })
+            .state('app.memberCharge',{
+                url: '/memberCharge',
+                templateUrl: helper.basepath('memberCharge/html/list.html'),
+                resolve: helper.resolveFor('memberCharge.list'),
+                controller: 'memberChargeListCtrl'
+            })
+            .state('app.memberChargeAdd',{
+                url: '/memberCharge-add',
+                templateUrl: helper.basepath('memberCharge/html/add.html'),
+                resolve: helper.resolveFor('memberCharge.add'),
+                controller: 'memberChargeAddCtrl'
+            })
             .state('app.admMember',{
                 url: '/admMember',
                 templateUrl: helper.basepath('admMember/html/list.html'),
@@ -221,5 +233,11 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admHandleHistory/html/list.html'),
                 resolve: helper.resolveFor('admHandleHistory'),
                 controller: 'admHandleHistoryCtrl'
+            })
+            .state('app.admMemberCharge',{
+                url: '/admMemberCharge',
+                templateUrl: helper.basepath('admMemberCharge/html/list.html'),
+                resolve: helper.resolveFor('admMemberCharge.list'),
+                controller: 'admMemberChargeListCtrl'
             })
     }]);

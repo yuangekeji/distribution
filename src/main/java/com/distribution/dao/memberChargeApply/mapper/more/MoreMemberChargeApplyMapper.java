@@ -6,6 +6,7 @@ import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface MoreMemberChargeApplyMapper extends MemberChargeApplyMapper{
@@ -29,4 +30,10 @@ public interface MoreMemberChargeApplyMapper extends MemberChargeApplyMapper{
      * @author sijeong
      * */
     int confirmMemberCharge(MoreMemberChargeApply moreMemberChargeApply);
+
+    /**
+     * description 充值列表下载
+     * @author sijeong
+     * */
+    List<MoreMemberChargeApply> getExcelMemberChargeList(Map map);
 }

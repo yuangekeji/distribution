@@ -149,4 +149,37 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <select id="getExcelAdvanceList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT a.id
+        , a.member_id
+        , b.member_name
+        , a.bank_name
+        , a.card_no
+        , a.card_name
+        , a.req_amt
+        , a.act_amt
+        , a.fee_amt
+        , a.remark
+        , a.request_date
+        , a.approve_date
+        , a.statues
+        , a.create_id
+        , a.create_time
+        , a.update_id
+        , a.update_time
+        FROM advance a
+        LEFT JOIN member b
+        ON a.member_id = b.id
+        WHERE a.statues = '2'
+        <if test="memberName!=null and memberName!=''">
+            AND b.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{memberName}))),'%') ESCAPE '*'
+        </if>
+        <if test="startTime != null and startTime != ''">
+            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{startTime}]]>
+        </if>
+        <if test="endTime != null and endTime != ''">
+            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') <= #{endTime}]]>
+        </if>
+        order by id desc
+    </select>
 </mapper>

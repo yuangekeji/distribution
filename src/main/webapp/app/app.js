@@ -62,6 +62,7 @@ angular.module('admin',[]);
 angular.module('admWarning',[]);
 angular.module('admTreeMember',[]);
 angular.module('admHandleHistory',[]);
+angular.module('admNotice',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 

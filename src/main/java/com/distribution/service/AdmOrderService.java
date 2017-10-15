@@ -99,6 +99,8 @@ public class AdmOrderService {
         sheet.setColumnWidth(11, 12 * 256);
         sheet.setColumnWidth(12, 20 * 256);
         //构建表体
+        int t = 0;
+        int p = 0;
         for(int j=0;j<list.size();j++){
             XSSFRow bodyRow = sheet.createRow(j + 1);
             String goods = "";
@@ -109,7 +111,7 @@ public class AdmOrderService {
                 goods = goods + "," + list.get(j).getOrderQty() + "个";
             }
 
-            bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo());
+            bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
             bodyRow.createCell(1).setCellValue(this.orderCategoryFilter(list.get(j).getOrderCategory()));
             bodyRow.createCell(2).setCellValue(list.get(j).getMemberName());
             bodyRow.createCell(3).setCellValue(this.memberLevelFilter(list.get(j).getMemberLevel()));
@@ -122,7 +124,19 @@ public class AdmOrderService {
             bodyRow.createCell(10).setCellValue(list.get(j).getExpressAddress());
             bodyRow.createCell(11).setCellValue(list.get(j).getReceiveName());
             bodyRow.createCell(12).setCellValue(list.get(j).getRecevivePhone());
+            p+=list.get(j).getActAmt().intValue();
+            t=j;
         }
+        XSSFRow bodyRow = sheet.createRow(t + 5);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+        style.setFont(font);
+
+        XSSFCell cel1 = bodyRow.createCell(0);
+        cel1.setCellStyle(style);
+        cel1.setCellValue("出库商品数量:");
+        XSSFCell cel2 = bodyRow.createCell(1);
+        cel2.setCellStyle(style);
+        cel2.setCellValue(p/600+"个");
 
         return  workbook;
     }

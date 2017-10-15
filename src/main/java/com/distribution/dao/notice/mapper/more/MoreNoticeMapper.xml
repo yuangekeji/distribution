@@ -22,7 +22,8 @@
   </sql>
 
   <sql id="where">
-    <where>
+    WHERE
+      n.detele_flag = 'N'
       <if test="parameterMap.title!=null and parameterMap.title!=''">
         AND n.title LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.title}))),'%') ESCAPE '*'
       </if>
@@ -32,7 +33,6 @@
       <if test="parameterMap.name!=null and parameterMap.name!=''">
         AND a.name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'
       </if>
-    </where>
   </sql>
 
   <sql id="pageLimit">
@@ -53,7 +53,7 @@
   </select>
 
   <select id="getList" resultType="java.util.Map" resultMap="BaseResultMap">
-    SELECT id, title, notice_time, `level` FROM notice WHERE publishing_state = 'Y' ORDER BY id DESC
+    SELECT id, title, notice_time, `level` FROM notice WHERE publishing_state = 'Y' AND delete_flag = 'N' ORDER BY id DESC
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

@@ -139,7 +139,11 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
         });
         saveAs(blob, "订单列表.xls");*/
-    }
+    };
+
+    $scope.excelDownload1 = function () {
+        window.location.href=ctx + "/admOrder/excelDownload1?orderNo="+this.myPage.parameterMap.orderNo+"&orderCategory="+this.myPage.parameterMap.orderCategory+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
+    };
 
     /**
      * 初始化

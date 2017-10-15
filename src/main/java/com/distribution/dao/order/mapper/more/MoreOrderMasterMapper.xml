@@ -157,6 +157,55 @@
         <include refid="excel_where"/>
         order by a.id desc
     </select>
+    <select id="getExcelOrderList1" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+        SELECT a.id
+        , a.order_no
+        , a.order_category
+        , a.order_amt
+        , a.discount
+        , a.act_amt
+        , b.goods_cd
+        , c.goods_name
+        , b.order_qty
+        , a.express_fee
+        , a.member_id
+        , d.member_name
+        , a.receive_name
+        , a.express_address
+        , a.member_level
+        , a.order_statues
+        , a.create_id
+        , a.create_time
+        , a.update_id
+        , a.update_time
+        , a.recevive_phone
+        FROM order_master a
+        LEFT JOIN order_detail b
+        ON a.order_no = b.order_no
+        LEFT JOIN goods c
+        ON b.goods_cd = c.id
+        LEFT JOIN member d
+        ON a.member_id = d.id
+        <where>
+            a.order_statues IN ('3','4')
+            <if test="memberId!=null and memberId!=''">
+                AND a.member_id = #{memberId}
+            </if>
+            <if test="orderNo!=null and orderNo!=''">
+                AND a.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{orderNo}))),'%') ESCAPE '*'
+            </if>
+            <if test="orderCategory!=null and orderCategory!=''">
+                AND a.order_category = #{orderCategory}
+            </if>
+            <if test="startTime != null and startTime != ''">
+                <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{startTime}]]>
+            </if>
+            <if test="endTime != null and endTime != ''">
+                <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') <= #{endTime}]]>
+            </if>
+        </where>
+        order by a.id desc
+    </select>
     <insert id="insertOrder" parameterType="com.distribution.dao.order.model.more.MoreOrderMaster" useGeneratedKeys="true" keyProperty="id">
         insert into order_master (order_no, order_category, order_amt,
         order_qty, discount, act_amt,

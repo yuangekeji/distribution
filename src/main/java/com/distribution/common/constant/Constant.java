@@ -36,4 +36,6 @@ public class Constant {
     public static final String ADMINHANDLETYPE_BASICSETTING = "5";//基本配置-提现设置、分红包设置、广告宣传奖设置
     public static final String ADMINHANDLETYPE_ADMINSETTING = "6";//管理员权限-管理员创建、启用、禁用
     public static final String ADMINHANDLETYPE_PAYAMTPROC = "7";//job奖金发放管理-补发分红包、补发广告宣传奖
+    public static final String ADMINHANDLETYPE_MEMBERCHARGE = "8";//充值管理-批准、驳回、充值
+    public static final String ADMINHANDLETYPE_ADDNOTICE = "9";//公告管理-添加
 }

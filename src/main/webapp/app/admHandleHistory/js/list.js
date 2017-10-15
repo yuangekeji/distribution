@@ -84,5 +84,6 @@ angular.module('admHandleHistory').filter("HandleTypeFilter",function () {
         if(input=='5'){return '基本配置'};
         if(input=='6'){return '权限管理'};
         if(input=='7'){return 'job奖金发放管理'};
+        if(input=='8'){return '充值管理'};
     }
 });

@@ -22,7 +22,8 @@
   </sql>
 
   <sql id="where">
-    <where>
+    WHERE
+      n.detele_flag = 'N'
       <if test="parameterMap.title!=null and parameterMap.title!=''">
         AND n.title LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.title}))),'%') ESCAPE '*'
       </if>
@@ -32,7 +33,6 @@
       <if test="parameterMap.name!=null and parameterMap.name!=''">
         AND a.name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'
       </if>
-    </where>
   </sql>
 
   <sql id="pageLimit">
@@ -53,10 +53,21 @@
   </select>
 
   <select id="getList" resultType="java.util.Map" resultMap="BaseResultMap">
-    SELECT id, title, notice_time, `level` FROM notice WHERE publishing_state = 'Y' ORDER BY id DESC
+    SELECT id, title, notice_time, `level` FROM notice WHERE publishing_state = 'Y' AND delete_flag = 'N' ORDER BY id DESC
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM notice n LEFT JOIN admin a ON n.create_by = a.id WHERE n.id = #{id}
   </select>
+
+  <insert id="insert" parameterType="com.distribution.dao.notice.model.Notice" useGeneratedKeys="true" keyProperty="id">
+    insert into notice (id, title, content,
+    `level`, publishing_state, detele_flag,
+    create_by, create_time, update_by,
+    update_time, notice_time)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+    #{level,jdbcType=VARCHAR}, #{publishingState,jdbcType=VARCHAR}, #{deteleFlag,jdbcType=VARCHAR},
+    #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+    #{updateTime,jdbcType=TIMESTAMP}, #{noticeTime,jdbcType=TIMESTAMP})
+  </insert>
 </mapper>

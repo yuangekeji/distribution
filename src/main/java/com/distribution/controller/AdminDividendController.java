@@ -66,14 +66,14 @@ public class AdminDividendController extends BasicController {
      * @author Bright
      * */
     @RequestMapping(value = "/excelDownload")
-    public void excelDownload(@RequestParam(value = "dividendStatus", required = false) String dividendStatus,
-                              @RequestParam(value = "orderNo", required = false) String orderNo,
+    public void excelDownload(@RequestParam(value = "startTime", required = false) String startTime,
+                              @RequestParam(value = "endTime", required = false) String endTime,
                               HttpSession session,
                               HttpServletResponse response) throws IOException, InvocationTargetException {
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("dividendStatus", dividendStatus);
-        map.put("orderNo", orderNo);
+        map.put("startTime", startTime+" 00:00:00");
+        map.put("endTime", endTime+" 00:00:00");
 
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = dividendService.exportData(map,response);

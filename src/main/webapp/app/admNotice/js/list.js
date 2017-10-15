@@ -50,7 +50,7 @@ angular.module('admNotice').controller('admNoticeCtrl',function ($q, title, $sco
 
     /**发布*/
     $scope.publish = function (id) {
-        $http.post(ctx + "/admNotice/insertOrUpdate",{id:id,publishingState:'Y',noticeTime:new Date()}).success(function (resp) {
+        $http.post(ctx + "/admNotice/insertOrUpdate",{id:id,publishingState:'Y',noticeTime:new Date(),updateTime:new Date()}).success(function (resp) {
             if(resp.successful){
                 Notify.warning("发布成功");
                 $scope.search();
@@ -61,6 +61,22 @@ angular.module('admNotice').controller('admNoticeCtrl',function ($q, title, $sco
             console.error(resp);
         })
     };
+
+    /**删除*/
+    $scope.delete = function (id) {
+        $http.post(ctx + "/admNotice/insertOrUpdate",{id:id,deteleFlag:'Y',updateTime:new Date()}).success(function (resp) {
+            if(resp.successful){
+                Notify.warning("删除成功");
+                $scope.search();
+            }else{
+                Notify.warning("删除失败");
+            }
+        }).error(function (resp) {
+            console.error(resp);
+        })
+    };
+
+
 
     /**取消*/
     $scope.cancel = function (id) {

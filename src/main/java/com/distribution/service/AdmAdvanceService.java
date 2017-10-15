@@ -159,6 +159,8 @@ public class AdmAdvanceService {
         sheet.setColumnWidth(6, 30 * 256);
         //构建表体
         int t = 0;
+        int e = 0;
+        int m = 0;
         int p = 0;
         for(int j=0;j<list.size();j++){
             XSSFRow bodyRow = sheet.createRow(j + 1);
@@ -170,10 +172,12 @@ public class AdmAdvanceService {
             bodyRow.createCell(4).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getRequestDate()));
             bodyRow.createCell(5).setCellValue(list.get(j).getCardName().toString()+"|"+list.get(j).getBankName().toString()+"|"+list.get(j).getCardNo().toString());
             bodyRow.createCell(6).setCellValue("已执行");
-            p+=list.get(j).getReqAmt().intValue();
             t=j;
+            e+=list.get(j).getReqAmt().intValue();
+            m+=list.get(j).getFeeAmt().intValue();
+            p+=list.get(j).getActAmt().intValue();
         }
-        XSSFRow bodyRow1 = sheet.createRow(t + 5);
+        XSSFRow bodyRow1 = sheet.createRow(t + 2);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
         style.setFont(font);
 
@@ -181,8 +185,11 @@ public class AdmAdvanceService {
         cel1.setCellStyle(style);
         cel1.setCellValue("已提现总金额:");
         XSSFCell cel2 = bodyRow1.createCell(1);
-        cel2.setCellStyle(style);
-        cel2.setCellValue(p+"元");
+        cel2.setCellValue(e);
+        XSSFCell cel3 = bodyRow1.createCell(2);
+        cel3.setCellValue(m);
+        XSSFCell cel4 = bodyRow1.createCell(3);
+        cel4.setCellValue(p);
 
         return  workbook;
     }

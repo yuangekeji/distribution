@@ -66,6 +66,7 @@ angular.module('admWarning',[]);
 angular.module('admTreeMember',[]);
 angular.module('admHandleHistory',[]);
 angular.module('admMemberCharge',[]);
+angular.module('admNotice',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
 
@@ -91,6 +92,10 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         $http.get(ctx + '/role/getUserRole').success(function (res) {
             $sessionStorage.currentUser = res.currentUser;
             $scope.currentUser = res.currentUser;
+
+            if($scope.currentUser.roleId == '1'&& $scope.currentUser.status =='Y'){
+                $state.go("app.member.overview");
+            }
 
             if(res.currentUser.roleId  != '1'){
                 $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
@@ -266,8 +271,10 @@ App.directive('dropdownMenuHover', function () {
 });
 
 /* Init global settings and run the app */
-App .run(['$rootScope', '$state', '$stateParams', "settings",function ($rootScope, $state, $stateParams,settings) {
+App .run(['$rootScope', '$state', '$stateParams', "settings","$sessionStorage",function ($rootScope, $state, $stateParams,settings, $sessionStorage) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.$settings = settings; // state to be accessed from view//
+
+
 }]);

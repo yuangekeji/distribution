@@ -6,6 +6,7 @@ import com.distribution.dao.advance.model.more.MoreAdvance;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface MoreAdvanceMapper {
@@ -30,5 +31,7 @@ public interface MoreAdvanceMapper {
      * @author WYN
      * */
     int confirmAdvance(MoreAdvance moreAdvance);
+
+    List<MoreAdvance> getExcelAdvanceList(Map map);
 
 }

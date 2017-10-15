@@ -82,4 +82,25 @@
       where id = #{record.id,jdbcType=INTEGER}
   	</foreach>
   </update>
+  <select id="memberDividendCount" parameterType="java.lang.Integer"  resultType="java.util.Map">
+     select
+       dividend_status      as dividendStatus,
+       sum(dividend_count)  as dividendCount
+      from dividend
+      where member_id = #{memberId}
+      GROUP BY dividend_status
+   </select>
+
+  <select id="getExcelDividendList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dividend
+    <if test="dividendStatus!=null and dividendStatus!=''">
+      AND dividend_status = #{dividendStatus}
+    </if>
+    <if test="orderNo!=null and orderNo!=''">
+      AND order_no LIKE concat('%',concat('*',LTrim(RTrim(#{orderNo}))),'%') ESCAPE '*'
+    </if>
+    order by id desc
+  </select>
 </mapper>

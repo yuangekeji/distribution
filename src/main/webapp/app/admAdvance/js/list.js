@@ -152,6 +152,13 @@ angular.module('admAdvance').controller('admAdvanceCtrl',function ($q, title, $s
     $scope.gotoAddPage = function () {
         $state.go("app.advanceAdd");
     };
+
+    /**
+     * excel download
+     */
+    $scope.excelDownload = function() {
+        window.location.href=ctx + "/admAdvance/excelDownload?memberName="+this.myPage.parameterMap.memberName+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
+    }
 });
 
 angular.module('admAdvance').controller('admAdvanceApprovalCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, ConfirmModal, Notify) {

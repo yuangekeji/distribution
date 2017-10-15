@@ -1,7 +1,8 @@
-angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify,ConfirmModal,$window) {
+angular.module('member').controller('memberCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage,$rootScope,Notify,ConfirmModal,$window,$timeout) {
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
+    $scope.notices = [];
     $scope.param = {
         loginPasswordConfirm:"",
         loginPasswordConfirm:"",
@@ -30,18 +31,57 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         }
     }
     $scope.MemberInfo = {};
+    $scope.dividendMap = {};
 
     $scope.onInit = function () {
         $http.get(ctx + '/member/getMemberInfo/'+$scope.user.id).success(function (resp) {
             if(resp.successful){
                 $scope.MemberInfo = resp.data.member;
-                $scope.banks = resp.data.list;
-                $scope.it = resp.data.it;
             }else{
                 console.log(resp);
             }
         });
+
+        $http.get(ctx + '/member/getMemberDividendCount/'+$scope.user.id).success(function (resp) {
+            if(resp.successful){
+               $scope.dividendMap =  resp.data;
+                console.info($scope.dividendMap);
+            }else{
+                console.log(resp);
+            }
+        });
+
+
+
+        var a = $timeout(function(){
+            $http.get(ctx + '/member/getIt/'+$scope.user.id).success(function (resp) {
+                if(resp.successful){
+                    $scope.it = resp.data.it;
+                }else{
+                    console.log(resp);
+                }
+            });
+
+            $http.get(ctx + '/member/getBankName/'+$scope.user.id).success(function (resp) {
+                if(resp.successful){
+                    $scope.banks = resp.data.list;
+                }else{
+                    console.log(resp);
+                }
+            });
+
+            $http.get(ctx + '/notice/getList/').success(function (resp) {
+                if(resp.successful){
+                    $scope.notices = resp.data;
+                }else{
+                    console.log(resp);
+                }
+            });
+        },2000);
+
+
     };
+
     $scope.onInit();
 
     /**
@@ -272,6 +312,18 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         }
     };
 
+    /**查看公告*/
+    $scope.show = function (id) {
+        $http.get(ctx + "/notice/getNoticeById/"+id).success(function (resp) {
+            if(resp.successful){
+                $scope.noc = resp.data;
+                $("#detail").modal("show");
+            }
+        }).error(function (resp) {
+            console.error(resp);
+        })
+    };
+
     /**loading*/
     var e1 = $('.full-view');
     $scope.startLoading=function () {
@@ -298,13 +350,13 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
 
 });
 
-angular.module('member').filter("MemberLevelFilter",function () {
-    return function (input) {
-        if(input=='member_level1'){return '普卡 (600)'};
-        if(input=='member_level2'){return '铜卡 (1800)'};
-        if(input=='member_level3'){return '银卡 (3000)'};
-        if(input=='member_level4'){return '金卡 (9000)'};
-        if(input=='member_level5'){return '白金卡 (30000)'};
-        if(input=='member_level6'){return '黑金卡 (60000)'};
-    }
-});
+// angular.module('member').filter("MemberLevelFilter",function () {
+//     return function (input) {
+//         if(input=='member_level1'){return '普卡 (600)'};
+//         if(input=='member_level2'){return '铜卡 (1800)'};
+//         if(input=='member_level3'){return '银卡 (3000)'};
+//         if(input=='member_level4'){return '金卡 (9000)'};
+//         if(input=='member_level5'){return '白金卡 (30000)'};
+//         if(input=='member_level6'){return '黑金卡 (60000)'};
+//     }
+// });

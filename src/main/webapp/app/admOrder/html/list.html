@@ -81,16 +81,16 @@
                                 <th class="text-center" width="9%">订单号</th>
                                 <th class="text-center" width="5%">订单来源</th>
                                 <th class="text-center" width="7%">会员</th>
-                                <th class="text-center" width="5%">会员级别</th>
+                                <!--<th class="text-center" width="5%">会员级别</th>-->
                                 <th class="text-center" width="4%">订单金额</th>
                                 <th class="text-center" width="4%">支付金额</th>
                                 <th class="text-center" width="5%">支付类型</th>
                                 <th class="text-center" width="5%">快递费</th>
-                                <th class="text-center" width="27%">商品名信息</th>
+                                <th class="text-center" width="30%">商品名信息</th>
                                 <th class="text-center" width="10%">订单时间</th>
                                 <th class="text-center" width="5%">订单状态</th>
                                 <th class="text-center" width="7%">物流信息</th>
-                                <th class="text-center" width="7%">操作</th>
+                                <th class="text-center" width="9%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -98,7 +98,7 @@
                                 <td class="text-left">{{orderMaster.orderNo}}</td>
                                 <td class="text-left">{{orderMaster.orderCategory|OrderCategoryFilter}}</td>
                                 <td class="text-left">{{orderMaster.memberName}}</td>
-                                <td class="text-left">{{orderMaster.memberLevel|MemberLevelFilter}}</td>
+                                <!--<td class="text-left">{{orderMaster.memberLevel|MemberLevelFilter}}</td>-->
                                 <td class="text-left">{{orderMaster.orderAmt|number:2}}</td>
                                 <td class="text-left">{{orderMaster.actAmt|number:2}}</td>
                                 <td class="text-left">{{orderMaster.bonusAccountType|bonusAccountTypeFilter}}</td>

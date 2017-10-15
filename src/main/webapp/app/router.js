@@ -240,4 +240,16 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admMemberCharge.list'),
                 controller: 'admMemberChargeListCtrl'
             })
+            .state('app.admNotice',{
+                url: '/admNotice',
+                templateUrl: helper.basepath('admNotice/html/list.html'),
+                resolve: helper.resolveFor('admNotice'),
+                controller: 'admNoticeCtrl'
+            })
+            .state('app.admAddNotice',{
+                url: '/admAddNotice/:id',
+                templateUrl: helper.basepath('admNotice/html/add.html'),
+                resolve: helper.resolveFor('admAddNotice'),
+                controller: 'admAddNoticeCtrl'
+            })
     }]);

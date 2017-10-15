@@ -13,6 +13,7 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.member.model.more.MoreMemberVO;
 import com.distribution.service.CommonService;
+import com.distribution.service.DividendService;
 import com.distribution.service.MemberService;
 import com.distribution.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,8 @@ public class MemberController extends BasicController {
     private MemberService memberService;
     @Autowired
     private NodeService nodeService;
+    @Autowired
+    private DividendService dividendService;
 
     @RequestMapping(value = "/jump")
     @IgnoreLoginCheck
@@ -148,10 +151,8 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/getMemberInfo/{id}")
     @ResponseBody
-    public JsonMessage getMemberInfo(@PathVariable Integer id){
+    public JsonMessage getBankName(@PathVariable Integer id){
         MoreMember moreMember = memberService.selectMemberInfo(id);
-        List<Dictionary> list = commonService.selectDictionary("bank_name");
-        Integer it = memberService.getByMemberId(id);
         Map map = nodeService.getSubNodeNumberAndSales(moreMember.getNodeId());
         Integer ln = !"null".equals(map.get("leftNum"))?Integer.valueOf(map.get("leftNum").toString()):0;
         BigDecimal ls = !"null".equals(map.get("leftToalSales"))?new BigDecimal(map.get("leftToalSales").toString()):new BigDecimal(0);
@@ -171,7 +172,42 @@ public class MemberController extends BasicController {
 
         Map result= new HashMap();
         result.put("member",moreMember);
+        return successMsg(result);
+    }
+
+
+    @RequestMapping("/getMemberDividendCount/{memberId}")
+    @ResponseBody
+    public JsonMessage getMemberDividendCount(@PathVariable Integer memberId){
+        Map result= new HashMap();
+        result= dividendService.memberDividendCount(memberId);
+        return successMsg(result);
+    }
+
+    /**
+     * description 获取会员详细信息
+     * @author Bright
+     * */
+    @RequestMapping("/getBankName/{id}")
+    @ResponseBody
+    public JsonMessage getIt(@PathVariable Integer id){
+        List<Dictionary> list = commonService.selectDictionary("bank_name");
+
+        Map result= new HashMap();
         result.put("list",list);
+        return successMsg(result);
+    }
+
+    /**
+     * description 获取会员详细信息
+     * @author Bright
+     * */
+    @RequestMapping("/getIt/{id}")
+    @ResponseBody
+    public JsonMessage getMemberInfo(@PathVariable Integer id){
+        Integer it = memberService.getByMemberId(id);
+
+        Map result= new HashMap();
         result.put("it",it);
         return successMsg(result);
     }

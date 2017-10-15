@@ -13,3 +13,6 @@ form{
 .blockOverlay{
     z-index: 160000 !important;
 }
+.black-font{
+ color:#000 !important;
+}

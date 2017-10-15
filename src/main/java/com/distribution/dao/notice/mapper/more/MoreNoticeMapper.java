@@ -13,4 +13,5 @@ public interface MoreNoticeMapper {
     /**前台*/
     List<MoreNotice> getList();
     MoreNotice selectByPrimaryKey(Integer id);
+    Integer insert(Notice notice);
 }

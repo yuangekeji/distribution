@@ -22,6 +22,7 @@ public interface MoreOrderMasterMapper {
 
     List<MoreOrderMaster> getOrderList(Page page);
     List<MoreOrderMaster> getExcelOrderList(Map map);
+    List<MoreOrderMaster> getExcelOrderList1(Map map);
     /**
      * description 订单插入
      * @author WYN

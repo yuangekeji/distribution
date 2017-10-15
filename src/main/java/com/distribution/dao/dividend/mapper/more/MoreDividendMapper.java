@@ -33,5 +33,4 @@ public interface MoreDividendMapper extends DividendMapper{
 
     List memberDividendCount(Integer memberId);
 
-    List<Dividend> getExcelDividendList(Map map);
 }

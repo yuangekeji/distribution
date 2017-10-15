@@ -2,8 +2,8 @@ package com.distribution.service;
 
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dividend.mapper.more.MoreDividendMapper;
-import com.distribution.dao.dividend.model.Dividend;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
+import com.distribution.dao.memberBonus.model.MemberBonus;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.*;
@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,14 +88,14 @@ public class DividendService {
      * @author Bright
      * */
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
-        List<Dividend> result = dividendMapper.getExcelDividendList(map);
+        List<MemberBonus> result = memberBonusMapper.getExcelMemberBonusList(map);
         //定义表头
-        String[] excelHeader = {"订单号", "分红包个数", "订单金额", "已领取金额", "未领取金额", "领取金额上限"};
+        String[] excelHeader = {"订单编号", "领取时间", "当日分红包金额", "领取金额", "管理费"};
 
-        return  this.exportExcel("红包列表", excelHeader, result, response.getOutputStream());
+        return  this.exportExcel("红包明细列表", excelHeader, result, response.getOutputStream());
     }
 
-    public XSSFWorkbook exportExcel(String title, String[] headers, List<Dividend> list, OutputStream out) throws InvocationTargetException {
+    public XSSFWorkbook exportExcel(String title, String[] headers, List<MemberBonus> list, OutputStream out) throws InvocationTargetException {
         // 声明一个工作薄
         XSSFWorkbook workbook = new XSSFWorkbook();
         // 生成一个表格
@@ -120,47 +121,38 @@ public class DividendService {
         sheet.setColumnWidth(2, 12 * 256);
         sheet.setColumnWidth(3, 22 * 256);
         sheet.setColumnWidth(4, 20 * 256);
-        sheet.setColumnWidth(5, 30 * 256);
         //构建表体
         int t = 0;
-        int p = 0;
-        int m = 0;
+        double e = 0;
+        double m = 0;
+        double p = 0;
         for(int j=0;j<list.size();j++){
             XSSFRow bodyRow = sheet.createRow(j + 1);
-
+            System.out.println(j);
             bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
-            bodyRow.createCell(1).setCellValue(list.get(j).getDividendCount());
-            bodyRow.createCell(2).setCellValue(list.get(j).getOrderAmount().toString());
-            bodyRow.createCell(3).setCellValue(list.get(j).getReceivedAmount().toString());
-            bodyRow.createCell(4).setCellValue(list.get(j).getRemainAmount().toString());
-            bodyRow.createCell(5).setCellValue(list.get(j).getDividendLimit().toString());
-            p+=list.get(j).getReceivedAmount().intValue();
-            m+=list.get(j).getRemainAmount().intValue();
+            bodyRow.createCell(1).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getBonusDate()));
+            bodyRow.createCell(2).setCellValue(list.get(j).getAmout().toString());
+            bodyRow.createCell(3).setCellValue(list.get(j).getActualAmout().toString());
+            bodyRow.createCell(4).setCellValue(list.get(j).getManageFee().toString());
             t=j;
+            e+=list.get(j).getAmout().doubleValue();
+            m+=list.get(j).getActualAmout().doubleValue();
+            p+=list.get(j).getManageFee().doubleValue();
         }
-        XSSFRow bodyRow1 = sheet.createRow(t + 5);
+        XSSFRow bodyRow1 = sheet.createRow(t + 2);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
         style.setFont(font);
 
         XSSFCell cel1 = bodyRow1.createCell(0);
         cel1.setCellStyle(style);
-        cel1.setCellValue("已领取奖金总金额:");
-        XSSFCell cel2 = bodyRow1.createCell(1);
-        cel2.setCellStyle(style);
-        cel2.setCellValue(p+"元");
+        cel1.setCellValue("统计:");
+        XSSFCell cel2 = bodyRow1.createCell(2);
+        cel2.setCellValue(e);
+        XSSFCell cel3 = bodyRow1.createCell(3);
+        cel3.setCellValue(m);
+        XSSFCell cel4 = bodyRow1.createCell(4);
+        cel4.setCellValue(p);
 
-        /***************************/
-
-        XSSFRow bodyRow2 = sheet.createRow(t + 7);
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
-        style.setFont(font);
-
-        XSSFCell cel3 = bodyRow2.createCell(0);
-        cel3.setCellStyle(style);
-        cel3.setCellValue("未领取奖金总金额:");
-        XSSFCell cel4 = bodyRow2.createCell(1);
-        cel4.setCellStyle(style);
-        cel4.setCellValue(m+"元");
 
         return  workbook;
     }

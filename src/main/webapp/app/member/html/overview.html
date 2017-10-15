@@ -76,29 +76,74 @@
             </div>
         </div>
     </div>
-    <!--<div class="col-md-5">-->
-        <!--<div class="portlet light ">-->
-            <!--<div class="portlet-title">-->
-                <!--<div class="caption caption-md">-->
-                    <!--<i class="icon-bar-chart theme-font hide"></i>-->
-                    <!--<span class="caption-subject font-blue-madison bold uppercase">网站公告</span>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="portlet-body">-->
-                <!--<div class="table-scrollable table-scrollable-borderless">-->
-                    <!--<table class="table table-hover table-light" >-->
-                        <!--<tr>-->
-                            <!--<td class="black-font" >-->
-                                <!--2017-10-14-->
-                            <!--</td>-->
-                            <!--<td class="black-font"><a>国庆中秋节假期安排和促销活动</a></td>-->
-                        <!--</tr>-->
-
-                    <!--</table>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-     <!--</div>-->
+    <div class="col-md-5">
+        <div class="portlet light ">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject font-blue-madison bold uppercase">网站公告</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-scrollable table-scrollable-borderless">
+                    <table class="table table-hover table-light" >
+                        <tr ng-repeat="notice in notices track by $index">
+                            <td class="black-font" ng-class="{'bold':notice.level=='2'}" >
+                                {{notice.noticeTime|date:'yyyy-MM-dd: HH:mm'}}
+                            </td>
+                            <td class="black-font"><a href="javascript:void(0);" ng-class="{'bold':notice.level=='2'}" ng-click="show(notice.id);">{{notice.title}}</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+     </div>
+</div>
+<div id="detail" class="modal fade" style="z-index: 1030" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard=false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-blue-steel">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">
+                    <!--<i class="icon-pencil"></i>-->
+                    <span id="lblAddTitle" style="font-weight:bold;color: white">公告详情</span>
+                </h4>
+            </div>
+            <form class="form-horizontal form-bordered form-row-strippe" id="ffAdd" action="" data-toggle="validator" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-12 bold" style="text-align: center">{{noc.title}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-offset-8">作者：{{noc.name}}</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-1"></label>
+                                <div class="col-md-10" style="max-height:450px;overflow-y:auto">
+                                    {{noc.content}}
+                                </div>
+                                <label class="col-md-1"></label>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-md-offset-7">发布时间：{{noc.noticeTime|date:'yyyy-MM-dd HH:mm'}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-info">
+                    <button type="button" class="btn blue-steel" data-dismiss="modal" style="margin-right:50px">确定</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
     Profile.init(); // init page demo

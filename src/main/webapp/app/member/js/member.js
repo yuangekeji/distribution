@@ -2,6 +2,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
     //Bright Start
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
+    $scope.notices = [];
     $scope.param = {
         loginPasswordConfirm:"",
         loginPasswordConfirm:"",
@@ -68,7 +69,16 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                     console.log(resp);
                 }
             });
+
+            $http.get(ctx + '/notice/getList/').success(function (resp) {
+                if(resp.successful){
+                    $scope.notices = resp.data;
+                }else{
+                    console.log(resp);
+                }
+            });
         },2000);
+
 
     };
 
@@ -300,6 +310,18 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 }
             }
         }
+    };
+
+    /**查看公告*/
+    $scope.show = function (id) {
+        $http.get(ctx + "/notice/getNoticeById/"+id).success(function (resp) {
+            if(resp.successful){
+                $scope.noc = resp.data;
+                $("#detail").modal("show");
+            }
+        }).error(function (resp) {
+            console.error(resp);
+        })
     };
 
     /**loading*/

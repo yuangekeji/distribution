@@ -49,7 +49,6 @@ angular.module('order', []);
 angular.module('operator',[]);
 angular.module('auth',[]);
 angular.module('product',[]);
-angular.module('notice',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);

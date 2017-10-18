@@ -7,48 +7,11 @@
         <div style="height: 500px">
             <uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
                 <uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
-                        <img ng-src="{{slide.image}}" style="margin:auto;width: 100%;height: 500px">
+                    <img ng-src="{{slide.image}}" style="margin:auto;height: 500px">
                 </uib-slide>
             </uib-carousel>
         </div>
 
-        <!-- BEGIN: ACCORDION DEMO -->
-        <!--<div class="portlet light bordered">-->
-            <!--<div class="portlet-title">-->
-                <!--<div class="caption font-green-sharp">-->
-                    <!--<i class="icon-settings font-green-sharp"></i>-->
-                    <!--<span class="caption-subject bold uppercase">Page Portlet</span>-->
-                    <!--<span class="caption-helper hide"></span>-->
-                <!--</div>-->
-              <!---->
-            <!--</div>-->
-            <!--<div class="portlet-body">-->
-                <!--&lt;!&ndash; BEGIN MAIN JS &ndash;&gt;-->
-                <!--<div >-->
-                    <!---->
-
-                    <!--<script type="text/ng-template" id="myModalContent.html">-->
-                        <!--<div class="modal-header">-->
-                            <!--<h3 class="modal-title">提示信息</h3>-->
-                        <!--</div>-->
-                        <!--<div class="modal-body">-->
-                            <!--<p>{{ msg }}</p>-->
-                        <!--</div>-->
-                        <!--<div class="modal-footer">-->
-                            <!--<button class="btn btn-primary" type="button" ng-click="ok()">确认</button>-->
-                            <!--<button class="btn btn-warning" ng-if="type == 'confirm'" type="button" ng-click="cancel()">取消</button>-->
-                        <!--</div>-->
-                    <!--</script>-->
-
-                    <!--&lt;!&ndash;&ndash;&gt;-->
-                    <!--&lt;!&ndash;&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="open()">Open me!</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>&ndash;&gt;-->
-                    <!--&lt;!&ndash;<button type="button" class="btn btn-default" ng-click="test()">test!</button>&ndash;&gt;-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
     </div>
 </div>
 <!-- END MAIN CONTENT -->
@@ -57,14 +20,14 @@
     // call any jquery or angularjs code ehre
 </script>
 
-<div id="add" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard=false>
+<div id="add" class="modal fade" style="z-index: 1030" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard=false>
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>-->
+            <div class="modal-header bg-blue-steel">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
                 <h4 class="modal-title">
-                    <i class="icon-pencil"></i>
-                    <span id="lblAddTitle" style="font-weight:bold">账号激活</span>
+                    <!--<i class="icon-pencil"></i>-->
+                    <span id="lblAddTitle" style="font-weight:bold;color: white">账号激活</span>
                 </h4>
             </div>
             <form class="form-horizontal form-bordered form-row-strippe" id="ffAdd" action="" data-toggle="validator" enctype="multipart/form-data">
@@ -80,7 +43,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">身份证号码</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="请输入身份证号码" ng-model="currentUser.idNumber" maxlength="18">
+                                    <input type="text" class="form-control input-circle" placeholder="请输入身份证号码" ng-model="currentUser.idNumber" maxlength="18">
                                 </div>
                             </div>
                         </div>
@@ -89,7 +52,7 @@
                                 <label class="control-label col-md-3">开户行</label>
                                 <div class="col-md-9">
                                     <!--<input type="text" class="form-control" placeholder="请输入开户行" ng-model="currentUser.bankName" maxlength="20">-->
-                                    <select class="form-control" ng-model="currentUser.bankName" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
+                                    <select class="form-control input-circle" ng-model="currentUser.bankName" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +60,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">开户人姓名</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="请输入开户人姓名" ng-model="currentUser.bankUserName" maxlength="20">
+                                    <input type="text" class="form-control input-circle" placeholder="请输入开户人姓名" ng-model="currentUser.bankUserName" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -105,7 +68,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3">银行卡号</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" placeholder="请输入银行卡号" ng-model="currentUser.cardNumber" maxlength="20">
+                                    <input type="text" class="form-control input-circle" placeholder="请输入银行卡号" ng-model="currentUser.cardNumber" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -113,7 +76,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">二级密码(查询密码)</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="二级密码" ng-model="currentUser.queryPassword" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="二级密码" ng-model="currentUser.queryPassword" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -121,7 +84,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">二级密码确认</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="二级密码确认" ng-model="queryPasswordConfirm" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="二级密码确认" ng-model="queryPasswordConfirm" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -129,7 +92,7 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">三级密码(支付密码)</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="三级密码" ng-model="currentUser.payPassword" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="三级密码" ng-model="currentUser.payPassword" maxlength="20">
                                 </div>
                             </div>
                         </div>
@@ -137,16 +100,50 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3" style="padding-left: 10px">三级密码确认</label>
                                 <div class="col-md-9">
-                                    <input type="password" class="form-control" placeholder="三级密码确认" ng-model="payPasswordConfirm" maxlength="20">
+                                    <input type="password" class="form-control input-circle" placeholder="三级密码确认" ng-model="payPasswordConfirm" maxlength="20">
                                 </div>
                             </div>
                         </div>
-
+                        <div class="col-md-12">
+                            <div class="form-group" >
+                                <label class="control-label col-md-3">产品邮寄方式</label>
+                                <div class="col-md-9">
+                                    <select name="sendbypostyn" ng-model="currentUser.sendbypostyn" class="form-control input-circle" >
+                                        <option value="1">自提</option>
+                                        <option value="2">快递邮寄</option>
+                                    </select>
+                                </div>
+                            </div>
+                      </div>
+                       <div class="col-md-12" ng-show="currentUser.sendbypostyn=='2'">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">收货人</label>
+                                <div class="col-md-9">
+                                   <input type="text" class="form-control input-circle" placeholder="请输入收货人姓名" ng-model="currentUser.receiveName" maxlength="50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="currentUser.sendbypostyn=='2'">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">收货地址</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control input-circle" placeholder="请输入收货人地址" ng-model="currentUser.receviveAddress" maxlength="200">
+                               </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" ng-show="currentUser.sendbypostyn=='2'">
+                            <div class="form-group">
+                                <label class="control-label col-md-3">收货电话</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control input-circle" placeholder="请输入收货电话" ng-model="currentUser.recevivePhone" maxlength="200">
+                                </div>
+                            </div>
+                       </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-info">
-                    <button type="button" class="btn blue" ng-click="activation();">确定</button>
-                    <!--<button type="button" class="btn green" data-dismiss="modal">取消</button>-->
+                    <button type="button" class="btn blue-steel" ng-click="activation();">确定</button>
+                    <button type="button" class="btn green" data-dismiss="modal">取消</button>
                 </div>
             </form>
         </div>

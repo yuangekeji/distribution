@@ -13,12 +13,17 @@
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
     <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
     <result column="order_statues" property="orderStatues" jdbcType="CHAR" />
+    <result column="express_no" property="expressNo" jdbcType="VARCHAR" />
     <result column="create_id" property="createId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="sendByPostYN" property="sendbypostyn" jdbcType="CHAR" />
+    <result column="bonus_account_type" property="bonusAccountType" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,8 +85,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, order_no, order_category, order_amt, order_qty, discount, act_amt, express_fee, 
-    member_id, receive_name, express_address, member_level, order_statues, create_id, 
-    create_time, update_id, update_time
+    member_id, receive_name, express_address, recevive_phone, remark, member_level, order_statues, 
+    express_no, create_id, create_time, update_id, update_time, sendByPostYN, bonus_account_type
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.order.model.OrderMasterExample" >
     select
@@ -118,15 +123,19 @@
     insert into order_master (id, order_no, order_category, 
       order_amt, order_qty, discount, 
       act_amt, express_fee, member_id, 
-      receive_name, express_address, member_level, 
-      order_statues, create_id, create_time, 
-      update_id, update_time)
+      receive_name, express_address, recevive_phone, 
+      remark, member_level, order_statues, 
+      express_no, create_id, create_time, 
+      update_id, update_time, sendByPostYN, 
+      bonus_account_type)
     values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, 
       #{orderAmt,jdbcType=DECIMAL}, #{orderQty,jdbcType=INTEGER}, #{discount,jdbcType=INTEGER}, 
       #{actAmt,jdbcType=DECIMAL}, #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, 
-      #{receiveName,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, 
-      #{orderStatues,jdbcType=CHAR}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+      #{receiveName,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{recevivePhone,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR}, 
+      #{expressNo,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{sendbypostyn,jdbcType=CHAR}, 
+      #{bonusAccountType,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.order.model.OrderMaster" >
     insert into order_master
@@ -164,11 +173,20 @@
       <if test="expressAddress != null" >
         express_address,
       </if>
+      <if test="recevivePhone != null" >
+        recevive_phone,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
       <if test="memberLevel != null" >
         member_level,
       </if>
       <if test="orderStatues != null" >
         order_statues,
+      </if>
+      <if test="expressNo != null" >
+        express_no,
       </if>
       <if test="createId != null" >
         create_id,
@@ -181,6 +199,12 @@
       </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="sendbypostyn != null" >
+        sendByPostYN,
+      </if>
+      <if test="bonusAccountType != null" >
+        bonus_account_type,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -217,11 +241,20 @@
       <if test="expressAddress != null" >
         #{expressAddress,jdbcType=VARCHAR},
       </if>
+      <if test="recevivePhone != null" >
+        #{recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="memberLevel != null" >
         #{memberLevel,jdbcType=VARCHAR},
       </if>
       <if test="orderStatues != null" >
         #{orderStatues,jdbcType=CHAR},
+      </if>
+      <if test="expressNo != null" >
+        #{expressNo,jdbcType=VARCHAR},
       </if>
       <if test="createId != null" >
         #{createId,jdbcType=INTEGER},
@@ -234,6 +267,12 @@
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendbypostyn != null" >
+        #{sendbypostyn,jdbcType=CHAR},
+      </if>
+      <if test="bonusAccountType != null" >
+        #{bonusAccountType,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -279,11 +318,20 @@
       <if test="record.expressAddress != null" >
         express_address = #{record.expressAddress,jdbcType=VARCHAR},
       </if>
+      <if test="record.recevivePhone != null" >
+        recevive_phone = #{record.recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
       <if test="record.memberLevel != null" >
         member_level = #{record.memberLevel,jdbcType=VARCHAR},
       </if>
       <if test="record.orderStatues != null" >
         order_statues = #{record.orderStatues,jdbcType=CHAR},
+      </if>
+      <if test="record.expressNo != null" >
+        express_no = #{record.expressNo,jdbcType=VARCHAR},
       </if>
       <if test="record.createId != null" >
         create_id = #{record.createId,jdbcType=INTEGER},
@@ -296,6 +344,12 @@
       </if>
       <if test="record.updateTime != null" >
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendbypostyn != null" >
+        sendByPostYN = #{record.sendbypostyn,jdbcType=CHAR},
+      </if>
+      <if test="record.bonusAccountType != null" >
+        bonus_account_type = #{record.bonusAccountType,jdbcType=CHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -315,12 +369,17 @@
       member_id = #{record.memberId,jdbcType=INTEGER},
       receive_name = #{record.receiveName,jdbcType=VARCHAR},
       express_address = #{record.expressAddress,jdbcType=VARCHAR},
+      recevive_phone = #{record.recevivePhone,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
       member_level = #{record.memberLevel,jdbcType=VARCHAR},
       order_statues = #{record.orderStatues,jdbcType=CHAR},
+      express_no = #{record.expressNo,jdbcType=VARCHAR},
       create_id = #{record.createId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_id = #{record.updateId,jdbcType=INTEGER},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      sendByPostYN = #{record.sendbypostyn,jdbcType=CHAR},
+      bonus_account_type = #{record.bonusAccountType,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -358,11 +417,20 @@
       <if test="expressAddress != null" >
         express_address = #{expressAddress,jdbcType=VARCHAR},
       </if>
+      <if test="recevivePhone != null" >
+        recevive_phone = #{recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
       <if test="memberLevel != null" >
         member_level = #{memberLevel,jdbcType=VARCHAR},
       </if>
       <if test="orderStatues != null" >
         order_statues = #{orderStatues,jdbcType=CHAR},
+      </if>
+      <if test="expressNo != null" >
+        express_no = #{expressNo,jdbcType=VARCHAR},
       </if>
       <if test="createId != null" >
         create_id = #{createId,jdbcType=INTEGER},
@@ -375,6 +443,12 @@
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendbypostyn != null" >
+        sendByPostYN = #{sendbypostyn,jdbcType=CHAR},
+      </if>
+      <if test="bonusAccountType != null" >
+        bonus_account_type = #{bonusAccountType,jdbcType=CHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -391,12 +465,17 @@
       member_id = #{memberId,jdbcType=INTEGER},
       receive_name = #{receiveName,jdbcType=VARCHAR},
       express_address = #{expressAddress,jdbcType=VARCHAR},
+      recevive_phone = #{recevivePhone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
       member_level = #{memberLevel,jdbcType=VARCHAR},
       order_statues = #{orderStatues,jdbcType=CHAR},
+      express_no = #{expressNo,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_id = #{updateId,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sendByPostYN = #{sendbypostyn,jdbcType=CHAR},
+      bonus_account_type = #{bonusAccountType,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

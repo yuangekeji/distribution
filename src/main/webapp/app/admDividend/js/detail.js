@@ -86,10 +86,8 @@ angular.module('admDividend').controller('admDividendDetailCtrl',function ($q, t
         $scope.myPage.pageNo = num;
         $scope.search();
     };
-});
-angular.module('admDividend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='1'){return '领取中'};
-        if(input=='2'){return '领取完'};
+
+    $scope.returnList = function () {
+        $state.go('app.admDividend');
     }
 });

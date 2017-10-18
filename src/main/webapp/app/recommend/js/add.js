@@ -1,24 +1,35 @@
-angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, Notify) {
     title.setTitle('创建分销订单');
     $scope.user = $sessionStorage.currentUser;
-    $scope.member = {
-        recommendPhone:$sessionStorage.currentUser.memberPhone
-    };
-    $scope.confirmLoginPassword = "";
-    $scope.dictionary = [];
+    $scope.confirmLoginPassword = "111111";
+    $scope.orderAmounts = [];
+
     $scope.onInit = function () {
-        $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
-            if(resp.successful){
-                $scope.dictionary = resp.data.list;
-                if($scope.dictionary){
-                    $scope.member.memberLevel = $scope.dictionary[0].dicCode;
-                }
-            }else{
-                console.log(resp);
-            }
-        });
+        var MIN = 600;
+        var MAX = 30000;
+
+        for(var i = 1 ; i<= MAX/MIN ; i++ ){
+            $scope.orderAmounts.push({value: i * MIN , name :  i * MIN +".00 ( "+i+"单 )"});
+        }
+        $scope.orderAmounts.unshift({value:"",name:"请选择报单金额"});
+        // $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
+        //     if(resp.successful){
+        //         $scope.dictionary = resp.data.list;
+        //         if($scope.dictionary){
+        //             $scope.member.memberLevel = $scope.dictionary[0].dicCode;
+        //         }
+        //     }else{
+        //         console.log(resp);
+        //     }
+        // });
     };
     $scope.onInit();
+    $scope.member = {
+        recommendPhone:$sessionStorage.currentUser.memberPhone,
+        notePhone:$stateParams.mobile ? $stateParams.mobile : '',
+        loginPassword:'111111',
+        orderAmount:""
+    };
     $scope.submitFlag = true;
 
     /**提交*/
@@ -26,30 +37,44 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
         if($scope.submitFlag){
             $scope.submitFlag = false;
             if($scope.check()){
+                $scope.startLoading();
                 $http.post(ctx + "/member/insert",$scope.member).success(function (resp) {
                 if(resp.successful){
                     if(resp.data=='NO_RECOMMENDER'){
-                        alert("推荐人不存在，请重新输入。");
+                        $scope.stopLoading();
+                        Notify.warning("推荐人不存在，请重新输入。");
                         $scope.submitFlag = true;
                     }else if(resp.data=='PHONE_EXISTENCE'){
-                        alert("会员账号已存在，请重新输入。");
+                        $scope.stopLoading();
+                        Notify.warning("会员账号已存在，请重新输入。");
                         $scope.submitFlag = true;
-                    }else if(resp.data=='NO_NODE_MEMBER'){
-                        alert("节点不存在，请重新输入。");
-                        $scope.submitFlag = true;
-                    }else if(resp.data=='LEFT_NOTE_FULL'){
-                        alert("该节点左区已存在，请从新选择节点区域。");
-                        $scope.submitFlag = true;
-                    }else if(resp.data=='RIGHT_NOTE_FULL'){
-                        alert("该节点右区已存在，请从新选择节点区域。");
-                        $scope.submitFlag = true;
-                    }else{
+                    }
+                    // else if(resp.data=='NO_NODE_MEMBER'){
+                    //     $scope.stopLoading();
+                    //     Notify.warning("节点不存在，请重新输入。");
+                    //     $scope.submitFlag = true;
+                    // }else if(resp.data=='LEFT_NOTE_FULL'){
+                    //     $scope.stopLoading();
+                    //     Notify.warning("该节点左区已存在，请从新选择节点区域。");
+                    //     $scope.submitFlag = true;
+                    // }else if(resp.data=='RIGHT_NOTE_FULL'){
+                    //     $scope.stopLoading();
+                    //     Notify.warning("该节点右区已存在，请从新选择节点区域。");
+                    //     $scope.submitFlag = true;
+                    // }
+                    else{
+                        $scope.stopLoading();
+                        Notify.success('添加成功，返回列表页面。');
                         $state.go("app.recommend");
                         $scope.submitFlag = true;
                     }
+                }else{
+                    $scope.stopLoading();
+                    Notify.error('添加失败，请重新尝试。');
                 }
                 }).error(function (resp) {
                     console.log(resp);
+                    $scope.stopLoading();
                     $scope.submitFlag = true;
                 });
             }
@@ -59,49 +84,75 @@ angular.module('recommend').controller('recommendAddCtrl',function ($q, title, $
     /**校验*/
     $scope.check = function () {
         if(!$scope.member.recommendPhone||!$scope.member.recommendPhone.trim()){
-            alert("请输入推荐人手机号码");
+            Notify.warning("请输入推荐人手机号码");
             $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.recommendPhone))){
-            alert("推荐人手机号有误，请重新输入。");
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.recommendPhone))){
+            Notify.warning("推荐人手机号有误，请重新输入。");
             $scope.submitFlag = true;
         }else if(!$scope.member.memberName||!$scope.member.memberName.trim()){
-            alert("请输入会员姓名。");
+            Notify.warning("请输入会员姓名。");
             $scope.submitFlag = true;
         }else if(!$scope.member.memberPhone||!$scope.member.memberPhone.trim()){
-            alert("请输入会员账号。");
+            Notify.warning("请输入会员账号。");
             $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
-            alert("会员账号有误，会员账号为手机号码。");
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.memberPhone))){
+            Notify.warning("会员账号有误，会员账号为手机号码。");
+            $scope.submitFlag = true;
+        }else if(!$scope.member.linkmanPhone||!$scope.member.linkmanPhone.trim()){
+            Notify.warning("请输入联系人手机号。");
+            $scope.submitFlag = true;
+        }else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.linkmanPhone))){
+            Notify.warning("联系人手机号有误，请重新输入。");
             $scope.submitFlag = true;
         }else if(!$scope.member.loginPassword||!$scope.member.loginPassword.trim()){
-            alert("请输入登录密码。");
+            Notify.warning("请输入登录密码。");
             $scope.submitFlag = true;
         }else if(!$scope.confirmLoginPassword||!$scope.confirmLoginPassword.trim()){
-            alert("请输入确认密码。");
+            Notify.warning("请输入确认密码。");
             $scope.submitFlag = true;
         }else if($scope.member.loginPassword!=$scope.confirmLoginPassword){
-            alert("登录密码与确认密码不一致，请重新输入。");
+            Notify.warning("登录密码与确认密码不一致，请重新输入。");
             $scope.submitFlag = true;
-        }else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
-            alert("请输入节点手机号码。");
+        }
+        // else if(!$scope.member.notePhone||!$scope.member.notePhone.trim()){
+        //     Notify.warning("请输入节点手机号码。");
+        //     $scope.submitFlag = true;
+        // }
+        // else if(!$scope.member.area){
+        //     Notify.warning("请选择节点区域。");
+        //     $scope.submitFlag = true;
+        // }
+        // else if(!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
+        //     Notify.warning("节点手机号有误，请重新输入。");
+        //     $scope.submitFlag = true;
+        // }
+        else if(!$scope.member.orderAmount){
+            Notify.warning("请选择报单金额。");
             $scope.submitFlag = true;
-        }else if(!$scope.member.area){
-            alert("请选择节点区域。");
-            $scope.submitFlag = true;
-        }else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($scope.member.notePhone))){
-            alert("节点手机号有误，请重新输入。");
-            $scope.submitFlag = true;
-        }else if(!$scope.member.memberLevel){
-            alert("请选择会员等级。");
-            $scope.submitFlag = true;
-        }else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
-            alert("请输入收货人姓名。");
+        }
+        /*else if(!$scope.member.consignee||!$scope.member.consignee.trim()){
+            Notify.warning("请输入收货人姓名。");
             $scope.submitFlag = true;
         }else if(!$scope.member.expressAddress||!$scope.member.expressAddress.trim()){
-            alert("请输入收货地址。");
+            Notify.warning("请输入收货地址。");
             $scope.submitFlag = true;
-        }else{
+        }*/
+        else{
             return true;
         }
+    };
+
+    /**loading*/
+    var e1 = $('.full-view');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    };
+
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
     };
  });

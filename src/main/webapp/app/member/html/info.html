@@ -1,18 +1,18 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="portlet light">
+        <div class="portlet box blue-steel">
             <div class="portlet-title tabbable-line">
                 <div class="caption caption-md">
                     <i class="icon-globe theme-font hide"></i>
                 </div>
                 <div class="actions">
                     <div class="btn-group btn-group-devided" data-toggle="buttons">
-                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm active"
-                               data-target="#tab_1_1" data-toggle="tab">
-                            <input type="radio" name="options" class="toggle" id="option1">个人信息</label>
-                        <label class="btn btn-transparent dark btn-outline btn-circle btn-sm " data-target="#tab_1_2"
-                               data-toggle="tab">
-                            <input type="radio" name="options" class="toggle" id="option2">修改密码</label>
+                        <label class="btn btn-transparent white  btn-outline btn-circle btn-sm active" data-target="#tab_1_1" data-toggle="tab">
+                            <input type="radio" name="options" class="toggle" id="option1">个人信息
+                        </label>
+                        <label class="btn btn-transparent white  btn-outline btn-circle btn-sm " data-target="#tab_1_2" data-toggle="tab">
+                            <input type="radio" name="options" class="toggle" id="option2">修改密码
+                        </label>
                     </div>
                 </div>
             </div>
@@ -33,27 +33,27 @@
                                 <div class="form-control" ng-bind="MemberInfo.createTime|date:'yyyy年MM月dd日'" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">会员等级</label>
-                                <div class="form-control" ng-bind="MemberInfo.memberLevel|MemberLevelFilter" readonly="readonly"></div>
+                                <label class="control-label">注册金额</label>
+                                <div class="form-control" ng-bind="MemberInfo.orderAmount" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">职务等级</label>
+                                <label class="control-label">爵位等级</label>
                                 <div class="form-control" ng-bind="MemberInfo.memberPost|PostLevelFilter" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">推荐者姓名</label>
+                                <label class="control-label">推荐人</label>
                                 <div class="form-control" ng-bind="MemberInfo.recommendName" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">是否是运营中心</label>
                                 <div class="form-control" readonly="readonly">{{MemberInfo.isOperator=='Y'?'是':'否'}}</div>
                             </div>
+                            <!--<div class="form-group">-->
+                                <!--<label class="control-label">是否是销售部</label>-->
+                                <!--<div class="form-control" readonly="readonly">{{MemberInfo.isSalesDept=='Y'?'是':'否'}}</div>-->
+                            <!--</div>-->
                             <div class="form-group">
-                                <label class="control-label">是否是销售部</label>
-                                <div class="form-control" readonly="readonly">{{MemberInfo.isSalesDep=='Y'?'是':'否'}}</div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">一代个数</label>
+                                <label class="control-label">一代人数</label>
                                 <div class="form-control" readonly="readonly">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</div>
                             </div>
                             <div class="form-group">
@@ -63,6 +63,10 @@
                             <div class="form-group">
                                 <label class="control-label">收货人</label>
                                 <input type="text" placeholder="请输入收货人姓名" class="form-control" ng-model="MemberInfo.consignee" maxlength="20"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">联系人手机号</label>
+                                <input type="text" placeholder="请输入联系人手机号" class="form-control" ng-model="MemberInfo.linkmanPhone" maxlength="20"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收货地址</label>
@@ -80,24 +84,86 @@
                                 <label class="control-label">银行卡号</label>
                                 <input type="text" placeholder="请输入银行卡号" class="form-control" ng-model="MemberInfo.cardNumber" maxlength="20"/>
                             </div>
-
+                            <div class="margin-top-10">
+                                <a href="javascript:void(0);" ng-click="saveInfo();" class="btn blue-steel">保存</a>
+                                <a href="javascript:void(0);" ng-show="false" class="btn default">取消</a>
+                            </div>
                         </form>
                     </div>
                     <div class="tab-pane" id="tab_1_2">
-                        <form action="#">
-                            <div class="form-group">
-                                <label class="control-label">Current Password</label>
-                                <input type="password" class="form-control"/></div>
-                            <div class="form-group">
-                                <label class="control-label">New Password</label>
-                                <input type="password" class="form-control"/></div>
-                            <div class="form-group">
-                                <label class="control-label">Re-type New Password</label>
-                                <input type="password" class="form-control"/></div>
-                            <div class="margin-top-10">
-                                <a href="#" class="btn green-haze"> Change Password </a>
-                                <a href="#" class="btn default"> Cancel </a>
-                            </div>
+                        <form action="#" id="pwdForm">
+                            <uib-tabset>
+                                <uib-tab index="0" heading="修改登录密码">
+
+                                    <div class="portlet-body">
+                                        <div class="form-group">
+                                            <label class="control-label">原始登录密码</label>
+                                            <input type="password" class="form-control" ng-model="pwdMember.oldLoginPwd"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">新登录密码</label>
+                                            <input type="password" class="form-control" ng-model="pwdMember.loginPassword"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">密码确认</label>
+                                            <input type="password" class="form-control" ng-model="param.loginPasswordConfirm"/>
+                                        </div>
+                                        <div class="margin-top-10">
+                                            <a href="javascript:void(0);" ng-click="savePwd('login');" class="btn blue-steel">保存</a>
+                                            <!--<a href="javascript:void(0);" class="btn default"> Cancel </a>-->
+                                        </div>
+                                    </div>
+
+                                </uib-tab>
+
+                                <!-----------见点奖点位------------------------>
+                                <uib-tab index="1" heading="修改查询密码">
+                                    <div class="portlet-body">
+                                        <div class="portlet-body">
+                                            <div class="form-group">
+                                                <label class="control-label">原始查询密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.oldQueryPwd"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">新查询密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.queryPassword"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">密码确认</label>
+                                                <input type="password" class="form-control" ng-model="param.queryPasswordConfirm"/>
+                                            </div>
+                                            <div class="margin-top-10">
+                                                <a href="javascript:void(0);" ng-click="savePwd('query');" class="btn blue-steel">保存</a>
+                                                <!--<a href="javascript:void(0);" class="btn default"> Cancel </a>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+
+                                <!-----------提现设置------------------------>
+                                <uib-tab index="2" heading="修改支付密码">
+                                    <div class="portlet-body">
+                                        <div class="portlet-body">
+                                            <div class="form-group">
+                                                <label class="control-label">原始支付密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.oldPayPwd"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">新支付密码</label>
+                                                <input type="password" class="form-control" ng-model="pwdMember.payPassword"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">密码确认</label>
+                                                <input type="password" class="form-control" ng-model="param.payPasswordConfirm"/>
+                                            </div>
+                                            <div class="margin-top-10">
+                                                <a href="javascript:void(0);" ng-click="savePwd('pay');" class="btn blue-steel">保存</a>
+                                                <!--<a href="javascript:void(0);" class="btn default"> Cancel </a>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-tab>
+                            </uib-tabset>
                         </form>
                     </div>
                 </div>

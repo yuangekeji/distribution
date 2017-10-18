@@ -1,10 +1,12 @@
 package com.distribution.dao.dividend.mapper.more;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dividend.mapper.DividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface MoreDividendMapper extends DividendMapper{
@@ -22,4 +24,13 @@ public interface MoreDividendMapper extends DividendMapper{
      * @return
      */
     Integer getDividendListCount(Page page);
+    
+    Integer getAllNeedSendDividendCount();
+    
+    List<Dividend>listAllNeedSendDividends(String date);
+    
+    int updateAllNeedSendDividends(Map<String,Object> map);
+
+    List memberDividendCount(Integer memberId);
+
 }

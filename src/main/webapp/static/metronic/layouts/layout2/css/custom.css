@@ -1,1 +1,18 @@
-/* here you can put your own css to customize and override the theme */
+@media (max-width: 767px) {
+    /* 767px */
+    .page-header.navbar {
+        background:#4B77BE!important;
+        /* Top menu */ }
+    .page-header.navbar .top-menu .navbar-nav > li.dropdown > .dropdown-toggle:hover {
+        background-color: #eff1f6; } }
+
+form{
+    margin-bottom: 0px !important;
+}
+
+.blockOverlay{
+    z-index: 160000 !important;
+}
+.black-font{
+ color:#000 !important;
+}

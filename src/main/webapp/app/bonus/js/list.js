@@ -112,11 +112,11 @@ angular.module('bonus').controller('bonusCtrl',function ($q, title, $scope, $htt
             });
         out.result.then(function(value)
         {
-            console.info('确认');
+            // console.info('确认');
 
         }, function()
         {
-            console.info('取消');
+            // console.info('取消');
         });
     };
 });
@@ -133,18 +133,4 @@ angular.module('bonus').controller('BonusDetailCtrl', function ($scope, $uibModa
     {
         $uibModalInstance.dismiss('cancel');
     };
-});
-angular.module('bonus').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='0'){return '销售奖'};
-        if(input=='1'){return '一代奖'};
-        if(input=='2'){return '二代奖'};
-        if(input=='3'){return '分红包奖'};
-        if(input=='4'){return '见点奖'};
-        if(input=='5'){return '级差奖'};
-        if(input=='6'){return '全国董事奖'};
-        if(input=='7'){return '工作室奖'};
-        if(input=='8'){return '运营中心奖'};
-        if(input=='9'){return '运营中心扶持奖'};
-    }
 });

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.dateBonusHistory.mapper.more.MoreDateBonusHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dateBonusHistory.model.DateBonusHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="total_sales" property="totalSales" jdbcType="DECIMAL" />
+    <result column="dividend_total" property="dividendTotal" jdbcType="DECIMAL" />
+    <result column="jd_bonus_total" property="jdBonusTotal" jdbcType="DECIMAL" />
+    <result column="use_dividend_total" property="useDividendTotal" jdbcType="DECIMAL" />
+    <result column="use_jd_bonus_total" property="useJdBonusTotal" jdbcType="DECIMAL" />
+    <result column="remain_dividend" property="remainDividend" jdbcType="DECIMAL" />
+    <result column="remain_jd_bonus" property="remainJdBonus" jdbcType="DECIMAL" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="alarm_status" property="alarmStatus" jdbcType="INTEGER" />
+    <result column="jd_alarm_status" property="jdAlarmStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, date, total_sales, dividend_total, jd_bonus_total, use_dividend_total, use_jd_bonus_total, 
+    remain_dividend, remain_jd_bonus, create_id, create_time, update_id, update_time,alarm_status,jd_alarm_status
+  </sql>
+  <sql id="where">
+      <where>
+        <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+          <![CDATA[AND DATE_FORMAT(date, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+        </if>
+        <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+          <![CDATA[AND DATE_FORMAT(date, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
+        </if>
+      </where>
+  </sql>
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+  <select id="getTotalSales" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+      round(total_sales * 0.01/#{size},2) as total_sales
+    from date_bonus_history
+    where DATE_FORMAT(date,'%Y-%m-%d') = DATE_SUB(curdate(),INTERVAL 1 DAY)
+  </select>
+  <select id="selectCurrentDaySalesAndBonus" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	    <include refid="Base_Column_List" />
+		from date_bonus_history
+		where DATE(create_time) = #{date}
+  </select>
+
+  <select id="selectFailJobCount" resultType="java.lang.Integer">
+     select count(0) as count
+     from date_bonus_history
+     where alarm_status = 0  or  jd_alarm_status = 0
+  </select>
+  <select id="selectDateBonusHistoryList" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page" >
+    select
+    <include refid="Base_Column_List" />
+    from date_bonus_history
+    <include refid="where"/>
+    order by alarm_status asc ,create_time desc
+    <include refid="pageLimit"/>
+  </select>
+  <select id="selectDateBonusHistoryListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
+    select
+    count(0) as count
+    from date_bonus_history
+    <include refid="where"/>
+  </select>
+  <update id="updateDateBonusHistorySuccess" parameterType="java.util.Map">
+  	update
+		date_bonus_history
+	set 
+		<if test="alarmStatus != null">
+		alarm_status=#{alarmStatus},
+		</if>
+		<if test="jdAlarmStatus != null">
+		jd_alarm_status=#{jdAlarmStatus},
+		</if>
+		update_id=#{updateId}, 
+		update_time=#{updateTime}
+	<![CDATA[where DATE_FORMAT(date, '%Y-%m-%d') <= #{date}]]>
+  </update>
+</mapper>

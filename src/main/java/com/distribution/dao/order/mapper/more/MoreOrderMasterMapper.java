@@ -1,11 +1,12 @@
 package com.distribution.dao.order.mapper.more;
 
-import com.distribution.common.utils.Page;
-import com.distribution.dao.order.model.OrderMaster;
-import com.distribution.dao.order.model.more.MoreOrderMaster;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.distribution.common.utils.Page;
+import com.distribution.dao.order.model.more.MoreOrderMaster;
 
 @Repository
 public interface MoreOrderMasterMapper {
@@ -19,8 +20,9 @@ public interface MoreOrderMasterMapper {
      * @author WYN
      * */
 
-    List<OrderMaster> getOrderList(Page page);
-
+    List<MoreOrderMaster> getOrderList(Page page);
+    List<MoreOrderMaster> getExcelOrderList(Map map);
+    List<MoreOrderMaster> getExcelOrderList1(Map map);
     /**
      * description 订单插入
      * @author WYN
@@ -38,4 +40,16 @@ public interface MoreOrderMasterMapper {
      * @author Bright
      * */
     Double countOrderAmcountByMemberId(Integer memberId);
+
+    /**
+     * description 确认收货
+     * @author WYN
+     * */
+    int confirmOrder(MoreOrderMaster moreOrderMaster);
+    
+    /**
+     * Description 查询当日的所有销售额
+     * @author su
+     */
+    double findCurrentDayOrderSales(String date);
 }

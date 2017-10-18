@@ -7,10 +7,11 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="role_id"  property="roleId" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    id,mobile,name,role_id
+    id,mobile,name,role_id,delete_flag
   </sql>
 
   <sql id="where">
@@ -19,7 +20,7 @@
         AND id = #{parameterMap.id}
       </if>
       <if test="parameterMap.name!=null and parameterMap.name!=''">
-        AND name = #{parameterMap.name}
+        AND name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.name}))),'%') ESCAPE '*'
       </if>
       <if test="parameterMap.mobile!=null and parameterMap.mobile!=''">
         AND mobile = #{parameterMap.mobile}
@@ -40,7 +41,10 @@
 
   <!--登陆-->
   <select id="login" parameterType="java.util.Map" resultMap="BaseResultMap">
-    SELECT id,mobile,name,role_id FROM admin WHERE mobile = #{userName} AND password = #{password}
+    SELECT id,mobile,name,role_id FROM admin
+    WHERE mobile = #{userName}
+      AND password = #{password}
+      AND delete_flag = 'N'
   </select>
 
   <!--查詢管理员列表-->
@@ -59,5 +63,14 @@
     count(0) as count
     from admin
     <include refid="where"/>
+  </select>
+
+  <!--通过手机号码查询-->
+  <select id="getAdminByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM admin WHERE mobile = #{mobile}
+  </select>
+
+  <select id="checkLoginPwd" parameterType="com.distribution.dao.admin.model.more.MoreAdmin" resultMap="BaseResultMap">
+    SELECT id,password FROM admin WHERE id = #{id} AND password = #{oldLoginPwd}
   </select>
 </mapper>

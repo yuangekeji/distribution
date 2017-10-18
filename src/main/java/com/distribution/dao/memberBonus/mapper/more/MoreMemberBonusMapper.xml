@@ -89,7 +89,7 @@
           and mb.member_id = #{parameterMap.memberId}
       </if>
       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-          and mb.order_no = #{parameterMap.orderNo}
+          and mb.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
       </if>
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderStartDate!=''">
           and DATE_FORMAT(mb.order_date,'%Y%m%d') &gt;= DATE_FORMAT(#{parameterMap.orderStartDate},'%Y%m%d')
@@ -97,7 +97,7 @@
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
           and DATE_FORMAT(mb.order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
       </if>
-          and mb.bonus_type not in ('6')
+          and mb.bonus_type not in ('6','3')
     </where>
   </sql>
   <select id="selectMemberBonusList" resultMap="MemberBonusListResultMap" parameterType="com.distribution.common.utils.Page" >
@@ -115,7 +115,7 @@
     </if>
       member.recommend_id,
       member.recommend_name,
-      member.order_amount,
+      mb.order_amount,
       mb.amout_total,
       mb.manage_fee_total,
       mb.actual_amout_total
@@ -125,6 +125,8 @@
           mb.order_id,
           mb.order_no,
           mb.order_date order_date,
+          max(mb.create_date) create_date,
+          om.order_amt AS order_amount,
           sum(mb.amout) AS amout_total,
           sum(mb.manage_fee) AS manage_fee_total,
           sum(mb.actual_amout) AS actual_amout_total
@@ -136,9 +138,11 @@
       union all
       select
         member_id member_id,
-        order_id,
-        order_no,
+        null order_id,
+        null order_no,
         NULL order_date,
+        create_date,
+        NULL order_amount,
         amout AS amout_total,
         manage_fee AS manage_fee_total,
         actual_amout AS actual_amout_total
@@ -150,7 +154,7 @@
       </if>
       ) mb, member member
       where mb.member_id = member.id
-      order by mb.order_id, mb.member_id
+      order by mb.member_id desc, mb.create_date desc
     <include refid="pageLimit"/>
   </select>
   <select id="selectMemberBonusListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
@@ -201,7 +205,7 @@
       <if test="parameterMap.orderEndDate!=null and parameterMap.orderEndDate!=''">
         and DATE_FORMAT(mb.order_date,'%Y%m%d') &lt;= DATE_FORMAT(#{parameterMap.orderEndDate},'%Y%m%d')
       </if>
-      and bonus_type not in ('6')
+      and bonus_type not in ('6','3')
     </where>
   </sql>
   <select id="selectMemberBonusDetail" resultMap="MemberBonusDetailResultMap" parameterType="com.distribution.common.utils.Page" >
@@ -218,5 +222,24 @@
     <include refid="whereMemberBonusDetail"/>
     group by mb.member_id, mb.order_id, mb.order_no,mb.bonus_type
       order by mb.member_id desc
+  </select>
+
+  <select id="getExcelMemberBonusList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT
+    m.*
+    FROM
+    dividend d
+    INNER JOIN
+    member_bonus m
+    ON d.member_id = m.member_id
+    AND d.order_no = m.order_no
+    AND m.bonus_type = 3
+    <if test="startTime != null and startTime != ''">
+      <![CDATA[AND DATE_FORMAT(m.bonus_date, '%Y-%m-%d') >= #{startTime}]]>
+    </if>
+    <if test="endTime != null and endTime != ''">
+      <![CDATA[AND DATE_FORMAT(m.bonus_date, '%Y-%m-%d') <= #{endTime}]]>
+    </if>
+    ORDER BY d.id DESC,m.bonus_date DESC
   </select>
 </mapper>

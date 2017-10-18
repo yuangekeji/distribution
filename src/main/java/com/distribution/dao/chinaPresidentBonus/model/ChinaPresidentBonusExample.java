@@ -1,5 +1,6 @@
 package com.distribution.dao.chinaPresidentBonus.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -235,52 +236,52 @@ public class ChinaPresidentBonusExample {
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutEqualTo(Double value) {
+        public Criteria andBonusAmoutEqualTo(BigDecimal value) {
             addCriterion("bonus_amout =", value, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutNotEqualTo(Double value) {
+        public Criteria andBonusAmoutNotEqualTo(BigDecimal value) {
             addCriterion("bonus_amout <>", value, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutGreaterThan(Double value) {
+        public Criteria andBonusAmoutGreaterThan(BigDecimal value) {
             addCriterion("bonus_amout >", value, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutGreaterThanOrEqualTo(Double value) {
+        public Criteria andBonusAmoutGreaterThanOrEqualTo(BigDecimal value) {
             addCriterion("bonus_amout >=", value, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutLessThan(Double value) {
+        public Criteria andBonusAmoutLessThan(BigDecimal value) {
             addCriterion("bonus_amout <", value, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutLessThanOrEqualTo(Double value) {
+        public Criteria andBonusAmoutLessThanOrEqualTo(BigDecimal value) {
             addCriterion("bonus_amout <=", value, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutIn(List<Double> values) {
+        public Criteria andBonusAmoutIn(List<BigDecimal> values) {
             addCriterion("bonus_amout in", values, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutNotIn(List<Double> values) {
+        public Criteria andBonusAmoutNotIn(List<BigDecimal> values) {
             addCriterion("bonus_amout not in", values, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutBetween(Double value1, Double value2) {
+        public Criteria andBonusAmoutBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("bonus_amout between", value1, value2, "bonusAmout");
             return (Criteria) this;
         }
 
-        public Criteria andBonusAmoutNotBetween(Double value1, Double value2) {
+        public Criteria andBonusAmoutNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("bonus_amout not between", value1, value2, "bonusAmout");
             return (Criteria) this;
         }
@@ -712,66 +713,6 @@ public class ChinaPresidentBonusExample {
 
         public Criteria andUpdateByNotBetween(Integer value1, Integer value2) {
             addCriterion("update_by not between", value1, value2, "updateBy");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdIsNull() {
-            addCriterion("day_bonus_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdIsNotNull() {
-            addCriterion("day_bonus_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdEqualTo(Integer value) {
-            addCriterion("day_bonus_id =", value, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdNotEqualTo(Integer value) {
-            addCriterion("day_bonus_id <>", value, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdGreaterThan(Integer value) {
-            addCriterion("day_bonus_id >", value, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("day_bonus_id >=", value, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdLessThan(Integer value) {
-            addCriterion("day_bonus_id <", value, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdLessThanOrEqualTo(Integer value) {
-            addCriterion("day_bonus_id <=", value, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdIn(List<Integer> values) {
-            addCriterion("day_bonus_id in", values, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdNotIn(List<Integer> values) {
-            addCriterion("day_bonus_id not in", values, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdBetween(Integer value1, Integer value2) {
-            addCriterion("day_bonus_id between", value1, value2, "dayBonusId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDayBonusIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("day_bonus_id not between", value1, value2, "dayBonusId");
             return (Criteria) this;
         }
     }

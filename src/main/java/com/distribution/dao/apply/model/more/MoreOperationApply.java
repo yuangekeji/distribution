@@ -11,6 +11,7 @@ public class MoreOperationApply extends OperationApply{
     private String recommendName;
     private String memberName;
 
+    private BigDecimal orderAmount;
     public String getMemberPost() {
         return memberPost;
     }
@@ -41,5 +42,13 @@ public class MoreOperationApply extends OperationApply{
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    public BigDecimal getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(BigDecimal orderAmount) {
+        this.orderAmount = orderAmount;
     }
 }

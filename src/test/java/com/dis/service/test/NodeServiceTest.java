@@ -4,8 +4,11 @@
   */
 package com.dis.service.test;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
+import com.distribution.dao.order.model.OrderMaster;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +45,48 @@ public class NodeServiceTest extends SpringServiceTest{
 	}
 	@Test
 	public void buildNodeTreeByNodeTest(){
-		int nodeId = 2;
+		int nodeId = 39;
 		nodeService.buildNodeTreeByNode(nodeId);
+	}
+	@Test
+	public void processMemberPromotionTest(){
+		OrderMaster order = new OrderMaster();
+		order.setOrderAmt(new BigDecimal(9000));
+		order.setId(8);
+		order.setCreateId(8);
+		order.setOrderNo(new Long("1701230"));
+		order.setCreateTime(new Date());
+		order.setMemberId(9);
+		int nodeId = 144;
+		nodeService.processMemberPromotion(nodeId, order.getCreateId());
+	}
+	@Test
+	public void insertMemberNodeBonus(){
+		OrderMaster order = new OrderMaster();
+		order.setOrderAmt(new BigDecimal(1200));
+		order.setId(8);
+		order.setCreateId(8);
+		order.setOrderNo(new Long("17012301322900"));
+		order.setCreateTime(new Date());
+		order.setMemberId(16);
+		int nodeId = 16;
+		nodeService.insertMemberNodeBonus(nodeId, order);
+	}
+	@Test
+	public void getSubNodeNumberAndSales(){
+		Map<String,String> map = nodeService.getSubNodeNumberAndSales(39);
+	}
+	@Test
+	public void getParentNodeTest(){
+		MemberNode node = nodeService.getParentNode(3);
+		System.out.println(node.getId());
+	}
+	@Test
+	public void saveNodeAutoTest(){
+		MemberNode node = new MemberNode();
+		node.setParentId(3);
+		node.setCreateBy(3);
+		MemberNode memberNode = nodeService.saveNode(node);
+		System.out.println("============ " + memberNode.getId());
 	}
 }

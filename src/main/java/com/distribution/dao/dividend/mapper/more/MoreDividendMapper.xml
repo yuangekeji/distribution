@@ -32,7 +32,7 @@
         AND dividend_status = #{parameterMap.dividendStatus}
       </if>
       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-        AND order_no = #{parameterMap.orderNo}
+        AND order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
       </if>
     </where>
   </sql>
@@ -58,4 +58,36 @@
     from dividend
     <include refid="where"/>
   </select>
+  <select id="listAllNeedSendDividends" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select <include refid="Base_Column_List" />
+	from dividend
+	where dividend_status != 2 
+	and DATE(create_time) <![CDATA[<=]]> #{yesterday}
+	and IFNULL(received_amount,0)<![CDATA[<]]>dividend_limit
+  </select>
+  <select id="getAllNeedSendDividendCount" resultType="java.lang.Integer">
+  	select IFNULL(sum(dividend_count),0) as totalAcount
+	from dividend
+	where dividend_status != 2 and IFNULL(received_amount,0)<![CDATA[<]]>dividend_limit
+  </select>
+  <update id="updateAllNeedSendDividends" parameterType="java.util.Map">
+  	<foreach collection="divList" item="record" index="index" separator=";">
+  	  update dividend
+  	  set 
+      received_amount = #{record.receivedAmount,jdbcType=DECIMAL},
+      remain_amount = #{record.remainAmount,jdbcType=DECIMAL},
+      dividend_status = #{record.dividendStatus,jdbcType=VARCHAR},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      where id = #{record.id,jdbcType=INTEGER}
+  	</foreach>
+  </update>
+  <select id="memberDividendCount" parameterType="java.lang.Integer"  resultType="java.util.Map">
+     select
+       dividend_status      as dividendStatus,
+       sum(dividend_count)  as dividendCount
+      from dividend
+      where member_id = #{memberId}
+      GROUP BY dividend_status
+   </select>
 </mapper>

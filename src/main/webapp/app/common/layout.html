@@ -6,13 +6,13 @@
 </div>
 <!-- END PAGE SPINNER -->
 <!-- BEGIN HEADER -->
-<div data-ng-include="'app/common/tpl/header.html'" data-ng-controller="TplController" class="page-header navbar navbar-fixed-top"> </div>
+<div data-ng-include="'app/common/tpl/header.html'"  class="page-header navbar navbar-fixed-top"> </div>
 <!-- END HEADER -->
 <div class="clearfix"> </div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
     <!-- BEGIN SIDEBAR -->
-    <div data-ng-include="'app/common/tpl/sidebar.html'"  class="page-sidebar-wrapper"> </div>
+    <div data-ng-include="'app/common/tpl/sidebar.html'" data-ng-controller="TplController"  class="page-sidebar-wrapper"> </div>
     <!-- END SIDEBAR -->
     <div class="page-content-wrapper">
         <div class="page-content">
@@ -25,6 +25,6 @@
     </div>
 </div>
 <!-- BEGIN FOOTER -->
-<div data-ng-include="'app/common/tpl/footer.html'" data-ng-controller="TplController" class="page-footer"> </div>
+<div data-ng-include="'app/common/tpl/footer.html'" class="page-footer"> </div>
 <!-- END FOOTER -->
 <!-- END CONTAINER -->

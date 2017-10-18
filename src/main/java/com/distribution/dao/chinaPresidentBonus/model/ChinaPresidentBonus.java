@@ -1,5 +1,6 @@
 package com.distribution.dao.chinaPresidentBonus.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ChinaPresidentBonus {
@@ -7,7 +8,7 @@ public class ChinaPresidentBonus {
 
     private Integer memberId;
 
-    private Double bonusAmout;
+    private BigDecimal bonusAmout;
 
     private Date bonusDate;
 
@@ -22,8 +23,6 @@ public class ChinaPresidentBonus {
     private Date updateTime;
 
     private Integer updateBy;
-
-    private Integer dayBonusId;
 
     public Integer getId() {
         return id;
@@ -41,11 +40,11 @@ public class ChinaPresidentBonus {
         this.memberId = memberId;
     }
 
-    public Double getBonusAmout() {
+    public BigDecimal getBonusAmout() {
         return bonusAmout;
     }
 
-    public void setBonusAmout(Double bonusAmout) {
+    public void setBonusAmout(BigDecimal bonusAmout) {
         this.bonusAmout = bonusAmout;
     }
 
@@ -103,13 +102,5 @@ public class ChinaPresidentBonus {
 
     public void setUpdateBy(Integer updateBy) {
         this.updateBy = updateBy;
-    }
-
-    public Integer getDayBonusId() {
-        return dayBonusId;
-    }
-
-    public void setDayBonusId(Integer dayBonusId) {
-        this.dayBonusId = dayBonusId;
     }
 }

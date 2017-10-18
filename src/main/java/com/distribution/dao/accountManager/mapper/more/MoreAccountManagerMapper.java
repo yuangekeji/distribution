@@ -24,5 +24,15 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
      * @author Bright
      * */
     MoreMember getSeedsAndBondsByMemberId(Integer memberId);
+    /**
+     * description 通过memberId查询账户管理表
+     * @author Bright
+     * */
+    AccountManager selectByMemberId(Integer memberId);
+    /**
+     * description 根据memberId更新账户管理表
+     * @author Bright
+     * */
+    Integer updateByMemberId(AccountManager accountManager);
 
 }

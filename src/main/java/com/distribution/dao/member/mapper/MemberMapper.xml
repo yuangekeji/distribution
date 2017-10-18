@@ -31,7 +31,8 @@
     <result column="is_sales_dept" property="isSalesDept" jdbcType="VARCHAR" />
     <result column="first_agent_cnt" property="firstAgentCnt" jdbcType="INTEGER" />
     <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
-    <result column="node_name" property="nodeName" jdbcType="VARCHAR" />
+    <result column="linkman_phone" property="linkmanPhone" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -96,7 +97,7 @@
     member_name, member_level, ID_number, express_address, status, delete_flag, role_id, 
     member_post, create_id, create_time, update_id, update_time, order_amount, consignee, 
     money_status, bank_name, bank_user_name, card_number, is_operator, is_sales_dept, 
-    first_agent_cnt, recommend_name, node_name
+    first_agent_cnt, recommend_name, linkman_phone, parent_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.member.model.MemberExample" >
     select
@@ -139,8 +140,8 @@
       update_time, order_amount, consignee, 
       money_status, bank_name, bank_user_name, 
       card_number, is_operator, is_sales_dept, 
-      first_agent_cnt, recommend_name, node_name
-      )
+      first_agent_cnt, recommend_name, linkman_phone, 
+      parent_id)
     values (#{id,jdbcType=INTEGER}, #{memberPhone,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, 
       #{queryPassword,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, #{recommendId,jdbcType=INTEGER}, 
       #{nodeId,jdbcType=INTEGER}, #{memberName,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, 
@@ -150,8 +151,8 @@
       #{updateTime,jdbcType=TIMESTAMP}, #{orderAmount,jdbcType=DECIMAL}, #{consignee,jdbcType=VARCHAR}, 
       #{moneyStatus,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankUserName,jdbcType=VARCHAR}, 
       #{cardNumber,jdbcType=VARCHAR}, #{isOperator,jdbcType=VARCHAR}, #{isSalesDept,jdbcType=VARCHAR}, 
-      #{firstAgentCnt,jdbcType=INTEGER}, #{recommendName,jdbcType=VARCHAR}, #{nodeName,jdbcType=VARCHAR}
-      )
+      #{firstAgentCnt,jdbcType=INTEGER}, #{recommendName,jdbcType=VARCHAR}, #{linkmanPhone,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.member.model.Member" >
     insert into member
@@ -243,8 +244,11 @@
       <if test="recommendName != null" >
         recommend_name,
       </if>
-      <if test="nodeName != null" >
-        node_name,
+      <if test="linkmanPhone != null" >
+        linkman_phone,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -335,8 +339,11 @@
       <if test="recommendName != null" >
         #{recommendName,jdbcType=VARCHAR},
       </if>
-      <if test="nodeName != null" >
-        #{nodeName,jdbcType=VARCHAR},
+      <if test="linkmanPhone != null" >
+        #{linkmanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -436,8 +443,11 @@
       <if test="record.recommendName != null" >
         recommend_name = #{record.recommendName,jdbcType=VARCHAR},
       </if>
-      <if test="record.nodeName != null" >
-        node_name = #{record.nodeName,jdbcType=VARCHAR},
+      <if test="record.linkmanPhone != null" >
+        linkman_phone = #{record.linkmanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -475,7 +485,8 @@
       is_sales_dept = #{record.isSalesDept,jdbcType=VARCHAR},
       first_agent_cnt = #{record.firstAgentCnt,jdbcType=INTEGER},
       recommend_name = #{record.recommendName,jdbcType=VARCHAR},
-      node_name = #{record.nodeName,jdbcType=VARCHAR}
+      linkman_phone = #{record.linkmanPhone,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -567,8 +578,11 @@
       <if test="recommendName != null" >
         recommend_name = #{recommendName,jdbcType=VARCHAR},
       </if>
-      <if test="nodeName != null" >
-        node_name = #{nodeName,jdbcType=VARCHAR},
+      <if test="linkmanPhone != null" >
+        linkman_phone = #{linkmanPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -603,7 +617,8 @@
       is_sales_dept = #{isSalesDept,jdbcType=VARCHAR},
       first_agent_cnt = #{firstAgentCnt,jdbcType=INTEGER},
       recommend_name = #{recommendName,jdbcType=VARCHAR},
-      node_name = #{nodeName,jdbcType=VARCHAR}
+      linkman_phone = #{linkmanPhone,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

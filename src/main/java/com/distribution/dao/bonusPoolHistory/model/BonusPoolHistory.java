@@ -21,6 +21,10 @@ public class BonusPoolHistory {
 
     private Date updateTime;
 
+    private Double oldAmout;
+
+    private Double newAmout;
+
     private Integer updateBy;
 
     public Integer getId() {
@@ -93,6 +97,22 @@ public class BonusPoolHistory {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Double getOldAmout() {
+        return oldAmout;
+    }
+
+    public void setOldAmout(Double oldAmout) {
+        this.oldAmout = oldAmout;
+    }
+
+    public Double getNewAmout() {
+        return newAmout;
+    }
+
+    public void setNewAmout(Double newAmout) {
+        this.newAmout = newAmout;
     }
 
     public Integer getUpdateBy() {

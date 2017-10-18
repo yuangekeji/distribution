@@ -3,110 +3,48 @@
 <div class="row">
     <div class="col-md-offset-1 col-md-10 ">
         <!-- BEGIN SAMPLE FORM PORTLET-->
-        <div class="portlet box green ">
+        <div class="portlet box blue-steel ">
             <div class="portlet-title">
                 <div class="caption ">
                     <i class="icon-settings"></i>
-                    <span class="caption-subject bold uppercase"> Default Form</span>
+                    <span class="caption-subject bold uppercase">提现余额到银行卡</span>
                 </div>
             </div>
             <div class="portlet-body form">
                 <form role="form">
                     <div class="form-body">
-
-                        <div class="form-group">
-                            <label >Password</label>
-                            <div class="input-group">
-                                <input type="password" class="form-control input-circle-left" placeholder="Password">
-                                <span class="input-group-addon input-circle-right">
-                                                                        <i class="fa fa-user"></i>
-                                                                    </span>
-                            </div>
-
+                        <div class="note note-info note-bordered">
+                            <h4>账户奖金币余额：{{accountInfo.bonusAmt | number:2}}元</h4>
                         </div>
 
-                        <div class="form-group">
-                            <label>Circle Input</label>
-                            <div class="input-icon right">
-                                <i class="fa fa-microphone"></i>
-                                <input type="text" class="form-control input-circle" placeholder="Right icon"> </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Input With Spinner</label>
-                            <input class="form-control spinner input-circle" type="text" placeholder="Process something" /> </div>
-                        <div class="form-group">
-                            <label>Static Control</label>
-                            <p class="form-control-static"> email@example.com </p>
-                        </div>
-                        <div class="form-group">
-                            <label>Readonly</label>
-                            <input type="text" class="form-control input-circle" placeholder="Readonly" readonly> </div>
-                        <div class="form-group">
-                            <label>Dropdown</label>
-                            <select class="form-control input-circle">
-                                <option>Option 1</option>
-                                <option>Option 2</option>
-                                <option>Option 3</option>
-                                <option>Option 4</option>
-                                <option>Option 5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Checkboxes</label>
-                            <div class="mt-checkbox-list">
-                                <label class="mt-checkbox"> Checkbox 1
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox"> Checkbox 2
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox"> Checkbox 3
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Outline Checkboxes</label>
-                            <div class="mt-checkbox-list">
-                                <label class="mt-checkbox mt-checkbox-outline"> Checkbox 1
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox mt-checkbox-outline"> Checkbox 2
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-checkbox mt-checkbox-outline"> Checkbox 3
-                                    <input type="checkbox" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Radios</label>
-                            <div class="mt-radio-list">
-                                <label class="mt-radio"> Radio 1
-                                    <input type="radio" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-radio"> Radio 2
-                                    <input type="radio" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                                <label class="mt-radio"> Radio 3
-                                    <input type="radio" value="1" name="test" />
-                                    <span></span>
-                                </label>
-                            </div>
+                        <div class="form-group" ng-class="{'has-error':advanceValidateErrors.bankNameError}">
+                            <label class="control-label">开户银行</label>
+                            <select class="form-control input-circle" ng-model="MemberInfo.bankName" ng-options="dic.dicCode as dic.dicName for dic in banks"></select>
                         </div>
 
+                        <div class="form-group" ng-class="{'has-error':advanceValidateErrors.bankUserNameError}">
+                            <label class="control-label">开户姓名</label>
+                            <input type="text" class="form-control input-circle" ng-model="MemberInfo.bankUserName" maxlength="50" placeholder="输入开户姓名" />
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':advanceValidateErrors.cardNumberError}">
+                            <label class="control-label">银行卡号</label>
+                            <input type="text" class="form-control spinner input-circle" ng-model="MemberInfo.cardNumber" maxlength="19" placeholder="输入银行卡号" />
+                        </div>
+                        <div class="form-group" ng-class="{'has-error':advanceValidateErrors.advanceAmtError}">
+                            <label class="control-label">提现金额</label>
+                            <input type="number" class="form-control input-circle" ng-model="advance.reqAmt" ng-change="changeReqAmt()" maxlength="12" placeholder="输入提现金额"/>
+                        </div>
+                        <div class="form-group"  ng-class="{'has-error':advanceValidateErrors.payPasswordError}">
+                            <label class="control-label">支付密码</label>
+                            <input type="password" ng-model="advance.payPassword" placeholder="输入支付密码" class="form-control input-circle" />
+                        </div>
+                        <div class="form-group">
+                            <label>提现金额： <span ng-bind="advance.reqAmt| number:2" ></span>&nbsp; &nbsp; 提现手续费：<span class="number" ng-model="advance.feeAmt" ng-bind="advance.feeAmt| number:2"></span> ({{maxPercent}}%) &nbsp; &nbsp; 实到金额：<span ng-model="advance.actAmt" ng-bind="advance.actAmt| number:2"></span></label>
+                        </div>
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn blue">Submit</button>
-                        <button type="button" class="btn default">Cancel</button>
+                        <button type="button" class="btn blue-steel" ng-click="advanceCommit();">申请提现</button>
+                        <button type="button" class="btn default" ui-sref="app.advance">返回</button>
                     </div>
                 </form>
             </div>

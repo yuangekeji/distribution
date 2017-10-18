@@ -15,6 +15,7 @@ angular.module('recommend').controller('recommendListCtrl', function (title, $sc
                 $scope.myPage = resp.data;
                 $scope.loadingFlag = false;
                 $scope.notData = false;
+                if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
             } else {
                 console.log(resp.errorMessage);
             }
@@ -53,20 +54,3 @@ angular.module('recommend').controller('recommendListCtrl', function (title, $sc
 
 });
 
-angular.module('recommend').filter("MemberLevelFilter",function () {
-    return function (input) {
-        if(input=='member_level1'){return '普卡'};
-        if(input=='member_level2'){return '铜卡'};
-        if(input=='member_level3'){return '银卡'};
-        if(input=='member_level4'){return '金卡'};
-        if(input=='member_level5'){return '白金卡'};
-        if(input=='member_level6'){return '黑金卡'};
-    }
-});
-
-angular.module('recommend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='Y'){return '已激活'};
-        if(input=='N'){return '未激活'};
-    }
-});

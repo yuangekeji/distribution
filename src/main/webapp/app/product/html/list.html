@@ -1,0 +1,85 @@
+<!-- BEGIN PAGE HEADER-->
+<h4 class="page-title">商品列表</h4>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN: ACCORDION DEMO -->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div id="sample_1_wrapper" class="dataTables_wrapper">
+                    <form action="#" class="form-horizontal form-bordered">
+                        <div class="form-body">
+                            <div class="row col-md-12">
+                                <div class="form-group col-md-4">
+                                    <label class="control-label col-md-5">商品名称</label>
+                                    <div class="col-md-7">
+                                        <input type="text" class="form-control input-sm input-small input-inline" placeholder="请输入商品名称" aria-controls="sample_1" maxlength="20" ng-model="myPage.parameterMap.goodsName">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label col-md-5">商品类型</label>
+                                    <div class="col-md-7">
+                                        <select class="form-control input-sm input-xsmall input-inline" ng-model="myPage.parameterMap.goodsType">
+                                            <option value="">全部</option>
+                                            <option ng-repeat="gt in goodsTypes" value="{{gt.dicCode}}">{{gt.dicName}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <button type="button" class="btn blue-steel" ng-click="search();"><i class="fa fa-search"></i>查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" dir-paginate="goods in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                        <div class="portlet light portlet-fit ">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <a  ng-click="detail(goods.id);" style="text-decoration: none;" class="caption-subject font-green bold uppercase">{{goods.goodsName}}</br>{{goods.goodsPrice|number:2}}</a>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="mt-element-overlay">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mt-overlay-1" style="width: 258px;height: 258px">
+                                                <img ng-if="goods.imgeUrl" style="height: 100%" ng-src="{{'goods/showPic?picUrl='+goods.imgeUrl}}" />
+                                                <div class="mt-overlay">
+                                                    <ul class="mt-info">
+                                                        <li>
+                                                            <a  ng-click="detail(goods.id);" class="btn default btn-outline"  >
+                                                                <i class="fa fa-shopping-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"  ng-show= "notData">
+                    <div class="col-md-12 text-center" >无商品数据</div>
+                </div>
+                <div class="other-controller">
+                    <div class="text-center">
+                        <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<script>
+    ComponentsDateTimePickers.init(); // init todo page
+</script>

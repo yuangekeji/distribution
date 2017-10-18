@@ -19,6 +19,22 @@ public class MoreMemberNode extends MemberNode{
 	private String memberName;
 	private String memberPhone;
 	private BigDecimal orderAmount;
+	private Integer rownum;
+	private Integer memberId;
+	private Integer firstAgentCnt;
+	private String memberLevel;
+	private String leftLevel;
+	private String rightLevel;
+	private String isOperator;
+	private String isSalesDept;
+	private String memberPost;
+	
+	public String getMemberPost() {
+		return memberPost;
+	}
+	public void setMemberPost(String memberPost) {
+		this.memberPost = memberPost;
+	}
 	public String getMemberName() {
 		return memberName;
 	}
@@ -37,5 +53,53 @@ public class MoreMemberNode extends MemberNode{
 	public void setOrderAmount(BigDecimal orderAmount) {
 		this.orderAmount = orderAmount;
 	}
-
+	public Integer getRownum() {
+		return rownum;
+	}
+	public void setRownum(Integer rownum) {
+		this.rownum = rownum;
+	}
+	public Integer getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+	public Integer getFirstAgentCnt() {
+		return firstAgentCnt;
+	}
+	public void setFirstAgentCnt(Integer firstAgentCnt) {
+		this.firstAgentCnt = firstAgentCnt;
+	}
+	public String getMemberLevel() {
+		return memberLevel;
+	}
+	public void setMemberLevel(String memberLevel) {
+		this.memberLevel = memberLevel;
+	}
+	public String getLeftLevel() {
+		return leftLevel;
+	}
+	public void setLeftLevel(String leftLevel) {
+		this.leftLevel = leftLevel;
+	}
+	public String getRightLevel() {
+		return rightLevel;
+	}
+	public void setRightLevel(String rightLevel) {
+		this.rightLevel = rightLevel;
+	}
+	public String getIsOperator() {
+		return isOperator;
+	}
+	public String getIsSalesDept() {
+		return isSalesDept;
+	}
+	public void setIsOperator(String isOperator) {
+		this.isOperator = isOperator;
+	}
+	public void setIsSalesDept(String isSalesDept) {
+		this.isSalesDept = isSalesDept;
+	}
+	
 }

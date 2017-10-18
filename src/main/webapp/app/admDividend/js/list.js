@@ -67,10 +67,16 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
     $scope.searchDividendDetails = function (memberId, orderNo) {
         $state.go('app.admDividend-detail', {memberId: memberId, orderNo: orderNo});
     }
-});
-angular.module('admDividend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='1'){return '领取中'};
-        if(input=='2'){return '领取完'};
+
+    $scope.show = function () {
+        $("#show").modal("show");
+    };
+
+    /**
+     * excel download
+     */
+    $scope.excelDownload = function() {
+        window.location.href=ctx + "/adminDividend/excelDownload?startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
+        $("#show").modal("hide");
     }
 });

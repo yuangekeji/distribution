@@ -42,6 +42,12 @@ public class Goods {
 
     private String deleteFlag;
 
+    private String info;
+
+    private String imgeUrl;
+
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -192,5 +198,29 @@ public class Goods {
 
     public void setDeleteFlag(String deleteFlag) {
         this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info == null ? null : info.trim();
+    }
+
+    public String getImgeUrl() {
+        return imgeUrl;
+    }
+
+    public void setImgeUrl(String imgeUrl) {
+        this.imgeUrl = imgeUrl == null ? null : imgeUrl.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 }

@@ -1,0 +1,81 @@
+<h4 class="page-title">添加商品</h4>
+<div class="row">
+    <div class="col-md-offset-1 col-md-10 ">
+        <div class="portlet box blue-steel ">
+            <div class="portlet-title">
+                <div class="caption ">
+                    <i class="icon-settings"></i>
+                    <span class="caption-subject bold uppercase"> 填写商品信息</span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form role="form">
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>商品名称</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control input-circle-left" placeholder="请输入商品名称" ng-model="goods.goodsName" maxlength="20">
+                                <span class="input-group-addon input-circle-right"> <i class="fa fa-user"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>商品价格</label>
+                            <div class="input-icon right">
+                                <i class="fa fa-microphone"></i>
+                                <input type="text" class="form-control input-circle" placeholder="请输入商品价格" ng-model="goods.goodsPrice" maxlength="12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>商品库存</label>
+                            <input class="form-control spinner input-circle" type="text" placeholder="请输入商品库存" ng-model="goods.goodsNum" maxlength="10"/>
+                        </div>
+                        <div class="form-group">
+                            <label>商品类型</label>
+                            <select class="form-control spinner input-circle" type="text" ng-model="goods.goodsType">
+                                <option ng-repeat="gt in goodsTypes" value="{{gt.dicCode}}">{{gt.dicName}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>商品图片</label>
+                            <!--<div class="mt-element-overlay">-->
+                                <!--<div class="mt-overlay-1" style="max-width: 50%;max-height: 50%">-->
+                                    <input type="file" ng-show="!goods.imgeUrl" id="one-input" src="static/image/icon_add.svg" accept="image/jpg,image/jpeg,image/png,image/bmp" file-model="images" onchange="angular.element(this).scope().img_upload(this.files)"/>
+                                    <div ng-show="!temp.flag" ng-repeat="item in thumb">
+                                        <label>
+                                            <a  ng-click="img_del($index)" class="btn red btn-outline"  style="float:right">
+                                                <i class="fa fa-remove"></i>
+                                            </a>
+                                            <img ng-src="{{item.imgSrc}}" style="max-width: 90%;max-height: 90%"/>
+                                        </label>
+                                        <!--<span ng-if="item.imgSrc" ng-click="img_del($index)"></span>-->
+                                    </div>
+                                    <div ng-show="temp.flag && goods.imgeUrl">
+                                        <label>
+                                            <a  ng-click="deleteImg();" class="btn red btn-outline"  style="float:right">
+                                                <i class="fa fa-remove"></i>
+                                            </a>
+                                            <img ng-if="goods.imgeUrl" ng-src="{{'admGoods/showPic?picUrl='+goods.imgeUrl}}" style="max-width: 90%;max-height: 90%">
+                                        </label>
+                                    </div>
+
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="form-group">
+                            <label>商品介绍</label>
+                            <textarea type="password" class="form-control input-circle" ng-model="goods.info" maxlength="5000"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn blue-steel" ng-click="add();">提交</button>
+                        <button type="button" class="btn default" ui-sref="app.admProduct">返回</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<script>
+    ComponentsDateTimePickers.init(); // init todo page
+</script>

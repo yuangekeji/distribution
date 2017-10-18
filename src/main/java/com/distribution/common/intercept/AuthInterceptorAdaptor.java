@@ -39,7 +39,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
             //会员 不能访问 admin路径
             if(roleId == 1){
 
-                if(requestURI.indexOf("admin") > -1){
+                if(requestURI.indexOf("admin") > -1 || requestURI.indexOf("adm") > -1){
                     System.out.println("=========会员==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
@@ -48,7 +48,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
              //超级管理员  不带admin不可以访问
             }else if(roleId == 2){
 
-                if(requestURI.indexOf("admin") <= -1){
+                if(requestURI.indexOf("admin") <= -1 && requestURI.indexOf("adm") <= -1){
                     System.out.println("=========超级管理员==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
@@ -58,7 +58,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
             }else if(roleId == 3){
 
 
-                if(requestURI.indexOf("admin") <= -1){
+                if(requestURI.indexOf("admin") <= -1 && requestURI.indexOf("adm") <= -1){
                     System.out.println("=========财务==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;

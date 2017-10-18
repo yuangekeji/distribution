@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.dividendHistory.mapper.more.MoreDividendHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dividendHistory.model.more.MoreDividendHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dividend_id" property="dividendId" jdbcType="INTEGER" />
+    <result column="received_time" property="receivedTime" jdbcType="TIMESTAMP" />
+    <result column="devidend_count" property="devidendCount" jdbcType="INTEGER" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="total_received" property="totalReceived" jdbcType="DECIMAL" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="mgmt_fee" property="mgmtFee" jdbcType="DECIMAL" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dividend_id, received_time, devidend_count, amount, total_received, create_id, 
+    create_time, update_id, update_time, mgmt_fee
+  </sql>
+  <insert id="insertDividendHistoryBatch" parameterType="java.util.Map">
+     insert into dividend_history 
+     (dividend_id, received_time, 
+      devidend_count, amount, total_received, 
+      create_id, create_time,update_id, update_time
+     )
+     values
+     <foreach collection="hisList" item="his" index="index" separator=",">
+     (
+      #{his.dividendId,jdbcType=INTEGER}, #{his.receivedTime,jdbcType=TIMESTAMP}, 
+      #{his.devidendCount,jdbcType=INTEGER}, #{his.amount,jdbcType=DECIMAL}, #{his.totalReceived,jdbcType=DECIMAL}, 
+      #{his.createId,jdbcType=INTEGER}, #{his.createTime,jdbcType=TIMESTAMP}, #{his.updateId,jdbcType=INTEGER}, 
+      #{his.updateTime,jdbcType=TIMESTAMP}
+     )
+     </foreach>
+  </insert>
+  <select id="listAllYesterdayDividendHistory" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	 select h.*,d.order_id,d.order_no,d.member_id,d.create_time as order_time
+	 from dividend_history h
+	 left join dividend d on h.dividend_id = d.id
+	 where DATE(h.received_time) <![CDATA[<=]]> #{yesterday}
+	 and h.balance_status = 0
+  </select>
+  <update id="updateAllYesterdayDividendHistory" parameterType="java.util.Map">
+    	update dividend_history
+    	set
+		update_id = #{updateId,jdbcType=INTEGER},
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        balance_status = #{balanceStatus,jdbcType=INTEGER}
+		where id in
+		<foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+		  #{ids.id}
+		</foreach>
+  </update>
+</mapper>

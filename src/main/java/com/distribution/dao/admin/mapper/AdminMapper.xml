@@ -11,6 +11,7 @@
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, mobile, name, password, create_id, create_time, update_id, update_time, role_id
+    id, mobile, name, password, create_id, create_time, update_id, update_time, role_id, 
+    delete_flag
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.admin.model.AdminExample" >
     select
@@ -107,12 +109,12 @@
   <insert id="insert" parameterType="com.distribution.dao.admin.model.Admin" >
     insert into admin (id, mobile, name, 
       password, create_id, create_time, 
-      update_id, update_time, role_id
-      )
+      update_id, update_time, role_id, 
+      delete_flag)
     values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{roleId,jdbcType=INTEGER}
-      )
+      #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{roleId,jdbcType=INTEGER}, 
+      #{deleteFlag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.admin.model.Admin" >
     insert into admin
@@ -144,6 +146,9 @@
       <if test="roleId != null" >
         role_id,
       </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -172,6 +177,9 @@
       </if>
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -211,6 +219,9 @@
       <if test="record.roleId != null" >
         role_id = #{record.roleId,jdbcType=INTEGER},
       </if>
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -226,7 +237,8 @@
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_id = #{record.updateId,jdbcType=INTEGER},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      role_id = #{record.roleId,jdbcType=INTEGER}
+      role_id = #{record.roleId,jdbcType=INTEGER},
+      delete_flag = #{record.deleteFlag,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -258,6 +270,9 @@
       <if test="roleId != null" >
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -270,7 +285,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_id = #{updateId,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      role_id = #{roleId,jdbcType=INTEGER}
+      role_id = #{roleId,jdbcType=INTEGER},
+      delete_flag = #{deleteFlag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

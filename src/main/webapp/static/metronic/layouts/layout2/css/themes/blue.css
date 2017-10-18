@@ -64,13 +64,13 @@
     .page-header.navbar .top-menu .navbar-nav > li.dropdown-tasks .dropdown-menu .dropdown-menu-list .progress {
       background-color: #dfe2e9; }
     .page-header.navbar .top-menu .navbar-nav > li.dropdown-user > .dropdown-toggle > .username {
-      color: #7f96ac; }
+      color: #000; }
     .page-header.navbar .top-menu .navbar-nav > li.dropdown-user > .dropdown-toggle > i {
-      color: #7f96ac; }
+      color: #000; }
     .page-header.navbar .top-menu .navbar-nav > li.dropdown-user > .dropdown-menu {
       width: 195px; }
     .page-header.navbar .top-menu .navbar-nav > li.dropdown-language > .dropdown-toggle > .langname {
-      color: #7f96ac; }
+      color: #000; }
     .page-header.navbar .top-menu .navbar-nav > li.dropdown-dark .dropdown-menu {
       background: #374b6d;
       border: 0; }
@@ -103,7 +103,7 @@
   .page-header.navbar .search-form {
     background: #fff; }
     .page-header.navbar .search-form .input-group .form-control {
-      color: #7f96ac; }
+      color: #000; }
       .page-header.navbar .search-form .input-group .form-control::-moz-placeholder {
         color: #7c94aa;
         opacity: 1; }
@@ -112,7 +112,7 @@
       .page-header.navbar .search-form .input-group .form-control::-webkit-input-placeholder {
         color: #7c94aa; }
     .page-header.navbar .search-form .input-group .input-group-btn .btn.submit > i {
-      color: #7f96ac; }
+      color: #000; }
 
 /* Page sidebar */
 .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover,
@@ -171,7 +171,7 @@
       .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > i, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > i,
       .page-sidebar .page-sidebar-menu > li.active > a > i,
       .page-sidebar .page-sidebar-menu > li.active.open > a > i {
-        color: #18cdc4; }
+        color: #4B77BE; }
       .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active > a > .arrow.open:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > .arrow:before, .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu > li.active.open > a > .arrow.open:before,
       .page-sidebar .page-sidebar-menu > li.active > a > .arrow:before,
       .page-sidebar .page-sidebar-menu > li.active > a > .arrow.open:before,

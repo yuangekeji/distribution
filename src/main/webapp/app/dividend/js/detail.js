@@ -1,6 +1,7 @@
 /**
  * Created by lijingx on 8/24/2017.
  */
+
 angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
     title.setTitle('分红包明细');
 
@@ -85,10 +86,8 @@ angular.module('dividend').controller('dividendDetailCtrl',function ($q, title, 
         $scope.myPage.pageNo = num;
         $scope.search();
     };
-});
-angular.module('dividend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='1'){return '领取中'};
-        if(input=='2'){return '领取完'};
+
+    $scope.returnList = function () {
+        $state.go('app.dividend');
     }
 });

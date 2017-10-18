@@ -3,16 +3,24 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	   http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd
+">
 
     <!-- 激活@Requird @Autowired @PostConstruct @Resource等-->
     <context:annotation-config/>
+
+    <!-- 扩充了注解驱动，启用基于annotation 的 HandlerMapping  -->
+    <mvc:annotation-driven />
+    <task:annotation-driven/>
 
     <!-- 只扫描controller DispatcherServlet 上下文， 只搜索@Controller 标注的类 ，不搜索其他标注的类-->
 
@@ -20,10 +28,7 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
     </context:component-scan>
-
-
-    <!-- 扩充了注解驱动，启用基于annotation 的 HandlerMapping  -->
-    <mvc:annotation-driven />
+    <context:component-scan base-package="com.distribution.job"></context:component-scan>
 
     <!-- 访问静态资源映射 <mvc:default-servlet-handler/> -->
     <mvc:resources mapping="/static/**" location="/static/" />
@@ -64,6 +69,17 @@
         <mvc:mapping path="/dividend/**"/>
         <mvc:mapping path="/member/**"/>
         <mvc:mapping path="/transfer/**"/>
+        <mvc:mapping path="/admAdvance/**"/>
+        <mvc:mapping path="/admBasicSetting/**"/>
+        <mvc:mapping path="/admGoods/**"/>
+        <mvc:mapping path="/adminBonus/**"/>
+        <mvc:mapping path="/admMember/**"/>
+        <mvc:mapping path="/admOperator/**"/>
+        <mvc:mapping path="/admOrder/**"/>
+        <mvc:mapping path="/admRecommend/**"/>
+        <mvc:mapping path="/admWarning/**"/>
+        <mvc:mapping path="/advance/**"/>
+        <mvc:mapping path="/goods/**"/>
         <mvc:exclude-mapping path="/member/jump"/>
         <mvc:exclude-mapping path="/member/login"/>
         <mvc:exclude-mapping path="/member/logout"/>

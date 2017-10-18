@@ -74,9 +74,3 @@ angular.module('dividend').controller('dividendCtrl',function ($q, title, $scope
     }
 
 });
-angular.module('dividend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='1'){return '领取中'};
-        if(input=='2'){return '领取完'};
-    }
-});

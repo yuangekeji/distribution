@@ -1,8 +1,8 @@
 /**
  * Created by lijingx on 8/24/2017.
  */
-angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
-    title.setTitle('我的分红包');
+angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $scope, $http,$uibModal, Notify, $state, $stateParams, $sessionStorage) {
+    title.setTitle('job奖金发放管理');
     $scope.notData = false;
     $scope.myPage = {
         pageNo: 1,
@@ -10,10 +10,21 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         totalCount: 0,
         result: [],
         parameterMap: {
-            orderNo:'',
-            dividendStatus:''
         }
     };
+
+    var e1 = $('.full-view');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
     $scope.search = function(){
 
         $http.post(ctx + '/admWarning/list', $scope.myPage)
@@ -24,11 +35,12 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
 
                 } else {
-                    console.log(resp.errorMessage);
+                    Notify.error(resp.errorMessage);
                 }
 
             }).error(function (error) {
-            console.error(error);
+
+            Notify.error(error);
         });
     }
 
@@ -40,8 +52,9 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         $scope.search();
     };
 
-
     $scope.onInit();
+
+    $scope.bonusPool ={};
 
     /**
      * 查询按钮触发
@@ -54,7 +67,6 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         $scope.search();
 
     }
-
     /**
      * 分页触发
      * @param num
@@ -63,10 +75,93 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         $scope.myPage.pageNo = num;
         $scope.search();
     };
-});
-angular.module('dividend').filter("StatusFilter",function () {
-    return function (input) {
-        if(input=='1'){return '领取中'};
-        if(input=='2'){return '领取完'};
+
+    $scope.bonusProc =function (poolType) {
+        $http.post(ctx + '/admWarning/getBonusPool?poolType='+poolType)
+            .success(function (resp) {
+                if (resp.successful) {
+                   $scope.open(resp.data,poolType);
+                }else {
+                    Notify.error(resp.errorMessage);
+                }
+            }).error(function (error) {
+             Notify.error(error);
+        });
     }
+
+    $scope.open = function(data,poolType)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "bonusProc.html",
+                controller: "bonusProcCtrl",
+                resolve:
+                {
+                    getDatas: function()
+                    {
+                        return data;
+                    },
+                    getPoolType:function () {
+                        return poolType;
+                    },
+                    startLoading:function () {
+                        return $scope.startLoading;
+                    },
+                    stopLoading:function () {
+                        return $scope.stopLoading;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            // console.info('确认');
+
+        }, function()
+        {
+            // console.info('取消');
+        });
+    };
+
 });
+
+angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http,startLoading,stopLoading) {
+
+    $scope.datas = getDatas;
+    $scope.poolType = getPoolType;
+    $scope.payAmt = 0;
+
+
+    $scope.ok = function()
+    {
+        if (angular.isUndefined($scope.payAmt) || !(/^\+?[1-9][0-9]*$/.test($scope.payAmt))) {
+            Notify.warning('请输入正确的金额')
+            return false;
+        }
+        if ( $scope.datas.bonusPoolAmt < $scope.payAmt ) {
+            Notify.warning('资金池金额余额不足')
+            return false;
+        }
+        startLoading();
+        $http.post(ctx + '/admWarning/payAmtProc?poolType='+$scope.poolType+'&amount='+$scope.payAmt)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $uibModalInstance.close(true);
+                    Notify.success('补发成功');
+
+                }else {
+                    Notify.error(resp.errorMessage);
+                }
+                stopLoading();
+            }).error(function (error) {
+            Notify.error(error);
+            stopLoading();
+        });
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+

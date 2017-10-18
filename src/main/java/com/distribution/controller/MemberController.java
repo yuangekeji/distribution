@@ -1,5 +1,6 @@
 package com.distribution.controller;
 
+import com.distribution.common.constant.BonusConstant;
 import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
@@ -10,8 +11,11 @@ import com.distribution.dao.apply.model.OperationApply;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
+import com.distribution.dao.member.model.more.MoreMemberVO;
 import com.distribution.service.CommonService;
+import com.distribution.service.DividendService;
 import com.distribution.service.MemberService;
+import com.distribution.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +40,10 @@ public class MemberController extends BasicController {
     private CommonService commonService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private NodeService nodeService;
+    @Autowired
+    private DividendService dividendService;
 
     @RequestMapping(value = "/jump")
     @IgnoreLoginCheck
@@ -77,8 +85,9 @@ public class MemberController extends BasicController {
     @RequestMapping("/list")
     @ResponseBody
     public JsonMessage list(@RequestBody Page page,HttpSession session){
+        Member m = (Member) getCurrentUser(session);
+        page.getParameterMap().put("memberId",m.getId());
         if(null!=page.getParameterMap().get("myRecord") && (Boolean) page.getParameterMap().get("myRecord")){
-            Member m = (Member) getCurrentUser(session);
             page.getParameterMap().put("recommendId",m.getId());
         }else{
             page.getParameterMap().put("recommendId",null);
@@ -123,9 +132,12 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/activation")
     @ResponseBody
-    public JsonMessage activation(@RequestBody Member member,HttpSession session){
+    public JsonMessage activation(@RequestBody MoreMemberVO member, HttpSession session){
         Integer it = memberService.updateActivation(member);
         if(it>0) {
+        	MoreMember m = memberService.selectMemberInfo(member.getId());
+        	//处理会员晋升 当前节点的所有上级
+    		nodeService.processMemberPromotion(m.getNodeId(),member.getId());
             session.setAttribute(Constant.SESSION_CURRENT_USER,member);
             return successMsg();
         }else {
@@ -139,13 +151,83 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/getMemberInfo/{id}")
     @ResponseBody
-    public JsonMessage getMemberInfo(@PathVariable Integer id){
+    public JsonMessage getBankName(@PathVariable Integer id){
         MoreMember moreMember = memberService.selectMemberInfo(id);
-        List<Dictionary> list = commonService.selectDictionary("bank_name");
+        Map map = nodeService.getSubNodeNumberAndSales(moreMember.getNodeId());
+        Integer ln = !"null".equals(map.get("leftNum"))?Integer.valueOf(map.get("leftNum").toString()):0;
+        BigDecimal ls = !"null".equals(map.get("leftToalSales"))?new BigDecimal(map.get("leftToalSales").toString()):new BigDecimal(0);
+        Integer rn = !"null".equals(map.get("rightNum"))?Integer.valueOf(map.get("rightNum").toString()):0;
+        BigDecimal rs = !"null".equals(map.get("rightToalSales"))?new BigDecimal(map.get("rightToalSales").toString()):new BigDecimal(0);
+        if(ls.compareTo(rs)==1 || ls.compareTo(rs)==0){//ls >= rs
+            moreMember.setCityTotalAmount(ls);
+            moreMember.setCityTotalPeople(ln);
+            moreMember.setCountyTotalAmount(rs);
+            moreMember.setCountyTotalPeople(rn);
+        }else if(rs.compareTo(ls)==1){//rs > ls
+            moreMember.setCityTotalAmount(rs);
+            moreMember.setCityTotalPeople(rn);
+            moreMember.setCountyTotalAmount(ls);
+            moreMember.setCountyTotalPeople(ln);
+        }
 
         Map result= new HashMap();
         result.put("member",moreMember);
+        return successMsg(result);
+    }
+
+
+    @RequestMapping("/getMemberDividendCount/{memberId}")
+    @ResponseBody
+    public JsonMessage getMemberDividendCount(@PathVariable Integer memberId){
+        Map result= new HashMap();
+        result= dividendService.memberDividendCount(memberId);
+        return successMsg(result);
+    }
+
+    /**
+     * description 获取会员详细信息
+     * @author Bright
+     * */
+    @RequestMapping("/getBankName/{id}")
+    @ResponseBody
+    public JsonMessage getIt(@PathVariable Integer id){
+        List<Dictionary> list = commonService.selectDictionary("bank_name");
+
+        Map result= new HashMap();
         result.put("list",list);
+        return successMsg(result);
+    }
+
+    /**
+     * description 获取会员详细信息
+     * @author Bright
+     * */
+    @RequestMapping("/getIt/{id}")
+    @ResponseBody
+    public JsonMessage getMemberInfo(@PathVariable Integer id){
+        Integer it = memberService.getByMemberId(id);
+
+        Map result= new HashMap();
+        result.put("it",it);
+        return successMsg(result);
+    }
+
+
+    /**
+     * description 获取会员详细信息
+     * @author Bright
+     * */
+    @RequestMapping("/getMemberInfoById/{id}")
+    @ResponseBody
+    public JsonMessage getMemberInfoById(@PathVariable Integer id){
+        MoreMember moreMember = memberService.selectMemberInfo(id);
+        List<Dictionary> list = commonService.selectDictionary("bank_name");
+        double maxPercent = commonService.getMaxPercent(BonusConstant.D08,BonusConstant.CODE_00);
+        Map result= new HashMap();
+        result.put("member",moreMember);
+        result.put("list",list);
+        result.put("maxPercent", BigDecimal.valueOf(maxPercent).multiply(new BigDecimal(100)));
+
         return successMsg(result);
     }
 
@@ -162,5 +244,36 @@ public class MemberController extends BasicController {
             return successMsg();
         else
             return failMsg();
+    }
+
+    /**
+     * description 修改会员信息
+     * @author Bright
+     * */
+    @RequestMapping("/updateMember")
+    @ResponseBody
+    public JsonMessage updateMember(@RequestBody MoreMember moreMember,HttpSession session){
+        Member m = (Member)getCurrentUser(session);
+        Integer it = memberService.updateMember(moreMember);
+        if(it>0){
+            if(null!=moreMember.getLinkmanPhone() && !"".equals(moreMember.getLinkmanPhone())) {
+                m.setLinkmanPhone(moreMember.getLinkmanPhone());
+            }
+            session.setAttribute(Constant.SESSION_CURRENT_USER,m);
+            return successMsg();
+        }else{
+            return failMsg();
+        }
+    }
+
+    /**
+     * description 修改密码
+     * @author Bright
+     * */
+    @RequestMapping("/updatePwd")
+    @ResponseBody
+    public JsonMessage updatePwd(@RequestBody MoreMember moreMember){
+        String str = memberService.updatePwd(moreMember);
+        return successMsg(str);
     }
 }

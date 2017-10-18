@@ -1,4 +1,4 @@
-angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, $scope, $http,  $state, Notify, $sessionStorage, ConfirmModal) {
     title.setTitle('运营中心管理');
     $scope.loadingFlag = true;
     $scope.notData = false;
@@ -32,6 +32,7 @@ angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, 
                 $scope.myPage = resp.data;
                 $scope.loadingFlag = false;
                 $scope.notData = false;
+                if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
             } else {
                 console.log(resp.errorMessage);
             }
@@ -54,46 +55,49 @@ angular.module('admOperator').controller('admOperatorCtrl',function ($q, title, 
 
     /**翻页*/
     $scope.pageChangeHandler = function(num) {
-        console.log('going to page ooooo ' + num);
         $scope.myPage.pageNo = num;
         $scope.onInit();
     };
 
-    $scope.approval = function (id,status) {
-        $http.post(ctx + "/admOperator/approval",{id:id,status:status}).success(function (resp) {
-            if(resp.successful){
-                alert("审批完成。");
-                $scope.search();
-            }else{
-                console.log(resp);
+    $scope.approval = function (id,memberId,memberName,status) {
+        $scope.textMessage = "";
+        if (status == "pass") {
+            $scope.textMessage = "确定审核通过会员" + memberName + "成为运营中心？";
+        } else {
+            $scope.textMessage = "确定审核驳回会员" + memberName + "成为运营中心？";
+        }
+        ConfirmModal.show({
+            text: $scope.textMessage,
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
             }
-        }).error(function (resp) {
-            console.log(resp);
-        })
+            $http.post(ctx + "/admOperator/approval?memberName="+memberName,{id:id,memberId:memberId,status:status}).success(function (resp) {
+                if(resp.successful){
+                    Notify.warning('操作完成。');
+                    $scope.search();
+                }else{
+                    console.log(resp);
+                }
+            }).error(function (resp) {
+                console.log(resp);
+            })
+        });
     }
 });
 
-angular.module('admOperator').filter("MemberLevelFilter",function () {
-    return function (input) {
-        if(input=='member_level1'){return '普卡'};
-        if(input=='member_level2'){return '铜卡'};
-        if(input=='member_level3'){return '银卡'};
-        if(input=='member_level4'){return '金卡'};
-        if(input=='member_level5'){return '白金卡'};
-        if(input=='member_level6'){return '黑金卡'};
-    }
-});
+// angular.module('admOperator').filter("MemberLevelFilter",function () {
+//     return function (input) {
+//         if(input=='member_level1'){return '普卡'};
+//         if(input=='member_level2'){return '铜卡'};
+//         if(input=='member_level3'){return '银卡'};
+//         if(input=='member_level4'){return '金卡'};
+//         if(input=='member_level5'){return '白金卡'};
+//         if(input=='member_level6'){return '黑金卡'};
+//     }
+// });
 
-angular.module('admOperator').filter("PostLevelFilter",function () {
-    return function (input) {
-        if(input=='post_level1'){return '普通会员'};
-        if(input=='post_level2'){return '主任'};
-        if(input=='post_level3'){return '经理'};
-        if(input=='post_level4'){return '总监'};
-        if(input=='post_level5'){return '董事'};
-        if(input=='post_level6'){return '全国董事'};
-    }
-});
 
 angular.module('admOperator').filter("StatusFilter",function () {
     return function (input) {

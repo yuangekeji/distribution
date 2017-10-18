@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.nodeBonusHistory.model.more.MoreNodeBonusHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mebmer_id" property="mebmerId" jdbcType="INTEGER" />
+    <result column="bonus_amount" property="bonusAmount" jdbcType="DOUBLE" />
+    <result column="from_node_id" property="fromNodeId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="order_qty" property="orderQty" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, mebmer_id, bonus_amount, from_node_id, status, create_time, create_by, update_time, 
+    update_by,order_id, order_no, order_date
+  </sql>
+  <insert id="insertBatch" parameterType="java.util.Map" >
+    insert into node_bonus_history 
+    (mebmer_id, bonus_amount, 
+      from_node_id, status, create_time, 
+      create_by,order_id, order_no, order_date
+    )
+    values 
+    <foreach collection="list" item="nodeHis" index="index" separator=",">
+    (
+    	#{nodeHis.mebmerId,jdbcType=INTEGER}, #{nodeHis.bonusAmount,jdbcType=DOUBLE}, 
+      	#{nodeHis.fromNodeId,jdbcType=INTEGER}, #{nodeHis.status,jdbcType=INTEGER}, #{nodeHis.createTime,jdbcType=TIMESTAMP}, 
+      	#{nodeHis.createBy,jdbcType=INTEGER},#{nodeHis.orderId,jdbcType=INTEGER}, 
+      	#{nodeHis.orderNo,jdbcType=BIGINT}, #{nodeHis.orderDate,jdbcType=TIMESTAMP}
+     )
+    </foreach>
+  </insert>
+  <select id="findCurrentDayNodeBonus" parameterType="java.lang.String" resultType="java.lang.Double">
+  		select SUM(bonus_amount) as totalBonus
+		from node_bonus_history
+		where DATE_FORMAT(create_time,'%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{date},'%Y-%m-%d')
+		and `status` = 0
+  </select>
+  <select id="listCurrentDayNodeBonus" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select h.*,m.order_qty 
+		from node_bonus_history h
+		LEFT JOIN order_master m
+		on h.order_id = m.id
+		where DATE_FORMAT(h.create_time,'%Y-%m-%d') <![CDATA[<=]]>  DATE_FORMAT(#{date},'%Y-%m-%d')
+		and h.`status` = 0
+  </select>
+  <update id="updateNodeBonusHistory" parameterType="java.util.Map">
+  	<foreach collection="list" item="ids" index="index" open="" close="" separator=";">
+  		update node_bonus_history
+		set 
+		bonus_amount = #{ids.bonusAmount},
+		`status` = #{bonusStatus},
+		update_time = #{updateTime},
+        update_by = #{updateBy}
+		where id = #{ids.id}
+	</foreach>
+  </update>
+  <select id="listAllYesterdayNodeBonusHistory" resultMap="BaseResultMap" parameterType="java.lang.String">
+  		select <include refid="Base_Column_List"/>
+		from node_bonus_history
+		where  `status` = 1
+		and DATE(create_time) <![CDATA[<=]]> #{yesterday}
+  </select>
+  <update id="updateNodeBonusHistoryStatusEnd" parameterType="java.util.Map">
+  		update node_bonus_history
+		set 
+		`status` = #{bonusStatus},
+		update_time = #{updateTime},
+        update_by = #{updateBy}
+		where id in
+		<foreach collection="list" item="ids" index="index" open="(" close=")" separator=",">
+		  #{ids.id}
+		</foreach>
+  </update>
+</mapper>

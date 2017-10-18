@@ -18,6 +18,15 @@ public class MoreMember extends Member{
     private BigDecimal actualAmount;         //提现总额
     private BigDecimal orderTotalAmount;     //累计订单金额
 
+    private String oldLoginPwd;             //原始登录密码
+    private String oldQueryPwd;             //原始查询密码
+    private String oldPayPwd;               //原始支付密码
+
+    private String pwdFlag;                 //密码修改标识位
+
+    private String parentMemberName;
+
+
     public String getRecommendPhone() {
         return recommendPhone;
     }
@@ -105,4 +114,46 @@ public class MoreMember extends Member{
     public void setOrderTotalAmount(BigDecimal orderTotalAmount) {
         this.orderTotalAmount = orderTotalAmount;
     }
+
+    public String getOldLoginPwd() {
+        return oldLoginPwd;
+    }
+
+    public void setOldLoginPwd(String oldLoginPwd) {
+        this.oldLoginPwd = oldLoginPwd;
+    }
+
+    public String getOldQueryPwd() {
+        return oldQueryPwd;
+    }
+
+    public void setOldQueryPwd(String oldQueryPwd) {
+        this.oldQueryPwd = oldQueryPwd;
+    }
+
+    public String getOldPayPwd() {
+        return oldPayPwd;
+    }
+
+    public void setOldPayPwd(String oldPayPwd) {
+        this.oldPayPwd = oldPayPwd;
+    }
+
+    public String getPwdFlag() {
+        return pwdFlag;
+    }
+
+    public void setPwdFlag(String pwdFlag) {
+        this.pwdFlag = pwdFlag;
+    }
+
+    public String getParentMemberName() {
+        return parentMemberName;
+    }
+
+    public void setParentMemberName(String parentMemberName) {
+        this.parentMemberName = parentMemberName;
+    }
+
+
 }

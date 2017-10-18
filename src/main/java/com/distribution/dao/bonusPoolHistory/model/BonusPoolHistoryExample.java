@@ -655,6 +655,126 @@ public class BonusPoolHistoryExample {
             return (Criteria) this;
         }
 
+        public Criteria andOldAmoutIsNull() {
+            addCriterion("old_amout is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutIsNotNull() {
+            addCriterion("old_amout is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutEqualTo(Double value) {
+            addCriterion("old_amout =", value, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutNotEqualTo(Double value) {
+            addCriterion("old_amout <>", value, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutGreaterThan(Double value) {
+            addCriterion("old_amout >", value, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutGreaterThanOrEqualTo(Double value) {
+            addCriterion("old_amout >=", value, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutLessThan(Double value) {
+            addCriterion("old_amout <", value, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutLessThanOrEqualTo(Double value) {
+            addCriterion("old_amout <=", value, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutIn(List<Double> values) {
+            addCriterion("old_amout in", values, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutNotIn(List<Double> values) {
+            addCriterion("old_amout not in", values, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutBetween(Double value1, Double value2) {
+            addCriterion("old_amout between", value1, value2, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldAmoutNotBetween(Double value1, Double value2) {
+            addCriterion("old_amout not between", value1, value2, "oldAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutIsNull() {
+            addCriterion("new_amout is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutIsNotNull() {
+            addCriterion("new_amout is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutEqualTo(Double value) {
+            addCriterion("new_amout =", value, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutNotEqualTo(Double value) {
+            addCriterion("new_amout <>", value, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutGreaterThan(Double value) {
+            addCriterion("new_amout >", value, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutGreaterThanOrEqualTo(Double value) {
+            addCriterion("new_amout >=", value, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutLessThan(Double value) {
+            addCriterion("new_amout <", value, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutLessThanOrEqualTo(Double value) {
+            addCriterion("new_amout <=", value, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutIn(List<Double> values) {
+            addCriterion("new_amout in", values, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutNotIn(List<Double> values) {
+            addCriterion("new_amout not in", values, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutBetween(Double value1, Double value2) {
+            addCriterion("new_amout between", value1, value2, "newAmout");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewAmoutNotBetween(Double value1, Double value2) {
+            addCriterion("new_amout not between", value1, value2, "newAmout");
+            return (Criteria) this;
+        }
+
         public Criteria andUpdateByIsNull() {
             addCriterion("update_by is null");
             return (Criteria) this;

@@ -1,6 +1,6 @@
 'use strict';
 angular
-    .module('app.lazyload')
+    .module('app.lazyLoad')
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(http|https|data):/);
     }])
@@ -19,7 +19,23 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admin/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name: 'adminAdd',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admin/js/add.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name: 'adminInfo',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admin/js/info.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -28,7 +44,7 @@ angular
                         'static/metronic/global/plugins/datatables/datatables.min.css',
                         'app/recommend/js/list.js?v=' + version,
                         'static/metronic/global/plugins/datatables/datatables.all.min.js',
-                        'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                        'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -77,13 +93,14 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/advance/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
                 name:'advance.add',
                 files: [
-                    'app/advance/js/add.js?v=' + version
+                    'app/advance/js/add.js?v=' + version,
+                    'static/metronic/global/plugins/fuelux/js/spinner.min.js'
                 ]
             },
             {
@@ -97,7 +114,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/bonus/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    'static/metronic/pages/scripts/components-date-time-pickers.js',
                     // 'app/common/pagination/dirPagination.js'
                 ]
             },
@@ -106,7 +123,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/dividend/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -114,7 +131,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/dividend/js/detail.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -128,7 +145,23 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/order/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'memberCharge.list',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/memberCharge/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'memberCharge.add',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/memberCharge/js/add.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -136,7 +169,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admMember/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -144,7 +177,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admOperator/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -152,7 +185,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admDividend/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -160,7 +193,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admDividend/js/detail.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -168,15 +201,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admBonus/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
-                ]
-            },
-            {
-                name:'admRecommend',
-                files: [
-                    'static/metronic/global/plugins/datatables/datatables.min.css',
-                    'app/admRecommend/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -184,7 +209,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admOrder/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -192,7 +217,7 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admAdvance/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -200,7 +225,31 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admProduct/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'admProductAdd',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admProduct/js/add.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'product',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/product/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'productDetail',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/product/js/detail.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -208,23 +257,16 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admBasicSetting/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
-            {
-                name:'admPermission',
-                files: [
-                    'static/metronic/global/plugins/datatables/datatables.min.css',
-                    'app/admPermission/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
-                ]
-            },
+
             {
                 name:'admWarning',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admWarning/js/list.js?v=' + version,
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {
@@ -237,8 +279,53 @@ angular
                 name:'graph',
                 files: [
                     'app/graph/js/graph.js?v=' + version,
+                    'static/metronic/global/plugins/jstree/dist/themes/default/style.min.css',
+                    'static/metronic/global/plugins/jstree/dist/jstree.min.js',
                     'static/metronic/pages/css/graph.css'
-
+                ]
+            },
+            {
+                name:'admTreeMember',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admTreeMember/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'admTreeMemberAdd',
+                files: [
+                    'app/admTreeMember/js/add.js?v=' + version
+                ]
+            },
+            {
+                name: 'admHandleHistory',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admHandleHistory/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name:'admMemberCharge.list',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admMemberCharge/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name: 'admNotice',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admNotice/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
+            },
+            {
+                name: 'admAddNotice',
+                files: [
+                    'app/admNotice/js/add.js'
                 ]
             }
         ]

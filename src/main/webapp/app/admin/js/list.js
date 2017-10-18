@@ -1,6 +1,8 @@
-angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage) {
+angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $http,  $state, Notify, $stateParams, $sessionStorage, ConfirmModal) {
     title.setTitle('管理员列表');
     $scope.notData = false;
+    $scope.currentUser = $sessionStorage.currentUser;
+
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,
@@ -70,11 +72,74 @@ angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $htt
         $state.go('app.admin-detail', {id: id});
     }
 
+    /**跳转到添加页面*/
+    $scope.gotoAddPage = function () {
+        $state.go("app.adminAdd");
+    };
+    /**跳转到密码修改页面*/
+    $scope.goAdminInfo = function () {
+        $state.go("app.adminInfo");
+    };
+
+    /**管理员禁用/启用功能操作*/
+    $scope.updateAdminDeleteFlag = function (id, name, rowName, deleteFlag) {
+        $scope.deleteFlagName = "";
+        if (deleteFlag == "Y") {
+            $scope.deleteFlagName = "禁用";
+        }else {
+            $scope.deleteFlagName = "启用";
+        }
+        ConfirmModal.show({
+            text: '确定要' + $scope.deleteFlagName + rowName + name +'吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $http.post(ctx + "/admin/updateAdminDeleteFlag",{id: id, name:name, deleteFlag: deleteFlag}).success(function (resp) {
+                if(resp.successful){
+                    Notify.success("操作成功。");
+                    $scope.search();
+                }else{
+                    Notify.warning("操作失败。");
+                }
+            })
+        });
+    }
+    /**
+     * 管理员密码初始化功能操作
+     * @author sijeong
+     * */
+    $scope.initAdminPassword = function (id, name, rowName) {
+        ConfirmModal.show({
+            text: '确定要初始' + rowName + name +'的密码吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $http.post(ctx + "/admin/initAdminPassword",{id: id, name: name }).success(function (resp) {
+                if(resp.successful){
+                    Notify.success("密码初始化操作成功。");
+                    $scope.search();
+                }else{
+                    Notify.warning("密码初始化操作失败。");
+                }
+            })
+        });
+    }
 });
 
 angular.module('admin').filter("RoleFilter",function () {
     return function (input) {
         if(input=='2'){return '系统管理员'};
         if(input=='3'){return '财务'};
+    }
+});
+
+angular.module('admin').filter("DeleteFlagFilter",function () {
+    return function (input) {
+        if(input=='N'){return '启用'};
+        if(input=='Y'){return '禁用'};
     }
 });

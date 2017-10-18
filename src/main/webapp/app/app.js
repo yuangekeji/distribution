@@ -2,12 +2,11 @@ var App = angular.module('app', [
     'ngSanitize',
     'ui.router',
     'oc.lazyLoad',
-    'app.lazyload',
+    'app.lazyLoad',
     'app.routes',
     'ngStorage',
     'ui.bootstrap',
     'angularUtils.directives.dirPagination',
-    'ui.tree',
     //前台业务模块
     'home',
     'recommend',
@@ -20,6 +19,8 @@ var App = angular.module('app', [
     'order',
     'operator',
     'auth',
+    'product',
+    'memberCharge',
     //后台业务模块
     'admAdvance',
     'admBasicSetting',
@@ -27,15 +28,16 @@ var App = angular.module('app', [
     'admMember',
     'admOperator',
     'admOrder',
-    'admPermission',
     'admProduct',
-    'admRecommend',
     'admin',
     'admBonus',
-    'admWarning'
+    'admWarning',
+    'admTreeMember',
+    'admHandleHistory',
+    'admMemberCharge'
 ]);
 
-angular.module('app.lazyload', []);
+angular.module('app.lazyLoad', []);
 angular.module('app.routes', []);
 angular.module('home', []);
 angular.module('recommend', []);
@@ -48,6 +50,8 @@ angular.module('graph', []);
 angular.module('order', []);
 angular.module('operator',[]);
 angular.module('auth',[]);
+angular.module('product',[]);
+angular.module('memberCharge',[]);
 
 angular.module('admAdvance', []);
 angular.module('admBasicSetting', []);
@@ -55,17 +59,17 @@ angular.module('admDividend', []);
 angular.module('admMember', []);
 angular.module('admOperator', []);
 angular.module('admOrder', []);
-angular.module('admPermission', []);
 angular.module('admProduct', []);
-angular.module('admRecommend', []);
 angular.module('admBonus', []);
 angular.module('admin',[]);
 angular.module('admWarning',[]);
+angular.module('admTreeMember',[]);
+angular.module('admHandleHistory',[]);
+angular.module('admMemberCharge',[]);
+angular.module('admNotice',[]);
 
 App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
-    $scope.$on('$includeContentLoaded', function() {
-        Layout.initSidebar($state); // init sidebar
-    });
+
     $scope.currentUser = {};
     /**
      * description 退出
@@ -88,10 +92,24 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         $http.get(ctx + '/role/getUserRole').success(function (res) {
             $sessionStorage.currentUser = res.currentUser;
             $scope.currentUser = res.currentUser;
+
+            if($scope.currentUser.roleId == '1'&& $scope.currentUser.status =='Y'){
+                $state.go("app.member.overview");
+            }
+
+            if(res.currentUser.roleId  != '1'){
+                $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
+
+                    if(res.successful){
+                        $scope.failCnt = res.data;
+                    }else{
+                        $scope.failCnt = 0;
+                    }
+                });
+            }
+
             $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
-
                 $rootScope.menu = res.data.menus;
-
                 // console.info($rootScope.menu );
                 $scope.firstMenu = [];
 
@@ -112,19 +130,20 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
         }).error(function (error) {
             alert('用户获取失败');
         });
+
+
+
     }
 
     $scope.onInit();
     $scope.goUrl= function (url) {
-        $state.go(url);
-        $scope.dimension = function () {
-            var hasWidth = $('.navbar-collapse').hasClass('width')
-            return hasWidth ? 'width' : 'height'
-        }
+    $state.go(url);
 
-        $('.navbar-collapse')
+    var hasWidth = $('.navbar-collapse').hasClass('width')? 'width' : 'height'
+
+    $('.navbar-collapse')
             .removeClass('collapse in')
-            .addClass('collapse')[$scope.dimension](0)
+            .addClass('collapse')[hasWidth](0)
             .attr('aria-expanded', false)
     }
 });
@@ -153,8 +172,8 @@ App.controller('TplController', ['$state', '$scope','$rootScope','$http', '$sess
     $scope.$on('$includeContentLoaded', function() {
         Layout.initHeader(); // init header
         Layout.initFooter(); // init footer
-    });
-    $scope.currentUser =  $sessionStorage.currentUser
+        Layout.initSidebar(); // init sidebar
+});
 }]);
 
 
@@ -177,8 +196,6 @@ App.factory('settings', ['$rootScope', function($rootScope) {
 
     return settings;
 }]);
-
-
 
 String.prototype.replaceAll = function (s1, s2) {
     var temp = this;
@@ -254,8 +271,10 @@ App.directive('dropdownMenuHover', function () {
 });
 
 /* Init global settings and run the app */
-App .run(['$rootScope', '$state', '$stateParams', "settings",function ($rootScope, $state, $stateParams,settings) {
+App .run(['$rootScope', '$state', '$stateParams', "settings","$sessionStorage",function ($rootScope, $state, $stateParams,settings, $sessionStorage) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.$settings = settings; // state to be accessed from view//
+
+
 }]);

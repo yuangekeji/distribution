@@ -2036,73 +2036,133 @@ public class MemberExample {
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameIsNull() {
-            addCriterion("node_name is null");
+        public Criteria andLinkmanPhoneIsNull() {
+            addCriterion("linkman_phone is null");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameIsNotNull() {
-            addCriterion("node_name is not null");
+        public Criteria andLinkmanPhoneIsNotNull() {
+            addCriterion("linkman_phone is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameEqualTo(String value) {
-            addCriterion("node_name =", value, "nodeName");
+        public Criteria andLinkmanPhoneEqualTo(String value) {
+            addCriterion("linkman_phone =", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameNotEqualTo(String value) {
-            addCriterion("node_name <>", value, "nodeName");
+        public Criteria andLinkmanPhoneNotEqualTo(String value) {
+            addCriterion("linkman_phone <>", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameGreaterThan(String value) {
-            addCriterion("node_name >", value, "nodeName");
+        public Criteria andLinkmanPhoneGreaterThan(String value) {
+            addCriterion("linkman_phone >", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameGreaterThanOrEqualTo(String value) {
-            addCriterion("node_name >=", value, "nodeName");
+        public Criteria andLinkmanPhoneGreaterThanOrEqualTo(String value) {
+            addCriterion("linkman_phone >=", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameLessThan(String value) {
-            addCriterion("node_name <", value, "nodeName");
+        public Criteria andLinkmanPhoneLessThan(String value) {
+            addCriterion("linkman_phone <", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameLessThanOrEqualTo(String value) {
-            addCriterion("node_name <=", value, "nodeName");
+        public Criteria andLinkmanPhoneLessThanOrEqualTo(String value) {
+            addCriterion("linkman_phone <=", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameLike(String value) {
-            addCriterion("node_name like", value, "nodeName");
+        public Criteria andLinkmanPhoneLike(String value) {
+            addCriterion("linkman_phone like", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameNotLike(String value) {
-            addCriterion("node_name not like", value, "nodeName");
+        public Criteria andLinkmanPhoneNotLike(String value) {
+            addCriterion("linkman_phone not like", value, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameIn(List<String> values) {
-            addCriterion("node_name in", values, "nodeName");
+        public Criteria andLinkmanPhoneIn(List<String> values) {
+            addCriterion("linkman_phone in", values, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameNotIn(List<String> values) {
-            addCriterion("node_name not in", values, "nodeName");
+        public Criteria andLinkmanPhoneNotIn(List<String> values) {
+            addCriterion("linkman_phone not in", values, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameBetween(String value1, String value2) {
-            addCriterion("node_name between", value1, value2, "nodeName");
+        public Criteria andLinkmanPhoneBetween(String value1, String value2) {
+            addCriterion("linkman_phone between", value1, value2, "linkmanPhone");
             return (Criteria) this;
         }
 
-        public Criteria andNodeNameNotBetween(String value1, String value2) {
-            addCriterion("node_name not between", value1, value2, "nodeName");
+        public Criteria andLinkmanPhoneNotBetween(String value1, String value2) {
+            addCriterion("linkman_phone not between", value1, value2, "linkmanPhone");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdIsNull() {
+            addCriterion("parent_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdIsNotNull() {
+            addCriterion("parent_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdEqualTo(Integer value) {
+            addCriterion("parent_id =", value, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdNotEqualTo(Integer value) {
+            addCriterion("parent_id <>", value, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdGreaterThan(Integer value) {
+            addCriterion("parent_id >", value, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("parent_id >=", value, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdLessThan(Integer value) {
+            addCriterion("parent_id <", value, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdLessThanOrEqualTo(Integer value) {
+            addCriterion("parent_id <=", value, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdIn(List<Integer> values) {
+            addCriterion("parent_id in", values, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdNotIn(List<Integer> values) {
+            addCriterion("parent_id not in", values, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdBetween(Integer value1, Integer value2) {
+            addCriterion("parent_id between", value1, value2, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("parent_id not between", value1, value2, "parentId");
             return (Criteria) this;
         }
     }

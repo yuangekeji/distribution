@@ -26,9 +26,15 @@ public class OrderMaster {
 
     private String expressAddress;
 
+    private String recevivePhone;
+
+    private String remark;
+
     private String memberLevel;
 
     private String orderStatues;
+
+    private String expressNo;
 
     private Integer createId;
 
@@ -37,6 +43,10 @@ public class OrderMaster {
     private Integer updateId;
 
     private Date updateTime;
+
+    private String sendbypostyn;
+
+    private String bonusAccountType;
 
     public Integer getId() {
         return id;
@@ -126,6 +136,22 @@ public class OrderMaster {
         this.expressAddress = expressAddress == null ? null : expressAddress.trim();
     }
 
+    public String getRecevivePhone() {
+        return recevivePhone;
+    }
+
+    public void setRecevivePhone(String recevivePhone) {
+        this.recevivePhone = recevivePhone == null ? null : recevivePhone.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
     public String getMemberLevel() {
         return memberLevel;
     }
@@ -140,6 +166,14 @@ public class OrderMaster {
 
     public void setOrderStatues(String orderStatues) {
         this.orderStatues = orderStatues == null ? null : orderStatues.trim();
+    }
+
+    public String getExpressNo() {
+        return expressNo;
+    }
+
+    public void setExpressNo(String expressNo) {
+        this.expressNo = expressNo == null ? null : expressNo.trim();
     }
 
     public Integer getCreateId() {
@@ -172,5 +206,21 @@ public class OrderMaster {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSendbypostyn() {
+        return sendbypostyn;
+    }
+
+    public void setSendbypostyn(String sendbypostyn) {
+        this.sendbypostyn = sendbypostyn == null ? null : sendbypostyn.trim();
+    }
+
+    public String getBonusAccountType() {
+        return bonusAccountType;
+    }
+
+    public void setBonusAccountType(String bonusAccountType) {
+        this.bonusAccountType = bonusAccountType == null ? null : bonusAccountType.trim();
     }
 }

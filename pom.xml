@@ -8,7 +8,7 @@
   <name>distribution Maven Webapp</name>
   <url>http://maven.apache.org</url>
     <profiles>
-        <!-- 开发/测试环境，默认激活 -->
+        <!-- 开发，默认激活 -->
         <profile>
             <id>dev</id>
             <properties>
@@ -18,12 +18,20 @@
                 <activeByDefault>true</activeByDefault><!--默认启用的是dev环境配置-->
             </activation>
         </profile>
+     <!-- 测试环境-->
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
         <!-- 生产 -->
         <profile>
             <id>prd</id>
             <properties>
                 <env>prd</env>
             </properties>
+
         </profile>
     </profiles>
 
@@ -60,6 +68,9 @@
     <commons-lang3.version>3.3.2</commons-lang3.version>
     <guava.version>17.0</guava.version>
      <logging.version>1.1.1</logging.version>
+      <quartz.version>2.2.0</quartz.version>
+      <logback.version>1.1.2</logback.version>
+      <poi.version>3.8</poi.version>
   </properties>
   <repositories>
 	    <repository>
@@ -253,8 +264,31 @@
           <artifactId>guava</artifactId>
           <version>${guava.version}</version>
         </dependency>
+       <!-- @@@@@@@@@@@@@@@ POI begin @@@@@@@@@@@@@@@ -->
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-scratchpad</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-ooxml</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.poi</groupId>
+           <artifactId>poi-ooxml-schemas</artifactId>
+           <version>${poi.version}</version>
+       </dependency>
+       <!-- @@@@@@@@@@@@@@@ POI end @@@@@@@@@@@@@@@ -->
 
-        <dependency>
+
+       <dependency>
           <groupId>org.appfuse.plugins</groupId>
           <artifactId>maven-warpath-plugin</artifactId>
           <version>3.0.0</version>
@@ -266,12 +300,24 @@
            <version>${spring-data-jpa.version}</version>
        </dependency>
         <!--GENERAL UTILS end-->
-
+       <!-- @@@@@@@@@@@@@@@ Quartz begin @@@@@@@@@@@@@@@ -->
+       <!-- jobs -->
+       <dependency>
+           <groupId>org.quartz-scheduler</groupId>
+           <artifactId>quartz</artifactId>
+           <version>${quartz.version}</version>
+       </dependency>
+       <dependency>
+           <groupId>org.quartz-scheduler</groupId>
+           <artifactId>quartz-jobs</artifactId>
+           <version>${quartz.version}</version>
+       </dependency>
+       <!-- @@@@@@@@@@@@@@@ Quartz end @@@@@@@@@@@@@@@ -->
       </dependencies>
 
 
    <build>
-
+       <finalName>distribution</finalName>
       <plugins>
        <plugin>
               <groupId>org.apache.maven.plugins</groupId>

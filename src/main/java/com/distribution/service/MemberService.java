@@ -10,11 +10,13 @@ import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.mapper.more.MoreAdminMapper;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.apply.mapper.OperationApplyMapper;
+import com.distribution.dao.apply.mapper.more.MoreOperationApplyMapper;
 import com.distribution.dao.apply.model.OperationApply;
 import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
+import com.distribution.dao.member.model.more.MoreMemberVO;
 import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
@@ -45,6 +47,8 @@ public class MemberService {
     @Autowired
     private OperationApplyMapper operationApplyMapper;
     @Autowired
+    private MoreOperationApplyMapper moreOperationApplyMapper;
+    @Autowired
     private NodeService nodeService;
     @Autowired
     private OrderService orderService;
@@ -54,10 +58,10 @@ public class MemberService {
      * @author Bright
      * */
     public Page findList(Page page){
-        if(null!=page.getParameterMap().get("startTime"))
-            page.getParameterMap().put("start",page.getParameterMap().get("startTime").toString()+" 00:00:00");
-        if(null!=page.getParameterMap().get("endTime"))
-            page.getParameterMap().put("end",page.getParameterMap().get("endTime").toString()+" 23:59:59");
+        /*if(null!=page.getParameterMap().get("startTime") && !"".equals(page.getParameterMap().get("startTime")))
+            page.getParameterMap().put("startTime",page.getParameterMap().get("startTime").toString()+" 00:00:00");
+        if(null!=page.getParameterMap().get("endTime") && !"".equals(page.getParameterMap().get("endTime")))
+            page.getParameterMap().put("endTime",page.getParameterMap().get("endTime").toString()+" 23:59:59");*/
         page.setTotalCount(moreMemberMapper.getMemberCount(page));
         page.setResult(moreMemberMapper.list(page));
         return page;
@@ -76,25 +80,26 @@ public class MemberService {
             if(null!=historyMember){//查询手机号是否被注册，是则报错
                 return "PHONE_EXISTENCE";
             } else {
-                Member noteMember = moreMemberMapper.getMemberByPhone(moreMember.getNotePhone());
-                if(null==noteMember){//查询节点是否存在，否则报错
-                    return "NO_NODE_MEMBER";
-                } else {
-                    Integer it = nodeService.findNodeByParentNode(noteMember.getNodeId(),moreMember.getArea());
-                    if(it.intValue()!=0){//判断节点是否还可以放一代，否则报错
-                        if("left".equals(moreMember.getArea()))
-                            return "LEFT_NOTE_FULL";
-                        else
-                            return "RIGHT_NOTE_FULL";
-                    }else {
+//                Member noteMember = moreMemberMapper.getMemberByPhone(moreMember.getNotePhone());
+//                if(null==noteMember){//查询节点是否存在，否则报错
+//                    return "NO_NODE_MEMBER";
+//                } else {
+//                    Integer it = nodeService.findNodeByParentNode(noteMember.getNodeId(),moreMember.getArea());
+//                    if(it.intValue()!=0){//判断节点是否还可以放一代，否则报错
+//                        if("left".equals(moreMember.getArea()))
+//                            return "LEFT_NOTE_FULL";
+//                        else
+//                            return "RIGHT_NOTE_FULL";
+//                    }else {
                         //保存节点信息
                         MemberNode memberNode = new MemberNode();
                         memberNode.setCreateBy(currentUser.getId());
-                        memberNode.setCreateTime(new Date());
-                        memberNode.setParentId(noteMember.getNodeId());
-                        memberNode.setUpdateBy(currentUser.getId());
-                        memberNode.setUpdateTime(new Date());
-                        Integer noteId = nodeService.saveNode(memberNode,moreMember.getArea());
+//                        memberNode.setCreateTime(new Date());
+                        memberNode.setParentId(recommendMember.getNodeId());
+//                        memberNode.setUpdateBy(currentUser.getId());
+//                        memberNode.setUpdateTime(new Date());
+
+                        MemberNode _memberNode = nodeService.saveNode(memberNode);
 
                         //保存报单信息
                         Member member = new Member();
@@ -109,23 +114,24 @@ public class MemberService {
                         member.setUpdateTime(new Date());
                         member.setMoneyStatus("N");
                         member.setRecommendName(recommendMember.getMemberName());
-                        member.setNodeId(noteId);
-                        member.setNodeName(noteMember.getMemberName());
-                        if ("member_level1".equals(member.getMemberLevel())) {
-                            member.setOrderAmount(new BigDecimal(600));
-                        } else if ("member_level2".equals(member.getMemberLevel())) {
-                            member.setOrderAmount(new BigDecimal(1800));
-                        } else if ("member_level3".equals(member.getMemberLevel())) {
-                            member.setOrderAmount(new BigDecimal(3000));
-                        } else if ("member_level4".equals(member.getMemberLevel())) {
-                            member.setOrderAmount(new BigDecimal(9000));
-                        } else if ("member_level5".equals(member.getMemberLevel())) {
-                            member.setOrderAmount(new BigDecimal(30000));
-                        } else if ("member_level6".equals(member.getMemberLevel())) {
-                            member.setOrderAmount(new BigDecimal(60000));
-                        }
+                        member.setNodeId(_memberNode.getId());
+                        member.setParentId(_memberNode.getParentId());
+//                        member.setNodeName(noteMember.getMemberName());
+//                        if ("member_level1".equals(member.getMemberLevel())) {
+//                            member.setOrderAmount(new BigDecimal(600));
+//                        } else if ("member_level2".equals(member.getMemberLevel())) {
+//                            member.setOrderAmount(new BigDecimal(1800));
+//                        } else if ("member_level3".equals(member.getMemberLevel())) {
+//                            member.setOrderAmount(new BigDecimal(3000));
+//                        } else if ("member_level4".equals(member.getMemberLevel())) {
+//                            member.setOrderAmount(new BigDecimal(9000));
+//                        } else if ("member_level5".equals(member.getMemberLevel())) {
+//                            member.setOrderAmount(new BigDecimal(30000));
+//                        } else if ("member_level6".equals(member.getMemberLevel())) {
+//                            member.setOrderAmount(new BigDecimal(60000));
+//                        }
                         if (null == member.getRecommendId())
-                            member.setRecommendId(currentUser.getId());
+                            member.setRecommendId(recommendMember.getId());
                         moreMemberMapper.insert(member);
 
                         //创建账户信息
@@ -142,8 +148,8 @@ public class MemberService {
                         accountManagerMapper.insert(accountManager);
 
                         return "SUCCESS";
-                    }
-                }
+//                    }
+//                }
             }
         }
     }
@@ -182,17 +188,23 @@ public class MemberService {
      * 创建账户信息；
      * @author Bright
      * */
-    public Integer updateActivation(Member member){
+    public Integer updateActivation(MoreMemberVO _member){
+        Member member = _member;
         member.setQueryPassword(CryptoUtil.md5ByHex(member.getQueryPassword()));
         member.setPayPassword(CryptoUtil.md5ByHex(member.getPayPassword()));
-        if(member.getOrderAmount().compareTo(new BigDecimal(30000))==1){
-            member.setIsSalesDept("Y");
-        }
+//        if(member.getOrderAmount().compareTo(new BigDecimal(30000)) > -1){
+//            member.setIsSalesDept("Y");
+//        }
+        member.setUpdateId(member.getId());
+        member.setUpdateTime(new Date());
         Integer it = memberMapper.updateByPrimaryKeySelective(member);
+        member = memberMapper.selectByPrimaryKey(member.getId());
         //给推荐人的一代个数中 +1
-        Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
-        m.setFirstAgentCnt(null!=member.getFirstAgentCnt()?(member.getFirstAgentCnt()+1):1);
-        memberMapper.updateByPrimaryKeySelective(m);
+        if(member.getRecommendId() != null && member.getRecommendId() > 0 ){
+            Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
+            m.setFirstAgentCnt(null!=m.getFirstAgentCnt()?(m.getFirstAgentCnt()+1):1);
+            memberMapper.updateByPrimaryKeySelective(m);
+        }
 
         MoreOrderMaster order = new MoreOrderMaster();
         order.setOrderCategory("1");
@@ -202,8 +214,11 @@ public class MemberService {
         order.setActAmt(member.getOrderAmount());
         order.setExpressFee(new BigDecimal(0));
         order.setMemberId(member.getId());
-        order.setReceiveName(member.getConsignee());
-        order.setExpressAddress(member.getExpressAddress());
+        //1 自提 2-邮寄
+        order.setSendbypostyn(_member.getSendbypostyn());
+        order.setReceiveName(_member.getReceiveName());
+        order.setRecevivePhone(_member.getRecevivePhone());
+        order.setExpressAddress(_member.getReceviveAddress());
         order.setMemberLevel(member.getMemberLevel());
         order.setOrderStatues("2");
         order.setCreateId(member.getId());
@@ -234,7 +249,7 @@ public class MemberService {
         Member member = memberMapper.selectByPrimaryKey(id);
         BeanUtils.copyProperties(member,moreMember);
         Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(id);
-        moreMember.setOrderTotalAmount(new BigDecimal(orderTotalAmount));
+        moreMember.setOrderTotalAmount(new BigDecimal(null!=orderTotalAmount?orderTotalAmount:0));
         return moreMember;
     }
 
@@ -258,5 +273,65 @@ public class MemberService {
      * */
     public MoreMember findAccountManageByMemberId(Integer memberId){
         return moreAccountManagerMapper.getSeedsAndBondsByMemberId(memberId);
+    }
+
+    public Integer getByMemberId(Integer memberId){
+        List<OperationApply> list = moreOperationApplyMapper.getByMemberId(memberId);
+        if(list.isEmpty()){
+            return 0;
+        }else{
+            return list.size();
+        }
+    }
+
+    /**
+     * description 修改会员信息
+     * @author Bright
+     * */
+    public Integer updateMember(MoreMember moreMember){
+        Member member = new Member();
+        BeanUtils.copyProperties(moreMember,member);
+        return memberMapper.updateByPrimaryKeySelective(member);
+    }
+
+    /**
+     * description 修改密码
+     * @author Bright
+     * */
+    public String updatePwd(MoreMember moreMember){
+        String pwdFlag = moreMember.getPwdFlag();
+        String result = "SUCCESS";
+        if("login".equals(pwdFlag)){
+            moreMember.setOldLoginPwd(CryptoUtil.md5ByHex(moreMember.getOldLoginPwd()));
+            if(null==moreMemberMapper.checkLoginPwd(moreMember)){
+                result = "OLD_PWD_ERROR";
+            }else{
+                Member m = new Member();
+                m.setId(moreMember.getId());
+                m.setLoginPassword(CryptoUtil.md5ByHex(moreMember.getLoginPassword()));
+                memberMapper.updateByPrimaryKeySelective(m);
+            }
+        }else if("query".equals(pwdFlag)){
+            moreMember.setOldQueryPwd(CryptoUtil.md5ByHex(moreMember.getOldQueryPwd()));
+            if(null==moreMemberMapper.checkQueryPwd(moreMember)){
+                result = "OLD_PWD_ERROR";
+            }else{
+                Member m = new Member();
+                m.setId(moreMember.getId());
+                m.setQueryPassword(CryptoUtil.md5ByHex(moreMember.getQueryPassword()));
+                memberMapper.updateByPrimaryKeySelective(m);
+            }
+        }else if("pay".equals(pwdFlag)){
+            moreMember.setOldPayPwd(CryptoUtil.md5ByHex(moreMember.getOldPayPwd()));
+            if(null==moreMemberMapper.checkPayPwd(moreMember)){
+                result = "OLD_PWD_ERROR";
+            }else{
+                Member m = new Member();
+                m.setId(moreMember.getId());
+                m.setPayPassword(CryptoUtil.md5ByHex(moreMember.getPayPassword()));
+                memberMapper.updateByPrimaryKeySelective(m);
+            }
+        }
+        return result;
     }
 }

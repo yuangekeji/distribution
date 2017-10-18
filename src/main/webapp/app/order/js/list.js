@@ -1,4 +1,4 @@
-angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage) {
+angular.module('order').controller('orderCtrl', function (title, $scope, $http, $state, $sessionStorage, $uibModal, ConfirmModal, Notify) {
     title.setTitle('我的订单');
     $scope.myPage = {
         pageNo: 1,
@@ -7,6 +7,24 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         result: [],
         parameterMap: {}
     };
+    $scope.expressMessage = {
+        expressNo: '',
+        expressAddress: '',
+        sendbypostyn: '',
+        orderStatues: ''
+    };
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
     $scope.search = function(){
 
         $http.post(ctx + '/order/list', $scope.myPage)
@@ -25,8 +43,28 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         });
     }
 
-    $scope.updateOrderStatus = function(){
-
+    $scope.confirmOrder = function (id, statues) {
+        ConfirmModal.show({
+            text: '确定已经收到商品了吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $scope.startLoading();
+            $http.post(ctx + "/order/confirmOrder", {id: id, orderStatues: statues}).success(function (resp) {
+                if (resp.successful) {
+                    Notify.success("确认收货完成。");
+                    $scope.search();
+                } else {
+                    Notify.error(resp.error());
+                }
+                $scope.stopLoading();
+            }).error(function (error) {
+                Notify.error(error);
+                $scope.stopLoading();
+            });
+        });
     };
 
 
@@ -53,6 +91,41 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
 
     }
 
+    /**物流信息查询*/
+    $scope.expressMessageSearch = function (expressNo, expressAddress, sendbypostyn, orderStatues) {
+        $scope.expressMessage.expressNo = expressNo;
+        $scope.expressMessage.expressAddress = expressAddress;
+        $scope.expressMessage.sendbypostyn = sendbypostyn;
+        $scope.expressMessage.orderStatues = orderStatues;
+        $scope.open();
+
+    };
+
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "expressMessage.html",
+                controller: "expressMessageCtrl",
+                size: opt_attributes,
+                resolve: {
+                    getDatas: function()
+                    {
+                        return $scope.expressMessage;
+                    }
+                }
+            });
+        out.result.then(function(value)
+        {
+            // console.info('确认');
+        }, function()
+        {
+            // console.info('取消');
+        });
+    };
+
     /**
      * 分页触发
      * @param num
@@ -60,6 +133,32 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
     $scope.pageChangeHandler = function(num) {
         $scope.myPage.pageNo = num;
         $scope.search();
+    };
+});
+
+angular.module('order').controller('expressMessageCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
+
+    $scope.datas = getDatas;
+
+    $scope.close = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
     };
 });
 
@@ -76,6 +175,13 @@ angular.module('order').filter("OrderCategoryFilter",function () {
     return function (input) {
         if(input=='1'){return '报单'};
         if(input=='2'){return '复投'};
-        if(input=='3'){return '线上下单'};
+        if(input=='3'){return '折扣单'};
+    }
+});
+
+angular.module('order').filter("bonusAccountTypeFilter",function () {
+    return function (input) {
+        if(input=='1'){return '种子币'};
+        if(input=='2'){return '奖金币'};
     }
 });

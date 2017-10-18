@@ -71,9 +71,9 @@ public class AdmTreeMemberService {
                 member.setStatus("N");
                 member.setRoleId(1);
                 member.setMemberPost("post_level1");
-                member.setCreateId(currentUser.getId());
+                member.setCreateId(0);
                 member.setCreateTime(new Date());
-                member.setUpdateId(currentUser.getId());
+                member.setUpdateId(0);
                 member.setUpdateTime(new Date());
                 member.setMoneyStatus("N");
                 member.setNodeId(memberNode.getId());

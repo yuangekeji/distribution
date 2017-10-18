@@ -71,9 +71,9 @@ public class AdmTreeMemberService {
                 member.setStatus("N");
                 member.setRoleId(1);
                 member.setMemberPost("post_level1");
-                member.setCreateId(currentUser.getId());
+                member.setCreateId(0);
                 member.setCreateTime(new Date());
-                member.setUpdateId(currentUser.getId());
+                member.setUpdateId(0);
                 member.setUpdateTime(new Date());
                 member.setMoneyStatus("N");
                 member.setNodeId(memberNode.getId());
@@ -81,18 +81,18 @@ public class AdmTreeMemberService {
                 member.setRecommendName("ADMIN");
                 member.setParentId(0);
                 member.setRecommendId(0);
-
-                if ("member_level1".equals(member.getMemberLevel())) {
-                    member.setOrderAmount(new BigDecimal(600));
-                } else if ("member_level2".equals(member.getMemberLevel())) {
-                    member.setOrderAmount(new BigDecimal(1800));
-                } else if ("member_level3".equals(member.getMemberLevel())) {
-                    member.setOrderAmount(new BigDecimal(3000));
-                } else if ("member_level4".equals(member.getMemberLevel())) {
-                    member.setOrderAmount(new BigDecimal(9000));
-                } else if ("member_level5".equals(member.getMemberLevel())) {
-                    member.setOrderAmount(new BigDecimal(30000));
-                }
+//
+//                if ("member_level1".equals(member.getMemberLevel())) {
+//                    member.setOrderAmount(new BigDecimal(600));
+//                } else if ("member_level2".equals(member.getMemberLevel())) {
+//                    member.setOrderAmount(new BigDecimal(1800));
+//                } else if ("member_level3".equals(member.getMemberLevel())) {
+//                    member.setOrderAmount(new BigDecimal(3000));
+//                } else if ("member_level4".equals(member.getMemberLevel())) {
+//                    member.setOrderAmount(new BigDecimal(9000));
+//                } else if ("member_level5".equals(member.getMemberLevel())) {
+//                    member.setOrderAmount(new BigDecimal(30000));
+//                }
 
                 moreMemberMapper.insert(member);
 

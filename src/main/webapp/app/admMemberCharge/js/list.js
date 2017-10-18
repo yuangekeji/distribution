@@ -10,9 +10,11 @@ angular.module('admMemberCharge').controller('admMemberChargeListCtrl',function 
         result: [],
         parameterMap: {
             memberName: '',
-            statue: '',
+            status: '',
             startTime: '',
-            endTime: ''
+            endTime: '',
+            chargeStartTime: '',
+            chargeEndTime: ''
         }
     };
     $scope.approvalRemark = {
@@ -54,7 +56,18 @@ angular.module('admMemberCharge').controller('admMemberChargeListCtrl',function 
             });
 
     };
-
+    /**
+     * excel download
+     */
+    $scope.excelDownload = function() {
+        window.location.href=ctx + "/admMemberCharge/excelDownload?"
+            +"memberName="+$scope.myPage.parameterMap.memberName
+            +"&startTime="+$scope.myPage.parameterMap.startTime
+            +"&endTime="+$scope.myPage.parameterMap.endTime
+            +"&chargeStartTime="+$scope.myPage.parameterMap.chargeStartTime
+            +"&chargeEndTime="+$scope.myPage.parameterMap.chargeEndTime
+            +"&status="+$scope.myPage.parameterMap.status;
+    }
     /**
      * 初始化
      */

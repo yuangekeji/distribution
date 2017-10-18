@@ -66,7 +66,13 @@
     <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
       <![CDATA[AND DATE_FORMAT(a.charge_request_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
     </if>
-    order by charge_request_time desc
+    <if test="parameterMap.chargeStartTime != null and parameterMap.chargeStartTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_time, '%Y-%m-%d') >= #{parameterMap.chargeStartTime}]]>
+    </if>
+    <if test="parameterMap.chargeEndTime != null and parameterMap.chargeEndTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_time, '%Y-%m-%d') <= #{parameterMap.chargeEndTime}]]>
+    </if>
+    order by a.charge_request_time desc
     <include refid="pageLimit"/>
   </select>
 
@@ -92,6 +98,12 @@
     <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
       <![CDATA[AND DATE_FORMAT(a.charge_request_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
     </if>
+    <if test="parameterMap.chargeStartTime != null and parameterMap.chargeStartTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_time, '%Y-%m-%d') >= #{parameterMap.chargeStartTime}]]>
+    </if>
+    <if test="parameterMap.chargeEndTime != null and parameterMap.chargeEndTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_time, '%Y-%m-%d') <= #{parameterMap.chargeEndTime}]]>
+    </if>
   </select>
 
   <update id="confirmMemberCharge" parameterType="com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply" >
@@ -103,4 +115,48 @@
     update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--充值列表下载-->
+  <select id="getExcelMemberChargeList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT a.id
+    , a.member_id
+    , b.member_name
+    , b.member_phone
+    , a.status
+    , a.charge_request_time
+    , a.pay_money_type
+    , a.pay_money_time
+    , a.charge_amt
+    , a.charge_apply_time
+    , a.charge_time
+    , a.apply_info
+    , a.remarks
+    , a.create_id
+    , a.create_time
+    , a.update_id
+    , a.update_time
+    FROM member_charge_apply a
+    LEFT JOIN member b
+    ON a.member_id = b.id
+    WHERE 1 = 1
+    <if test="memberName!=null and memberName!=''">
+      AND b.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{memberName}))),'%') ESCAPE '*'
+    </if>
+    <if test="status!=null and status!=''">
+      AND a.status = #{status}
+    </if>
+    <if test="startTime != null and startTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_request_time, '%Y-%m-%d') >= #{startTime}]]>
+    </if>
+    <if test="endTime != null and endTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_request_time, '%Y-%m-%d') <= #{endTime}]]>
+    </if>
+    <if test="chargeStartTime != null and chargeStartTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_time, '%Y-%m-%d') >= #{chargeStartTime}]]>
+    </if>
+    <if test="chargeEndTime != null and chargeEndTime != ''">
+      <![CDATA[AND DATE_FORMAT(a.charge_time, '%Y-%m-%d') <= #{chargeEndTime}]]>
+    </if>
+    order by a.charge_time desc
+  </select>
 </mapper>

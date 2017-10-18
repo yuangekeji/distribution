@@ -9,11 +9,21 @@ import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.memberChargeApply.mapper.more.MoreMemberChargeApplyMapper;
 import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdmMemberChargeService {
@@ -92,5 +102,97 @@ public class AdmMemberChargeService {
             throw new RuntimeException();
         }
         return "success";
+    }
+
+    /**
+     * description 充值列表下载
+     * @author sijeong
+     * */
+    public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
+        List<MoreMemberChargeApply> result = moreMemberChargeApplyMapper.getExcelMemberChargeList(map);
+        //定义表头
+        String[] excelHeader = {"申请人", "手机号", "打款时间", "打款方式", "申请时间", "审批时间", "充值金额", "充值时间", "状态", "申请备注"};
+
+        return  this.exportExcel("已充值会员列表", excelHeader, result, response.getOutputStream());
+    }
+
+    public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreMemberChargeApply> list, OutputStream out) throws InvocationTargetException {
+        // 声明一个工作薄
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        // 生成一个表格
+        XSSFSheet sheet = workbook.createSheet(title);
+        //定义字体
+        XSSFFont font = workbook.createFont();
+        font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+        font.setFontHeightInPoints((short) 12);
+        //定义样式
+        XSSFCellStyle style = workbook.createCellStyle();
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+        style.setFont(font);
+        // 产生表格标题行
+        XSSFRow row = sheet.createRow(0);
+        for (int i = 0; i < headers.length; i++){
+            XSSFCell cell = row.createCell(i);
+            cell.setCellStyle(style);
+            cell.setCellValue(headers[i]);
+        }
+        //设置表格宽度
+        sheet.setColumnWidth(0, 22 * 256);
+        sheet.setColumnWidth(1, 15 * 256);
+        sheet.setColumnWidth(2, 15 * 256);
+        sheet.setColumnWidth(3, 20 * 256);
+        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
+        sheet.setColumnWidth(6, 15 * 256);
+        sheet.setColumnWidth(7, 20 * 256);
+        sheet.setColumnWidth(8, 15 * 256);
+        sheet.setColumnWidth(9, 40 * 256);
+
+        //构建表体
+        //定义body样式
+        XSSFCellStyle styleRight = workbook.createCellStyle();
+        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);//居右
+        XSSFCellStyle styleCenter = workbook.createCellStyle();
+        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+        int t = 0;
+        BigDecimal p =  new BigDecimal("0");
+        for(int j=0;j<list.size();j++){
+            XSSFRow bodyRow = sheet.createRow(j + 1);
+
+            bodyRow.createCell(0).setCellValue(list.get(j).getMemberName());
+            bodyRow.createCell(1).setCellValue(list.get(j).getMemberPhone());
+            bodyRow.createCell(2).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getPayMoneyTime()));
+            bodyRow.createCell(3).setCellValue(list.get(j).getPayMoneyType());
+            bodyRow.createCell(4).setCellValue(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeRequestTime()));
+            bodyRow.createCell(5).setCellValue(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeApplyTime()));
+            bodyRow.createCell(6).setCellValue(list.get(j).getChargeAmt().toString());
+            bodyRow.createCell(7).setCellValue(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeTime()));
+            bodyRow.createCell(8).setCellValue("充值成功");
+            bodyRow.createCell(9).setCellValue(list.get(j).getApplyInfo());
+
+            bodyRow.getCell(0).setCellStyle(styleCenter);
+            bodyRow.getCell(1).setCellStyle(styleCenter);
+            bodyRow.getCell(2).setCellStyle(styleCenter);
+            bodyRow.getCell(4).setCellStyle(styleCenter);
+            bodyRow.getCell(5).setCellStyle(styleCenter);
+            bodyRow.getCell(6).setCellStyle(styleRight);
+            bodyRow.getCell(7).setCellStyle(styleCenter);
+            bodyRow.getCell(8).setCellStyle(styleCenter);
+
+            p = p.add(list.get(j).getChargeAmt());
+            t=j;
+        }
+        XSSFRow bodyRow1 = sheet.createRow(t + 3);
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+        style.setFont(font);
+
+        XSSFCell cel1 = bodyRow1.createCell(0);
+        cel1.setCellStyle(style);
+        cel1.setCellValue("已充值成功总金额(元)");
+        XSSFCell cel2 = bodyRow1.createCell(1);
+        cel2.setCellStyle(styleRight);
+        cel2.setCellValue(p.toString());
+
+        return  workbook;
     }
 }

@@ -35,8 +35,10 @@
                             <input type="password" class="form-control input-circle" ng-model="confirmLoginPassword" maxlength="24">
                         </div>
                         <div class="form-group">
-                            <label>会员等级</label>
-                            <select class="form-control input-circle" ng-model="member.memberLevel" ng-options="dic.dicCode as dic.dicName for dic in dictionary"></select>
+                            <label>报单金额</label>
+                            <select class="form-control input-circle" ng-model="member.orderAmount" >
+                                <option ng-repeat="orderAmount in orderAmounts" value="{{orderAmount.value}}">{{orderAmount.name}}</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label>收货人姓名</label>

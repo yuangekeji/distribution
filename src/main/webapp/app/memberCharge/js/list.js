@@ -7,7 +7,7 @@ angular.module('memberCharge').controller('memberChargeListCtrl',function ($q, t
         totalCount: 0,
         result: [],
         parameterMap: {
-            statue:'',
+            status:'',
             startTime:'',
             endTime:''
         }

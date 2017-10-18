@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, content, `level`, publishing_state, detele_flag, create_by, create_time,
+    id, title, content, level, publishing_state, detele_flag, create_by, create_time, 
     update_by, update_time, notice_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.notice.model.NoticeExample" >

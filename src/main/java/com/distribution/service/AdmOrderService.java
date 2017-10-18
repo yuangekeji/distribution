@@ -1,6 +1,7 @@
 package com.distribution.service;
 
 import com.distribution.common.utils.Page;
+import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.order.mapper.OrderMasterMapper;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +49,25 @@ public class AdmOrderService {
      * @author WYN
      * */
     public String confirmSendOrder(OrderMaster orderMaster) {
+        int cnt = orderMasterMapper.updateByPrimaryKeySelective(orderMaster);
+
+        if(cnt > 0){
+            return "success";
+        }else{
+            throw new RuntimeException();
+        }
+    }
+    /**
+     * description 管理员确认收货
+     * @author sijeong
+     * */
+    public String confirmReceiveOrder(OrderMaster om, Admin admin) {
+
+        OrderMaster orderMaster = new OrderMaster();
+        orderMaster.setId(om.getId());
+        orderMaster.setOrderStatues(om.getOrderStatues());
+        orderMaster.setUpdateId(admin.getId());
+        orderMaster.setUpdateTime(new Date());
         int cnt = orderMasterMapper.updateByPrimaryKeySelective(orderMaster);
 
         if(cnt > 0){

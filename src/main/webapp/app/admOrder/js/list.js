@@ -1,4 +1,4 @@
-angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope, $http, $state, $stateParams, $sessionStorage, Notify, $uibModal) {
+angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope, $http, $state, $stateParams, $sessionStorage, Notify, $uibModal, ConfirmModal) {
     title.setTitle('订单管理');
     $scope.myPage = {
         pageNo: 1,
@@ -127,7 +127,35 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             // console.info('取消');
         });
     };
-
+    /**
+     * 管理员确认收货
+     * @param id
+     * @param orderNo
+     * @param statues
+     */
+    $scope.adminConfirmOrder = function (id, orderNo, statues) {
+        ConfirmModal.show({
+            text: '确定已经收到商品了吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $scope.startLoading();
+            $http.post(ctx + "/admOrder/confirmReceiveOrder", {id: id, orderNo: orderNo, orderStatues: statues}).success(function (resp) {
+                if (resp.successful) {
+                    Notify.success("确认收货完成。");
+                    $scope.search();
+                } else {
+                    Notify.error(resp.error());
+                }
+                $scope.stopLoading();
+            }).error(function (error) {
+                Notify.error(error);
+                $scope.stopLoading();
+            });
+        });
+    };
     /**
      * excel download
      */

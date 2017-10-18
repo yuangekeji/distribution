@@ -5,21 +5,33 @@ angular.module('admTreeMember').controller('admTreeMemberAddCtrl',function ($q, 
     title.setTitle('创建分支');
     $scope.user = $sessionStorage.currentUser;
     $scope.member = {
-        loginPassword:'111111'
+        loginPassword:'111111',
+        orderAmount:""
     };
     $scope.confirmLoginPassword = "111111";
     $scope.dictionary = [];
+    $scope.orderAmounts = [];
+
     $scope.onInit = function () {
-        $http.get(ctx + '/admTreeMember/getDictionary/member_level').success(function (resp) {
-            if(resp.successful){
-                $scope.dictionary = resp.data.list;
-                if($scope.dictionary){
-                    $scope.member.memberLevel = $scope.dictionary[0].dicCode;
-                }
-            }else{
-                console.log(resp);
-            }
-        });
+
+        var MIN = 600;
+        var MAX = 30000;
+
+        for(var i = 1 ; i<= MAX/MIN ; i++ ){
+            $scope.orderAmounts.push({value: i * MIN , name :  i * MIN +".00 ( "+i+"单 )"});
+        }
+        $scope.orderAmounts.unshift({value:"",name:"请选择报单金额"});
+
+        // $http.get(ctx + '/admTreeMember/getDictionary/member_level').success(function (resp) {
+        //     if(resp.successful){
+        //         $scope.dictionary = resp.data.list;
+        //         if($scope.dictionary){
+        //             $scope.member.memberLevel = $scope.dictionary[0].dicCode;
+        //         }
+        //     }else{
+        //         console.log(resp);
+        //     }
+        // });
     };
     $scope.onInit();
     $scope.submitFlag = true;
@@ -81,10 +93,10 @@ angular.module('admTreeMember').controller('admTreeMemberAddCtrl',function ($q, 
         }else if($scope.member.loginPassword!=$scope.confirmLoginPassword){
             Notify.warning("登录密码与确认密码不一致，请重新输入。");
             $scope.submitFlag = true;
-        } else if(!$scope.member.memberLevel){
-            Notify.warning("请选择会员等级。");
-            $scope.submitFlag = true;
-        }else{
+        }else if(!$scope.member.orderAmount){
+           Notify.warning("请选择报单金额。");
+           $scope.submitFlag = true;
+       }else{
             return true;
         }
     };

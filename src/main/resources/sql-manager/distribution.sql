@@ -593,8 +593,7 @@ INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.account', null)
 INSERT INTO `menu` VALUES ('28', null, '推荐网络图', '1', 'app.graph', 'icon-graph');
 INSERT INTO `menu` VALUES ('29', null, '分支管理', '25', 'app.admTreeMember', null);
 INSERT INTO `menu` VALUES ('30', null, '操作记录', '25', 'app.admHandleHistory', null);
-INSERT INTO `menu` VALUES ('31', null, '充值管理', '1', 'app.memberCharge', 'icon-diamond');
-INSERT INTO `menu` VALUES ('34', null, '充值管理', '15', 'app.admMemberCharge', 'icon-diamond');
+
 -- ----------------------------
 -- Table structure for node_bonus_history
 -- ----------------------------
@@ -752,9 +751,6 @@ INSERT INTO `role_menu` VALUES ('1', '28');
 INSERT INTO `role_menu` VALUES ('2', '21');
 INSERT INTO `role_menu` VALUES ('2', '29');
 INSERT INTO `role_menu` VALUES ('2', '30');
-INSERT INTO `role_menu` VALUES ('1', '31');
-INSERT INTO `role_menu` VALUES ('2', '34');
-INSERT INTO `role_menu` VALUES ('3', '34');
 
 -- ----------------------------
 -- Table structure for transfer
@@ -872,3 +868,12 @@ INSERT INTO `menu` VALUES ('32', null, '公告管理', '31', 'app.admNotice', nu
 
 INSERT INTO `role_menu` VALUES ('2', '31');
 INSERT INTO `role_menu` VALUES ('2', '32');
+
+
+INSERT INTO `menu` VALUES (33, null, '充值申请', '1', 'app.memberCharge', 'icon-diamond');
+INSERT INTO `menu` VALUES (34, null, '充值管理', '12', 'app.admMemberCharge', 'icon-diamond');
+
+INSERT INTO `role_menu` VALUES ('2', '34');
+INSERT INTO `role_menu` VALUES ('3', '34');
+INSERT INTO `role_menu` VALUES ('1', '33');
+

@@ -44,7 +44,7 @@ public class AdmNoticeService {
             it = noticeMapper.updateByPrimaryKeySelective(notice);
         }else{
             notice.setPublishingState("N");
-            notice.setDeteleFlag("N");
+            notice.setDeleteFlag("N");
             notice.setCreateBy(admin.getId().toString());
             notice.setCreateTime(new Date());
             notice.setUpdateBy(admin.getId().toString());

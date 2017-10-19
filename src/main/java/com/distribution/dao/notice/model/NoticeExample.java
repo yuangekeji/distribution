@@ -445,73 +445,73 @@ public class NoticeExample {
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagIsNull() {
-            addCriterion("detele_flag is null");
+        public Criteria andDeleteFlagIsNull() {
+            addCriterion("delete_flag is null");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagIsNotNull() {
-            addCriterion("detele_flag is not null");
+        public Criteria andDeleteFlagIsNotNull() {
+            addCriterion("delete_flag is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagEqualTo(String value) {
-            addCriterion("detele_flag =", value, "deteleFlag");
+        public Criteria andDeleteFlagEqualTo(String value) {
+            addCriterion("delete_flag =", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagNotEqualTo(String value) {
-            addCriterion("detele_flag <>", value, "deteleFlag");
+        public Criteria andDeleteFlagNotEqualTo(String value) {
+            addCriterion("delete_flag <>", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagGreaterThan(String value) {
-            addCriterion("detele_flag >", value, "deteleFlag");
+        public Criteria andDeleteFlagGreaterThan(String value) {
+            addCriterion("delete_flag >", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagGreaterThanOrEqualTo(String value) {
-            addCriterion("detele_flag >=", value, "deteleFlag");
+        public Criteria andDeleteFlagGreaterThanOrEqualTo(String value) {
+            addCriterion("delete_flag >=", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagLessThan(String value) {
-            addCriterion("detele_flag <", value, "deteleFlag");
+        public Criteria andDeleteFlagLessThan(String value) {
+            addCriterion("delete_flag <", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagLessThanOrEqualTo(String value) {
-            addCriterion("detele_flag <=", value, "deteleFlag");
+        public Criteria andDeleteFlagLessThanOrEqualTo(String value) {
+            addCriterion("delete_flag <=", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagLike(String value) {
-            addCriterion("detele_flag like", value, "deteleFlag");
+        public Criteria andDeleteFlagLike(String value) {
+            addCriterion("delete_flag like", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagNotLike(String value) {
-            addCriterion("detele_flag not like", value, "deteleFlag");
+        public Criteria andDeleteFlagNotLike(String value) {
+            addCriterion("delete_flag not like", value, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagIn(List<String> values) {
-            addCriterion("detele_flag in", values, "deteleFlag");
+        public Criteria andDeleteFlagIn(List<String> values) {
+            addCriterion("delete_flag in", values, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagNotIn(List<String> values) {
-            addCriterion("detele_flag not in", values, "deteleFlag");
+        public Criteria andDeleteFlagNotIn(List<String> values) {
+            addCriterion("delete_flag not in", values, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagBetween(String value1, String value2) {
-            addCriterion("detele_flag between", value1, value2, "deteleFlag");
+        public Criteria andDeleteFlagBetween(String value1, String value2) {
+            addCriterion("delete_flag between", value1, value2, "deleteFlag");
             return (Criteria) this;
         }
 
-        public Criteria andDeteleFlagNotBetween(String value1, String value2) {
-            addCriterion("detele_flag not between", value1, value2, "deteleFlag");
+        public Criteria andDeleteFlagNotBetween(String value1, String value2) {
+            addCriterion("delete_flag not between", value1, value2, "deleteFlag");
             return (Criteria) this;
         }
 

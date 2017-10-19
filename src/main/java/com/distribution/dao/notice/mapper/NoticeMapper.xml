@@ -7,7 +7,7 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="level" property="level" jdbcType="VARCHAR" />
     <result column="publishing_state" property="publishingState" jdbcType="VARCHAR" />
-    <result column="detele_flag" property="deteleFlag" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="VARCHAR" />
     <result column="create_by" property="createBy" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
@@ -73,7 +73,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, content, `level`, publishing_state, detele_flag, create_by, create_time,
+    id, title, content, level, publishing_state, delete_flag, create_by, create_time, 
     update_by, update_time, notice_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.notice.model.NoticeExample" >
@@ -109,11 +109,11 @@
   </delete>
   <insert id="insert" parameterType="com.distribution.dao.notice.model.Notice" >
     insert into notice (id, title, content, 
-      level, publishing_state, detele_flag, 
+      level, publishing_state, delete_flag, 
       create_by, create_time, update_by, 
       update_time, notice_time)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
-      #{level,jdbcType=VARCHAR}, #{publishingState,jdbcType=VARCHAR}, #{deteleFlag,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR}, #{publishingState,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=VARCHAR}, 
       #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{noticeTime,jdbcType=TIMESTAMP})
   </insert>
@@ -135,8 +135,8 @@
       <if test="publishingState != null" >
         publishing_state,
       </if>
-      <if test="deteleFlag != null" >
-        detele_flag,
+      <if test="deleteFlag != null" >
+        delete_flag,
       </if>
       <if test="createBy != null" >
         create_by,
@@ -170,8 +170,8 @@
       <if test="publishingState != null" >
         #{publishingState,jdbcType=VARCHAR},
       </if>
-      <if test="deteleFlag != null" >
-        #{deteleFlag,jdbcType=VARCHAR},
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
         #{createBy,jdbcType=VARCHAR},
@@ -214,8 +214,8 @@
       <if test="record.publishingState != null" >
         publishing_state = #{record.publishingState,jdbcType=VARCHAR},
       </if>
-      <if test="record.deteleFlag != null" >
-        detele_flag = #{record.deteleFlag,jdbcType=VARCHAR},
+      <if test="record.deleteFlag != null" >
+        delete_flag = #{record.deleteFlag,jdbcType=VARCHAR},
       </if>
       <if test="record.createBy != null" >
         create_by = #{record.createBy,jdbcType=VARCHAR},
@@ -244,7 +244,7 @@
       content = #{record.content,jdbcType=VARCHAR},
       level = #{record.level,jdbcType=VARCHAR},
       publishing_state = #{record.publishingState,jdbcType=VARCHAR},
-      detele_flag = #{record.deteleFlag,jdbcType=VARCHAR},
+      delete_flag = #{record.deleteFlag,jdbcType=VARCHAR},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       update_by = #{record.updateBy,jdbcType=VARCHAR},
@@ -269,8 +269,8 @@
       <if test="publishingState != null" >
         publishing_state = #{publishingState,jdbcType=VARCHAR},
       </if>
-      <if test="deteleFlag != null" >
-        detele_flag = #{deteleFlag,jdbcType=VARCHAR},
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
       </if>
       <if test="createBy != null" >
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -296,7 +296,7 @@
       content = #{content,jdbcType=VARCHAR},
       level = #{level,jdbcType=VARCHAR},
       publishing_state = #{publishingState,jdbcType=VARCHAR},
-      detele_flag = #{deteleFlag,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=VARCHAR},
       create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},

@@ -133,6 +133,10 @@
                                                 class="btn btn-outline blue-steel btn-xs"
                                                 ng-click="confirmOrder(orderMaster.id,orderMaster.orderNo,'3',orderMaster.expressNo)">确认发货</button>
                                     <!--</div>-->
+                                    <button type="button"
+                                            ng-show="{{orderMaster.orderStatues == '3'}}"
+                                            class="btn btn-outline blue-steel btn-xs"
+                                            ng-click="adminConfirmOrder(orderMaster.id,orderMaster.orderNo,'4')">确认收货</button>
                                 </td>
                             </tr>
                             <tr ng-show= "notData">

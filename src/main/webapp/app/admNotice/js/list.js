@@ -64,7 +64,7 @@ angular.module('admNotice').controller('admNoticeCtrl',function ($q, title, $sco
 
     /**删除*/
     $scope.delete = function (id) {
-        $http.post(ctx + "/admNotice/insertOrUpdate",{id:id,deteleFlag:'Y',updateTime:new Date()}).success(function (resp) {
+        $http.post(ctx + "/admNotice/insertOrUpdate",{id:id,deleteFlag:'Y',updateTime:new Date()}).success(function (resp) {
             if(resp.successful){
                 Notify.warning("删除成功");
                 $scope.search();

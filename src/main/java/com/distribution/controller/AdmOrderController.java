@@ -152,4 +152,22 @@ public class AdmOrderController extends BasicController{
         admHandleHistoryService.addAdminHandleHistory(currentUser, map);
         return successMsg("result",result);
     }
+    /**
+     * description 管理员确认收货
+     * @author sijeong
+     * */
+    @RequestMapping("/confirmReceiveOrder")
+    @ResponseBody
+    public JsonMessage confirmReceiveOrder(@RequestBody OrderMaster orderMaster, HttpSession session){
+        Admin currentUser = (Admin) getCurrentUser(session);
+
+        String result = admOrderService.confirmReceiveOrder(orderMaster, currentUser);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
+        map.put("handleId", orderMaster.getOrderNo());
+        map.put("handleComment", "订单号: " + orderMaster.getOrderNo() + ", 操作: 确认发货");
+        admHandleHistoryService.addAdminHandleHistory(currentUser, map);
+        return successMsg("result",result);
+    }
 }

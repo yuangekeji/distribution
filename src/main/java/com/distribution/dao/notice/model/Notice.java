@@ -13,7 +13,7 @@ public class Notice {
 
     private String publishingState;
 
-    private String deteleFlag;
+    private String deleteFlag;
 
     private String createBy;
 
@@ -65,12 +65,12 @@ public class Notice {
         this.publishingState = publishingState == null ? null : publishingState.trim();
     }
 
-    public String getDeteleFlag() {
-        return deteleFlag;
+    public String getDeleteFlag() {
+        return deleteFlag;
     }
 
-    public void setDeteleFlag(String deteleFlag) {
-        this.deteleFlag = deteleFlag == null ? null : deteleFlag.trim();
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag == null ? null : deleteFlag.trim();
     }
 
     public String getCreateBy() {

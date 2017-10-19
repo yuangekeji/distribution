@@ -847,7 +847,8 @@ CREATE TABLE `member_charge_apply` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
---添加公告表
+
+-- 添加公告表
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
@@ -862,10 +863,10 @@ CREATE TABLE `notice` (
   `update_time` datetime DEFAULT NULL,
   `notice_time` datetime DEFAULT NULL COMMENT '公告激活时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
---添加公告菜单数据 ID请根据实际情况设定
+-- 添加公告菜单数据 ID请根据实际情况设定
 INSERT INTO `menu` VALUES ('31', '6', '公告管理', '0', '', 'icon-settings');
 INSERT INTO `menu` VALUES ('32', null, '公告管理', '31', 'app.admNotice', null);
 

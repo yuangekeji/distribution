@@ -91,7 +91,7 @@ public class AdmAdvanceService {
             historyout.setBonusAmt(moreAdvance.getReqAmt());
             historyout.setTotalAmt(moreAdvance.getReqAmt());
 
-            cnt1 = moreAccountManagerMapper.updateAccountManagerAmt(advanceAccount);
+            cnt1 = moreAccountManagerMapper.updateAccountManagerAmtWhileAdvance(advanceAccount);
             cnt2= accountFlowHistoryMapper.insert(historyout);
 
         }else {

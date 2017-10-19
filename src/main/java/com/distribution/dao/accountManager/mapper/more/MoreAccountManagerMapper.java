@@ -17,6 +17,8 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
 
     int updateAccountManagerAmt(AccountManager accountManager);
 
+    int updateAccountManagerAmtWhileAdvance(AccountManager accountManager);
+
     int updateAccountManager(AccountManager accountManager);
 
     /**

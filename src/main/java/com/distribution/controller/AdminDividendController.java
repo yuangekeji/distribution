@@ -72,8 +72,8 @@ public class AdminDividendController extends BasicController {
                               HttpServletResponse response) throws IOException, InvocationTargetException {
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("startTime", startTime+" 00:00:00");
-        map.put("endTime", endTime+" 00:00:00");
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
 
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = dividendService.exportData(map,response);

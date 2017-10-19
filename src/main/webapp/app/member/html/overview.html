@@ -11,65 +11,65 @@
                 <div class="table-scrollable table-scrollable-borderless">
                     <table class="table table-striped table-hover" >
                         <tr>
-                            <td class="black-font" >
+                            <td class="black-font text-left" >
                                市级市场业绩
                             </td>
-                            <td class="black-font">{{MemberInfo.cityTotalAmount | number:2}}</td>
-                            <td class="black-font">
+                            <td class="black-font text-right">{{MemberInfo.cityTotalAmount | number:2}}</td>
+                            <td class="black-font text-left">
                                 县级市场业绩
                             </td>
-                            <td class="black-font">{{MemberInfo.countyTotalAmount | number:2}}</td>
+                            <td class="black-font text-right">{{MemberInfo.countyTotalAmount | number:2}}</td>
 
                         </tr>
                         <tr>
-                            <td class="black-font">
+                            <td class="black-font text-left">
                                 市级市场会员数
                             </td>
-                            <td class="black-font">{{MemberInfo.cityTotalPeople}}个</td>
-                            <td class="black-font">
+                            <td class="black-font text-right">{{MemberInfo.cityTotalPeople}}个</td>
+                            <td class="black-font text-left">
                                 县级市场会员数
                             </td>
-                            <td class="black-font">{{MemberInfo.countyTotalPeople}}个</td>
+                            <td class="black-font text-right">{{MemberInfo.countyTotalPeople}}个</td>
                         </tr>
                         <tr>
-                            <td class="black-font">
+                            <td class="black-font text-left">
                                 销售总业绩
                             </td>
-                            <td class="black-font">{{MemberInfo.cityTotalAmount + MemberInfo.countyTotalAmount | number:2}}</td>
-                            <td class="black-font">
+                            <td class="black-font text-right">{{MemberInfo.cityTotalAmount + MemberInfo.countyTotalAmount | number:2}}</td>
+                            <td class="black-font text-left">
                                 分红包个数
                             </td>
-                            <td class="black-font">{{dividendMap.totalDividendCount }}个</td>
+                            <td class="black-font text-right">{{dividendMap.totalDividendCount }}个</td>
                         </tr>
                         <tr>
-                            <td class="black-font">
+                            <td class="black-font text-left">
                                 出局分红包
                             </td>
-                            <td class="black-font">{{dividendMap.inValidDividendCount}}个</td>
-                            <td class="black-font">
+                            <td class="black-font text-right">{{dividendMap.inValidDividendCount}}个</td>
+                            <td class="black-font text-left">
                                 未出局分红包
                             </td>
-                            <td class="black-font">{{dividendMap.validDividendCount}}个</td>
+                            <td class="black-font text-right">{{dividendMap.validDividendCount}}个</td>
                         </tr>
                         <tr>
-                            <td class="black-font">
+                            <td class="black-font text-left">
                                奖金币余额
                             </td>
-                            <td class="black-font">{{MemberInfo.bonusAmount | number:2}}</td>
-                            <td class="black-font">
+                            <td class="black-font text-right">{{MemberInfo.bonusAmount | number:2}}</td>
+                            <td class="black-font text-left">
                                种子币余额
                             </td>
-                            <td class="black-font">{{MemberInfo.seedAmount | number:2}}</td>
+                            <td class="black-font text-right">{{MemberInfo.seedAmount | number:2}}</td>
                         </tr>
                         <tr>
-                            <td class="black-font">
+                            <td class="black-font text-left">
                                 直接销售量
                             </td>
-                            <td class="black-font">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}个</td>
-                            <td class="black-font">
+                            <td class="black-font text-right">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}个</td>
+                            <td class="black-font text-left">
                                 已提现金额
                             </td>
-                            <td class="black-font">{{MemberInfo.actualAmount | number:2}}</td>
+                            <td class="black-font text-right">{{MemberInfo.actualAmount | number:2}}</td>
                         </tr>
                     </table>
                 </div>
@@ -91,6 +91,15 @@
                     <div class="tab-pane active" id="tab_1_1">
                         <div class="scroller" style="height: 235px;" data-always-visible="1" data-rail-visible="0">
                             <ul class="feeds">
+                                <li ng-if="notices.length == 0">
+                                    <div class="col1">
+                                        <div class="cont">
+                                            <div class="cont-col2">
+                                                <div class="desc"> 系统暂无公告</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
                                 <li ng-repeat="notice in notices track by $index">
                                     <div class="col1">
                                         <div class="cont">

@@ -80,7 +80,7 @@ public class AdmOrderService {
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList(map);
         //定义表头
-        String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
+        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
         return  this.exportExcel("待发货列表", excelHeader, result, response.getOutputStream(), "待发货商品数量:");
     }

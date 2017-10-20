@@ -49,6 +49,17 @@
     <result column="manage_fee_total" property="manageFeeTotal" jdbcType="DOUBLE" />
     <result column="actual_amout_total" property="actualAmoutTotal" jdbcType="DOUBLE" />
   </resultMap>
+  <resultMap id="MemberBonusExclResultMap" type="com.distribution.dao.memberBonus.model.more.MoreMemberBonus" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="bonus_type" property="bonusType" jdbcType="VARCHAR" />
+    <result column="bonus_date" property="bonusDate" jdbcType="TIMESTAMP" />
+    <result column="recommend_name" property="recommendName" jdbcType="VARCHAR" />
+    <result column="amout" property="amout" jdbcType="DOUBLE" />
+    <result column="manage_fee" property="manageFee" jdbcType="DOUBLE" />
+    <result column="actual_amout" property="actualAmout" jdbcType="DOUBLE" />
+  </resultMap>
   <sql id="Base_Column_List" >
     id, member_id, bonus_date, bonus_type, amout, manage_fee, actual_amout,
     order_id, order_no, remarks, create_by, create_date, update_by, update_time
@@ -241,5 +252,27 @@
       <![CDATA[AND DATE_FORMAT(m.bonus_date, '%Y-%m-%d') <= #{endTime}]]>
     </if>
     ORDER BY d.id DESC,m.bonus_date DESC
+  </select>
+
+  <select id="getMemberBonusExcelList" parameterType="java.util.Map" resultMap="MemberBonusExclResultMap">
+    select
+      mb.id
+    , mb.order_no
+    , m.recommend_name
+    , m.member_name
+    , mb.bonus_date
+    , mb.bonus_type
+    , mb.amout
+    , mb.manage_fee
+    , mb.actual_amout
+    from member_bonus mb, member m
+    where mb.member_id = m.id
+    <if test="startTime != null and startTime != ''">
+      <![CDATA[and DATE_FORMAT(mb.bonus_date, '%Y-%m-%d') >= #{startTime}]]>
+    </if>
+    <if test="endTime != null and endTime != ''">
+      <![CDATA[and DATE_FORMAT(mb.bonus_date, '%Y-%m-%d') <= #{endTime}]]>
+    </if>
+    order by mb.bonus_date desc,mb.member_id
   </select>
 </mapper>

@@ -4,14 +4,22 @@
   */
 package com.distribution.service;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.distribution.dao.memberBonus.model.more.MoreMemberBonus;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +49,8 @@ import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
 import com.distribution.dao.nodeBonusHistory.model.more.MoreNodeBonusHistory;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class BonusService {
@@ -111,7 +121,6 @@ public class BonusService {
      * @author su
      * @date 2017年9月9日 下午10:14:59
      * @param order
-     * @param owner
      */
 	public void insertOrderBonus(OrderMaster order){
 		//订单主人会员
@@ -649,8 +658,6 @@ public class BonusService {
 	 * 生成分红包明细表 
 	 * @author su
 	 * @date 2017年9月7日 下午10:00:57
-	 * @param list
-	 * @param bonusNum
 	 */
 	public Map<String,Object> calculateDividendHistoryBonus(String date){
 		//定义实际需要发送奖金
@@ -714,8 +721,6 @@ public class BonusService {
 	/**
 	 * 
 	 * 更新订单分红包
-	 * @param list
-	 * @param bonusNum
 	 */
 	public void updateAllNeedSendDividends(Map<String,Object> map){
         //更新订单分红记录
@@ -765,5 +770,122 @@ public class BonusService {
 		double v2 = bonus_percent;
 		System.out.println(multiply(v1,v2));
 	}*/
+	/**
+	 * description 分销记录详情列表下载
+	 * @author sijeong
+	 * */
+	public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
+		List<MoreMemberBonus> result = moreMemberBonusMapper.getMemberBonusExcelList(map);
+		//定义表头
+		String[] excelHeader = {"订单编号", "推荐人", "购买会员", "领取时间", "获奖项",  "当日奖金金额", "管理费", "实得金额"};
 
+		return  this.exportExcel("分销记录详情列表", excelHeader, result, response.getOutputStream());
+	}
+
+	public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreMemberBonus> list, OutputStream out) throws InvocationTargetException {
+		// 声明一个工作薄
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		// 生成一个表格
+		XSSFSheet sheet = workbook.createSheet(title);
+		//定义字体
+		XSSFFont font = workbook.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font.setFontHeightInPoints((short) 12);
+		//定义样式
+		XSSFCellStyle style = workbook.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+		style.setFont(font);
+		// 产生表格标题行
+		XSSFRow row = sheet.createRow(0);
+		for (int i = 0; i < headers.length; i++){
+			XSSFCell cell = row.createCell(i);
+			cell.setCellStyle(style);
+			cell.setCellValue(headers[i]);
+		}
+		//设置表格宽度
+		sheet.setColumnWidth(0, 18 * 256);
+		sheet.setColumnWidth(1, 20 * 256);
+		sheet.setColumnWidth(2, 12 * 256);
+		sheet.setColumnWidth(3, 15 * 256);
+		sheet.setColumnWidth(4, 15 * 256);
+		sheet.setColumnWidth(5, 18 * 256);
+		sheet.setColumnWidth(6, 18 * 256);
+		sheet.setColumnWidth(7, 18 * 256);
+		//构建表体
+		int t = 0;
+		double e = 0;
+		double m = 0;
+		double p = 0;
+		//定义body样式
+		XSSFCellStyle styleRight = workbook.createCellStyle();
+		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);//居右
+		XSSFCellStyle styleCenter = workbook.createCellStyle();
+		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+
+		for(int j=0;j<list.size();j++){
+			XSSFRow bodyRow = sheet.createRow(j + 1);
+			if (list.get(j).getBonusType().equals("6")){
+				bodyRow.createCell(0).setCellValue("全国董事奖");
+			}else {
+				bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
+			}
+			bodyRow.createCell(1).setCellValue(list.get(j).getRecommendName());
+			bodyRow.createCell(2).setCellValue(list.get(j).getMemberName());
+			bodyRow.createCell(3).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getBonusDate()));
+			bodyRow.createCell(4).setCellValue(bonusTypeName(list.get(j).getBonusType()));
+			bodyRow.createCell(5).setCellValue(list.get(j).getAmout().toString());
+			bodyRow.createCell(7).setCellValue(list.get(j).getManageFee().toString());
+			bodyRow.createCell(6).setCellValue(list.get(j).getActualAmout().toString());
+
+			bodyRow.getCell(0).setCellStyle(styleCenter);
+			bodyRow.getCell(3).setCellStyle(styleCenter);
+			bodyRow.getCell(5).setCellStyle(styleRight);
+			bodyRow.getCell(6).setCellStyle(styleRight);
+			bodyRow.getCell(7).setCellStyle(styleRight);
+			t=j;
+			e+=list.get(j).getAmout().doubleValue();
+			m+=list.get(j).getActualAmout().doubleValue();
+			p+=list.get(j).getManageFee().doubleValue();
+		}
+		XSSFRow bodyRow1 = sheet.createRow(t + 2);
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+		style.setFont(font);
+
+		XSSFCell cel1 = bodyRow1.createCell(0);
+		cel1.setCellStyle(style);
+		cel1.setCellValue("统计:");
+		XSSFCell cel2 = bodyRow1.createCell(5);
+		cel2.setCellValue(e);
+		XSSFCell cel3 = bodyRow1.createCell(6);
+		cel3.setCellValue(p);
+		XSSFCell cel4 = bodyRow1.createCell(7);
+		cel4.setCellValue(m);
+
+		return  workbook;
+	}
+	private String bonusTypeName(String bonusType) {
+		String bonusTypeName = "";
+		if (bonusType.equals(BonusConstant.BONUS_TYPE_0)){
+			bonusTypeName = "一代奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_1)){
+			bonusTypeName = "二代奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_2)){
+			bonusTypeName = "三代奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_3)){
+			bonusTypeName = "分红包奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_4)){
+			bonusTypeName = "广告宣传奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_5)){
+			bonusTypeName = "级差奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_6)){
+			bonusTypeName = "全国董事奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_7)){
+			bonusTypeName = "销售部奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_8)){
+			bonusTypeName = "运营中心奖";
+		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_9)){
+			bonusTypeName = "运营中心扶持奖";
+		}
+		return bonusTypeName;
+	}
 }

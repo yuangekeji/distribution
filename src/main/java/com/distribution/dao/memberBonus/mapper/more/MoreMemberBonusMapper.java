@@ -44,4 +44,11 @@ public interface MoreMemberBonusMapper extends MemberBonusMapper {
     List<MoreMemberBonus> selectMemberBonusDetail(Page page);
 
     List<MemberBonus> getExcelMemberBonusList(Map map);
+
+    /**
+     * 分销记录详情列表下载
+     * @param map
+     * @return
+     */
+    List<MoreMemberBonus> getMemberBonusExcelList(Map map);
 }

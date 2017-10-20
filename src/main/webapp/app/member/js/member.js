@@ -3,6 +3,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
     title.setTitle('个人中心');
     $scope.user = $sessionStorage.currentUser;
     $scope.notices = [];
+
     $scope.param = {
         loginPasswordConfirm:"",
         loginPasswordConfirm:"",
@@ -51,6 +52,13 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
             }
         });
 
+        $http.get(ctx + '/notice/getList/').success(function (resp) {
+            if(resp.successful){
+                $scope.notices = resp.data;
+            }else{
+                console.log(resp);
+            }
+        });
 
 
         var a = $timeout(function(){
@@ -70,13 +78,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 }
             });
 
-            $http.get(ctx + '/notice/getList/').success(function (resp) {
-                if(resp.successful){
-                    $scope.notices = resp.data;
-                }else{
-                    console.log(resp);
-                }
-            });
+
         },2000);
 
 

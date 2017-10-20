@@ -64,16 +64,27 @@ angular.module('admNotice').controller('admNoticeCtrl',function ($q, title, $sco
 
     /**删除*/
     $scope.delete = function (id) {
-        $http.post(ctx + "/admNotice/insertOrUpdate",{id:id,deleteFlag:'Y',updateTime:new Date()}).success(function (resp) {
-            if(resp.successful){
-                Notify.warning("删除成功");
-                $scope.search();
-            }else{
-                Notify.warning("删除失败");
+        ConfirmModal.show({
+            text: $scope.textMessage,
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
             }
-        }).error(function (resp) {
-            console.error(resp);
-        })
+            $scope.startLoading();
+                $http.post(ctx + "/admNotice/insertOrUpdate",{id:id,deleteFlag:'Y',updateTime:new Date()}).success(function (resp) {
+                    if(resp.successful){
+                        Notify.warning("删除成功");
+                        $scope.search();
+                    }else{
+                        Notify.warning("删除失败");
+                    }
+                    $scope.stopLoading();
+                }).error(function (resp) {
+                    console.error(resp);
+                    $scope.stopLoading();
+                })
+        });
     };
 
 
@@ -91,6 +102,19 @@ angular.module('admNotice').controller('admNoticeCtrl',function ($q, title, $sco
             console.error(resp);
         })
     };
+
+
+    var e1 = $('.portlet');
+    $scope.startLoading=function () {
+        App.blockUI({
+            target: e1,
+            animate: true,
+            overlayColor: 'none'
+        });
+    }
+    $scope.stopLoading=function () {
+        App.unblockUI(e1);
+    }
 });
 
 angular.module('admNotice').filter("NoticeLevelFilter",function () {

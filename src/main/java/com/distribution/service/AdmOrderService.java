@@ -80,7 +80,7 @@ public class AdmOrderService {
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList(map);
         //定义表头
-        String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
+        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
         return  this.exportExcel("待发货列表", excelHeader, result, response.getOutputStream(), "待发货商品数量:");
     }
@@ -88,7 +88,7 @@ public class AdmOrderService {
     public XSSFWorkbook exportData1(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList1(map);
         //定义表头
-        String[] excelHeader = {"订单号", "订单来源", "会员", "会员级别", "订单金额", "支付金额", "快递费", "商品名信息", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
+        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
         return  this.exportExcel("已发货列表", excelHeader, result, response.getOutputStream(), "已出库商品数量:");
     }
@@ -136,20 +136,21 @@ public class AdmOrderService {
             if(list.get(j).getGoodsNm() != null && !"".equals(list.get(j).getGoodsNm())){
                 goods = goods + list.get(j).getGoodsNm();
             }
-            if(list.get(j).getOrderQty() != null && !"".equals(list.get(j).getOrderQty())){
+            /*if(list.get(j).getOrderQty() != null && !"".equals(list.get(j).getOrderQty())){
                 goods = goods + "," + list.get(j).getOrderQty() + "个";
-            }
+            }*/
 
             p+=(null!=list.get(j)?(null!=list.get(j).getOrderQty()?list.get(j).getOrderQty():0):0);
             System.out.println(j);
             bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
             bodyRow.createCell(1).setCellValue(this.orderCategoryFilter(list.get(j).getOrderCategory()));
             bodyRow.createCell(2).setCellValue(list.get(j).getMemberName());
-            bodyRow.createCell(3).setCellValue(this.memberLevelFilter(null!=list.get(j).getMemberLevel()?list.get(j).getMemberLevel():""));
-            bodyRow.createCell(4).setCellValue(String.valueOf(list.get(j).getOrderAmt()));
-            bodyRow.createCell(5).setCellValue(String.valueOf(list.get(j).getActAmt()));
-            bodyRow.createCell(6).setCellValue(String.valueOf(list.get(j).getExpressFee()));
-            bodyRow.createCell(7).setCellValue(goods);
+//            bodyRow.createCell(3).setCellValue(this.memberLevelFilter(null!=list.get(j).getMemberLevel()?list.get(j).getMemberLevel():""));
+            bodyRow.createCell(3).setCellValue(String.valueOf(list.get(j).getOrderAmt()));
+            bodyRow.createCell(4).setCellValue(String.valueOf(list.get(j).getActAmt()));
+            bodyRow.createCell(5).setCellValue(String.valueOf(list.get(j).getExpressFee()));
+            bodyRow.createCell(6).setCellValue(goods);
+            bodyRow.createCell(7).setCellValue(null==list.get(j).getOrderQty()?"":list.get(j).getOrderQty() + " 个");
             bodyRow.createCell(8).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getCreateTime()));
             bodyRow.createCell(9).setCellValue(this.orderStatusFilter(list.get(j).getOrderStatues()));
             bodyRow.createCell(10).setCellValue(list.get(j).getExpressAddress());

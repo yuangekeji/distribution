@@ -871,8 +871,6 @@ public class BonusService {
 			bonusTypeName = "二代奖";
 		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_2)){
 			bonusTypeName = "三代奖";
-		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_3)){
-			bonusTypeName = "分红包奖";
 		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_4)){
 			bonusTypeName = "广告宣传奖";
 		}else if (bonusType.equals(BonusConstant.BONUS_TYPE_5)){

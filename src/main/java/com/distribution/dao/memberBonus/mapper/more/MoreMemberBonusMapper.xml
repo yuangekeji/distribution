@@ -267,6 +267,7 @@
     , mb.actual_amout
     from member_bonus mb, member m
     where mb.member_id = m.id
+    and mb.bonus_type <![CDATA[ <> ]]> '3'
     <if test="startTime != null and startTime != ''">
       <![CDATA[and DATE_FORMAT(mb.bonus_date, '%Y-%m-%d') >= #{startTime}]]>
     </if>

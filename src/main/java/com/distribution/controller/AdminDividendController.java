@@ -1,9 +1,11 @@
 package com.distribution.controller;
 
+import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
+import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.DividendService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,8 @@ public class AdminDividendController extends BasicController {
 
     @Autowired
     private DividendService dividendService;
-
+    @Autowired
+    private AdmHandleHistoryService admHandleHistoryService;
     /**
      * 查詢分紅包列表
      */
@@ -85,15 +88,11 @@ public class AdminDividendController extends BasicController {
         outStream.close();
 
         //管理员操作记录
-        /*Map mapHandle = new HashMap();
-        String orderNoHandle = orderNo;
-        if (orderNo.isEmpty() || "".equals(orderNo)) {
-            orderNoHandle = "全部";
-        }
-        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
-        mapHandle.put("handleId", orderNoHandle);
-        mapHandle.put("handleComment", "订单号: " + orderNoHandle + ", 操作: 订单下载");
-        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);*/
+        Map mapHandle = new HashMap();
+        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_DIVIDEND);
+        mapHandle.put("handleId", "Dividend");
+        mapHandle.put("handleComment", "操作: 红包列表下载");
+        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }
 

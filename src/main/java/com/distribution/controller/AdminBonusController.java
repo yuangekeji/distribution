@@ -79,7 +79,7 @@ public class AdminBonusController extends BasicController {
         //管理员操作记录
         Map mapHandle = new HashMap();
         mapHandle.put("handleType", Constant.ADMINHANDLETYPE_BONUS);
-        mapHandle.put("handleId", "分销管理");
+        mapHandle.put("handleId", "Bonus");
         mapHandle.put("handleComment", "操作: 分销记录详情列表");
         admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 

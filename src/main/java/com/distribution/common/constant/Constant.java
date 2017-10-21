@@ -39,4 +39,5 @@ public class Constant {
     public static final String ADMINHANDLETYPE_MEMBERCHARGE = "8";//充值管理-批准、驳回、充值
     public static final String ADMINHANDLETYPE_ADDNOTICE = "9";//公告管理-添加
     public static final String ADMINHANDLETYPE_BONUS = "10";//分销管理-下载
+    public static final String ADMINHANDLETYPE_DIVIDEND = "11";//分红包管理-下载
 }

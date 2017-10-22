@@ -59,16 +59,16 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 console.log(resp);
             }
         });
-
+        $http.get(ctx + '/member/getIt/'+$scope.user.id).success(function (resp) {
+            if(resp.successful){
+                $scope.it = resp.data.it;
+            }else{
+                console.log(resp);
+            }
+        });
 
         var a = $timeout(function(){
-            $http.get(ctx + '/member/getIt/'+$scope.user.id).success(function (resp) {
-                if(resp.successful){
-                    $scope.it = resp.data.it;
-                }else{
-                    console.log(resp);
-                }
-            });
+
 
             $http.get(ctx + '/member/getBankName/'+$scope.user.id).success(function (resp) {
                 if(resp.successful){

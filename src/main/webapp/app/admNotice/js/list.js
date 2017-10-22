@@ -65,7 +65,7 @@ angular.module('admNotice').controller('admNoticeCtrl',function ($q, title, $sco
     /**删除*/
     $scope.delete = function (id) {
         ConfirmModal.show({
-            text: $scope.textMessage,
+            text: '删除后不可恢复，确定要删除吗？',
             isCancel:true //false alert ,true confirm
         }).then(function (sure) {
             if (!sure) {

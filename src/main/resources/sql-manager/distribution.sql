@@ -863,10 +863,10 @@ CREATE TABLE `notice` (
 
 
 -- 添加公告菜单数据 ID请根据实际情况设定
-INSERT INTO `menu` VALUES ('31', '6', '公告管理', '0', '', 'icon-settings');
-INSERT INTO `menu` VALUES ('32', null, '公告管理', '31', 'app.admNotice', null);
 
-INSERT INTO `role_menu` VALUES ('2', '31');
+INSERT INTO `menu` VALUES ('32', null, '公告管理', '23', 'app.admNotice', null);
+update menu set name ='系统管理' where id = 23;
+
 INSERT INTO `role_menu` VALUES ('2', '32');
 
 

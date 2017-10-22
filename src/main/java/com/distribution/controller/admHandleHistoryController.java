@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/admHandleHistory")
-public class admHandleHistoryController extends BasicController {
+public class AdmHandleHistoryController extends BasicController {
 
     @Autowired
     private AdmHandleHistoryService admHandleHistoryService;

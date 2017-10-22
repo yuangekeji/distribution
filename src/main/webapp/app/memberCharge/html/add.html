@@ -13,26 +13,39 @@
             <div class="portlet-body form">
                 <form role="form">
                     <div class="form-body">
-                        <h4>汇款账户: 62322155003220319  桂林银行 李军胜</h4>
+                        <!--<h4>汇款账户: 62322155003220319  桂林银行 李军胜</h4>-->
                         <div class="note note-info note-bordered">
                             <h4 >账户奖金币余额：{{accountInfo.bonusAmt | number:2}}元</h4>
                         </div>
                         <div class="form-group" ng-class="{'has-error':memberChargeValidateErrors.payMoneyTypeError}">
                             <label class="control-label">打款方式</label>
-                            <input type="text" class="form-control input-circle" ng-model="memberCharge.payMoneyType" maxlength="255" placeholder="支付宝转账、网银转账等" />
+                            <input type="text" class="form-control input-circle" ng-model="memberCharge.payMoneyType" maxlength="255" placeholder="支付宝转账、网银转账、柜台汇款、存款机汇款等" />
                         </div>
                         <div class="form-group" ng-class="{'has-error':memberChargeValidateErrors.payMoneyTimeError}">
                             <label class="control-label">打款时间</label>
-                            <div class="form-group date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
-                                <input type="text" class="form-control input-circle" name="payMoneyTime" ng-model="memberCharge.payMoneyTime" placeholder="选择打款时间">
+                            <div class="input-group date form_advance_datetime bs-datetime" data-date-format="yyyy-mm-dd hh:ii" >
+                                <input type="text" size="16" class="form-control" name="payMoneyTime" ng-model="memberCharge.payMoneyTime" placeholder="选择打款时间">
+                                <span class="input-group-addon">
+                                                            <button class="btn default date-reset" type="button" style="height: 32px">
+                                                                <i class="fa fa-times"></i>
+                                                            </button>
+                                                        </span>
+                                <span class="input-group-addon">
+                                                            <button class="btn default date-set" type="button" style="height: 32px">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </button>
+                                                        </span>
                             </div>
+                            <!--<div class="form-group form_advance_datetime input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">-->
+                                <!--<input type="text" class="form-control input-circle" name="payMoneyTime" ng-model="memberCharge.payMoneyTime" placeholder="选择打款时间">-->
+                            <!--</div>-->
                         </div>
                         <div class="form-group" ng-class="{'has-error':memberChargeValidateErrors.chargeAmtError}">
                             <label class="control-label">充值金额<span style="color: red">（只能输入整数）</span></label>
                             <input type="number" class="form-control input-circle" ng-model="memberCharge.chargeAmt" maxlength="12" placeholder="输入充值金额"/>
                         </div>
                         <div class="form-group" ng-class="{'has-error':memberChargeValidateErrors.applyInfoError}">
-                            <label class="control-label">打款详情备注<span style="color: red">（例：打款银行、打款银行卡号、打款开户名、营业网点，支付宝账号等信息。）</span></label>
+                            <label class="control-label">打款详情备注<span style="color: red">（例：打款银行卡号、打款开户名、打款银行以及营业网点，支付宝账号等信息。）</span></label>
                             <textarea class="form-control input-circle" cols="2" ng-model="memberCharge.applyInfo" maxlength="5000" placeholder="输入打款信息">
 
                             </textarea>

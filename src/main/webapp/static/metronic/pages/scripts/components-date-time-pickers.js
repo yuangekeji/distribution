@@ -159,20 +159,20 @@ var handleTimePickers = function () {
         $(".form_datetime").datetimepicker({
             autoclose: true,
             isRTL: App.isRTL(),
-            format: "dd MM yyyy - hh:ii",
+            format: "yyyy-mm-dd hh:ii",
             fontAwesome: true,
             pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
         });
 
         $(".form_advance_datetime").datetimepicker({
             isRTL: App.isRTL(),
-            format: "dd MM yyyy - hh:ii",
+            format: "yyyy-mm-dd hh:ii",
             autoclose: true,
             todayBtn: true,
             fontAwesome: true,
             startDate: "2013-02-14 10:00",
             pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left"),
-            minuteStep: 10
+            minuteStep: 5
         });
 
         $(".form_meridian_datetime").datetimepicker({
@@ -236,7 +236,7 @@ var handleTimePickers = function () {
         init: function () {
             handleDatePickers();
             // handleTimePickers();
-            // handleDatetimePicker();
+            handleDatetimePicker();
             // handleDateRangePickers();
             // handleClockfaceTimePickers();
         }

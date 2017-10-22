@@ -74,7 +74,7 @@
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="memberCharge in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                 <td class="text-center">{{memberCharge.memberName}}</td>
-                                <td class="text-center">{{memberCharge.payMoneyTime | date:'yyyy-MM-dd'}}</td>
+                                <td class="text-center">{{memberCharge.payMoneyTime | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td class="text-left">{{memberCharge.payMoneyType}}</td>
                                 <td class="text-center">{{memberCharge.chargeRequestTime | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td class="text-center">{{memberCharge.chargeApplyTime | date:'yyyy-MM-dd HH:mm'}}</td>

@@ -10,7 +10,7 @@ public class MoreMemberChargeApply extends MemberChargeApply{
 
     private String memberName;
     private String memberPhone;
-
+    private String payTime;
     public String getMemberName() {
         return memberName;
     }
@@ -25,5 +25,13 @@ public class MoreMemberChargeApply extends MemberChargeApply{
 
     public void setMemberPhone(String memberPhone) {
         this.memberPhone = memberPhone;
+    }
+
+    public String getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(String payTime) {
+        this.payTime = payTime;
     }
 }

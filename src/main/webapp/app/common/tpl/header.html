@@ -45,8 +45,8 @@
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
-                        <li>
-                            <a href="#/profile/dashboard">
+                        <li ng-if="currentUser.roleId == '2' || currentUser.roleId == '3'">
+                            <a href="#" ui-sref="app.adminInfo">
                                 <i class="icon-lock"></i> 修改密码</a>
                         </li>
                         <!--<li class="divider"> </li>-->

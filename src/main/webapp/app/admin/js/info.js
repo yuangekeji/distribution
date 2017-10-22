@@ -58,7 +58,7 @@ angular.module('admin').controller('adminInfoCtrl',function ($q, title, $scope, 
                             if("SUCCESS"==resp.data){
                                 Notify.success("登录密码修改成功。");
                                 $scope.initParam();
-                                $state.go("app.admin");
+                                $state.go("app.home");
                             }
                             if("OLD_PWD_ERROR"==resp.data){
                                 Notify.warning("原登录密码错误，修改失败。");

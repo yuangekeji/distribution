@@ -9,6 +9,7 @@
     <result column="pay_money_type" property="payMoneyType" jdbcType="VARCHAR" />
     <result column="pay_money_time" property="payMoneyTime" jdbcType="TIMESTAMP" />
     <result column="charge_amt" property="chargeAmt" jdbcType="DECIMAL" />
+    <result column="charge_money_type" property="chargeMoneyType" jdbcType="VARCHAR" />
     <result column="charge_apply_time" property="chargeApplyTime" jdbcType="TIMESTAMP" />
     <result column="charge_time" property="chargeTime" jdbcType="TIMESTAMP" />
     <result column="apply_info" property="applyInfo" jdbcType="VARCHAR" />
@@ -78,8 +79,8 @@
   </sql>
   <sql id="Base_Column_List" >
     id, member_id, status, charge_request_time, pay_money_type, pay_money_time, charge_amt, 
-    charge_apply_time, charge_time, apply_info, remarks, create_id, create_time, update_id, 
-    update_time
+    charge_money_type, charge_apply_time, charge_time, apply_info, remarks, create_id, 
+    create_time, update_id, update_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.memberChargeApply.model.MemberChargeApplyExample" >
     select
@@ -115,16 +116,16 @@
   <insert id="insert" parameterType="com.distribution.dao.memberChargeApply.model.MemberChargeApply" >
     insert into member_charge_apply (id, member_id, status, 
       charge_request_time, pay_money_type, pay_money_time, 
-      charge_amt, charge_apply_time, charge_time, 
-      apply_info, remarks, create_id, 
-      create_time, update_id, update_time
-      )
+      charge_amt, charge_money_type, charge_apply_time, 
+      charge_time, apply_info, remarks, 
+      create_id, create_time, update_id, 
+      update_time)
     values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
       #{chargeRequestTime,jdbcType=TIMESTAMP}, #{payMoneyType,jdbcType=VARCHAR}, #{payMoneyTime,jdbcType=TIMESTAMP}, 
-      #{chargeAmt,jdbcType=DECIMAL}, #{chargeApplyTime,jdbcType=TIMESTAMP}, #{chargeTime,jdbcType=TIMESTAMP}, 
-      #{applyInfo,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{chargeAmt,jdbcType=DECIMAL}, #{chargeMoneyType,jdbcType=VARCHAR}, #{chargeApplyTime,jdbcType=TIMESTAMP}, 
+      #{chargeTime,jdbcType=TIMESTAMP}, #{applyInfo,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.memberChargeApply.model.MemberChargeApply" >
     insert into member_charge_apply
@@ -149,6 +150,9 @@
       </if>
       <if test="chargeAmt != null" >
         charge_amt,
+      </if>
+      <if test="chargeMoneyType != null" >
+        charge_money_type,
       </if>
       <if test="chargeApplyTime != null" >
         charge_apply_time,
@@ -196,6 +200,9 @@
       </if>
       <if test="chargeAmt != null" >
         #{chargeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMoneyType != null" >
+        #{chargeMoneyType,jdbcType=VARCHAR},
       </if>
       <if test="chargeApplyTime != null" >
         #{chargeApplyTime,jdbcType=TIMESTAMP},
@@ -253,6 +260,9 @@
       <if test="record.chargeAmt != null" >
         charge_amt = #{record.chargeAmt,jdbcType=DECIMAL},
       </if>
+      <if test="record.chargeMoneyType != null" >
+        charge_money_type = #{record.chargeMoneyType,jdbcType=VARCHAR},
+      </if>
       <if test="record.chargeApplyTime != null" >
         charge_apply_time = #{record.chargeApplyTime,jdbcType=TIMESTAMP},
       </if>
@@ -291,6 +301,7 @@
       pay_money_type = #{record.payMoneyType,jdbcType=VARCHAR},
       pay_money_time = #{record.payMoneyTime,jdbcType=TIMESTAMP},
       charge_amt = #{record.chargeAmt,jdbcType=DECIMAL},
+      charge_money_type = #{record.chargeMoneyType,jdbcType=VARCHAR},
       charge_apply_time = #{record.chargeApplyTime,jdbcType=TIMESTAMP},
       charge_time = #{record.chargeTime,jdbcType=TIMESTAMP},
       apply_info = #{record.applyInfo,jdbcType=VARCHAR},
@@ -323,6 +334,9 @@
       </if>
       <if test="chargeAmt != null" >
         charge_amt = #{chargeAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="chargeMoneyType != null" >
+        charge_money_type = #{chargeMoneyType,jdbcType=VARCHAR},
       </if>
       <if test="chargeApplyTime != null" >
         charge_apply_time = #{chargeApplyTime,jdbcType=TIMESTAMP},
@@ -359,6 +373,7 @@
       pay_money_type = #{payMoneyType,jdbcType=VARCHAR},
       pay_money_time = #{payMoneyTime,jdbcType=TIMESTAMP},
       charge_amt = #{chargeAmt,jdbcType=DECIMAL},
+      charge_money_type = #{chargeMoneyType,jdbcType=VARCHAR},
       charge_apply_time = #{chargeApplyTime,jdbcType=TIMESTAMP},
       charge_time = #{chargeTime,jdbcType=TIMESTAMP},
       apply_info = #{applyInfo,jdbcType=VARCHAR},

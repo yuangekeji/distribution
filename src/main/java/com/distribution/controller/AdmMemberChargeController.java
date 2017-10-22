@@ -102,7 +102,7 @@ public class AdmMemberChargeController extends BasicController {
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("memberName", memberName);
-        map.put("status", "3");
+        map.put("status", status);
         map.put("startTime", startTime);
         map.put("endTime", endTime);
         map.put("chargeStartTime", chargeStartTime);
@@ -111,7 +111,7 @@ public class AdmMemberChargeController extends BasicController {
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = admMemberChargeService.exportData(map,response);
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("已充值会员列表", "UTF-8") + ".xlsx");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("充值列表", "UTF-8") + ".xlsx");
         OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
         wb.write(outStream); // 输出数据
         outStream.flush();
@@ -121,7 +121,7 @@ public class AdmMemberChargeController extends BasicController {
         Map mapHandle = new HashMap();
         mapHandle.put("handleType", Constant.ADMINHANDLETYPE_MEMBERCHARGE);
         mapHandle.put("handleId", "admMemberCharge");
-        mapHandle.put("handleComment", "操作: 已充值会员列表下载");
+        mapHandle.put("handleComment", "操作: 充值列表下载");
         admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }

@@ -546,6 +546,76 @@ public class MemberChargeApplyExample {
             return (Criteria) this;
         }
 
+        public Criteria andChargeMoneyTypeIsNull() {
+            addCriterion("charge_money_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeIsNotNull() {
+            addCriterion("charge_money_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeEqualTo(String value) {
+            addCriterion("charge_money_type =", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeNotEqualTo(String value) {
+            addCriterion("charge_money_type <>", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeGreaterThan(String value) {
+            addCriterion("charge_money_type >", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("charge_money_type >=", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeLessThan(String value) {
+            addCriterion("charge_money_type <", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeLessThanOrEqualTo(String value) {
+            addCriterion("charge_money_type <=", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeLike(String value) {
+            addCriterion("charge_money_type like", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeNotLike(String value) {
+            addCriterion("charge_money_type not like", value, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeIn(List<String> values) {
+            addCriterion("charge_money_type in", values, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeNotIn(List<String> values) {
+            addCriterion("charge_money_type not in", values, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeBetween(String value1, String value2) {
+            addCriterion("charge_money_type between", value1, value2, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
+        public Criteria andChargeMoneyTypeNotBetween(String value1, String value2) {
+            addCriterion("charge_money_type not between", value1, value2, "chargeMoneyType");
+            return (Criteria) this;
+        }
+
         public Criteria andChargeApplyTimeIsNull() {
             addCriterion("charge_apply_time is null");
             return (Criteria) this;

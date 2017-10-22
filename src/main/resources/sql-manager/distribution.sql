@@ -833,6 +833,7 @@ CREATE TABLE `member_charge_apply` (
   `pay_money_type` varchar(255) DEFAULT NULL COMMENT '打款方式',
   `pay_money_time` datetime DEFAULT NULL COMMENT '打款时间',
   `charge_amt` decimal(15,2) DEFAULT NULL COMMENT '充值金额',
+	`charge_money_type` varchar(255) DEFAULT NULL COMMENT '充值方式(''0'':会员申请充值，''1'':管理员充值)',
   `charge_apply_time` datetime DEFAULT NULL COMMENT '审批时间',
   `charge_time` datetime DEFAULT NULL COMMENT '充值时间',
 	`apply_info` varchar(5000) DEFAULT NULL COMMENT '申请备注',

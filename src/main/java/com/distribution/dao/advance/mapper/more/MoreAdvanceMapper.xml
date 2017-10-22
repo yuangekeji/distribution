@@ -11,8 +11,8 @@
         <result column="req_amt" property="reqAmt" jdbcType="DECIMAL" />
         <result column="act_amt" property="actAmt" jdbcType="DECIMAL" />
         <result column="fee_amt" property="feeAmt" jdbcType="DECIMAL" />
-        <result column="request_date" property="requestDate" jdbcType="DATE" />
-        <result column="approve_date" property="approveDate" jdbcType="DATE" />
+        <result column="request_date" property="requestDate" jdbcType="TIMESTAMP" />
+        <result column="approve_date" property="approveDate" jdbcType="TIMESTAMP" />
         <result column="statues" property="statues" jdbcType="CHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="create_id" property="createId" jdbcType="INTEGER" />

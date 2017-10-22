@@ -878,3 +878,7 @@ INSERT INTO `role_menu` VALUES ('2', '34');
 INSERT INTO `role_menu` VALUES ('3', '34');
 INSERT INTO `role_menu` VALUES ('1', '33');
 
+-- 修改提现申请
+alter table advance MODIFY request_date datetime not null;
+alter table advance MODIFY approve_date datetime  null;
+

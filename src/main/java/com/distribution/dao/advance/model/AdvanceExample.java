@@ -3,7 +3,6 @@ package com.distribution.dao.advance.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class AdvanceExample {
@@ -105,32 +104,6 @@ public class AdvanceExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andIdIsNull() {
@@ -654,52 +627,52 @@ public class AdvanceExample {
         }
 
         public Criteria andRequestDateEqualTo(Date value) {
-            addCriterionForJDBCDate("request_date =", value, "requestDate");
+            addCriterion("request_date =", value, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("request_date <>", value, "requestDate");
+            addCriterion("request_date <>", value, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("request_date >", value, "requestDate");
+            addCriterion("request_date >", value, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("request_date >=", value, "requestDate");
+            addCriterion("request_date >=", value, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateLessThan(Date value) {
-            addCriterionForJDBCDate("request_date <", value, "requestDate");
+            addCriterion("request_date <", value, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("request_date <=", value, "requestDate");
+            addCriterion("request_date <=", value, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateIn(List<Date> values) {
-            addCriterionForJDBCDate("request_date in", values, "requestDate");
+            addCriterion("request_date in", values, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("request_date not in", values, "requestDate");
+            addCriterion("request_date not in", values, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("request_date between", value1, value2, "requestDate");
+            addCriterion("request_date between", value1, value2, "requestDate");
             return (Criteria) this;
         }
 
         public Criteria andRequestDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("request_date not between", value1, value2, "requestDate");
+            addCriterion("request_date not between", value1, value2, "requestDate");
             return (Criteria) this;
         }
 
@@ -714,52 +687,52 @@ public class AdvanceExample {
         }
 
         public Criteria andApproveDateEqualTo(Date value) {
-            addCriterionForJDBCDate("approve_date =", value, "approveDate");
+            addCriterion("approve_date =", value, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("approve_date <>", value, "approveDate");
+            addCriterion("approve_date <>", value, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("approve_date >", value, "approveDate");
+            addCriterion("approve_date >", value, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("approve_date >=", value, "approveDate");
+            addCriterion("approve_date >=", value, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateLessThan(Date value) {
-            addCriterionForJDBCDate("approve_date <", value, "approveDate");
+            addCriterion("approve_date <", value, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("approve_date <=", value, "approveDate");
+            addCriterion("approve_date <=", value, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateIn(List<Date> values) {
-            addCriterionForJDBCDate("approve_date in", values, "approveDate");
+            addCriterion("approve_date in", values, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("approve_date not in", values, "approveDate");
+            addCriterion("approve_date not in", values, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("approve_date between", value1, value2, "approveDate");
+            addCriterion("approve_date between", value1, value2, "approveDate");
             return (Criteria) this;
         }
 
         public Criteria andApproveDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("approve_date not between", value1, value2, "approveDate");
+            addCriterion("approve_date not between", value1, value2, "approveDate");
             return (Criteria) this;
         }
 

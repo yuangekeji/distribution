@@ -3,7 +3,6 @@
 <mapper namespace="com.distribution.dao.advance.mapper.AdvanceMapper" >
   <resultMap id="BaseResultMap" type="com.distribution.dao.advance.model.Advance" >
     <id column="id" property="id" jdbcType="INTEGER" />
-
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
     <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
@@ -11,8 +10,8 @@
     <result column="req_amt" property="reqAmt" jdbcType="DECIMAL" />
     <result column="act_amt" property="actAmt" jdbcType="DECIMAL" />
     <result column="fee_amt" property="feeAmt" jdbcType="DECIMAL" />
-    <result column="request_date" property="requestDate" jdbcType="DATE" />
-    <result column="approve_date" property="approveDate" jdbcType="DATE" />
+    <result column="request_date" property="requestDate" jdbcType="TIMESTAMP" />
+    <result column="approve_date" property="approveDate" jdbcType="TIMESTAMP" />
     <result column="statues" property="statues" jdbcType="CHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="create_id" property="createId" jdbcType="INTEGER" />
@@ -122,8 +121,8 @@
       update_time)
     values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, 
       #{cardNo,jdbcType=VARCHAR}, #{cardName,jdbcType=VARCHAR}, #{reqAmt,jdbcType=DECIMAL}, 
-      #{actAmt,jdbcType=DECIMAL}, #{feeAmt,jdbcType=DECIMAL}, #{requestDate,jdbcType=DATE}, 
-      #{approveDate,jdbcType=DATE}, #{statues,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{actAmt,jdbcType=DECIMAL}, #{feeAmt,jdbcType=DECIMAL}, #{requestDate,jdbcType=TIMESTAMP}, 
+      #{approveDate,jdbcType=TIMESTAMP}, #{statues,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
       #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
@@ -205,10 +204,10 @@
         #{feeAmt,jdbcType=DECIMAL},
       </if>
       <if test="requestDate != null" >
-        #{requestDate,jdbcType=DATE},
+        #{requestDate,jdbcType=TIMESTAMP},
       </if>
       <if test="approveDate != null" >
-        #{approveDate,jdbcType=DATE},
+        #{approveDate,jdbcType=TIMESTAMP},
       </if>
       <if test="statues != null" >
         #{statues,jdbcType=CHAR},
@@ -264,10 +263,10 @@
         fee_amt = #{record.feeAmt,jdbcType=DECIMAL},
       </if>
       <if test="record.requestDate != null" >
-        request_date = #{record.requestDate,jdbcType=DATE},
+        request_date = #{record.requestDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.approveDate != null" >
-        approve_date = #{record.approveDate,jdbcType=DATE},
+        approve_date = #{record.approveDate,jdbcType=TIMESTAMP},
       </if>
       <if test="record.statues != null" >
         statues = #{record.statues,jdbcType=CHAR},
@@ -302,8 +301,8 @@
       req_amt = #{record.reqAmt,jdbcType=DECIMAL},
       act_amt = #{record.actAmt,jdbcType=DECIMAL},
       fee_amt = #{record.feeAmt,jdbcType=DECIMAL},
-      request_date = #{record.requestDate,jdbcType=DATE},
-      approve_date = #{record.approveDate,jdbcType=DATE},
+      request_date = #{record.requestDate,jdbcType=TIMESTAMP},
+      approve_date = #{record.approveDate,jdbcType=TIMESTAMP},
       statues = #{record.statues,jdbcType=CHAR},
       remark = #{record.remark,jdbcType=VARCHAR},
       create_id = #{record.createId,jdbcType=INTEGER},
@@ -339,10 +338,10 @@
         fee_amt = #{feeAmt,jdbcType=DECIMAL},
       </if>
       <if test="requestDate != null" >
-        request_date = #{requestDate,jdbcType=DATE},
+        request_date = #{requestDate,jdbcType=TIMESTAMP},
       </if>
       <if test="approveDate != null" >
-        approve_date = #{approveDate,jdbcType=DATE},
+        approve_date = #{approveDate,jdbcType=TIMESTAMP},
       </if>
       <if test="statues != null" >
         statues = #{statues,jdbcType=CHAR},
@@ -374,8 +373,8 @@
       req_amt = #{reqAmt,jdbcType=DECIMAL},
       act_amt = #{actAmt,jdbcType=DECIMAL},
       fee_amt = #{feeAmt,jdbcType=DECIMAL},
-      request_date = #{requestDate,jdbcType=DATE},
-      approve_date = #{approveDate,jdbcType=DATE},
+      request_date = #{requestDate,jdbcType=TIMESTAMP},
+      approve_date = #{approveDate,jdbcType=TIMESTAMP},
       statues = #{statues,jdbcType=CHAR},
       remark = #{remark,jdbcType=VARCHAR},
       create_id = #{createId,jdbcType=INTEGER},

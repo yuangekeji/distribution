@@ -11,6 +11,7 @@
     <result column="pay_money_type" property="payMoneyType" jdbcType="VARCHAR" />
     <result column="pay_money_time" property="payMoneyTime" jdbcType="TIMESTAMP" />
     <result column="charge_amt" property="chargeAmt" jdbcType="DECIMAL" />
+    <result column="charge_money_type" property="chargeMoneyType" jdbcType="VARCHAR" />
     <result column="charge_apply_time" property="chargeApplyTime" jdbcType="TIMESTAMP" />
     <result column="charge_time" property="chargeTime" jdbcType="TIMESTAMP" />
     <result column="apply_info" property="applyInfo" jdbcType="VARCHAR" />
@@ -39,6 +40,7 @@
     , a.pay_money_type
     , a.pay_money_time
     , a.charge_amt
+    , a.charge_money_type
     , a.charge_apply_time
     , a.charge_time
     , a.apply_info
@@ -129,6 +131,7 @@
     , a.charge_amt
     , a.charge_apply_time
     , a.charge_time
+    , a.charge_money_type
     , a.apply_info
     , a.remarks
     , a.create_id

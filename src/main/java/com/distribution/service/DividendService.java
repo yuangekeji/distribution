@@ -90,7 +90,7 @@ public class DividendService {
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MemberBonus> result = memberBonusMapper.getExcelMemberBonusList(map);
         //定义表头
-        String[] excelHeader = {"订单编号", "领取时间", "当日分红包金额", "领取金额", "管理费"};
+        String[] excelHeader = {"订单编号", "领取时间", "当日分红包金额", "管理费", "领取金额"};
 
         return  this.exportExcel("红包明细列表", excelHeader, result, response.getOutputStream());
     }
@@ -117,11 +117,16 @@ public class DividendService {
         }
         //设置表格宽度
         sheet.setColumnWidth(0, 18 * 256);
-        sheet.setColumnWidth(1, 20 * 256);
-        sheet.setColumnWidth(2, 12 * 256);
-        sheet.setColumnWidth(3, 22 * 256);
-        sheet.setColumnWidth(4, 20 * 256);
+        sheet.setColumnWidth(1, 15 * 256);
+        sheet.setColumnWidth(2, 15 * 256);
+        sheet.setColumnWidth(3, 18 * 256);
+        sheet.setColumnWidth(4, 18 * 256);
         //构建表体
+        XSSFCellStyle styleRight = workbook.createCellStyle();
+        styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);//居右
+        XSSFCellStyle styleCenter = workbook.createCellStyle();
+        styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+
         int t = 0;
         double e = 0;
         double m = 0;
@@ -132,8 +137,14 @@ public class DividendService {
             bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
             bodyRow.createCell(1).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getBonusDate()));
             bodyRow.createCell(2).setCellValue(list.get(j).getAmout().toString());
-            bodyRow.createCell(3).setCellValue(list.get(j).getActualAmout().toString());
-            bodyRow.createCell(4).setCellValue(list.get(j).getManageFee().toString());
+            bodyRow.createCell(3).setCellValue(list.get(j).getManageFee().toString());
+            bodyRow.createCell(4).setCellValue(list.get(j).getActualAmout().toString());
+
+            bodyRow.getCell(0).setCellStyle(styleCenter);
+            bodyRow.getCell(1).setCellStyle(styleCenter);
+            bodyRow.getCell(2).setCellStyle(styleRight);
+            bodyRow.getCell(3).setCellStyle(styleRight);
+            bodyRow.getCell(4).setCellStyle(styleRight);
             t=j;
             e+=list.get(j).getAmout().doubleValue();
             m+=list.get(j).getActualAmout().doubleValue();
@@ -149,9 +160,9 @@ public class DividendService {
         XSSFCell cel2 = bodyRow1.createCell(2);
         cel2.setCellValue(e);
         XSSFCell cel3 = bodyRow1.createCell(3);
-        cel3.setCellValue(m);
+        cel3.setCellValue(p);
         XSSFCell cel4 = bodyRow1.createCell(4);
-        cel4.setCellValue(p);
+        cel4.setCellValue(m);
 
 
         return  workbook;

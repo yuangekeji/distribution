@@ -74,6 +74,7 @@
                                 <th class="text-center">审批时间</th>
                                 <th class="text-center">充值金额</th>
                                 <th class="text-center">充值时间</th>
+                                <th class="text-center">充值方式</th>
                                 <th class="text-center">状态</th>
                                 <th class="text-center">申请备注</th>
                                 <th class="text-center">操作</th>
@@ -89,7 +90,7 @@
                                 <td class="text-center">{{memberCharge.chargeApplyTime | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td class="text-right">{{memberCharge.chargeAmt | number:2 }}</td>
                                 <td class="text-center">{{memberCharge.chargeTime | date:'yyyy-MM-dd HH:mm'}}</td>
-
+                                <td class="text-center">{{memberCharge.chargeMoneyType | MemberChargeTypeFilter}}</td>
                                 <td class="text-center">
                                     <span class="label label-sm " ng-class="{'label-info': memberCharge.status == '0' || memberCharge.status == '1','label-success': memberCharge.status == '3','label-warning': memberCharge.status == '2'}">{{memberCharge.status | MemberChargeStatusFilter}} </span>
                                     <a href="javascript:" ng-click="getRemarks(memberCharge.remarks)" ng-show="{{memberCharge.status == '2'}}">&nbsp;审批备注</a>

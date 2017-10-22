@@ -53,6 +53,7 @@ public class MemberChargeService {
         MoreMemberChargeApply mmc = new MoreMemberChargeApply();
         mmc.setMemberId(moreMemberChargeApply.getMemberId());
         mmc.setStatus("0");
+        mmc.setChargeMoneyType("0");
         mmc.setChargeRequestTime(date);
         mmc.setPayMoneyType(moreMemberChargeApply.getPayMoneyType());
         mmc.setPayMoneyTime(moreMemberChargeApply.getPayMoneyTime());

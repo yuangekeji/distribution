@@ -11,8 +11,8 @@ import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
-import com.distribution.dao.memberCharge.mapper.MemberChargeMapper;
-import com.distribution.dao.memberCharge.model.MemberCharge;
+import com.distribution.dao.memberChargeApply.mapper.more.MoreMemberChargeApplyMapper;
+import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +31,11 @@ public class AdmMemberService {
     @Autowired
     private MoreAccountManagerMapper moreAccountManagerMapper;
     @Autowired
-    private MemberChargeMapper memberChargeMapper;
-    @Autowired
     private AccountFlowHistoryMapper accountFlowHistoryMapper;
     @Autowired
     private MoreMemberMapper memberMapper;
+    @Autowired
+    private MoreMemberChargeApplyMapper moreMemberChargeApplyMapper;
     /**
      * description 后台会员列表分页查询
      * @author Bright
@@ -54,30 +54,44 @@ public class AdmMemberService {
      * description 充值
      * @author Bright
      * */
-    public Integer addAccount(MemberCharge memberCharge,Admin admin){
+    public Integer addAccount(MoreMemberChargeApply moreMemberChargeApply, Admin admin){
 
 
-        AccountManager am = moreAccountManagerMapper.selectByMemberId(memberCharge.getMemberId());
+        AccountManager am = moreAccountManagerMapper.selectByMemberId(moreMemberChargeApply.getMemberId());
 
-        Member receivedMember = memberMapper.selectByPrimaryKey(memberCharge.getMemberId());
+        Member receivedMember = memberMapper.selectByPrimaryKey(moreMemberChargeApply.getMemberId());
 
-        am.setTotalBonus(am.getTotalBonus().add(memberCharge.getChargeAmt()));
-        am.setBonusAmt(am.getBonusAmt().add(memberCharge.getChargeAmt()));
+        am.setTotalBonus(am.getTotalBonus().add(moreMemberChargeApply.getChargeAmt()));
+        am.setBonusAmt(am.getBonusAmt().add(moreMemberChargeApply.getChargeAmt()));
         am.setUpdateId(admin.getId());
         am.setUpdateTime(new Date());
         Integer am1 = moreAccountManagerMapper.updateByMemberId(am);
 
-        memberCharge.setCreateId(admin.getId());
-        memberCharge.setCreateTime(new Date());
-        Integer me1 = memberChargeMapper.insert(memberCharge);
+        Date date  = new Date();
+        MoreMemberChargeApply mmca = new MoreMemberChargeApply();
+        mmca.setMemberId(moreMemberChargeApply.getMemberId());
+        mmca.setStatus("3");
+        mmca.setChargeRequestTime(date);
+        mmca.setPayMoneyType("管理员充值");
+        mmca.setPayMoneyTime(date);
+        mmca.setChargeAmt(moreMemberChargeApply.getChargeAmt());
+        mmca.setChargeMoneyType("1");
+        mmca.setChargeApplyTime(date);
+        mmca.setChargeTime(date);
+        mmca.setApplyInfo("管理员充值");
+        mmca.setCreateTime(date);
+        mmca.setCreateId(admin.getId());
+        mmca.setUpdateId(admin.getId());
+        mmca.setUpdateTime(date);
+        Integer me1 = moreMemberChargeApplyMapper.insert(mmca);
 
         AccountFlowHistory af = new AccountFlowHistory();
-        af.setMemberId(memberCharge.getMemberId());
+        af.setMemberId(moreMemberChargeApply.getMemberId());
         af.setCreateTime(new Date());
         af.setCreateId(admin.getId());
         af.setType("2");//转入
-        af.setTotalAmt(memberCharge.getChargeAmt());
-        af.setBonusAmt(memberCharge.getChargeAmt());
+        af.setTotalAmt(moreMemberChargeApply.getChargeAmt());
+        af.setBonusAmt(moreMemberChargeApply.getChargeAmt());
         af.setSeedAmt(new BigDecimal(0));
         af.setFlowType(Constant.MEMBERCHARGE);//管理员充值
 

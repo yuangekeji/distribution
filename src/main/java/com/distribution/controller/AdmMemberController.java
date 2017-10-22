@@ -8,7 +8,7 @@ import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
-import com.distribution.dao.memberCharge.model.MemberCharge;
+import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
 import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.AdmMemberService;
 import com.distribution.service.CommonService;
@@ -72,14 +72,14 @@ public class AdmMemberController extends BasicController{
      * */
     @RequestMapping("/addAccount")
     @ResponseBody
-    public JsonMessage addAccount(@RequestBody MemberCharge memberCharge,@RequestParam String memberName, HttpSession session){
+    public JsonMessage addAccount(@RequestBody MoreMemberChargeApply moreMemberChargeApply, @RequestParam String memberName, HttpSession session){
         Admin admin = (Admin) getCurrentUser(session);
-        admMemberService.addAccount(memberCharge,admin);
+        admMemberService.addAccount(moreMemberChargeApply,admin);
         //管理员操作记录
         Map map = new HashMap();
         map.put("handleType", Constant.ADMINHANDLETYPE_ADDACCOUNT);
-        map.put("handleId", memberCharge.getMemberId());
-        map.put("handleComment", "会员名称: " + memberName + ", 充值金额: " + memberCharge.getChargeAmt());
+        map.put("handleId", moreMemberChargeApply.getMemberId());
+        map.put("handleComment", "会员名称: " + memberName + ", 充值金额: " + moreMemberChargeApply.getChargeAmt());
         admHandleHistoryService.addAdminHandleHistory(admin, map);
         return successMsg();
     }

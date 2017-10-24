@@ -21,6 +21,8 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         expressNo: ''
     };
     $scope.expressMessage = {
+        receiveName:'',
+        recevivePhone:'',
         expressNo: '',
         expressAddress: '',
         sendbypostyn: '',
@@ -94,7 +96,9 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
     };
 
     /**物流信息查询*/
-    $scope.expressMessageSearch = function (expressNo, expressAddress, sendbypostyn, orderStatues) {
+    $scope.expressMessageSearch = function (receiveName,recevivePhone,expressNo, expressAddress, sendbypostyn, orderStatues) {
+        $scope.expressMessage.receiveName =receiveName;
+        $scope.expressMessage.recevivePhone =recevivePhone;
         $scope.expressMessage.expressNo = expressNo;
         $scope.expressMessage.expressAddress = expressAddress;
         $scope.expressMessage.sendbypostyn = sendbypostyn;

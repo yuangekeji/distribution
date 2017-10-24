@@ -112,6 +112,7 @@
          , a.create_time
          , a.update_id
          , a.update_time
+         , a.recevive_phone
          , a.sendByPostYN
          , a.bonus_account_type
       FROM order_master a

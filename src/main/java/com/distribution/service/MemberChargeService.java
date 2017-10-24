@@ -8,6 +8,9 @@ import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,9 +56,10 @@ public class MemberChargeService {
         MoreMemberChargeApply mmc = new MoreMemberChargeApply();
         mmc.setMemberId(moreMemberChargeApply.getMemberId());
         mmc.setStatus("0");
+        mmc.setChargeMoneyType("0");
         mmc.setChargeRequestTime(date);
         mmc.setPayMoneyType(moreMemberChargeApply.getPayMoneyType());
-        mmc.setPayMoneyTime(moreMemberChargeApply.getPayMoneyTime());
+        mmc.setPayMoneyTime(stringToDate(moreMemberChargeApply.getPayTime()));
         mmc.setChargeAmt(moreMemberChargeApply.getChargeAmt());
         mmc.setApplyInfo(moreMemberChargeApply.getApplyInfo());
         mmc.setCreateId(moreMemberChargeApply.getMemberId());
@@ -69,5 +73,18 @@ public class MemberChargeService {
         }else{
             throw new RuntimeException();
         }
+    }
+
+    public static Date stringToDate(String str) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = null;
+        try {
+            // Fri Feb 24 00:00:00 CST 2012
+            date = format.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return date;
     }
 }

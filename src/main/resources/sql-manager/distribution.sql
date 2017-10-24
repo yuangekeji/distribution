@@ -593,8 +593,7 @@ INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.account', null)
 INSERT INTO `menu` VALUES ('28', null, '推荐网络图', '1', 'app.graph', 'icon-graph');
 INSERT INTO `menu` VALUES ('29', null, '分支管理', '25', 'app.admTreeMember', null);
 INSERT INTO `menu` VALUES ('30', null, '操作记录', '25', 'app.admHandleHistory', null);
-INSERT INTO `menu` VALUES ('31', null, '充值管理', '1', 'app.memberCharge', 'icon-diamond');
-INSERT INTO `menu` VALUES ('34', null, '充值管理', '15', 'app.admMemberCharge', 'icon-diamond');
+
 -- ----------------------------
 -- Table structure for node_bonus_history
 -- ----------------------------
@@ -752,9 +751,6 @@ INSERT INTO `role_menu` VALUES ('1', '28');
 INSERT INTO `role_menu` VALUES ('2', '21');
 INSERT INTO `role_menu` VALUES ('2', '29');
 INSERT INTO `role_menu` VALUES ('2', '30');
-INSERT INTO `role_menu` VALUES ('1', '31');
-INSERT INTO `role_menu` VALUES ('2', '34');
-INSERT INTO `role_menu` VALUES ('3', '34');
 
 -- ----------------------------
 -- Table structure for transfer
@@ -837,6 +833,7 @@ CREATE TABLE `member_charge_apply` (
   `pay_money_type` varchar(255) DEFAULT NULL COMMENT '打款方式',
   `pay_money_time` datetime DEFAULT NULL COMMENT '打款时间',
   `charge_amt` decimal(15,2) DEFAULT NULL COMMENT '充值金额',
+	`charge_money_type` varchar(255) DEFAULT NULL COMMENT '充值方式(''0'':会员申请充值，''1'':管理员充值)',
   `charge_apply_time` datetime DEFAULT NULL COMMENT '审批时间',
   `charge_time` datetime DEFAULT NULL COMMENT '充值时间',
 	`apply_info` varchar(5000) DEFAULT NULL COMMENT '申请备注',
@@ -847,7 +844,8 @@ CREATE TABLE `member_charge_apply` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
---添加公告表
+
+-- 添加公告表
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
@@ -862,4 +860,25 @@ CREATE TABLE `notice` (
   `update_time` datetime DEFAULT NULL,
   `notice_time` datetime DEFAULT NULL COMMENT '公告激活时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
+-- 添加公告菜单数据 ID请根据实际情况设定
+
+INSERT INTO `menu` VALUES ('32', null, '公告管理', '23', 'app.admNotice', null);
+update menu set name ='系统管理' where id = 23;
+
+INSERT INTO `role_menu` VALUES ('2', '32');
+
+
+INSERT INTO `menu` VALUES (33, null, '充值申请', '1', 'app.memberCharge', 'icon-diamond');
+INSERT INTO `menu` VALUES (34, null, '充值管理', '12', 'app.admMemberCharge', 'icon-diamond');
+
+INSERT INTO `role_menu` VALUES ('2', '34');
+INSERT INTO `role_menu` VALUES ('3', '34');
+INSERT INTO `role_menu` VALUES ('1', '33');
+
+-- 修改提现申请
+alter table advance MODIFY request_date datetime not null;
+alter table advance MODIFY approve_date datetime  null;
+

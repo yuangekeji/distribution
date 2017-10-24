@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<h4 class="page-title">充值管理</h4>
+<h4 class="page-title">充值申请</h4>
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -66,6 +66,7 @@
                                 <th class="text-center">审批时间</th>
                                 <th class="text-center">充值金额</th>
                                 <th class="text-center">充值时间</th>
+                                <th class="text-center">充值方式</th>
                                 <th class="text-center">状态</th>
                                 <th class="text-center">申请备注</th>
                             </tr>
@@ -73,12 +74,13 @@
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="memberCharge in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                 <td class="text-center">{{memberCharge.memberName}}</td>
-                                <td class="text-center">{{memberCharge.payMoneyTime | date:'yyyy-MM-dd'}}</td>
+                                <td class="text-center">{{memberCharge.payMoneyTime | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td class="text-left">{{memberCharge.payMoneyType}}</td>
                                 <td class="text-center">{{memberCharge.chargeRequestTime | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td class="text-center">{{memberCharge.chargeApplyTime | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td class="text-right">{{memberCharge.chargeAmt | number:2 }}</td>
                                 <td class="text-center">{{memberCharge.chargeTime | date:'yyyy-MM-dd HH:mm'}}</td>
+                                <td class="text-center">{{memberCharge.chargeMoneyType | MemberChargeTypeFilter}}</td>
                                 <td class="text-center">
                                     <span class="label label-sm " ng-class="{'label-info': memberCharge.status == '0' || memberCharge.status == '1','label-success': memberCharge.status == '3','label-warning': memberCharge.status == '2'}">{{memberCharge.status | MemberChargeStatusFilter}} </span>
                                     <a href="javascript:" ng-click="getRemarks(memberCharge.remarks)" ng-show="{{memberCharge.status == '2'}}">&nbsp;审批备注</a>

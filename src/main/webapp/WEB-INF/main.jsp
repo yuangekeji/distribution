@@ -42,6 +42,9 @@
     <link href="${ctx}/static/metronic/layouts/layout2/css/themes/blue.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="${ctx}/static/metronic/layouts/layout2/css/custom.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/notify/notify.css" rel="stylesheet" type="text/css" />
+    <%--<link href="${ctx}/static/metronic/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />--%>
+    <link href="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/metronic/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
     <!-- metronic  end -->
 
 
@@ -83,6 +86,9 @@
 <!-- END CORE ANGULARJS PLUGINS -->
 <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
+<%--<script src="${ctx}/static/metronic/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>--%>
+<script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/metronic/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/notify/notify.js" type="text/javascript"></script>
 <script src="${ctx}/app/common/pagination/dirPagination.js" type="text/javascript" charset="utf-8"></script>
 <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>

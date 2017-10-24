@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 public interface AdvanceMapper {
     int countByExample(AdvanceExample example);
 
-
     int deleteByExample(AdvanceExample example);
 
     int deleteByPrimaryKey(Integer id);

@@ -9,7 +9,9 @@ angular.module('admDividend').controller('admDividendCtrl',function ($q, title, 
         result: [],
         parameterMap: {
             orderNo:'',
-            dividendStatus:''
+            dividendStatus:'',
+            startTime: '',
+            endTime: ''
         }
     };
     $scope.search = function(){

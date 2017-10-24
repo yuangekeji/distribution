@@ -77,7 +77,7 @@ public class AdmAdvanceController extends BasicController {
     }
 
     /**
-     * description 红包列表下载
+     * description 提现列表下载
      * @author Bright
      * */
     @RequestMapping(value = "/excelDownload")
@@ -97,22 +97,19 @@ public class AdmAdvanceController extends BasicController {
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = admAdvanceService.exportData(map,response);
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("提现列表", "UTF-8") + ".xlsx");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("提现报表", "UTF-8") + ".xlsx");
         OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
         wb.write(outStream); // 输出数据
         outStream.flush();
         outStream.close();
 
         //管理员操作记录
-        /*Map mapHandle = new HashMap();
-        String orderNoHandle = orderNo;
-        if (orderNo.isEmpty() || "".equals(orderNo)) {
-            orderNoHandle = "全部";
-        }
-        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
-        mapHandle.put("handleId", orderNoHandle);
-        mapHandle.put("handleComment", "订单号: " + orderNoHandle + ", 操作: 订单下载");
-        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);*/
+        Map mapHandle = new HashMap();
+
+        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYADVANCE);
+        mapHandle.put("handleId", "AdvanceDownload");
+        mapHandle.put("handleComment", "操作: 提现列表下载");
+        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }
 

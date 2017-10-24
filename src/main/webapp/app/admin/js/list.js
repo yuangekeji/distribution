@@ -76,10 +76,6 @@ angular.module('admin').controller('adminCtrl',function ($q, title, $scope, $htt
     $scope.gotoAddPage = function () {
         $state.go("app.adminAdd");
     };
-    /**跳转到密码修改页面*/
-    $scope.goAdminInfo = function () {
-        $state.go("app.adminInfo");
-    };
 
     /**管理员禁用/启用功能操作*/
     $scope.updateAdminDeleteFlag = function (id, name, rowName, deleteFlag) {

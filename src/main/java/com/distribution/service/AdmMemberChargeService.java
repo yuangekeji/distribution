@@ -111,9 +111,9 @@ public class AdmMemberChargeService {
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MoreMemberChargeApply> result = moreMemberChargeApplyMapper.getExcelMemberChargeList(map);
         //定义表头
-        String[] excelHeader = {"申请人", "手机号", "打款时间", "打款方式", "申请时间", "审批时间", "充值金额", "充值时间", "状态", "申请备注"};
+        String[] excelHeader = {"申请人", "手机号", "打款时间", "打款方式", "申请时间", "审批时间", "充值金额", "充值时间","充值方式", "状态", "申请备注"};
 
-        return  this.exportExcel("已充值会员列表", excelHeader, result, response.getOutputStream());
+        return  this.exportExcel("充值列表", excelHeader, result, response.getOutputStream());
     }
 
     public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreMemberChargeApply> list, OutputStream out) throws InvocationTargetException {
@@ -146,7 +146,8 @@ public class AdmMemberChargeService {
         sheet.setColumnWidth(6, 15 * 256);
         sheet.setColumnWidth(7, 20 * 256);
         sheet.setColumnWidth(8, 15 * 256);
-        sheet.setColumnWidth(9, 40 * 256);
+        sheet.setColumnWidth(9, 15 * 256);
+        sheet.setColumnWidth(10, 40 * 256);
 
         //构建表体
         //定义body样式
@@ -164,11 +165,14 @@ public class AdmMemberChargeService {
             bodyRow.createCell(2).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getPayMoneyTime()));
             bodyRow.createCell(3).setCellValue(list.get(j).getPayMoneyType());
             bodyRow.createCell(4).setCellValue(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeRequestTime()));
-            bodyRow.createCell(5).setCellValue(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeApplyTime()));
+            bodyRow.createCell(5).setCellValue(
+                    list.get(j).getChargeApplyTime() == null ? "" : new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeApplyTime()));
             bodyRow.createCell(6).setCellValue(list.get(j).getChargeAmt().toString());
-            bodyRow.createCell(7).setCellValue(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeTime()));
-            bodyRow.createCell(8).setCellValue("充值成功");
-            bodyRow.createCell(9).setCellValue(list.get(j).getApplyInfo());
+            bodyRow.createCell(7).setCellValue(
+                    list.get(j).getChargeTime() == null ? "" : new SimpleDateFormat("yyyy-MM-dd HH:mm").format(list.get(j).getChargeTime()));
+            bodyRow.createCell(8).setCellValue(chargeMoneyTypeName(list.get(j).getChargeMoneyType()));
+            bodyRow.createCell(9).setCellValue(statusName(list.get(j).getStatus()));
+            bodyRow.createCell(10).setCellValue(list.get(j).getApplyInfo());
 
             bodyRow.getCell(0).setCellStyle(styleCenter);
             bodyRow.getCell(1).setCellStyle(styleCenter);
@@ -178,6 +182,7 @@ public class AdmMemberChargeService {
             bodyRow.getCell(6).setCellStyle(styleRight);
             bodyRow.getCell(7).setCellStyle(styleCenter);
             bodyRow.getCell(8).setCellStyle(styleCenter);
+            bodyRow.getCell(9).setCellStyle(styleCenter);
 
             p = p.add(list.get(j).getChargeAmt());
             t=j;
@@ -188,11 +193,33 @@ public class AdmMemberChargeService {
 
         XSSFCell cel1 = bodyRow1.createCell(0);
         cel1.setCellStyle(style);
-        cel1.setCellValue("已充值成功总金额(元)");
+        cel1.setCellValue("充值总金额(元)");
         XSSFCell cel2 = bodyRow1.createCell(1);
         cel2.setCellStyle(styleRight);
         cel2.setCellValue(p.toString());
 
         return  workbook;
+    }
+    private String chargeMoneyTypeName(String chargeMoneyType) {
+        String chargeMoneyTypeName = "";
+        if (chargeMoneyType.equals("0")){
+            chargeMoneyTypeName = "会员申请";
+        }else if (chargeMoneyType.equals("1")){
+            chargeMoneyTypeName = "管理员充值";
+        }
+        return chargeMoneyTypeName;
+    }
+    private String statusName(String status) {
+        String statusName = "";
+        if (status.equals("0")){
+            statusName = "审核中";
+        }else if (status.equals("1")){
+            statusName = "待充值";
+        }else if (status.equals("2")){
+            statusName = "审核驳回";
+        }else if (status.equals("3")){
+            statusName = "充值成功";
+        }
+        return statusName;
     }
 }

@@ -71,7 +71,7 @@
                                 <td >{{advance.reqAmt | number:2}}</td>
                                 <td >{{advance.feeAmt | number:2}}</td>
                                 <td >{{advance.actAmt | number:2}}</td>
-                                <td >{{advance.requestDate|date:'yyyy-MM-dd'}}</td>
+                                <td >{{advance.requestDate|date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td >{{advance.cardName}}|{{advance.bankName}}|{{advance.cardNo}}</td>
                                 <td >
                                     <span class="label label-sm " ng-class="{'label-info': advance.statues == '1','label-success': advance.statues == '2','label-warning': advance.statues == '3'}">{{advance.statues|AdvanceStatuesFilter}} </span>

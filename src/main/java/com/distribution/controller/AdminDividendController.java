@@ -1,9 +1,11 @@
 package com.distribution.controller;
 
+import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
+import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.DividendService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,8 @@ public class AdminDividendController extends BasicController {
 
     @Autowired
     private DividendService dividendService;
-
+    @Autowired
+    private AdmHandleHistoryService admHandleHistoryService;
     /**
      * 查詢分紅包列表
      */
@@ -72,28 +75,24 @@ public class AdminDividendController extends BasicController {
                               HttpServletResponse response) throws IOException, InvocationTargetException {
 
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("startTime", startTime+" 00:00:00");
-        map.put("endTime", endTime+" 00:00:00");
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
 
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = dividendService.exportData(map,response);
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("红包列表", "UTF-8") + ".xlsx");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("分红包领取明细报表", "UTF-8") + ".xlsx");
         OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
         wb.write(outStream); // 输出数据
         outStream.flush();
         outStream.close();
 
         //管理员操作记录
-        /*Map mapHandle = new HashMap();
-        String orderNoHandle = orderNo;
-        if (orderNo.isEmpty() || "".equals(orderNo)) {
-            orderNoHandle = "全部";
-        }
-        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
-        mapHandle.put("handleId", orderNoHandle);
-        mapHandle.put("handleComment", "订单号: " + orderNoHandle + ", 操作: 订单下载");
-        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);*/
+        Map mapHandle = new HashMap();
+        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_DIVIDEND);
+        mapHandle.put("handleId", "Dividend");
+        mapHandle.put("handleComment", "操作: 红包列表下载");
+        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }
 

@@ -18,6 +18,8 @@ public class MemberChargeApply {
 
     private BigDecimal chargeAmt;
 
+    private String chargeMoneyType;
+
     private Date chargeApplyTime;
 
     private Date chargeTime;
@@ -88,6 +90,14 @@ public class MemberChargeApply {
 
     public void setChargeAmt(BigDecimal chargeAmt) {
         this.chargeAmt = chargeAmt;
+    }
+
+    public String getChargeMoneyType() {
+        return chargeMoneyType;
+    }
+
+    public void setChargeMoneyType(String chargeMoneyType) {
+        this.chargeMoneyType = chargeMoneyType == null ? null : chargeMoneyType.trim();
     }
 
     public Date getChargeApplyTime() {

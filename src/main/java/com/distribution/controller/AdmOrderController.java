@@ -44,7 +44,7 @@ public class AdmOrderController extends BasicController{
     }
 
     /**
-     * description 订单列表下载
+     * description 订单列表下载(待发货)
      * @author WYN
      * */
     @RequestMapping(value = "/excelDownload")
@@ -74,19 +74,15 @@ public class AdmOrderController extends BasicController{
 
         //管理员操作记录
         Map mapHandle = new HashMap();
-        String orderNoHandle = orderNo;
-        if (orderNo.isEmpty() || "".equals(orderNo)) {
-            orderNoHandle = "全部";
-        }
         mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
-        mapHandle.put("handleId", orderNoHandle);
-        mapHandle.put("handleComment", "订单号: " + orderNoHandle + ", 操作: 订单下载");
+        mapHandle.put("handleId", "OrderDownload");
+        mapHandle.put("handleComment", "操作: 待发货订单下载");
         admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }
 
     /**
-     * description 订单列表下载
+     * description 订单列表下载（已出库）
      * @author WYN
      * */
     @RequestMapping(value = "/excelDownload1")
@@ -108,7 +104,7 @@ public class AdmOrderController extends BasicController{
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = admOrderService.exportData1(map,response);
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("已出库列表", "UTF-8") + ".xlsx");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("商品出库报表", "UTF-8") + ".xlsx");
         OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
         wb.write(outStream); // 输出数据
         outStream.flush();
@@ -116,13 +112,9 @@ public class AdmOrderController extends BasicController{
 
         //管理员操作记录
         Map mapHandle = new HashMap();
-        String orderNoHandle = orderNo;
-        if (orderNo.isEmpty() || "".equals(orderNo)) {
-            orderNoHandle = "全部";
-        }
         mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
-        mapHandle.put("handleId", orderNoHandle);
-        mapHandle.put("handleComment", "订单号: " + orderNoHandle + ", 操作: 订单下载");
+        mapHandle.put("handleId", "OrderDownload1");
+        mapHandle.put("handleComment", "操作: 已出库订单下载");
         admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }

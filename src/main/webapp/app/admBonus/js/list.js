@@ -23,6 +23,10 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
             orderEndDate: ''
         }
     };
+    $scope.excelDownloadTime = {
+        startTime: '',
+        endTime: ''
+    }
 
     $scope.search = function(){
         $http.post(ctx + '/adminBonus/list', $scope.myPage)
@@ -113,6 +117,17 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
             // console.info('取消');
         });
     };
+    $scope.show = function () {
+        $("#show").modal("show");
+    };
+
+    /**
+     * excel download
+     */
+    $scope.excelDownload = function() {
+        window.location.href=ctx + "/adminBonus/excelDownload?startTime="+$scope.excelDownloadTime.startTime+"&endTime="+$scope.excelDownloadTime.endTime;
+        $("#show").modal("hide");
+    }
 });
 angular.module('admBonus').controller('admBonusDetailCtrl', function ($scope, $uibModalInstance,getDatas) {
 

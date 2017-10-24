@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -91,7 +92,7 @@ public class AdmAdvanceService {
             historyout.setBonusAmt(moreAdvance.getReqAmt());
             historyout.setTotalAmt(moreAdvance.getReqAmt());
 
-            cnt1 = moreAccountManagerMapper.updateAccountManagerAmt(advanceAccount);
+            cnt1 = moreAccountManagerMapper.updateAccountManagerAmtWhileAdvance(advanceAccount);
             cnt2= accountFlowHistoryMapper.insert(historyout);
 
         }else {
@@ -159,9 +160,9 @@ public class AdmAdvanceService {
         sheet.setColumnWidth(6, 30 * 256);
         //构建表体
         int t = 0;
-        int e = 0;
-        int m = 0;
-        int p = 0;
+        BigDecimal e = new BigDecimal(0);
+        BigDecimal m = new BigDecimal(0);
+        BigDecimal p = new BigDecimal(0);
         for(int j=0;j<list.size();j++){
             XSSFRow bodyRow = sheet.createRow(j + 1);
 
@@ -173,9 +174,9 @@ public class AdmAdvanceService {
             bodyRow.createCell(5).setCellValue(list.get(j).getCardName().toString()+"|"+list.get(j).getBankName().toString()+"|"+list.get(j).getCardNo().toString());
             bodyRow.createCell(6).setCellValue("已执行");
             t=j;
-            e+=list.get(j).getReqAmt().intValue();
-            m+=list.get(j).getFeeAmt().intValue();
-            p+=list.get(j).getActAmt().intValue();
+            e=e.add(list.get(j).getReqAmt());
+            m=m.add(list.get(j).getFeeAmt());
+            p=p.add(list.get(j).getActAmt());
         }
         XSSFRow bodyRow1 = sheet.createRow(t + 2);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
@@ -185,11 +186,11 @@ public class AdmAdvanceService {
         cel1.setCellStyle(style);
         cel1.setCellValue("已提现总金额:");
         XSSFCell cel2 = bodyRow1.createCell(1);
-        cel2.setCellValue(e);
+        cel2.setCellValue(e.toString());
         XSSFCell cel3 = bodyRow1.createCell(2);
-        cel3.setCellValue(m);
+        cel3.setCellValue(m.toString());
         XSSFCell cel4 = bodyRow1.createCell(3);
-        cel4.setCellValue(p);
+        cel4.setCellValue(p.toString());
 
         return  workbook;
     }

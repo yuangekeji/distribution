@@ -101,10 +101,10 @@ angular.module('memberCharge').controller('memberChargeAddCtrl',function ($q, ti
     }
 
     $scope.memberChargeValidateConditionArray = {
-        payMoneyTimeError: function () {
-            if (angular.isUndefined($scope.memberCharge.payMoneyTime) ||
-                $scope.memberCharge.payMoneyTime.length <= 0) {
-                $scope.memberChargeValidateErrors.payMoneyTimeError = true;
+        payTimeError: function () {
+            if (angular.isUndefined($scope.memberCharge.payTime) ||
+                $scope.memberCharge.payTime.length <= 0) {
+                $scope.memberChargeValidateErrors.payTimeError = true;
             }
         },
         payMoneyTypeError: function () {

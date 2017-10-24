@@ -165,4 +165,9 @@ angular.module('memberCharge').filter("MemberChargeStatusFilter",function () {
         if(input=='3'){return '充值成功'};
     }
 });
-
+angular.module('memberCharge').filter("MemberChargeTypeFilter",function () {
+    return function (input) {
+        if(input=='0'){return '会员申请'};
+        if(input=='1'){return '管理员充值'};
+    }
+});

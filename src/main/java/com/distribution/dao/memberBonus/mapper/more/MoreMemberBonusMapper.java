@@ -3,6 +3,7 @@ package com.distribution.dao.memberBonus.mapper.more;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.memberBonus.mapper.MemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
+import com.distribution.dao.memberBonus.model.more.DividendExcelVO;
 import com.distribution.dao.memberBonus.model.more.MoreMemberBonus;
 
 
@@ -43,7 +44,7 @@ public interface MoreMemberBonusMapper extends MemberBonusMapper {
      */
     List<MoreMemberBonus> selectMemberBonusDetail(Page page);
 
-    List<MemberBonus> getExcelMemberBonusList(Map map);
+    List<DividendExcelVO> getExcelMemberBonusList(Map map);
 
     /**
      * 分销记录详情列表下载

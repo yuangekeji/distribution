@@ -4,6 +4,7 @@ import com.distribution.common.utils.Page;
 import com.distribution.dao.dividend.mapper.more.MoreDividendMapper;
 import com.distribution.dao.memberBonus.mapper.more.MoreMemberBonusMapper;
 import com.distribution.dao.memberBonus.model.MemberBonus;
+import com.distribution.dao.memberBonus.model.more.DividendExcelVO;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.*;
@@ -88,14 +89,14 @@ public class DividendService {
      * @author Bright
      * */
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
-        List<MemberBonus> result = memberBonusMapper.getExcelMemberBonusList(map);
+        List<DividendExcelVO> result = memberBonusMapper.getExcelMemberBonusList(map);
         //定义表头
-        String[] excelHeader = {"订单编号", "领取时间", "当日分红包金额", "管理费", "领取金额"};
+        String[] excelHeader = {"订单编号", "订单金额", "分红包个数",  "会员名称",  "领取时间",  "当日分红包金额", "管理费", "领取金额"};
 
         return  this.exportExcel("红包明细列表", excelHeader, result, response.getOutputStream());
     }
 
-    public XSSFWorkbook exportExcel(String title, String[] headers, List<MemberBonus> list, OutputStream out) throws InvocationTargetException {
+    public XSSFWorkbook exportExcel(String title, String[] headers, List<DividendExcelVO> list, OutputStream out) throws InvocationTargetException {
         // 声明一个工作薄
         XSSFWorkbook workbook = new XSSFWorkbook();
         // 生成一个表格
@@ -121,6 +122,10 @@ public class DividendService {
         sheet.setColumnWidth(2, 15 * 256);
         sheet.setColumnWidth(3, 18 * 256);
         sheet.setColumnWidth(4, 18 * 256);
+        sheet.setColumnWidth(5, 18 * 256);
+        sheet.setColumnWidth(6, 18 * 256);
+        sheet.setColumnWidth(7, 18 * 256);
+
         //构建表体
         XSSFCellStyle styleRight = workbook.createCellStyle();
         styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);//居右
@@ -131,24 +136,33 @@ public class DividendService {
         double e = 0;
         double m = 0;
         double p = 0;
+
         for(int j=0;j<list.size();j++){
             XSSFRow bodyRow = sheet.createRow(j + 1);
             System.out.println(j);
             bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
-            bodyRow.createCell(1).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getBonusDate()));
-            bodyRow.createCell(2).setCellValue(list.get(j).getAmout().toString());
-            bodyRow.createCell(3).setCellValue(list.get(j).getManageFee().toString());
-            bodyRow.createCell(4).setCellValue(list.get(j).getActualAmout().toString());
+            bodyRow.createCell(1).setCellValue(list.get(j).getOrderAmount().toString());
+            bodyRow.createCell(2).setCellValue(list.get(j).getDividendCount().toString());
+            bodyRow.createCell(3).setCellValue(list.get(j).getMemberName().toString());
+            bodyRow.createCell(4).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getBonusDate()));
+            bodyRow.createCell(5).setCellValue(list.get(j).getAmout().toString());
+            bodyRow.createCell(6).setCellValue(list.get(j).getManageFee().toString());
+            bodyRow.createCell(7).setCellValue(list.get(j).getActualAmout().toString());
 
             bodyRow.getCell(0).setCellStyle(styleCenter);
-            bodyRow.getCell(1).setCellStyle(styleCenter);
+            bodyRow.getCell(1).setCellStyle(styleRight);
             bodyRow.getCell(2).setCellStyle(styleRight);
-            bodyRow.getCell(3).setCellStyle(styleRight);
-            bodyRow.getCell(4).setCellStyle(styleRight);
+            bodyRow.getCell(3).setCellStyle(styleCenter);
+            bodyRow.getCell(4).setCellStyle(styleCenter);
+            bodyRow.getCell(5).setCellStyle(styleRight);
+            bodyRow.getCell(6).setCellStyle(styleRight);
+            bodyRow.getCell(7).setCellStyle(styleRight);
+
             t=j;
-            e+=list.get(j).getAmout().doubleValue();
-            m+=list.get(j).getActualAmout().doubleValue();
-            p+=list.get(j).getManageFee().doubleValue();
+
+            e += list.get(j).getAmout().doubleValue();
+            p += list.get(j).getManageFee().doubleValue();
+            m += list.get(j).getActualAmout().doubleValue();
         }
         XSSFRow bodyRow1 = sheet.createRow(t + 2);
         style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
@@ -157,11 +171,11 @@ public class DividendService {
         XSSFCell cel1 = bodyRow1.createCell(0);
         cel1.setCellStyle(style);
         cel1.setCellValue("统计:");
-        XSSFCell cel2 = bodyRow1.createCell(2);
+        XSSFCell cel2 = bodyRow1.createCell(5);
         cel2.setCellValue(e);
-        XSSFCell cel3 = bodyRow1.createCell(3);
+        XSSFCell cel3 = bodyRow1.createCell(6);
         cel3.setCellValue(p);
-        XSSFCell cel4 = bodyRow1.createCell(4);
+        XSSFCell cel4 = bodyRow1.createCell(7);
         cel4.setCellValue(m);
 
 

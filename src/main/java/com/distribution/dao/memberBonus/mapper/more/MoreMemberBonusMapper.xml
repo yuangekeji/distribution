@@ -60,6 +60,25 @@
     <result column="manage_fee" property="manageFee" jdbcType="DOUBLE" />
     <result column="actual_amout" property="actualAmout" jdbcType="DOUBLE" />
   </resultMap>
+  <resultMap id="DividendDetailExcel" type="com.distribution.dao.memberBonus.model.more.DividendExcelVO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="bonus_date" property="bonusDate" jdbcType="TIMESTAMP" />
+    <result column="bonus_type" property="bonusType" jdbcType="VARCHAR" />
+    <result column="amout" property="amout" jdbcType="DOUBLE" />
+    <result column="manage_fee" property="manageFee" jdbcType="DOUBLE" />
+    <result column="actual_amout" property="actualAmout" jdbcType="DOUBLE" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+    <result column="dividend_count" property="dividendCount" jdbcType="INTEGER" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     id, member_id, bonus_date, bonus_type, amout, manage_fee, actual_amout,
     order_id, order_no, remarks, create_by, create_date, update_by, update_time
@@ -235,14 +254,16 @@
       order by mb.member_id desc
   </select>
 
-  <select id="getExcelMemberBonusList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="getExcelMemberBonusList" parameterType="java.util.Map"  resultMap="DividendDetailExcel">
     SELECT
-    m.*
+    m.*,
+    member.member_name,
+    d.dividend_count,
+    d.order_amount
     FROM
     dividend d
-    INNER JOIN
-    member_bonus m
-    ON d.member_id = m.member_id
+    INNER JOIN member_bonus m ON d.member_id = m.member_id
+    INNER JOIN member member  ON d.member_id = member.id
     AND d.order_no = m.order_no
     AND m.bonus_type = 3
     <if test="startTime != null and startTime != ''">

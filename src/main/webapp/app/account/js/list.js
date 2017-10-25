@@ -248,6 +248,11 @@ angular.module('account').controller('accountListCtrl',
              return false;
          }
 
+         if($scope.reOrder.orderQty > 50 || $scope.reOrder.amt > 30000){
+             Notify.warning('每日投资额不能超过3万，请重新填写复投信息。');
+             return false;
+         }
+
          if($scope.reOrder.bonusType == 1 && $scope.reOrder.amt > $scope.accountInfo.seedAmt){
              Notify.warning('扣除的种子币金额不能大于账户种子币余额');
              return false;
@@ -291,7 +296,9 @@ angular.module('account').controller('accountListCtrl',
                      $scope.onInit();
                  } else if (resp.data.result == 'pwdWrong') {
                      Notify.error('支付密码错误');
-                 } else if (resp.data.result == 'fail') {
+                 } else if(resp.data.result =='reOrderLimit'){
+                     Notify.error('当日投资额已超过3万，请明日操作。');
+                 }else if (resp.data.result == 'fail') {
                      Notify.error('复投失败，请重新尝试');
                      $scope.onInit();
                  }

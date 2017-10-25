@@ -281,14 +281,24 @@ public class OrderService {
 
         if(count != null  && count >0 ) {
 
+            //种子币复投
             if("1".equals(moreOrderMaster.getBonusType())) {
                 moreOrderMaster.setSeedAmt(moreOrderMaster.getOrderAmt());
+
+            //奖金币复投
             }else  if("2".equals(moreOrderMaster.getBonusType())){
                 moreOrderMaster.setBonusAmt(moreOrderMaster.getOrderAmt());
+
             }else{
                 throw new RuntimeException("ERROR bonusType is null,memberId="+currentUser.getId());
             }
 
+            //判断当日复投的金额是否在30000之内
+            double maxOrderAmt =  moreOrderMasterMapper.selectMaxOrderAmt(currentUser.getId());
+
+            if((moreOrderMaster.getOrderAmt().add(new BigDecimal(maxOrderAmt))).compareTo(new BigDecimal(30000)) == 1){
+                return "reOrderLimit";
+            }
 
             moreOrderMaster.setOrderCategory("2");
             moreOrderMaster.setDiscount(0);

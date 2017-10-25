@@ -1,5 +1,6 @@
 package com.distribution.dao.order.mapper.more;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -52,4 +53,11 @@ public interface MoreOrderMasterMapper {
      * @author su
      */
     double findCurrentDayOrderSales(String date);
+
+    /**
+     * 查找会员的当日总投资呃 （报单和复投）
+     * @param memberId
+     * @return
+     */
+    double selectMaxOrderAmt(Integer memberId);
 }

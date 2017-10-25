@@ -882,3 +882,7 @@ INSERT INTO `role_menu` VALUES ('1', '33');
 alter table advance MODIFY request_date datetime not null;
 alter table advance MODIFY approve_date datetime  null;
 
+
+update dictionary set dic_name ='药膳食品' ,dic_des ='商品类别' where dic_type ='goods_type' and dic_code = '01';
+INSERT INTO `dictionary` VALUES (null, '02', '足浴粉', 'goods_type', '商品类别');
+INSERT INTO `dictionary` VALUES (null, '03', '药浴粉', 'goods_type', '商品类别');

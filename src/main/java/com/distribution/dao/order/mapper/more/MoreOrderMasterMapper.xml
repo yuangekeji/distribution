@@ -252,4 +252,12 @@
 		from order_master
 		where DATE(create_time) = #{date} and order_category != 3 and order_statues != 1
    </select>
+    <select id ="selectMaxOrderAmt" parameterType="java.lang.Integer" resultType="java.lang.Double">
+        select
+           IFNULL(SUM(order_amt),0) as sumAmt
+        from order_master
+        where order_category in (1,2)
+        and DATE_FORMAT (create_time,'%Y-%m-%d') = DATE_FORMAT (NOW(),'%Y-%m-%d')
+        and member_id = #{memberId}
+    </select>
 </mapper>

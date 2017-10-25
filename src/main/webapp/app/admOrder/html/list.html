@@ -121,7 +121,7 @@
                                            <button type="button"
                                                    class="btn btn-outline green-steel btn-xs"
                                                    ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn == '2'"
-                                                   ng-click="expressMessageSearch(orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)">物流信息
+                                                   ng-click="expressMessageSearch(orderMaster.receiveName, orderMaster.recevivePhone, orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)">物流信息
                                            </button>
                                     <!--</div>-->
                                     <span ng-show="orderMaster.sendbypostyn == '1'">自提</span>
@@ -191,6 +191,18 @@
                         <label class="control-label col-md-3">收货地址:</label>
                         <div class="col-md-9">
                             {{datasExpressMessage.expressAddress}}
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">收货人:</label>
+                        <div class="col-md-9">
+                            {{datasExpressMessage.receiveName}}
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label col-md-3">收货人电话:</label>
+                        <div class="col-md-9">
+                            {{datasExpressMessage.recevivePhone}}
                         </div>
                     </div>
                 </div>

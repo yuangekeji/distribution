@@ -10,7 +10,8 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             orderCategory: "",
             orderStatus: "",
             startTime: "",
-            endTime: ""
+            endTime: "",
+            sendByPostYN:""
         }
     };
 

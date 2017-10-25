@@ -48,6 +48,9 @@
        <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
            AND a.order_category = #{parameterMap.orderCategory}
        </if>
+       <if test="parameterMap.sendByPostYN!=null and parameterMap.sendByPostYN!=''">
+           AND a.sendByPostYN = #{parameterMap.sendByPostYN}
+       </if>
        <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
        </if>

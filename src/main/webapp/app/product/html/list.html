@@ -5,8 +5,14 @@
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN: ACCORDION DEMO -->
-        <div class="portlet light bordered">
+        <div class="portlet blue-steel box">
             <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">商品列表</span>
+                </div>
+            </div>
+            <div class="portlet-body">
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <form action="#" class="form-horizontal form-bordered">
                         <div class="form-body">
@@ -33,9 +39,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-
-            <div class="portlet-body">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" dir-paginate="goods in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                         <div class="portlet light portlet-fit ">

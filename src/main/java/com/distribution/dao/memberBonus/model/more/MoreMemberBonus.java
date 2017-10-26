@@ -2,6 +2,9 @@ package com.distribution.dao.memberBonus.model.more;
 
 import com.distribution.dao.memberBonus.model.MemberBonus;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 public class MoreMemberBonus extends MemberBonus {
     private String memberName;
     private Integer recommendId;
@@ -12,6 +15,8 @@ public class MoreMemberBonus extends MemberBonus {
     private Double actualAmoutTotal;
     private String orderStartDate;
     private String orderEndDate;
+    private BigDecimal orderAmt;
+    private Date createTime;
 
     public String getMemberName() {
         return memberName;
@@ -83,5 +88,21 @@ public class MoreMemberBonus extends MemberBonus {
 
     public void setOrderEndDate(String orderEndDate) {
         this.orderEndDate = orderEndDate;
+    }
+
+    public BigDecimal getOrderAmt() {
+        return orderAmt;
+    }
+
+    public void setOrderAmt(BigDecimal orderAmt) {
+        this.orderAmt = orderAmt;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

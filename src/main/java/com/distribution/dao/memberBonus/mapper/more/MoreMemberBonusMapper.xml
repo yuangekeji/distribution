@@ -59,6 +59,8 @@
     <result column="amout" property="amout" jdbcType="DOUBLE" />
     <result column="manage_fee" property="manageFee" jdbcType="DOUBLE" />
     <result column="actual_amout" property="actualAmout" jdbcType="DOUBLE" />
+    <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="DividendDetailExcel" type="com.distribution.dao.memberBonus.model.more.DividendExcelVO" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -286,9 +288,12 @@
     , mb.amout
     , mb.manage_fee
     , mb.actual_amout
-    from member_bonus mb, member m
-    where mb.member_id = m.id
-    and mb.bonus_type <![CDATA[ <> ]]> '3'
+    , ord.order_amt
+    , ord.create_time
+    from member_bonus mb
+    inner join member m  on mb.member_id = m.id
+    inner join order_master ord on mb.order_no = ord.order_no
+    where  mb.bonus_type <![CDATA[ <> ]]> '3'
     <if test="startTime != null and startTime != ''">
       <![CDATA[and DATE_FORMAT(mb.bonus_date, '%Y-%m-%d') >= #{startTime}]]>
     </if>

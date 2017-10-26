@@ -777,7 +777,7 @@ public class BonusService {
 	public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
 		List<MoreMemberBonus> result = moreMemberBonusMapper.getMemberBonusExcelList(map);
 		//定义表头
-		String[] excelHeader = {"订单编号", "推荐人", "购买会员", "领取时间", "获奖项",  "当日奖金金额", "管理费", "实得金额"};
+		String[] excelHeader = {"订单编号","订单时间","订单金额", "推荐人", "购买会员", "领取时间", "获奖项",  "当日奖金金额", "管理费", "实得金额"};
 
 		return  this.exportExcel("分销记录详情列表", excelHeader, result, response.getOutputStream());
 	}
@@ -805,12 +805,14 @@ public class BonusService {
 		//设置表格宽度
 		sheet.setColumnWidth(0, 18 * 256);
 		sheet.setColumnWidth(1, 20 * 256);
-		sheet.setColumnWidth(2, 12 * 256);
+		sheet.setColumnWidth(2, 20 * 256);
 		sheet.setColumnWidth(3, 15 * 256);
 		sheet.setColumnWidth(4, 15 * 256);
-		sheet.setColumnWidth(5, 18 * 256);
+		sheet.setColumnWidth(5, 20 * 256);
 		sheet.setColumnWidth(6, 18 * 256);
 		sheet.setColumnWidth(7, 18 * 256);
+		sheet.setColumnWidth(8, 18 * 256);
+		sheet.setColumnWidth(9, 18 * 256);
 		//构建表体
 		int t = 0;
 		double e = 0;
@@ -829,19 +831,24 @@ public class BonusService {
 			}else {
 				bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
 			}
-			bodyRow.createCell(1).setCellValue(list.get(j).getRecommendName());
-			bodyRow.createCell(2).setCellValue(list.get(j).getMemberName());
-			bodyRow.createCell(3).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getBonusDate()));
-			bodyRow.createCell(4).setCellValue(bonusTypeName(list.get(j).getBonusType()));
-			bodyRow.createCell(5).setCellValue(list.get(j).getAmout().toString());
-			bodyRow.createCell(7).setCellValue(list.get(j).getManageFee().toString());
-			bodyRow.createCell(6).setCellValue(list.get(j).getActualAmout().toString());
+
+			bodyRow.createCell(1).setCellValue(list.get(j).getOrderAmt().toString());
+			bodyRow.createCell(2).setCellValue(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(list.get(j).getCreateTime()));
+			bodyRow.createCell(3).setCellValue(list.get(j).getRecommendName());
+			bodyRow.createCell(4).setCellValue(list.get(j).getMemberName());
+			bodyRow.createCell(5).setCellValue(new SimpleDateFormat("yyyy-MM-dd hh:mm").format(list.get(j).getBonusDate()));
+			bodyRow.createCell(6).setCellValue(bonusTypeName(list.get(j).getBonusType()));
+			bodyRow.createCell(7).setCellValue(list.get(j).getAmout().toString());
+			bodyRow.createCell(8).setCellValue(list.get(j).getManageFee().toString());
+			bodyRow.createCell(9).setCellValue(list.get(j).getActualAmout().toString());
 
 			bodyRow.getCell(0).setCellStyle(styleCenter);
+			bodyRow.getCell(1).setCellStyle(styleRight);
 			bodyRow.getCell(3).setCellStyle(styleCenter);
-			bodyRow.getCell(5).setCellStyle(styleRight);
-			bodyRow.getCell(6).setCellStyle(styleRight);
+			bodyRow.getCell(4).setCellStyle(styleCenter);
 			bodyRow.getCell(7).setCellStyle(styleRight);
+			bodyRow.getCell(8).setCellStyle(styleRight);
+			bodyRow.getCell(9).setCellStyle(styleRight);
 			t=j;
 			e+=list.get(j).getAmout().doubleValue();
 			m+=list.get(j).getActualAmout().doubleValue();
@@ -854,11 +861,11 @@ public class BonusService {
 		XSSFCell cel1 = bodyRow1.createCell(0);
 		cel1.setCellStyle(style);
 		cel1.setCellValue("统计:");
-		XSSFCell cel2 = bodyRow1.createCell(5);
+		XSSFCell cel2 = bodyRow1.createCell(7);
 		cel2.setCellValue(e);
-		XSSFCell cel3 = bodyRow1.createCell(6);
+		XSSFCell cel3 = bodyRow1.createCell(8);
 		cel3.setCellValue(p);
-		XSSFCell cel4 = bodyRow1.createCell(7);
+		XSSFCell cel4 = bodyRow1.createCell(9);
 		cel4.setCellValue(m);
 
 		return  workbook;

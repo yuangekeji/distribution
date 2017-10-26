@@ -1,7 +1,13 @@
 <h4 class="page-title">公告管理</h4>
 <div class="row">
     <div class="col-md-12">
-        <div class="portlet light bordered">
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">公告管理</span>
+                </div>
+            </div>
             <div class="portlet-body">
                 <div class="table-toolbar">
                     <div class="row">
@@ -48,7 +54,7 @@
                         </div>
                     </form>
                     <div class="table-scrollable">
-                        <table class="table table-striped table-bordered table-hover" id="sample_1">
+                        <table class="table blue-steel-table table-bordered table-hover" id="sample_1">
                             <thead>
                                 <tr>
                                     <th class="text-center">标题</th>
@@ -69,10 +75,10 @@
                                     <td class="text-center">{{notice.noticeTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                     <td class="text-center">{{notice.publishingState|PublishFilter}}</td>
                                     <td class="text-center">
-                                        <a href="javascript:void(0);" ng-show="notice.publishingState=='N'" ng-click="publish(notice.id);" class="btn btn-xs grey-cascade">发布</a>
+                                        <a href="javascript:void(0);" ng-show="notice.publishingState=='N'" ng-click="publish(notice.id);" class="btn btn-xs green">发布</a>
                                         <a href="javascript:void(0);" ng-show="notice.publishingState=='Y'" ng-click="cancel(notice.id);" class="btn btn-xs grey-cascade">取消发布</a>
-                                        <a href="javascript:void(0);" ng-click="gotoAddPage(notice.id);" class="btn btn-xs grey-cascade">编辑</a>
-                                        <a href="javascript:void(0);" ng-click="delete(notice.id);" class="btn btn-xs grey-cascade">删除</a>
+                                        <a href="javascript:void(0);" ng-click="gotoAddPage(notice.id);" class="btn btn-xs blue-steel">编辑</a>
+                                        <a href="javascript:void(0);" ng-click="delete(notice.id);" class="btn btn-xs red">删除</a>
                                     </td>
                             </tr>
                             <tr ng-show= "notData" >

@@ -4,8 +4,13 @@
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
-        <div class="portlet light bordered">
-
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">管理员列表</span>
+                </div>
+            </div>
             <div class="portlet-body">
                 <div class="table-toolbar">
                     <div class="row">
@@ -53,7 +58,7 @@
                     </form>
                     <!-- END FORM-->
                     <div class="table-scrollable">
-                        <table class="table table-striped table-bordered table-hover"
+                        <table class="table blue-steel-table table-bordered table-hover"
                                id="sample_1">
                             <thead>
                             <tr >
@@ -73,8 +78,8 @@
                                 <td class="text-center">{{row.deleteFlag | DeleteFlagFilter}}</td>
                                 <td class="text-center">
                                     <a href="javascript:void(0);"  ng-click="updateAdminDeleteFlag(row.id, row.name, row.roleId | RoleFilter, 'Y')" ng-show="{{currentUser.id != row.id && row.deleteFlag == 'N'}}" class="btn btn-xs grey-cascade"> 禁用 </a>
-                                    <a href="javascript:void(0);"  ng-click="updateAdminDeleteFlag(row.id, row.name, row.roleId | RoleFilter, 'N')" ng-show="{{currentUser.id != row.id && row.deleteFlag == 'Y'}}" class="btn btn-xs grey-cascade"> 启用 </a>
-                                    <a href="javascript:void(0);" ng-click="initAdminPassword(row.id, row.name, row.roleId | RoleFilter);" ng-show="{{currentUser.id != row.id}}" class="btn btn-xs grey-cascade">密码初始化</a>
+                                    <a href="javascript:void(0);"  ng-click="updateAdminDeleteFlag(row.id, row.name, row.roleId | RoleFilter, 'N')" ng-show="{{currentUser.id != row.id && row.deleteFlag == 'Y'}}" class="btn btn-xs green"> 启用 </a>
+                                    <a href="javascript:void(0);" ng-click="initAdminPassword(row.id, row.name, row.roleId | RoleFilter);" ng-show="{{currentUser.id != row.id}}" class="btn btn-xs red">密码初始化</a>
                                 </td>
                             </tr>
                             <tr ng-show= "notData" >

@@ -4,8 +4,13 @@
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
-        <div class="portlet light bordered">
-
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">分红包管理</span>
+                </div>
+            </div>
             <div class="portlet-body">
                 <div class="table-toolbar">
 
@@ -45,7 +50,7 @@
                     <!-- END FORM-->
                     <!-- END FORM-->
                     <div class="table-scrollable">
-                        <table class="table table-striped table-bordered table-hover"
+                        <table class="table blue-steel-table table-bordered table-hover"
                                id="sample_1">
                             <thead>
                             <tr >
@@ -71,7 +76,7 @@
                                 <td >
                                     <span class="label label-sm " ng-class="{'label-info': row.dividendStatus == '1','label-success': row.dividendStatus == '2'}"> {{row.dividendStatus | dividendStatusFilter}} </span>
                                 </td>
-                                <td ><a href="javascript:"  ng-click="searchDividendDetails(row.memberId, row.orderNo)"> 领取明细 </a></td>
+                                <td ><a href="javascript:"  ng-click="searchDividendDetails(row.memberId, row.orderNo)"> [领取明细] </a></td>
                             </tr>
                             <tr ng-show= "notData" >
                                 <td colspan="8" class="text-center">无记录</td>

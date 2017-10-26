@@ -16,3 +16,18 @@ form{
 .black-font{
  color:#000 !important;
 }
+
+.blue-steel-table th{
+    border: 1px solid #4B77BE !important;
+    font-size: 1em;
+    color: #fff;
+    border-bottom: none;
+    background-color: #4B77BE;
+    text-align: center;
+    white-space: nowrap;
+    padding: 8px;
+}
+.blue-steel-table td {
+    border: 1px solid #4B77BE !important;
+    color: #000;
+}

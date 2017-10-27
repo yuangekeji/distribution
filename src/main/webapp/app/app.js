@@ -83,8 +83,8 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
             $sessionStorage.currentUser = res.currentUser;
             $scope.currentUser = res.currentUser;
 
-            if($scope.currentUser.roleId == '1'&& $scope.currentUser.status =='Y'){
-                $state.go("app.member.overview");
+            if($scope.currentUser.roleId == '1'&& $scope.currentUser.status =='N'){
+                $state.go("app.home");
             }
 
             if(res.currentUser.roleId  != '1'){

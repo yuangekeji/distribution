@@ -2,7 +2,7 @@ angular.module('app').config([
     '$stateProvider', '$urlRouterProvider', '$locationProvider', 'RouteHelpersProvider',
     function ($stateProvider, $urlRouterProvider, $locationProvider, helper) {
         // $locationProvider.hashPrefix('main');
-        $urlRouterProvider.otherwise('/app/home');
+        $urlRouterProvider.otherwise('/app/member/member-overview');
         $stateProvider
             .state('app', {
                 abstract: true,

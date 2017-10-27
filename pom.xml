@@ -24,6 +24,7 @@
             <properties>
                 <env>test</env>
             </properties>
+
         </profile>
         <!-- 生产 -->
         <profile>
@@ -31,7 +32,6 @@
             <properties>
                 <env>prd</env>
             </properties>
-
         </profile>
     </profiles>
 

@@ -1,6 +1,6 @@
 angular.module('home').controller('homeCtrl',
     function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $window,Notify) {
-    title.setTitle('主页');
+    title.setTitle('欢迎页');
 
     $scope.$on('$viewContentLoaded', function() {
         // initialize core components

@@ -1,10 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="roleId" value="${sessionScope.currentUserRole}"/>
+<c:set var="userStatus" value="${sessionScope.currentUserStatus}"/>
+
 <script>
 
     var _ctx = "${ctx}";
     var ctx = _ctx;
+    var roleId ="${roleId}";
+    var userStatus ="${userStatus}";
     var version = Math.floor(Math.random()*10);
 
 </script>

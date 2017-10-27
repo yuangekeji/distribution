@@ -11,6 +11,7 @@ public class Constant {
      */
     public static final String SESSION_CURRENT_USER="currentUser";
     public static final String SESSION_CURRENT_ROLE="currentUserRole";
+    public static final String SESSION_CURRENT_STATUS="currentUserStatus";
 
     //资金流向类型（支出：复投1，转出2，提现3 , 报单单 7, 折扣单 8；收入：分红包奖金4，转入5，动态奖金6）
 

@@ -79,49 +79,42 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
     $scope.onInit = function () {
 
         $scope.ctx = window['ctx'];
+        $scope.roleId = window['roleId'];
+
+        if($scope.roleId  != '1'){
+            $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
+                if(res.successful){
+                    $scope.failCnt = res.data;
+                }else{
+                    $scope.failCnt = 0;
+                }
+            });
+        }
+
+        $http.get(ctx + '/menu/getMenuByRoleId?roleId='+$scope.roleId).success(function (res) {
+            $rootScope.menu = res.data.menus;
+            // console.info($rootScope.menu );
+            $scope.firstMenu = [];
+            angular.forEach($rootScope.menu,function (menu,index) {
+                if(menu.parentMenu ==0){
+                    $scope.firstMenu.push(menu);
+                }
+            })
+            $scope.secondMenu =[];
+            angular.forEach($rootScope.menu,function (menu,index) {
+                if(menu.parentMenu > 0){
+                    $scope.secondMenu.push(menu);
+                }
+            })
+        })
+
         $http.get(ctx + '/role/getUserRole').success(function (res) {
             $sessionStorage.currentUser = res.currentUser;
             $scope.currentUser = res.currentUser;
 
-            if($scope.currentUser.roleId == '1'&& $scope.currentUser.status =='N'){
-                $state.go("app.home");
-            }
-
-            if(res.currentUser.roleId  != '1'){
-                $http.get(ctx + '/admWarning/getFailJobCount').success(function (res) {
-
-                    if(res.successful){
-                        $scope.failCnt = res.data;
-                    }else{
-                        $scope.failCnt = 0;
-                    }
-                });
-            }
-
-            $http.get(ctx + '/menu/getMenuByRoleId?roleId='+res.currentUser.roleId).success(function (res) {
-                $rootScope.menu = res.data.menus;
-                // console.info($rootScope.menu );
-                $scope.firstMenu = [];
-
-                angular.forEach($rootScope.menu,function (menu,index) {
-                    if(menu.parentMenu ==0){
-                        $scope.firstMenu.push(menu);
-                    }
-                })
-
-                $scope.secondMenu =[];
-
-                angular.forEach($rootScope.menu,function (menu,index) {
-                    if(menu.parentMenu > 0){
-                        $scope.secondMenu.push(menu);
-                    }
-                })
-            })
         }).error(function (error) {
             alert('用户获取失败');
         });
-
-
 
     }
 

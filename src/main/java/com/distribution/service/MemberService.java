@@ -162,7 +162,10 @@ public class MemberService {
         if(null!=remember){
             List<Admin> list = moreAdminMapper.login(param);
             if(!list.isEmpty()){
-                session.setAttribute(Constant.SESSION_CURRENT_USER,list.get(0));
+                Admin admin = list.get(0);
+                session.setAttribute(Constant.SESSION_CURRENT_USER,admin);
+                session.setAttribute(Constant.SESSION_CURRENT_ROLE,admin.getRoleId());
+
                 return new JsonMessage(true,"success",null);
             }else{
                 return new JsonMessage(false,"fail",null);
@@ -170,7 +173,11 @@ public class MemberService {
         }else{
             List<Member> list = moreMemberMapper.login(param);
             if(!list.isEmpty()){
-                session.setAttribute(Constant.SESSION_CURRENT_USER,list.get(0));
+                Member member = list.get(0);
+                session.setAttribute(Constant.SESSION_CURRENT_USER,member);
+                session.setAttribute(Constant.SESSION_CURRENT_ROLE,member.getRoleId());
+                session.setAttribute(Constant.SESSION_CURRENT_STATUS,member.getStatus());
+
                 return new JsonMessage(true,"success",null);
             }else{
                 return new JsonMessage(false,"fail",null);

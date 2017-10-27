@@ -1,8 +1,16 @@
 angular.module('app').config([
     '$stateProvider', '$urlRouterProvider', '$locationProvider', 'RouteHelpersProvider',
     function ($stateProvider, $urlRouterProvider, $locationProvider, helper) {
+
+       var defaultPage  = '/app/home';
+       var roleId  = window['roleId'];
+       var userStatus = window['userStatus'];
+
+       if(roleId == 1 && userStatus == 'Y'){
+           defaultPage = 'app/member/member-overview';
+       }
         // $locationProvider.hashPrefix('main');
-        $urlRouterProvider.otherwise('/app/member/member-overview');
+        $urlRouterProvider.otherwise(defaultPage);
         $stateProvider
             .state('app', {
                 abstract: true,

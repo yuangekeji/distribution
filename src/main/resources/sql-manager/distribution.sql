@@ -872,7 +872,7 @@ INSERT INTO `role_menu` VALUES ('2', '31');
 
 
 INSERT INTO `menu` VALUES (null, null, '充值申请', '1', 'app.memberCharge', 'icon-diamond');
-INSERT INTO `menu` VALUES (null, null, '充值管理', '12', 'app.admMemberCharge', 'icon-diamond');
+INSERT INTO `menu` VALUES (null, null, '充值管理', '15', 'app.admMemberCharge', 'icon-diamond');
 
 INSERT INTO `role_menu` VALUES ('2', '33');
 INSERT INTO `role_menu` VALUES ('3', '33');

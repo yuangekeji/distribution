@@ -865,18 +865,18 @@ CREATE TABLE `notice` (
 
 -- 添加公告菜单数据 ID请根据实际情况设定
 
-INSERT INTO `menu` VALUES ('32', null, '公告管理', '23', 'app.admNotice', null);
+INSERT INTO `menu` VALUES (null, null, '公告管理', '23', 'app.admNotice', null);
 update menu set name ='系统管理' where id = 23;
 
-INSERT INTO `role_menu` VALUES ('2', '32');
+INSERT INTO `role_menu` VALUES ('2', '31');
 
 
-INSERT INTO `menu` VALUES (33, null, '充值申请', '1', 'app.memberCharge', 'icon-diamond');
-INSERT INTO `menu` VALUES (34, null, '充值管理', '12', 'app.admMemberCharge', 'icon-diamond');
+INSERT INTO `menu` VALUES (null, null, '充值申请', '1', 'app.memberCharge', 'icon-diamond');
+INSERT INTO `menu` VALUES (null, null, '充值管理', '12', 'app.admMemberCharge', 'icon-diamond');
 
-INSERT INTO `role_menu` VALUES ('2', '34');
-INSERT INTO `role_menu` VALUES ('3', '34');
-INSERT INTO `role_menu` VALUES ('1', '33');
+INSERT INTO `role_menu` VALUES ('2', '33');
+INSERT INTO `role_menu` VALUES ('3', '33');
+INSERT INTO `role_menu` VALUES ('1', '32');
 
 -- 修改提现申请
 alter table advance MODIFY request_date datetime not null;
@@ -916,8 +916,8 @@ charge_amt,
 1,
 create_time,
 create_time,
-'',
-'',
+'管理员充值',
+'管理员充值',
 create_id,
 create_time,
 create_id,

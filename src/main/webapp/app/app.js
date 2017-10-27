@@ -68,7 +68,7 @@ angular.module('admHandleHistory',[]);
 angular.module('admMemberCharge',[]);
 angular.module('admNotice',[]);
 
-App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage) {
+App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionStorage,ConfirmModal) {
 
     $scope.currentUser = {};
     /**
@@ -120,14 +120,23 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
 
     $scope.onInit();
     $scope.logOut = function () {
-        $http.post(ctx + "/member/logout").success(function (resp) {
-            if(resp.successful){
-                if($sessionStorage && $sessionStorage.currentUser)
-                    $sessionStorage.currentUser = null;
-                window.location.href = ctx;
+        ConfirmModal.show({
+            text: '确定要退出系统吗？退出后将返回登录页面',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
             }
-        }).error(function (resp) {
-            console.log(resp);
+            $http.post(ctx + "/member/logout").success(function (resp) {
+                if(resp.successful){
+                    if($sessionStorage && $sessionStorage.currentUser)
+                        $sessionStorage.currentUser = null;
+                    window.location.href = ctx;
+                }
+            }).error(function (resp) {
+                console.log(resp);
+            });
+
         });
     };
 

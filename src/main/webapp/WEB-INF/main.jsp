@@ -30,7 +30,7 @@
     <link rel="bookmark" href="favicon.ico" type="image/x-icon" />
     <!-- metronic  start -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+    <%--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />--%>
     <link href="${ctx}/static/metronic/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -76,9 +76,6 @@
 <script src="${ctx}/static/metronic/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-<%--<script src="${ctx}/static/metronic/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>--%>
-<%--<script src="${ctx}/static/metronic/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>--%>
-<%--<script src="${ctx}/static/metronic/global/plugins/datatables/datatables.all.min.js" type="text/javascript"></script>--%>
 <!-- END CORE JQUERY PLUGINS -->
 
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
@@ -91,7 +88,6 @@
 <!-- END CORE ANGULARJS PLUGINS -->
 <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
-<%--<script src="${ctx}/static/metronic/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>--%>
 <script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/notify/notify.js" type="text/javascript"></script>
@@ -107,14 +103,9 @@
 <script src="${ctx}/app/services.js?v=${version}"></script>
 <script src="${ctx}/app/filter.js?v=${version}"></script>
 
-
-
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="${ctx}/static/metronic/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
-<%--<script src="${ctx}/static/metronic/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>--%>
-<%--<script src="${ctx}/static/metronic/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>--%>
-<%--<script src="${ctx}/static/metronic/layouts/layout2/scripts/demo.min.js" type="text/javascript"></script>--%>
 
 <!-- END APP LEVEL JQUERY SCRIPTS -->
 <!-- END JAVASCRIPTS --

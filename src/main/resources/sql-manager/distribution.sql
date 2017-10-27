@@ -886,3 +886,41 @@ alter table advance MODIFY approve_date datetime  null;
 update dictionary set dic_name ='药膳食品' ,dic_des ='商品类别' where dic_type ='goods_type' and dic_code = '01';
 INSERT INTO `dictionary` VALUES (null, '02', '足浴粉', 'goods_type', '商品类别');
 INSERT INTO `dictionary` VALUES (null, '03', '药浴粉', 'goods_type', '商品类别');
+
+insert into member_charge_apply (
+id,
+member_id,
+status,
+charge_request_time,
+pay_money_type,
+pay_money_time,
+charge_amt,
+charge_money_type,
+charge_apply_time,
+charge_time,
+apply_info,
+remarks,
+create_id,
+create_time,
+update_id,
+update_time
+)
+select
+null,
+member_id ,
+3,
+create_time,
+'管理员充值',
+create_time,
+charge_amt,
+1,
+create_time,
+create_time,
+'',
+'',
+create_id,
+create_time,
+create_id,
+create_time
+
+from member_charge;

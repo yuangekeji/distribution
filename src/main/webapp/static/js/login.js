@@ -6,6 +6,7 @@
 //休息时间true,正常false
 var offTime = false;
 
+
 function login() {
 	if(offTime){
 		alert('很抱歉现在属于维护时间，系统不能使用，明日上午9点后可恢复，给您带来不便深感歉意。');
@@ -56,50 +57,3 @@ function check() {
 	}
 	return true;
 }
-
-/*function showLoadPanel(){
-	$("#loadPanel").show();
-	$('#loadPanel').removeClass().addClass('fadeIn animated');
-}
-
-function hideLoadPanel(loaded){
-	setTimeout(function(){
-		$('#loadPanel').removeClass().addClass('fadeOut animated').one('animationend', function(){
-			$("#loadPanel").hide();
-			if(loaded){
-				loaded();
-			}
-		});
-	},500)
-}
-
-function success() {
-	var ui = document.getElementById("suc");
-	ui.style.display = "block";
-}
-
-function wrong() {
-	var ui = document.getElementById("wor");
-	ui.style.display = "block";
-}
-
-function suc() {
-	$.get(ctx + '/loginAuthentication/getContextPath').success(function(result){
-		window.location.href = result.data;
-	})
-	return;
-	//window.location.href = ctx;
-	//if(window.event){
-	//	window.event.returnValue=false;
-	//}
-}
-function wor() {
-	var ui = document.getElementById("wor");
-	ui.style.display = "none";
-}
-function removeUserName() {
-	$('#userName').val('');
-}
-function removePassword() {
-	$('#password').val('');
-}*/

@@ -22,31 +22,31 @@
                         <form role="form" action="#">
                             <div class="form-group">
                                 <label class="control-label">姓名</label>
-                                <div class="form-control" ng-bind="MemberInfo.memberName" readonly="readonly"></div>
+                                <div class="form-control input-circle" ng-bind="MemberInfo.memberName" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">账号</label>
-                                <div class="form-control" ng-bind="MemberInfo.memberPhone" readonly="readonly"></div>
+                                <div class="form-control input-circle" ng-bind="MemberInfo.memberPhone" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">加入时间</label>
-                                <div class="form-control" ng-bind="MemberInfo.createTime|date:'yyyy年MM月dd日'" readonly="readonly"></div>
+                                <div class="form-control input-circle" ng-bind="MemberInfo.createTime|date:'yyyy年MM月dd日'" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">注册金额</label>
-                                <div class="form-control" ng-bind="MemberInfo.orderAmount" readonly="readonly"></div>
+                                <div class="form-control input-circle" ng-bind="MemberInfo.orderAmount" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">爵位等级</label>
-                                <div class="form-control" ng-bind="MemberInfo.memberPost|PostLevelFilter" readonly="readonly"></div>
+                                <div class="form-control input-circle" ng-bind="MemberInfo.memberPost|PostLevelFilter" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">推荐人</label>
-                                <div class="form-control" ng-bind="MemberInfo.recommendName" readonly="readonly"></div>
+                                <div class="form-control input-circle" ng-bind="MemberInfo.recommendName" readonly="readonly"></div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">是否是运营中心</label>
-                                <div class="form-control" readonly="readonly">{{MemberInfo.isOperator=='Y'?'是':'否'}}</div>
+                                <div class="form-control input-circle" readonly="readonly">{{MemberInfo.isOperator=='Y'?'是':'否'}}</div>
                             </div>
                             <!--<div class="form-group">-->
                                 <!--<label class="control-label">是否是销售部</label>-->
@@ -54,35 +54,35 @@
                             <!--</div>-->
                             <div class="form-group">
                                 <label class="control-label">一代人数</label>
-                                <div class="form-control" readonly="readonly">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</div>
+                                <div class="form-control input-circle" readonly="readonly">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">身份证号码</label>
-                                <input type="text" placeholder="请输入身份证号码" class="form-control" ng-model="MemberInfo.idNumber" maxlength="18"/>
+                                <input type="text" placeholder="请输入身份证号码" class="form-control input-circle" ng-model="MemberInfo.idNumber" maxlength="18"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收货人</label>
-                                <input type="text" placeholder="请输入收货人姓名" class="form-control" ng-model="MemberInfo.consignee" maxlength="20"/>
+                                <input type="text" placeholder="请输入收货人姓名" class="form-control input-circle" ng-model="MemberInfo.consignee" maxlength="20"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">联系人手机号</label>
-                                <input type="text" placeholder="请输入联系人手机号" class="form-control" ng-model="MemberInfo.linkmanPhone" maxlength="20"/>
+                                <input type="text" placeholder="请输入联系人手机号" class="form-control input-circle" ng-model="MemberInfo.linkmanPhone" maxlength="20"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收货地址</label>
-                                <input type="text" placeholder="请输入收货地址" class="form-control" ng-model="MemberInfo.expressAddress" maxlength="100"/>
+                                <input type="text" placeholder="请输入收货地址" class="form-control input-circle" ng-model="MemberInfo.expressAddress" maxlength="100"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">开户行</label>
-                                <select class="form-control" ng-model="MemberInfo.bankName" ng-options="dic.dicCode as dic.dicName for dic in banks"></select>
+                                <select class="form-control input-circle" ng-model="MemberInfo.bankName" ng-options="dic.dicCode as dic.dicName for dic in banks"></select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">开户姓名</label>
-                                <input type="text" placeholder="请输入开户姓名" class="form-control" ng-model="MemberInfo.bankUserName" maxlength="20"/>
+                                <input type="text" placeholder="请输入开户姓名" class="form-control input-circle" ng-model="MemberInfo.bankUserName" maxlength="20"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">银行卡号</label>
-                                <input type="text" placeholder="请输入银行卡号" class="form-control" ng-model="MemberInfo.cardNumber" maxlength="20"/>
+                                <input type="text" placeholder="请输入银行卡号" class="form-control input-circle" ng-model="MemberInfo.cardNumber" maxlength="20"/>
                             </div>
                             <div class="margin-top-10">
                                 <a href="javascript:void(0);" ng-click="saveInfo();" class="btn blue-steel">保存</a>
@@ -98,15 +98,15 @@
                                     <div class="portlet-body">
                                         <div class="form-group">
                                             <label class="control-label">原始登录密码</label>
-                                            <input type="password" class="form-control" ng-model="pwdMember.oldLoginPwd"/>
+                                            <input type="password" class="form-control input-circle" ng-model="pwdMember.oldLoginPwd"/>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">新登录密码</label>
-                                            <input type="password" class="form-control" ng-model="pwdMember.loginPassword"/>
+                                            <input type="password" class="form-control input-circle" ng-model="pwdMember.loginPassword"/>
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label">密码确认</label>
-                                            <input type="password" class="form-control" ng-model="param.loginPasswordConfirm"/>
+                                            <input type="password" class="form-control input-circle" ng-model="param.loginPasswordConfirm"/>
                                         </div>
                                         <div class="margin-top-10">
                                             <a href="javascript:void(0);" ng-click="savePwd('login');" class="btn blue-steel">保存</a>
@@ -122,15 +122,15 @@
                                         <div class="portlet-body">
                                             <div class="form-group">
                                                 <label class="control-label">原始查询密码</label>
-                                                <input type="password" class="form-control" ng-model="pwdMember.oldQueryPwd"/>
+                                                <input type="password" class="form-control input-circle" ng-model="pwdMember.oldQueryPwd"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">新查询密码</label>
-                                                <input type="password" class="form-control" ng-model="pwdMember.queryPassword"/>
+                                                <input type="password" class="form-control input-circle" ng-model="pwdMember.queryPassword"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">密码确认</label>
-                                                <input type="password" class="form-control" ng-model="param.queryPasswordConfirm"/>
+                                                <input type="password" class="form-control input-circle" ng-model="param.queryPasswordConfirm"/>
                                             </div>
                                             <div class="margin-top-10">
                                                 <a href="javascript:void(0);" ng-click="savePwd('query');" class="btn blue-steel">保存</a>
@@ -146,15 +146,15 @@
                                         <div class="portlet-body">
                                             <div class="form-group">
                                                 <label class="control-label">原始支付密码</label>
-                                                <input type="password" class="form-control" ng-model="pwdMember.oldPayPwd"/>
+                                                <input type="password" class="form-control input-circle" ng-model="pwdMember.oldPayPwd"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">新支付密码</label>
-                                                <input type="password" class="form-control" ng-model="pwdMember.payPassword"/>
+                                                <input type="password" class="form-control input-circle" ng-model="pwdMember.payPassword"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label">密码确认</label>
-                                                <input type="password" class="form-control" ng-model="param.payPasswordConfirm"/>
+                                                <input type="password" class="form-control input-circle" ng-model="param.payPasswordConfirm"/>
                                             </div>
                                             <div class="margin-top-10">
                                                 <a href="javascript:void(0);" ng-click="savePwd('pay');" class="btn blue-steel">保存</a>

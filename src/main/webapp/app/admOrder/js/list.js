@@ -11,7 +11,8 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             orderStatus: "",
             startTime: "",
             endTime: "",
-            sendByPostYN:""
+            sendByPostYN:"",
+            bonusAccountType: ""
         }
     };
 

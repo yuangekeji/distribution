@@ -80,7 +80,7 @@ public class AdmOrderService {
     public XSSFWorkbook exportData(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList(map);
         //定义表头
-        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
+        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "支付类型", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
         return  this.exportExcel("待发货列表", excelHeader, result, response.getOutputStream(), "待发货商品数量:");
     }
@@ -88,7 +88,7 @@ public class AdmOrderService {
     public XSSFWorkbook exportData1(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
         List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderList1(map);
         //定义表头
-        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
+        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "支付类型", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
 
         return  this.exportExcel("已发货列表", excelHeader, result, response.getOutputStream(), "已出库商品数量:");
     }
@@ -119,14 +119,15 @@ public class AdmOrderService {
         sheet.setColumnWidth(2, 12 * 256);
         sheet.setColumnWidth(3, 22 * 256);
         sheet.setColumnWidth(4, 20 * 256);
-        sheet.setColumnWidth(5, 30 * 256);
+        sheet.setColumnWidth(5, 20 * 256);
         sheet.setColumnWidth(6, 30 * 256);
         sheet.setColumnWidth(7, 30 * 256);
         sheet.setColumnWidth(8, 30 * 256);
         sheet.setColumnWidth(9, 30 * 256);
         sheet.setColumnWidth(10, 30 * 256);
-        sheet.setColumnWidth(11, 12 * 256);
-        sheet.setColumnWidth(12, 20 * 256);
+        sheet.setColumnWidth(11, 30 * 256);
+        sheet.setColumnWidth(12, 12 * 256);
+        sheet.setColumnWidth(13, 20 * 256);
         //构建表体
         int t = 0;
         int p = 0;
@@ -148,14 +149,15 @@ public class AdmOrderService {
 //            bodyRow.createCell(3).setCellValue(this.memberLevelFilter(null!=list.get(j).getMemberLevel()?list.get(j).getMemberLevel():""));
             bodyRow.createCell(3).setCellValue(String.valueOf(list.get(j).getOrderAmt()));
             bodyRow.createCell(4).setCellValue(String.valueOf(list.get(j).getActAmt()));
-            bodyRow.createCell(5).setCellValue(String.valueOf(list.get(j).getExpressFee()));
-            bodyRow.createCell(6).setCellValue(goods);
-            bodyRow.createCell(7).setCellValue(null==list.get(j).getOrderQty()?"":list.get(j).getOrderQty() + " 个");
-            bodyRow.createCell(8).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getCreateTime()));
-            bodyRow.createCell(9).setCellValue(this.orderStatusFilter(list.get(j).getOrderStatues()));
-            bodyRow.createCell(10).setCellValue(list.get(j).getExpressAddress());
-            bodyRow.createCell(11).setCellValue(list.get(j).getReceiveName());
-            bodyRow.createCell(12).setCellValue(list.get(j).getRecevivePhone());
+            bodyRow.createCell(5).setCellValue(this.bonusAccountTypeFilter(list.get(j).getBonusAccountType()));
+            bodyRow.createCell(6).setCellValue(String.valueOf(list.get(j).getExpressFee()));
+            bodyRow.createCell(7).setCellValue(goods);
+            bodyRow.createCell(8).setCellValue(null==list.get(j).getOrderQty()?"":list.get(j).getOrderQty() + " 个");
+            bodyRow.createCell(9).setCellValue(new SimpleDateFormat("yyyy-MM-dd").format(list.get(j).getCreateTime()));
+            bodyRow.createCell(10).setCellValue(this.orderStatusFilter(list.get(j).getOrderStatues()));
+            bodyRow.createCell(11).setCellValue(list.get(j).getExpressAddress());
+            bodyRow.createCell(12).setCellValue(list.get(j).getReceiveName());
+            bodyRow.createCell(13).setCellValue(list.get(j).getRecevivePhone());
             t=j;
         }
         XSSFRow bodyRow = sheet.createRow(t + 2);
@@ -233,6 +235,21 @@ public class AdmOrderService {
                 break;
             case "4":
                 result = "订单完成";
+                break;
+            default:
+                result = "";
+                break;
+        }
+        return result;
+    }
+    public String bonusAccountTypeFilter(String bonusAccountType){
+        String result;
+        switch (bonusAccountType){
+            case "1":
+                result = "种子币";
+                break;
+            case "2":
+                result = "奖金币";
                 break;
             default:
                 result = "";

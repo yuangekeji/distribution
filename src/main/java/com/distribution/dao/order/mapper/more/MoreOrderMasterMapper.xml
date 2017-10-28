@@ -51,6 +51,9 @@
        <if test="parameterMap.sendByPostYN!=null and parameterMap.sendByPostYN!=''">
            AND a.sendByPostYN = #{parameterMap.sendByPostYN}
        </if>
+       <if test="parameterMap.bonusAccountType!=null and parameterMap.bonusAccountType!=''">
+           AND a.bonus_account_type = #{parameterMap.bonusAccountType}
+       </if>
        <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
        </if>
@@ -151,6 +154,7 @@
         , a.update_id
         , a.update_time
         , a.recevive_phone
+        , a.bonus_account_type
         FROM order_master a
         LEFT JOIN order_detail b
         ON a.order_no = b.order_no
@@ -183,6 +187,7 @@
         , a.update_id
         , a.update_time
         , a.recevive_phone
+        , a.bonus_account_type
         FROM order_master a
         LEFT JOIN order_detail b
         ON a.order_no = b.order_no

@@ -1,1 +1,1 @@
-<%response.sendRedirect("http://"+request.getServerName()+":"+request.getServerPort()+"/distribution/index");%>
+<%response.sendRedirect("http://"+request.getServerName()+":"+request.getServerPort()+"/index");%>

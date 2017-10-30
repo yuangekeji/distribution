@@ -136,10 +136,12 @@ public class DividendService {
         double e = 0;
         double m = 0;
         double p = 0;
+        double n = 0;
+        double c = 0;
 
         for(int j=0;j<list.size();j++){
             XSSFRow bodyRow = sheet.createRow(j + 1);
-            System.out.println(j);
+//            System.out.println(j);
             bodyRow.createCell(0).setCellValue(list.get(j).getOrderNo().toString());
             bodyRow.createCell(1).setCellValue(list.get(j).getOrderAmount().toString());
             bodyRow.createCell(2).setCellValue(list.get(j).getDividendCount().toString());
@@ -160,12 +162,16 @@ public class DividendService {
 
             t=j;
 
+            n += list.get(j).getOrderAmount().doubleValue();
+            c += list.get(j).getDividendCount().doubleValue();
             e += list.get(j).getAmout().doubleValue();
             p += list.get(j).getManageFee().doubleValue();
             m += list.get(j).getActualAmout().doubleValue();
+
+
         }
         XSSFRow bodyRow1 = sheet.createRow(t + 2);
-        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+        style.setAlignment(HSSFCellStyle.ALIGN_LEFT);//居中
         style.setFont(font);
 
         XSSFCell cel1 = bodyRow1.createCell(0);
@@ -177,7 +183,10 @@ public class DividendService {
         cel3.setCellValue(p);
         XSSFCell cel4 = bodyRow1.createCell(7);
         cel4.setCellValue(m);
-
+        XSSFCell cel5 = bodyRow1.createCell(1);
+        cel5.setCellValue(n);
+        XSSFCell cel6 = bodyRow1.createCell(2);
+        cel6.setCellValue(c);
 
         return  workbook;
     }

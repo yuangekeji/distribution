@@ -24,7 +24,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 
-            System.out.println("AuthInterceptorAdaptor preHandle:"+request.getContextPath()+","+request.getRequestURI()+","+request.getMethod());
+//            System.out.println("AuthInterceptorAdaptor preHandle:"+request.getContextPath()+","+request.getRequestURI()+","+request.getMethod());
 
             int roleId = 0;
 
@@ -40,7 +40,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
             if(roleId == 1){
 
                 if(requestURI.indexOf("admin") > -1 || requestURI.indexOf("adm") > -1){
-                    System.out.println("=========会员==不允许访问"+requestURI);
+//                    System.out.println("=========会员==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
                 }
@@ -49,7 +49,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
             }else if(roleId == 2){
 
                 if(requestURI.indexOf("admin") <= -1 && requestURI.indexOf("adm") <= -1){
-                    System.out.println("=========超级管理员==不允许访问"+requestURI);
+//                    System.out.println("=========超级管理员==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
                 }
@@ -59,7 +59,7 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
 
 
                 if(requestURI.indexOf("admin") <= -1 && requestURI.indexOf("adm") <= -1){
-                    System.out.println("=========财务==不允许访问"+requestURI);
+//                    System.out.println("=========财务==不允许访问"+requestURI);
                     response.setStatus(403);
                     return false;
                 }

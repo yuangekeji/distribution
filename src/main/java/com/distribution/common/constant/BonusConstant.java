@@ -68,11 +68,11 @@ public class BonusConstant extends Constant{
 	public static String CODE_05 = "05";
 	public static String CODE_06 = "06";
 	public static String CODE_07 = "07";
-	//奖金类型0-销售佣金，
+	//奖金类型0-1代奖，
 	public static String BONUS_TYPE_0 = "0";
-	//1-1代奖，
+	//1-2代奖，
 	public static String BONUS_TYPE_1 = "1";
-	//2-2代奖，
+	//2-3代奖，
 	public static String BONUS_TYPE_2 = "2";
 	//3-分红包奖，
 	public static String BONUS_TYPE_3 = "3";

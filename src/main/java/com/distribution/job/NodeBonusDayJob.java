@@ -35,7 +35,7 @@ public class NodeBonusDayJob {
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("jobName", "定时发放见点奖/NodeBonusDayJob/sendNodeBonusFromNodeHistory");
 		result = bonusService.saveNodeBonusFromNodeHistory(result);
-		System.out.println(result.toString());
+//		System.out.println(result.toString());
 		this.saveNodeBonusFromNodeHistoryLog(result);
 		
 	}

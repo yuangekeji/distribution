@@ -78,4 +78,7 @@
         update_time = #{updateTime}
         WHERE member_id = #{memberId}
     </update>
+    <select id="listBonusTemp" resultType="java.util.Map" parameterType="java.lang.Integer">
+      SELECT * FROM bonus_temp
+    </select>
 </mapper>

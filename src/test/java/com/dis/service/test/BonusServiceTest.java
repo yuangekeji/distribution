@@ -89,4 +89,8 @@ public class BonusServiceTest extends SpringServiceTest{
 		order.setOrderCategory("2");
 		bonusService.insertOrderBonus(order);
 	}
+	@Test
+	public void updateAccountManager(){
+		bonusService.updateAcountManager();
+	}
 }

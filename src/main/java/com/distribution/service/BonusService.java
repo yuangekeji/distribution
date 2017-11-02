@@ -893,4 +893,15 @@ public class BonusService {
 		}
 		return bonusTypeName;
 	}
+	public void updateAcountManager(){
+		List<Map<String,Object>> list = moreAccountManagerMapper.listBonusTemp();
+		for(int i=0;i<list.size();i++){
+			Map<String,Object> map = list.get(i);
+			String sql = "UPDATE account_manager SET total_bonus = total_bonus -" + map.get("total") 
+					+ ", bonus_amt = bonus_amt - " + map.get("bonus")
+					+ ", seed_amt = seed_amt - " + map.get("seed")
+					+ " WHERE member_id = " + map.get("member_id") + ";";
+			System.out.println(sql);
+		}
+	}
 }

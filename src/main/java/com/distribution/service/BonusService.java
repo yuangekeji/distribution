@@ -895,13 +895,22 @@ public class BonusService {
 	}
 	public void updateAcountManager(){
 		List<Map<String,Object>> list = moreAccountManagerMapper.listBonusTemp();
+		StringBuffer sql1 = new StringBuffer();
+		StringBuffer sql2 = new StringBuffer();
+
 		for(int i=0;i<list.size();i++){
 			Map<String,Object> map = list.get(i);
-			String sql = "UPDATE account_manager SET total_bonus = total_bonus -" + map.get("total") 
+			sql1.append("UPDATE account_manager SET total_bonus = total_bonus -" + map.get("total")
 					+ ", bonus_amt = bonus_amt - " + map.get("bonus")
 					+ ", seed_amt = seed_amt - " + map.get("seed")
-					+ " WHERE member_id = " + map.get("member_id") + ";";
-			System.out.println(sql);
+					+ " WHERE member_id = " + map.get("member_id") + ";\n");
+
+
+			sql2.append("INSERT INTO account_flow_history VALUES (null,"+ map.get("member_id")+",NOW(),0,1,"+map.get("total")+","+map.get("bonus")+","+map.get("seed")+",'10月31日见点奖恢复');\n");
+
+
 		}
+		System.out.println(sql1);
+		System.out.println(sql2);
 	}
 }

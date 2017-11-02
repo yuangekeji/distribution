@@ -1,9 +1,10 @@
 package com.distribution.dao.accountManager.mapper.more;
+import java.util.List;
+import java.util.Map;
+
 import com.distribution.dao.accountManager.mapper.AccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.member.model.more.MoreMember;
-
-import java.util.Map;
 
 public interface MoreAccountManagerMapper extends AccountManagerMapper{
 
@@ -36,5 +37,7 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
      * @author Bright
      * */
     Integer updateByMemberId(AccountManager accountManager);
+    
+    List<Map<String,Object>>listBonusTemp();
 
 }

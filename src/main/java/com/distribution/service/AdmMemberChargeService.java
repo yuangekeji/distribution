@@ -8,6 +8,7 @@ import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.memberChargeApply.mapper.more.MoreMemberChargeApplyMapper;
+import com.distribution.dao.memberChargeApply.model.MemberChargeApply;
 import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -67,41 +68,46 @@ public class AdmMemberChargeService {
      * */
     public String AddMemberCharge(MoreMemberChargeApply moreMemberChargeApply, Admin admin){
 
-        AccountManager am = moreAccountManagerMapper.selectByMemberId(moreMemberChargeApply.getMemberId());
-        Date date = new Date();
-        am.setTotalBonus(am.getTotalBonus().add(moreMemberChargeApply.getChargeAmt()));
-        am.setBonusAmt(am.getBonusAmt().add(moreMemberChargeApply.getChargeAmt()));
-        am.setUpdateId(admin.getId());
-        am.setUpdateTime(date);
-        int am1 = moreAccountManagerMapper.updateByMemberId(am);
-        if(am1 < 1){
-            throw new RuntimeException();
-        }
-        MoreMemberChargeApply mmc = new MoreMemberChargeApply();
-        mmc.setId(moreMemberChargeApply.getId());
-        mmc.setStatus(moreMemberChargeApply.getStatus());
-        mmc.setChargeTime(date);
-        mmc.setUpdateTime(date);
-        mmc.setUpdateId(admin.getId());
-        int count = moreMemberChargeApplyMapper.updateByPrimaryKeySelective(mmc);
-        if(count < 1){
-            throw new RuntimeException();
-        }
-        AccountFlowHistory af = new AccountFlowHistory();
-        af.setMemberId(moreMemberChargeApply.getMemberId());
-        af.setCreateTime(date);
-        af.setCreateId(admin.getId());
-        af.setType("2");//转入
-        af.setTotalAmt(moreMemberChargeApply.getChargeAmt());
-        af.setBonusAmt(moreMemberChargeApply.getChargeAmt());
-        af.setSeedAmt(new BigDecimal(0));
-        af.setFlowType(Constant.MEMBERCHARGE);//管理员充值
+        MemberChargeApply mmca = moreMemberChargeApplyMapper.selectByPrimaryKey(moreMemberChargeApply.getId());
+        if ("1".equals(mmca.getStatus())) {
+            AccountManager am = moreAccountManagerMapper.selectByMemberId(moreMemberChargeApply.getMemberId());
+            Date date = new Date();
+            am.setTotalBonus(am.getTotalBonus().add(moreMemberChargeApply.getChargeAmt()));
+            am.setBonusAmt(am.getBonusAmt().add(moreMemberChargeApply.getChargeAmt()));
+            am.setUpdateId(admin.getId());
+            am.setUpdateTime(date);
+            int am1 = moreAccountManagerMapper.updateByMemberId(am);
+            if(am1 < 1){
+                throw new RuntimeException();
+            }
+            MoreMemberChargeApply mmc = new MoreMemberChargeApply();
+            mmc.setId(moreMemberChargeApply.getId());
+            mmc.setStatus(moreMemberChargeApply.getStatus());
+            mmc.setChargeTime(date);
+            mmc.setUpdateTime(date);
+            mmc.setUpdateId(admin.getId());
+            int count = moreMemberChargeApplyMapper.updateByPrimaryKeySelective(mmc);
+            if(count < 1){
+                throw new RuntimeException();
+            }
+            AccountFlowHistory af = new AccountFlowHistory();
+            af.setMemberId(moreMemberChargeApply.getMemberId());
+            af.setCreateTime(date);
+            af.setCreateId(admin.getId());
+            af.setType("2");//转入
+            af.setTotalAmt(moreMemberChargeApply.getChargeAmt());
+            af.setBonusAmt(moreMemberChargeApply.getChargeAmt());
+            af.setSeedAmt(new BigDecimal(0));
+            af.setFlowType(Constant.MEMBERCHARGE);//管理员充值
 
-        int af1 = accountFlowHistoryMapper.insert(af);
-        if(af1 < 1){
-            throw new RuntimeException();
+            int af1 = accountFlowHistoryMapper.insert(af);
+            if(af1 < 1){
+                throw new RuntimeException();
+            }
+            return "success";
+        }else {
+            return "chargeWarning";
         }
-        return "success";
     }
 
     /**

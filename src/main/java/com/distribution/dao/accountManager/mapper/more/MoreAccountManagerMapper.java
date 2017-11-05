@@ -38,6 +38,6 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
      * */
     Integer updateByMemberId(AccountManager accountManager);
     
-    List<Map<String,Object>>listBonusTemp();
+    List<Map<String,Object>>listBonusTemp(String dateStr);
 
 }

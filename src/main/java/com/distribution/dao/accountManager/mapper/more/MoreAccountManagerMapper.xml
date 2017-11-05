@@ -78,7 +78,17 @@
         update_time = #{updateTime}
         WHERE member_id = #{memberId}
     </update>
-    <select id="listBonusTemp" resultType="java.util.Map" parameterType="java.lang.Integer">
-      SELECT * FROM bonus_temp
+    <select id="listBonusTemp" resultType="java.util.Map" parameterType="java.lang.String">
+      SELECT tep.member_id,
+		sum(actual_amout)as total,
+		sum(actual_amout)*0.6 as bonus,
+		sum(actual_amout)*0.4 as seed 
+		from 
+		(SELECT min(id),member_id,bonus_type,amout,actual_amout,order_id
+		from member_bonus 
+		where bonus_type = 4 and DATE(create_date) = DATE(#{dateStr}) 
+		group by member_id,bonus_type,amout,actual_amout,order_id) 
+		tep
+		group by tep.member_id
     </select>
 </mapper>

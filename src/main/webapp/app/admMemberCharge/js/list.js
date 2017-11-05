@@ -231,7 +231,11 @@ angular.module('admMemberCharge').controller('admMemberChargeListCtrl',function 
             $scope.startLoading();
             $http.post(ctx + "/admMemberCharge/AddMemberCharge",{id:id, memberId:memberId, memberName:memberName, chargeAmt:chargeAmt, status:status}).success(function (resp) {
                 if(resp.successful){
-                    Notify.success("会员充值成功。");
+                    if(resp.data.result == "chargeWarning") {
+                        Notify.warning("该操作已被完成，充值已确认。");
+                    }else {
+                        Notify.success("会员充值成功。");
+                    }
                     $scope.search();
                 }else{
                     Notify.error('会员充值失败。');

@@ -893,8 +893,8 @@ public class BonusService {
 		}
 		return bonusTypeName;
 	}
-	public void updateAcountManager(){
-		List<Map<String,Object>> list = moreAccountManagerMapper.listBonusTemp();
+	public void updateAcountManager(String dateStr){
+		List<Map<String,Object>> list = moreAccountManagerMapper.listBonusTemp(dateStr);
 		StringBuffer sql1 = new StringBuffer();
 		StringBuffer sql2 = new StringBuffer();
 

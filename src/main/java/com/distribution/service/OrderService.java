@@ -94,19 +94,36 @@ public class OrderService {
         Long orderNo = this.getOrderNo();
         moreOrderMaster.setOrderNo(orderNo);
 
+
         //判断是否是种子币复投
         boolean reOrderSeed = ("2".equals(moreOrderMaster.getOrderCategory()) && Constant.BONUSACCOUNTTYPE_SEED.equals(moreOrderMaster.getBonusType())) ? true :false ;
+
+        //扣钱之前判断账户余额，提现账户余额查询与计算
+        AccountManager advanceAccount = new AccountManager();
+        advanceAccount.setMemberId(moreOrderMaster.getMemberId());
+        advanceAccount = moreAccountManagerMapper.selectAccountManager(advanceAccount);
 
         //order_master insert
         //复投订单状态并用种子币支付的直接为订单完成（奖金币支付除外）
         if(reOrderSeed){
             moreOrderMaster.setOrderStatues("4");
             moreOrderMaster.setBonusAccountType(Constant.BONUSACCOUNTTYPE_SEED); //种子币
+
+            //种子币支付的时候，判断账户余额
+            if(advanceAccount.getSeedAmt().compareTo(moreOrderMaster.getSeedAmt()) == -1){
+                throw new RuntimeException("The account balance is not enough"+moreOrderMaster.getMemberId()+"---"+advanceAccount.getSeedAmt());
+            }
         }else{
+
             moreOrderMaster.setBonusAccountType(Constant.BONUSACCOUNTTYPE_BONUS); //奖金币
             //自提的话直接发货完成
             if("1".equals(moreOrderMaster.getSendbypostyn())){
                 moreOrderMaster.setOrderStatues("3");//待收货
+            }
+
+            //奖金币支付的时候判断奖金币余额
+            if(advanceAccount.getBonusAmt().compareTo(moreOrderMaster.getBonusAmt()) == -1){
+                throw new RuntimeException("The account balance is not enough"+moreOrderMaster.getMemberId()+"---"+advanceAccount.getBonusAmt());
             }
         }
 
@@ -151,6 +168,7 @@ public class OrderService {
         if(cnt3 == 0){
             throw new RuntimeException();
         }
+
 
         //扣款登记 account_manager
         AccountManager accountManager = new AccountManager();

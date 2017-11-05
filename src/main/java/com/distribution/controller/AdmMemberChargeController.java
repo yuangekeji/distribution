@@ -79,11 +79,13 @@ public class AdmMemberChargeController extends BasicController {
         Admin admin = (Admin) getCurrentUser(session);
         String result = admMemberChargeService.AddMemberCharge(moreMemberChargeApply,admin);
         //管理员操作记录
-        Map map = new HashMap();
-        map.put("handleType", Constant.ADMINHANDLETYPE_MEMBERCHARGE);
-        map.put("handleId", moreMemberChargeApply.getMemberId());
-        map.put("handleComment", "申请人: " + moreMemberChargeApply.getMemberName() + ", 充值金额: " + moreMemberChargeApply.getChargeAmt());
-        admHandleHistoryService.addAdminHandleHistory(admin, map);
+        if ("success".equals(result)) {
+            Map map = new HashMap();
+            map.put("handleType", Constant.ADMINHANDLETYPE_MEMBERCHARGE);
+            map.put("handleId", moreMemberChargeApply.getMemberId());
+            map.put("handleComment", "申请人: " + moreMemberChargeApply.getMemberName() + ", 充值金额: " + moreMemberChargeApply.getChargeAmt());
+            admHandleHistoryService.addAdminHandleHistory(admin, map);
+        }
         return successMsg("result",result);
     }
     /**

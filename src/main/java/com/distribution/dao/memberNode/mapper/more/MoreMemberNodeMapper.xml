@@ -126,7 +126,8 @@
 			n.right_id,
 			n.parent_id
 		from member_node n
-		where FIND_IN_SET(n.id,getChildList(#{nodeId})) 
+		left join member m on n.id = m.node_id
+		where m.status = 'Y' and FIND_IN_SET(n.id,getChildList(#{nodeId})) 
 		order by n.id asc
   </select>
   <select id="listParentNodesWithMemberInfo" resultMap="MoreResultMap" parameterType="java.lang.Integer">

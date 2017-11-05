@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.distribution.dao.order.model.OrderMaster;
+
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,7 @@ public class BonusServiceTest extends SpringServiceTest{
 	}
 	@Test
 	public void updateAccountManager(){
-		bonusService.updateAcountManager();
+		String dateStr = "2017-11-01";
+		bonusService.updateAcountManager(dateStr);
 	}
 }

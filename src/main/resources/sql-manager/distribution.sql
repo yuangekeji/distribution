@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : product_dist
-Source Server Version : 50719
-Source Host           : 59.110.42.11:3303
+Source Server         : mydb
+Source Server Version : 50711
+Source Host           : localhost:3306
 Source Database       : distribution
 
 Target Server Type    : MYSQL
-Target Server Version : 50719
+Target Server Version : 50711
 File Encoding         : 65001
 
-Date: 2017-10-05 16:04:36
+Date: 2017-11-05 21:41:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,7 +53,11 @@ CREATE TABLE `account_manager` (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `member_id` (`member_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='账户管理表master';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户管理表master';
+
+-- ----------------------------
+-- Records of account_manager
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for admin
@@ -71,12 +75,16 @@ CREATE TABLE `admin` (
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `delete_flag` varchar(255) DEFAULT NULL COMMENT '管理员禁用/启用(启用:Y; 禁用: N)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='管理员';
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', '13554861391', '周总', '96E79218965EB72C92A549DD5A330112', '1', '2017-10-05 14:10:39', '1', '2017-10-05 14:10:50', '2', 'N');
+INSERT INTO `admin` VALUES ('1', '13554861391', '周总', '96E79218965EB72C92A549DD5A330112', '1', '2017-10-14 14:10:39', '1', '2017-10-19 09:38:28', '2', 'N');
+INSERT INTO `admin` VALUES ('2', '18378836134', '李天阳', '96E79218965EB72C92A549DD5A330112', '1', '2017-10-15 23:35:56', '1', '2017-10-18 10:10:31', '2', 'N');
+INSERT INTO `admin` VALUES ('3', '13842648081', '晶鑫', '96E79218965EB72C92A549DD5A330112', '1', '2017-10-19 20:41:09', '1', '2017-10-27 22:48:14', '2', 'N');
+INSERT INTO `admin` VALUES ('5', '18587888210', '李萍', '96E79218965EB72C92A549DD5A330112', '2', '2017-10-19 09:25:17', '2', '2017-10-19 09:25:17', '3', 'N');
+INSERT INTO `admin` VALUES ('6', '15994362068', '师萌萌', '96E79218965EB72C92A549DD5A330112', '2', '2017-10-19 09:26:54', '2', '2017-10-19 09:26:54', '3', 'N');
 
 -- ----------------------------
 -- Table structure for admin_handle_history
@@ -95,7 +103,11 @@ CREATE TABLE `admin_handle_history` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `create_id` int(11) DEFAULT NULL COMMENT '创建ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin_handle_history
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for advance
@@ -110,8 +122,8 @@ CREATE TABLE `advance` (
   `req_amt` decimal(15,2) DEFAULT NULL COMMENT '申请提现金额',
   `act_amt` decimal(15,2) DEFAULT NULL COMMENT '实际提现金额',
   `fee_amt` decimal(15,2) DEFAULT NULL COMMENT '手续费',
-  `request_date` date DEFAULT NULL COMMENT '申请提现日期',
-  `approve_date` date DEFAULT NULL COMMENT '审批日期',
+  `request_date` datetime NOT NULL,
+  `approve_date` datetime DEFAULT NULL,
   `statues` char(1) DEFAULT NULL COMMENT '提现状态(提交申请1，成功提现2，提现失败3)',
   `remark` varchar(200) DEFAULT NULL COMMENT '备注',
   `create_id` int(11) NOT NULL COMMENT '创建人',
@@ -164,7 +176,7 @@ INSERT INTO `basic_manage` VALUES ('3', 'D01', '02', '铜卡', '1800.00', '3', '
 INSERT INTO `basic_manage` VALUES ('4', 'D01', '03', '银卡', '3000.00', '5', '5', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('5', 'D01', '04', '金卡', '9000.00', '15', '15', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('6', 'D01', '05', '白金卡', '30000.00', '50', '50', '16.00', '5.00', '8.00', '30.00', '40.00', null, null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
-INSERT INTO `basic_manage` VALUES ('8', 'D02', '00', '分红包奖励', null, null, null, null, null, null, null, null, null, null, '5.00', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
+INSERT INTO `basic_manage` VALUES ('8', 'D02', '00', '分红包奖励', null, null, null, null, null, null, null, null, null, null, '6.36', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('9', 'D02', '01', '当日分红包比例', null, null, null, null, null, null, null, null, '20.00', null, null, null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('10', 'D02', '02', '分红包领满数额', null, null, null, null, null, null, null, null, null, null, '760.00', null, null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
 INSERT INTO `basic_manage` VALUES ('11', 'D03', '00', '见点奖', null, null, null, null, null, null, null, null, null, null, '4.00', '0.00', null, null, '0', '0000-00-00 00:00:00', '0', '0000-00-00 00:00:00');
@@ -207,7 +219,7 @@ CREATE TABLE `bonus_cache_pool` (
   `update_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='资金发放池表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='资金发放池表';
 
 -- ----------------------------
 -- Records of bonus_cache_pool
@@ -332,7 +344,7 @@ INSERT INTO `dictionary` VALUES ('2', 'member_level2', '铜卡(1800)', 'member_l
 INSERT INTO `dictionary` VALUES ('3', 'member_level3', '银卡(3000)', 'member_level', '会员级别');
 INSERT INTO `dictionary` VALUES ('4', 'member_level4', '金卡(9000)', 'member_level', '会员级别');
 INSERT INTO `dictionary` VALUES ('5', 'member_level5', '白金卡(30000)', 'member_level', '会员级别');
-INSERT INTO `dictionary` VALUES ('24', '01', '保健品', 'goods_type', '商品名称');
+INSERT INTO `dictionary` VALUES ('24', '01', '药膳食品', 'goods_type', '商品类别');
 INSERT INTO `dictionary` VALUES ('9', 'post_level1', '普通会员', 'post_level', '爵位(职务等级)');
 INSERT INTO `dictionary` VALUES ('10', 'post_level2', '主任', 'post_level', '爵位(职务等级)');
 INSERT INTO `dictionary` VALUES ('11', 'post_level3', '经理', 'post_level', '爵位(职务等级)');
@@ -346,6 +358,8 @@ INSERT INTO `dictionary` VALUES ('18', '中国银行', '中国银行', 'bank_nam
 INSERT INTO `dictionary` VALUES ('21', '招商银行', '招商银行', 'bank_name', '银行名称');
 INSERT INTO `dictionary` VALUES ('22', '交通银行', '交通银行', 'bank_name', '银行名称');
 INSERT INTO `dictionary` VALUES ('23', '邮政银行', '邮政银行', 'bank_name', '银行名称');
+INSERT INTO `dictionary` VALUES ('25', '02', '足浴粉', 'goods_type', '商品类别');
+INSERT INTO `dictionary` VALUES ('26', '03', '药浴粉', 'goods_type', '商品类别');
 
 -- ----------------------------
 -- Table structure for dividend
@@ -368,7 +382,11 @@ CREATE TABLE `dividend` (
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分红包表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分红包表';
+
+-- ----------------------------
+-- Records of dividend
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for dividend_history
@@ -422,7 +440,8 @@ CREATE TABLE `goods` (
   `imge_url` varchar(5000) DEFAULT NULL COMMENT '图片路径',
   `status` varchar(255) DEFAULT NULL COMMENT '状态(Y:上架,N:下架)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='商品表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品表';
+
 
 -- ----------------------------
 -- Table structure for job_logs
@@ -484,7 +503,11 @@ CREATE TABLE `member` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `member_phone` (`member_phone`),
   UNIQUE KEY `node_id` (`node_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员表';
+
+-- ----------------------------
+-- Records of member
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for member_bonus
@@ -514,20 +537,31 @@ CREATE TABLE `member_bonus` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for member_charge
+-- Table structure for member_charge_apply
 -- ----------------------------
-DROP TABLE IF EXISTS `member_charge`;
-CREATE TABLE `member_charge` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `member_id` int(11) DEFAULT NULL COMMENT '会员id',
+DROP TABLE IF EXISTS `member_charge_apply`;
+CREATE TABLE `member_charge_apply` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
+  `member_id` int(11) DEFAULT NULL COMMENT '会员ID',
+  `status` varchar(255) DEFAULT '0' COMMENT '充值申请状态(''0'':财务审核中，''1'':待充值，''2'':审核驳回，''3'':充值成功)',
+  `charge_request_time` datetime DEFAULT NULL COMMENT '申请时间',
+  `pay_money_type` varchar(255) DEFAULT NULL COMMENT '打款方式',
+  `pay_money_time` datetime DEFAULT NULL COMMENT '打款时间',
   `charge_amt` decimal(15,2) DEFAULT NULL COMMENT '充值金额',
-  `create_id` int(11) DEFAULT NULL COMMENT '充值管理员id',
-  `create_time` datetime DEFAULT NULL COMMENT '充值时间',
+  `charge_money_type` varchar(255) DEFAULT NULL COMMENT '充值方式(''0'':会员申请充值，''1'':管理员充值)',
+  `charge_apply_time` datetime DEFAULT NULL COMMENT '审批时间',
+  `charge_time` datetime DEFAULT NULL COMMENT '充值时间',
+  `apply_info` varchar(5000) DEFAULT NULL COMMENT '申请备注',
+  `remarks` varchar(5000) DEFAULT NULL COMMENT '审批备注',
+  `create_id` int(11) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) DEFAULT NULL COMMENT '修改人',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='会员充值表（管理员操作的）';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of member_charge
+-- Records of member_charge_apply
 -- ----------------------------
 
 -- ----------------------------
@@ -546,7 +580,11 @@ CREATE TABLE `member_node` (
   `member_total` int(255) unsigned DEFAULT '0' COMMENT '备用下级数量,废弃字段',
   `sales_total` double(10,0) DEFAULT '0' COMMENT '备用销售业绩总数，废弃字段',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会员节点二叉树表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员节点二叉树表';
+
+-- ----------------------------
+-- Records of member_node
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for menu
@@ -585,7 +623,7 @@ INSERT INTO `menu` VALUES ('19', null, '订单管理', '15', 'app.admOrder', nul
 INSERT INTO `menu` VALUES ('20', null, '提现管理', '15', 'app.admAdvance', null);
 INSERT INTO `menu` VALUES ('21', '3', '商品管理', '0', '', 'icon-basket');
 INSERT INTO `menu` VALUES ('22', null, '商品列表', '21', 'app.admProduct', null);
-INSERT INTO `menu` VALUES ('23', '4', '基本配置', '0', '', 'icon-settings');
+INSERT INTO `menu` VALUES ('23', '4', '系统管理', '0', '', 'icon-settings');
 INSERT INTO `menu` VALUES ('24', null, '基本配置', '23', 'app.admBasicSetting', null);
 INSERT INTO `menu` VALUES ('25', '5', '权限管理', '0', '', 'icon-lock');
 INSERT INTO `menu` VALUES ('26', null, '管理员列表', '25', 'app.admin', null);
@@ -593,6 +631,9 @@ INSERT INTO `menu` VALUES ('27', null, '账户管理', '1', 'app.account', null)
 INSERT INTO `menu` VALUES ('28', null, '推荐网络图', '1', 'app.graph', 'icon-graph');
 INSERT INTO `menu` VALUES ('29', null, '分支管理', '25', 'app.admTreeMember', null);
 INSERT INTO `menu` VALUES ('30', null, '操作记录', '25', 'app.admHandleHistory', null);
+INSERT INTO `menu` VALUES ('31', null, '公告管理', '23', 'app.admNotice', null);
+INSERT INTO `menu` VALUES ('32', null, '充值申请', '1', 'app.memberCharge', 'icon-diamond');
+INSERT INTO `menu` VALUES ('33', null, '充值管理', '15', 'app.admMemberCharge', 'icon-diamond');
 
 -- ----------------------------
 -- Table structure for node_bonus_history
@@ -619,6 +660,29 @@ CREATE TABLE `node_bonus_history` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for notice
+-- ----------------------------
+DROP TABLE IF EXISTS `notice`;
+CREATE TABLE `notice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
+  `title` varchar(255) DEFAULT NULL COMMENT '标题',
+  `content` varchar(5000) DEFAULT NULL COMMENT '内容',
+  `level` varchar(255) DEFAULT '1' COMMENT '优先级别(2:紧急，1:一般)',
+  `publishing_state` varchar(255) DEFAULT 'N' COMMENT '发布状态(Y:已发布，N:未发布)',
+  `delete_flag` varchar(255) DEFAULT 'N' COMMENT '删除状态',
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `notice_time` datetime DEFAULT NULL COMMENT '公告激活时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of notice
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for operation_apply
 -- ----------------------------
 DROP TABLE IF EXISTS `operation_apply`;
@@ -639,6 +703,31 @@ CREATE TABLE `operation_apply` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '订单号',
+  `order_category` char(1) DEFAULT NULL COMMENT '订单分类',
+  `order_amt` decimal(15,2) NOT NULL COMMENT '订单金额',
+  `order_qty` int(11) NOT NULL COMMENT '订购数量',
+  `member_id` int(11) NOT NULL COMMENT '会员id',
+  `receive_name` varchar(50) DEFAULT NULL COMMENT '收货人姓名',
+  `express_address` varchar(500) DEFAULT NULL COMMENT '收货地址',
+  `member_level` varchar(2) DEFAULT NULL COMMENT '会员等级',
+  `order_statues` char(1) DEFAULT NULL COMMENT '订单状态',
+  `create_id` int(11) NOT NULL COMMENT '创建人',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_id` int(11) NOT NULL COMMENT '修改人',
+  `update_time` datetime NOT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单管理表master';
+
+-- ----------------------------
+-- Records of order
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for order_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `order_detail`;
@@ -653,7 +742,11 @@ CREATE TABLE `order_detail` (
   `update_id` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单管理表detail';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单管理表detail';
+
+-- ----------------------------
+-- Records of order_detail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for order_master
@@ -684,7 +777,11 @@ CREATE TABLE `order_master` (
   `bonus_account_type` char(1) DEFAULT NULL COMMENT '复投账户 1-种子币，2奖金币',
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_no` (`order_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='订单master';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单master';
+
+-- ----------------------------
+-- Records of order_master
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for role
@@ -751,6 +848,10 @@ INSERT INTO `role_menu` VALUES ('1', '28');
 INSERT INTO `role_menu` VALUES ('2', '21');
 INSERT INTO `role_menu` VALUES ('2', '29');
 INSERT INTO `role_menu` VALUES ('2', '30');
+INSERT INTO `role_menu` VALUES ('2', '31');
+INSERT INTO `role_menu` VALUES ('2', '33');
+INSERT INTO `role_menu` VALUES ('3', '33');
+INSERT INTO `role_menu` VALUES ('1', '32');
 
 -- ----------------------------
 -- Table structure for transfer
@@ -780,10 +881,10 @@ CREATE TABLE `transfer` (
 -- ----------------------------
 DROP FUNCTION IF EXISTS `getChildList`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `getChildList`(rootId INT) RETURNS varchar(1000) CHARSET utf8
+CREATE DEFINER=`root`@`localhost` FUNCTION `getChildList`(rootId INT) RETURNS varchar(4000) CHARSET utf8
   BEGIN
-    DECLARE sChildList VARCHAR(1000);
-    DECLARE sChildTemp VARCHAR(1000);
+    DECLARE sChildList VARCHAR(4000);
+    DECLARE sChildTemp VARCHAR(4000);
     SET sChildTemp =cast(rootId as CHAR);
     WHILE sChildTemp is not null DO
       IF (sChildList is not null) THEN
@@ -803,10 +904,10 @@ DELIMITER ;
 -- ----------------------------
 DROP FUNCTION IF EXISTS `getParentList`;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS varchar(1000) CHARSET utf8
+CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS varchar(4000) CHARSET utf8
   BEGIN
-    DECLARE sParentList varchar(1000);
-    DECLARE sParentTemp varchar(1000);
+    DECLARE sParentList varchar(4000);
+    DECLARE sParentTemp varchar(4000);
     SET sParentTemp =cast(rootId as CHAR);
     WHILE sParentTemp is not null DO
       IF (sParentList is not null) THEN
@@ -820,107 +921,3 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS v
   END
 ;;
 DELIMITER ;
-
--- ----------------------------
--- Table structure for member_charge_apply
--- ----------------------------
-DROP TABLE IF EXISTS `member_charge_apply`;
-CREATE TABLE `member_charge_apply` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
-  `member_id` int(11) DEFAULT NULL COMMENT '会员ID',
-  `status` varchar(255) DEFAULT '0' COMMENT '充值申请状态(''0'':财务审核中，''1'':待充值，''2'':审核驳回，''3'':充值成功)',
-  `charge_request_time` datetime DEFAULT NULL COMMENT '申请时间',
-  `pay_money_type` varchar(255) DEFAULT NULL COMMENT '打款方式',
-  `pay_money_time` datetime DEFAULT NULL COMMENT '打款时间',
-  `charge_amt` decimal(15,2) DEFAULT NULL COMMENT '充值金额',
-	`charge_money_type` varchar(255) DEFAULT NULL COMMENT '充值方式(''0'':会员申请充值，''1'':管理员充值)',
-  `charge_apply_time` datetime DEFAULT NULL COMMENT '审批时间',
-  `charge_time` datetime DEFAULT NULL COMMENT '充值时间',
-	`apply_info` varchar(5000) DEFAULT NULL COMMENT '申请备注',
-  `remarks` varchar(5000) DEFAULT NULL COMMENT '审批备注',
-  `create_id` int(11) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_id` int(11) DEFAULT NULL COMMENT '修改人',
-  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- 添加公告表
-DROP TABLE IF EXISTS `notice`;
-CREATE TABLE `notice` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID主键',
-  `title` varchar(255) DEFAULT NULL COMMENT '标题',
-  `content` varchar(5000) DEFAULT NULL COMMENT '内容',
-  `level` varchar(255) DEFAULT '1' COMMENT '优先级别(2:紧急，1:一般)',
-  `publishing_state` varchar(255) DEFAULT 'N' COMMENT '发布状态(Y:已发布，N:未发布)',
-  `delete_flag` varchar(255) DEFAULT 'N' COMMENT '删除状态',
-  `create_by` varchar(255) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `update_by` varchar(255) DEFAULT NULL,
-  `update_time` datetime DEFAULT NULL,
-  `notice_time` datetime DEFAULT NULL COMMENT '公告激活时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-
-
--- 添加公告菜单数据 ID请根据实际情况设定
-
-INSERT INTO `menu` VALUES (null, null, '公告管理', '23', 'app.admNotice', null);
-update menu set name ='系统管理' where id = 23;
-
-INSERT INTO `role_menu` VALUES ('2', '31');
-
-
-INSERT INTO `menu` VALUES (null, null, '充值申请', '1', 'app.memberCharge', 'icon-diamond');
-INSERT INTO `menu` VALUES (null, null, '充值管理', '15', 'app.admMemberCharge', 'icon-diamond');
-
-INSERT INTO `role_menu` VALUES ('2', '33');
-INSERT INTO `role_menu` VALUES ('3', '33');
-INSERT INTO `role_menu` VALUES ('1', '32');
-
--- 修改提现申请
-alter table advance MODIFY request_date datetime not null;
-alter table advance MODIFY approve_date datetime  null;
-
-
-update dictionary set dic_name ='药膳食品' ,dic_des ='商品类别' where dic_type ='goods_type' and dic_code = '01';
-INSERT INTO `dictionary` VALUES (null, '02', '足浴粉', 'goods_type', '商品类别');
-INSERT INTO `dictionary` VALUES (null, '03', '药浴粉', 'goods_type', '商品类别');
-
-insert into member_charge_apply (
-id,
-member_id,
-status,
-charge_request_time,
-pay_money_type,
-pay_money_time,
-charge_amt,
-charge_money_type,
-charge_apply_time,
-charge_time,
-apply_info,
-remarks,
-create_id,
-create_time,
-update_id,
-update_time
-)
-select
-null,
-member_id ,
-3,
-create_time,
-'管理员充值',
-create_time,
-charge_amt,
-1,
-create_time,
-create_time,
-'管理员充值',
-'管理员充值',
-create_id,
-create_time,
-create_id,
-create_time
-
-from member_charge;

@@ -233,14 +233,16 @@ angular.module('admMemberCharge').controller('admMemberChargeListCtrl',function 
                 if(resp.successful){
                     if(resp.data.result == "chargeWarning") {
                         Notify.warning("该操作已被完成，充值已确认。");
+                        $scope.stopLoading();
                     }else {
                         Notify.success("会员充值成功。");
+                        $scope.stopLoading();
                     }
                     $scope.search();
                 }else{
                     Notify.error('会员充值失败。');
+                    $scope.stopLoading();
                 }
-                $scope.stopLoading();
             }).error(function (error) {
                 Notify.error('会员充值失败。');
                 console.error(error);

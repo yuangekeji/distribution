@@ -25,9 +25,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
 
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="bookmark" href="favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
+    <link rel="bookmark" href="static/favicon.ico" type="image/x-icon" />
     <!-- metronic  start -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <%--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />--%>

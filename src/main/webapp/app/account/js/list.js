@@ -12,7 +12,12 @@ angular.module('account').controller('accountListCtrl',
     //定义复投model
     $scope.reOrder = {};
 
-
+    $scope.onlyNumber = function (event) {
+            var value = event.target.value;
+            if (value <= 0 || !(/^\+?[1-9][0-9]*$/.test(value))) {
+                event.target.value ='';
+            }
+    }
    var e1 = $('.portlet');
      $scope.startLoading=function () {
             App.blockUI({
@@ -43,7 +48,7 @@ angular.module('account').controller('accountListCtrl',
     }
     $scope.onInit=function () {
         $scope.transfer = {
-            transferAmt:0.00,
+            transferAmt:'',
             receivePhone:'',
             receiveName:'',
             payPassword:''
@@ -51,10 +56,10 @@ angular.module('account').controller('accountListCtrl',
         $scope.getAccount();
 
         $scope.reOrder={
-            orderQty: 0,
+            orderQty: '',
             price:600,
-            amt:0.00,
-            orderAmt:0.00,
+            amt:'',
+            orderAmt:'',
             payPassword:'',
             bonusType:'1',
             sendbypostyn : '1',

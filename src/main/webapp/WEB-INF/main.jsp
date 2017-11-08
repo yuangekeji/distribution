@@ -31,7 +31,7 @@
     <!-- metronic  start -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="${ctx}/static/metronic/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/metronic/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
     <link id="ng_load_plugins_before" />
@@ -61,12 +61,12 @@
 <script src="${ctx}/static/metronic/global/plugins/excanvas.min.js"></script>
 <![endif]-->
 <script src="${ctx}/static/metronic/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
 <!-- END CORE JQUERY PLUGINS -->
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
-<script src="${ctx}/static/metronic/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.8/angular.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>

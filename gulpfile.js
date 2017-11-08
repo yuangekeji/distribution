@@ -18,19 +18,26 @@ gulp.task('loginjs', function() {
         .pipe(uglify())
         .pipe(gulp.dest('./src/main/webapp/static/js'));
 });
+//
+// gulp.task('componentdatejs', function() {
+//     gulp.src('./src/main/webapp/static/metronic/pages/scripts/components-date-time-pickers.js')
+//         .pipe(rename('components-date-time-pickers.min.js'))
+//         .pipe(uglify())
+//         .pipe(gulp.dest('./src/main/webapp/static/metronic/pages/scripts'));
+// });
+//
+// gulp.task('notifyjs', function () {
+//     gulp.src('./src/main/webapp/static/notify/notify.js')
+//         .pipe(rename('notify.min.js'))
+//         .pipe(uglify())
+//         .pipe(gulp.dest('./src/main/webapp/static/notify'));
+// });
 
-gulp.task('componentdatejs', function() {
-    gulp.src('./src/main/webapp/static/metronic/pages/scripts/components-date-time-pickers.js')
-        .pipe(rename('components-date-time-pickers.min.js'))
+gulp.task('pagjs', function() {
+    gulp.src('./src/main/webapp/app/common/pagination/dirPagination.js')
+        .pipe(rename('dirPagination.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./src/main/webapp/static/metronic/pages/scripts'));
-});
-
-gulp.task('notifyjs', function () {
-    gulp.src('./src/main/webapp/static/notify/notify.js')
-        .pipe(rename('notify.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./src/main/webapp/static/notify'));
+        .pipe(gulp.dest('./src/main/webapp/app/common/pagination'));
 });
 
 gulp.task('appjs', function() {
@@ -80,34 +87,34 @@ gulp.task('servicesjs', function() {
 });
 
 
-
-gulp.task('componentscss', function () {
-    gulp.src('./src/main/webapp/static/metronic/global/css/components.css')
-        .pipe(rename('components.min.css'))
-        .pipe(cssmin())
-        .pipe(gulp.dest('./src/main/webapp/static/metronic/global/css'));
-});
-
-gulp.task('layoutcss', function () {
-    gulp.src('./src/main/webapp/static/metronic/layouts/layout2/css/layout.css')
-        .pipe(rename('layout.min.css'))
-        .pipe(cssmin())
-        .pipe(gulp.dest('./src/main/webapp/static/metronic/layouts/layout2/css'));
-});
-
-gulp.task('bluecss', function () {
-    gulp.src('./src/main/webapp/static/metronic/layouts/layout2/css/themes/blue.css')
-        .pipe(rename('blue.min.css'))
-        .pipe(cssmin())
-        .pipe(gulp.dest('./src/main/webapp/static/metronic/layouts/layout2/css/themes'));
-});
-
-gulp.task('notifycss', function () {
-    gulp.src('./src/main/webapp/static/notify/notify.css')
-        .pipe(rename('notify.min.css'))
-        .pipe(cssmin())
-        .pipe(gulp.dest('./src/main/webapp/static/notify'));
-});
+//
+// gulp.task('componentscss', function () {
+//     gulp.src('./src/main/webapp/static/metronic/global/css/components.css')
+//         .pipe(rename('components.min.css'))
+//         .pipe(cssmin())
+//         .pipe(gulp.dest('./src/main/webapp/static/metronic/global/css'));
+// });
+//
+// gulp.task('layoutcss', function () {
+//     gulp.src('./src/main/webapp/static/metronic/layouts/layout2/css/layout.css')
+//         .pipe(rename('layout.min.css'))
+//         .pipe(cssmin())
+//         .pipe(gulp.dest('./src/main/webapp/static/metronic/layouts/layout2/css'));
+// });
+//
+// gulp.task('bluecss', function () {
+//     gulp.src('./src/main/webapp/static/metronic/layouts/layout2/css/themes/blue.css')
+//         .pipe(rename('blue.min.css'))
+//         .pipe(cssmin())
+//         .pipe(gulp.dest('./src/main/webapp/static/metronic/layouts/layout2/css/themes'));
+// });
+//
+// gulp.task('notifycss', function () {
+//     gulp.src('./src/main/webapp/static/notify/notify.css')
+//         .pipe(rename('notify.min.css'))
+//         .pipe(cssmin())
+//         .pipe(gulp.dest('./src/main/webapp/static/notify'));
+// });
 
 
 // 默认任务

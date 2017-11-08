@@ -1,5 +1,5 @@
 var App = angular.module('app', [
-    'ngSanitize',
+
     'ui.router',
     'oc.lazyLoad',
     'app.lazyLoad',

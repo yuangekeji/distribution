@@ -200,11 +200,11 @@ angular
                 name:'admDividend',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
-                    'app/admDividend/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
                     'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
                     'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
-                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js',
+                    'app/admDividend/js/list.js?v=' + version,
                 ]
             },
             {

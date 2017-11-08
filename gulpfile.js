@@ -87,13 +87,13 @@ gulp.task('servicesjs', function() {
 });
 
 
-//
-// gulp.task('componentscss', function () {
-//     gulp.src('./src/main/webapp/static/metronic/global/css/components.css')
-//         .pipe(rename('components.min.css'))
-//         .pipe(cssmin())
-//         .pipe(gulp.dest('./src/main/webapp/static/metronic/global/css'));
-// });
+
+gulp.task('componentscss', function () {
+    gulp.src('./src/main/webapp/static/metronic/global/css/components.css')
+        .pipe(rename('components.min.css'))
+        .pipe(cssmin())
+        .pipe(gulp.dest('./src/main/webapp/static/metronic/global/css'));
+});
 //
 // gulp.task('layoutcss', function () {
 //     gulp.src('./src/main/webapp/static/metronic/layouts/layout2/css/layout.css')

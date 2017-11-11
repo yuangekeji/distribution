@@ -572,6 +572,8 @@ public class BonusService {
         }
         return result;
 	}
+	
+	
 	/**
 	 * Job统一处理发放分红奖
 	 * @author su
@@ -623,8 +625,8 @@ public class BonusService {
 			result.put("sendActualTotalBonus", totalBonus);
 			//发放成功
 			history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
-			//更新历史所有失败的见点奖记录
-			updateDateBonusHistorySuccess(date,"div");
+			//更新历史所有失败的见点奖记录,20171111 发放失败需要补发，不能更新。
+			//updateDateBonusHistorySuccess(date,"div");
 			result.put("result", "Send bonus ok!");
        }else{
     	    if(totalBonus.doubleValue() > 0){
@@ -655,6 +657,44 @@ public class BonusService {
        return result;
 	}
 	/**
+	 * Job 补发失败分红奖
+	 * @author su
+	 * @date 2017年11月11日 
+	 */
+	public Map<String,Object> saveFailureDividendBonus(Map<String,Object> result,DateBonusHistory history){
+		result.put("should send date", history.getDate());
+		//计算奖金并生成分红包明细
+        Map<String,Object> map = calculateDividendHistoryBonus(DateHelper.formatDate(history.getDate(), DateHelper.YYYY_MM_DD));
+        BigDecimal totalBonus = new BigDecimal(map.get("actualBonus").toString());
+        //查找奖金发放池，奖金余额
+        double lessNodeBonus = bonusPoolService.getBonusCachePool(BonusConstant.POOL_ID_DIVIDEND); 
+        double rest = new BigDecimal(lessNodeBonus).subtract(totalBonus).doubleValue();
+        //判断有奖需要发，缓存池钱够
+        if(totalBonus.doubleValue() > 0 && rest >= 0){
+            //更新订单分红记录,生成分红明细
+            this.updateAllNeedSendDividends(map);
+            //扣除缓存池的钱
+        	bonusPoolService.updateCachePool(totalBonus.abs(),BonusConstant.POOL_TYPE_DIVIDEND, BonusConstant.POOL_BONUS_REDUCE);
+			history.setAlarmStatus(BonusConstant.BONUS_STATUS_1);
+			//发放的分红奖数量
+			history.setUseDividendTotal(totalBonus);
+			//计算 并设置余额
+			long remain =  history.getDividendTotal().subtract(totalBonus).longValue();
+			if(remain > 0){
+				history.setRemainDividend(remain);
+			}else{
+				history.setRemainDividend(new BigDecimal(0).longValue());
+			}
+			history.setUpdateId(0);
+			history.setUpdateTime(new Date());
+			moreDateBonusHistoryMapper.updateByPrimaryKeySelective(history);
+			result.put("result", "Send bonus ok!");
+       }else{
+    	    result.put("result", "Send bonus failuer,the cache pool money is less then needs.");
+       }
+       return result;
+	}
+	/**
 	 * 生成分红包明细表 
 	 * @author su
 	 * @date 2017年9月7日 下午10:00:57
@@ -663,7 +703,7 @@ public class BonusService {
 		//定义实际需要发送奖金
 	    BigDecimal actualBonus = new BigDecimal(0);
 		List<DividendHistory> hisList = new ArrayList<DividendHistory>();
-		//需要的分红奖金列表,小于等于昨天的所有数据
+		//需要的分红奖金列表,小于等于应发奖日期的所有数据
         List<Dividend> list = moreDividendMapper.listAllNeedSendDividends(date);
 		 //分红包奖金额
         double bonusNum = commonService.getMaxAmt(BonusConstant.D02,BonusConstant.CODE_00);
@@ -677,8 +717,8 @@ public class BonusService {
 			divHis.setDevidendCount(div.getDividendCount());
 			//订单分红包id
 			divHis.setDividendId(div.getId());
-			//领取时间,Job执行时间的昨天
-			divHis.setReceivedTime(DateHelper.getYesterDay());
+			//发奖日期
+			divHis.setReceivedTime(DateHelper.getDateFromStr(date, DateHelper.YYYY_MM_DD));
 			//本次领取金额
 			double total = commonService.multiply(bonusNum, div.getDividendCount().doubleValue());
 			//如果已经领取的值 大于余额，那么只能领取余额。
@@ -912,5 +952,9 @@ public class BonusService {
 		}
 		System.out.println(sql1);
 		System.out.println(sql2);
+	}
+	public List<DateBonusHistory> listFailureDividendBonus(String date){
+		List<DateBonusHistory> list = moreDateBonusHistoryMapper.listFailureDividendBonus(date);
+		return list;
 	}
 }

@@ -30,11 +30,8 @@
     <link rel="bookmark" href="static/favicon.ico" type="image/x-icon" />
     <!-- metronic  start -->
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <%--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />--%>
-    <link href="${ctx}/static/metronic/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/metronic/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <%--<link href="${ctx}/static/metronic/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />--%>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN DYMANICLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
     <link id="ng_load_plugins_before" />
@@ -42,17 +39,11 @@
     <!-- BEGIN THEME STYLES -->
     <!-- DOC: To use 'rounded corners' style just load 'components-rounded.css' stylesheet instead of 'components.css' in the below style tag -->
     <link href="${ctx}/static/metronic/global/css/components.min.css" id="style_components" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/metronic/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/metronic/layouts/layout2/css/layout.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/metronic/layouts/layout2/css/themes/blue.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="${ctx}/static/metronic/layouts/layout2/css/themes/blue.min.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="${ctx}/static/metronic/layouts/layout2/css/custom.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/notify/notify.css" rel="stylesheet" type="text/css" />
-    <%--<link href="${ctx}/static/metronic/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />--%>
-    <link href="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/metronic/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/notify/notify.min.css" rel="stylesheet" type="text/css" />
     <!-- metronic  end -->
-
-
 <body ng-controller="AppCtrl" class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid" ng-class="{'page-sidebar-closed': settings.layout.pageSidebarClosed}">
 <!-- BEGIN PAGE SPINNER -->
 <div ng-spinner-bar class="page-spinner-bar">
@@ -64,49 +55,34 @@
 <div ui-view class="full-view"></div>
 
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-
 <!-- BEGIN CORE JQUERY PLUGINS -->
 <!--[if lt IE 9]>
 <script src="${ctx}/static/metronic/global/plugins/respond.min.js"></script>
 <script src="${ctx}/static/metronic/global/plugins/excanvas.min.js"></script>
 <![endif]-->
 <script src="${ctx}/static/metronic/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/js.cookie.min.js" type="text/javascript"></script>
 <!-- END CORE JQUERY PLUGINS -->
-
 <!-- BEGIN CORE ANGULARJS PLUGINS -->
-<script src="${ctx}/static/metronic/global/plugins/angularjs/angular.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/angularjs/angular-touch.min.js" type="text/javascript"></script>
+<script src="https://cdn.bootcss.com/angular.js/1.5.8/angular.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/angular-ui-router.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/global/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 <!-- END CORE ANGULARJS PLUGINS -->
-<script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/metronic/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-<script src="${ctx}/static/notify/notify.js" type="text/javascript"></script>
-<script src="${ctx}/app/common/pagination/dirPagination.js" type="text/javascript" charset="utf-8"></script>
+<script src="${ctx}/static/notify/notify.min.js" type="text/javascript"></script>
+<script src="${ctx}/app/common/pagination/dirPagination.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>
-
-
-<script src="${ctx}/app/app.js?v=${version}"></script>
-<script src="${ctx}/app/config.js?v=${version}"></script>
-<script src="${ctx}/app/router.js?v=${version}"></script>
-<script src="${ctx}/app/directives.js?v=${version}"></script>
-<script src="${ctx}/app/controllers.js?v=${version}"></script>
-<script src="${ctx}/app/services.js?v=${version}"></script>
-<script src="${ctx}/app/filter.js?v=${version}"></script>
-
+<script src="${ctx}/app/app.min.js?v=${version}"></script>
+<script src="${ctx}/app/config.min.js?v=${version}"></script>
+<script src="${ctx}/app/router.min.js?v=${version}"></script>
+<script src="${ctx}/app/controllers.min.js?v=${version}"></script>
+<script src="${ctx}/app/services.min.js?v=${version}"></script>
+<script src="${ctx}/app/filter.min.js?v=${version}"></script>
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="${ctx}/static/metronic/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>
-
 <!-- END APP LEVEL JQUERY SCRIPTS -->
 <!-- END JAVASCRIPTS --
 </body>

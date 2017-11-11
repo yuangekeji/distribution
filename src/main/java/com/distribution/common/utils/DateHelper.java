@@ -350,6 +350,14 @@ public class DateHelper {
         Date yesterday=calendar.getTime();
         return yesterday;
     }
+    public static Date getPreDay(String day){
+    	Date date = getDateFromStr(day,YYYY_MM_DD);
+    	Calendar calendar=new GregorianCalendar(); 
+        calendar.setTime(date); 
+        calendar.add(calendar.DATE,-1);
+        Date nextDate=calendar.getTime();   
+    	return nextDate;
+    }
     public static void main(String[] args) {
 		System.out.println(getYesterDay());
 	}

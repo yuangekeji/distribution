@@ -125,4 +125,11 @@ angular.module('memberCharge').controller('memberChargeAddCtrl',function ($q, ti
             }
         }
     }
+
+    $scope.onlyNumber = function (event) {
+        var value = event.target.value;
+        if (value <= 0 || !(/^\+?[1-9][0-9]*$/.test(value))) {
+            event.target.value ='';
+        }
+    }
 });

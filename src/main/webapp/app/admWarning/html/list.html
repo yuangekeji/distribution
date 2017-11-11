@@ -13,8 +13,8 @@
             <script type="text/ng-template" id="bonusProc.html">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                    <h3 ng-show="poolType == '1'" class="modal-title">补发分红包(从资金池拨资金到发放池)</h3>
-                    <h3 ng-show="poolType == '2'" class="modal-title">补发广告宣传奖(从资金池拨资金到发放池)</h3>
+                    <h3 ng-show="poolType == '1'" class="modal-title">拨资金到分红包发放池</h3>
+                    <h3 ng-show="poolType == '2'" class="modal-title">拨资金到广告宣传奖发放池</h3>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -51,9 +51,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-7">
                                 <div class="col-md-12">
                                     <button type="button" class="btn blue-steel" ng-click="searchByParam();"><i class="fa fa-search"></i>查询</button>
+
+                                    <button type="button" class="btn red" ng-click="bonusProc(1);">确认分红包发放资金</button>
+                                    <button type="button" class="btn red" ng-click="bonusProc(2);">确认广告宣传奖发放资金</button>
                                 </div>
                             </div>
                         </div>
@@ -71,8 +74,8 @@
                                     <th>营业额|营业额20%|营业额10%</th>
                                     <th>应发分红包总额</th>
                                     <th>应发广告宣传奖总额</th>
-                                    <th>补发分红包</th>
-                                    <th>补发广告宣传奖</th>
+                                    <!--<th>补发分红包</th>-->
+                                    <!--<th>补发广告宣传奖</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,8 +96,8 @@
                                 <td>{{row.totalSales |  number:2}} | {{row.dividendTotal |  number:2}} | {{row.jdBonusTotal |  number:2}}</td>
                                 <td>{{row.useDividendTotal |  number:2}}</td>
                                 <td>{{row.useJdBonusTotal  |  number:2}}</td>
-                                <td><a href="javascript:void(0);" ng-if="row.alarmStatus==0" ng-click="bonusProc('1');" class="btn btn-xs grey-cascade">补发分红包</a></td>
-                                <td><a href="javascript:void(0);" ng-if="row.jdAlarmStatus==0" ng-click="bonusProc('2');" class="btn btn-xs grey-cascade">补发广告宣传奖金</a></td>
+                                <!--<td><a href="javascript:void(0);" ng-if="row.alarmStatus==0"   ng-click="bonusProc('1');" class="btn btn-xs grey-cascade">补发分红包</a></td>-->
+                                <!--<td><a href="javascript:void(0);" ng-if="row.jdAlarmStatus==0" ng-click="bonusProc('2');" class="btn btn-xs grey-cascade">补发广告宣传奖金</a></td>-->
                             </tr>
                             <tr ng-show= "notData" >
                                 <td colspan="8" class="text-center">无记录</td>

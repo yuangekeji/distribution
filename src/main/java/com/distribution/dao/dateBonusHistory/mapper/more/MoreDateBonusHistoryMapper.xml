@@ -51,6 +51,12 @@
 		from date_bonus_history
 		where DATE(create_time) = #{date}
   </select>
+  <select id="listFailureDividendBonus" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	    <include refid="Base_Column_List" />
+		from date_bonus_history
+		where alarm_status = 0 and <![CDATA[ DATE(create_time) <= #{date}]]>
+  </select>
 
   <select id="selectFailJobCount" resultType="java.lang.Integer">
      select count(0) as count

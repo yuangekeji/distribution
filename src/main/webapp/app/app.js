@@ -1,5 +1,5 @@
 var App = angular.module('app', [
-    'ngSanitize',
+
     'ui.router',
     'oc.lazyLoad',
     'app.lazyLoad',
@@ -214,7 +214,6 @@ String.prototype.replaceAll = function (s1, s2) {
 /***
  GLobal Directives
  ***/
-
 // Route State Load Spinner(used on page or content load)
 App.directive('ngSpinnerBar', ['$rootScope', '$state',
     function($rootScope, $state) {
@@ -254,34 +253,10 @@ App.directive('ngSpinnerBar', ['$rootScope', '$state',
     }
 ])
 
-// Handle global LINK click
-App.directive('a', function() {
-    return {
-        restrict: 'E',
-        link: function(scope, elem, attrs) {
-            if (attrs.ngClick || attrs.href === '' || attrs.href === '#') {
-                elem.on('click', function(e) {
-                    e.preventDefault(); // prevent link click for above criteria
-                });
-            }
-        }
-    };
-});
-
-// Handle Dropdown Hover Plugin Integration
-App.directive('dropdownMenuHover', function () {
-    return {
-        link: function (scope, elem) {
-            elem.dropdownHover();
-        }
-    };
-});
-
 /* Init global settings and run the app */
 App .run(['$rootScope', '$state', '$stateParams', "settings","$sessionStorage",function ($rootScope, $state, $stateParams,settings, $sessionStorage) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.$settings = settings; // state to be accessed from view//
-
 
 }]);

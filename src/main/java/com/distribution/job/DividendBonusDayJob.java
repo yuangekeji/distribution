@@ -28,7 +28,7 @@ public class DividendBonusDayJob {
     private JobLogsMapper jobLogsMapper;
 	
 	/**
-	 * 处理昨天发放失败的数据分红包奖
+	 * 处理历史发放失败的数据分红包奖
 	 * @author su
 	 * @date 2017年11月11日 上午11:13:42
 	 */
@@ -41,10 +41,14 @@ public class DividendBonusDayJob {
 		//查找昨天所有失败的分红奖数据
 		List<DateBonusHistory> list = bonusService.listFailureDividendBonus(date);
 		//循环处理发放失败的数据
-		for(int i=0;i<list.size();i++){
-			DateBonusHistory history = list.get(i);
-			result = bonusService.saveFailureDividendBonus(result,history);
-			this.saveDividendBonusLog(result);
+		if(list.size() > 0){
+			for(int i=0;i<list.size();i++){
+				DateBonusHistory history = list.get(i);
+				result = bonusService.saveFailureDividendBonus(result,history);
+				this.saveDividendBonusLog(result);
+			}
+		}else{
+			result.put("result", "No failuer dividend bonus.");
 		}
 	}
 	/**

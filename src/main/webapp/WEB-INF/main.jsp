@@ -74,12 +74,12 @@
 <script src="${ctx}/static/notify/notify.min.js" type="text/javascript"></script>
 <script src="${ctx}/app/common/pagination/dirPagination.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="${ctx}/static/metronic/global/scripts/ngStorage.js?v=${version}"></script>
-<script src="${ctx}/app/app.min.js?v=${version}"></script>
-<script src="${ctx}/app/config.min.js?v=${version}"></script>
-<script src="${ctx}/app/router.min.js?v=${version}"></script>
-<script src="${ctx}/app/controllers.min.js?v=${version}"></script>
-<script src="${ctx}/app/services.min.js?v=${version}"></script>
-<script src="${ctx}/app/filter.min.js?v=${version}"></script>
+<script src="${ctx}/app/app.js?v=${version}"></script>
+<script src="${ctx}/app/config.js?v=${version}"></script>
+<script src="${ctx}/app/router.js?v=${version}"></script>
+<script src="${ctx}/app/controllers.js?v=${version}"></script>
+<script src="${ctx}/app/services.js?v=${version}"></script>
+<script src="${ctx}/app/filter.js?v=${version}"></script>
 <!-- BEGIN APP LEVEL JQUERY SCRIPTS -->
 <script src="${ctx}/static/metronic/global/scripts/app.min.js" type="text/javascript"></script>
 <script src="${ctx}/static/metronic/layouts/layout2/scripts/layout.min.js" type="text/javascript"></script>

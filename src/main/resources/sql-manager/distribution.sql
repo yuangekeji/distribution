@@ -924,3 +924,11 @@ create_id,
 create_time
 
 from member_charge;
+
+INSERT INTO `menu` VALUES (null, null, '转账管理', '15', 'app.admTransfer', 'icon-diamond');
+INSERT INTO `role_menu` VALUES ('2', '34');
+INSERT INTO `role_menu` VALUES ('3', '34');
+
+ALTER TABLE `transfer`
+ADD COLUMN `cancel_time`  datetime NULL COMMENT '撤销时间',
+ADD COLUMN `status`  varchar(255) DEFAULT '0' COMMENT '状态(0-转账成功， 1-撤销)';

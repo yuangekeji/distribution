@@ -805,6 +805,136 @@ public class TransferExample {
             addCriterion("receive_name not between", value1, value2, "receiveName");
             return (Criteria) this;
         }
+
+        public Criteria andCancelTimeIsNull() {
+            addCriterion("cancel_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeIsNotNull() {
+            addCriterion("cancel_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeEqualTo(Date value) {
+            addCriterion("cancel_time =", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeNotEqualTo(Date value) {
+            addCriterion("cancel_time <>", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeGreaterThan(Date value) {
+            addCriterion("cancel_time >", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("cancel_time >=", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeLessThan(Date value) {
+            addCriterion("cancel_time <", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeLessThanOrEqualTo(Date value) {
+            addCriterion("cancel_time <=", value, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeIn(List<Date> values) {
+            addCriterion("cancel_time in", values, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeNotIn(List<Date> values) {
+            addCriterion("cancel_time not in", values, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeBetween(Date value1, Date value2) {
+            addCriterion("cancel_time between", value1, value2, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCancelTimeNotBetween(Date value1, Date value2) {
+            addCriterion("cancel_time not between", value1, value2, "cancelTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(String value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(String value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(String value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(String value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLike(String value) {
+            addCriterion("status like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotLike(String value) {
+            addCriterion("status not like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<String> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<String> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(String value1, String value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(String value1, String value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

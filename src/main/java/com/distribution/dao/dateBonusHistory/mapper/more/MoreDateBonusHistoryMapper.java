@@ -17,6 +17,7 @@ public interface MoreDateBonusHistoryMapper extends DateBonusHistoryMapper {
     DateBonusHistory getTotalSales(int size);
     
     DateBonusHistory selectCurrentDaySalesAndBonus(String date);
+    List<DateBonusHistory> listFailureDividendBonus(String date);
 
     /**
      * 查询失败的条数

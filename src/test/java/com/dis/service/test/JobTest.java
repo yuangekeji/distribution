@@ -53,4 +53,8 @@ public class JobTest extends SpringServiceTest{
 	public void balanceDividendBonusTest(){
 		dividendJob.balanceDividendBonus();
 	}
+	@Test
+	public void sendFailureDividendBonus(){
+		dividendJob.sendFailureDividendBonus();;
+	}
 }

@@ -6,12 +6,15 @@ package com.distribution.job;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.distribution.common.utils.DateHelper;
+import com.distribution.dao.dateBonusHistory.model.DateBonusHistory;
 import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
 import com.distribution.dao.jobLogs.model.JobLogs;
 import com.distribution.service.BonusService;
@@ -23,6 +26,27 @@ public class DividendBonusDayJob {
 	private BonusService bonusService;
 	@Autowired
     private JobLogsMapper jobLogsMapper;
+	
+	/**
+	 * 处理昨天发放失败的数据分红包奖
+	 * @author su
+	 * @date 2017年11月11日 上午11:13:42
+	 */
+	@Scheduled(cron ="0 10 1 * * ?" )//每天早上1点10分钟执行
+	public void sendFailureDividendBonus(){
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("jobName", "定时发放失败分红包奖/DividendBonusDayJob/sendFailureDividendBonus");
+		//先处理昨天发放失败的数据
+		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+		//查找昨天所有失败的分红奖数据
+		List<DateBonusHistory> list = bonusService.listFailureDividendBonus(date);
+		//循环处理发放失败的数据
+		for(int i=0;i<list.size();i++){
+			DateBonusHistory history = list.get(i);
+			result = bonusService.saveFailureDividendBonus(result,history);
+			this.saveDividendBonusLog(result);
+		}
+	}
 	/**
 	 * 发放分红包奖
 	 * @author su

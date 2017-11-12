@@ -42,8 +42,6 @@ angular
                         'app/recommend/js/list.js?v=' + version,
                         'static/metronic/global/plugins/datatables/datatables.all.min.js',
                         'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                        'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                        'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                         'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -94,8 +92,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/advance/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -117,8 +113,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/bonus/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -128,8 +122,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/dividend/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -152,8 +144,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/order/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -163,8 +153,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/memberCharge/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -173,7 +161,6 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'static/metronic/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css',
-                    'static/metronic/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js',
                     'app/memberCharge/js/add.js?v=' + version
                 ]
             },
@@ -182,8 +169,6 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js',
                     'app/admMember/js/list.js?v=' + version
 
@@ -201,8 +186,6 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js',
                     'app/admDividend/js/list.js?v=' + version,
                 ]
@@ -220,8 +203,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admBonus/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -231,8 +212,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admOrder/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -242,8 +221,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admAdvance/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -289,8 +266,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admWarning/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -328,8 +303,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admHandleHistory/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },
@@ -339,8 +312,6 @@ angular
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admMemberCharge/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
-                    'static/metronic/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
-                    'static/metronic/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
             },

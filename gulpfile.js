@@ -19,12 +19,12 @@ gulp.task('loginjs', function() {
         .pipe(gulp.dest('./src/main/webapp/static/js'));
 });
 //
-// gulp.task('componentdatejs', function() {
-//     gulp.src('./src/main/webapp/static/metronic/pages/scripts/components-date-time-pickers.js')
-//         .pipe(rename('components-date-time-pickers.min.js'))
-//         .pipe(uglify())
-//         .pipe(gulp.dest('./src/main/webapp/static/metronic/pages/scripts'));
-// });
+gulp.task('componentdatejs', function() {
+    gulp.src('./src/main/webapp/static/metronic/pages/scripts/components-date-time-pickers.js')
+        .pipe(rename('components-date-time-pickers.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./src/main/webapp/static/metronic/pages/scripts'));
+});
 //
 // gulp.task('notifyjs', function () {
 //     gulp.src('./src/main/webapp/static/notify/notify.js')
@@ -85,8 +85,6 @@ gulp.task('servicesjs', function() {
         .pipe(uglify())
         .pipe(gulp.dest('./src/main/webapp/app'));
 });
-
-
 
 gulp.task('componentscss', function () {
     gulp.src('./src/main/webapp/static/metronic/global/css/components.css')

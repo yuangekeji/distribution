@@ -196,7 +196,7 @@
       select
         member_id
       from member_bonus
-    where bonus_type not in ('6')
+    where bonus_type not in ('6','3')
     <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
       and member_id = #{parameterMap.memberId}
     </if>

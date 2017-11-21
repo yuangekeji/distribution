@@ -1,0 +1,103 @@
+<h4 class="page-title">账户管理</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">账户管理</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <uib-tabset  >
+                            <uib-tab index="0" heading="转账">
+                                <div class="note note-info note-bordered">
+                                    <h4>奖金币余额：{{accountInfo.bonusAmt | number:2}}元</h4>
+                                </div>
+                                <form role="form" action="#">
+                                    <div class="form-group"  ng-class="{'has-error':validateErrors.transferAmtError}">
+                                        <label class="control-label">转账金额</label>
+                                        <input type="number" ng-mouseup="onlyNumber($event)" ng-keyup="onlyNumber($event)" ng-model="transfer.transferAmt" placeholder="转账金额" class="form-control input-circle" /></div>
+                                    <div class="form-group" ng-class="{'has-error':validateErrors.receivePhoneError}">
+                                        <label class="control-label">收款账户(请输入手机号)</label>
+                                        <input type="text" ng-model="transfer.receivePhone" placeholder="收款账户" class="form-control input-circle" /></div>
+                                    <div class="form-group"  ng-class="{'has-error':validateErrors.payPasswordError}">
+                                        <label class="control-label">支付密码</label>
+                                        <input type="password" ng-model="transfer.payPassword" placeholder="输入支付密码" class="form-control input-circle" /> </div>
+                                    <div class="margiv-top-10">
+                                        <a href="javascript:void(0);" ng-click="commitTransfer()" class="btn blue-steel">提交转账</a>
+                                        <button type="button" class="btn default" ui-sref="app.account">返回</button>
+                                    </div>
+                                </form>
+                            </uib-tab>
+                            <uib-tab index="1" heading="复投">
+                                <div class="note note-info note-bordered">
+                                    <h4>奖金币余额：{{accountInfo.bonusAmt | number:2}}元 </h4>
+                                    <h4>种子币余额：{{accountInfo.seedAmt | number:2}}元</h4>
+                                </div>
+                                <form action="#">
+                                    <!--复投的时候 奖金币账户和种子币账户二选一 -->
+                                    <div class="form-group"  ng-class="{'has-error':reOrdervalidateErrors.bonusTypeError}">
+                                        <label class="control-label">复投账户</label>
+                                        <div>
+                                            <select name="bonusType" ng-model="reOrder.bonusType" class="form-control input-circle" >
+                                                <option value="1">种子币</option>
+                                                <option value="2">奖金币</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error':reOrdervalidateErrors.orderQtyError}">
+                                        <label class="control-label">复投单数（600元/单）</label>
+                                        <div>
+                                            <input type="number" ng-mouseup="onlyNumber($event)" ng-keyup="onlyNumber($event)" ng-model="reOrder.orderQty"   placeholder="输入单数" class="form-control input-circle" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" >
+                                        <label class="control-label">复投需支付金额</label>
+                                        <input type="text" value="{{(reOrder.orderQty?reOrder.orderQty:0) * (reOrder.price?reOrder.price:0)}}" readonly  class="form-control input-circle" />
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error':reOrdervalidateErrors.amtError}">
+                                        <label class="control-label">扣除金额</label>
+                                        <input type="number" ng-mouseup="onlyNumber($event)" ng-keyup="onlyNumber($event)"  ng-model="reOrder.amt"  placeholder="输入扣除金额" class="form-control input-circle" />
+                                    </div>
+                                    <!--<div class="form-group" ng-class="{'has-error':reOrdervalidateErrors.bonusAmtError}">-->
+                                    <!--<label class="control-label">从奖金币中扣除</label>-->
+                                    <!--<input type="number"  ng-model="reOrder.bonusAmt"  placeholder="输入金额" class="form-control input-circle" />-->
+                                    <!--</div>-->
+                                    <div class="form-group" ng-if="reOrder.bonusType == '2'">
+                                        <label class="control-label">产品邮寄方式</label>
+                                        <select name="sendbypostyn" ng-model="reOrder.sendbypostyn" class="form-control input-circle" >
+                                            <option value="1">自提</option>
+                                            <option value="2">快递邮寄</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error':reOrdervalidateErrors.receiveNameError}"    ng-if="reOrder.bonusType == '2' && reOrder.sendbypostyn=='2'">
+                                        <label class="control-label">收货人</label>
+                                        <input type="text" class="form-control input-circle" ng-model="reOrder.receiveName" maxlength="50" placeholder="输入收货人姓名" />
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error':reOrdervalidateErrors.expressAddressError}"  ng-if="reOrder.bonusType == '2' && reOrder.sendbypostyn=='2'">
+                                        <label class="control-label">收货地址</label>
+                                        <input type="text" class="form-control input-circle" ng-model="reOrder.expressAddress" maxlength="255" placeholder="输入收货地址" />
+                                    </div>
+                                    <div class="form-group" ng-class="{'has-error':reOrdervalidateErrors.recevivePhoneError}"   ng-if="reOrder.bonusType == '2' && reOrder.sendbypostyn=='2'">
+                                        <label class="control-label">电话</label>
+                                        <input type="text" class="form-control input-circle" ng-model="reOrder.recevivePhone" maxlength="50" placeholder="输入电话" />
+                                    </div>
+                                    <div class="form-group"  ng-class="{'has-error':reOrdervalidateErrors.payPasswordError}">
+                                        <label class="control-label">支付密码</label>
+                                        <input type="password" ng-model="reOrder.payPassword" placeholder="输入支付密码" class="form-control input-circle" /> </div>
+                                    <div class="margin-top-10">
+                                        <a href="javascript:void(0);" ng-click="reOrderCommit()" class="btn blue-steel"> 提交复投</a>
+                                        <button type="button" class="btn default" ui-sref="app.account">返回</button>
+                                    </div>
+                                </form>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

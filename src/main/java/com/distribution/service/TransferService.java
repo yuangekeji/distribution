@@ -2,6 +2,7 @@ package com.distribution.service;
 
 import com.distribution.common.constant.Constant;
 import com.distribution.common.utils.CryptoUtil;
+import com.distribution.common.utils.Page;
 import com.distribution.dao.accountFlowHistory.mapper.AccountFlowHistoryMapper;
 import com.distribution.dao.accountFlowHistory.model.AccountFlowHistory;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
@@ -10,6 +11,7 @@ import com.distribution.dao.member.mapper.MemberMapper;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.transfer.mapper.TransferMapper;
+import com.distribution.dao.transfer.mapper.more.MoreTransferMapper;
 import com.distribution.dao.transfer.model.Transfer;
 import com.distribution.dao.transfer.model.more.MoreTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class TransferService {
     @Autowired
     private TransferMapper transferMapper;
 
+    @Autowired
+    private MoreTransferMapper moreTransferMapper;
     /**
      * 查询账户信息
      * @param accountManager
@@ -73,6 +77,7 @@ public class TransferService {
                 tsf.setCreateTime(new Date());
                 tsf.setTransferAmt(transfer.getTransferAmt());
                 tsf.setTransferTime(new Date());
+                tsf.setStatus("0");
 
                 //step1-1) 通过手机号找id收款人的
                 Member receivedMember = memberMapper.getMemberByPhone(transfer.getReceivePhone());
@@ -159,5 +164,15 @@ public class TransferService {
 
         //密码错误
         return  "pwdWrong";
+    }
+
+    /**
+     * description 转账记录查询
+     * @author sijeong
+     * */
+    public Page transferList(Page page) {
+        page.setTotalCount(moreTransferMapper.getTransferListCount(page));
+        page.setResult( moreTransferMapper.getTransferList(page));
+        return page;
     }
 }

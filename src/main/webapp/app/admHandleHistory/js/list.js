@@ -88,5 +88,6 @@ angular.module('admHandleHistory').filter("HandleTypeFilter",function () {
         if(input=='9'){return '公告管理'};
         if(input=='10'){return '分销管理'};
         if(input=='11'){return '分红包管理'};
+        if(input=='12'){return '转账管理'};
     }
 });

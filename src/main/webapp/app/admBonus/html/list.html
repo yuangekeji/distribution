@@ -95,11 +95,12 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div>
-                            <div class="text-center">
-                                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)"
-                                                         template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
-                            </div>
+                        <div class="text-center">
+                            <dir-pagination-controls
+                                    boundary-links="true"
+                                    on-page-change="pageChangeHandler(newPageNumber)"
+                                    template-url="app/common/pagination/dirPagination.tpl.html">
+                            </dir-pagination-controls>
                         </div>
                     </div>
                 </div>

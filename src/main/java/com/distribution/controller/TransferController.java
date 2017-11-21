@@ -2,6 +2,7 @@ package com.distribution.controller;
 
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
+import com.distribution.common.utils.Page;
 import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.transfer.model.more.MoreTransfer;
@@ -83,5 +84,16 @@ public class TransferController extends BasicController{
         return successMsg("result",result);
     }
 
+    /**
+     * 转账记录查询
+     */
+    @RequestMapping(value = "/getTransferList")
+    @ResponseBody
+    public JsonMessage getTransferList(@RequestBody Page page, HttpSession session){
+        Member member = (Member) getCurrentUser(session);
+        page.getParameterMap().put("memberId",member.getId());
+        page = transferService.transferList(page);
+        return successMsg(page);
+    }
 
 }

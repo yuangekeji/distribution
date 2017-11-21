@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.transfer.mapper.more.MoreTransferMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.transfer.model.Transfer" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="receive_id" property="receiveId" jdbcType="INTEGER" />
+    <result column="transfer_amt" property="transferAmt" jdbcType="DECIMAL" />
+    <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="receive_phone" property="receivePhone" jdbcType="VARCHAR" />
+    <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
+    <result column="cancel_time" property="cancelTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+
+  <sql id="Base_Column_List" >
+    id, member_id, receive_id, transfer_amt, transfer_time, create_id, create_time, member_phone, 
+    member_name, receive_phone, receive_name, cancel_time, status
+  </sql>
+  <!--转账记录查询-->
+  <select id="getTransferList" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page" >
+    select 
+    <include refid="Base_Column_List" />
+    from transfer
+    where 1 = 1
+    <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+      AND member_id = #{parameterMap.memberId}
+    </if>
+    <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+      AND member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
+    </if>
+    <if test="parameterMap.receiveName!=null and parameterMap.receiveName!=''">
+      AND receive_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.receiveName}))),'%') ESCAPE '*'
+    </if>
+    <if test="parameterMap.status!=null and parameterMap.status!=''">
+      AND status = #{parameterMap.status}
+    </if>
+    <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+      <![CDATA[AND DATE_FORMAT(transfer_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+    </if>
+    <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+      <![CDATA[AND DATE_FORMAT(transfer_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
+    </if>
+    <if test="parameterMap.cancelStartTime != null and parameterMap.cancelStartTime != ''">
+      <![CDATA[AND DATE_FORMAT(cancel_time, '%Y-%m-%d') >= #{parameterMap.cancelStartTime}]]>
+    </if>
+    <if test="parameterMap.cancelEndTime != null and parameterMap.cancelEndTime != ''">
+      <![CDATA[AND DATE_FORMAT(cancel_time, '%Y-%m-%d') <= #{parameterMap.cancelEndTime}]]>
+    </if>
+    order by transfer_time desc
+    <include refid="pageLimit"/>
+  </select>
+
+  <!--查詢总数-->
+  <select id="getTransferListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
+    select
+      count(*)
+    from transfer
+    where 1 = 1
+    <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+      AND member_id = #{parameterMap.memberId}
+    </if>
+    <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+      AND member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
+    </if>
+    <if test="parameterMap.status!=null and parameterMap.status!=''">
+      AND status = #{parameterMap.status}
+    </if>
+    <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+      <![CDATA[AND DATE_FORMAT(transfer_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+    </if>
+    <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+      <![CDATA[AND DATE_FORMAT(transfer_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
+    </if>
+    <if test="parameterMap.cancelStartTime != null and parameterMap.cancelStartTime != ''">
+      <![CDATA[AND DATE_FORMAT(cancel_time, '%Y-%m-%d') >= #{parameterMap.cancelStartTime}]]>
+    </if>
+    <if test="parameterMap.cancelEndTime != null and parameterMap.cancelEndTime != ''">
+      <![CDATA[AND DATE_FORMAT(cancel_time, '%Y-%m-%d') <= #{parameterMap.cancelEndTime}]]>
+    </if>
+  </select>
+
+  <!--Excel查询-->
+  <select id="getExcelTransferList" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from transfer
+    where 1 = 1
+    <if test="memberName!=null and memberName!=''">
+      AND member_name LIKE concat('%',concat('*',LTrim(RTrim(#{memberName}))),'%') ESCAPE '*'
+    </if>
+    <if test="status!=null and status!=''">
+      AND status = #{status}
+    </if>
+    <if test="startTime != null and startTime != ''">
+      <![CDATA[AND DATE_FORMAT(transfer_time, '%Y-%m-%d') >= #{startTime}]]>
+    </if>
+    <if test="endTime != null and endTime != ''">
+      <![CDATA[AND DATE_FORMAT(transfer_time, '%Y-%m-%d') <= #{endTime}]]>
+    </if>
+    <if test="cancelStartTime != null and cancelStartTime != ''">
+      <![CDATA[AND DATE_FORMAT(cancel_time, '%Y-%m-%d') >= #{cancelStartTime}]]>
+    </if>
+    <if test="cancelEndTime != null and cancelEndTime != ''">
+      <![CDATA[AND DATE_FORMAT(cancel_time, '%Y-%m-%d') <= #{cancelEndTime}]]>
+    </if>
+    order by transfer_time desc
+  </select>
+</mapper>

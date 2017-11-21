@@ -60,6 +60,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('account'),
                 controller: 'accountListCtrl'
           })
+        .state('app.transferReorder',{
+            url: '/transferReorder',
+            templateUrl: helper.basepath('account/html/transferReorder.html'),
+            resolve: helper.resolveFor('transferReorder'),
+            controller: 'transferReorderCtrl'
+        })
          .state('app.advance',{
                 url: '/advance',
                 templateUrl: helper.basepath('advance/html/list.html'),
@@ -259,5 +265,11 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admNotice/html/add.html'),
                 resolve: helper.resolveFor('admAddNotice'),
                 controller: 'admAddNoticeCtrl'
+            })
+            .state('app.admTransfer',{
+                url: '/admTransfer',
+                templateUrl: helper.basepath('admTransfer/html/list.html'),
+                resolve: helper.resolveFor('admTransfer.list'),
+                controller: 'admTransferListCtrl'
             })
     }]);

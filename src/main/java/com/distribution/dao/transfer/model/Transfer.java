@@ -26,6 +26,10 @@ public class Transfer {
 
     private String receiveName;
 
+    private Date cancelTime;
+
+    private String status;
+
     public Integer getId() {
         return id;
     }
@@ -112,5 +116,21 @@ public class Transfer {
 
     public void setReceiveName(String receiveName) {
         this.receiveName = receiveName == null ? null : receiveName.trim();
+    }
+
+    public Date getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(Date cancelTime) {
+        this.cancelTime = cancelTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 }

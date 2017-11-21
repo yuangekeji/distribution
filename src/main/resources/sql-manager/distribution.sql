@@ -75,7 +75,7 @@ CREATE TABLE `admin` (
   `role_id` int(11) DEFAULT NULL COMMENT '角色ID',
   `delete_flag` varchar(255) DEFAULT NULL COMMENT '管理员禁用/启用(启用:Y; 禁用: N)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='管理员';
 
 -- ----------------------------
 -- Records of admin
@@ -219,7 +219,7 @@ CREATE TABLE `bonus_cache_pool` (
   `update_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='资金发放池表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='资金发放池表';
 
 -- ----------------------------
 -- Records of bonus_cache_pool
@@ -921,3 +921,11 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `getParentList`(rootId INT) RETURNS v
   END
 ;;
 DELIMITER ;
+
+INSERT INTO `menu` VALUES (null, null, '转账管理', '15', 'app.admTransfer', 'icon-diamond');
+INSERT INTO `role_menu` VALUES ('2', '34');
+INSERT INTO `role_menu` VALUES ('3', '34');
+
+ALTER TABLE `transfer`
+ADD COLUMN `cancel_time`  datetime NULL COMMENT '撤销时间',
+ADD COLUMN `status`  varchar(255) DEFAULT '0' COMMENT '状态(0-转账成功， 1-撤销)';

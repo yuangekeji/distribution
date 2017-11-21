@@ -10,4 +10,3 @@ DB基本信息参照->\distribution\src\main\resources\jdbc.properties
 DB脚本参照 ->\distribution\src\main\resources\sql-manager\distribution.sql 
 (数据库有脚本更新时，需要维护)
 
-this is prod branch

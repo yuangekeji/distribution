@@ -135,8 +135,17 @@ angular
             {
                 name:'account',
                 files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/account/js/list.js?v=' + version,
-                    'static/metronic/global/plugins/fuelux/js/spinner.min.js']
+                    'static/metronic/pages/scripts/components-date-time-pickers.js']
+            },
+            {
+                name:'transferReorder',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/account/js/transferReorder.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
             },
             {
                 name:'order',
@@ -326,6 +335,14 @@ angular
                 name: 'admAddNotice',
                 files: [
                     'app/admNotice/js/add.js'
+                ]
+            },
+            {
+                name:'admTransfer.list',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admTransfer/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             }
         ]

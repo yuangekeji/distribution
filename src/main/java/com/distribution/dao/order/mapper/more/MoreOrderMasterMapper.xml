@@ -14,6 +14,7 @@
     <result column="express_fee" property="expressFee" jdbcType="DECIMAL" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
     <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
     <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
     <result column="member_level" property="memberLevel" jdbcType="VARCHAR" />
@@ -36,6 +37,7 @@
 
    <sql id="where">
        <where>
+
        <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
            AND a.member_id = #{parameterMap.memberId}
        </if>
@@ -60,6 +62,12 @@
        <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
            <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
        </if>
+       <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+           AND d.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
+       </if>
+       <if test="parameterMap.memberPhone!=null and parameterMap.memberPhone!=''">
+           AND d.member_phone LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberPhone}))),'%') ESCAPE '*'
+        </if>
        </where>
    </sql>
     <sql id="excel_where">
@@ -93,41 +101,50 @@
   </sql>
 
   <select id="getOrderListCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM order_master a   <include refid="where"/>
+    SELECT COUNT(0) FROM
+      order_master a
+      LEFT JOIN order_detail b
+      ON a.order_no = b.order_no
+      LEFT JOIN goods c
+      ON b.goods_cd = c.id
+      LEFT JOIN member d
+      ON a.member_id = d.id
+      <include refid="where"/>
   </select>
   
   <select id="getOrderList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
     SELECT a.id
-         , a.order_no
-         , a.order_category
-         , a.order_amt
-         , a.discount
-         , a.act_amt
-         , b.goods_cd
-         , c.goods_name
-         , b.order_qty
-         , a.express_fee
-         , a.member_id
-         , d.member_name
-         , a.receive_name
-         , a.express_address
-         , a.member_level
-         , a.order_statues
-         , a.express_no
-         , a.create_id
-         , a.create_time
-         , a.update_id
-         , a.update_time
-         , a.recevive_phone
-         , a.sendByPostYN
-         , a.bonus_account_type
+      , a.order_no
+      , a.order_category
+      , a.order_amt
+      , a.discount
+      , a.act_amt
+      , b.goods_cd
+      , c.goods_name
+      , b.order_qty
+      , a.express_fee
+      , a.member_id
+      , d.member_name
+      , d.member_phone
+      , a.receive_name
+      , a.express_address
+      , a.member_level
+      , a.order_statues
+      , a.express_no
+      , a.create_id
+      , a.create_time
+      , a.update_id
+      , a.update_time
+      , a.recevive_phone
+      , a.sendByPostYN
+      , a.bonus_account_type
       FROM order_master a
       LEFT JOIN order_detail b
-        ON a.order_no = b.order_no
+      ON a.order_no = b.order_no
       LEFT JOIN goods c
-        ON b.goods_cd = c.id
+      ON b.goods_cd = c.id
       LEFT JOIN member d
-        ON a.member_id = d.id
+      ON a.member_id = d.id
       <include refid="where"/>
       order by a.id desc
       <include refid="pageLimit"/>

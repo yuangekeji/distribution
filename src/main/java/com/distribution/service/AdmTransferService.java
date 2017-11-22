@@ -115,7 +115,9 @@ public class AdmTransferService {
             historyout.setCreateId(admin.getId());
             historyout.setType("1");      //1支出 进账2
             historyout.setFlowType(Constant.TRANSFEROUT); //转出
+            historyout.setTotalAmt(transfer.getTransferAmt());
             historyout.setBonusAmt(transfer.getTransferAmt());
+            historyout.setSeedAmt(new BigDecimal(0));
 
             AccountFlowHistory historyin = new AccountFlowHistory();
             historyin.setMemberId(transfer.getMemberId());
@@ -123,7 +125,9 @@ public class AdmTransferService {
             historyin.setCreateId(admin.getId());
             historyin.setType("2");      //1支出 进账2
             historyin.setFlowType(Constant.TRANSFERIN); //转出
+            historyin.setTotalAmt(transfer.getTransferAmt());
             historyin.setBonusAmt(transfer.getTransferAmt());
+            historyin.setSeedAmt(new BigDecimal(0));
 
             if(transAccount.getId() != null && transAccount.getId() >0
                     && recivedAccount.getId() !=null && recivedAccount.getId() >0){

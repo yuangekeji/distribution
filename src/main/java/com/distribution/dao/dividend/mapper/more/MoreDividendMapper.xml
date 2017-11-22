@@ -36,6 +36,12 @@
       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
         AND d.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
       </if>
+      <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+        AND m.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.memberPhone!=null and parameterMap.memberPhone!=''">
+        AND m.member_phone LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberPhone}))),'%') ESCAPE '*'
+      </if>
     </where>
   </sql>
   <sql id="pageLimit">
@@ -73,7 +79,7 @@
   <select id="getDividendListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
     select
      count(0) as count
-    from dividend d
+    from  dividend d join member m on d.member_id = m.id
     <include refid="where"/>
   </select>
   <select id="listAllNeedSendDividends" resultMap="BaseResultMap" parameterType="java.lang.String">

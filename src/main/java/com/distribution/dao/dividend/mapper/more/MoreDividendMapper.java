@@ -2,6 +2,7 @@ package com.distribution.dao.dividend.mapper.more;
 import java.util.List;
 import java.util.Map;
 
+import com.distribution.dao.dividend.model.more.MoreDividend;
 import org.springframework.stereotype.Repository;
 
 import com.distribution.common.utils.Page;
@@ -16,7 +17,7 @@ public interface MoreDividendMapper extends DividendMapper{
      * @param page
      * @return
      */
-    List<Dividend> getDividendList(Page page);
+    List<MoreDividend> getDividendList(Page page);
 
     /**
      * 查詢總條數

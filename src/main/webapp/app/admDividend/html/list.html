@@ -55,6 +55,8 @@
                             <thead>
                             <tr >
                                 <th >订单编号</th>
+                                <th >会员手机号</th>
+                                <th >会员名</th>
                                 <th >分红包个数</th>
                                 <th >订单金额</th>
                                 <th >已领取金额</th>
@@ -68,6 +70,8 @@
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
                                 total-items="myPage.totalCount">
                                 <td >{{row.orderNo}}</td>
+                                <td >{{row.memberPhone}}</td>
+                                <td >{{row.memberName}}</td>
                                 <td >{{row.dividendCount}}</td>
                                 <td >{{row.orderAmount | number:2}}</td>
                                 <td >{{row.receivedAmount | number:2}}</td>

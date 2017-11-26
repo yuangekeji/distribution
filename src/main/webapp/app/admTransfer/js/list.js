@@ -100,7 +100,7 @@ angular.module('admTransfer').controller('admTransferListCtrl',function ($q, tit
             $http.post(ctx + "/admTransfer/CancelTransfer",{id:id, memberId:memberId, memberName:memberName, receiveId:receiveId, receiveName:receiveName, transferAmt:transferAmt, status:status}).success(function (resp) {
                 if(resp.successful){
                     if(resp.data.result == "transferFail") {
-                        Notify.error("收款人奖金币不足，转账撤销失败。");
+                        Notify.error("收款人账户奖金币余额不足，转账撤销失败。");
                     }else if(resp.data.result == "transferWarning") {
                         Notify.warning("该操作已被完成，转账撤销已完成。");
                     }else {

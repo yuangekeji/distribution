@@ -16,16 +16,15 @@ public class Constant {
     //资金流向类型（支出：复投1，转出2，提现3 , 报单单 7, 折扣单 8；收入：分红包奖金4，转入5，动态奖金6）
     //account_flow_history.flow_type字段
 
-    public static final String REORDER = "1";     //复投
-    public static final String TRANSFEROUT = "2"; //转出
-    public static final String ADVANCE  = "3";    //提现
-    public static final String DIVIDEND = "4";    //报单
-    public static final String TRANSFERIN = "5";  //转入
-    public static final String BONUS = "6";       //动态奖金
-    public static final String MEMBERORDER   = "7";
-    public static final String DISCOUNTORDER = "8";
-    public static final String MEMBERCHARGE  = "9"; //用户充值申请或管理员充值
-    public static final String CANCLE_ADVANCE = "10";
+    public static final String REORDER     = "1";    //复投    1
+    public static final String TRANSFEROUT = "2";    //转出   1
+    public static final String ADVANCE      = "3";   //提现   1
+//    public static final String TRANSFERIN   = "5";    //转入  2
+    public static final String TRANSFERIN   = "11";   //转入  2
+    public static final String MEMBERORDER   = "7";  //报单 1
+    public static final String DISCOUNTORDER = "8";  //折扣单 1
+    public static final String MEMBERCHARGE   = "9";  //用户充值申请或管理员充值 2
+    public static final String CANCLE_ADVANCE = "10"; //取消提现  2
 
     public static final String BONUSACCOUNTTYPE_SEED ="1"; //种子币
     public static final String BONUSACCOUNTTYPE_BONUS ="2";//奖金币

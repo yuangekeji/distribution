@@ -134,6 +134,21 @@ angular.module('order').controller('orderCtrl', function (title, $scope, $http, 
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+    //订单号复制
+    $scope.copyOrder = function (orderNo) {
+        // 创建元素用于复制
+        var aux = document.createElement("input");
+        // 设置元素内容
+        aux.setAttribute("value", orderNo);
+        // 将元素插入页面进行调用
+        document.body.appendChild(aux);
+        // 复制内容
+        aux.select();
+        // 将内容复制到剪贴板
+        document.execCommand("copy");
+        // 删除创建元素
+        document.body.removeChild(aux);
+    }
 });
 
 angular.module('order').controller('expressMessageCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {

@@ -151,7 +151,7 @@ angular.module('app').config([
                 controller: 'admDividendDetailCtrl'
             })
             .state('app.admBonus',{
-                url: '/admBonus',
+                url: '/admBonus/:orderNo',
                 templateUrl: helper.basepath('admBonus/html/list.html'),
                 resolve: helper.resolveFor('admBonus'),
                 controller: 'admBonusCtrl'

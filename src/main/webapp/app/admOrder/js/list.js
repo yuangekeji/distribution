@@ -207,6 +207,25 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+    //订单号复制
+    $scope.copyOrder = function (orderNo) {
+        // 创建元素用于复制
+        var aux = document.createElement("input");
+        // 设置元素内容
+        aux.setAttribute("value", orderNo);
+        // 将元素插入页面进行调用
+        document.body.appendChild(aux);
+        // 复制内容
+        aux.select();
+        // 将内容复制到剪贴板
+        document.execCommand("copy");
+        // 删除创建元素
+        document.body.removeChild(aux);
+    }
+    //分销管理页面跳转
+    $scope.gotoAdmBonus = function (orderNo) {
+        $state.go("app.admBonus", {orderNo: orderNo});
+    }
 });
 
 angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, Notify) {

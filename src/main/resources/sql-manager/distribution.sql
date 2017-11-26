@@ -953,6 +953,9 @@ where flow_type = '10月31日见点奖恢复';
 
 update account_flow_history set flow_type = 11 where type = 2 and flow_type =5 and total_amt is null;
 
+delete from transfer where id= 710;
+
+
 select *,
   case when type =1 and flow_type =1 then '复投'
   when type =1 and flow_type =2 then '转出'

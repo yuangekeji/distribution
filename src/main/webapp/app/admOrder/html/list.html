@@ -134,7 +134,7 @@
                                 <th class="text-center" width="5%">支付类型</th>
                                 <th class="text-center" width="5%">快递费</th>
                                 <th class="text-center" width="30%">商品名信息</th>
-                                <!--<th class="text-center" width="10%">订单时间</th>-->
+                                <th class="text-center" width="10%">订单时间</th>
                                 <th class="text-center" width="5%">订单状态</th>
                                 <th class="text-center" width="7%">物流信息</th>
                                 <th class="text-center" width="9%">操作</th>
@@ -143,7 +143,7 @@
                             <tbody>
                             <tr ng-show= "!notData" class="odd gradeX" dir-paginate="orderMaster in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
                                 <td class="text-left"><a ng-click="gotoAdmBonus(orderMaster.orderNo);" style="text-decoration:underline;">{{orderMaster.orderNo}}</a>
-                                    <button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="copyOrder(orderMaster.orderNo)">复制</button>
+                                    <!--<button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="copyOrder(orderMaster.orderNo)">复制</button>-->
                                 </td>
                                 <td class="text-left">{{orderMaster.orderCategory|OrderCategoryFilter}}</td>
                                 <td class="text-left">{{orderMaster.memberName}}</td>
@@ -159,7 +159,7 @@
                                     {{orderMaster.orderQty}}
                                     <span ng-show="orderMaster.orderQty != null">个</span>
                                 </td>
-                                <!--<td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd'}}</td>-->
+                                <td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd'}}</td>
                                 <td class="text-left">
                                     <span class="label label-sm " ng-class="{'label-default': orderMaster.orderStatues == '1', 'label-info': orderMaster.orderStatues == '2', 'label-primary': orderMaster.orderStatues == '3', 'label-success': orderMaster.orderStatues == '4'}">
                                     {{orderMaster.orderStatues|OrderStatuesFilter}}

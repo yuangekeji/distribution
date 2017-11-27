@@ -181,7 +181,7 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', 
                        alert("404找不到路径");
                        break;
                    default:
-                       alert("未知错误");
+                       console.error("未知错误");
                }
              if(response.status == 500 ){
                  // $window.location.reload();

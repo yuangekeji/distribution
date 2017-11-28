@@ -36,7 +36,7 @@
     from transfer
     where 1 = 1
     <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-      AND member_id = #{parameterMap.memberId}
+      AND (member_id = #{parameterMap.memberId} or receive_id = #{parameterMap.memberId} )
     </if>
     <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
       AND member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
@@ -70,7 +70,7 @@
     from transfer
     where 1 = 1
     <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-      AND member_id = #{parameterMap.memberId}
+      AND (member_id = #{parameterMap.memberId} or receive_id = #{parameterMap.memberId} )
     </if>
     <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
       AND member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'

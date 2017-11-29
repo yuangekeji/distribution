@@ -8,7 +8,7 @@ angular.module('admBonus').controller('admBonusCtrl',function ($q, title, $scope
         totalCount: 0,
         result: [],
         parameterMap: {
-            orderNo:'',
+            orderNo: $stateParams.orderNo,
             chinaPresidentBonusYN: true
         }
     };

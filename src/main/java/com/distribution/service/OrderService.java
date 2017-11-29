@@ -197,11 +197,11 @@ public class OrderService {
         accountFlowHistory.setTotalAmt(accountFlowHistory.getSeedAmt().add(accountFlowHistory.getBonusAmt()));
         accountFlowHistory.setType("1");
         if("1".equals(moreOrderMaster.getOrderCategory())){
-            accountFlowHistory.setFlowType(Constant.MEMBERORDER);
+            accountFlowHistory.setFlowType(Constant.MEMBERORDER);//报单
         }else if("2".equals(moreOrderMaster.getOrderCategory())){
-            accountFlowHistory.setFlowType(Constant.REORDER);
+            accountFlowHistory.setFlowType(Constant.REORDER);//复投
         }else if("3".equals(moreOrderMaster.getOrderCategory())){
-            accountFlowHistory.setFlowType(Constant.DISCOUNTORDER);
+            accountFlowHistory.setFlowType(Constant.DISCOUNTORDER);//折扣单
         }
 
         cnt5 = accountFlowHistoryMapper.insert(accountFlowHistory);

@@ -3,16 +3,14 @@
  * @author Bright
  * */
 
-//休息时间true,正常false
-var offTime = false;
-
-
 function login() {
-	if(offTime){
-		alert('很抱歉现在属于维护时间，系统不能使用，明日上午9点后可恢复，给您带来不便深感歉意。');
-		return false;
-	}
-	if(check()) {
+    var date = new Date();
+    var now = date.getHours();
+    if(now < 4){
+        alert('凌晨12点到4点之间属于系统业务处理时间，给您带来不便深感歉意，请在其他时间访问系统，谢谢配合。');
+        return;
+    }
+    if(check()) {
         $.ajax({
             type: "POST",
             url: ctx + "/member/login",
@@ -43,17 +41,19 @@ function login() {
  * @author Bright
  * */
 function check() {
+
+
     var userName = $("#username").val();
-	var password = $("#passwd").val();
-	if(!userName||!userName.trim()){
+    var password = $("#passwd").val();
+    if(!userName||!userName.trim()){
         $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户名不能为空，请重新输入");
-		return false;
-	}else if(/^[\u4e00-\u9fa5]+$/.test(userName)){
+        return false;
+    }else if(/^[\u4e00-\u9fa5]+$/.test(userName)){
         $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户名不能为汉字，请重新输入");
-		return false;
-	}else if(!password||!password.trim()){
+        return false;
+    }else if(!password||!password.trim()){
         $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("密码不能为空，请重新输入");
         return false;
-	}
-	return true;
+    }
+    return true;
 }

@@ -69,4 +69,9 @@ public interface MoreMemberMapper extends MemberMapper{
      * 验证支付密码
      * */
     Member checkPayPwd(MoreMember moreMember);
+
+    /**
+     * 修改会员姓名
+     * */
+    int updateByRecommendId(MoreMember moreMember);
 }

@@ -140,7 +140,10 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
             })
         });
     }
-
+    //会员详情页面跳转
+    $scope.gotoAdmMemberInfo = function (memberId) {
+        $state.go("app.admMemberInfo", {memberId: memberId});
+    }
 });
 
 // angular.module('admMember').filter("MemberLevelFilter",function () {

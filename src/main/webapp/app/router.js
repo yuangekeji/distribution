@@ -272,4 +272,10 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admTransfer.list'),
                 controller: 'admTransferListCtrl'
             })
+            .state('app.admMemberInfo',{
+                url: '/admMemberInfo/:memberId',
+                templateUrl: helper.basepath('admMember/html/memberInfo.html'),
+                resolve: helper.resolveFor('admMemberInfo'),
+                controller: 'admMemberInfoCtrl'
+            })
     }]);

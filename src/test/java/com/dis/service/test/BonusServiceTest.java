@@ -64,7 +64,7 @@ public class BonusServiceTest extends SpringServiceTest{
 		order.setCreateId(6);
 		order.setOrderNo(new Long("1701235"));
 		order.setCreateTime(new Date());
-		int nodeId = 10;
+		int nodeId = 167;
 		bonusService.insertMemberLevelBonus(nodeId, order);
 	}
 	@Test

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.distribution.dao.memberBonus.model.more.MoreMemberBonus;
+
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -215,7 +216,8 @@ public class BonusService {
 	 */
 	public void insertMemberLevelBonus(int nodeId,OrderMaster order){
 		//查找当前节点的所有父节点信息，从小到大升序排列；
-        List<MoreMemberNode> list = moreNodeMapper.listParentIsManageLevelNodes(nodeId);
+		Map<String,Object> ids = nodeService.getParentNodeIdsMap(nodeId);
+        List<MoreMemberNode> list = moreNodeMapper.listParentIsManageLevelNodes(ids);
         for(MoreMemberNode m : list){
         	//当前节点不参与奖金计算
         	int memberId = m.getMemberId();
@@ -255,7 +257,8 @@ public class BonusService {
 	 */
 	public void insertWorkRoomAndOperatingCenterBonus(int nodeId,OrderMaster order){
 	    //根据当前节点ID查找所有上级会员节点
-		List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
+		Map<String,Object> ids = nodeService.getParentNodeIdsMap(nodeId);
+		List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(ids);
 		for(int i=0;i<list.size();i++){
 			MoreMemberNode m = list.get(i);
 			//忽略当前节点

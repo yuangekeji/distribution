@@ -96,7 +96,7 @@ public class NodeService {
 	public MemberNode getParentNode(int recommendNodeId){
 		MemberNode result = null;
 		//查询结果中的节点ID从小到大排列，不能人为调整节点主键值。
-		List<MemberNode> list = moreNodeMapper.listSubNodesByRecommendNode(recommendNodeId);
+		List<MemberNode> list = moreNodeMapper.listSubNodesByRecommendNode(getSubNodeIdsMap(recommendNodeId));
 		Queue<MemberNode> q = new LinkedList<MemberNode>();
 		q.add(list.get(0));
 		while(!q.isEmpty()){
@@ -167,7 +167,7 @@ public class NodeService {
 	public void insertMemberNodeBonus(int nodeId,OrderMaster order){
 		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
         //查找当前节点的所有父节点，查找其直销的卡数是多少张。
-        List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(nodeId);
+        List<MoreMemberNode> list = moreNodeMapper.listParentNodesWithMemberInfo(getParentNodeIdsMap(nodeId));
        
         for(MoreMemberNode m:list){
         	//忽略当前节点
@@ -221,15 +221,16 @@ public class NodeService {
 	 * @author su
 	 */
 	public void processMemberPromotion(int nodeId,int updateId){
-		
 		//根据当前会员的nodeId查询其所有上级;
-		List<MemberNode> list = moreNodeMapper.findParentNodes(nodeId);
+		List<MemberNode> list = moreNodeMapper.findParentNodes(getParentNodeIdsMap(nodeId));
 		//对返回的字符串进行处理
 		if(null != list && list.size() > 0){
 			int promNodeId = 0;
 			for(MemberNode node : list){
 				//查询其下属所有节点的销售业绩,不包括自己。
-				double total = moreNodeMapper.findTotalSalesByParentIdNotIncludeCurrentNode(node.getId());
+				Map<String,Object> map = this.getSubNodeIdsMap(node.getId());
+				map.put("parentId", node.getId());
+				double total = moreNodeMapper.findTotalSalesByParentIdNotIncludeCurrentNode(map);
 				//判断是否符合主任晋升标准
 				if(total >= commonService.getPromotionStandard(BonusConstant.D10,BonusConstant.CODE_00)){
 			        //更新会员级别为主任，其上级中不是主任的都升为主任。
@@ -262,6 +263,8 @@ public class NodeService {
         
 		Map<String,Object> param = setParamMap(nodeId,fromLevel,toLevel);
 		//查找带左右子节点上级
+		String ids = this.getParentNodeIds(nodeId);
+		param.put("array", ids.split(","));
         List<MoreMemberNode> list = moreNodeMapper.listParentNodesWhichHasTwoSubNodes(param);
         List<Integer> members = new ArrayList<Integer>();
         for(MoreMemberNode node:list){
@@ -297,7 +300,8 @@ public class NodeService {
 		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		TransactionStatus txStatus = txManager.getTransaction(def);
 		try {
-			List<MemberNode> list = moreNodeMapper.findParentNodes(nodeId);
+			//20171125 优化查询方式
+			List<MemberNode> list = moreNodeMapper.findParentNodes(getParentNodeIdsMap(nodeId));
 			if(null != list && list.size() > 0){
 				Map<String,Object> param = setParamMap(nodeId,fromLevel,toLevel);
 				param.put("list", list);
@@ -376,7 +380,7 @@ public class NodeService {
 		//构建根节点
 		CustomNode root = new CustomNode(nodeId);
 		//查询结果中的节点ID从小到大排列，不能人为调整节点主键值。
-		List<MoreMemberNode> list = moreNodeMapper.listSubNodes(nodeId);
+		List<MoreMemberNode> list = moreNodeMapper.listSubNodes(getSubNodeIdsMap(nodeId));
 		root = convertBiTree(root,list);
 		return root;
 	}
@@ -453,13 +457,15 @@ public class NodeService {
 		}
 		//左节点的所有子节点
 		if(node.getLeftId()!=null && !"".equals(node.getLeftId())){
-
-			List<MoreMemberNode> leftNum = moreNodeMapper.listSubNodes(node.getLeftId());
-			if(null != leftNum && leftNum.size() > 0){
-				//左节点的所有销售额，不包含折扣单
-				Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(node.getLeftId());
-				map.put("leftNum", String.valueOf(leftNum.size()));
-				map.put("leftToalSales", String.valueOf(leftToalSales));
+			Map<String,Object> ids = this.getSubNodeIdsMap(node.getLeftId());
+			if(null != ids){
+				String[] leftNum = (String[])ids.get("array");
+				if(null != leftNum && leftNum.length > 0){
+					//左节点的所有销售额，不包含折扣单
+					Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(ids);
+					map.put("leftNum", String.valueOf(leftNum.length));
+					map.put("leftToalSales", String.valueOf(leftToalSales));
+				}
 			}
 		}else{
 			map.put("leftNum", "0");
@@ -468,12 +474,15 @@ public class NodeService {
 
 		if(node.getRightId()!=null && !"".equals(node.getRightId())) {
 			//右节点的所有子节点
-			List<MoreMemberNode> rightNum = moreNodeMapper.listSubNodes(node.getRightId());
-			if (null != rightNum && rightNum.size() > 0) {
-				//右节点的所有销售额，不包含折扣单
-				Double rightToalSales = moreNodeMapper.findTotalSalesByParentId(node.getRightId());
-				map.put("rightNum", String.valueOf(rightNum.size()));
-				map.put("rightToalSales", String.valueOf(rightToalSales));
+			Map<String,Object> ids = this.getSubNodeIdsMap(node.getRightId());
+			if(null != ids){
+				String[] rightNum = (String[])ids.get("array");
+				if (null != rightNum && rightNum.length > 0) {
+					//右节点的所有销售额，不包含折扣单
+					Double rightToalSales = moreNodeMapper.findTotalSalesByParentId(ids);
+					map.put("rightNum", String.valueOf(rightNum.length));
+					map.put("rightToalSales", String.valueOf(rightToalSales));
+				}
 			}
 		}else{
 			map.put("rightNum", "0");
@@ -527,5 +536,37 @@ public class NodeService {
 			m.setBonusAmount(m.getOrderQty() * nodeBonus);
 		}
 		return total;
+	}
+	/**
+	 * Name: 获取所有子节点
+	 * Description: 
+	 * @date 2017年11月26日 下午4:14:01
+	 * @param nodeId
+	 * @return
+	 */
+	public String getSubNodeIds(int nodeId){
+		return moreNodeMapper.getSubNodes(nodeId);
+	}
+	public Map<String,Object> getSubNodeIdsMap(int nodeId){
+		Map<String,Object> map = new HashMap<String,Object>();
+		String ids = moreNodeMapper.getSubNodes(nodeId);
+		map.put("array", ids.split(","));
+		return map;
+	}
+	/**
+	 * Name: 获取所有父亲节点
+	 * Description: 
+	 * @date 2017年11月26日 下午4:14:01
+	 * @param nodeId
+	 * @return
+	 */
+	public String getParentNodeIds(int nodeId){
+		return moreNodeMapper.getParentNodes(nodeId);
+	}
+	public Map<String,Object> getParentNodeIdsMap(int nodeId){
+		String ids = moreNodeMapper.getParentNodes(nodeId);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("array", ids.split(","));
+		return map;
 	}
 }

@@ -11,6 +11,7 @@ angular.module('account').controller('transferReorderCtrl',
         $scope.transfer = {};
         //定义复投model
         $scope.reOrder = {};
+        $scope.reOrderQtys = [];
 
         $scope.onlyNumber = function (event) {
             var value = event.target.value;
@@ -67,6 +68,24 @@ angular.module('account').controller('transferReorderCtrl',
                 expressAddress:$scope.user.expressAddress,
                 recevivePhone:$scope.user.linkmanPhone
             }
+
+
+            var MIN = 600;
+            var MAX = 30000;
+            for(var i = 1 ; i<= MAX/MIN ; i++ ){
+                $scope.reOrderQtys.push({value: i  , name :  i +"单"});
+            }
+            // $scope.reOrderQtys.unshift({value:"",name:"请选择复投单数"});
+            // $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
+            //     if(resp.successful){
+            //         $scope.dictionary = resp.data.list;
+            //         if($scope.dictionary){
+            //             $scope.member.memberLevel = $scope.dictionary[0].dicCode;
+            //         }
+            //     }else{
+            //         console.log(resp);
+            //     }
+            // });
         }
         $scope.onInit();
         $scope.commitTransfer= function () {
@@ -274,6 +293,10 @@ angular.module('account').controller('transferReorderCtrl',
                 return false;
             }
 
+            if($scope.reOrder.orderQty < 0 || $scope.reOrder.orderAmt < 0 ){
+                Notify.warning('请输入正确金额的信息。');
+                return false;
+            }
 
             $scope.startLoading();
 

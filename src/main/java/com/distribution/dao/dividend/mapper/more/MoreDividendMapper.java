@@ -2,12 +2,12 @@ package com.distribution.dao.dividend.mapper.more;
 import java.util.List;
 import java.util.Map;
 
-import com.distribution.dao.dividend.model.more.MoreDividend;
 import org.springframework.stereotype.Repository;
 
 import com.distribution.common.utils.Page;
 import com.distribution.dao.dividend.mapper.DividendMapper;
 import com.distribution.dao.dividend.model.Dividend;
+import com.distribution.dao.dividend.model.more.MoreDividend;
 
 @Repository
 public interface MoreDividendMapper extends DividendMapper{

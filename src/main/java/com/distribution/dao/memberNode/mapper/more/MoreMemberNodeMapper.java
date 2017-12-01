@@ -9,14 +9,16 @@ import com.distribution.dao.memberNode.model.more.MoreMemberNode;
 
 public interface MoreMemberNodeMapper extends MemberNodeMapper{
 	int insertBackId(MemberNode record);
-	List<MemberNode> findParentNodes(int nodeId);
-	Double findTotalSalesByParentId(int parentId);
-	Double findTotalSalesByParentIdNotIncludeCurrentNode(int parentId);
+	List<MemberNode> findParentNodes(Map<String,Object> map);
+	Double findTotalSalesByParentId(Map<String,Object> map);
+	Double findTotalSalesByParentIdNotIncludeCurrentNode(Map<String,Object> map);
 	int updateParentLevel(Map<String,Object> map);
 	List<MoreMemberNode> listParentNodesWhichHasTwoSubNodes(Map<String,Object> map);
-	List<MoreMemberNode> listParentIsManageLevelNodes(int nodeId);
-	List<MoreMemberNode> listSubNodes(int nodeId);
-	List<MoreMemberNode> listParentNodesWithMemberInfo(int nodeId);
+	List<MoreMemberNode> listParentIsManageLevelNodes(Map<String,Object> map);
+	List<MoreMemberNode> listSubNodes(Map<String,Object> map);
+	List<MoreMemberNode> listParentNodesWithMemberInfo(Map<String,Object> map);
 	Map<String,Object> getSubNodesIsSalesDept(int nodeId);
-	List<MemberNode> listSubNodesByRecommendNode(int nodeId);
+	List<MemberNode> listSubNodesByRecommendNode(Map<String,Object> map);
+	String getSubNodes(int nodeId);
+	String getParentNodes(int nodeId);
 }

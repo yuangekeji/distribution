@@ -46,7 +46,8 @@ public class MenuController extends BasicController {
             //如果是前台会员登录
             Member member = (Member) getCurrentUser(session);
 
-            if(member.getId() > 1 && !"Y".equals(member.getIsOperator()) && !"Y".equals(member.getIsSalesDept()) && member.getRecommendId() !=0){
+//            if(member.getId() > 1 && !"Y".equals(member.getIsOperator()) && !"Y".equals(member.getIsSalesDept()) && member.getRecommendId() !=0){
+            if(member.getId() > 1 ){
                 for (int i = 0; i < menus.size(); i++) {
                     Menu menu = menus.get(i);
                     if ("app.graph".equals(menu.getMenuLink())) {

@@ -220,4 +220,19 @@
   <select id="checkPayPwd" parameterType="com.distribution.dao.member.model.more.MoreMember" resultMap="BaseResultMap">
     SELECT id,pay_password FROM member WHERE id = #{id} AND pay_password = #{oldPayPwd}
   </select>
+  <update id="updateByRecommendId" parameterType="com.distribution.dao.member.model.more.MoreMember" >
+    update member
+    <set >
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recommendName != null" >
+        recommend_name = #{recommendName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where recommend_id = #{recommendId,jdbcType=INTEGER}
+  </update>
 </mapper>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.distribution.dao.dividend.mapper.more.MoreDividendMapper" >
-  <resultMap id="BaseResultMap" type="com.distribution.dao.dividend.model.Dividend" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.dividend.model.more.MoreDividend" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="member_id" property="memberId" jdbcType="INTEGER" />
     <result column="order_id" property="orderId" jdbcType="INTEGER" />
@@ -17,6 +17,8 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_id" property="updateId" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, member_id, order_id, order_no, order_amount, dividend_count, received_amount, 
@@ -26,13 +28,19 @@
   <sql id="where">
     <where>
       <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
-        AND member_id = #{parameterMap.memberId}
+        AND d.member_id = #{parameterMap.memberId}
       </if>
       <if test="parameterMap.dividendStatus!=null and parameterMap.dividendStatus!=''">
-        AND dividend_status = #{parameterMap.dividendStatus}
+        AND d.dividend_status = #{parameterMap.dividendStatus}
       </if>
       <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
-        AND order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
+        AND d.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+        AND m.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.memberPhone!=null and parameterMap.memberPhone!=''">
+        AND m.member_phone LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberPhone}))),'%') ESCAPE '*'
       </if>
     </where>
   </sql>
@@ -45,17 +53,33 @@
   </sql>
   <select id="getDividendList" resultMap="BaseResultMap" parameterType="com.distribution.common.utils.Page" >
     select
-    <include refid="Base_Column_List" />
-    from dividend
+      d.id,
+      d.member_id,
+      d.order_id,
+      d.order_no,
+      d.order_amount,
+      d.dividend_count,
+      d.received_amount,
+      d.remain_amount,
+      d.dividend_limit,
+      d.dividend_status,
+      d.mgmt_fee,
+      d.create_id,
+      d.create_time,
+      d.update_id,
+      d.update_time,
+      m.member_name,
+      m.member_phone
+    from dividend d join member m on d.member_id = m.id
     <include refid="where"/>
-    order by id desc
+    order by d.id desc
     <include refid="pageLimit"/>
 
   </select>
   <select id="getDividendListCount" resultType="java.lang.Integer" parameterType="com.distribution.common.utils.Page" >
     select
      count(0) as count
-    from dividend
+    from  dividend d join member m on d.member_id = m.id
     <include refid="where"/>
   </select>
   <select id="listAllNeedSendDividends" resultMap="BaseResultMap" parameterType="java.lang.String">

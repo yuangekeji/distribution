@@ -69,7 +69,7 @@
                             </thead>
                             <tbody>
                                 <tr class="odd gradeX" ng-show= "!notData" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
-                                <td>{{member.memberName}}</td>
+                                    <td><a ng-click="gotoAdmMemberInfo(member.id);" style="text-decoration:underline;">{{member.memberName}}</a></td>
                                 <td>{{member.memberPost|PostLevelFilter}}</td>
                                 <td>{{member.memberPhone}}</td>
                                 <td>{{member.orderAmount | number:2}}</td>

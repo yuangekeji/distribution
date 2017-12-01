@@ -929,3 +929,49 @@ INSERT INTO `role_menu` VALUES ('3', '34');
 ALTER TABLE `transfer`
 ADD COLUMN `cancel_time`  datetime NULL COMMENT '撤销时间',
 ADD COLUMN `status`  varchar(255) DEFAULT '0' COMMENT '状态(0-转账成功， 1-撤销)';
+
+-- 转账的code 从 5-》11
+-- 新增备注自动
+ALTER TABLE `account_flow_history`
+  ADD COLUMN `remark`  VARCHAR(255) NULL COMMENT '备注';
+
+update account_flow_history  set remark='复投出错，恢复种子币600元' ,
+  flow_type = -99
+where flow_type = '复投出错，恢复种子币600元';
+
+update account_flow_history  set remark='管理员重复充值，扣除充值金额1800元' ,
+  flow_type = -99
+where flow_type = '管理员重复充值，扣除充值金额1800元';
+
+update account_flow_history  set remark='系统收回误发的币' ,
+  flow_type = -99
+where flow_type = '系统收回误发的币';
+
+update account_flow_history  set remark='10月31日见点奖恢复' ,
+  flow_type = -99
+where flow_type = '10月31日见点奖恢复';
+
+update account_flow_history set flow_type = 11 where type = 2 and flow_type =5 and total_amt is null;
+
+delete from transfer where id= 710;
+
+
+select *,
+  case when type =1 and flow_type =1 then '复投'
+  when type =1 and flow_type =2 then '转出'
+  when type =1 and flow_type =3 then '提现'
+  when type =1 and flow_type = 7 then '报单'
+  when type =1 and flow_type = 8 then '折扣单'
+  when type =2 and flow_type = 0 then '1代奖'
+  when type =2 and flow_type = 1 then '2代奖'
+  when type =2 and flow_type = 2 then '3代奖'
+  when type =2 and flow_type = 11 then '转入'
+  when type =2 and flow_type = 3 then '分红包奖'
+  when type =2 and flow_type = 4 then '见点奖'
+  when type =2 and flow_type =5 then '级差奖'
+  when type =2 and flow_type = 8 then '运营中心奖'
+  when type =2 and flow_type= 9 then '管理员充值'
+  when type =1 and flow_type = -99 then '支出-管理员手动调整数据'
+  when type =2 and flow_type = -99 then '收入-管理员手动调整数据'
+  end as remark  from account_flow_history GROUP BY type , flow_type;
+

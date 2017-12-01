@@ -344,6 +344,14 @@ angular
                     'app/admTransfer/js/list.js?v=' + version,
                     'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
+            },
+            {
+                name:'admMemberInfo',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admMember/js/memberInfo.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
+                ]
             }
         ]
     });

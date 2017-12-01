@@ -1,0 +1,192 @@
+<h4 class="page-title">会员详情</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">会员详情</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <uib-tabset>
+                            <uib-tab index="0" heading="会员信息">
+                                <form action="#">
+                                    <div class="form-group">
+                                        <div class="portlet-body">
+                                            <div class="table-scrollable table-scrollable-borderless">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            会员姓名
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            <input type="text" style="height:23px; display:inline-block; width: 70%" class="form-control input-circle" ng-model="MemberInfo.memberName" maxlength="100"/>
+                                                            <a href="javascript:void(0);" ng-click="updateMemberName();" style="display: inline-block" class="btn blue-steel btn-xs">修改</a>
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            会员账号
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.memberPhone}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            加入时间
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.createTime|date:'yyyy年MM月dd日'}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            注册金额
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.orderAmount}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            爵位等级
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.memberPost|PostLevelFilter}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            推荐人
+                                                        </td>
+                                                        <td class="black-font text-right" width="10%">{{MemberInfo.recommendName}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            是否是运营中心
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.isOperator=='Y'?'是':'否'}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            一代人数
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            身份证号码
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.idNumber}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            收货人
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.consignee}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            联系人手机号
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.linkmanPhone}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            开户行
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.bankName}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            开户姓名
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.bankUserName}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            银行卡号
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cardNumber}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            收货地址
+                                                        </td>
+                                                        <td class="black-font text-left" colspan="3">{{MemberInfo.expressAddress}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="margin-top-10">
+                                        <a class="btn default" ui-sref="app.admMember">返回</a>
+                                    </div>
+                                </form>
+                            </uib-tab>
+                            <uib-tab index="1" heading="账户信息">
+                                <form action="#">
+                                    <div class="form-group">
+                                        <div class="portlet-body">
+                                            <div class="table-scrollable table-scrollable-borderless">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            市级市场业绩
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cityTotalAmount | number:2}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            县级市场业绩
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.countyTotalAmount | number:2}}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            市级市场会员数
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cityTotalPeople}}个</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            县级市场会员数
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.countyTotalPeople}}个</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            销售总业绩
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cityTotalAmount + MemberInfo.countyTotalAmount | number:2}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            分红包个数
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{dividendMap.totalDividendCount }}个</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            出局分红包
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{dividendMap.inValidDividendCount}}个</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            未出局分红包
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{dividendMap.validDividendCount}}个</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            奖金币余额
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.bonusAmount | number:2}}</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            种子币余额
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.seedAmount | number:2}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="black-font text-right" width="15%">
+                                                            直接销售量
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}个</td>
+                                                        <td class="black-font text-right" width="15%">
+                                                            已提现金额
+                                                        </td>
+                                                        <td class="black-font text-right" width="15%">{{MemberInfo.actualAmount | number:2}}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="margin-top-10">
+                                        <a class="btn default" ui-sref="app.admMember">返回</a>
+                                    </div>
+                                </form>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

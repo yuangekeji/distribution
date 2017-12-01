@@ -19,6 +19,8 @@ public class MoreOrderMaster extends OrderMaster{
 
     private String memberName;
 
+    private String memberPhone;
+
     private Integer createId;
 
     private String payPassword;
@@ -115,6 +117,14 @@ public class MoreOrderMaster extends OrderMaster{
 
     public void setBonusType(String bonusType) {
         this.bonusType = bonusType;
+    }
+
+    public String getMemberPhone() {
+        return memberPhone;
+    }
+
+    public void setMemberPhone(String memberPhone) {
+        this.memberPhone = memberPhone;
     }
 }
 

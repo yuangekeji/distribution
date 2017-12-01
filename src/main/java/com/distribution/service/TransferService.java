@@ -120,15 +120,20 @@ public class TransferService {
                 historyout.setCreateId(tsf.getMemberId());
                 historyout.setType("1");      //1支出 进账2
                 historyout.setFlowType(Constant.TRANSFEROUT); //转出
+                historyout.setTotalAmt(tsf.getTransferAmt());
                 historyout.setBonusAmt(tsf.getTransferAmt());
+                historyout.setSeedAmt(new BigDecimal(0));
 
                 AccountFlowHistory historyin = new AccountFlowHistory();
                 historyin.setMemberId(tsf.getReceiveId());
                 historyin.setCreateTime(new Date());
                 historyin.setCreateId(tsf.getMemberId());
                 historyin.setType("2");      //1支出 进账2
-                historyin.setFlowType(Constant.TRANSFERIN); //转出
+                historyin.setFlowType(Constant.TRANSFERIN); //转入
+                historyin.setTotalAmt(tsf.getTransferAmt());
                 historyin.setBonusAmt(tsf.getTransferAmt());
+                historyin.setSeedAmt(new BigDecimal(0));
+
 
                 //判断如果会员状态未激活，并且账户的余额和订单金额相同，更新会员款状态
                 if("N".equals(receivedMember.getStatus()) && "N".equals(receivedMember.getMoneyStatus())){

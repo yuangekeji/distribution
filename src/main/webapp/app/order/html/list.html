@@ -82,7 +82,9 @@
                             </thead>
                             <tbody>
                                 <tr ng-show= "!notData" class="odd gradeX" dir-paginate="orderMaster in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
-                                    <td class="text-left">{{orderMaster.orderNo}}</td>
+                                    <td class="text-left">{{orderMaster.orderNo}}
+                                        <!--<button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="copyOrder(orderMaster.orderNo)">复制</button>-->
+                                    </td>
                                     <td class="text-left">{{orderMaster.orderAmt | number:2}}</td>
                                     <td class="text-left">{{orderMaster.orderCategory|OrderCategoryFilter}}</td>
                                     <td class="text-left">{{orderMaster.bonusAccountType|bonusAccountTypeFilter}}</td>

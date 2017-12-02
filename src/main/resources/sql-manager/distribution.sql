@@ -975,3 +975,7 @@ select *,
   when type =2 and flow_type = -99 then '收入-管理员手动调整数据'
   end as remark  from account_flow_history GROUP BY type , flow_type;
 
+--  1202 部署
+
+
+delete from menu where id = 28;

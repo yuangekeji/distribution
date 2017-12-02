@@ -80,6 +80,7 @@
                                 <th >订单编号</th>
                                 <th >会员手机号</th>
                                 <th >会员名</th>
+                                <th >生成时间</th>
                                 <th >分红包个数</th>
                                 <th >订单金额</th>
                                 <th >已领取金额</th>
@@ -95,7 +96,8 @@
                                 <td >{{row.orderNo}}</td>
                                 <td >{{row.memberPhone}}</td>
                                 <td >{{row.memberName}}</td>
-                                <td >{{row.dividendCount}}</td>
+                                <td >{{row.createTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                                <td >{{row.dividendCount}}个</td>
                                 <td >{{row.orderAmount | number:2}}</td>
                                 <td >{{row.receivedAmount | number:2}}</td>
                                 <td >{{row.remainAmount | number:2}}</td>

@@ -106,6 +106,7 @@ public class MemberService {
                         BeanUtils.copyProperties(moreMember,member);
                         member.setLoginPassword(CryptoUtil.md5ByHex(member.getLoginPassword()));
                         member.setStatus("N");
+                        member.setDeleteFlag("N");
                         member.setRoleId(1);
                         member.setMemberPost("post_level1");
                         member.setCreateId(currentUser.getId());

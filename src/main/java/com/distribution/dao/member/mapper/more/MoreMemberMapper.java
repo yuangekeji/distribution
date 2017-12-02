@@ -74,4 +74,6 @@ public interface MoreMemberMapper extends MemberMapper{
      * 修改会员姓名
      * */
     int updateByRecommendId(MoreMember moreMember);
+
+    Integer selectOrderTotalAmtByMemberId(Integer memberId);
 }

@@ -235,4 +235,7 @@
     </set>
     where recommend_id = #{recommendId,jdbcType=INTEGER}
   </update>
+  <select id="selectOrderTotalAmtByMemberId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+      select sum(order_amt) from order_master where member_id = #{memberId,jdbcType=INTEGER} and order_category in (1,2)
+   </select>
 </mapper>

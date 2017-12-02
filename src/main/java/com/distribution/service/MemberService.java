@@ -341,4 +341,8 @@ public class MemberService {
         }
         return result;
     }
+
+    public Integer selectOrderTotalAmtByMemberId(Integer memberId){
+        return moreMemberMapper.selectOrderTotalAmtByMemberId(memberId);
+    }
 }

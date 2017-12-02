@@ -151,4 +151,19 @@ public class AdmMemberService {
         }
         return "success";
     }
+    /**
+     * 会员禁用功能操作
+     * @author sijeong
+     * */
+
+    public Integer deleteMember(Member m, Admin admin){
+
+        Member member = new Member();
+        member.setId(m.getId());
+        member.setDeleteFlag(m.getDeleteFlag());
+        member.setUpdateId(admin.getId());
+        member.setUpdateTime(new Date());
+        Integer count = memberMapper.updateByPrimaryKeySelective(member);
+        return count;
+    }
 }

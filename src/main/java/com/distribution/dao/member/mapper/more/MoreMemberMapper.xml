@@ -123,7 +123,8 @@
     money_status, is_operator, is_sales_dept,
     first_agent_cnt, recommend_name,
     parent_id ,
-    linkman_phone
+    linkman_phone,
+    IFNULL(delete_flag, 'N') as delete_flag
     FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
   <select id="findMatchMemberQueryPwd" parameterType="java.util.Map" resultType="java.lang.Integer">
@@ -149,7 +150,8 @@
       m.money_status, m.is_operator, m.is_sales_dept,
       m.first_agent_cnt, m.recommend_name ,
       m.parent_id,
-      p.member_name as parentMemberName
+      p.member_name as parentMemberName,
+      IFNULL(m.delete_flag, 'N') as delete_flag
     FROM member m LEFT JOIN	member p ON p.id = m.parent_id
     <include refid="where"/>ORDER BY m.id DESC <include refid="pageLimit"/>
   </select>

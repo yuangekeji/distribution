@@ -25,7 +25,11 @@ function login() {
                 if (resp.successful) {
                     window.location.href = ctx + "/index"
                 } else{
-                    $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户名或密码不正确，请重新输入");
+                    if(resp.errorMessage == "memberDeleted") {
+                        $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户账号已被禁用，请联系管理员");
+                    }else {
+                        $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户名或密码不正确，请重新输入");
+                    }
                 }
             },
             error: function (error) {

@@ -166,4 +166,22 @@ public class AdmMemberController extends BasicController{
 
         return successMsg("result",result);
     }
+    /**
+     * 会员禁用功能操作
+     * @author sijeong
+     * */
+    @RequestMapping("/deleteMember")
+    @ResponseBody
+    public JsonMessage deleteMember(@RequestBody Member member, HttpSession session){
+        Admin admin = (Admin) getCurrentUser(session);
+
+        admMemberService.deleteMember(member, admin);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_ADDACCOUNT);
+        map.put("handleId", member.getId());
+        map.put("handleComment", "会员名称: " + member.getMemberName() + ", 操作: 会员禁用");
+        admHandleHistoryService.addAdminHandleHistory(admin, map);
+        return successMsg();
+    }
 }

@@ -174,11 +174,16 @@ public class MemberService {
             List<Member> list = moreMemberMapper.login(param);
             if(!list.isEmpty()){
                 Member member = list.get(0);
-                session.setAttribute(Constant.SESSION_CURRENT_USER,member);
-                session.setAttribute(Constant.SESSION_CURRENT_ROLE,member.getRoleId());
-                session.setAttribute(Constant.SESSION_CURRENT_STATUS,member.getStatus());
+                if(member.getDeleteFlag().equals("Y")) {
 
-                return new JsonMessage(true,"success",null);
+                    return new JsonMessage(false,"memberDeleted",null);
+                } else {
+                    session.setAttribute(Constant.SESSION_CURRENT_USER,member);
+                    session.setAttribute(Constant.SESSION_CURRENT_ROLE,member.getRoleId());
+                    session.setAttribute(Constant.SESSION_CURRENT_STATUS,member.getStatus());
+
+                    return new JsonMessage(true,"success",null);
+                }
             }else{
                 return new JsonMessage(false,"fail",null);
             }

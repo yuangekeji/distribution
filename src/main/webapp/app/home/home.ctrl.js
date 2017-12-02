@@ -89,7 +89,7 @@ angular.module('home').controller('homeCtrl',
                 Notify.warning("请输入收货人电话。");
             }else{
 
-                Notify.warning("正在激活处理，请耐心等待，激活成功后会自动刷新页面。");
+                // Notify.warning("正在激活处理，请耐心等待，激活成功后会自动刷新页面。");
                 $scope.activting = true;
                 $scope.startLoading();
                 $scope.currentUser.status='Y';
@@ -97,7 +97,9 @@ angular.module('home').controller('homeCtrl',
                     if(resp.successful){
                         $scope.stopLoading();
                         Notify.warning("激活成功。");
+                        $("#add").modal("hide");
                         $window.location.reload();
+
                     }
                 }).error(function (resp) {
                     console.log(resp);

@@ -72,7 +72,7 @@ angular.module('admMember').controller('admMemberInfoCtrl', function ($q, title,
                     if(resp.successful){
                         Notify.success("会员姓名修改成功。");
                         $scope.stopLoading();
-                        $window.location.reload();
+                        // $window.location.reload();
                     }
                 }).error(function (resp) {
                     console.log(resp);

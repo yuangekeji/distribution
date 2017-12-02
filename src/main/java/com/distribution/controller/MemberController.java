@@ -272,8 +272,16 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/updatePwd")
     @ResponseBody
-    public JsonMessage updatePwd(@RequestBody MoreMember moreMember){
-        String str = memberService.updatePwd(moreMember);
-        return successMsg(str);
+    public JsonMessage updatePwd(@RequestBody MoreMember moreMember,HttpSession session){
+        Member m = (Member)getCurrentUser(session);
+        if(m != null && m.getId() != null){
+            moreMember.setId(m.getId());
+            String str = memberService.updatePwd(moreMember);
+            return successMsg(str);
+
+        }else{
+            return failMsg();
+        }
+
     }
 }

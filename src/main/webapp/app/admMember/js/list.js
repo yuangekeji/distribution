@@ -144,6 +144,34 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
     $scope.gotoAdmMemberInfo = function (memberId) {
         $state.go("app.admMemberInfo", {memberId: memberId});
     }
+    /**
+     * 会员禁用功能操作
+     * @author sijeong
+     * */
+    $scope.deleteMember = function (id, memberName, deleteFlag) {
+        var deleteName = "";
+        if (deleteFlag == "Y") {
+            deleteName = "禁用";
+        }else {
+            deleteName = "启用";
+        }
+        ConfirmModal.show({
+            text: '确定要'+ deleteName + memberName +'账号吗？',
+            isCancel:true //false alert ,true confirm
+        }).then(function (sure) {
+            if (!sure) {
+                return;
+            }
+            $http.post(ctx + "/admMember/deleteMember",{id: id, memberName: memberName, deleteFlag: deleteFlag }).success(function (resp) {
+                if(resp.successful){
+                    Notify.success(deleteName + "操作成功。");
+                    $scope.search();
+                }else{
+                    Notify.warning(deleteName + "操作失败。");
+                }
+            })
+        });
+    }
 });
 
 // angular.module('admMember').filter("MemberLevelFilter",function () {

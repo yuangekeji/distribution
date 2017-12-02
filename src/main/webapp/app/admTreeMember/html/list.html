@@ -71,6 +71,7 @@
                                 <th>创建时间</th>
                                 <!--<th>激活时间</th>-->
                                 <th>状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -84,6 +85,9 @@
                                 <!--<td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>-->
                                 <td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
                                 <td>{{member.status|recommendStatusFilter}}</td>
+                                <td>
+                                    <a href="javascript:void(0);" ng-click="showGraph(member);" class="btn btn-xs blue-steel" >查看网络图</a>
+                                </td>
                             </tr>
                             <tr ng-show= "notData" >
                                 <td colspan="10" class="text-center">无记录</td>

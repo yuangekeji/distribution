@@ -1,11 +1,10 @@
 angular.module('graph').controller('graphCtrl',
-    function ($scope, $http, title, $sessionStorage, $timeout, $state,$rootScope,ConfirmModal,settings ,$uibModal, $log) {
+    function ($scope, $http, title, $stateParams,$state ) {
         title.setTitle('推荐网络图');
         var e1 = $('.portlet');
 
         $scope.collapseAll = function () {
             $("#tree_2").jstree(true).close_all();
-
         };
 
         $scope.expandAll = function () {
@@ -15,13 +14,16 @@ angular.module('graph').controller('graphCtrl',
         $scope.data=[];
 
         $scope.getGraphTree = function () {
+
+            $scope.nodeId = $stateParams.nodeId;
+
             App.blockUI({
                 target: e1,
                 animate: true,
                 overlayColor: 'none'
 
             });
-            $http.post(ctx + "/node/tree").success(function (resp) {
+            $http.post(ctx + "/node/tree/"+$scope.nodeId).success(function (resp) {
                 if(resp.successful){
                     // console.info(JSON.stringify(resp.data));
                     $scope.handleSample2({nodeId:0,
@@ -42,6 +44,10 @@ angular.module('graph').controller('graphCtrl',
         }
 
         $scope.getGraphTree();
+
+        $scope.goBack = function () {
+            $state.go("app.admTreeMember");
+        }
 
         $scope.handleSample2 = function (data) {
 

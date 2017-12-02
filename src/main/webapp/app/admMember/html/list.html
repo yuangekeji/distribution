@@ -80,7 +80,8 @@
                                 <td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
                                 <td>{{member.status|recommendStatusFilter}}</td>
                                 <!--<td>{{member.expressAddress}}</td>-->
-                                <td><a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs blue-steel" ng-show="member.status == 'N'">充值</a>
+                                <td>
+                                    <a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs blue-steel" ng-show="member.status == 'N'">充值</a>
                                     <a href="javascript:void(0);" ng-click="initMemberPassword(member.id, member.memberName);" class="btn btn-xs red">密码初始化</a>
                                 </td>
                             </tr>

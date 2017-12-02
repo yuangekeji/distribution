@@ -97,7 +97,7 @@ angular.module('app').config([
                 controller: 'dividendDetailCtrl'
             })
             .state('app.graph',{
-                url: '/graph',
+                url: '/graph/:nodeId',
                 templateUrl: helper.basepath('graph/html/graph.html'),
                 resolve: helper.resolveFor('graph'),
                 controller: 'graphCtrl'

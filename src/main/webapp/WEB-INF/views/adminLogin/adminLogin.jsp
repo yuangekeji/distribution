@@ -181,7 +181,7 @@
 
 </div>
 
-<script src="${ctx}/static/js/login.min.js" type="text/javascript"></script>
+<script src="${ctx}/static/js/login.js" type="text/javascript"></script>
 <!--[if lt IE 9]>
 <script src="${ctx}/static/metronic/global/plugins/respond.min.js"></script>
 <script src="${ctx}/static/metronic/global/plugins/excanvas.min.js"></script>

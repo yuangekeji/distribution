@@ -3,13 +3,20 @@
  * @author Bright
  * */
 
+
 function login() {
+    var login = false;
     var date = new Date();
     var now = date.getHours();
     if(now < 4){
         alert('凌晨12点到4点之间属于系统业务处理时间，给您带来不便深感歉意，请在其他时间访问系统，谢谢配合。');
         return;
     }
+    if(login){
+        alert('今日10:30后属于系统维护时间，给您带来不便深感歉意，请在其他时间访问系统，谢谢配合。');
+        return false;
+    }
+
     if(check()) {
         $.ajax({
             type: "POST",

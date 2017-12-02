@@ -166,7 +166,7 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', 
                        //}
                        break;
                    case (500):
-                       alert("服务器系统内部错误");
+                       console.error("服务器系统内部错误");
                        break;
                    case (401):
                        alert("未登录");
@@ -184,7 +184,7 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', 
                        console.error("未知错误");
                }
              if(response.status == 500 ){
-                 // $window.location.reload();
+                 $window.location.href = ctx + '/index#/app/home';
              }
 
              if(response.status == 403){

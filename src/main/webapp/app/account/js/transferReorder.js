@@ -11,6 +11,7 @@ angular.module('account').controller('transferReorderCtrl',
         $scope.transfer = {};
         //定义复投model
         $scope.reOrder = {};
+        $scope.reOrderQtys = [];
 
         $scope.onlyNumber = function (event) {
             var value = event.target.value;
@@ -67,6 +68,24 @@ angular.module('account').controller('transferReorderCtrl',
                 expressAddress:$scope.user.expressAddress,
                 recevivePhone:$scope.user.linkmanPhone
             }
+
+
+            var MIN = 600;
+            var MAX = 30000;
+            for(var i = 1 ; i<= MAX/MIN ; i++ ){
+                $scope.reOrderQtys.push({value: i  , name :  i +"单"});
+            }
+            // $scope.reOrderQtys.unshift({value:"",name:"请选择复投单数"});
+            // $http.get(ctx + '/member/getDictionary/member_level').success(function (resp) {
+            //     if(resp.successful){
+            //         $scope.dictionary = resp.data.list;
+            //         if($scope.dictionary){
+            //             $scope.member.memberLevel = $scope.dictionary[0].dicCode;
+            //         }
+            //     }else{
+            //         console.log(resp);
+            //     }
+            // });
         }
         $scope.onInit();
         $scope.commitTransfer= function () {
@@ -211,11 +230,11 @@ angular.module('account').controller('transferReorderCtrl',
                 }
             },
             /*金额0和正整数*/
-            amtError: function () {
-                if (angular.isUndefined($scope.reOrder.amt)  || !(/^\d+$/.test($scope.reOrder.amt)))  {
-                    $scope.reOrdervalidateErrors.amtError = true;
-                }
-            },
+            // amtError: function () {
+            //     if (angular.isUndefined($scope.reOrder.amt)  || !(/^\d+$/.test($scope.reOrder.amt)))  {
+            //         $scope.reOrdervalidateErrors.amtError = true;
+            //     }
+            // },
             // /*金额0和正整数*/
             //  bonusAmtError: function () {
             //       if (angular.isUndefined($scope.reOrder.bonusAmt)  || !(/^\d+$/.test($scope.reOrder.bonusAmt))) {
@@ -253,27 +272,27 @@ angular.module('account').controller('transferReorderCtrl',
                 return false;
             }
 
-            if($scope.reOrder.orderQty > 50 || $scope.reOrder.amt > 30000){
-                Notify.warning('每日投资额不能超过3万，请重新填写复投信息。');
-                return false;
-            }
+            $scope.reOrder.orderAmt = $scope.reOrder.orderQty * $scope.reOrder.price;
 
-            if($scope.reOrder.bonusType == 1 && $scope.reOrder.amt > $scope.accountInfo.seedAmt){
+            if($scope.reOrder.bonusType == 1 && $scope.reOrder.orderAmt > $scope.accountInfo.seedAmt){
                 Notify.warning('扣除的种子币金额不能大于账户种子币余额');
                 return false;
             }
 
-            if($scope.reOrder.bonusType == 2 && $scope.reOrder.amt > $scope.accountInfo.bonusAmt){
+            if($scope.reOrder.bonusType == 2 && $scope.reOrder.orderAmt> $scope.accountInfo.bonusAmt){
                 Notify.warning('扣除的奖金币金额不能大于账户奖金币余额');
                 return false;
             }
 
-            $scope.reOrder.orderAmt = $scope.reOrder.orderQty * $scope.reOrder.price;
-            if($scope.reOrder.orderAmt != $scope.reOrder.amt  ){
-                Notify.warning('请确认输入的金额和复投单金额是否匹配');
+            if($scope.reOrder.orderQty > 50 || $scope.reOrder.orderAmt > 30000){
+                Notify.warning('每日投资额不能超过3万，请重新填写复投信息。');
                 return false;
             }
-
+            if($scope.reOrder.orderQty < 0 || $scope.reOrder.orderAmt < 0 ){
+                Notify.warning('请输入正确金额的信息。');
+                return false;
+            }
+            $scope.reOrder.amt = $scope.reOrder.orderAmt;
 
             $scope.startLoading();
 

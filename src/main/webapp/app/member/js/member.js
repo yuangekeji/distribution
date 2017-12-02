@@ -9,9 +9,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
         loginPasswordConfirm:"",
         payPasswordConfirm:""
     };
-    $scope.pwdMember ={
-        id:$sessionStorage.currentUser.id
-    };
+    $scope.pwdMember ={};
 
     $scope.initParam = function () {
         $scope.param = {
@@ -19,9 +17,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
             loginPasswordConfirm:"",
             payPasswordConfirm:""
         };
-        $scope.pwdMember ={
-            id:$sessionStorage.currentUser.id
-        };
+        $scope.pwdMember ={};
     }
     $scope.applyFlag = true;
     $scope.saveFlag = true;
@@ -266,7 +262,8 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                         }).error(function (resp) {
                             $scope.stopLoading();
                             $scope.saveFlag = true;
-                            console.log(resp);
+                            console.error(resp);
+                            $window.location.reload();
                         })
                     });
                 }

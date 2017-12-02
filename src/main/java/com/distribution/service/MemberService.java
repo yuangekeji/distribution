@@ -207,11 +207,11 @@ public class MemberService {
         Integer it = memberMapper.updateByPrimaryKeySelective(member);
         member = memberMapper.selectByPrimaryKey(member.getId());
         //给推荐人的一代个数中 +1
-        if(member.getRecommendId() != null && member.getRecommendId() > 0 ){
-            Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
-            m.setFirstAgentCnt(null!=m.getFirstAgentCnt()?(m.getFirstAgentCnt()+1):1);
-            memberMapper.updateByPrimaryKeySelective(m);
-        }
+//         if(member.getRecommendId() != null && member.getRecommendId() > 0 ){
+//            Member m = memberMapper.selectByPrimaryKey(member.getRecommendId());
+//            m.setFirstAgentCnt(null!=m.getFirstAgentCnt()?(m.getFirstAgentCnt()+1):1);
+//            memberMapper.updateByPrimaryKeySelective(m);
+//        }
 
         MoreOrderMaster order = new MoreOrderMaster();
         order.setOrderCategory("1");

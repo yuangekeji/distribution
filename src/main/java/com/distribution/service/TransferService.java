@@ -68,6 +68,9 @@ public class TransferService {
 
             if(count != null  && count >0 ){
 
+                AccountFlowHistory historyout = new AccountFlowHistory();
+                AccountFlowHistory historyin = new AccountFlowHistory();
+
                 //step1) 插入转账明细表
                 Transfer tsf = new Transfer();
                 tsf.setMemberId(transfer.getMemberId());
@@ -96,7 +99,11 @@ public class TransferService {
                     throw new RuntimeException();
                 }
 
+                //转出前余额
+                historyout.setOldTotalBonusAmt(transAccount.getBonusAmt());
                 transAccount.setBonusAmt(transAccount.getBonusAmt().subtract(transfer.getTransferAmt()));//从奖金币中扣除
+                //转出后余额
+                historyout.setNewTotalBonusAmt(transAccount.getBonusAmt());
                 transAccount.setTotalBonus(transAccount.getBonusAmt().add(transAccount.getSeedAmt()));//计算总奖金字段
                 transAccount.setUpdateId(tsf.getMemberId());
                 transAccount.setUpdateTime(new Date());
@@ -105,8 +112,11 @@ public class TransferService {
                 AccountManager recivedAccount = new AccountManager();
                 recivedAccount.setMemberId(tsf.getReceiveId());
                 recivedAccount = this.selectAccountManager(recivedAccount);
-
+                //转入之前余额
+                historyin.setOldTotalBonusAmt(recivedAccount.getBonusAmt());
                 recivedAccount.setBonusAmt(recivedAccount.getBonusAmt().add(transfer.getTransferAmt()));//增加奖金币
+                //转入之前余额
+                historyin.setNewTotalBonusAmt(recivedAccount.getBonusAmt());
                 recivedAccount.setTotalBonus(recivedAccount.getBonusAmt().add(recivedAccount.getSeedAmt()));//计算总奖金字段
 
 
@@ -114,7 +124,6 @@ public class TransferService {
                 recivedAccount.setUpdateTime(new Date());
 
 
-                AccountFlowHistory historyout = new AccountFlowHistory();
                 historyout.setMemberId(tsf.getMemberId());
                 historyout.setCreateTime(new Date());
                 historyout.setCreateId(tsf.getMemberId());
@@ -123,8 +132,9 @@ public class TransferService {
                 historyout.setTotalAmt(tsf.getTransferAmt());
                 historyout.setBonusAmt(tsf.getTransferAmt());
                 historyout.setSeedAmt(new BigDecimal(0));
+                historyout.setNewTotalSeedAmt(transAccount.getSeedAmt());
+                historyout.setOldTotalSeedAmt(transAccount.getSeedAmt());
 
-                AccountFlowHistory historyin = new AccountFlowHistory();
                 historyin.setMemberId(tsf.getReceiveId());
                 historyin.setCreateTime(new Date());
                 historyin.setCreateId(tsf.getMemberId());
@@ -133,7 +143,8 @@ public class TransferService {
                 historyin.setTotalAmt(tsf.getTransferAmt());
                 historyin.setBonusAmt(tsf.getTransferAmt());
                 historyin.setSeedAmt(new BigDecimal(0));
-
+                historyin.setNewTotalSeedAmt(recivedAccount.getSeedAmt());
+                historyin.setOldTotalSeedAmt(recivedAccount.getSeedAmt());
 
                 //判断如果会员状态未激活，并且账户的余额和订单金额相同，更新会员款状态
                 if("N".equals(receivedMember.getStatus()) && "N".equals(receivedMember.getMoneyStatus())){

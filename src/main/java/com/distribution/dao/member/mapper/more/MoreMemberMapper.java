@@ -74,4 +74,16 @@ public interface MoreMemberMapper extends MemberMapper{
      * 修改会员姓名
      * */
     int updateByRecommendId(MoreMember moreMember);
+
+    /**
+     * 查詢推荐人推荐会员
+     * @param page
+     * @return
+     */
+    List<Member> selectRecommendMemberInfo(Page page);
+    /**
+     * description 查詢推荐人推荐会员有多少条
+     * @author sijeong
+     * */
+    Integer selectRecommendMemberCnt(Page page);
 }

@@ -166,4 +166,13 @@ public class AdmMemberService {
         Integer count = memberMapper.updateByPrimaryKeySelective(member);
         return count;
     }
+    /**
+     * description 查詢推荐人推荐会员
+     * @author shiqing
+     * */
+    public Page selectRecommendMemberInfo(Page page){
+        page.setTotalCount(moreMemberMapper.selectRecommendMemberCnt(page));
+        page.setResult( memberMapper.selectRecommendMemberInfo(page));
+        return page;
+    }
 }

@@ -1,4 +1,4 @@
-angular.module('admMember').controller('admMemberInfoCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal,Notify, $timeout,$window) {
+angular.module('admMember').controller('admMemberInfoCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $log,ConfirmModal,Notify, $timeout,$window, $uibModal) {
     title.setTitle('会员详情');
 
     $scope.memberId = $stateParams.memberId;
@@ -7,6 +7,16 @@ angular.module('admMember').controller('admMemberInfoCtrl', function ($q, title,
     $scope.memberInfo = {};
     //定义账户信息model
     $scope.dividendMap = {};
+
+    $scope.param = {
+        pageNo: 1,
+        pageSize: 10,
+        totalCount: 0,
+        result: [],
+        parameterMap: {
+            recommendId: ''
+        }
+    }
 
     var e1 = $('.portlet');
     $scope.startLoading=function () {
@@ -82,4 +92,63 @@ angular.module('admMember').controller('admMemberInfoCtrl', function ($q, title,
         }
     }
 
+    $scope.recommendMemberInfo = function(recommendId){
+        $scope.param.parameterMap.recommendId = recommendId;
+        console.info($scope.param.parameterMap.recommendId);
+        $http.post(ctx + '/admMember/recommendMemberInfo', $scope.param)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.param = resp.data;
+                    $scope.open();
+                } else {
+                    console.log(resp.errorMessage);
+                }
+
+            }).error(function (error) {
+            console.error(error);
+        });
+    }
+
+    $scope.open = function(opt_attributes)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "recommendMemberInfo.html",
+                controller: "recommendMemberInfoCtrl",
+                size: opt_attributes,
+                resolve:
+                    {
+                        getDatas: function()
+                        {
+                            return $scope.param;
+                        }
+                    }
+            });
+        out.result.then(function(value)
+        {
+            // console.info('确认');
+        }, function()
+        {
+            // console.info('取消');
+        });
+    };
+    $scope.show = function () {
+        $("#show").modal("show");
+    };
+});
+
+angular.module('admMember').controller('recommendMemberInfoCtrl', function ($scope, $uibModalInstance,getDatas) {
+
+    $scope.datas = getDatas;
+
+    $scope.ok = function()
+    {
+        $uibModalInstance.close(true);
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
 });

@@ -11,8 +11,8 @@
                     <div class="profile-usertitle-job" ng-if="user.nextMemberPost">我的晋升目标:{{user.nextMemberPost|PostLevelFilter}}</div>
                 </div>
                 <div class="profile-userbuttons">
-                    <button type="button" class="btn btn-circle green-haze btn-sm">{{user.memberPost|PostLevelFilter}}</button>
-                    <button type="button" class="btn btn-circle btn-danger btn-sm">报单金额（{{user.orderAmount}}）</button>
+                    <button type="button" class="btn btn-circle blue btn-sm">{{user.memberPost|PostLevelFilter}}</button>
+                    <button type="button" class="btn btn-circle btn-danger btn-sm">投资金额 {{totalOrderAmt | number:2 }}</button>
                 </div>
                 <div class="profile-usermenu">
                     <ul class="nav">

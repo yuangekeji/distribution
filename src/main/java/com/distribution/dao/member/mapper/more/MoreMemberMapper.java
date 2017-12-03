@@ -75,6 +75,8 @@ public interface MoreMemberMapper extends MemberMapper{
      * */
     int updateByRecommendId(MoreMember moreMember);
 
+    Integer selectOrderTotalAmtByMemberId(Integer memberId);
+
     /**
      * 查詢推荐人推荐会员
      * @param page

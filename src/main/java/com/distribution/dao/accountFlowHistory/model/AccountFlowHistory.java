@@ -22,6 +22,16 @@ public class AccountFlowHistory {
 
     private String flowType;
 
+    private String remark;
+
+    private BigDecimal oldTotalBonusAmt;
+
+    private BigDecimal newTotalBonusAmt;
+
+    private BigDecimal oldTotalSeedAmt;
+
+    private BigDecimal newTotalSeedAmt;
+
     public Integer getId() {
         return id;
     }
@@ -92,5 +102,45 @@ public class AccountFlowHistory {
 
     public void setFlowType(String flowType) {
         this.flowType = flowType == null ? null : flowType.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public BigDecimal getOldTotalBonusAmt() {
+        return oldTotalBonusAmt;
+    }
+
+    public void setOldTotalBonusAmt(BigDecimal oldTotalBonusAmt) {
+        this.oldTotalBonusAmt = oldTotalBonusAmt;
+    }
+
+    public BigDecimal getNewTotalBonusAmt() {
+        return newTotalBonusAmt;
+    }
+
+    public void setNewTotalBonusAmt(BigDecimal newTotalBonusAmt) {
+        this.newTotalBonusAmt = newTotalBonusAmt;
+    }
+
+    public BigDecimal getOldTotalSeedAmt() {
+        return oldTotalSeedAmt;
+    }
+
+    public void setOldTotalSeedAmt(BigDecimal oldTotalSeedAmt) {
+        this.oldTotalSeedAmt = oldTotalSeedAmt;
+    }
+
+    public BigDecimal getNewTotalSeedAmt() {
+        return newTotalSeedAmt;
+    }
+
+    public void setNewTotalSeedAmt(BigDecimal newTotalSeedAmt) {
+        this.newTotalSeedAmt = newTotalSeedAmt;
     }
 }

@@ -15,6 +15,7 @@ import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,6 +77,9 @@ public class AdvanceService {
 
         Integer count = moreMemberMapper.findMatchMemberQueryPwd(param);
 
+        //step 3)账户流水
+        AccountFlowHistory historyout = new AccountFlowHistory();
+
         if(count != null  && count >0 ){
 
             //step1) 插入提现明细表
@@ -105,24 +109,25 @@ public class AdvanceService {
             if(advanceAccount.getBonusAmt().compareTo(moreAdvance.getReqAmt()) == -1){
                 throw new RuntimeException();
             }
-
+            historyout.setOldTotalBonusAmt(advanceAccount.getBonusAmt());
             advanceAccount.setBonusAmt(advanceAccount.getBonusAmt().subtract(moreAdvance.getReqAmt()));//从奖金币中扣除提现申请金额（提现申请金额=实际提现金额+手续费）
+            historyout.setNewTotalBonusAmt(advanceAccount.getBonusAmt());
             advanceAccount.setTotalBonus(advanceAccount.getBonusAmt().add(advanceAccount.getSeedAmt()));//计算总奖金字段
             advanceAccount.setAdvanceAmt(advanceAccount.getAdvanceAmt().add(moreAdvance.getReqAmt()));//提现总额 = 原提现总额 + 实际提现金额
             advanceAccount.setUpdateId(moreAdvance.getMemberId());
             advanceAccount.setUpdateTime(new Date());
 
 
-            //step 3)账户流水
-            AccountFlowHistory historyout = new AccountFlowHistory();
             historyout.setMemberId(moreAdvance.getMemberId());
             historyout.setCreateTime(new Date());
             historyout.setCreateId(moreAdvance.getMemberId());
             historyout.setType("1");      //1支出 进账2
             historyout.setFlowType(Constant.ADVANCE); //提现
             historyout.setBonusAmt(moreAdvance.getReqAmt());
+            historyout.setSeedAmt(new BigDecimal(0));
             historyout.setTotalAmt(moreAdvance.getReqAmt());
-
+            historyout.setNewTotalSeedAmt(advanceAccount.getSeedAmt());
+            historyout.setOldTotalSeedAmt(advanceAccount.getSeedAmt());
 
             //step 3) 插入提现明细表，账户表，账户流水表
             int  cnt1 = advanceMapper.insert(advance);

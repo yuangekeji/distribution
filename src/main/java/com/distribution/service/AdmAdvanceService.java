@@ -65,12 +65,17 @@ public class AdmAdvanceService {
         //提现管理员驳回，原路退回
         if("3".equals(moreAdvance.getStatues())){
             //提现账户余额查询与计算
+            AccountFlowHistory historyout = new AccountFlowHistory();
+
             AccountManager advanceAccount = new AccountManager();
             advanceAccount.setMemberId(moreAdvance.getMemberId());
 
             advanceAccount = this.selectAccountManager(advanceAccount);
-
+            //提现返还前余额
+            historyout.setOldTotalBonusAmt(advanceAccount.getBonusAmt());
             advanceAccount.setBonusAmt(advanceAccount.getBonusAmt().add(moreAdvance.getReqAmt()));//从奖金币中扣除提现申请金额（提现申请金额=实际提现金额+手续费）
+            //提现返还后余额
+            historyout.setNewTotalBonusAmt(advanceAccount.getBonusAmt());
             advanceAccount.setTotalBonus(advanceAccount.getBonusAmt().add(advanceAccount.getSeedAmt()));//计算总奖金字段
             advanceAccount.setAdvanceAmt(advanceAccount.getAdvanceAmt().subtract(moreAdvance.getReqAmt()));//提现总额 = 原提现总额 + 实际提现金额
             advanceAccount.setUpdateId(moreAdvance.getMemberId());
@@ -78,14 +83,17 @@ public class AdmAdvanceService {
 
 
             //step 3)账户流水
-            AccountFlowHistory historyout = new AccountFlowHistory();
+
             historyout.setMemberId(moreAdvance.getMemberId());
             historyout.setCreateTime(new Date());
             historyout.setCreateId(moreAdvance.getMemberId());
             historyout.setType("2");      //1支出 进账2
             historyout.setFlowType(Constant.CANCLE_ADVANCE); //提现退回
+            historyout.setSeedAmt(new BigDecimal(0));
             historyout.setBonusAmt(moreAdvance.getReqAmt());
             historyout.setTotalAmt(moreAdvance.getReqAmt());
+            historyout.setNewTotalSeedAmt(advanceAccount.getSeedAmt());
+            historyout.setOldTotalSeedAmt(advanceAccount.getSeedAmt());
 
             cnt1 = moreAccountManagerMapper.updateAccountManagerAmtWhileAdvance(advanceAccount);
             cnt2= accountFlowHistoryMapper.insert(historyout);

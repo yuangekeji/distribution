@@ -11,6 +11,11 @@
     <result column="bonus_amt" property="bonusAmt" jdbcType="DECIMAL" />
     <result column="seed_amt" property="seedAmt" jdbcType="DECIMAL" />
     <result column="flow_type" property="flowType" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="old_total_bonus_amt" property="oldTotalBonusAmt" jdbcType="DECIMAL" />
+    <result column="new_total_bonus_amt" property="newTotalBonusAmt" jdbcType="DECIMAL" />
+    <result column="old_total_seed_amt" property="oldTotalSeedAmt" jdbcType="DECIMAL" />
+    <result column="new_total_seed_amt" property="newTotalSeedAmt" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, member_id, create_time, create_id, type, total_amt, bonus_amt, seed_amt, flow_type
+    id, member_id, create_time, create_id, type, total_amt, bonus_amt, seed_amt, flow_type, 
+    remark, old_total_bonus_amt, new_total_bonus_amt, old_total_seed_amt, new_total_seed_amt
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistoryExample" >
     select
@@ -107,12 +113,14 @@
   <insert id="insert" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistory" >
     insert into account_flow_history (id, member_id, create_time, 
       create_id, type, total_amt, 
-      bonus_amt, seed_amt, flow_type
-      )
+      bonus_amt, seed_amt, flow_type, 
+      remark, old_total_bonus_amt, new_total_bonus_amt, 
+      old_total_seed_amt, new_total_seed_amt)
     values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{createId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{totalAmt,jdbcType=DECIMAL}, 
-      #{bonusAmt,jdbcType=DECIMAL}, #{seedAmt,jdbcType=DECIMAL}, #{flowType,jdbcType=VARCHAR}
-      )
+      #{bonusAmt,jdbcType=DECIMAL}, #{seedAmt,jdbcType=DECIMAL}, #{flowType,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{oldTotalBonusAmt,jdbcType=DECIMAL}, #{newTotalBonusAmt,jdbcType=DECIMAL}, 
+      #{oldTotalSeedAmt,jdbcType=DECIMAL}, #{newTotalSeedAmt,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.distribution.dao.accountFlowHistory.model.AccountFlowHistory" >
     insert into account_flow_history
@@ -144,6 +152,21 @@
       <if test="flowType != null" >
         flow_type,
       </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="oldTotalBonusAmt != null" >
+        old_total_bonus_amt,
+      </if>
+      <if test="newTotalBonusAmt != null" >
+        new_total_bonus_amt,
+      </if>
+      <if test="oldTotalSeedAmt != null" >
+        old_total_seed_amt,
+      </if>
+      <if test="newTotalSeedAmt != null" >
+        new_total_seed_amt,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -172,6 +195,21 @@
       </if>
       <if test="flowType != null" >
         #{flowType,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="oldTotalBonusAmt != null" >
+        #{oldTotalBonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="newTotalBonusAmt != null" >
+        #{newTotalBonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="oldTotalSeedAmt != null" >
+        #{oldTotalSeedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="newTotalSeedAmt != null" >
+        #{newTotalSeedAmt,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -211,6 +249,21 @@
       <if test="record.flowType != null" >
         flow_type = #{record.flowType,jdbcType=VARCHAR},
       </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldTotalBonusAmt != null" >
+        old_total_bonus_amt = #{record.oldTotalBonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.newTotalBonusAmt != null" >
+        new_total_bonus_amt = #{record.newTotalBonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oldTotalSeedAmt != null" >
+        old_total_seed_amt = #{record.oldTotalSeedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.newTotalSeedAmt != null" >
+        new_total_seed_amt = #{record.newTotalSeedAmt,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -226,7 +279,12 @@
       total_amt = #{record.totalAmt,jdbcType=DECIMAL},
       bonus_amt = #{record.bonusAmt,jdbcType=DECIMAL},
       seed_amt = #{record.seedAmt,jdbcType=DECIMAL},
-      flow_type = #{record.flowType,jdbcType=VARCHAR}
+      flow_type = #{record.flowType,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      old_total_bonus_amt = #{record.oldTotalBonusAmt,jdbcType=DECIMAL},
+      new_total_bonus_amt = #{record.newTotalBonusAmt,jdbcType=DECIMAL},
+      old_total_seed_amt = #{record.oldTotalSeedAmt,jdbcType=DECIMAL},
+      new_total_seed_amt = #{record.newTotalSeedAmt,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -258,6 +316,21 @@
       <if test="flowType != null" >
         flow_type = #{flowType,jdbcType=VARCHAR},
       </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="oldTotalBonusAmt != null" >
+        old_total_bonus_amt = #{oldTotalBonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="newTotalBonusAmt != null" >
+        new_total_bonus_amt = #{newTotalBonusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="oldTotalSeedAmt != null" >
+        old_total_seed_amt = #{oldTotalSeedAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="newTotalSeedAmt != null" >
+        new_total_seed_amt = #{newTotalSeedAmt,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -270,7 +343,12 @@
       total_amt = #{totalAmt,jdbcType=DECIMAL},
       bonus_amt = #{bonusAmt,jdbcType=DECIMAL},
       seed_amt = #{seedAmt,jdbcType=DECIMAL},
-      flow_type = #{flowType,jdbcType=VARCHAR}
+      flow_type = #{flowType,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      old_total_bonus_amt = #{oldTotalBonusAmt,jdbcType=DECIMAL},
+      new_total_bonus_amt = #{newTotalBonusAmt,jdbcType=DECIMAL},
+      old_total_seed_amt = #{oldTotalSeedAmt,jdbcType=DECIMAL},
+      new_total_seed_amt = #{newTotalSeedAmt,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -70,10 +70,16 @@ public class AdmMemberChargeService {
 
         MemberChargeApply mmca = moreMemberChargeApplyMapper.selectByPrimaryKey(moreMemberChargeApply.getId());
         if ("1".equals(mmca.getStatus())) {
+            AccountFlowHistory af = new AccountFlowHistory();
+
             AccountManager am = moreAccountManagerMapper.selectByMemberId(moreMemberChargeApply.getMemberId());
             Date date = new Date();
             am.setTotalBonus(am.getTotalBonus().add(moreMemberChargeApply.getChargeAmt()));
+            //充值前余额
+            af.setOldTotalBonusAmt(am.getBonusAmt());
             am.setBonusAmt(am.getBonusAmt().add(moreMemberChargeApply.getChargeAmt()));
+            //充值后余额
+            af.setNewTotalBonusAmt(am.getBonusAmt());
             am.setUpdateId(admin.getId());
             am.setUpdateTime(date);
             int am1 = moreAccountManagerMapper.updateByMemberId(am);
@@ -90,7 +96,7 @@ public class AdmMemberChargeService {
             if(count < 1){
                 throw new RuntimeException();
             }
-            AccountFlowHistory af = new AccountFlowHistory();
+
             af.setMemberId(moreMemberChargeApply.getMemberId());
             af.setCreateTime(date);
             af.setCreateId(admin.getId());
@@ -99,6 +105,8 @@ public class AdmMemberChargeService {
             af.setBonusAmt(moreMemberChargeApply.getChargeAmt());
             af.setSeedAmt(new BigDecimal(0));
             af.setFlowType(Constant.MEMBERCHARGE);//管理员充值
+            af.setNewTotalSeedAmt(am.getSeedAmt());
+            af.setOldTotalSeedAmt(am.getSeedAmt());
 
             int af1 = accountFlowHistoryMapper.insert(af);
             if(af1 < 1){

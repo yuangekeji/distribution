@@ -55,6 +55,7 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 console.log(resp);
             }
         });
+
         $http.get(ctx + '/member/getIt/'+$scope.user.id).success(function (resp) {
             if(resp.successful){
                 $scope.it = resp.data.it;
@@ -62,6 +63,16 @@ angular.module('member').controller('memberCtrl', function ($q, title, $scope, $
                 console.log(resp);
             }
         });
+
+
+        $http.get(ctx + '/member/getOrderTotalAmt').success(function (resp) {
+            if(resp.successful){
+                $scope.totalOrderAmt = resp.data;
+            }else{
+                console.log(resp);
+            }
+        });
+
 
         var a = $timeout(function(){
 

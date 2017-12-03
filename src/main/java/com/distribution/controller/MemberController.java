@@ -246,6 +246,16 @@ public class MemberController extends BasicController {
             return failMsg();
     }
 
+    @RequestMapping("/getOrderTotalAmt")
+    @ResponseBody
+    public JsonMessage getOrderTotalAmt(HttpSession session){
+        Member member = (Member) getCurrentUser(session);
+        Integer orderTotalAmt = memberService.selectOrderTotalAmtByMemberId(member.getId());
+        if(orderTotalAmt > 0 )
+            return successMsg(orderTotalAmt);
+        else
+            return failMsg();
+    }
     /**
      * description 修改会员信息
      * @author Bright

@@ -57,4 +57,8 @@ public class JobTest extends SpringServiceTest{
 	public void sendFailureDividendBonus(){
 		dividendJob.sendFailureDividendBonus();;
 	}
+	@Test
+	public void savePlatformCashFlowTest() {
+		nodeJob.savePlatformCashFlow();
+	}
 }

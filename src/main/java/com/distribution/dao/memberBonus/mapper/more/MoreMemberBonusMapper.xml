@@ -302,4 +302,23 @@
     </if>
     order by mb.bonus_date desc,mb.member_id
   </select>
+  <select id="getTotalMemberBonus" parameterType="java.lang.String" resultType="java.lang.Double">
+  	SELECT sum(actual_amout) as totalBonusAmount
+	FROM member_bonus 
+  </select>
+  <select id="getDayMemberBonus" parameterType="java.lang.String" resultType="java.lang.Double">
+  	SELECT IFNULL(sum(actual_amout),0) as  dayBonusAmount
+	FROM member_bonus 
+	where DATE(bonus_date) = DATE(#{date})
+  </select>
+  <select id="getTotalAdvance" parameterType="java.lang.String" resultType="java.lang.Double" >
+  	SELECT SUM(act_amt) as totalAdvanceAmount
+	FROM advance
+	where statues = '2' 
+  </select>
+  <select id="getDayAdvance" parameterType="java.lang.String" resultType="java.lang.Double">
+  	SELECT IFNULL(SUM(act_amt),0) as dayAdvanceAmount
+	FROM advance
+	where statues = '2' and DATE(request_date) = DATE(#{date})
+  </select>
 </mapper>

@@ -1005,6 +1005,366 @@ public class DateBonusHistoryExample {
             addCriterion("jd_alarm_status not between", value1, value2, "jdAlarmStatus");
             return (Criteria) this;
         }
+
+        public Criteria andAllTotalSalesIsNull() {
+            addCriterion("all_total_sales is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesIsNotNull() {
+            addCriterion("all_total_sales is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesEqualTo(BigDecimal value) {
+            addCriterion("all_total_sales =", value, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesNotEqualTo(BigDecimal value) {
+            addCriterion("all_total_sales <>", value, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesGreaterThan(BigDecimal value) {
+            addCriterion("all_total_sales >", value, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("all_total_sales >=", value, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesLessThan(BigDecimal value) {
+            addCriterion("all_total_sales <", value, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("all_total_sales <=", value, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesIn(List<BigDecimal> values) {
+            addCriterion("all_total_sales in", values, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesNotIn(List<BigDecimal> values) {
+            addCriterion("all_total_sales not in", values, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("all_total_sales between", value1, value2, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalSalesNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("all_total_sales not between", value1, value2, "allTotalSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusIsNull() {
+            addCriterion("all_total_bonus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusIsNotNull() {
+            addCriterion("all_total_bonus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusEqualTo(BigDecimal value) {
+            addCriterion("all_total_bonus =", value, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusNotEqualTo(BigDecimal value) {
+            addCriterion("all_total_bonus <>", value, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusGreaterThan(BigDecimal value) {
+            addCriterion("all_total_bonus >", value, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("all_total_bonus >=", value, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusLessThan(BigDecimal value) {
+            addCriterion("all_total_bonus <", value, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("all_total_bonus <=", value, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusIn(List<BigDecimal> values) {
+            addCriterion("all_total_bonus in", values, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusNotIn(List<BigDecimal> values) {
+            addCriterion("all_total_bonus not in", values, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("all_total_bonus between", value1, value2, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalBonusNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("all_total_bonus not between", value1, value2, "allTotalBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceIsNull() {
+            addCriterion("all_total_advance is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceIsNotNull() {
+            addCriterion("all_total_advance is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceEqualTo(BigDecimal value) {
+            addCriterion("all_total_advance =", value, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceNotEqualTo(BigDecimal value) {
+            addCriterion("all_total_advance <>", value, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceGreaterThan(BigDecimal value) {
+            addCriterion("all_total_advance >", value, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("all_total_advance >=", value, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceLessThan(BigDecimal value) {
+            addCriterion("all_total_advance <", value, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("all_total_advance <=", value, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceIn(List<BigDecimal> values) {
+            addCriterion("all_total_advance in", values, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceNotIn(List<BigDecimal> values) {
+            addCriterion("all_total_advance not in", values, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("all_total_advance between", value1, value2, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllTotalAdvanceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("all_total_advance not between", value1, value2, "allTotalAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceIsNull() {
+            addCriterion("day_advance is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceIsNotNull() {
+            addCriterion("day_advance is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceEqualTo(BigDecimal value) {
+            addCriterion("day_advance =", value, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceNotEqualTo(BigDecimal value) {
+            addCriterion("day_advance <>", value, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceGreaterThan(BigDecimal value) {
+            addCriterion("day_advance >", value, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("day_advance >=", value, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceLessThan(BigDecimal value) {
+            addCriterion("day_advance <", value, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("day_advance <=", value, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceIn(List<BigDecimal> values) {
+            addCriterion("day_advance in", values, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceNotIn(List<BigDecimal> values) {
+            addCriterion("day_advance not in", values, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("day_advance between", value1, value2, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayAdvanceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("day_advance not between", value1, value2, "dayAdvance");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusIsNull() {
+            addCriterion("day_actual_bonus is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusIsNotNull() {
+            addCriterion("day_actual_bonus is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusEqualTo(BigDecimal value) {
+            addCriterion("day_actual_bonus =", value, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusNotEqualTo(BigDecimal value) {
+            addCriterion("day_actual_bonus <>", value, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusGreaterThan(BigDecimal value) {
+            addCriterion("day_actual_bonus >", value, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("day_actual_bonus >=", value, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusLessThan(BigDecimal value) {
+            addCriterion("day_actual_bonus <", value, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("day_actual_bonus <=", value, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusIn(List<BigDecimal> values) {
+            addCriterion("day_actual_bonus in", values, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusNotIn(List<BigDecimal> values) {
+            addCriterion("day_actual_bonus not in", values, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("day_actual_bonus between", value1, value2, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayActualBonusNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("day_actual_bonus not between", value1, value2, "dayActualBonus");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesIsNull() {
+            addCriterion("day_discount_sales is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesIsNotNull() {
+            addCriterion("day_discount_sales is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesEqualTo(BigDecimal value) {
+            addCriterion("day_discount_sales =", value, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesNotEqualTo(BigDecimal value) {
+            addCriterion("day_discount_sales <>", value, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesGreaterThan(BigDecimal value) {
+            addCriterion("day_discount_sales >", value, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("day_discount_sales >=", value, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesLessThan(BigDecimal value) {
+            addCriterion("day_discount_sales <", value, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("day_discount_sales <=", value, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesIn(List<BigDecimal> values) {
+            addCriterion("day_discount_sales in", values, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesNotIn(List<BigDecimal> values) {
+            addCriterion("day_discount_sales not in", values, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("day_discount_sales between", value1, value2, "dayDiscountSales");
+            return (Criteria) this;
+        }
+
+        public Criteria andDayDiscountSalesNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("day_discount_sales not between", value1, value2, "dayDiscountSales");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

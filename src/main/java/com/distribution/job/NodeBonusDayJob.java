@@ -4,6 +4,7 @@
   */
 package com.distribution.job;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.distribution.common.utils.DateHelper;
+import com.distribution.dao.dateBonusHistory.model.DateBonusHistory;
 import com.distribution.dao.jobLogs.mapper.JobLogsMapper;
 import com.distribution.dao.jobLogs.model.JobLogs;
-import com.distribution.service.BonusPoolService;
 import com.distribution.service.BonusService;
-import com.distribution.service.CommonService;
 
 @Component
 public class NodeBonusDayJob {
@@ -87,6 +88,27 @@ public class NodeBonusDayJob {
 		job.setResult(map.get("result").toString());
 		job.setRunTime(new Date());
 		return job;
+	}
+	public void saveJobLog(Map<String,Object> map){
+		JobLogs job = convertToJobLogsFromMap(map);
+		jobLogsMapper.insert(job);
+	}
+	@Scheduled(cron ="0 30 2 * * ?" )//每天2点30钟执行
+	public void savePlatformCashFlow(){
+		Map<String,Object> result = new HashMap<String,Object>();
+		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+		date = "2017-11-18";
+		result = bonusService.getDaySalesAndBonusAmount(date);
+		result.put("jobName", "定时结算平台资金/NodeBonusDayJob/selectPlatformCashFlow");
+		DateBonusHistory dateHistory= bonusService.getDateBonusHistory(date);
+		dateHistory.setDayActualBonus(new BigDecimal((Double)result.get("dayMemberBonusAmount")));
+		dateHistory.setDayAdvance(new BigDecimal((Double)result.get("dayAdvanceAmount")));
+		dateHistory.setDayDiscountSales(new BigDecimal((Double)result.get("dayDiscountSalesAmount")));
+		dateHistory.setAllTotalAdvance(new BigDecimal((Double)result.get("totalAdvanceAmount")));
+		dateHistory.setAllTotalBonus(new BigDecimal((Double)result.get("totalMemberBonusAmount")));
+		dateHistory.setAllTotalSales(new BigDecimal((Double)result.get("totalSalesAmount")));
+		bonusService.saveOrUpdateDateHistory(dateHistory);
+		saveJobLog(result);
 	}
 }
 

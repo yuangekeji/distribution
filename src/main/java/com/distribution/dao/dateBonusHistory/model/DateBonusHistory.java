@@ -34,6 +34,18 @@ public class DateBonusHistory {
 
     private Integer jdAlarmStatus;
 
+    private BigDecimal allTotalSales;
+
+    private BigDecimal allTotalBonus;
+
+    private BigDecimal allTotalAdvance;
+
+    private BigDecimal dayAdvance;
+
+    private BigDecimal dayActualBonus;
+
+    private BigDecimal dayDiscountSales;
+
     public Integer getId() {
         return id;
     }
@@ -152,5 +164,53 @@ public class DateBonusHistory {
 
     public void setJdAlarmStatus(Integer jdAlarmStatus) {
         this.jdAlarmStatus = jdAlarmStatus;
+    }
+
+    public BigDecimal getAllTotalSales() {
+        return allTotalSales;
+    }
+
+    public void setAllTotalSales(BigDecimal allTotalSales) {
+        this.allTotalSales = allTotalSales;
+    }
+
+    public BigDecimal getAllTotalBonus() {
+        return allTotalBonus;
+    }
+
+    public void setAllTotalBonus(BigDecimal allTotalBonus) {
+        this.allTotalBonus = allTotalBonus;
+    }
+
+    public BigDecimal getAllTotalAdvance() {
+        return allTotalAdvance;
+    }
+
+    public void setAllTotalAdvance(BigDecimal allTotalAdvance) {
+        this.allTotalAdvance = allTotalAdvance;
+    }
+
+    public BigDecimal getDayAdvance() {
+        return dayAdvance;
+    }
+
+    public void setDayAdvance(BigDecimal dayAdvance) {
+        this.dayAdvance = dayAdvance;
+    }
+
+    public BigDecimal getDayActualBonus() {
+        return dayActualBonus;
+    }
+
+    public void setDayActualBonus(BigDecimal dayActualBonus) {
+        this.dayActualBonus = dayActualBonus;
+    }
+
+    public BigDecimal getDayDiscountSales() {
+        return dayDiscountSales;
+    }
+
+    public void setDayDiscountSales(BigDecimal dayDiscountSales) {
+        this.dayDiscountSales = dayDiscountSales;
     }
 }

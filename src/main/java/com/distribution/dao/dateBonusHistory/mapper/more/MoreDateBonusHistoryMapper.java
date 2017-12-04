@@ -40,5 +40,7 @@ public interface MoreDateBonusHistoryMapper extends DateBonusHistoryMapper {
     Integer selectDateBonusHistoryListCount(Page page);
     
     int updateDateBonusHistorySuccess(Map<String,Object> param);
+    
+    DateBonusHistory getDateBonusHistoryByDate(String date);
 
 }

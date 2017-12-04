@@ -39,7 +39,6 @@ angular.module('admTreeMember').controller('admTreeMemberListCtrl',function ($q,
                 console.log(resp.errorMessage);
             }
         });
-
     };
 
     $scope.onInit();
@@ -56,7 +55,10 @@ angular.module('admTreeMember').controller('admTreeMemberListCtrl',function ($q,
             }
         });
     };
-
+    $scope.showGraph = function (member) {
+        $state.go("app.graph",{nodeId: member.nodeId});
+    }
+    
     /**翻页*/
     $scope.pageChangeHandler = function(num) {
         $scope.myPage.pageNo = num;

@@ -58,7 +58,7 @@
                                     <th>电话</th>
                                     <th>报单金额</th>
                                     <th>推荐人</th>
-                                    <th>一代个数</th>
+                                    <!--<th>一代个数</th>-->
                                     <th>放置节点信息</th>
                                     <th>报单时间</th>
                                     <!--<th>激活时间</th>-->
@@ -69,19 +69,22 @@
                             </thead>
                             <tbody>
                                 <tr class="odd gradeX" ng-show= "!notData" dir-paginate="member in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
-                                <td>{{member.memberName}}</td>
+                                    <td><a ng-click="gotoAdmMemberInfo(member.id);" style="text-decoration:underline;">{{member.memberName}}</a></td>
                                 <td>{{member.memberPost|PostLevelFilter}}</td>
                                 <td>{{member.memberPhone}}</td>
                                 <td>{{member.orderAmount | number:2}}</td>
                                 <td>{{member.recommendName}}</td>
-                                <td>{{member.firstAgentCnt}}</td>
+                                <!--<td>{{member.firstAgentCnt}}</td>-->
                                 <td>{{member.parentMemberName}}</td>
                                 <!--<td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>-->
                                 <td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
                                 <td>{{member.status|recommendStatusFilter}}</td>
                                 <!--<td>{{member.expressAddress}}</td>-->
-                                <td><a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs blue-steel" ng-show="member.status == 'N'">充值</a>
+                                <td>
+                                    <a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs blue-steel" ng-show="member.status == 'N'">充值</a>
                                     <a href="javascript:void(0);" ng-click="initMemberPassword(member.id, member.memberName);" class="btn btn-xs red">密码初始化</a>
+                                    <a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'Y');" class="btn btn-xs red" ng-show="member.deleteFlag == 'N'">禁用</a>
+                                    <a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'N');" class="btn btn-xs blue" ng-show="member.deleteFlag == 'Y'">启用</a>
                                 </td>
                             </tr>
                             <tr ng-show= "notData" >

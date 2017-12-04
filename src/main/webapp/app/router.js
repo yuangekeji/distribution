@@ -97,7 +97,7 @@ angular.module('app').config([
                 controller: 'dividendDetailCtrl'
             })
             .state('app.graph',{
-                url: '/graph',
+                url: '/graph/:nodeId',
                 templateUrl: helper.basepath('graph/html/graph.html'),
                 resolve: helper.resolveFor('graph'),
                 controller: 'graphCtrl'
@@ -271,5 +271,11 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admTransfer/html/list.html'),
                 resolve: helper.resolveFor('admTransfer.list'),
                 controller: 'admTransferListCtrl'
+            })
+            .state('app.admMemberInfo',{
+                url: '/admMemberInfo/:memberId',
+                templateUrl: helper.basepath('admMember/html/memberInfo.html'),
+                resolve: helper.resolveFor('admMemberInfo'),
+                controller: 'admMemberInfoCtrl'
             })
     }]);

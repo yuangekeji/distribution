@@ -123,7 +123,8 @@
     money_status, is_operator, is_sales_dept,
     first_agent_cnt, recommend_name,
     parent_id ,
-    linkman_phone
+    linkman_phone,
+    IFNULL(delete_flag, 'N') as delete_flag
     FROM member WHERE member_phone = #{userName} AND login_password = #{password}
   </select>
   <select id="findMatchMemberQueryPwd" parameterType="java.util.Map" resultType="java.lang.Integer">
@@ -149,7 +150,8 @@
       m.money_status, m.is_operator, m.is_sales_dept,
       m.first_agent_cnt, m.recommend_name ,
       m.parent_id,
-      p.member_name as parentMemberName
+      p.member_name as parentMemberName,
+      IFNULL(m.delete_flag, 'N') as delete_flag
     FROM member m LEFT JOIN	member p ON p.id = m.parent_id
     <include refid="where"/>ORDER BY m.id DESC <include refid="pageLimit"/>
   </select>
@@ -220,4 +222,22 @@
   <select id="checkPayPwd" parameterType="com.distribution.dao.member.model.more.MoreMember" resultMap="BaseResultMap">
     SELECT id,pay_password FROM member WHERE id = #{id} AND pay_password = #{oldPayPwd}
   </select>
+  <update id="updateByRecommendId" parameterType="com.distribution.dao.member.model.more.MoreMember" >
+    update member
+    <set >
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recommendName != null" >
+        recommend_name = #{recommendName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where recommend_id = #{recommendId,jdbcType=INTEGER}
+  </update>
+  <select id="selectOrderTotalAmtByMemberId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+      select sum(order_amt) from order_master where member_id = #{memberId,jdbcType=INTEGER} and order_category in (1,2)
+   </select>
 </mapper>

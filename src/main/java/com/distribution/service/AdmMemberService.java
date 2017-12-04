@@ -11,6 +11,7 @@ import com.distribution.dao.accountManager.model.AccountManager;
 import com.distribution.dao.admin.model.Admin;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.member.model.Member;
+import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.memberChargeApply.mapper.more.MoreMemberChargeApplyMapper;
 import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,6 +122,45 @@ public class AdmMemberService {
         member.setLoginPassword(CryptoUtil.md5ByHex("111111"));
         member.setQueryPassword(CryptoUtil.md5ByHex("222222"));
         member.setPayPassword(CryptoUtil.md5ByHex("333333"));
+        member.setUpdateId(admin.getId());
+        member.setUpdateTime(new Date());
+        Integer count = memberMapper.updateByPrimaryKeySelective(member);
+        return count;
+    }
+    /**
+     * description 修改会员姓名
+     * @author sijeng
+     * */
+    public String updateMember(MoreMember moreMember, Admin admin){
+        Date date = new Date();
+        Member member = new Member();
+        member.setId(moreMember.getId());
+        member.setMemberName(moreMember.getMemberName());
+        member.setUpdateId(admin.getId());
+        member.setUpdateTime(date);
+        int cnt = memberMapper.updateByPrimaryKeySelective(member);
+        if (cnt > 0) {
+            MoreMember mm = new MoreMember();
+            mm.setRecommendId(moreMember.getId());
+            mm.setRecommendName(moreMember.getMemberName());
+            mm.setUpdateId(admin.getId());
+            mm.setUpdateTime(date);
+            int cnt2 = memberMapper.updateByRecommendId(mm);
+        }else {
+            throw new RuntimeException();
+        }
+        return "success";
+    }
+    /**
+     * 会员禁用功能操作
+     * @author sijeong
+     * */
+
+    public Integer deleteMember(Member m, Admin admin){
+
+        Member member = new Member();
+        member.setId(m.getId());
+        member.setDeleteFlag(m.getDeleteFlag());
         member.setUpdateId(admin.getId());
         member.setUpdateTime(new Date());
         Integer count = memberMapper.updateByPrimaryKeySelective(member);

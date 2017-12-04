@@ -48,7 +48,7 @@
                             <tbody>
                             <tr ng-if= "myPage.result.length >0" class="odd gradeX" dir-paginate="row in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo"
                                 total-items="myPage.totalCount">
-                                <td>{{row.bonusDate  | date:'yyyy-MM-dd'}}</td>
+                                <td>{{row.bonusDate  | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td >{{row.amout | number:2}}</td>
                                 <td >{{row.actualAmout | number:2}}</td>
                                 <td >{{row.manageFee | number:2}}</td>

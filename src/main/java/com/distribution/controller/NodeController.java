@@ -8,6 +8,7 @@ import com.distribution.service.NodeService;
 import com.distribution.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,11 +25,11 @@ public class NodeController extends BonusController {
     @Autowired
     private NodeService nodeService;
 
-    @RequestMapping("/tree")
+    @RequestMapping("/tree/{nodeId}")
     @ResponseBody
-    public JsonMessage orderList( HttpSession session){
-        Member m = (Member) getCurrentUser(session);
-        CustomNode node = nodeService.buildNodeTreeByNode(m.getNodeId());
+    public JsonMessage orderList(@PathVariable Integer nodeId){
+//        Member m = (Member) getCurrentUser(session);
+        CustomNode node = nodeService.buildNodeTreeByNode(nodeId);
         return successMsg(node);
     }
 }

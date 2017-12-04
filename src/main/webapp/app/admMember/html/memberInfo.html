@@ -15,102 +15,184 @@
                             <uib-tab index="0" heading="会员信息">
                                 <form action="#">
                                     <div class="form-group">
-                                        <div class="portlet-body">
-                                            <div class="table-scrollable table-scrollable-borderless">
-                                                <table class="table">
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            会员姓名
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            <input type="text" style="height:23px; display:inline-block; width: 70%" class="form-control input-circle" ng-model="MemberInfo.memberName" maxlength="100"/>
-                                                            <a href="javascript:void(0);" ng-click="updateMemberName();" style="display: inline-block" class="btn blue-steel btn-xs">修改</a>
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            会员账号
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.memberPhone}}</td>
+                                        <div class="portlet-body form">
+                                            <form class="form-horizontal" role="form">
+                                                <div class="form-body">
+                                                    <h2 class="margin-bottom-20"> {{MemberInfo.memberName}} </h2>
+                                                    <h3 class="form-section">个人信息</h3>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">会员名:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">
+                                                                        <input type="text" style="height:23px; display:inline-block; width: 70%" class="form-control input-circle" ng-model="MemberInfo.memberName" maxlength="100"/>
+                                                                        <a href="javascript:void(0);" ng-click="updateMemberName();" style="display: inline-block" class="btn green-steel btn-xs">修改</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">登录账号:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.memberPhone}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!--/row-->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">加入时间:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.createTime|date:'yyyy年MM月dd日'}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">注册金额:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.orderAmount}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!--/row-->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">爵位等级:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.memberPost|PostLevelFilter}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">推荐人:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.recommendName}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!--/row-->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">激活状态:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.status=='Y'?'已激活':'未激活'}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">账号状态:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.deleteFlag=='Y'?'已禁用':'已启用'}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">是否是运营中心:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{MemberInfo.isOperator=='Y'?'是':'否'}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            加入时间
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.createTime|date:'yyyy年MM月dd日'}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            注册金额
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.orderAmount}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            爵位等级
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.memberPost|PostLevelFilter}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            推荐人
-                                                        </td>
-                                                        <td class="black-font text-right" width="10%"><a ng-click="recommendMemberInfo(MemberInfo.recommendId);" style="text-decoration:underline;">{{MemberInfo.recommendName}}</a></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            激活状态
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.status=='Y'?'已激活':'未激活'}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            账号状态
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.deleteFlag=='Y'?'已禁用':'已启用'}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            身份证号码
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.idNumber}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            收货人
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.consignee}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            联系人手机号
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.linkmanPhone}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            开户行
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.bankName}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            开户姓名
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.bankUserName}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            银行卡号
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cardNumber}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            是否是运营中心
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.isOperator=='Y'?'是':'否'}}</td>
-                                                        <td class="black-font text-right" colspan="2"></td>
-                                                        <!--<td class="black-font text-right" width="15%">-->
-                                                        <!--一代人数-->
-                                                        <!--</td>-->
-                                                        <!--<td class="black-font text-right" width="15%">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}</td>-->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            收货地址
-                                                        </td>
-                                                        <td class="black-font text-left" colspan="3">{{MemberInfo.expressAddress}}</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                                    </div>
+                                                    <h3 class="form-section">收货信息</h3>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">收货人:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.consignee}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">联系人手机号:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.linkmanPhone}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">收货地址:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.expressAddress}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <!--/row-->
+                                                    <h3 class="form-section">银行账户信息</h3>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">身份证号码:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.idNumber}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">开户行:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.bankName}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">开户姓名:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{MemberInfo.bankUserName}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">银行卡号:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{MemberInfo.cardNumber}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                    </div>
+                                                </div>
+                                            </form>
+
                                         </div>
                                     </div>
                                     <div class="margin-top-10">

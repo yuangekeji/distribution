@@ -954,7 +954,6 @@ where flow_type = '10月31日见点奖恢复';
 update account_flow_history set flow_type = 11 where type = 2 and flow_type =5 and total_amt is null;
 
 delete from transfer where id= 710;
-
 select *,
   case when type =1 and flow_type =1 then '复投'
   when type =1 and flow_type =2 then '转出'
@@ -974,11 +973,30 @@ select *,
   when type =2 and flow_type = -99 then '收入-管理员手动调整数据'
   end as remark  from account_flow_history GROUP BY type , flow_type;
 
---  1202 部署
+--  1202 部署完成
 delete from menu where id = 28;
 set global transaction isolation level SERIALIZABLE;
 set session transaction isolation level SERIALIZABLE;
 select @@global.tx_isolation,@@tx_isolation;
+
+-- 1204 未部署
+ALTER TABLE `date_bonus_history`
+  ADD COLUMN  `all_total_sales` decimal(15,2) DEFAULT NULL COMMENT '所有销售总和';
+ALTER TABLE `date_bonus_history`
+  ADD COLUMN  `all_total_bonus` decimal(15,2) DEFAULT NULL COMMENT '所有奖金总和';
+ALTER TABLE `date_bonus_history`
+  ADD COLUMN  `all_total_advance` decimal(15,2) DEFAULT NULL COMMENT '所有提现总和';
+ALTER TABLE `date_bonus_history`
+  ADD COLUMN  `day_advance` decimal(15,2) DEFAULT NULL COMMENT '日提现总金额';
+ALTER TABLE `date_bonus_history`
+  ADD COLUMN  `day_actual_bonus` decimal(15,2) DEFAULT NULL COMMENT '日实际发奖金总金额';
+ALTER TABLE `date_bonus_history`
+  ADD COLUMN  `day_discount_sales` decimal(15,2) DEFAULT NULL COMMENT '当日折扣单总额';
+
+-- 财务可查看会员管理
+insert into role_menu values(3,12);
+insert into role_menu values(3,13);
+
 
 
 -- 未部署

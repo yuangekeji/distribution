@@ -967,4 +967,47 @@ public class BonusService {
 		List<DateBonusHistory> list = moreDateBonusHistoryMapper.listFailureDividendBonus(date);
 		return list;
 	}
+	/**
+	 * 查询平台资金沉淀流水
+	 * @param date
+	 * @return
+	 */
+	public Map<String,Object> getDaySalesAndBonusAmount(String date){
+		Map<String,Object> map = new HashMap<String,Object>();
+		//总销售额,不算折扣单
+		map.put("totalSalesAmount", moreOrderMasterMapper.selectTotalSalesAmount());
+		//当日营业额
+		map.put("dayDiscountSalesAmount", moreOrderMasterMapper.findCurrentDayOrderSales(date));
+		//当日折扣单销售额
+		map.put("dayDiscountSalesAmount", moreOrderMasterMapper.selectDayDiscountSalesAmount(date));
+		//总奖金额
+		map.put("totalMemberBonusAmount", moreMemberBonusMapper.getTotalMemberBonus());
+		//当日奖金额
+		map.put("dayMemberBonusAmount", moreMemberBonusMapper.getDayMemberBonus(date));
+		//总提现额
+		map.put("totalAdvanceAmount", moreMemberBonusMapper.getTotalAdvance());
+		//当日提现额
+		map.put("dayAdvanceAmount", moreMemberBonusMapper.getDayAdvance(date));
+		return map;
+	}
+	/**
+	 * 保存或更新日奖金流水
+	 * @param record
+	 */
+	public void saveOrUpdateDateHistory(DateBonusHistory record) {
+		if(null != record.getId()) {
+			moreDateBonusHistoryMapper.updateByPrimaryKey(record);
+		}else {
+			moreDateBonusHistoryMapper.insert(record);
+		}
+	}
+	/**
+	 * 通过date查询DateBonusHistory
+	 * @param date
+	 * @return
+	 */
+	public DateBonusHistory getDateBonusHistory(String date) {
+		DateBonusHistory history = moreDateBonusHistoryMapper.getDateBonusHistoryByDate(date);
+		return history;
+	}
 }

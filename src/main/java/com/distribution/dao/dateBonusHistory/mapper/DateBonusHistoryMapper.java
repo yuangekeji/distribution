@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface DateBonusHistoryMapper {
-    int countByExample(DateBonusHistoryExample example);
+    long countByExample(DateBonusHistoryExample example);
 
     int deleteByExample(DateBonusHistoryExample example);
 

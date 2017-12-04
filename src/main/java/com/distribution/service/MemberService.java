@@ -154,12 +154,38 @@ public class MemberService {
             }
         }
     }
+    /**
+     * 验证码验证
+     *
+     * @param session
+     * @param code
+     */
+
+    private boolean checkCode(HttpSession session, String code) {
+        String codeSession = (String) session.getAttribute("code");
+        if (codeSession ==null || "".equals(codeSession) || code==null || "".equals(code) ) {
+           return false;
+        }
+
+        if (codeSession.equalsIgnoreCase(code)) {
+            // 验证码通过
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 
     /**
      * description 登录
      * @author Bright
      * */
-    public JsonMessage login(Map param, String remember, HttpSession session){
+    public JsonMessage login(Map param, String remember,String code,  HttpSession session){
+
+        if(!checkCode(session,code)){
+            return new JsonMessage(false,"codeError",null);
+        }
+
         if(null!=remember){
             List<Admin> list = moreAdminMapper.login(param);
             if(!list.isEmpty()){
@@ -350,5 +376,18 @@ public class MemberService {
 
     public Integer selectOrderTotalAmtByMemberId(Integer memberId){
         return moreMemberMapper.selectOrderTotalAmtByMemberId(memberId);
+    }
+
+    /**
+     * 校验查询密码
+     * @param moreMember
+     * @return
+     */
+    public boolean searchPwdValidate(MoreMember moreMember){
+        Member m =  moreMemberMapper.checkQueryPwd(moreMember);
+        if( m != null && m.getId() > 0 ){
+           return true;
+        }
+         return  false;
     }
 }

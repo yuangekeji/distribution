@@ -1,0 +1,77 @@
+<!-- BEGIN PAGE HEADER-->
+<h4 class="page-title">账户明细</h4>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">账户明细</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="note note-info note-bordered">
+                                <h4>账户总收入：+30200</h4> <h4>账户总支出：-2000</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="sample_1_wrapper" class="dataTables_wrapper">
+                    <!-- BEGIN FORM-->
+                    <form action="#" class="form-horizontal form-bordered">
+                        <div class="form-body">
+                            <div class="form-group col-md-5">
+                                <label class="control-label col-md-3">查询时间</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime">
+                                         <span class="input-group-addon"> to </span>
+                                        <input type="text" class="form-control" name="to"   ng-model="myPage.parameterMap.endTime">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn blue-steel" ng-click="searchByParam();"><i class="fa fa-search"></i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <div class="table-scrollable">
+                        <table class="table blue-steel-table table-bordered table-hover "
+                               id="sample_1">
+                                <thead>
+                                    <tr >
+                                        <th class="text-center">转账人</th>
+                                        <th class="text-center">转账人电话</th>
+                                        <th class="text-center">收款人</th>
+                                        <th class="text-center">收款人电话</th>
+                                        <th class="text-center">转账时间</th>
+                                        <th class="text-center">转账金额</th>
+                                        <th class="text-center">撤销时间</th>
+                                        <th class="text-center">状态</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+
+                            <tr ng-show= "notData" >
+                                <td colspan="8" class="text-center">无记录</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<script>
+    ComponentsDateTimePickers.init(); // init todo page
+</script>

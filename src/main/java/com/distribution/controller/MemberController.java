@@ -5,6 +5,7 @@ import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.intercept.IgnoreLoginCheck;
+import com.distribution.common.utils.CaptchaUtil;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.apply.model.OperationApply;
@@ -23,7 +24,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -59,11 +64,11 @@ public class MemberController extends BasicController {
     @RequestMapping("/login")
     @IgnoreLoginCheck
     @ResponseBody
-    public JsonMessage login(String userName, String password, String remember, HttpSession session){
+    public JsonMessage login(String userName, String password, String remember,String code,  HttpSession session){
         Map param = new HashMap();
         param.put("userName",userName);
         param.put("password", CryptoUtil.md5ByHex(password));
-        return memberService.login(param,remember,session);
+        return memberService.login(param,remember,code,session);
     }
 
     /**
@@ -294,4 +299,46 @@ public class MemberController extends BasicController {
         }
 
     }
+    /**
+     * description 验证查询密码
+     * @author Bright
+     * */
+    @RequestMapping("/searchPwdValidate")
+    @ResponseBody
+    public JsonMessage searchPwdValidate(@RequestBody String searchPwd,HttpSession session){
+        Member m = (Member)getCurrentUser(session);
+        if(m != null && m.getId() != null){
+
+            MoreMember moreMember = new MoreMember();
+            moreMember.setOldQueryPwd(CryptoUtil.md5ByHex(searchPwd));
+            moreMember.setId(m.getId());
+            Boolean returnFlag = memberService.searchPwdValidate(moreMember);
+
+            if(returnFlag){
+                return successMsg(returnFlag);
+            }else{
+                return failMsg();
+            }
+
+        }else{
+            return failMsg();
+        }
+
+    }
+
+    @RequestMapping("/check")
+    @IgnoreLoginCheck
+    public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 通知浏览器不要缓存
+        response.setHeader("Expires", "-1");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Pragma", "-1");
+        CaptchaUtil util = CaptchaUtil.Instance();
+        // 将验证码输入到session中，用来验证
+        String code = util.getString();
+        request.getSession().setAttribute("code", code);
+        // 输出打web页面
+        ImageIO.write(util.getImage(), "jpg", response.getOutputStream());
+    }
+
 }

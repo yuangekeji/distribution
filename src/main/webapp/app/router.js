@@ -278,4 +278,10 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admMemberInfo'),
                 controller: 'admMemberInfoCtrl'
             })
+            .state('app.accountHistory',{
+                url: '/accountHistory/',
+                templateUrl: helper.basepath('account/html/accountHistory.html'),
+                resolve: helper.resolveFor('accountHistory'),
+                controller: 'accountHistoryCtrl'
+            })
     }]);

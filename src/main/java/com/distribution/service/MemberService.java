@@ -351,4 +351,17 @@ public class MemberService {
     public Integer selectOrderTotalAmtByMemberId(Integer memberId){
         return moreMemberMapper.selectOrderTotalAmtByMemberId(memberId);
     }
+
+    /**
+     * 校验查询密码
+     * @param moreMember
+     * @return
+     */
+    public boolean searchPwdValidate(MoreMember moreMember){
+        Member m =  moreMemberMapper.checkQueryPwd(moreMember);
+        if( m != null && m.getId() > 0 ){
+           return true;
+        }
+         return  false;
+    }
 }

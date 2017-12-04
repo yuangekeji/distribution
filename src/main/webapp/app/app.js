@@ -143,15 +143,14 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
     };
 
 
-    $scope.goUrl= function (url) {
-    $state.go(url);
+    $scope.goUrl= function (second) {
 
-    var hasWidth = $('.navbar-collapse').hasClass('width')? 'width' : 'height'
-
-    $('.navbar-collapse')
+         $state.go(second.menuLink);
+         var hasWidth = $('.navbar-collapse').hasClass('width')? 'width' : 'height';
+         $('.navbar-collapse')
             .removeClass('collapse in')
             .addClass('collapse')[hasWidth](0)
-            .attr('aria-expanded', false)
+            .attr('aria-expanded', false);
     }
 });
 

@@ -294,4 +294,30 @@ public class MemberController extends BasicController {
         }
 
     }
+    /**
+     * description 验证查询密码
+     * @author Bright
+     * */
+    @RequestMapping("/searchPwdValidate")
+    @ResponseBody
+    public JsonMessage searchPwdValidate(@RequestBody String searchPwd,HttpSession session){
+        Member m = (Member)getCurrentUser(session);
+        if(m != null && m.getId() != null){
+
+            MoreMember moreMember = new MoreMember();
+            moreMember.setOldQueryPwd(CryptoUtil.md5ByHex(searchPwd));
+            moreMember.setId(m.getId());
+            Boolean returnFlag = memberService.searchPwdValidate(moreMember);
+
+            if(returnFlag){
+                return successMsg(returnFlag);
+            }else{
+                return failMsg();
+            }
+
+        }else{
+            return failMsg();
+        }
+
+    }
 }

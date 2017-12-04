@@ -21,7 +21,7 @@
             </a>
             <ul class="sub-menu">
                 <li ng-repeat="second in secondMenu" ng-if="second.parentMenu == row.id">
-                    <a  ng-click="goUrl(second.menuLink)">
+                    <a  ng-click="goUrl(second)">
                         <i class="icon-puzzle"></i> {{second.name}}
                     </a>
                 </li>

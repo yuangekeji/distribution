@@ -979,6 +979,7 @@ set global transaction isolation level SERIALIZABLE;
 set session transaction isolation level SERIALIZABLE;
 select @@global.tx_isolation,@@tx_isolation;
 
+
 -- 1204 未部署
 ALTER TABLE `date_bonus_history`
   ADD COLUMN  `all_total_sales` decimal(15,2) DEFAULT NULL COMMENT '所有销售总和';
@@ -996,8 +997,6 @@ ALTER TABLE `date_bonus_history`
 -- 财务可查看会员管理
 insert into role_menu values(3,12);
 insert into role_menu values(3,13);
-
-
 
 -- 未部署
 ALTER TABLE `account_flow_history`

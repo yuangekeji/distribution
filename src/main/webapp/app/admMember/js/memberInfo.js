@@ -94,7 +94,6 @@ angular.module('admMember').controller('admMemberInfoCtrl', function ($q, title,
 
     $scope.recommendMemberInfo = function(recommendId){
         $scope.param.parameterMap.recommendId = recommendId;
-        console.info($scope.param.parameterMap.recommendId);
         $http.post(ctx + '/admMember/recommendMemberInfo', $scope.param)
             .success(function (resp) {
                 if (resp.successful) {

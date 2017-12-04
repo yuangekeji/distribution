@@ -981,16 +981,14 @@ select @@global.tx_isolation,@@tx_isolation;
 
 -- 1204 未部署
 ALTER TABLE `date_bonus_history`
-ADD COLUMN  `jd_alarm_status` int(1) DEFAULT '0' COMMENT '见点奖发放状态';
+  ADD COLUMN  `all_total_sales` decimal(15,2) DEFAULT NULL COMMENT '所有销售总和';
 ALTER TABLE `date_bonus_history`
-ADD COLUMN  `all_total_sales` decimal(15,2) DEFAULT NULL COMMENT '所有销售总和';
+  ADD COLUMN  `all_total_bonus` decimal(15,2) DEFAULT NULL COMMENT '所有奖金总和';
 ALTER TABLE `date_bonus_history`
-ADD COLUMN  `all_total_bonus` decimal(15,2) DEFAULT NULL COMMENT '所有奖金总和';
+  ADD COLUMN  `all_total_advance` decimal(15,2) DEFAULT NULL COMMENT '所有提现总和';
 ALTER TABLE `date_bonus_history`
-ADD COLUMN  `all_total_advance` decimal(15,2) DEFAULT NULL COMMENT '所有提现总和';
+  ADD COLUMN  `day_advance` decimal(15,2) DEFAULT NULL COMMENT '日提现总金额';
 ALTER TABLE `date_bonus_history`
-ADD COLUMN  `day_advance` decimal(15,2) DEFAULT NULL COMMENT '日提现总金额';
+  ADD COLUMN  `day_actual_bonus` decimal(15,2) DEFAULT NULL COMMENT '日实际发奖金总金额';
 ALTER TABLE `date_bonus_history`
-ADD COLUMN  `day_actual_bonus` decimal(15,2) DEFAULT NULL COMMENT '日实际发奖金总金额';
-ALTER TABLE `date_bonus_history`
-ADD COLUMN  `day_discount_sales` decimal(15,2) DEFAULT NULL COMMENT '当日折扣单总额';
+  ADD COLUMN  `day_discount_sales` decimal(15,2) DEFAULT NULL COMMENT '当日折扣单总额';

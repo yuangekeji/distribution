@@ -992,3 +992,7 @@ ALTER TABLE `date_bonus_history`
   ADD COLUMN  `day_actual_bonus` decimal(15,2) DEFAULT NULL COMMENT '日实际发奖金总金额';
 ALTER TABLE `date_bonus_history`
   ADD COLUMN  `day_discount_sales` decimal(15,2) DEFAULT NULL COMMENT '当日折扣单总额';
+
+-- 财务可查看会员管理
+insert into role_menu values(3,12);
+insert into role_menu values(3,13);

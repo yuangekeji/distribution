@@ -18,7 +18,6 @@
                                         <div class="portlet-body form">
                                             <form class="form-horizontal" role="form">
                                                 <div class="form-body">
-                                                    <h2 class="margin-bottom-20"> {{MemberInfo.memberName}} </h2>
                                                     <h3 class="form-section">个人信息</h3>
                                                     <div class="row">
                                                         <div class="col-md-6">
@@ -211,7 +210,6 @@
                                                     </div>
                                                 </div>
                                             </form>
-
                                         </div>
                                     </div>
                                     <div class="margin-top-10">
@@ -222,72 +220,120 @@
                             <uib-tab index="1" heading="账户信息">
                                 <form action="#">
                                     <div class="form-group">
-                                        <div class="portlet-body">
-                                            <div class="table-scrollable table-scrollable-borderless">
-                                                <table class="table">
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            市级市场业绩
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cityTotalAmount | number:2}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            县级市场业绩
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.countyTotalAmount | number:2}}</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            市级市场会员数
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cityTotalPeople}}个</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            县级市场会员数
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.countyTotalPeople}}个</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            销售总业绩
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.cityTotalAmount + MemberInfo.countyTotalAmount | number:2}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            分红包个数
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{dividendMap.totalDividendCount }}个</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            出局分红包
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{dividendMap.inValidDividendCount}}个</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            未出局分红包
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{dividendMap.validDividendCount}}个</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            奖金币余额
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.bonusAmount | number:2}}</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            种子币余额
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.seedAmount | number:2}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="black-font text-right" width="15%">
-                                                            直接销售量
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}个</td>
-                                                        <td class="black-font text-right" width="15%">
-                                                            已提现金额
-                                                        </td>
-                                                        <td class="black-font text-right" width="15%">{{MemberInfo.actualAmount | number:2}}</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
+                                        <div class="portlet-body form">
+                                            <form class="form-horizontal" role="form">
+                                                <div class="form-body">
+                                                    <h3 class="form-section">账户信息</h3>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">市级市场业绩:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static text-right"> {{MemberInfo.cityTotalAmount | number:2}} </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">县级市场业绩:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static"> {{MemberInfo.countyTotalAmount | number:2}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">市级市场会员数:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static text-right"> {{MemberInfo.cityTotalPeople}}个</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">县级市场会员数:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{MemberInfo.countyTotalPeople}}个</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">销售总业绩:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static text-right"> {{MemberInfo.cityTotalAmount + MemberInfo.countyTotalAmount | number:2}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">分红包个数:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{dividendMap.totalDividendCount }}个</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">出局分红包:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static text-right">{{dividendMap.inValidDividendCount}}个</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">未出局分红包:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{dividendMap.validDividendCount}}个</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">奖金币余额:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static text-right">{{MemberInfo.bonusAmount | number:2}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">种子币余额:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{MemberInfo.seedAmount | number:2}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">直接销售量:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static text-right">{{MemberInfo.firstAgentCnt?MemberInfo.firstAgentCnt:0}}个</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-md-3">已提现金额:</label>
+                                                                <div class="col-md-9">
+                                                                    <p class="form-control-static">{{MemberInfo.actualAmount | number:2}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="margin-top-10">

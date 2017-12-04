@@ -19,10 +19,7 @@ import com.distribution.service.MemberService;
 import com.distribution.service.NodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -305,10 +302,11 @@ public class MemberController extends BasicController {
      * */
     @RequestMapping("/searchPwdValidate")
     @ResponseBody
-    public JsonMessage searchPwdValidate(@RequestBody String searchPwd,HttpSession session){
+    public JsonMessage searchPwdValidate(@RequestBody Map param, HttpSession session){
         Member m = (Member)getCurrentUser(session);
         if(m != null && m.getId() != null){
 
+            String searchPwd = (String) param.get("searchPwd");
             MoreMember moreMember = new MoreMember();
             moreMember.setOldQueryPwd(CryptoUtil.md5ByHex(searchPwd));
             moreMember.setId(m.getId());

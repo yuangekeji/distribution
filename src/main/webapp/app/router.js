@@ -279,9 +279,15 @@ angular.module('app').config([
                 controller: 'admMemberInfoCtrl'
             })
             .state('app.accountHistory',{
-                url: '/accountHistory/',
+                url: '/accountHistory',
                 templateUrl: helper.basepath('account/html/accountHistory.html'),
                 resolve: helper.resolveFor('accountHistory'),
                 controller: 'accountHistoryCtrl'
+            })
+            .state('app.searchValidate',{
+                url: '/searchValidate/:url',
+                templateUrl: helper.basepath('member/html/searchValidate.html'),
+                resolve: helper.resolveFor('searchValidate'),
+                controller: 'searchValidateCtrl'
             })
     }]);

@@ -145,7 +145,11 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
 
     $scope.goUrl= function (second) {
 
-         $state.go(second.menuLink);
+         if(second.id == 3 || second.id == 27|| second.id == 32){
+             $state.go("app.searchValidate",{url:second.menuLink});
+         }else{
+             $state.go(second.menuLink);
+         }
          var hasWidth = $('.navbar-collapse').hasClass('width')? 'width' : 'height';
          $('.navbar-collapse')
             .removeClass('collapse in')

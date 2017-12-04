@@ -352,6 +352,15 @@ angular
                     'app/admMember/js/memberInfo.js?v=' + version,
                     'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
+            },
+            {
+                name:'accountHistory',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/account/js/accountHistory.js?v=' + version,
+                    'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
             }
         ]
     });

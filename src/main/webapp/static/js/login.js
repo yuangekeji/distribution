@@ -37,7 +37,7 @@ function login() {
                     if(resp.errorMessage == "memberDeleted") {
                         $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户账号已被禁用，请联系管理员");
                     }else if(resp.errorMessage == 'codeError') {
-                        $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("验证码错误");
+                        $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("验证码不正确，请重新输入");
                     }else{
                         $(".alert,.alert-danger,.display-hide").removeClass("display-hide").text("用户名或密码不正确，请重新输入");
                     }

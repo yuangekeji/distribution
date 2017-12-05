@@ -174,7 +174,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <input class="form-control form-control-solid placeholder-no-fix input-sm" style="height: 32px;" type="text" autocomplete="off" placeholder="请输入验证码" name="code" id="code"/>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-6">
+                <div class="col-md-4 col-sm-4 col-xs-4">
                     <img  id="codeImg" style="float: right" src="${ctx}/member/check" onclick="refresh()">
                 </div>
             </div>

@@ -55,7 +55,11 @@
                             <td class="black-font text-left">
                                奖金币余额
                             </td>
-                            <td class="black-font text-right">{{MemberInfo.bonusAmount | number:2}}</td>
+                            <td class="black-font text-right">
+                                <a ng-click="accountHistory(MemberInfo.id);" style="text-decoration:underline;">查看明细</a>
+                                {{MemberInfo.bonusAmount | number:2}}
+
+                            </td>
                             <td class="black-font text-left">
                                种子币余额
                             </td>

@@ -10,4 +10,9 @@ angular.module('member').controller('memberOverviewCtrl',
         // set sidebar closed and body solid layout mode
         $rootScope.settings.layout.pageBodySolid = true;
         $rootScope.settings.layout.pageSidebarClosed = false;
+
+        $scope.accountHistory = function (id) {
+            $state.go('app.accountHistory',{'memberId':id});
+        }
+
     });

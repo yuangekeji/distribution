@@ -11,14 +11,18 @@
                 </div>
             </div>
             <div class="portlet-body">
+
                 <div class="table-toolbar">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="note note-info note-bordered">
-                                <h4>账户总收入：+30200</h4> <h4>账户总支出：-2000</h4>
+                                <p> <span>账户总收入：+30200</span>  <span style="margin-right: 20px">账户总支出：-2000</span></p>
                             </div>
                         </div>
                     </div>
+                    <p style="margin-bottom:20px">
+                        <a href="javascript:void(0);" class="btn blue-steel sbold pull-right"  ng-click="goMemberView()"> 返回会员中心</a>
+                    </p>
                 </div>
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <!-- BEGIN FORM-->
@@ -47,25 +51,27 @@
                                id="sample_1">
                                 <thead>
                                     <tr >
-                                        <th class="text-center">转账人</th>
-                                        <th class="text-center">转账人电话</th>
-                                        <th class="text-center">收款人</th>
-                                        <th class="text-center">收款人电话</th>
-                                        <th class="text-center">转账时间</th>
-                                        <th class="text-center">转账金额</th>
-                                        <th class="text-center">撤销时间</th>
-                                        <th class="text-center">状态</th>
+                                        <th class="text-center">会员名</th>
+                                        <th class="text-center">会员账号</th>
+                                        <th class="text-center">交易发生时间</th>
+                                        <th class="text-center">交易执行者</th>
+                                        <th class="text-center">交易类型</th>
+                                        <th class="text-center">奖金币发生额</th>
+                                        <th class="text-center">种子币发生额</th>
+                                        <th class="text-center">具体类型</th>
+                                        <th class="text-center">奖金币余额</th>
+                                        <th class="text-center">种子币余额</th>
                                     </tr>
                                 </thead>
                             <tbody>
-
                             <tr ng-show= "notData" >
-                                <td colspan="8" class="text-center">无记录</td>
+                                <td colspan="10" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+
             </div>
         </div>
         <!-- END EXAMPLE TABLE PORTLET-->

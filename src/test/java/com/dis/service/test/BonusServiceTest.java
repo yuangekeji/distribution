@@ -6,6 +6,7 @@ package com.dis.service.test;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import com.distribution.dao.order.model.OrderMaster;
 
@@ -95,4 +96,17 @@ public class BonusServiceTest extends SpringServiceTest{
 		String dateStr = "2017-11-01";
 		bonusService.updateAcountManager(dateStr);
 	}
+
+	@Test
+	public void mergeDateTest(){
+		List dateList = bonusService.selectNeedMergeDates();
+		Object[] dates = dateList.toArray();
+
+		for( int i =0 ; i < dates.length ; i++) {
+
+			String date = (String) dates[i];
+		}
+	}
+
+
 }

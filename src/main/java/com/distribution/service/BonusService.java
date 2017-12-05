@@ -1010,4 +1010,12 @@ public class BonusService {
 		DateBonusHistory history = moreDateBonusHistoryMapper.getDateBonusHistoryByDate(date);
 		return history;
 	}
+
+	/**
+	 * 平台资金数据merge
+	 * @return
+	 */
+	public List selectNeedMergeDates(){
+		return moreDateBonusHistoryMapper.selectNeedMergeDates();
+	}
 }

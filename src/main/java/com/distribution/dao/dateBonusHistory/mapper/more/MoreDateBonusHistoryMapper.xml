@@ -105,4 +105,14 @@
 		from date_bonus_history
 		where DATE(date) = DATE(#{date})
   </select>
+  <select id="selectNeedMergeDates" resultType="java.lang.String">
+      <![CDATA[
+      SELECT
+         DATE_FORMAT(date, '%Y-%m-%d')
+      FROM
+         date_bonus_history
+      WHERE
+         create_time < DATE_FORMAT (now(),'%Y-%m-%d')
+    ]]>
+  </select>
 </mapper>

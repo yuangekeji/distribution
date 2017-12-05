@@ -7,8 +7,10 @@ package com.distribution.job;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.distribution.dao.chinaPresidentBonus.mapper.more.MoreChinaPresidentBonusMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -23,9 +25,9 @@ import com.distribution.service.BonusService;
 public class NodeBonusDayJob {
 	@Autowired
 	private BonusService bonusService;
+
 	@Autowired
-    private JobLogsMapper jobLogsMapper;
-	
+	private JobLogsMapper jobLogsMapper;
 	/**
 	 * 发放见点奖
 	 * @author su
@@ -110,6 +112,32 @@ public class NodeBonusDayJob {
 		result.put("result", result.toString());
 		result.put("jobName", "定时结算平台资金/NodeBonusDayJob/selectPlatformCashFlow");
 		saveJobLog(result);
+	}
+
+	@Scheduled(cron ="0 30 14 * * ?" )//数据mergejob 只运行一次 每天14点30钟执行
+	public void mergerPlatformCashFlow(){
+		Map<String,Object> result = new HashMap<String,Object>();
+		//获取max(id) 以外的所有数据，因为max(id)留给明天凌晨处理
+		List  dateList = bonusService.selectNeedMergeDates();
+		Object[] dates = dateList.toArray();
+
+		for( int i =0 ; i < dates.length ; i++){
+
+			String date = (String) dates[i];
+			System.out.println(date);
+			result = bonusService.getDaySalesAndBonusAmount(date);
+			DateBonusHistory dateHistory= bonusService.getDateBonusHistory(date);
+			dateHistory.setDayActualBonus(new BigDecimal((Double)result.get("dayMemberBonusAmount")));
+			dateHistory.setDayAdvance(new BigDecimal((Double)result.get("dayAdvanceAmount")));
+			dateHistory.setDayDiscountSales(new BigDecimal((Double)result.get("dayDiscountSalesAmount")));
+			dateHistory.setAllTotalAdvance(new BigDecimal((Double)result.get("totalAdvanceAmount")));
+			dateHistory.setAllTotalBonus(new BigDecimal((Double)result.get("totalMemberBonusAmount")));
+			dateHistory.setAllTotalSales(new BigDecimal((Double)result.get("totalSalesAmount")));
+			bonusService.saveOrUpdateDateHistory(dateHistory);
+			result.put("result", result.toString());
+			result.put("jobName", "定时结算平台资金/NodeBonusDayJob/selectPlatformCashFlow");
+			saveJobLog(result);
+		}
 	}
 }
 

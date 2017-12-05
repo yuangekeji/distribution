@@ -43,4 +43,5 @@ public interface MoreDateBonusHistoryMapper extends DateBonusHistoryMapper {
     
     DateBonusHistory getDateBonusHistoryByDate(String date);
 
+    List selectNeedMergeDates();
 }

@@ -99,7 +99,6 @@ public class NodeBonusDayJob {
 		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
 		date = "2017-11-18";
 		result = bonusService.getDaySalesAndBonusAmount(date);
-		result.put("jobName", "定时结算平台资金/NodeBonusDayJob/selectPlatformCashFlow");
 		DateBonusHistory dateHistory= bonusService.getDateBonusHistory(date);
 		dateHistory.setDayActualBonus(new BigDecimal((Double)result.get("dayMemberBonusAmount")));
 		dateHistory.setDayAdvance(new BigDecimal((Double)result.get("dayAdvanceAmount")));
@@ -108,6 +107,8 @@ public class NodeBonusDayJob {
 		dateHistory.setAllTotalBonus(new BigDecimal((Double)result.get("totalMemberBonusAmount")));
 		dateHistory.setAllTotalSales(new BigDecimal((Double)result.get("totalSalesAmount")));
 		bonusService.saveOrUpdateDateHistory(dateHistory);
+		result.put("result", result.toString());
+		result.put("jobName", "定时结算平台资金/NodeBonusDayJob/selectPlatformCashFlow");
 		saveJobLog(result);
 	}
 }

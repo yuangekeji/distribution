@@ -85,6 +85,10 @@ public class AdmTransferService {
 
             //step 1)账户转出计算
             AccountManager transAccount = new AccountManager();
+
+            AccountFlowHistory historyout = new AccountFlowHistory();
+            AccountFlowHistory historyin = new AccountFlowHistory();
+
             transAccount.setMemberId(transfer.getReceiveId());
 
             transAccount = this.selectAccountManager(transAccount);
@@ -94,7 +98,12 @@ public class AdmTransferService {
                 return "transferFail";
                 //throw new RuntimeException();
             }
+
+           //转账撤销前余额
+            historyout.setOldTotalBonusAmt(transAccount.getBonusAmt());
             transAccount.setBonusAmt(transAccount.getBonusAmt().subtract(transfer.getTransferAmt()));//从奖金币中扣除
+            //转账撤销后余额
+            historyout.setNewTotalBonusAmt(transAccount.getBonusAmt());
             transAccount.setTotalBonus(transAccount.getBonusAmt().add(transAccount.getSeedAmt()));//计算总奖金字段
             transAccount.setUpdateId(admin.getId());
             transAccount.setUpdateTime(date);
@@ -103,13 +112,16 @@ public class AdmTransferService {
             AccountManager recivedAccount = new AccountManager();
             recivedAccount.setMemberId(transfer.getMemberId());
             recivedAccount = this.selectAccountManager(recivedAccount);
-
+            //转账撤销前余额
+            historyin.setOldTotalBonusAmt(recivedAccount.getBonusAmt());
             recivedAccount.setBonusAmt(recivedAccount.getBonusAmt().add(transfer.getTransferAmt()));//增加奖金币
+            //转账撤销后余额
+            historyin.setNewTotalBonusAmt(recivedAccount.getBonusAmt());
             recivedAccount.setTotalBonus(recivedAccount.getBonusAmt().add(recivedAccount.getSeedAmt()));//计算总奖金字段
             recivedAccount.setUpdateId(admin.getId());
             recivedAccount.setUpdateTime(date);
 
-            AccountFlowHistory historyout = new AccountFlowHistory();
+            //转出流水
             historyout.setMemberId(transfer.getReceiveId());
             historyout.setCreateTime(date);
             historyout.setCreateId(admin.getId());
@@ -118,8 +130,10 @@ public class AdmTransferService {
             historyout.setTotalAmt(transfer.getTransferAmt());
             historyout.setBonusAmt(transfer.getTransferAmt());
             historyout.setSeedAmt(new BigDecimal(0));
+            historyout.setNewTotalSeedAmt(transAccount.getSeedAmt());
+            historyout.setOldTotalSeedAmt(transAccount.getSeedAmt());
 
-            AccountFlowHistory historyin = new AccountFlowHistory();
+           //转入流水
             historyin.setMemberId(transfer.getMemberId());
             historyin.setCreateTime(date);
             historyin.setCreateId(admin.getId());
@@ -128,6 +142,8 @@ public class AdmTransferService {
             historyin.setTotalAmt(transfer.getTransferAmt());
             historyin.setBonusAmt(transfer.getTransferAmt());
             historyin.setSeedAmt(new BigDecimal(0));
+            historyin.setNewTotalSeedAmt(recivedAccount.getSeedAmt());
+            historyin.setOldTotalSeedAmt(recivedAccount.getSeedAmt());
 
             if(transAccount.getId() != null && transAccount.getId() >0
                     && recivedAccount.getId() !=null && recivedAccount.getId() >0){

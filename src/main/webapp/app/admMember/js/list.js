@@ -4,6 +4,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
     $scope.notData = false;
     $scope.posts = [];
     $scope.levels = [];
+    $scope.currentUser =  $sessionStorage.currentUser
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,

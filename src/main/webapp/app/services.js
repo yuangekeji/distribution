@@ -125,7 +125,7 @@ angular.module('app').service('Notify', [function(){
     }
 }]);
 
-angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', function($q, $injector,$window) {
+angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window','Notify', function($q, $injector,$window,Notify) {
     var sessionRecoverer = {
         request: function (config) {
             return config || $q.when(config);
@@ -184,6 +184,7 @@ angular.module('app').factory('sessionRecoverer', ['$q', '$injector','$window', 
                        console.error("未知错误");
                }
              if(response.status == 500 ){
+                 Notify.warning('服务器内部错误');
                  $window.location.href = ctx + '/index#/app/home';
              }
 

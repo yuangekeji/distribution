@@ -154,7 +154,7 @@
 <div class="content"  style="border-radius: 10px !important;padding: 10px 30px !important;" >
     <!-- BEGIN LOGIN FORM -->
     <form class="login-form" method="post">
-        <h4 class="form-title text-center" style="color: #01407d">欢迎登录</h4>
+        <h4 class="form-title text-center" style="color: #01407d;margin-bottom: 10px;">欢迎登录</h4>
         <div class="alert alert-danger display-hide">
             <button class="close" data-close="alert"></button>
             <span>  </span>
@@ -162,13 +162,27 @@
         <div class="form-group">
             <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
             <label class="control-label visible-ie8 visible-ie9">用户名</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="请输入用户名" name="username" id="username"/> </div>
+            <input class="form-control form-control-solid placeholder-no-fix"  style="height: 38px" type="text" autocomplete="off" placeholder="请输入用户名" name="username" id="username"/>
+        </div>
         <div class="form-group">
             <label class="control-label visible-ie8 visible-ie9">密码</label>
-            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="请输入密码" name="password" id="passwd"/> </div>
+            <input class="form-control form-control-solid placeholder-no-fix"  style="height: 38px" type="password" autocomplete="off" placeholder="请输入密码" name="password" id="passwd"/>
+        </div>
+        <div class="form-group">
+            <%--<label class="control-label visible-ie8 visible-ie9">验证码</label>--%>
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <input class="form-control form-control-solid placeholder-no-fix input-sm" style="height: 32px;" type="text" autocomplete="off" placeholder="请输入验证码" name="code" id="code"/>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <img  id="codeImg" style="float: right" src="${ctx}/member/check" onclick="refresh()">
+                </div>
+            </div>
+
+        </div>
         <div class="form-actions" style="border-bottom:none !important;padding: 10px 30px !important;">
             <input type="button" class="btn uppercase" onclick="login();"
-                   style="background-color: #01407d;color: white;border-radius: 5px !important;" value="登录"/>
+                   style="background-color: #01407d;color: white;border-radius: 5px !important;height: 38px" value="登录"/>
             <label class="rememberme check mt-checkbox mt-checkbox-outline">
                 <input type="checkbox" name="remember" value="1" />管理员登录
                 <span></span>

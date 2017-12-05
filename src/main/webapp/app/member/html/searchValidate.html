@@ -1,0 +1,31 @@
+<h4 class="page-title">查询密码校验</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">输入查询密码</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="note note-info note-bordered">
+                            <h4>请输入查询密码</h4>
+                        </div>
+                        <form role="form" action="#">
+                            <div class="form-group" >
+                                <label class="control-label">二级查询密码</label>
+                                <input type="password" ng-model="searchPwd" placeholder="输入二级查询密码" class="form-control input-circle" /> </div>
+                            <div class="margiv-top-10">
+                                <a href="javascript:void(0);" ng-click="validateSearchPwd()" class="btn blue-steel">校验</a>
+                                <button type="button" class="btn default" ui-sref="app.home">返回主页</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

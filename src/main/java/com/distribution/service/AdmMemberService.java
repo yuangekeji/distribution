@@ -61,9 +61,14 @@ public class AdmMemberService {
         AccountManager am = moreAccountManagerMapper.selectByMemberId(moreMemberChargeApply.getMemberId());
 
         Member receivedMember = memberMapper.selectByPrimaryKey(moreMemberChargeApply.getMemberId());
+        AccountFlowHistory af = new AccountFlowHistory();
 
         am.setTotalBonus(am.getTotalBonus().add(moreMemberChargeApply.getChargeAmt()));
+        //充值前余额
+        af.setOldTotalBonusAmt(am.getBonusAmt());
         am.setBonusAmt(am.getBonusAmt().add(moreMemberChargeApply.getChargeAmt()));
+        //充值后余额
+        af.setNewTotalBonusAmt(am.getBonusAmt());
         am.setUpdateId(admin.getId());
         am.setUpdateTime(new Date());
         Integer am1 = moreAccountManagerMapper.updateByMemberId(am);
@@ -86,7 +91,6 @@ public class AdmMemberService {
         mmca.setUpdateTime(date);
         Integer me1 = moreMemberChargeApplyMapper.insert(mmca);
 
-        AccountFlowHistory af = new AccountFlowHistory();
         af.setMemberId(moreMemberChargeApply.getMemberId());
         af.setCreateTime(new Date());
         af.setCreateId(admin.getId());
@@ -95,6 +99,8 @@ public class AdmMemberService {
         af.setBonusAmt(moreMemberChargeApply.getChargeAmt());
         af.setSeedAmt(new BigDecimal(0));
         af.setFlowType(Constant.MEMBERCHARGE);//管理员充值
+        af.setNewTotalSeedAmt(am.getSeedAmt());
+        af.setOldTotalSeedAmt(am.getSeedAmt());
 
         Integer af1 = accountFlowHistoryMapper.insert(af);
 
@@ -165,5 +171,14 @@ public class AdmMemberService {
         member.setUpdateTime(new Date());
         Integer count = memberMapper.updateByPrimaryKeySelective(member);
         return count;
+    }
+    /**
+     * description 查詢推荐人推荐会员
+     * @author shiqing
+     * */
+    public Page selectRecommendMemberInfo(Page page){
+        page.setTotalCount(moreMemberMapper.selectRecommendMemberCnt(page));
+        page.setResult( memberMapper.selectRecommendMemberInfo(page));
+        return page;
     }
 }

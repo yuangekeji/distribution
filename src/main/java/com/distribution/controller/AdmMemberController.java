@@ -184,4 +184,13 @@ public class AdmMemberController extends BasicController{
         admHandleHistoryService.addAdminHandleHistory(admin, map);
         return successMsg();
     }
+    /**
+     * 查詢推荐人推荐会员
+     */
+    @RequestMapping(value = "/recommendMemberInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonMessage recommendMemberInfo(@RequestBody Page page){
+        page = admMemberService.selectRecommendMemberInfo(page);
+        return successMsg(page);
+    }
 }

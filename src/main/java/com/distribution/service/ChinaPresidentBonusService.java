@@ -179,6 +179,7 @@ public class ChinaPresidentBonusService {
                     //查询现有账号信息
                     AccountManager param = new AccountManager();
                     param.setMemberId(bonusAmoutByMonthList.get(i).getMemberId());
+                    AccountFlowHistory flow = new AccountFlowHistory();
                     AccountManager account = moreAccountManagerMapper.selectAccountManager(param);
                     if(null == account){
                         account = param;
@@ -191,6 +192,10 @@ public class ChinaPresidentBonusService {
                         account.setUpdateId(0);
                         account.setUpdateTime(date);
                     }
+
+                    flow.setOldTotalSeedAmt(account.getSeedAmt());
+                    flow.setOldTotalBonusAmt(account.getBonusAmt());
+
                     //对现有余额进行相加
                     BigDecimal total = account.getTotalBonus().add(new BigDecimal(actualAmout));
                     BigDecimal seedAmt = account.getSeedAmt().add(new BigDecimal(seedBonus));
@@ -201,6 +206,9 @@ public class ChinaPresidentBonusService {
                     account.setTotalBonus(total);
                     account.setUpdateId(0);
                     account.setUpdateTime(date);
+
+                    flow.setNewTotalSeedAmt(account.getSeedAmt());
+                    flow.setNewTotalBonusAmt(account.getBonusAmt());
 
                     if(null != account.getId() && account.getId() > 0){
                         //更新账户余额
@@ -218,7 +226,7 @@ public class ChinaPresidentBonusService {
                         }
                     }
                     //AccountFlowHistory 记录
-                    AccountFlowHistory flow = new AccountFlowHistory();
+
                     flow.setCreateId(0);
                     flow.setCreateTime(new Date());
                     //奖金类型，参照奖金表设置
@@ -229,6 +237,8 @@ public class ChinaPresidentBonusService {
                     flow.setBonusAmt(new BigDecimal(bonusRest));
                     flow.setTotalAmt(new BigDecimal(actualAmout));
                     flow.setType(BonusConstant.ACCOUNT_TYPE_IN);
+
+
                     //记录账号资金出入情况
                     int countHistory = accountFlowHistoryMapper.insert(flow);
                     if (countHistory == 0) {

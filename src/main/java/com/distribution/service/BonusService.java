@@ -397,6 +397,9 @@ public class BonusService {
 			account.setUpdateId(bonus.getCreateBy());
 			account.setUpdateTime(new Date());
 		}
+		flow.setOldTotalSeedAmt(account.getSeedAmt());
+		flow.setOldTotalBonusAmt(account.getBonusAmt());
+
 		//对现有余额进行相加
 		BigDecimal total = account.getTotalBonus().add(new BigDecimal(totalBonus));
 		BigDecimal seedAmt = account.getSeedAmt().add(new BigDecimal(seedBonus));
@@ -407,6 +410,10 @@ public class BonusService {
 		account.setTotalBonus(total);
 		account.setUpdateId(bonus.getMemberId());
 		account.setUpdateTime(new Date());
+
+		flow.setNewTotalSeedAmt(account.getSeedAmt());
+		flow.setNewTotalBonusAmt(account.getBonusAmt());
+
 		//保存奖金
 		moreMemberBonusMapper.insert(bonus);
 		if(null != account.getId() && account.getId() > 0){

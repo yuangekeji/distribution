@@ -37,6 +37,15 @@
                                   <input type="text" class="form-control input-sm input-small input-inline" placeholder="请输入会员姓名" aria-controls="sample_1" maxlength="20" ng-model="myPage.parameterMap.name">
                               </div>
                               <div class="form-group col-md-3">
+                                  <label class="control-label">登录账号</label>
+                                  <input type="search"
+                                         class="form-control input-sm input-small input-inline"
+                                         id="memberPhone"
+                                         placeholder="请输入登录账号"
+                                         maxlength="15"
+                                         aria-controls="sample_1" ng-model="myPage.parameterMap.phone">
+                              </div>
+                              <div class="form-group col-md-3">
                                   <label class="control-label">爵位</label>
                                   <select class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.post">
                                       <option value="">全部</option>
@@ -64,7 +73,7 @@
                                     <!--<th>激活时间</th>-->
                                     <th>状态</th>
                                     <!--<th>地址</th>-->
-                                    <th>操作</th>
+                                    <th ng-if="currentUser.roleId == 2">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,11 +89,11 @@
                                 <td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
                                 <td>{{member.status|recommendStatusFilter}}</td>
                                 <!--<td>{{member.expressAddress}}</td>-->
-                                <td>
+                                <td ng-if="currentUser.roleId == 2">
+                                    <a href="javascript:void(0);" ng-click="initMemberPassword(member.id, member.memberName);" class="btn btn-xs green-steel">密码初始化</a>
+                                    <!--<a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'Y');" class="btn btn-xs red" ng-show="member.deleteFlag == 'N'">禁用</a>-->
+                                    <!--<a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'N');" class="btn btn-xs blue" ng-show="member.deleteFlag == 'Y'">启用</a>-->
                                     <a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs blue-steel" ng-show="member.status == 'N'">充值</a>
-                                    <a href="javascript:void(0);" ng-click="initMemberPassword(member.id, member.memberName);" class="btn btn-xs red">密码初始化</a>
-                                    <a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'Y');" class="btn btn-xs red" ng-show="member.deleteFlag == 'N'">禁用</a>
-                                    <a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'N');" class="btn btn-xs blue" ng-show="member.deleteFlag == 'Y'">启用</a>
                                 </td>
                             </tr>
                             <tr ng-show= "notData" >

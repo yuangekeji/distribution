@@ -143,15 +143,18 @@ App.controller('AppCtrl', function ($scope, $rootScope, $http, $state, $sessionS
     };
 
 
-    $scope.goUrl= function (url) {
-    $state.go(url);
+    $scope.goUrl= function (second) {
 
-    var hasWidth = $('.navbar-collapse').hasClass('width')? 'width' : 'height'
-
-    $('.navbar-collapse')
+         if(second.id == 3 || second.id == 27|| second.id == 32){
+             $state.go("app.searchValidate",{url:second.menuLink});
+         }else{
+             $state.go(second.menuLink);
+         }
+         var hasWidth = $('.navbar-collapse').hasClass('width')? 'width' : 'height';
+         $('.navbar-collapse')
             .removeClass('collapse in')
             .addClass('collapse')[hasWidth](0)
-            .attr('aria-expanded', false)
+            .attr('aria-expanded', false);
     }
 });
 

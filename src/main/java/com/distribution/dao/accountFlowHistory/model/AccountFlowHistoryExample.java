@@ -665,6 +665,316 @@ public class AccountFlowHistoryExample {
             addCriterion("flow_type not between", value1, value2, "flowType");
             return (Criteria) this;
         }
+
+        public Criteria andRemarkIsNull() {
+            addCriterion("remark is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIsNotNull() {
+            addCriterion("remark is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkEqualTo(String value) {
+            addCriterion("remark =", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotEqualTo(String value) {
+            addCriterion("remark <>", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThan(String value) {
+            addCriterion("remark >", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkGreaterThanOrEqualTo(String value) {
+            addCriterion("remark >=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThan(String value) {
+            addCriterion("remark <", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLessThanOrEqualTo(String value) {
+            addCriterion("remark <=", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkLike(String value) {
+            addCriterion("remark like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotLike(String value) {
+            addCriterion("remark not like", value, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkIn(List<String> values) {
+            addCriterion("remark in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotIn(List<String> values) {
+            addCriterion("remark not in", values, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkBetween(String value1, String value2) {
+            addCriterion("remark between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkNotBetween(String value1, String value2) {
+            addCriterion("remark not between", value1, value2, "remark");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtIsNull() {
+            addCriterion("old_total_bonus_amt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtIsNotNull() {
+            addCriterion("old_total_bonus_amt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtEqualTo(BigDecimal value) {
+            addCriterion("old_total_bonus_amt =", value, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtNotEqualTo(BigDecimal value) {
+            addCriterion("old_total_bonus_amt <>", value, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtGreaterThan(BigDecimal value) {
+            addCriterion("old_total_bonus_amt >", value, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("old_total_bonus_amt >=", value, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtLessThan(BigDecimal value) {
+            addCriterion("old_total_bonus_amt <", value, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("old_total_bonus_amt <=", value, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtIn(List<BigDecimal> values) {
+            addCriterion("old_total_bonus_amt in", values, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtNotIn(List<BigDecimal> values) {
+            addCriterion("old_total_bonus_amt not in", values, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("old_total_bonus_amt between", value1, value2, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalBonusAmtNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("old_total_bonus_amt not between", value1, value2, "oldTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtIsNull() {
+            addCriterion("new_total_bonus_amt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtIsNotNull() {
+            addCriterion("new_total_bonus_amt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtEqualTo(BigDecimal value) {
+            addCriterion("new_total_bonus_amt =", value, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtNotEqualTo(BigDecimal value) {
+            addCriterion("new_total_bonus_amt <>", value, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtGreaterThan(BigDecimal value) {
+            addCriterion("new_total_bonus_amt >", value, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("new_total_bonus_amt >=", value, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtLessThan(BigDecimal value) {
+            addCriterion("new_total_bonus_amt <", value, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("new_total_bonus_amt <=", value, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtIn(List<BigDecimal> values) {
+            addCriterion("new_total_bonus_amt in", values, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtNotIn(List<BigDecimal> values) {
+            addCriterion("new_total_bonus_amt not in", values, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("new_total_bonus_amt between", value1, value2, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalBonusAmtNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("new_total_bonus_amt not between", value1, value2, "newTotalBonusAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtIsNull() {
+            addCriterion("old_total_seed_amt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtIsNotNull() {
+            addCriterion("old_total_seed_amt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtEqualTo(BigDecimal value) {
+            addCriterion("old_total_seed_amt =", value, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtNotEqualTo(BigDecimal value) {
+            addCriterion("old_total_seed_amt <>", value, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtGreaterThan(BigDecimal value) {
+            addCriterion("old_total_seed_amt >", value, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("old_total_seed_amt >=", value, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtLessThan(BigDecimal value) {
+            addCriterion("old_total_seed_amt <", value, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("old_total_seed_amt <=", value, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtIn(List<BigDecimal> values) {
+            addCriterion("old_total_seed_amt in", values, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtNotIn(List<BigDecimal> values) {
+            addCriterion("old_total_seed_amt not in", values, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("old_total_seed_amt between", value1, value2, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andOldTotalSeedAmtNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("old_total_seed_amt not between", value1, value2, "oldTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtIsNull() {
+            addCriterion("new_total_seed_amt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtIsNotNull() {
+            addCriterion("new_total_seed_amt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtEqualTo(BigDecimal value) {
+            addCriterion("new_total_seed_amt =", value, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtNotEqualTo(BigDecimal value) {
+            addCriterion("new_total_seed_amt <>", value, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtGreaterThan(BigDecimal value) {
+            addCriterion("new_total_seed_amt >", value, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("new_total_seed_amt >=", value, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtLessThan(BigDecimal value) {
+            addCriterion("new_total_seed_amt <", value, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("new_total_seed_amt <=", value, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtIn(List<BigDecimal> values) {
+            addCriterion("new_total_seed_amt in", values, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtNotIn(List<BigDecimal> values) {
+            addCriterion("new_total_seed_amt not in", values, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("new_total_seed_amt between", value1, value2, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewTotalSeedAmtNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("new_total_seed_amt not between", value1, value2, "newTotalSeedAmt");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

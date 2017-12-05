@@ -36,6 +36,16 @@
             </script>
             <div class="portlet-body">
                 <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="note note-info note-bordered">
+                                <p> <span>总营业额:+3000302.00</span>  <span style="margin-right: 20px">总发放奖金额：-2000</span>  </p>
+                                <p> <span>分红包资金池:+23000.00</span>  <span style="margin-right: 20px">广告宣传奖资金池金额：+2000</span></p>
+                                <p> <span>分红包发放池:+10000.00</span>  <span style="margin-right: 20px">广告宣传奖发放池金额：+2000</span></p>
+                                <p> <span>公司账户资金:+200000.00</span></p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <!-- BEGIN FORM-->
@@ -68,12 +78,11 @@
                             <thead>
                                 <tr >
                                     <th>发放日期</th>
-                                    <th>操作日期</th>
-                                    <th>分红包发放状态</th>
-                                    <th>广告宣传奖发放状态</th>
-                                    <th>营业额|营业额20%|营业额10%</th>
-                                    <th>应发分红包总额</th>
-                                    <th>应发广告宣传奖总额</th>
+                                    <th>数据处理日期</th>
+                                    <th>营业额|折扣单营业额</th>
+                                    <th>日发放奖金总额</th>
+                                    <th colspan="3">分红包发放状态 | 营业额20% | 分红包发放额</th>
+                                    <th colspan="3">广告宣传奖状态 | 营业额10% | 广告宣传奖发放额 </th>
                                     <!--<th>补发分红包</th>-->
                                     <!--<th>补发广告宣传奖</th>-->
                                 </tr>
@@ -83,19 +92,30 @@
                                 total-items="myPage.totalCount">
                                 <td>{{row.date |date:'yyyy-MM-dd'}}</td>
                                 <td>{{row.createTime |date:'yyyy-MM-dd'}}</td>
-                                <td>
-                                    <span class="label label-sm " ng-class="{'label-danger': row.alarmStatus ==0,  'label-success': row.alarmStatus ==1}">
+                                <td>+{{row.totalSales |  number:2}} | +{{row.dayDiscountSales |  number:2}}</td>
+                                <td>-{{row.dayActualBonus |  number:2}}</td>
+                                <td >
+                                    <span class="label label-sm " style="float: left" ng-class="{'label-danger': row.alarmStatus ==0,  'label-success': row.alarmStatus ==1}">
                                          {{row.alarmStatus |warningStatusFilter}}
                                      </span>
-                                 </td>
-                                <td>
-                                    <span class="label label-sm " ng-class="{'label-danger': row.jdAlarmStatus ==0,  'label-success': row.jdAlarmStatus ==1}">
+                                </td>
+                                <td class="text-right">
+                                    +{{row.dividendTotal |  number:2}}
+                                </td>
+                                <td class="text-right">
+                                   -{{row.useDividendTotal |  number:2}}
+                                </td>
+                                <td >
+                                    <span class="label label-sm " style="float: left" ng-class="{'label-danger': row.jdAlarmStatus ==0,  'label-success': row.jdAlarmStatus ==1}">
                                          {{row.jdAlarmStatus |warningStatusFilter}}
                                      </span>
                                 </td>
-                                <td>{{row.totalSales |  number:2}} | {{row.dividendTotal |  number:2}} | {{row.jdBonusTotal |  number:2}}</td>
-                                <td>{{row.useDividendTotal |  number:2}}</td>
-                                <td>{{row.useJdBonusTotal  |  number:2}}</td>
+                                <td class="text-right">
+                                    +{{row.jdBonusTotal |  number:2}}
+                                </td>
+                                <td class="text-right">
+                                   -{{row.useJdBonusTotal  |  number:2}}
+                                </td>
                                 <!--<td><a href="javascript:void(0);" ng-if="row.alarmStatus==0"   ng-click="bonusProc('1');" class="btn btn-xs grey-cascade">补发分红包</a></td>-->
                                 <!--<td><a href="javascript:void(0);" ng-if="row.jdAlarmStatus==0" ng-click="bonusProc('2');" class="btn btn-xs grey-cascade">补发广告宣传奖金</a></td>-->
                             </tr>

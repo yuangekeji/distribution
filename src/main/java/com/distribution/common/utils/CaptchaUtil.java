@@ -11,7 +11,8 @@ public class CaptchaUtil {
 
     private BufferedImage image;// 图像
     private String str;// 验证码
-    private static char code[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789".toCharArray();
+//    private static char code[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789".toCharArray();
+    private static char code[] = "abcdefghjklmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789".toCharArray();
 
     public static final String SESSION_CODE_NAME="code";
 

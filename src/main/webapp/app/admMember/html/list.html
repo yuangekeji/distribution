@@ -73,7 +73,7 @@
                                     <!--<th>激活时间</th>-->
                                     <th>状态</th>
                                     <!--<th>地址</th>-->
-                                    <th>操作</th>
+                                    <th ng-if="currentUser.roleId == 2">操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,7 +89,7 @@
                                 <td>{{member.createTime|date:'yyyy年MM月dd日 HH:mm'}}</td>
                                 <td>{{member.status|recommendStatusFilter}}</td>
                                 <!--<td>{{member.expressAddress}}</td>-->
-                                <td>
+                                <td ng-if="currentUser.roleId == 2">
                                     <a href="javascript:void(0);" ng-click="initMemberPassword(member.id, member.memberName);" class="btn btn-xs green-steel">密码初始化</a>
                                     <!--<a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'Y');" class="btn btn-xs red" ng-show="member.deleteFlag == 'N'">禁用</a>-->
                                     <!--<a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'N');" class="btn btn-xs blue" ng-show="member.deleteFlag == 'Y'">启用</a>-->

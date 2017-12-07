@@ -14,5 +14,8 @@ angular.module('member').controller('memberOverviewCtrl',
         $scope.accountHistory = function (id) {
             $state.go('app.accountHistory',{'memberId':id});
         }
+        $scope.recommend = function () {
+            $state.go('app.recommend');
+        }
 
     });

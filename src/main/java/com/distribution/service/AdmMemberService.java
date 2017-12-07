@@ -14,11 +14,15 @@ import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.memberChargeApply.mapper.more.MoreMemberChargeApplyMapper;
 import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
+import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
+import com.distribution.dao.memberNode.model.MemberNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * description 后台会员管理
@@ -37,6 +41,8 @@ public class AdmMemberService {
     private MoreMemberMapper memberMapper;
     @Autowired
     private MoreMemberChargeApplyMapper moreMemberChargeApplyMapper;
+    @Autowired
+    private MoreMemberNodeMapper moreMemberNodeMapper;
     /**
      * description 后台会员列表分页查询
      * @author Bright
@@ -180,5 +186,62 @@ public class AdmMemberService {
         page.setTotalCount(moreMemberMapper.selectRecommendMemberCnt(page));
         page.setResult( memberMapper.selectRecommendMemberInfo(page));
         return page;
+    }
+
+    /**
+     * 校验是否有孩子节点
+     * @param memberId
+     * @return
+     */
+    public boolean checkMemberChild(Integer memberId){
+
+        MemberNode mn =  moreMemberNodeMapper.getMemberNodeByMemberId(memberId);
+
+        if(mn.getRightId() == null && mn.getLeftId() == null){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    /**
+     * 删除未激活的会员
+     * @param memberId
+     * @return
+     */
+    public boolean deleteMemberNode(Integer memberId){
+
+        Member m = moreMemberMapper.selectByPrimaryKey(memberId);
+        MemberNode n = moreMemberNodeMapper.selectByPrimaryKey(m.getParentId());
+
+        Map param = new HashMap<>();
+        param.put("id", m.getParentId());
+
+        if(n.getRightId() == m.getNodeId()) {
+
+            param.put("rightId",n.getRightId());
+
+        }else if(n.getLeftId() == m.getNodeId()){
+
+            param.put("leftId",n.getRightId());
+        }
+
+
+        //删除在父节点中的位置
+        int updateCnt = moreMemberNodeMapper.updateRemoveMemberNode(param);
+        //删除节点
+        int delNodeCnt =  moreMemberNodeMapper.deleteByPrimaryKey(m.getNodeId());
+        //删除账户信息
+        int delAccountCnt = moreAccountManagerMapper.deleteAccountManager(memberId);
+        //删除用户
+        int delMemberCnt =  moreMemberMapper.deleteMemberById(memberId);
+
+
+        if(updateCnt == 1 && delNodeCnt == 1 && delMemberCnt == 1 && delAccountCnt == 1 ){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

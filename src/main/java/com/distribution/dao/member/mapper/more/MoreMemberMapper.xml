@@ -251,4 +251,7 @@
     from member
     where recommend_id = #{parameterMap.recommendId}
   </select>
+  <delete id="deleteMemberById" parameterType="java.lang.Integer">
+    delete from member where id = #{memberId} and STATUS='N'
+  </delete>
 </mapper>

@@ -173,6 +173,35 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
             })
         });
     }
+    
+    $scope.removeMemberNode = function (member) {
+        $http.post(ctx + "/admMember/checkMemberChild",{memberId: member.id }).success(function (resp) {
+            if(resp.successful){
+                Notify.success("没有孩子节点，可删除。");
+
+                ConfirmModal.show({
+                    text: '确定要删除'+ member.memberName +'账号吗？',
+                    isCancel:true //false alert ,true confirm
+                }).then(function (sure) {
+                    if (!sure) {
+                        return;
+                    }
+                    $http.post(ctx + "/admMember/deleteMemberNode",{memberId: member.id }).success(function (resp) {
+                        if(resp.successful){
+                            Notify.success( "操作成功。");
+                            $scope.search();
+                        }else{
+                            Notify.warning( "操作失败。");
+                        }
+                    })
+                });
+
+
+            }else{
+                Notify.warning("有孩子节点。");
+            }
+        });
+    }
 });
 
 // angular.module('admMember').filter("MemberLevelFilter",function () {

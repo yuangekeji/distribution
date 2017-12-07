@@ -94,7 +94,7 @@
                                     <!--<a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'Y');" class="btn btn-xs red" ng-show="member.deleteFlag == 'N'">禁用</a>-->
                                     <!--<a href="javascript:void(0);" ng-click="deleteMember(member.id, member.memberName, 'N');" class="btn btn-xs blue" ng-show="member.deleteFlag == 'Y'">启用</a>-->
                                     <a href="javascript:void(0);" ng-click="showTab(member);" class="btn btn-xs blue-steel" ng-show="member.status == 'N'">充值</a>
-                                    <a href="javascript:void(0);" ng-click="removeMemberNode(member);" class="btn btn-xs blue-steel" ng-show="member.status == 'N'">删除</a>
+                                    <a href="javascript:void(0);" ng-click="removeMemberNode(member);" class="btn btn-xs red" ng-show="member.status == 'N'">删除</a>
                                 </td>
                             </tr>
                             <tr ng-show= "notData" >

@@ -199,15 +199,15 @@ public class AdmMemberController extends BasicController{
      * @param
      * @return
      */
-    @RequestMapping(value = "/checkMemberChild", method = RequestMethod.POST)
+    @RequestMapping(value = "/checkMemberChild/{memberId}", method = RequestMethod.POST)
     @ResponseBody
-    public JsonMessage checkMemberChild(Integer memberId){
+    public JsonMessage checkMemberChild(@PathVariable Integer memberId){
         return successMsg(admMemberService.checkMemberChild(memberId));
     }
 
-    @RequestMapping(value = "/deleteMemberNode", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteMemberNode/{memberId}", method = RequestMethod.POST)
     @ResponseBody
-    public JsonMessage deleteMemberNode(Integer memberId){
+    public JsonMessage deleteMemberNode(@PathVariable Integer memberId){
         return successMsg(admMemberService.deleteMemberNode(memberId));
     }
 

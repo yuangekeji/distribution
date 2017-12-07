@@ -175,10 +175,8 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
     }
     
     $scope.removeMemberNode = function (member) {
-        $http.post(ctx + "/admMember/checkMemberChild",{memberId: member.id }).success(function (resp) {
+        $http.post(ctx + "/admMember/checkMemberChild/"+member.id).success(function (resp) {
             if(resp.successful){
-                Notify.success("没有孩子节点，可删除。");
-
                 ConfirmModal.show({
                     text: '确定要删除'+ member.memberName +'账号吗？',
                     isCancel:true //false alert ,true confirm
@@ -186,7 +184,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
                     if (!sure) {
                         return;
                     }
-                    $http.post(ctx + "/admMember/deleteMemberNode",{memberId: member.id }).success(function (resp) {
+                    $http.post(ctx + "/admMember/deleteMemberNode/"+member.id).success(function (resp) {
                         if(resp.successful){
                             Notify.success( "操作成功。");
                             $scope.search();
@@ -198,7 +196,7 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
 
 
             }else{
-                Notify.warning("有孩子节点。");
+                Notify.warning("该节点下已有点位不能删除。");
             }
         });
     }

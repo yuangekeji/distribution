@@ -218,13 +218,13 @@ public class AdmMemberService {
         Map param = new HashMap<>();
         param.put("id", m.getParentId());
 
-        if(n.getRightId() == m.getNodeId()) {
+        if(n.getRightId() != null && n.getRightId().equals(m.getNodeId())) {
 
             param.put("rightId",n.getRightId());
 
-        }else if(n.getLeftId() == m.getNodeId()){
+        }else if(n.getLeftId() != null && n.getLeftId().equals(m.getNodeId())){
 
-            param.put("leftId",n.getRightId());
+            param.put("leftId",n.getLeftId());
         }
 
 

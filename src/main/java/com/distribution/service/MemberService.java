@@ -286,6 +286,8 @@ public class MemberService {
     public MoreMember selectMemberInfo(Integer id){
         MoreMember moreMember = moreAccountManagerMapper.getSeedsAndBondsByMemberId(id);
         Member member = memberMapper.selectByPrimaryKey(id);
+        Integer recommendMemberCnt = moreMemberMapper.getRecommendMemberCnt(id);
+        moreMember.setRecommendMemberCnt(recommendMemberCnt);
         BeanUtils.copyProperties(member,moreMember);
         Double orderTotalAmount = moreOrderMasterMapper.countOrderAmcountByMemberId(id);
         moreMember.setOrderTotalAmount(new BigDecimal(null!=orderTotalAmount?orderTotalAmount:0));

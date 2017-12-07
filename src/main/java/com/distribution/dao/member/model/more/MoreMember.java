@@ -26,6 +26,8 @@ public class MoreMember extends Member{
 
     private String parentMemberName;
 
+    private Integer recommendMemberCnt;
+
 
     public String getRecommendPhone() {
         return recommendPhone;
@@ -155,5 +157,11 @@ public class MoreMember extends Member{
         this.parentMemberName = parentMemberName;
     }
 
+    public Integer getRecommendMemberCnt() {
+        return recommendMemberCnt;
+    }
 
+    public void setRecommendMemberCnt(Integer recommendMemberCnt) {
+        this.recommendMemberCnt = recommendMemberCnt;
+    }
 }

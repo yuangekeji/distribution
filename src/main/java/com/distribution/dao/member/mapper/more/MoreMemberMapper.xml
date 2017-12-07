@@ -251,6 +251,11 @@
     from member
     where recommend_id = #{parameterMap.recommendId}
   </select>
+  <select id="getRecommendMemberCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(*)
+    from member
+    where recommend_id = #{id}
+  </select>
   <delete id="deleteMemberById" parameterType="java.lang.Integer">
     delete from member where id = #{memberId} and STATUS='N'
   </delete>

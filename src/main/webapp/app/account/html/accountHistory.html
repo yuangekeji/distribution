@@ -51,24 +51,32 @@
                                id="sample_1">
                                 <thead>
                                     <tr >
-                                        <th class="text-center">会员名</th>
-                                        <th class="text-center">会员账号</th>
                                         <th class="text-center">交易发生时间</th>
-                                        <th class="text-center">交易执行者</th>
                                         <th class="text-center">交易类型</th>
-                                        <th class="text-center">奖金币发生额</th>
-                                        <th class="text-center">种子币发生额</th>
                                         <th class="text-center">具体类型</th>
-                                        <th class="text-center">奖金币余额</th>
-                                        <th class="text-center">种子币余额</th>
+                                        <th class="text-center">奖金币</th>
+                                        <th class="text-center">种子币</th>
+
                                     </tr>
                                 </thead>
                             <tbody>
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="accountHistory in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                <td class="text-center">{{accountHistory.createTime | date:'yyyy-MM-dd HH:mm'}}</td>
+                                <td class="text-center">{{accountHistory.type | AccountHistoryTypeFilter}}</td>
+                                <td class="text-center">{{accountHistory.flowType | AccountHistoryFlowTypeFilter : accountHistory.type }}</td>
+                                <td class="text-center">{{accountHistory.bonusAmt | number:2 }}</td>
+                                <td class="text-right">{{accountHistory.seedAmt | number:2}}</td>
+                            </tr>
                             <tr ng-show= "notData" >
-                                <td colspan="10" class="text-center">无记录</td>
+                                <td colspan="5" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>
+                        <div class="other-controller">
+                            <div class="text-center">
+                                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

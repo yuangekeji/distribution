@@ -339,4 +339,22 @@ public class MemberController extends BasicController {
         ImageIO.write(util.getImage(), "jpg", response.getOutputStream());
     }
 
+    @RequestMapping("/accountHistory")
+    @ResponseBody
+    public JsonMessage accountHistoryList(@RequestBody Page page, HttpSession session){
+        Member m = (Member) getCurrentUser(session);
+        page.getParameterMap().put("memberId",m.getId());
+        page = memberService.accountHistoryList(page);
+        return successMsg(page);
+    }
+
+    @RequestMapping("/accountHistoryTotal")
+    @ResponseBody
+    public JsonMessage accountHistoryTotal(@RequestBody Page page, HttpSession session){
+        Member m = (Member) getCurrentUser(session);
+        page.getParameterMap().put("memberId",m.getId());
+        page = memberService.accountHistoryList(page);
+        return successMsg(page);
+    }
+
 }

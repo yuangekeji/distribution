@@ -53,11 +53,11 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
                     $scope.notData = false;
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
                 } else {
-                    Nodify.error("查询订单列表失败，请重新尝试");
+                    Notify.error("查询订单列表失败，请重新尝试");
                     console.log(resp.errorMessage);
                 }
             }).error(function (error) {
-            Nodify.error("查询订单列表失败，请重新尝试");
+            Notify.error("查询订单列表失败，请重新尝试");
             console.error(error);
         });
     }

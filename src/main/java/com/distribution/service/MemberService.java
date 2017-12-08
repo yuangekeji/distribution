@@ -4,6 +4,7 @@ import com.distribution.common.constant.Constant;
 import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.utils.CryptoUtil;
 import com.distribution.common.utils.Page;
+import com.distribution.dao.accountFlowHistory.mapper.more.MoreAccountFlowHistoryMapper;
 import com.distribution.dao.accountManager.mapper.AccountManagerMapper;
 import com.distribution.dao.accountManager.mapper.more.MoreAccountManagerMapper;
 import com.distribution.dao.accountManager.model.AccountManager;
@@ -51,8 +52,9 @@ public class MemberService {
     @Autowired
     private NodeService nodeService;
     @Autowired
+    private MoreAccountFlowHistoryMapper moreAccountFlowHistoryMapper;
+    @Autowired
     private OrderService orderService;
-
     /**
      * description 会员列表查询
      * @author Bright
@@ -391,5 +393,16 @@ public class MemberService {
            return true;
         }
          return  false;
+    }
+
+    /**
+     * description 订单列表查询
+     * @author WYN
+     * */
+    public Page accountHistoryList(Page page){
+
+        page.setTotalCount(moreAccountFlowHistoryMapper.getAccountHistoryListCount(page));
+        page.setResult(moreAccountFlowHistoryMapper.getAccountHistoryList(page));
+        return page;
     }
 }

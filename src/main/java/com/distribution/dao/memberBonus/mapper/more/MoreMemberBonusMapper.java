@@ -52,8 +52,8 @@ public interface MoreMemberBonusMapper extends MemberBonusMapper {
      * @return
      */
     List<MoreMemberBonus> getMemberBonusExcelList(Map map);
-    double getTotalMemberBonus();
+    double getTotalMemberBonus(String date);
     double getDayMemberBonus(String date);
-    double getTotalAdvance();
+    double getTotalAdvance(String date);
     double getDayAdvance(String date);
 }

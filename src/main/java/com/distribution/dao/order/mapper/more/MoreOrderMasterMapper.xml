@@ -286,11 +286,11 @@
         and DATE_FORMAT (create_time,'%Y-%m-%d') = DATE_FORMAT (NOW(),'%Y-%m-%d')
         and member_id = #{memberId}
     </select>
-    <select id ="selectTotalSalesAmount" parameterType="java.lang.Integer" resultType="java.lang.Double">
+    <select id ="selectTotalSalesAmount" parameterType="java.lang.String" resultType="java.lang.Double">
         select
            IFNULL(SUM(order_amt),0) as totalSalesAmount
         from order_master
-        where order_statues > 1 and order_category != 3
+        <![CDATA[where order_statues > 1 and order_category != 3 and DATE(create_time) <= DATE(#{date})]]>
     </select>
     
     <select id ="selectDayDiscountSalesAmount" parameterType="java.lang.String" resultType="java.lang.Double">

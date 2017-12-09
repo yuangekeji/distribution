@@ -8,18 +8,23 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.distribution.dao.bonusCachePool.model.BonusCachePoolExample;
-import com.distribution.dao.bonusPool.model.BonusPoolExample;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.distribution.common.constant.BonusConstant;
 import com.distribution.dao.bonusCachePool.mapper.BonusCachePoolMapper;
 import com.distribution.dao.bonusCachePool.model.BonusCachePool;
+import com.distribution.dao.bonusCachePool.model.BonusCachePoolExample;
 import com.distribution.dao.bonusPool.mapper.BonusPoolMapper;
 import com.distribution.dao.bonusPool.model.BonusPool;
+import com.distribution.dao.bonusPool.model.BonusPoolExample;
 import com.distribution.dao.bonusPoolHistory.mapper.BonusPoolHistoryMapper;
 import com.distribution.dao.bonusPoolHistory.model.BonusPoolHistory;
+import com.distribution.dao.platformAccount.mapper.PlatformAccountMapper;
+import com.distribution.dao.platformAccount.model.PlatformAccount;
+import com.distribution.dao.platformAccountHistory.mapper.PlatformAccountHistoryMapper;
+import com.distribution.dao.platformAccountHistory.model.PlatformAccountHistory;
 
 @Service
 public class BonusPoolService {
@@ -29,7 +34,11 @@ public class BonusPoolService {
 	private BonusCachePoolMapper bonusCachePoolMapper;
 	@Autowired
 	private BonusPoolHistoryMapper bonusPoolHistoryMapper;
-	
+	@Autowired
+	private PlatformAccountHistoryMapper platformAccountHistoryMapper;
+	@Autowired
+	private PlatformAccountMapper platformAccountMapper;
+
 	
 	/**
 	 * 更新奖金池
@@ -127,6 +136,16 @@ public class BonusPoolService {
 		}
 		return total;
 	}
+	
+	public double getBonusPool(int id){
+		double total = 0;
+		BonusPool pool = bonusPoolMapper.selectByPrimaryKey(id);
+		if(null != pool){
+			total = pool.getTotalAmount();
+		}
+		return total;
+	}
+
 
 	/**
 	 * 获取资金池数据
@@ -167,4 +186,71 @@ public class BonusPoolService {
 		this.updatePool(amount,poolType,BonusConstant.POOL_BONUS_REDUCE);
 		return true;
 	}
+	/**
+	 * Name: 保存平台账户流水
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月6日 上午6:24:54
+	 * @param createBy
+	 * @param accountAmountNew
+	 * @param flowAmount
+	 */
+	public void savePlatformAccountflow(PlatformAccount pa,String createBy,BigDecimal accountAmountNew,BigDecimal accountAmountOld,BigDecimal flowAmount) {
+		PlatformAccountHistory hs = new PlatformAccountHistory();
+		pa.setId(null);
+		BeanUtils.copyProperties(pa, hs);
+		hs.setAccountAmountNew(accountAmountNew);
+		hs.setAccountAmountOld(accountAmountOld);
+		hs.setFlowAmount(flowAmount);
+		hs.setCreateDate(new Date());
+		hs.setCreateBy(createBy);
+		platformAccountHistoryMapper.insert(hs);
+	}
+	/**
+	 * Name:更新 账户资金
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月6日 上午6:28:38
+	 * @param pa
+	 */
+	public void updatePlatformAccount(PlatformAccount pa) {
+		platformAccountMapper.updateByPrimaryKey(pa);
+	}
+	/**
+	 * Name: 更新平台账户资金并生成流水
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月6日 上午6:44:05
+	 * @param flowAmout
+	 * @param createBy
+	 */
+	public void updatePlatformAccountByFlow(BigDecimal flowAmout,String createBy) {
+		PlatformAccount pa = getPlatformAccountById();
+		BigDecimal accountAmountOld = pa.getAccountAmount();
+		BigDecimal accountAmountNew = accountAmountOld.subtract(flowAmout);
+		pa.setAccountAmount(accountAmountNew);
+		pa.setUpdateBy(createBy);
+		pa.setUpdateTime(new Date());
+		platformAccountMapper.updateByPrimaryKeySelective(pa);
+		this.savePlatformAccountflow(pa,createBy,accountAmountNew,accountAmountOld,flowAmout);
+	}
+	/**
+	 * Name: 划拨资金到奖金池
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月6日 上午6:53:33
+	 * @param flowAmout
+	 * @param createBy
+	 * @param poolType
+	 */
+	public void saveAccountToBonus(BigDecimal flowAmout,String createBy,int poolType) {
+		this.updatePlatformAccountByFlow(flowAmout,createBy);
+		this.updatePool(flowAmout, poolType, BonusConstant.POOL_BONUS_ADD);
+	}
+	public PlatformAccount getPlatformAccountById() {
+		PlatformAccount pa = platformAccountMapper.selectByPrimaryKey(1);
+		return pa;
+	}
+	
+
 }

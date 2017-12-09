@@ -57,7 +57,7 @@
   	select 
   	    <include refid="Base_Column_List" />
 		from date_bonus_history
-		where DATE(create_time) = #{date}
+		where DATE(date) = #{date}
   </select>
   <select id="listFailureDividendBonus" parameterType="java.lang.String" resultMap="BaseResultMap">
   	select 

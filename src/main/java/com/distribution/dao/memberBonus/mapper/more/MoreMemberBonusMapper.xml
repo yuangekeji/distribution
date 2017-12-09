@@ -303,8 +303,9 @@
     order by mb.bonus_date desc,mb.member_id
   </select>
   <select id="getTotalMemberBonus" parameterType="java.lang.String" resultType="java.lang.Double">
-  	SELECT sum(actual_amout) as totalBonusAmount
+  	SELECT IFNULL(sum(actual_amout),0) as totalBonusAmount
 	FROM member_bonus 
+	<![CDATA[where DATE(bonus_date) <= DATE(#{date})]]>
   </select>
   <select id="getDayMemberBonus" parameterType="java.lang.String" resultType="java.lang.Double">
   	SELECT IFNULL(sum(actual_amout),0) as  dayBonusAmount
@@ -312,9 +313,9 @@
 	where DATE(bonus_date) = DATE(#{date})
   </select>
   <select id="getTotalAdvance" parameterType="java.lang.String" resultType="java.lang.Double" >
-  	SELECT SUM(act_amt) as totalAdvanceAmount
+  	SELECT IFNULL(SUM(act_amt),0) as totalAdvanceAmount
 	FROM advance
-	where statues = '2' 
+	<![CDATA[where statues = '2' and DATE(request_date) <= DATE(#{date})]]>
   </select>
   <select id="getDayAdvance" parameterType="java.lang.String" resultType="java.lang.Double">
   	SELECT IFNULL(SUM(act_amt),0) as dayAdvanceAmount

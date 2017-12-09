@@ -61,6 +61,6 @@ public interface MoreOrderMasterMapper {
      */
     double selectMaxOrderAmt(Integer memberId);
     
-    double selectTotalSalesAmount();
+    double selectTotalSalesAmount(String date);
     double selectDayDiscountSalesAmount(String date);
 }

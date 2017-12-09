@@ -72,5 +72,9 @@ angular.module('admWarning').controller('platformHistoryCtrl',function ($q, titl
         $scope.myPage.pageNo = num;
         $scope.search();
     };
+
+    $scope.goBack= function () {
+        $state.go('app.admWarning');
+    }
 });
 

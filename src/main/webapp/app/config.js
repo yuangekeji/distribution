@@ -237,6 +237,7 @@ angular
                 name:'admProduct',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'static/metronic/pages/scripts/components-date-time-pickers.js',
                     'app/admProduct/js/list.js?v=' + version
                 ]
             },
@@ -328,7 +329,8 @@ angular
                 name: 'admNotice',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
-                    'app/admNotice/js/list.js?v=' + version
+                    'app/admNotice/js/list.js?v=' + version,
+                    'static/metronic/pages/scripts/components-date-time-pickers.js'
                 ]
             },
             {

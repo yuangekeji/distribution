@@ -111,8 +111,7 @@
          DATE_FORMAT(date, '%Y-%m-%d')
       FROM
          date_bonus_history
-      WHERE
-         create_time < DATE_FORMAT (now(),'%Y-%m-%d')
+
     ]]>
   </select>
 </mapper>

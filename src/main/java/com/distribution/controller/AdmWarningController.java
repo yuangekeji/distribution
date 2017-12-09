@@ -97,4 +97,29 @@ public class AdmWarningController extends BasicController{
         result.put("platformAccount",platformAccount);
         return successMsg(result);
     }
+
+    @RequestMapping("/getTransferBonusPool")
+    @ResponseBody
+    public JsonMessage getTransferBonusPool(String poolType){
+        Map map = new HashMap<>();
+        map.put("bonusPoolAmt",bonusPoolService.getBonusPool(poolType).getTotalAmount());
+        map.put("accountAmount",bonusPoolService.getPlatformAccountById().getAccountAmount());
+        return successMsg(map);
+    }
+
+    @RequestMapping(value="/transferPayAmtProc")
+    @ResponseBody
+    public JsonMessage transferPayAmtProc(BigDecimal amount, Integer poolType, HttpSession session){
+        Admin admin = (Admin) getCurrentUser(session);
+        bonusPoolService.saveAccountToBonus(amount,admin.getId().toString(),poolType);
+        //管理员操作记录
+        Map map = new HashMap();
+        map.put("handleType", Constant.ADMINHANDLETYPE_PAYAMTPROC);
+        if (poolType == 1) {
+            map.put("handleId", "拨款到分红包奖金池");
+            map.put("handleComment", "拨款到分红包奖金池(从公司账户资金拨资金到分红包奖金池), 拨款金额: " + amount);
+        }
+        admHandleHistoryService.addAdminHandleHistory(admin, map);
+        return successMsg("success");
+    }
 }

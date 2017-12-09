@@ -20,8 +20,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="note note-info note-bordered">
-                                <h4>资金池金额:{{datas.bonusPoolAmt}}</h4>
-                                <h4>发放池金额:{{datas.bonusCachePoolAmt}}</h4>
+                                <h4>资金池金额:{{datas.bonusPoolAmt |  number:2}}</h4>
+                                <h4>发放池金额:{{datas.bonusCachePoolAmt |  number:2}}</h4>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -31,6 +31,30 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn blue-steel" type="button" ng-click="ok()">确认补发</button>
+                    <button type="button"  class="btn default"  ng-click="cancel()">取消</button>
+                </div>
+            </script>
+            <script type="text/ng-template" id="transferBonusProc.html">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h3 ng-show="poolType == '1'" class="modal-title">拨公司账户资金到分红包奖金池</h3>
+                    <h3 ng-show="poolType == '2'" class="modal-title">拨公司账户资金到广告宣传奖奖金池</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="note note-info note-bordered">
+                                <h4>公司账户资金: {{datas.accountAmount |  number:2}}</h4>
+                                <h4>奖金池金额: {{datas.bonusPoolAmt |  number:2}}</h4>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="number" class="form-control" ng-model="payAmt">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn blue-steel" type="button" ng-click="ok()">确认拨款</button>
                     <button type="button"  class="btn default"  ng-click="cancel()">取消</button>
                 </div>
             </script>
@@ -68,8 +92,9 @@
                                 <div class="col-md-12">
                                     <button type="button" class="btn blue-steel" ng-click="searchByParam();"><i class="fa fa-search"></i>查询</button>
 
-                                    <button type="button" class="btn red" ng-click="bonusProc(1);">确认分红包发放资金</button>
-                                    <button type="button" class="btn red" ng-click="bonusProc(2);">确认广告宣传奖发放资金</button>
+                                    <button type="button" class="btn btn-sm red" ng-click="bonusProc(1);">确认分红包发放资金</button>
+                                    <button type="button" class="btn btn-sm red" ng-click="bonusProc(2);">确认广告宣传奖发放资金</button>
+                                    <button type="button" class="btn btn-sm red" ng-click="transferBonusProc(1);">确认分红包奖金池资金</button>
                                 </div>
                             </div>
                         </div>

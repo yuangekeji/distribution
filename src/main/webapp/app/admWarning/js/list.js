@@ -147,6 +147,53 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
     $scope.showIntro = function () {
         $scope.showReadme = !$scope.showReadme;
     }
+    $scope.transferBonusProc =function (poolType) {
+        $http.post(ctx + '/admWarning/getTransferBonusPool?poolType='+poolType)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.open2(resp.data,poolType);
+                }else {
+                    Notify.error(resp.errorMessage);
+                }
+            }).error(function (error) {
+            Notify.error(error);
+        });
+    }
+
+    $scope.open2 = function(data,poolType)
+    {
+        var out = $uibModal.open(
+            {
+                animation: true,
+                backdrop: 'static',
+                templateUrl: "transferBonusProc.html",
+                controller: "transferBonusProcCtrl",
+                resolve:
+                    {
+                        getDatas: function()
+                        {
+                            return data;
+                        },
+                        getPoolType:function () {
+                            return poolType;
+                        },
+                        startLoading:function () {
+                            return $scope.startLoading;
+                        },
+                        stopLoading:function () {
+                            return $scope.stopLoading;
+                        }
+                    }
+            });
+        out.result.then(function(value)
+        {
+            // console.info('确认');
+
+        }, function()
+        {
+            // console.info('取消');
+        });
+    };
 
 });
 

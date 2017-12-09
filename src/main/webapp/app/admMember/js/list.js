@@ -177,23 +177,26 @@ angular.module('admMember').controller('admMemberCtrl',function ($q, title, $sco
     $scope.removeMemberNode = function (member) {
         $http.post(ctx + "/admMember/checkMemberChild/"+member.id).success(function (resp) {
             if(resp.successful){
-                ConfirmModal.show({
-                    text: '确定要删除'+ member.memberName +'账号吗？',
-                    isCancel:true //false alert ,true confirm
-                }).then(function (sure) {
-                    if (!sure) {
-                        return;
-                    }
-                    $http.post(ctx + "/admMember/deleteMemberNode/"+member.id).success(function (resp) {
-                        if(resp.successful){
-                            Notify.success( "操作成功。");
-                            $scope.search();
-                        }else{
-                            Notify.warning( "操作失败。");
+                if(resp.data ){
+                    ConfirmModal.show({
+                        text: '确定要删除'+ member.memberName +'账号吗？',
+                        isCancel:true //false alert ,true confirm
+                    }).then(function (sure) {
+                        if (!sure) {
+                            return;
                         }
-                    })
-                });
-
+                        $http.post(ctx + "/admMember/deleteMemberNode/"+member.id).success(function (resp) {
+                            if(resp.successful){
+                                Notify.success( "操作成功。");
+                                $scope.search();
+                            }else{
+                                Notify.warning( "操作失败。");
+                            }
+                        })
+                    });
+                }else{
+                    Notify.warning("该节点下已有点位不能删除。");
+                }
 
             }else{
                 Notify.warning("该节点下已有点位不能删除。");

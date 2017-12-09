@@ -143,10 +143,7 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
             // console.info('取消');
         });
     };
-    $scope.showReadme = false;
-    $scope.showIntro = function () {
-        $scope.showReadme = !$scope.showReadme;
-    }
+
     $scope.transferBonusProc =function (poolType) {
         $http.post(ctx + '/admWarning/getTransferBonusPool?poolType='+poolType)
             .success(function (resp) {
@@ -194,7 +191,10 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
             // console.info('取消');
         });
     };
-
+    $scope.showReadme = false;
+    $scope.showIntro = function () {
+        $scope.showReadme = !$scope.showReadme;
+    }
 });
 
 angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http,startLoading,stopLoading) {
@@ -220,6 +220,46 @@ angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalI
                 if (resp.successful) {
                     $uibModalInstance.close(true);
                     Notify.success('补发成功');
+
+                }else {
+                    Notify.error(resp.errorMessage);
+                }
+                stopLoading();
+            }).error(function (error) {
+            Notify.error(error);
+            stopLoading();
+        });
+    };
+    $scope.cancel = function()
+    {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+angular.module('bonus').controller('transferBonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http,startLoading,stopLoading,$state) {
+
+    $scope.datas = getDatas;
+    $scope.poolType = getPoolType;
+    $scope.payAmt = 0;
+
+
+    $scope.ok = function()
+    {
+        if (angular.isUndefined($scope.payAmt) || !(/^\+?[1-9][0-9]*$/.test($scope.payAmt))) {
+            Notify.warning('请输入正确的金额')
+            return false;
+        }
+        if ( $scope.datas.accountAmount < $scope.payAmt ) {
+            Notify.warning('公司账户资金余额不足')
+            return false;
+        }
+        startLoading();
+        $http.post(ctx + '/admWarning/transferPayAmtProc?poolType='+$scope.poolType+'&amount='+$scope.payAmt)
+            .success(function (resp) {
+                if (resp.successful) {
+                    $uibModalInstance.close(true);
+                    Notify.success('拨款成功');
+                    stopLoading();
+                    $state.go("app.admWarning", {}, {reload: true});
 
                 }else {
                     Notify.error(resp.errorMessage);

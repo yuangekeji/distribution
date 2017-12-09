@@ -110,6 +110,8 @@ public class NodeBonusDayJob {
 		dateHistory.setDayAdvance(new BigDecimal((Double)result.get("dayAdvanceAmount")));
 		dateHistory.setDayDiscountSales(new BigDecimal((Double)result.get("dayDiscountSalesAmount")));
 		dateHistory.setAllTotalSales(new BigDecimal((Double)result.get("totalSalesAmount")));
+		dateHistory.setUpdateId(0);
+		dateHistory.setUpdateTime(new Date());
 		bonusService.saveOrUpdateDateHistory(dateHistory);
 		result.put("result", result.toString());
 		result.put("jobName", "定时结算平台资金/NodeBonusDayJob/selectPlatformCashFlow");

@@ -277,7 +277,7 @@
     ORDER BY d.id DESC,m.bonus_date DESC
   </select>
 
-  <select id="getMemberBonusExcelList" parameterType="java.util.Map" resultMap="MemberBonusExclResultMap">
+  <!--<select id="getMemberBonusExcelList" parameterType="java.util.Map" resultMap="MemberBonusExclResultMap">
     select
       mb.id
     , mb.order_no
@@ -301,7 +301,7 @@
       <![CDATA[and DATE_FORMAT(mb.bonus_date, '%Y-%m-%d') <= #{endTime}]]>
     </if>
     order by mb.bonus_date desc,mb.member_id
-  </select>
+  </select>-->
   <select id="getTotalMemberBonus" parameterType="java.lang.String" resultType="java.lang.Double">
   	SELECT IFNULL(sum(actual_amout),0) as totalBonusAmount
 	FROM member_bonus 
@@ -321,5 +321,57 @@
   	SELECT IFNULL(SUM(act_amt),0) as dayAdvanceAmount
 	FROM advance
 	where statues = '2' and DATE(request_date) = DATE(#{date})
+  </select>
+  <select id="getMemberBonusExcelList" resultMap="MemberBonusListResultMap" parameterType="java.util.Map" >
+    select
+    mb.member_id,
+    member.member_name,
+    mb.order_id,
+    mb.order_no,
+    mb.order_date,
+    member.recommend_id,
+    member.recommend_name,
+    mb.order_amount,
+    mb.amout_total,
+    mb.manage_fee_total,
+    mb.actual_amout_total
+    from (
+    select
+    om.member_id,
+    mb.order_id,
+    mb.order_no,
+    mb.order_date order_date,
+    max(mb.create_date) create_date,
+    om.order_amt AS order_amount,
+    round(sum(mb.amout),2) AS amout_total,
+    round(sum(mb.manage_fee),2) AS manage_fee_total,
+    round(sum(mb.actual_amout),2) AS actual_amout_total
+    from
+    member_bonus mb, order_master om
+    where mb.order_no = om.order_no
+    <if test="startTime != null and startTime != ''">
+      <![CDATA[and DATE_FORMAT(mb.order_date, '%Y-%m-%d') >= #{startTime}]]>
+    </if>
+    <if test="endTime != null and endTime != ''">
+      <![CDATA[and DATE_FORMAT(mb.order_date, '%Y-%m-%d') <= #{endTime}]]>
+    </if>
+    and mb.bonus_type not in ('6','3')
+    group by order_no
+      union all
+      select
+      member_id member_id,
+      null order_id,
+      null order_no,
+      NULL order_date,
+      create_date,
+      NULL order_amount,
+      amout AS amout_total,
+      manage_fee AS manage_fee_total,
+      actual_amout AS actual_amout_total
+      from member_bonus
+      where   bonus_type = '6'
+    ) mb, member member
+    where mb.member_id = member.id
+    order by mb.create_date desc
   </select>
 </mapper>

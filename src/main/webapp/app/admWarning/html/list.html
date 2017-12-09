@@ -39,10 +39,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="note note-info note-bordered">
-                                <p> <span>总营业额:+3000302.00</span>  <span style="margin-right: 20px">总发放奖金额：-2000</span>  </p>
-                                <p> <span>分红包资金池:+23000.00</span>  <span style="margin-right: 20px">广告宣传奖资金池金额：+2000</span></p>
-                                <p> <span>分红包发放池:+10000.00</span>  <span style="margin-right: 20px">广告宣传奖发放池金额：+2000</span></p>
-                                <p> <span>公司账户资金:+200000.00</span></p>
+                                <p> <span>总营业额：{{titleData.totalSales | number:2}}</span>  <span style="margin-right: 20px">总发放奖金额：{{titleData.totalBonus | number:2}}</span>  </p>
+                                <p> <span>平台沉淀资金总额：{{titleData.platformAmount | number:2}}</span>  <span style="margin-right: 20px">奖金池资金：{{titleData.poolAmount | number:2}}</span></p>
+                                <p> <span>公司账户资金余额：{{titleData.accountAmount | number:2}}</span></p>
                             </div>
                         </div>
                     </div>

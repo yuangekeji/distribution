@@ -5,6 +5,7 @@ import com.distribution.common.constant.JsonMessage;
 import com.distribution.common.controller.BasicController;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.admin.model.Admin;
+import com.distribution.dao.platformAccount.model.PlatformAccount;
 import com.distribution.service.AdmHandleHistoryService;
 import com.distribution.service.AdmWarningService;
 import com.distribution.service.BonusPoolService;
@@ -84,6 +85,16 @@ public class AdmWarningController extends BasicController{
         return successMsg(result);
     }
 
-
-
+    /**
+     * job沉淀资金查询
+     * @return
+     */
+    @RequestMapping("/getPlatformAccount")
+    @ResponseBody
+    public JsonMessage getPlatformAccount(){
+        PlatformAccount platformAccount = bonusPoolService.getPlatformAccountById();
+        Map result= new HashMap();
+        result.put("platformAccount",platformAccount);
+        return successMsg(result);
+    }
 }

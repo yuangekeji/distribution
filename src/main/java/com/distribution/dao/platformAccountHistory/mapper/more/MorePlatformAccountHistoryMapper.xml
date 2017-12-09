@@ -72,6 +72,13 @@
       </foreach>
     </where>
   </sql>
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
   <sql id="Base_Column_List">
     id, total_sales, total_bonus, platform_amount, account_amount, account_amount_old, 
     pool_amount, flow_amount, account_amount_new, create_date, create_by
@@ -80,13 +87,41 @@
     select
     <include refid="Base_Column_List" />
     from platform_account_history
-    where
-    <![CDATA[
-    DATE(create_date) >= DATE(#{startDate})
-	and 
-	DATE(create_date) <= DATE(#{endDate})]]>
+    where 1=1
+    <if test="parameterMap.startDate != null and parameterMap.startDate != ''">
+      <![CDATA[AND  DATE(create_date) >= DATE(#{parameterMap.startDate})]]>
+    </if>
+    <if test="parameterMap.endDate != null and parameterMap.endDate != ''">
+      <![CDATA[AND 	DATE(create_date) <= DATE(#{parameterMap.endDate})]]>
+    </if>
 	order BY
-	create_date ASC
+	id DESC
   </select>
-  
+  <select id="listPlatformAccountHistoryPaging" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from platform_account_history
+    where 1=1
+    <if test="parameterMap.startDate != null and parameterMap.startDate != ''">
+      <![CDATA[AND  DATE(create_date) >= DATE(#{parameterMap.startDate})]]>
+    </if>
+    <if test="parameterMap.endDate != null and parameterMap.endDate != ''">
+      <![CDATA[AND 	DATE(create_date) <= DATE(#{parameterMap.endDate})]]>
+    </if>
+    order BY id desc
+    <include refid="pageLimit"/>
+  </select>
+  <select id="listPlatformAccountHistoryCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
+    select
+    count(0)
+    from platform_account_history
+    where 1=1
+    <if test="parameterMap.startDate != null and parameterMap.startDate != ''">
+      <![CDATA[AND  DATE(create_date) >= DATE(#{parameterMap.startDate})]]>
+    </if>
+    <if test="parameterMap.endDate != null and parameterMap.endDate != ''">
+      <![CDATA[AND 	DATE(create_date) <= DATE(#{parameterMap.endDate})]]>
+    </if>
+
+  </select>
 </mapper>

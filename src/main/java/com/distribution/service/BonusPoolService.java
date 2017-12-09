@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.distribution.common.utils.Page;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -352,5 +353,16 @@ public class BonusPoolService {
 		}
 		return  workbook;
 	}
+	/**
+	 * Job公司沉淀资金明细
+	 * @param page
+	 * @return
+	 */
+	public Page selectPlatformHistoryList(Page page){
 
+		page.setTotalCount(platformAccountHistoryMapper.listPlatformAccountHistoryCount(page));
+		page.setResult(platformAccountHistoryMapper.listPlatformAccountHistoryPaging(page));
+		return page;
+
+	}
 }

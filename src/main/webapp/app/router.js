@@ -290,4 +290,10 @@ angular.module('app').config([
                 resolve: helper.resolveFor('searchValidate'),
                 controller: 'searchValidateCtrl'
             })
+            .state('app.platformHistory',{
+                url: '/platformHistory',
+                templateUrl: helper.basepath('admWarning/html/platformHistory.html'),
+                resolve: helper.resolveFor('platformHistory'),
+                controller: 'platformHistoryCtrl'
+            })
     }]);

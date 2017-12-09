@@ -1,0 +1,82 @@
+<!-- BEGIN PAGE HEADER-->
+<h4 class="page-title">公司沉淀资金明细</h4>
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">公司沉淀资金明细</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <p style="margin-bottom:20px">
+                        <a href="javascript:void(0);" class="btn blue-steel sbold pull-right"  ng-click="goMemberView()"> 返回Job奖金发放管理</a>
+                    </p>
+                </div>
+                <div id="sample_1_wrapper" class="dataTables_wrapper">
+                    <!-- BEGIN FORM-->
+                    <form action="#" class="form-horizontal form-bordered">
+                        <div class="form-body">
+                            <div class="form-group col-md-5">
+                                <label class="control-label col-md-3">查询时间</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control" name="from" ng-model="myPage.parameterMap.startTime">
+                                        <span class="input-group-addon"> to </span>
+                                        <input type="text" class="form-control" name="to"   ng-model="myPage.parameterMap.endTime">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn blue-steel" ng-click="searchByParam();"><i class="fa fa-search"></i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <div class="table-scrollable">
+                        <table class="table blue-steel-table table-bordered table-hover "
+                               id="sample_1">
+                            <thead>
+                            <tr >
+                                <th class="text-center">统计时间</th>
+                                <th class="text-center">总营业额</th>
+                                <th class="text-center">总实发奖金</th>
+                                <th class="text-center">平台沉淀资金</th>
+                                <th class="text-center">公司账户资金</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="platformHistory in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                <td class="text-center">{{platformHistory.createDate | date:'yyyy-MM-dd HH:mm'}}</td>
+                                <td class="text-right">{{platformHistory.totalSales | number:2 }}</td>
+                                <td class="text-right">{{platformHistory.totalBonus | number:2 }}</td>
+                                <td class="text-right">{{platformHistory.platformAmount | number:2 }}</td>
+                                <td class="text-right">{{platformHistory.accountAmount | number:2 }}</td>
+                            </tr>
+                            <tr ng-show= "notData" >
+                                <td colspan="5" class="text-center">无记录</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="other-controller">
+                            <div class="text-center">
+                                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END MAIN CONTENT -->
+<script>
+    ComponentsDateTimePickers.init(); // init todo page
+</script>

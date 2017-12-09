@@ -70,7 +70,7 @@ public class AdminBonusController extends BasicController {
         Admin admin = (Admin) getCurrentUser(session);
         XSSFWorkbook wb = bonusService.exportData(map,response);
         response.setContentType("application/vnd.ms-excel");
-        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("分销记录详情报表", "UTF-8") + ".xlsx");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("分销记录报表", "UTF-8") + ".xlsx");
         OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
         wb.write(outStream); // 输出数据
         outStream.flush();
@@ -80,7 +80,7 @@ public class AdminBonusController extends BasicController {
         Map mapHandle = new HashMap();
         mapHandle.put("handleType", Constant.ADMINHANDLETYPE_BONUS);
         mapHandle.put("handleId", "Bonus");
-        mapHandle.put("handleComment", "操作: 分销记录详情列表");
+        mapHandle.put("handleComment", "操作: 分销记录列表");
         admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }

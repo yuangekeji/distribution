@@ -199,8 +199,8 @@
   <select id="getMemberNodeByMemberId" resultType="com.distribution.dao.memberNode.model.MemberNode"  parameterType="java.lang.Integer">
 		SELECT
 			id,
-			left_id,
-			right_id
+			left_id as leftId,
+			right_id as rightId
 		FROM
 			member_node n
 		WHERE

@@ -13,13 +13,13 @@
             <div class="portlet-body">
 
                 <div class="table-toolbar">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="note note-info note-bordered">
-                                <p> <span>账户总收入：+30200</span>  <span style="margin-right: 20px">账户总支出：-2000</span></p>
-                            </div>
-                        </div>
-                    </div>
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-12">-->
+                            <!--<div class="note note-info note-bordered">-->
+                                <!--<p> <span>账户总收入：+30200</span>  <span style="margin-right: 20px">账户总支出：-2000</span></p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <p style="margin-bottom:20px">
                         <a href="javascript:void(0);" class="btn blue-steel sbold pull-right"  ng-click="goMemberView()"> 返回会员中心</a>
                     </p>
@@ -64,8 +64,14 @@
                                 <td class="text-center">{{accountHistory.createTime | date:'yyyy-MM-dd HH:mm'}}</td>
                                 <td class="text-center">{{accountHistory.type | AccountHistoryTypeFilter}}</td>
                                 <td class="text-center">{{accountHistory.flowType | AccountHistoryFlowTypeFilter : accountHistory.type }}</td>
-                                <td class="text-center">{{accountHistory.bonusAmt | number:2 }}</td>
-                                <td class="text-right">{{accountHistory.seedAmt | number:2}}</td>
+                                <td class="text-right">
+                                    <span ng-if="accountHistory.type == '1'">-</span>
+                                    <span ng-if="accountHistory.type == '2'">+</span>{{accountHistory.bonusAmt | number:2 }}
+                                </td>
+                                <td class="text-right">
+                                    <span ng-if="accountHistory.type == '1'">-</span>
+                                    <span ng-if="accountHistory.type == '2'">+</span>
+                                    {{accountHistory.seedAmt | number:2}}</td>
                             </tr>
                             <tr ng-show= "notData" >
                                 <td colspan="5" class="text-center">无记录</td>

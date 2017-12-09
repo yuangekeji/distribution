@@ -61,4 +61,8 @@ public class JobTest extends SpringServiceTest{
 	public void savePlatformCashFlowTest() {
 		nodeJob.savePlatformCashFlow();
 	}
+	@Test
+	public void mergerPlatformCashFlow() {
+		nodeJob.mergerPlatformCashFlow();
+	}
 }

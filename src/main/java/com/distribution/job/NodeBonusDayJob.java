@@ -97,16 +97,18 @@ public class NodeBonusDayJob {
 	}
 	@Scheduled(cron ="0 30 2 * * ?" )//每天2点30钟执行
 	public void savePlatformCashFlow(){
-		Map<String,Object> result = new HashMap<String,Object>();
 		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
-		date = "2017-11-18";
+		savePlatformCashFlow(date);
+	}
+	public void savePlatformCashFlow(String date) {
+		Map<String,Object> result = null;
 		result = bonusService.getDaySalesAndBonusAmount(date);
-		DateBonusHistory dateHistory= bonusService.getDateBonusHistory(date);
+		DateBonusHistory dateHistory= bonusService.findCurrentDayBonusHistory(date);
+		dateHistory.setAllTotalBonus(new BigDecimal((Double)result.get("totalMemberBonusAmount")));
 		dateHistory.setDayActualBonus(new BigDecimal((Double)result.get("dayMemberBonusAmount")));
+		dateHistory.setAllTotalAdvance(new BigDecimal((Double)result.get("totalAdvanceAmount")));
 		dateHistory.setDayAdvance(new BigDecimal((Double)result.get("dayAdvanceAmount")));
 		dateHistory.setDayDiscountSales(new BigDecimal((Double)result.get("dayDiscountSalesAmount")));
-		dateHistory.setAllTotalAdvance(new BigDecimal((Double)result.get("totalAdvanceAmount")));
-		dateHistory.setAllTotalBonus(new BigDecimal((Double)result.get("totalMemberBonusAmount")));
 		dateHistory.setAllTotalSales(new BigDecimal((Double)result.get("totalSalesAmount")));
 		bonusService.saveOrUpdateDateHistory(dateHistory);
 		result.put("result", result.toString());
@@ -116,27 +118,13 @@ public class NodeBonusDayJob {
 
 	@Scheduled(cron ="0 30 14 * * ?" )//数据mergejob 只运行一次 每天14点30钟执行
 	public void mergerPlatformCashFlow(){
-		Map<String,Object> result = new HashMap<String,Object>();
 		//获取max(id) 以外的所有数据，因为max(id)留给明天凌晨处理
 		List  dateList = bonusService.selectNeedMergeDates();
 		Object[] dates = dateList.toArray();
-
 		for( int i =0 ; i < dates.length ; i++){
-
 			String date = (String) dates[i];
 			System.out.println(date);
-			result = bonusService.getDaySalesAndBonusAmount(date);
-			DateBonusHistory dateHistory= bonusService.getDateBonusHistory(date);
-			dateHistory.setDayActualBonus(new BigDecimal((Double)result.get("dayMemberBonusAmount")));
-			dateHistory.setDayAdvance(new BigDecimal((Double)result.get("dayAdvanceAmount")));
-			dateHistory.setDayDiscountSales(new BigDecimal((Double)result.get("dayDiscountSalesAmount")));
-			dateHistory.setAllTotalAdvance(new BigDecimal((Double)result.get("totalAdvanceAmount")));
-			dateHistory.setAllTotalBonus(new BigDecimal((Double)result.get("totalMemberBonusAmount")));
-			dateHistory.setAllTotalSales(new BigDecimal((Double)result.get("totalSalesAmount")));
-			bonusService.saveOrUpdateDateHistory(dateHistory);
-			result.put("result", result.toString());
-			result.put("jobName", "定时结算平台资金/NodeBonusDayJob/selectPlatformCashFlow");
-			saveJobLog(result);
+			savePlatformCashFlow(date);		
 		}
 	}
 }

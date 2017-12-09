@@ -50,6 +50,7 @@ import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
 import com.distribution.dao.nodeBonusHistory.model.more.MoreNodeBonusHistory;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
+import com.distribution.dao.platformAccount.model.PlatformAccount;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -83,8 +84,8 @@ public class BonusService {
 	private MoreDividendMapper moreDividendMapper;
 	@Autowired
 	private MoreDividendHistoryMapper dividendHistoryMapper;
-	@Autowired
-	private BonusPoolHistoryMapper bonusPoolHistoryMapper;
+	//@Autowired
+	//private BonusPoolHistoryMapper bonusPoolHistoryMapper;
 	
 	
 	
@@ -435,12 +436,15 @@ public class BonusService {
 	 */
 	public DateBonusHistory findCurrentDayBonusHistory(String yesterday){
 		//查找同一天的执行记录
-		String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
-		DateBonusHistory history = moreDateBonusHistoryMapper.selectCurrentDaySalesAndBonus(date);
+		//String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
+		//20171209,调整查询字段从create_time到date,条件改为昨天。
+		DateBonusHistory history = moreDateBonusHistoryMapper.selectCurrentDaySalesAndBonus(yesterday);
 		if(null == history){
 			history = new DateBonusHistory();
 			history.setCreateId(0);
 			history.setCreateTime(new Date());
+			history.setUpdateId(0);
+			history.setUpdateTime(new Date());
 			//设置奖金时间
 			history.setDate(DateHelper.getYesterDay());
 			//设置营业额相关数据
@@ -954,11 +958,7 @@ public class BonusService {
 					+ ", bonus_amt = bonus_amt - " + map.get("bonus")
 					+ ", seed_amt = seed_amt - " + map.get("seed")
 					+ " WHERE member_id = " + map.get("member_id") + ";\n");
-
-
-			sql2.append("INSERT INTO account_flow_history VALUES (null,"+ map.get("member_id")+",NOW(),0,1,"+map.get("total")+","+map.get("bonus")+","+map.get("seed")+",'10月31日见点奖恢复');\n");
-
-
+				sql2.append("INSERT INTO account_flow_history VALUES (null,"+ map.get("member_id")+",NOW(),0,1,"+map.get("total")+","+map.get("bonus")+","+map.get("seed")+",'10月31日见点奖恢复');\n");
 		}
 		System.out.println(sql1);
 		System.out.println(sql2);
@@ -975,17 +975,17 @@ public class BonusService {
 	public Map<String,Object> getDaySalesAndBonusAmount(String date){
 		Map<String,Object> map = new HashMap<String,Object>();
 		//总销售额,不算折扣单
-		map.put("totalSalesAmount", moreOrderMasterMapper.selectTotalSalesAmount());
+		map.put("totalSalesAmount", moreOrderMasterMapper.selectTotalSalesAmount(date));
 		//当日营业额
-		map.put("dayDiscountSalesAmount", moreOrderMasterMapper.findCurrentDayOrderSales(date));
+		map.put("daySalesAmount", moreOrderMasterMapper.findCurrentDayOrderSales(date));
 		//当日折扣单销售额
 		map.put("dayDiscountSalesAmount", moreOrderMasterMapper.selectDayDiscountSalesAmount(date));
 		//总奖金额
-		map.put("totalMemberBonusAmount", moreMemberBonusMapper.getTotalMemberBonus());
+		map.put("totalMemberBonusAmount", moreMemberBonusMapper.getTotalMemberBonus(date));
 		//当日奖金额
 		map.put("dayMemberBonusAmount", moreMemberBonusMapper.getDayMemberBonus(date));
 		//总提现额
-		map.put("totalAdvanceAmount", moreMemberBonusMapper.getTotalAdvance());
+		map.put("totalAdvanceAmount", moreMemberBonusMapper.getTotalAdvance(date));
 		//当日提现额
 		map.put("dayAdvanceAmount", moreMemberBonusMapper.getDayAdvance(date));
 		return map;
@@ -1000,17 +1000,39 @@ public class BonusService {
 		}else {
 			moreDateBonusHistoryMapper.insert(record);
 		}
+		//查找奖金池与缓存池余额
+		double bp1 = bonusPoolService.getBonusPool(1);
+		double bp2 = bonusPoolService.getBonusPool(2);
+		double bcp1 = bonusPoolService.getBonusCachePool(1);
+		double bcp2 = bonusPoolService.getBonusCachePool(2);
+		double total = bp1 + bp2 + bcp1 + bcp2;
+		//更新公司账户余额，平台资金余额。
+		PlatformAccount pa = bonusPoolService.getPlatformAccountById();
+		//平台资金
+		pa.setPlatformAmount(record.getAllTotalSales().subtract(record.getAllTotalBonus()));
+		BigDecimal accountAmountOld = pa.getAccountAmount();
+		pa.setTotalSales(record.getAllTotalSales());
+		pa.setTotalBonus(record.getAllTotalBonus());
+		//账户资金等于平台资金 - 奖金池余额 - 发放池余额
+		pa.setAccountAmount(pa.getPlatformAmount().subtract(new BigDecimal(total)));
+		pa.setPoolAmount(new BigDecimal(total));
+		BigDecimal accountAmountNew = pa.getAccountAmount();
+		pa.setUpdateBy("job");
+		pa.setUpdateTime(new Date());
+		bonusPoolService.updatePlatformAccount(pa);
+		//更新账户流水
+		BigDecimal flowAmount = accountAmountNew.subtract(accountAmountOld);
+		bonusPoolService.savePlatformAccountflow(pa,pa.getUpdateBy(),accountAmountNew,accountAmountOld,flowAmount);
 	}
 	/**
 	 * 通过date查询DateBonusHistory
 	 * @param date
 	 * @return
 	 */
-	public DateBonusHistory getDateBonusHistory(String date) {
+	/*public DateBonusHistory getDateBonusHistory(String date) {
 		DateBonusHistory history = moreDateBonusHistoryMapper.getDateBonusHistoryByDate(date);
 		return history;
-	}
-
+	}*/
 	/**
 	 * 平台资金数据merge
 	 * @return

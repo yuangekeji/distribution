@@ -45,7 +45,7 @@
                         <div class="col-md-12">
                             <div class="note note-info note-bordered">
                                 <h4>公司账户资金: {{datas.accountAmount |  number:2}}</h4>
-                                <h4>奖金池金额: {{datas.bonusPoolAmt |  number:2}}</h4>
+                                <h4>分红包资金池金额: {{datas.bonusPoolAmt |  number:2}}</h4>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -72,12 +72,18 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="col-md-12">
+
+                            <button type="button" class="btn btn-sm red" ng-click="bonusProc(1);">确认分红包发放资金</button>
+                            <button type="button" class="btn btn-sm red" ng-click="bonusProc(2);">确认广告宣传奖发放资金</button>
+                            <button type="button" class="btn btn-sm red" ng-click="transferBonusProc(1);">拨币到分红包资金池</button>
+                            <button type="button" class="btn btn-sm blue" ng-click="getPlatformDetail();">沉淀资金明细</button>
+                        </div>
                     </div>
                 </div>
                 <div id="sample_1_wrapper" class="dataTables_wrapper">
                     <!-- BEGIN FORM-->
                     <form action="#" class="form-horizontal form-bordered">
-                        <div class="col-md-12">
                             <div class="form-group col-md-5">
                                 <label class="control-label col-md-3">发放时间</label>
                                 <div class="col-md-8">
@@ -88,16 +94,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-7">
+                            <div class="form-group col-md-offset-2 col-md-5">
                                 <div class="col-md-12">
                                     <button type="button" class="btn blue-steel" ng-click="searchByParam();"><i class="fa fa-search"></i>查询</button>
-
-                                    <button type="button" class="btn btn-sm red" ng-click="bonusProc(1);">确认分红包发放资金</button>
-                                    <button type="button" class="btn btn-sm red" ng-click="bonusProc(2);">确认广告宣传奖发放资金</button>
-                                    <button type="button" class="btn btn-sm red" ng-click="transferBonusProc(1);">拨币到分红包资金池</button>
                                 </div>
                             </div>
-                        </div>
                     </form>
                     <!-- END FORM-->
                     <div class="table-scrollable">

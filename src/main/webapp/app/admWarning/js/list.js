@@ -241,7 +241,6 @@ angular.module('bonus').controller('transferBonusProcCtrl', function ($scope, $u
     $scope.poolType = getPoolType;
     $scope.payAmt = 0;
 
-
     $scope.ok = function()
     {
         if (angular.isUndefined($scope.payAmt) || !(/^\+?[1-9][0-9]*$/.test($scope.payAmt))) {
@@ -274,5 +273,9 @@ angular.module('bonus').controller('transferBonusProcCtrl', function ($scope, $u
     {
         $uibModalInstance.dismiss('cancel');
     };
+
+    $scope.getPlatformDetail = function () {
+
+    }
 });
 

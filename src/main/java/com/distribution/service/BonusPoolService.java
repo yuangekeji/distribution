@@ -243,6 +243,7 @@ public class BonusPoolService {
 		BigDecimal accountAmountOld = pa.getAccountAmount();
 		BigDecimal accountAmountNew = accountAmountOld.subtract(flowAmout);
 		pa.setAccountAmount(accountAmountNew);
+		pa.setPoolAmount(pa.getPoolAmount().add(flowAmout));
 		pa.setUpdateBy(createBy);
 		pa.setUpdateTime(new Date());
 		platformAccountMapper.updateByPrimaryKeySelective(pa);
@@ -286,8 +287,6 @@ public class BonusPoolService {
 	 * Description: 
 	 * @author BAB1703658
 	 * @date 2017年12月9日 下午2:34:05
-	 * @param map
-	 * @param response
 	 * @return
 	 * @throws IOException
 	 * @throws InvocationTargetException

@@ -4,15 +4,29 @@
   */
 package com.distribution.service;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.distribution.common.constant.BonusConstant;
+import com.distribution.common.utils.DateHelper;
 import com.distribution.dao.bonusCachePool.mapper.BonusCachePoolMapper;
 import com.distribution.dao.bonusCachePool.model.BonusCachePool;
 import com.distribution.dao.bonusCachePool.model.BonusCachePoolExample;
@@ -23,7 +37,7 @@ import com.distribution.dao.bonusPoolHistory.mapper.BonusPoolHistoryMapper;
 import com.distribution.dao.bonusPoolHistory.model.BonusPoolHistory;
 import com.distribution.dao.platformAccount.mapper.PlatformAccountMapper;
 import com.distribution.dao.platformAccount.model.PlatformAccount;
-import com.distribution.dao.platformAccountHistory.mapper.PlatformAccountHistoryMapper;
+import com.distribution.dao.platformAccountHistory.mapper.more.MorePlatformAccountHistoryMapper;
 import com.distribution.dao.platformAccountHistory.model.PlatformAccountHistory;
 
 @Service
@@ -35,7 +49,7 @@ public class BonusPoolService {
 	@Autowired
 	private BonusPoolHistoryMapper bonusPoolHistoryMapper;
 	@Autowired
-	private PlatformAccountHistoryMapper platformAccountHistoryMapper;
+	private MorePlatformAccountHistoryMapper platformAccountHistoryMapper;
 	@Autowired
 	private PlatformAccountMapper platformAccountMapper;
 
@@ -251,6 +265,93 @@ public class BonusPoolService {
 		PlatformAccount pa = platformAccountMapper.selectByPrimaryKey(1);
 		return pa;
 	}
-	
+	/**
+	 * Name: 查询平台资金流出
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月9日 下午2:23:27
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public List<PlatformAccountHistory> listPlatformAccountHistory(String startDate,String endDate){
+		Map<String,Object> param = new HashMap<String,Object>();
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		List<PlatformAccountHistory> list = platformAccountHistoryMapper.listPlatformAccountHistory(param);
+		return list;
+	}
+	/**
+	 * Name: 平台资金流水导出
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月9日 下午2:34:05
+	 * @param map
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 * @throws InvocationTargetException
+	 */
+	public XSSFWorkbook exportData(String startDate,String endDate) throws IOException, InvocationTargetException {
+		List<PlatformAccountHistory> list = listPlatformAccountHistory(startDate,endDate);
+		//定义表头
+		String[] excelHeader = {"总销售额","奖金发放总额","平台资金总额", "账户总额", "奖金池总额", "账户原总额", "账户新总额",  "流水金额", "流水创建时间", "创建人"};
+
+		return this.exportExcel("平台账户资金流水明细", excelHeader, list);
+	}
+
+	public XSSFWorkbook exportExcel(String title, String[] headers, List<PlatformAccountHistory> list) throws InvocationTargetException {
+		// 声明一个工作薄
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		// 生成一个表格
+		XSSFSheet sheet = workbook.createSheet(title);
+		//定义字体
+		XSSFFont font = workbook.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font.setFontHeightInPoints((short) 12);
+		//定义样式
+		XSSFCellStyle style = workbook.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+		style.setFont(font);
+		// 产生表格标题行
+		XSSFRow row = sheet.createRow(0);
+		for (int i = 0; i < headers.length; i++){
+			XSSFCell cell = row.createCell(i);
+			cell.setCellStyle(style);
+			cell.setCellValue(headers[i]);
+		}
+		//设置表格宽度
+		sheet.setColumnWidth(0, 20 * 256);
+		sheet.setColumnWidth(1, 20 * 256);
+		sheet.setColumnWidth(2, 20 * 256);
+		sheet.setColumnWidth(3, 20 * 256);
+		sheet.setColumnWidth(4, 20 * 256);
+		sheet.setColumnWidth(5, 20 * 256);
+		sheet.setColumnWidth(6, 20 * 256);
+		sheet.setColumnWidth(7, 20 * 256);
+		sheet.setColumnWidth(8, 20 * 256);
+		sheet.setColumnWidth(9, 20 * 256);
+		//定义body样式
+		XSSFCellStyle styleRight = workbook.createCellStyle();
+		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);//居右
+		XSSFCellStyle styleCenter = workbook.createCellStyle();
+		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+
+		for(int j=0;j<list.size();j++){
+			XSSFRow bodyRow = sheet.createRow(j+1);
+			PlatformAccountHistory history = list.get(j);
+			bodyRow.createCell(0).setCellValue(history.getTotalSales().toString());
+			bodyRow.createCell(1).setCellValue(history.getTotalBonus().toString());
+			bodyRow.createCell(2).setCellValue(history.getPlatformAmount().toString());
+			bodyRow.createCell(3).setCellValue(history.getAccountAmount().toString());
+			bodyRow.createCell(4).setCellValue(history.getPoolAmount().toString());
+			bodyRow.createCell(5).setCellValue(history.getAccountAmountOld().toString());
+			bodyRow.createCell(6).setCellValue(history.getAccountAmountNew().toString());
+			bodyRow.createCell(7).setCellValue(history.getFlowAmount().toString());
+			bodyRow.createCell(8).setCellValue(DateHelper.formatDate(history.getCreateDate(), DateHelper.YYYY_MM_DD_HH_MM_SS));
+			bodyRow.createCell(9).setCellValue(history.getCreateBy().toString());
+		}
+		return  workbook;
+	}
 
 }

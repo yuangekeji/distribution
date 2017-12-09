@@ -233,7 +233,7 @@ public class BonusPoolService {
 	}
 	/**
 	 * Name: 更新平台账户资金并生成流水
-	 * Description: 
+	 * Description:从公司账户划拨资金到奖金池更新方法 
 	 * @author BAB1703658
 	 * @date 2017年12月6日 上午6:44:05
 	 * @param flowAmout
@@ -248,7 +248,7 @@ public class BonusPoolService {
 		pa.setUpdateBy(createBy);
 		pa.setUpdateTime(new Date());
 		platformAccountMapper.updateByPrimaryKeySelective(pa);
-		this.savePlatformAccountflow(pa,createBy,accountAmountNew,accountAmountOld,flowAmout);
+		this.savePlatformAccountflow(pa,createBy,accountAmountNew,accountAmountOld,flowAmout.negate());
 	}
 	/**
 	 * Name: 划拨资金到奖金池

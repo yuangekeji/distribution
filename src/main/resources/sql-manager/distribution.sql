@@ -1043,3 +1043,4 @@ CREATE TABLE `platform_account_history` (
 ) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
 
 
+INSERT INTO `platform_account` VALUES ('1', '0.00', '0.00', '0.00', '0.00', '0.00', '2017-12-09 10:39:43', 'job');

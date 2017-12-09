@@ -1010,3 +1010,36 @@ ALTER TABLE `account_flow_history`
 
 ALTER TABLE `account_flow_history`
   ADD COLUMN `new_total_seed_amt`  decimal(15,2)  DEFAULT 0 NULL COMMENT '新种子币余额';
+
+
+DROP TABLE IF EXISTS `platform_account`;
+CREATE TABLE `platform_account` (
+  `id` int(8) NOT NULL,
+  `total_sales` decimal(15,2) NOT NULL DEFAULT '0.00' COMMENT '总销售额',
+  `total_bonus` decimal(15,2) NOT NULL COMMENT '已发总奖金额',
+  `platform_amount` decimal(15,2) NOT NULL COMMENT '平台沉淀资金总额=销售额-已发奖金',
+  `account_amount` decimal(15,2) NOT NULL COMMENT '公司账户资金余额=平台沉淀资金总和-奖金池金额-发放池金额',
+  `pool_amount` decimal(15,2) NOT NULL,
+  `update_time` datetime NOT NULL,
+  `update_by` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `platform_account_history`;
+
+DROP TABLE IF EXISTS `platform_account_history`;
+CREATE TABLE `platform_account_history` (
+  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `total_sales` decimal(15,2) NOT NULL,
+  `total_bonus` decimal(15,2) NOT NULL,
+  `platform_amount` decimal(15,2) NOT NULL,
+  `account_amount` decimal(15,2) NOT NULL,
+  `pool_amount` decimal(15,2) NOT NULL,
+  `account_amount_old` decimal(15,2) NOT NULL COMMENT '账户原有资金',
+  `account_amount_new` decimal(15,2) NOT NULL COMMENT '现有账户资金',
+  `flow_amount` decimal(15,2) NOT NULL COMMENT '拨出资金',
+  `create_date` datetime NOT NULL,
+  `create_by` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
+
+

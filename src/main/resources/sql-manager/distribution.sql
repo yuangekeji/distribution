@@ -1044,3 +1044,4 @@ CREATE TABLE `platform_account_history` (
 
 
 INSERT INTO `platform_account` VALUES ('1', '0.00', '0.00', '0.00', '0.00', '0.00', '2017-12-09 10:39:43', 'job');
+update account_flow_history set seed_amt = 0.00 where seed_amt  is null;

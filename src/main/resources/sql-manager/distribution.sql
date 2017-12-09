@@ -1040,7 +1040,7 @@ CREATE TABLE `platform_account_history` (
   `create_date` datetime NOT NULL,
   `create_by` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `platform_account` VALUES ('1', '0.00', '0.00', '0.00', '0.00', '0.00', '2017-12-09 10:39:43', 'job');

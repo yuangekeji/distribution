@@ -88,4 +88,12 @@ public interface MoreMemberMapper extends MemberMapper{
      * @author sijeong
      * */
     Integer selectRecommendMemberCnt(Page page);
+
+    Integer getRecommendMemberCnt(Integer id);
+    /**
+     * 删除会员根据id
+     * @param memberId
+     * @return
+     */
+    int deleteMemberById(Integer memberId);
 }

@@ -40,4 +40,6 @@ public interface MoreAccountManagerMapper extends AccountManagerMapper{
     
     List<Map<String,Object>>listBonusTemp(String dateStr);
 
+    int deleteAccountManager(Integer memberId);
+
 }

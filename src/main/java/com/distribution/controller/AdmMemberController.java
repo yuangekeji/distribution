@@ -193,4 +193,22 @@ public class AdmMemberController extends BasicController{
         page = admMemberService.selectRecommendMemberInfo(page);
         return successMsg(page);
     }
+
+    /**
+     * 校验是否有孩子节点，如果有不可以删除。
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/checkMemberChild/{memberId}", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonMessage checkMemberChild(@PathVariable Integer memberId){
+        return successMsg(admMemberService.checkMemberChild(memberId));
+    }
+
+    @RequestMapping(value = "/deleteMemberNode/{memberId}", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonMessage deleteMemberNode(@PathVariable Integer memberId){
+        return successMsg(admMemberService.deleteMemberNode(memberId));
+    }
+
 }

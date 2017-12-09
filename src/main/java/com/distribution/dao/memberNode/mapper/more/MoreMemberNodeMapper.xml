@@ -196,4 +196,40 @@
   <select id="getParentNodes" resultType="java.lang.String" parameterType="java.lang.Integer">
   	SELECT getParentList(#{nodeId})
   </select>
+  <select id="getMemberNodeByMemberId" resultType="com.distribution.dao.memberNode.model.MemberNode"  parameterType="java.lang.Integer">
+		SELECT
+			id,
+			left_id,
+			right_id
+		FROM
+			member_node n
+		WHERE
+			EXISTS (
+				SELECT
+					1
+				FROM
+					member m
+				WHERE
+					m.id = #{memberId}
+				AND n.id = m.node_id
+		)
+	</select>
+	<update id="updateRemoveMemberNode" parameterType="java.util.Map">
+		UPDATE member_node
+		SET
+		<if test="rightId != null and rightId != ''">
+			right_id = NULL
+		</if>
+		<if test="leftId != null and leftId != ''">
+			left_id = NULL
+		</if>
+		WHERE
+			id = #{id}
+		<if test="rightId != null and rightId != ''">
+			and right_id = #{rightId}
+		</if>
+		<if test="leftId != null and leftId != ''">
+			and left_id = #{leftId}
+		</if>
+	</update>
 </mapper>

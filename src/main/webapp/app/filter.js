@@ -63,3 +63,32 @@ angular.module('app').filter("PostLevelFilter",function () {
         if(input=='post_level6'){return '全国董事'};
     }
 });
+
+angular.module('app').filter("AccountHistoryTypeFilter",function () {
+    return function (input) {
+        if(input=='1'){return '支出'};
+        if(input=='2'){return '收入'};
+
+    }
+});
+
+angular.module('app').filter("AccountHistoryFlowTypeFilter",function () {
+    return function (flowType,type) {
+        if(type == '1' && flowType=='1' ){return '复投'};
+        if(type == '1' && flowType=='2' ){return '转出'};
+        if(type == '1' && flowType=='3' ){return '提现'};
+        if(type == '1' && flowType=='7' ){return '报单'};
+        if(type == '1' && flowType=='8' ){return '折扣单'};
+
+        if(type == '2' && flowType=='0' ){return '一代奖'};
+        if(type == '2' && flowType=='1' ){return '二代奖'};
+        if(type == '2' && flowType=='2' ){return '三代奖'};
+        if(type == '2' && flowType=='11' ){return '转入'};
+
+        if(type == '2' && flowType=='3' ){return '分红包奖'};
+        if(type == '2' && flowType=='4' ){return '广告宣传奖'};
+        if(type == '2' && flowType=='5' ){return '级差奖'};
+        if(type == '2' && flowType=='8' ){return '运营中心奖'};
+        if(type == '2' && flowType=='9' ){return '管理员充值'};
+    }
+});

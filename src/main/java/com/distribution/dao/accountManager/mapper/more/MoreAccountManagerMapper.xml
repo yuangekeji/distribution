@@ -91,4 +91,7 @@
 		tep
 		group by tep.member_id
     </select>
+    <delete id="deleteAccountManager" parameterType="java.lang.Integer">
+        delete from account_manager where member_id = #{memberId}
+    </delete>
 </mapper>

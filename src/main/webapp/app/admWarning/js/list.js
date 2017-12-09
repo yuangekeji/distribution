@@ -44,16 +44,21 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
             $scope.stopLoading();
             Notify.error(error);
         });
+    }
+    $scope.getPlatformAccount = function(){
+        $scope.startLoading();
         $http.post(ctx + '/admWarning/getPlatformAccount')
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.titleData = resp.data.platformAccount;
+                    $scope.stopLoading();
                 } else {
+                    $scope.stopLoading();
                     Notify.error(resp.errorMessage);
                 }
 
             }).error(function (error) {
-
+            $scope.stopLoading();
             Notify.error(error);
         });
     }
@@ -64,6 +69,7 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
     $scope.onInit = function () {
 
         $scope.search();
+        $scope.getPlatformAccount();
     };
 
     $scope.onInit();

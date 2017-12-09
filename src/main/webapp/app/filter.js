@@ -90,5 +90,7 @@ angular.module('app').filter("AccountHistoryFlowTypeFilter",function () {
         if(type == '2' && flowType=='5' ){return '级差奖'};
         if(type == '2' && flowType=='8' ){return '运营中心奖'};
         if(type == '2' && flowType=='9' ){return '管理员充值'};
+        if(type == '2' && flowType=='-99' ){return '系统冲正'};
+        if(type == '1' && flowType=='-99' ){return '系统冲正'};
     }
 });

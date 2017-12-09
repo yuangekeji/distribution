@@ -12,6 +12,7 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
         parameterMap: {
         }
     };
+    $scope.titleData = {};
 
     var e1 = $('.full-view');
     $scope.startLoading=function () {
@@ -26,20 +27,38 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
     }
 
     $scope.search = function(){
-
+        $scope.startLoading();
         $http.post(ctx + '/admWarning/list', $scope.myPage)
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myPage = resp.data;
                     $scope.notData = false;
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
-
+                    $scope.stopLoading();
                 } else {
+                    $scope.stopLoading();
                     Notify.error(resp.errorMessage);
                 }
 
             }).error(function (error) {
+            $scope.stopLoading();
+            Notify.error(error);
+        });
+    }
+    $scope.getPlatformAccount = function(){
+        $scope.startLoading();
+        $http.post(ctx + '/admWarning/getPlatformAccount')
+            .success(function (resp) {
+                if (resp.successful) {
+                    $scope.titleData = resp.data.platformAccount;
+                    $scope.stopLoading();
+                } else {
+                    $scope.stopLoading();
+                    Notify.error(resp.errorMessage);
+                }
 
+            }).error(function (error) {
+            $scope.stopLoading();
             Notify.error(error);
         });
     }
@@ -50,6 +69,7 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
     $scope.onInit = function () {
 
         $scope.search();
+        $scope.getPlatformAccount();
     };
 
     $scope.onInit();

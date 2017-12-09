@@ -143,6 +143,10 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
             // console.info('取消');
         });
     };
+    $scope.showReadme = false;
+    $scope.showIntro = function () {
+        $scope.showReadme = !$scope.showReadme;
+    }
 
 });
 

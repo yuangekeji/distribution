@@ -95,7 +95,7 @@ public class NodeBonusDayJob {
 		JobLogs job = convertToJobLogsFromMap(map);
 		jobLogsMapper.insert(job);
 	}
-	@Scheduled(cron ="0 30 2 * * ?" )//每天2点30钟执行
+	@Scheduled(cron ="0 50 3 * * ?" )//每天2点30钟执行
 	public void savePlatformCashFlow(){
 		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
 		savePlatformCashFlow(date);

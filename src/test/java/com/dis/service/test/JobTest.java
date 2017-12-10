@@ -63,6 +63,6 @@ public class JobTest extends SpringServiceTest{
 	}
 	@Test
 	public void mergerPlatformCashFlow() {
-		nodeJob.mergerPlatformCashFlow();
+//		nodeJob.mergerPlatformCashFlow();
 	}
 }

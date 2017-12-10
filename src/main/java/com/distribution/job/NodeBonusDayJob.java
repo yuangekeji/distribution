@@ -118,17 +118,17 @@ public class NodeBonusDayJob {
 		saveJobLog(result);
 	}
 
-	@Scheduled(cron ="0 30 14 * * ?" )//数据mergejob 只运行一次 每天14点30钟执行
-	public void mergerPlatformCashFlow(){
-		//获取max(id) 以外的所有数据，因为max(id)留给明天凌晨处理
-		List  dateList = bonusService.selectNeedMergeDates();
-		Object[] dates = dateList.toArray();
-		for( int i =0 ; i < dates.length ; i++){
-			String date = (String) dates[i];
-			System.out.println(date);
-			savePlatformCashFlow(date);		
-		}
-	}
+//	@Scheduled(cron ="0 59 22 * * ?" )//数据mergejob 只运行一次 每天14点30钟执行
+//	public void mergerPlatformCashFlow(){
+//		//获取max(id) 以外的所有数据，因为max(id)留给明天凌晨处理
+//		List  dateList = bonusService.selectNeedMergeDates();
+//		Object[] dates = dateList.toArray();
+//		for( int i =0 ; i < dates.length ; i++){
+//			String date = (String) dates[i];
+//			System.out.println(date);
+//			savePlatformCashFlow(date);
+//		}
+//	}
 }
 
 

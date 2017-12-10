@@ -51,4 +51,8 @@ public class PoolServiceTest extends SpringServiceTest{
 		} catch (IOException e) {
 		}
 	}
+	@Test
+	public void saveAccountToBonusTest() {
+		poolServie.saveAccountToBonus(new BigDecimal("100"), "job", 1);
+	}
 }

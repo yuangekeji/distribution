@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.distribution.common.utils.Page;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -232,7 +233,7 @@ public class BonusPoolService {
 	}
 	/**
 	 * Name: 更新平台账户资金并生成流水
-	 * Description: 
+	 * Description:从公司账户划拨资金到奖金池更新方法 
 	 * @author BAB1703658
 	 * @date 2017年12月6日 上午6:44:05
 	 * @param flowAmout
@@ -243,10 +244,11 @@ public class BonusPoolService {
 		BigDecimal accountAmountOld = pa.getAccountAmount();
 		BigDecimal accountAmountNew = accountAmountOld.subtract(flowAmout);
 		pa.setAccountAmount(accountAmountNew);
+		pa.setPoolAmount(pa.getPoolAmount().add(flowAmout));
 		pa.setUpdateBy(createBy);
 		pa.setUpdateTime(new Date());
 		platformAccountMapper.updateByPrimaryKeySelective(pa);
-		this.savePlatformAccountflow(pa,createBy,accountAmountNew,accountAmountOld,flowAmout);
+		this.savePlatformAccountflow(pa,createBy,accountAmountNew,accountAmountOld,flowAmout.negate());
 	}
 	/**
 	 * Name: 划拨资金到奖金池
@@ -286,8 +288,6 @@ public class BonusPoolService {
 	 * Description: 
 	 * @author BAB1703658
 	 * @date 2017年12月9日 下午2:34:05
-	 * @param map
-	 * @param response
 	 * @return
 	 * @throws IOException
 	 * @throws InvocationTargetException
@@ -353,5 +353,16 @@ public class BonusPoolService {
 		}
 		return  workbook;
 	}
+	/**
+	 * Job公司沉淀资金明细
+	 * @param page
+	 * @return
+	 */
+	public Page selectPlatformHistoryList(Page page){
 
+		page.setTotalCount(platformAccountHistoryMapper.listPlatformAccountHistoryCount(page));
+		page.setResult(platformAccountHistoryMapper.listPlatformAccountHistoryPaging(page));
+		return page;
+
+	}
 }

@@ -195,6 +195,10 @@ angular.module('admWarning').controller('admWarningCtrl',function ($q, title, $s
     $scope.showIntro = function () {
         $scope.showReadme = !$scope.showReadme;
     }
+
+    $scope.getPlatformDetail = function () {
+        $state.go('app.platformHistory');
+    }
 });
 
 angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http,startLoading,stopLoading) {
@@ -234,13 +238,14 @@ angular.module('bonus').controller('bonusProcCtrl', function ($scope, $uibModalI
     {
         $uibModalInstance.dismiss('cancel');
     };
+
 });
+
 angular.module('bonus').controller('transferBonusProcCtrl', function ($scope, $uibModalInstance,getDatas,getPoolType,Notify,$http,startLoading,stopLoading,$state) {
 
     $scope.datas = getDatas;
     $scope.poolType = getPoolType;
     $scope.payAmt = 0;
-
 
     $scope.ok = function()
     {
@@ -274,5 +279,6 @@ angular.module('bonus').controller('transferBonusProcCtrl', function ($scope, $u
     {
         $uibModalInstance.dismiss('cancel');
     };
+
 });
 

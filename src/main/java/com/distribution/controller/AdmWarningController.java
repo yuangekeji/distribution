@@ -50,6 +50,14 @@ public class AdmWarningController extends BasicController{
         return successMsg(page);
     }
 
+    @RequestMapping("/platformHistoryList")
+    @ResponseBody
+    public JsonMessage platformHistoryList(@RequestBody Page page, HttpSession session){
+        Admin m = (Admin) getCurrentUser(session);
+        page = bonusPoolService.selectPlatformHistoryList(page);
+        return successMsg(page);
+    }
+
     @RequestMapping("/getFailJobCount")
     @ResponseBody
     public JsonMessage selectFailJobCount(){
@@ -122,4 +130,6 @@ public class AdmWarningController extends BasicController{
         admHandleHistoryService.addAdminHandleHistory(admin, map);
         return successMsg("success");
     }
+
+
 }

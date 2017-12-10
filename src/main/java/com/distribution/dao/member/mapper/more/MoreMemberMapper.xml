@@ -244,6 +244,7 @@
   select <include refid="Base_Column_List"/>
   from member
   where recommend_id = #{parameterMap.recommendId}
+    and status = 'Y'
   order by recommend_id desc
 </select>
   <select id="selectRecommendMemberCnt" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
@@ -255,6 +256,7 @@
     select count(*)
     from member
     where recommend_id = #{id}
+    and status = 'Y'
   </select>
   <delete id="deleteMemberById" parameterType="java.lang.Integer">
     delete from member where id = #{memberId} and STATUS='N'

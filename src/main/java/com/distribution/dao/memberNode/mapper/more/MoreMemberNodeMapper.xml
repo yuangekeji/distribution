@@ -232,4 +232,9 @@
 			and left_id = #{leftId}
 		</if>
 	</update>
+	<select id="countRecommendedTotal" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		SELECT ifnull(count(1),0) as total 
+		from member 
+		where recommend_id = #{memberId} and `status` = 'Y'
+	</select>
 </mapper>

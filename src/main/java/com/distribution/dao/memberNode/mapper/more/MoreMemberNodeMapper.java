@@ -23,4 +23,5 @@ public interface MoreMemberNodeMapper extends MemberNodeMapper{
 	String getParentNodes(int nodeId);
 	MemberNode getMemberNodeByMemberId(Integer MemberId);
 	int updateRemoveMemberNode(Map map);
+	int countRecommendedTotal(int memberId);
 }

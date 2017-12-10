@@ -48,6 +48,7 @@
                                 <th class="text-center">总实发奖金</th>
                                 <th class="text-center">平台沉淀资金</th>
                                 <th class="text-center">公司账户资金</th>
+                                <th class="text-center">发生额</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,6 +58,7 @@
                                 <td class="text-right">{{platformHistory.totalBonus | number:2 }}</td>
                                 <td class="text-right">{{platformHistory.platformAmount | number:2 }}</td>
                                 <td class="text-right">{{platformHistory.accountAmount | number:2 }}</td>
+                                <td class="text-right">{{platformHistory.flowAmount | number:2 }}</td>
                             </tr>
                             <tr ng-show= "notData" >
                                 <td colspan="5" class="text-center">无记录</td>

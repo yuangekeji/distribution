@@ -174,7 +174,8 @@ public class NodeService {
         	if(m.getId().intValue() == nodeId){
         		continue;
         	}
-        	Integer salesNum = m.getFirstAgentCnt();
+        	//Integer salesNum = m.getFirstAgentCnt();20171210注释该行代码，原因是会员的直推下属数量实时查询。
+        	Integer salesNum = moreNodeMapper.countRecommendedTotal(m.getMemberId());
         	//当前节点会员推荐人数大于零才可以领取见点奖
         	if(null != salesNum && salesNum.intValue() > 0){
         		//取得当前会员可以领节点奖代数

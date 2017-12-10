@@ -251,6 +251,7 @@
     select count(*)
     from member
     where recommend_id = #{parameterMap.recommendId}
+    and status = 'Y'
   </select>
   <select id="getRecommendMemberCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
     select count(*)

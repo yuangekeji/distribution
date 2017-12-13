@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -183,6 +184,12 @@ public class MemberService {
      * @author Bright
      * */
     public JsonMessage login(Map param, String remember,String code,  HttpSession session){
+
+        Calendar now = Calendar.getInstance();
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        if (hour < 4) {
+            return new JsonMessage(false,"loginTimeCheck",null);
+        }
 
         if(!checkCode(session,code)){
             return new JsonMessage(false,"codeError",null);

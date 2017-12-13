@@ -94,6 +94,14 @@ public class AdmOrderService {
         return  this.exportExcel("已发货列表", excelHeader, result, response.getOutputStream(), "已出库统计:");
     }
 
+    public XSSFWorkbook exportDataAll(Map map, HttpServletResponse response) throws IOException, InvocationTargetException {
+        List<MoreOrderMaster> result = moreOrderMasterMapper.getExcelOrderListAll(map);
+        //定义表头
+        String[] excelHeader = {"订单号", "订单来源", "会员", "订单金额", "支付金额", "支付类型", "快递费", "商品名信息", "商品数量", "订单时间", "订单状态", "物流信息","收货人","收货电话"};
+
+        return  this.exportExcel("订单列表", excelHeader, result, response.getOutputStream(), "订单数量统计:");
+    }
+
     public XSSFWorkbook exportExcel(String title, String[] headers, List<MoreOrderMaster> list, OutputStream out, String str) throws InvocationTargetException {
         // 声明一个工作薄
         XSSFWorkbook workbook = new XSSFWorkbook();

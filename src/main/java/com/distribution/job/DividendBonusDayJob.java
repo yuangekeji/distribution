@@ -59,8 +59,11 @@ public class DividendBonusDayJob {
 	@Scheduled(cron ="0 30 1 * * ?" )//每天早上1点30分钟执行
 	public void sendDividendBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
+		//数据查询范围昨天
+		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+		result.put("date", date);
 		result.put("jobName", "定时发放分红包奖/DividendBonusDayJob/sendDividendBonus");
-		result = bonusService.saveDividendBonus(result);
+		result = bonusService.saveDividendBonus(result,date);
 		this.saveDividendBonusLog(result);
 	}
 	/**
@@ -71,8 +74,10 @@ public class DividendBonusDayJob {
 	@Scheduled(cron ="0 30 2 * * ?" )//每天2点30钟执行
 	public void balanceDividendBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
+		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+		result.put("date", date);
 		result.put("jobName", "定时结算分红包奖/DividendBonusDayJob/balanceDividendBonus");
-		result = bonusService.saveBalanceMemberDividendBonus(result);
+		result = bonusService.saveBalanceMemberDividendBonus(result,date);
 		this.saveBlanceDividendBonusLog(result);
 	}
 	/**

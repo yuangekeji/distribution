@@ -36,8 +36,11 @@ public class NodeBonusDayJob {
 	@Scheduled(cron ="0 0 1 * * ?" )//每天早上1点钟执行
 	public void sendNodeBonusFromNodeHistory(){
 		Map<String,Object> result = new HashMap<String,Object>();
+		//数据查询范围昨天
+		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+		result.put("date", date);
 		result.put("jobName", "定时发放见点奖/NodeBonusDayJob/sendNodeBonusFromNodeHistory");
-		result = bonusService.saveNodeBonusFromNodeHistory(result);
+		result = bonusService.saveNodeBonusFromNodeHistory(result,date);
 //		System.out.println(result.toString());
 		this.saveNodeBonusFromNodeHistoryLog(result);
 		
@@ -50,8 +53,10 @@ public class NodeBonusDayJob {
 	@Scheduled(cron ="0 10 2 * * ?" )//每天2点10钟执行
 	public void balanceNodeBonus(){
 		Map<String,Object> result = new HashMap<String,Object>();
+		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+		result.put("date", date);
 		result.put("jobName", "定时结算见点奖/NodeBonusDayJob/balanceNodeBonus");
-		result = bonusService.saveBalanceMemberNodeBonus(result);
+		result = bonusService.saveBalanceMemberNodeBonus(result,date);
 		saveBalanceMemberNodeBonusLog(result);
 	}
 	/**

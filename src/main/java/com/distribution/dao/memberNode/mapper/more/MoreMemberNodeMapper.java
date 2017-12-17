@@ -24,4 +24,7 @@ public interface MoreMemberNodeMapper extends MemberNodeMapper{
 	MemberNode getMemberNodeByMemberId(Integer MemberId);
 	int updateRemoveMemberNode(Map map);
 	int countRecommendedTotal(int memberId);
+	
+	List<Map<String,Object>> listOperatorLeftAndRightSales(Map<String,Object> map);
+	int countOperatorLeftAndRightSales(Map<String,Object> map);
 }

@@ -134,6 +134,20 @@ public class NodeBonusDayJob {
 //			savePlatformCashFlow(date);
 //		}
 //	}
+	public void sendNodeBonusByMtuser(String date) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("date", date);
+		result.put("jobName", "手动补发放见点奖/NodeBonusDayJob/sendNodeBonusFromNodeHistory");
+		result = bonusService.saveNodeBonusFromNodeHistory(result,date);
+		this.saveNodeBonusFromNodeHistoryLog(result);
+	}
+	public void banlanceNodeBonusByMtuser(String date) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("date", date);
+		result.put("jobName", "手动补结算见点奖/NodeBonusDayJob/balanceNodeBonus");
+		result = bonusService.saveBalanceMemberNodeBonus(result,date);
+		saveBalanceMemberNodeBonusLog(result);
+	}
 }
 
 

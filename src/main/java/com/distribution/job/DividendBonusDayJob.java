@@ -117,4 +117,19 @@ public class DividendBonusDayJob {
 		job.setRunTime(new Date());
 		return job;
 	}
+	public void sendDividendBonusByMtUser(String date) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		//数据查询范围昨天
+		result.put("date", date);
+		result.put("jobName", "手动补发放分红包奖/DividendBonusDayJob/sendDividendBonus");
+		result = bonusService.saveDividendBonus(result,date);
+		this.saveDividendBonusLog(result);
+	}
+	public void banlanceDividendBonusByMtUser(String date) {
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("date", date);
+		result.put("jobName", "手动补结算分红包奖/DividendBonusDayJob/balanceDividendBonus");
+		result = bonusService.saveBalanceMemberDividendBonus(result,date);
+		this.saveBlanceDividendBonusLog(result);
+	}
 }

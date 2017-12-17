@@ -1042,6 +1042,13 @@ CREATE TABLE `platform_account_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `platform_account` VALUES ('1', '0.00', '0.00', '0.00', '0.00', '0.00', '2017-12-09 10:39:43', 'job');
 update account_flow_history set seed_amt = 0.00 where seed_amt  is null;
+
+-- 12.17未部署
+insert into role VALUES(4,'物流管理员');
+insert into role_menu VALUES(4,15);
+insert into role_menu VALUES(4,19);
+insert into menu VALUES(null,null,'运营中心业绩查询',12,'app.operatorPerformance',null);
+insert into role_menu VALUES(2,35);
+insert into role_menu VALUES(3,35);

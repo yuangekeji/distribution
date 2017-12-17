@@ -5,10 +5,10 @@
 package com.dis.service.test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
-
-import com.distribution.dao.order.model.OrderMaster;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -16,12 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.dis.junit.test.SpringServiceTest;
 import com.distribution.dao.memberNode.model.MemberNode;
+import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.service.NodeService;
+import com.distribution.service.OrderService;
 
 public class NodeServiceTest extends SpringServiceTest{
 	private static Logger log = Logger.getLogger(NodeServiceTest.class);
 	@Autowired
 	private NodeService nodeService;
+	@Autowired
+	private OrderService orderService; 
 	/*@Autowired
 	public MenuService menuService;
 	@Test
@@ -93,5 +97,14 @@ public class NodeServiceTest extends SpringServiceTest{
 		node.setCreateBy(3);
 		MemberNode memberNode = nodeService.saveNode(node);
 		System.out.println("============ " + memberNode.getId());
+	}
+	@Test
+	public void insertMemberNodeBonusForGenerateData(){
+		int nodeId = 571;
+		int orderMemberId = 571;
+		int[] memberIds = {551,493};
+		String date = "2017-12-10";
+		List<OrderMaster> list = orderService.listOrdersByMemberId(orderMemberId,date);
+		nodeService.insertMemberNodeBonusTest(nodeId, list,memberIds);
 	}
 }

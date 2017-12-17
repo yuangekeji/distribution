@@ -570,4 +570,25 @@ public class NodeService {
 		map.put("array", ids.split(","));
 		return map;
 	}
+	
+	public void insertMemberNodeBonusTest(int nodeId,List<OrderMaster> list,int[] memberIds){
+		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
+		for(OrderMaster order : list) {
+			for(int memberId : memberIds) {
+				NodeBonusHistory history = new NodeBonusHistory();
+				history.setCreateBy(order.getCreateId());
+				history.setCreateTime(order.getCreateTime());
+				history.setFromNodeId(nodeId);
+				history.setMebmerId(memberId);
+				history.setStatus(BonusConstant.BONUS_STATUS_0);
+				history.setOrderId(order.getId());
+				history.setOrderNo(order.getOrderNo());
+				history.setOrderDate(order.getCreateTime());
+				historyList.add(history);
+			}
+		}
+        if(historyList.size() > 0){
+        	saveNodeBonusHistoryBatch(historyList);
+        }
+	}
 }

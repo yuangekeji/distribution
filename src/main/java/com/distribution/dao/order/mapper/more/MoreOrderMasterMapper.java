@@ -1,12 +1,12 @@
 package com.distribution.dao.order.mapper.more;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import com.distribution.common.utils.Page;
+import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
 
 @Repository
@@ -63,4 +63,6 @@ public interface MoreOrderMasterMapper {
     
     double selectTotalSalesAmount(String date);
     double selectDayDiscountSalesAmount(String date);
+    
+    List<OrderMaster> listOrdersByMemberId(Map<String,Object> map);
 }

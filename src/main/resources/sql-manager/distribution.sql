@@ -980,7 +980,7 @@ set session transaction isolation level SERIALIZABLE;
 select @@global.tx_isolation,@@tx_isolation;
 
 
--- 1204 未部署
+-- 1204 部署完成
 ALTER TABLE `date_bonus_history`
   ADD COLUMN  `all_total_sales` decimal(15,2) DEFAULT NULL COMMENT '所有销售总和';
 ALTER TABLE `date_bonus_history`
@@ -1042,6 +1042,59 @@ CREATE TABLE `platform_account_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `platform_account` VALUES ('1', '0.00', '0.00', '0.00', '0.00', '0.00', '2017-12-09 10:39:43', 'job');
 update account_flow_history set seed_amt = 0.00 where seed_amt  is null;
+
+-- 12.17未部署
+insert into role VALUES(4,'物流管理员');
+insert into role_menu VALUES(4,15);
+insert into role_menu VALUES(4,19);
+insert into menu VALUES(null,null,'运营中心业绩查询',12,'app.operatorPerformance',null);
+insert into role_menu VALUES(2,35);
+insert into role_menu VALUES(3,35);
+
+DROP TABLE IF EXISTS `point_master`;
+CREATE TABLE `point_master` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `member_id` int(11) NOT NULL COMMENT '会员id',
+  `point_amt` decimal(15,2) NOT NULL COMMENT '积分数',
+  `create_id` int(11) NOT NULL COMMENT '创建人',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_id` int(11) NOT NULL COMMENT '修改人',
+  `update_time` datetime NOT NULL COMMENT '修改时间',
+
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员积分管理表master';
+
+-- ----------------------------
+-- Table structure for point_order
+-- ----------------------------
+DROP TABLE IF EXISTS `point_order`;
+CREATE TABLE `point_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_no` bigint(20) NOT NULL COMMENT '订单号',
+  `order_category` char(1) DEFAULT NULL COMMENT '订单类型（1.积分兑换）',
+  `order_amt` decimal(15,2) DEFAULT NULL COMMENT '订单金额',
+  `point_amt` decimal(15,2) DEFAULT NULL COMMENT '积分数',
+  `point_type` char(1) DEFAULT NULL COMMENT '积分类型 1-收入，2支出',
+  `order_qty` int(11) DEFAULT NULL COMMENT '订购数量',
+  `express_fee` decimal(15,2) DEFAULT NULL COMMENT '快递费',
+  `member_id` int(11) DEFAULT NULL COMMENT '会员id',
+  `receive_name` varchar(50) DEFAULT NULL COMMENT '收货人姓名',
+  `express_address` varchar(500) DEFAULT NULL COMMENT '收货地址',
+  `recevive_phone` varchar(255) DEFAULT NULL COMMENT '收货人电话',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `member_level` varchar(100) DEFAULT NULL COMMENT '会员等级',
+  `order_statues` char(1) DEFAULT NULL COMMENT '订单状态（1.待支付\n2.待发货\n3.待收货\n4.订单完成）',
+  `express_no` varchar(255) DEFAULT NULL COMMENT '物流编号',
+  `create_id` int(11) NOT NULL COMMENT '创建人',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_id` int(11) NOT NULL COMMENT '修改人',
+  `update_time` datetime NOT NULL COMMENT '修改时间',
+  `sendByPostYN` char(1) DEFAULT NULL COMMENT '是否邮寄 1-自提，2-邮寄',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_no` (`order_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='积分订单master';
+
+INSERT INTO `menu` VALUES ('36', null, '积分兑换', '9', 'app.point', null);
+INSERT INTO `role_menu` VALUES ('1', '36');

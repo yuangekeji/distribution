@@ -130,6 +130,7 @@ angular.module('admin').filter("RoleFilter",function () {
     return function (input) {
         if(input=='2'){return '系统管理员'};
         if(input=='3'){return '财务'};
+        if(input=='4'){return '物流管理员'};
     }
 });
 

@@ -63,6 +63,14 @@ public class AuthInterceptorAdaptor extends HandlerInterceptorAdapter {
                     response.setStatus(403);
                     return false;
                 }
+            }else if(roleId == 4){
+
+
+                if(requestURI.indexOf("admin") <= -1 && requestURI.indexOf("adm") <= -1){
+//                    System.out.println("=========财务==不允许访问"+requestURI);
+                    response.setStatus(403);
+                    return false;
+                }
             }else{
                 return false;
             }

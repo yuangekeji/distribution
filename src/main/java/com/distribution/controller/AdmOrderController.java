@@ -118,7 +118,43 @@ public class AdmOrderController extends BasicController{
         admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
 
     }
+    /**
+     * description 订单列表下载(全部)
+     * @author sijeong
+     * */
+    @RequestMapping(value = "/excelDownloadAll")
+    public void excelDownloadAll(@RequestParam(value = "orderNo", required = false) String orderNo,
+                              @RequestParam(value = "orderCategory", required = false) String orderCategory,
+                              @RequestParam(value = "orderStatus", required = false) String orderStatus,
+                              @RequestParam(value = "startTime", required = false) String startTime,
+                              @RequestParam(value = "endTime", required = false) String endTime,
+                              HttpSession session,
+                              HttpServletResponse response) throws IOException, InvocationTargetException {
 
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("orderNo", orderNo);
+        map.put("orderCategory", orderCategory);
+        map.put("orderStatus", orderStatus);
+        map.put("startTime", startTime);
+        map.put("endTime", endTime);
+
+        Admin admin = (Admin) getCurrentUser(session);
+        XSSFWorkbook wb = admOrderService.exportDataAll(map,response);
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment;filename=" + java.net.URLEncoder.encode("订单列表", "UTF-8") + ".xlsx");
+        OutputStream outStream = response.getOutputStream(); // 得到向客户端输出二进制数据的对象
+        wb.write(outStream); // 输出数据
+        outStream.flush();
+        outStream.close();
+
+        //管理员操作记录
+        Map mapHandle = new HashMap();
+        mapHandle.put("handleType", Constant.ADMINHANDLETYPE_APPLYORDER);
+        mapHandle.put("handleId", "OrderDownload");
+        mapHandle.put("handleComment", "操作: 订单列表下载(全部)");
+        admHandleHistoryService.addAdminHandleHistory(admin, mapHandle);
+
+    }
 
     /**
      * description 确认发货

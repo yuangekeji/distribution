@@ -180,6 +180,12 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
     };
 
     /**
+     * 全部下载
+     */
+    $scope.excelDownloadAll = function () {
+        window.location.href=ctx + "/admOrder/excelDownloadAll?orderNo="+this.myPage.parameterMap.orderNo+"&orderCategory="+this.myPage.parameterMap.orderCategory+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
+    };
+    /**
      * 初始化
      */
     $scope.onInit = function () {

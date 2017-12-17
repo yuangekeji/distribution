@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -29,7 +30,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.distribution.common.constant.BonusConstant;
-import com.distribution.common.utils.DateHelper;
 import com.distribution.common.utils.Page;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
@@ -40,7 +40,6 @@ import com.distribution.dao.nodeBonusHistory.mapper.more.MoreNodeBonusHistoryMap
 import com.distribution.dao.nodeBonusHistory.model.NodeBonusHistory;
 import com.distribution.dao.nodeBonusHistory.model.more.MoreNodeBonusHistory;
 import com.distribution.dao.order.model.OrderMaster;
-import com.distribution.dao.platformAccountHistory.model.PlatformAccountHistory;
 
 @Service
 public class NodeService {
@@ -514,8 +513,8 @@ public class NodeService {
 	 */
 	public void processTotalSalesResult(Map<String,String> map) {
 		int standard = 10000000;
-		int leftToalSales = Integer.valueOf(map.get("leftToalSales"));
-		int rightToalSales = Integer.valueOf(map.get("rightToalSales"));
+		int leftToalSales = Double.valueOf(map.get("leftToalSales")).intValue();
+		int rightToalSales = Double.valueOf(map.get("rightToalSales")).intValue();
 		//计算左区钻石数量
 		if(leftToalSales >= standard) {
 			int leftDiamondNum = Math.floorDiv(leftToalSales, standard);
@@ -646,12 +645,12 @@ public class NodeService {
 		List<Map<String,Object>> list = moreNodeMapper.listOperatorLeftAndRightSales(param);
 		int totalCount = moreNodeMapper.countOperatorLeftAndRightSales(param);
 		
+		String flag = String.valueOf(param.get("scope"));
+		String startDate = param.get("startDate") == null?"":String.valueOf(param.get("startDate"));
+		String endDate = param.get("endDate") == null?"": String.valueOf(param.get("endDate"));
 		if(null != list && list.size() > 0) {
 			//查询每个运营中心销售业绩
 			for(Map<String,Object> map : list) {
-				String flag = String.valueOf(param.get("scope"));
-				String startDate = String.valueOf(param.get("startDate"));
-				String endDate = String.valueOf(param.get("endDate"));
 				processOperatorLeftAndRightSales(map,flag,startDate,endDate);
 			}
 		}
@@ -676,8 +675,12 @@ public class NodeService {
 		if(flag.equals("left") || flag.equals("all")) {
 			if(node.getLeftId()!=null && !"".equals(node.getLeftId().toString())){
 				Map<String,Object> param = this.getSubNodeIdsMap(node.getLeftId());
-				param.put("startDate", startDate);
-				param.put("endDate", endDate);
+				if(!StringUtils.isBlank(startDate)) {
+					param.put("startDate", startDate);
+				}
+				if(!StringUtils.isBlank(endDate)) {
+					param.put("endDate", endDate);
+				}
 				if(null != param){
 					String[] leftNum = (String[])param.get("array");
 					if(null != leftNum && leftNum.length > 0){
@@ -697,8 +700,12 @@ public class NodeService {
 			if(node.getRightId()!=null && !"".equals(node.getRightId().toString())) {
 				//右节点的所有子节点
 				Map<String,Object> param = this.getSubNodeIdsMap(node.getRightId());
-				param.put("startDate", startDate);
-				param.put("endDate", endDate);
+				if(!StringUtils.isBlank(startDate)) {
+					param.put("startDate", startDate);
+				}
+				if(!StringUtils.isBlank(endDate)) {
+					param.put("endDate", endDate);
+				}
 				if(null != param){
 					String[] rightNum = (String[])param.get("array");
 					if (null != rightNum && rightNum.length > 0) {
@@ -761,7 +768,7 @@ public class NodeService {
 		for(int j=0;j<list.size();j++){
 			XSSFRow bodyRow = sheet.createRow(j+1);
 			Map<String,Object> map = list.get(j);
-			bodyRow.createCell(0).setCellValue(map.get("memberName")==null?"":String.valueOf(map.get("memberName")));
+			bodyRow.createCell(0).setCellValue(map.get("nodeName")==null?"":String.valueOf(map.get("nodeName")));
 			bodyRow.createCell(1).setCellValue(map.get("leftNum")==null?"":String.valueOf(map.get("leftNum")));
 			bodyRow.createCell(2).setCellValue(map.get("leftToalSales")==null?"":String.valueOf(map.get("leftToalSales")));
 			bodyRow.createCell(3).setCellValue(map.get("rightNum")==null?"":String.valueOf(map.get("rightNum")));

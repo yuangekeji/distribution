@@ -980,7 +980,7 @@ set session transaction isolation level SERIALIZABLE;
 select @@global.tx_isolation,@@tx_isolation;
 
 
--- 1204 未部署
+-- 1204 部署完成
 ALTER TABLE `date_bonus_history`
   ADD COLUMN  `all_total_sales` decimal(15,2) DEFAULT NULL COMMENT '所有销售总和';
 ALTER TABLE `date_bonus_history`

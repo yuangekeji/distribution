@@ -99,7 +99,7 @@ public class OrderController extends BasicController{
     }
 
     /**
-     * description 折扣订单
+     * description 折扣订单、积分兑换订单
      * @author WYN
      * */
     @RequestMapping("/disOrder")
@@ -109,7 +109,13 @@ public class OrderController extends BasicController{
         if (getCurrentUser(session) instanceof Member) {
             currentUser = (Member) getCurrentUser(session);
         }
-        String result = orderService.insertDisOrder(moreOrderMaster,currentUser);
+        String result;
+        if (moreOrderMaster.getBuyType().equals("1")) {
+            result = orderService.insertDisOrder(moreOrderMaster,currentUser);
+        }else {
+            result = orderService.insertPointOrder(moreOrderMaster,currentUser);
+        }
+
         return successMsg("result",result);
 
     }

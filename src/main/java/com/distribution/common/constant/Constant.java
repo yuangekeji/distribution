@@ -43,4 +43,5 @@ public class Constant {
     public static final String ADMINHANDLETYPE_BONUS = "10";//分销管理-下载
     public static final String ADMINHANDLETYPE_DIVIDEND = "11";//分红包管理-下载
     public static final String ADMINHANDLETYPE_TRANSFER = "12";//转账管理-下载
+    public static final String ADMINHANDLETYPE_APPLYPOINT = "13";//积分兑换管理
 }

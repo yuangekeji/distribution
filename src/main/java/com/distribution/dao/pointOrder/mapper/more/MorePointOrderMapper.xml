@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.pointOrder.mapper.more.MorePointOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.pointOrder.model.more.MorePointOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="order_category" property="orderCategory" jdbcType="CHAR" />
+    <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="point_amt" property="pointAmt" jdbcType="DECIMAL" />
+    <result column="point_type" property="pointType" jdbcType="CHAR" />
+    <result column="order_qty" property="orderQty" jdbcType="INTEGER" />
+    <result column="express_fee" property="expressFee" jdbcType="DECIMAL" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
+    <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="order_statues" property="orderStatues" jdbcType="CHAR" />
+    <result column="express_no" property="expressNo" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="sendByPostYN" property="sendbypostyn" jdbcType="CHAR" />
+    <result column="goods_cd" property="goodsCd" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsNm" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_no, order_category, order_amt, point_amt, point_type, order_qty, express_fee, 
+    member_id, receive_name, express_address, recevive_phone, remark, order_statues, 
+    express_no, create_id, create_time, update_id, update_time, sendByPostYN
+  </sql>
+  <sql id="pageLimit">
+    <if test="pageSize!=null">
+      <if test="offset!=null">
+        LIMIT #{pageSize} OFFSET #{offset}
+      </if>
+    </if>
+  </sql>
+  <sql id="where">
+    <where>
+
+      <if test="parameterMap.memberId!=null and parameterMap.memberId!=''">
+        AND a.member_id = #{parameterMap.memberId}
+      </if>
+      <if test="parameterMap.orderStatus!=null and parameterMap.orderStatus!=''">
+        AND a.order_statues = #{parameterMap.orderStatus}
+      </if>
+      <if test="parameterMap.orderNo!=null and parameterMap.orderNo!=''">
+        AND a.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.orderNo}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.orderCategory!=null and parameterMap.orderCategory!=''">
+        AND a.order_category = #{parameterMap.orderCategory}
+      </if>
+      <if test="parameterMap.sendByPostYN!=null and parameterMap.sendByPostYN!=''">
+        AND a.sendByPostYN = #{parameterMap.sendByPostYN}
+      </if>
+      <if test="parameterMap.startTime != null and parameterMap.startTime != ''">
+        <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{parameterMap.startTime}]]>
+      </if>
+      <if test="parameterMap.endTime != null and parameterMap.endTime != ''">
+        <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') <= #{parameterMap.endTime}]]>
+      </if>
+      <if test="parameterMap.memberName!=null and parameterMap.memberName!=''">
+        AND d.member_name LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberName}))),'%') ESCAPE '*'
+      </if>
+      <if test="parameterMap.memberPhone!=null and parameterMap.memberPhone!=''">
+        AND d.member_phone LIKE concat('%',concat('*',LTrim(RTrim(#{parameterMap.memberPhone}))),'%') ESCAPE '*'
+      </if>
+    </where>
+  </sql>
+  <select id="selectByMemberId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from point_order
+    where member_id = #{memberId,jdbcType=INTEGER}
+  </select>
+  <select id="getPointOrderListCount" parameterType="com.distribution.common.utils.Page" resultType="java.lang.Integer">
+    SELECT COUNT(0) FROM
+    point_order a
+    LEFT JOIN order_detail b
+    ON a.order_no = b.order_no
+    LEFT JOIN goods c
+    ON b.goods_cd = c.id
+    LEFT JOIN member d
+    ON a.member_id = d.id
+    <include refid="where"/>
+  </select>
+
+  <select id="getPointOrderList" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    SELECT a.id
+    , a.order_no
+    , a.order_category
+    , a.order_amt
+    , a.point_amt
+    , a.point_type
+    , b.goods_cd
+    , c.goods_name
+    , a.order_qty
+    , a.express_fee
+    , a.member_id
+    , d.member_name
+    , d.member_phone
+    , a.receive_name
+    , a.express_address
+    , a.order_statues
+    , a.express_no
+    , a.create_id
+    , a.create_time
+    , a.update_id
+    , a.update_time
+    , a.recevive_phone
+    , a.sendByPostYN
+    FROM point_order a
+    LEFT JOIN order_detail b
+    ON a.order_no = b.order_no
+    LEFT JOIN goods c
+    ON b.goods_cd = c.id
+    LEFT JOIN member d
+    ON a.member_id = d.id
+    <include refid="where"/>
+    order by a.id desc
+    <include refid="pageLimit"/>
+  </select>
+  <select id="getExcelPointOrderListAll" parameterType="com.distribution.common.utils.Page" resultMap="BaseResultMap">
+    SELECT a.id
+    , a.order_no
+    , a.order_category
+    , a.order_amt
+    , a.point_amt
+    , a.point_type
+    , b.goods_cd
+    , c.goods_name
+    , a.order_qty
+    , a.express_fee
+    , a.member_id
+    , d.member_name
+    , d.member_phone
+    , a.receive_name
+    , a.express_address
+    , a.order_statues
+    , a.express_no
+    , a.create_id
+    , a.create_time
+    , a.update_id
+    , a.update_time
+    , a.recevive_phone
+    , a.sendByPostYN
+    FROM point_order a
+    LEFT JOIN order_detail b
+    ON a.order_no = b.order_no
+    LEFT JOIN goods c
+    ON b.goods_cd = c.id
+    LEFT JOIN member d
+    ON a.member_id = d.id
+    <where>
+      <if test="memberId!=null and memberId!=''">
+        AND a.member_id = #{memberId}
+      </if>
+      <if test="orderNo!=null and orderNo!=''">
+        AND a.order_no LIKE concat('%',concat('*',LTrim(RTrim(#{orderNo}))),'%') ESCAPE '*'
+      </if>
+      <if test="startTime != null and startTime != ''">
+        <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') >= #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''">
+        <![CDATA[AND DATE_FORMAT(a.create_time, '%Y-%m-%d') <= #{endTime}]]>
+      </if>
+    </where>
+    order by a.id desc
+  </select>
+</mapper>

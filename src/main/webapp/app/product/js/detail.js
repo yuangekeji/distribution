@@ -8,6 +8,7 @@ angular.module('product').controller('productDetailCtrl',function ($q, title, $s
         goodsName   : "",
         goodsPrice  : "",
         orderQty    : "",
+        buyType     : "",
         receiveName : "",
         expressAddress : "",
         recevivePhone  : "",
@@ -82,6 +83,7 @@ angular.module('product').controller('productDetailCtrl',function ($q, title, $s
         $scope.goodsOrder.goodsName      =  $scope.goods.goodsName;
         $scope.goodsOrder.goodsPrice     =  $scope.goods.goodsPrice;
         $scope.goodsOrder.orderQty       =  $scope.orderQty;
+        $scope.goodsOrder.buyType        =  $scope.buyType;
         $scope.goodsOrder.receiveName    =  $scope.user.consignee;
         $scope.goodsOrder.expressAddress =  $scope.user.expressAddress;
         $scope.goodsOrder.recevivePhone  =  $scope.user.linkmanPhone;
@@ -168,6 +170,7 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
 
     $scope.datas = getDatas;
     $scope.datas.sendbypostyn ='1';
+    $scope.datas.buyType ='1';
 
     $scope.close = function()
     {
@@ -193,6 +196,7 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
             goodsNm     : $scope.datas.goodsName,
             goodsPrice  : parseInt($scope.datas.goodsPrice),
             orderQty    : parseInt($scope.datas.orderQty),
+            buyType     : $scope.datas.buyType,
             receiveName : $scope.datas.receiveName,
             expressAddress : $scope.datas.expressAddress,
             recevivePhone  : $scope.datas.recevivePhone,
@@ -203,6 +207,8 @@ angular.module('product').controller('goodsOrderCtrl', function ($q, title, $sco
             if(resp.successful){
                 if (resp.data.result == "cannotBuy") {
                     Notify.error("当前账户余额不足，请充值后购买。");
+                }else  if (resp.data.result == "cannotPointBuy"){
+                    Notify.error("当前账户积分不足，请确认后购买。");
                 }else {
                     Notify.success("商品订单提交成功。");
                     $uibModalInstance.close(true);

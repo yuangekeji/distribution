@@ -174,6 +174,15 @@ angular
                 ]
             },
             {
+                name:'point',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/point/js/list.js?v=' + version,
+                    'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
+            },
+            {
                 name:'admMember',
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
@@ -378,6 +387,15 @@ angular
                 files: [
                     'static/metronic/global/plugins/datatables/datatables.min.css',
                     'app/admWarning/js/platformHistory.js?v=' + version,
+                    'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
+            },
+            {
+                name:'admPoint',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admPoint/js/list.js?v=' + version,
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]

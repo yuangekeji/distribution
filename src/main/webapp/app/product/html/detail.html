@@ -54,17 +54,31 @@
                         商品名称 : {{datas.goodsName}}
                     </div>
                     <div class="form-group">
+                        <label class="control-label">支付方式 :  </label>
+                        <input checked="true" type="radio" name="buyType" value="1" ng-model="datas.buyType" /> 折扣单
+                        <input  type="radio" name="buyType"value="2" ng-model="datas.buyType" /> 积分兑换
+                        <!--<select name="buyType" ng-model="datas.buyType" class="form-control input-circle" >
+                            <option value="1">折扣单</option>
+                            <option value="2">积分兑换</option>
+                        </select>-->
+                    </div>
+                    <div class="form-group" ng-if="datas.buyType == '1'">
                         商品价格 : ¥{{(datas.goodsPrice * datas.orderQty * 0.4 )|number:2}}
+                    </div>
+                    <div class="form-group" ng-if="datas.buyType == '2'">
+                        使用积分 : {{(datas.goodsPrice * datas.orderQty )|number:2}}
                     </div>
                     <div class="form-group">
                         购买数量 : {{datas.orderQty}} 个
                     </div>
                     <div class="form-group">
-                        <label class="control-label">产品邮寄方式</label>
-                        <select name="sendbypostyn" ng-model="datas.sendbypostyn" class="form-control input-circle" >
+                        <label class="control-label">产品邮寄方式 :  </label>
+                        <input checked="true" type="radio" name="sendbypostyn" value="1" ng-model="datas.sendbypostyn" /> 自提
+                        <input  type="radio" name="sendbypostyn"value="2" ng-model="datas.sendbypostyn" /> 快递邮寄
+                        <!--<select name="sendbypostyn" ng-model="datas.sendbypostyn" class="form-control input-circle" >
                             <option value="1">自提</option>
                             <option value="2">快递邮寄</option>
-                        </select>
+                        </select>-->
                     </div>
                     <div class="form-group" ng-class="{'has-error':orderValidateErrors.receiveNameError}"    ng-if="datas.sendbypostyn=='2'">
                         <label class="control-label">收货人</label>

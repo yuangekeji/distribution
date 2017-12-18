@@ -13,10 +13,8 @@ import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.member.model.more.MoreMemberVO;
-import com.distribution.service.CommonService;
-import com.distribution.service.DividendService;
-import com.distribution.service.MemberService;
-import com.distribution.service.NodeService;
+import com.distribution.dao.pointMaster.model.PointMaster;
+import com.distribution.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +44,8 @@ public class MemberController extends BasicController {
     private NodeService nodeService;
     @Autowired
     private DividendService dividendService;
+    @Autowired
+    private PointService pointService;
 
     @RequestMapping(value = "/jump")
     @IgnoreLoginCheck
@@ -171,7 +171,12 @@ public class MemberController extends BasicController {
             moreMember.setCountyTotalAmount(ls);
             moreMember.setCountyTotalPeople(ln);
         }
-
+        PointMaster pointMaster = pointService.selectByMemberId(id);
+        if (pointMaster != null) {
+            moreMember.setPointAmt(pointMaster.getPointAmt());
+        }else {
+            moreMember.setPointAmt(new BigDecimal("0"));
+        }
         Map result= new HashMap();
         result.put("member",moreMember);
         return successMsg(result);

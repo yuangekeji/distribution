@@ -21,6 +21,7 @@ import com.distribution.dao.member.model.more.MoreMemberVO;
 import com.distribution.dao.memberNode.model.MemberNode;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
+import com.distribution.dao.pointMaster.model.PointMaster;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -263,12 +264,12 @@ public class MemberService {
         order.setExpressFee(new BigDecimal(0));
         order.setMemberId(member.getId());
         //1 自提 2-邮寄
-        order.setSendbypostyn(_member.getSendbypostyn());
+       /* order.setSendbypostyn(_member.getSendbypostyn());
         order.setReceiveName(_member.getReceiveName());
         order.setRecevivePhone(_member.getRecevivePhone());
-        order.setExpressAddress(_member.getReceviveAddress());
+        order.setExpressAddress(_member.getReceviveAddress());*/
         order.setMemberLevel(member.getMemberLevel());
-        order.setOrderStatues("2");
+        order.setOrderStatues("4");
         order.setCreateId(member.getId());
         order.setCreateTime(new Date());
         order.setUpdateId(member.getId());

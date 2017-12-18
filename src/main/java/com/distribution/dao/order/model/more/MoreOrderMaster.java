@@ -29,6 +29,8 @@ public class MoreOrderMaster extends OrderMaster{
 
     private BigDecimal goodsPrice;
 
+    private String buyType;
+
     public Integer getGoodsCd() {
         return goodsCd;
     }
@@ -125,6 +127,14 @@ public class MoreOrderMaster extends OrderMaster{
 
     public void setMemberPhone(String memberPhone) {
         this.memberPhone = memberPhone;
+    }
+
+    public String getBuyType() {
+        return buyType;
+    }
+
+    public void setBuyType(String buyType) {
+        this.buyType = buyType;
     }
 }
 

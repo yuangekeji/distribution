@@ -126,6 +126,12 @@ angular.module('app').config([
                 resolve: helper.resolveFor('memberCharge.add'),
                 controller: 'memberChargeAddCtrl'
             })
+            .state('app.point',{
+                url: '/point',
+                templateUrl: helper.basepath('point/html/list.html'),
+                resolve: helper.resolveFor('point'),
+                controller: 'pointCtrl'
+            })
             .state('app.admMember',{
                 url: '/admMember',
                 templateUrl: helper.basepath('admMember/html/list.html'),
@@ -295,5 +301,11 @@ angular.module('app').config([
                 templateUrl: helper.basepath('admWarning/html/platformHistory.html'),
                 resolve: helper.resolveFor('platformHistory'),
                 controller: 'platformHistoryCtrl'
+            })
+            .state('app.admPoint',{
+                url: '/admPoint',
+                templateUrl: helper.basepath('admPoint/html/list.html'),
+                resolve: helper.resolveFor('admPoint'),
+                controller: 'admPointCtrl'
             })
     }]);

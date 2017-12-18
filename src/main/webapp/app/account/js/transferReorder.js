@@ -62,11 +62,11 @@ angular.module('account').controller('transferReorderCtrl',
                 amt:'',
                 orderAmt:'',
                 payPassword:'',
-                bonusType:'1',
-                sendbypostyn : '1',
+                bonusType:'1'
+               /* sendbypostyn : '1',
                 receiveName: $scope.user.consignee,
                 expressAddress:$scope.user.expressAddress,
-                recevivePhone:$scope.user.linkmanPhone
+                recevivePhone:$scope.user.linkmanPhone*/
             }
 
 
@@ -246,8 +246,8 @@ angular.module('account').controller('transferReorderCtrl',
                     $scope.reOrder.payPassword.length <= 0) {
                     $scope.reOrdervalidateErrors.payPasswordError = true;
                 }
-            },
-            receiveNameError:function () {
+            }
+            /*receiveNameError:function () {
                 if($scope.reOrder.sendbypostyn == '2' && (!$scope.reOrder.receiveName||!$scope.reOrder.receiveName.trim())){
                     $scope.reOrdervalidateErrors.receiveNameError = true;
                 }
@@ -261,7 +261,7 @@ angular.module('account').controller('transferReorderCtrl',
                 if($scope.reOrder.sendbypostyn == '2' && (!$scope.reOrder.recevivePhone||!$scope.reOrder.recevivePhone.trim())){
                     $scope.reOrdervalidateErrors.recevivePhoneError = true;
                 }
-            }
+            }*/
 
         }
 
@@ -302,11 +302,11 @@ angular.module('account').controller('transferReorderCtrl',
                     orderAmt:parseInt($scope.reOrder.orderAmt),
                     bonusType:$scope.reOrder.bonusType,
                     amt:parseInt($scope.reOrder.amt),
-                    payPassword:$scope.reOrder.payPassword,
-                    sendbypostyn:$scope.reOrder.sendbypostyn,
+                    payPassword:$scope.reOrder.payPassword
+                    /*sendbypostyn:$scope.reOrder.sendbypostyn,
                     receiveName:$scope.reOrder.receiveName,
                     expressAddress:$scope.reOrder.expressAddress,
-                    recevivePhone:$scope.reOrder.recevivePhone
+                    recevivePhone:$scope.reOrder.recevivePhone*/
 
                 }).success(function (resp) {
 

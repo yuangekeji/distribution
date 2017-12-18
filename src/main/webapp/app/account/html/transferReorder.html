@@ -74,7 +74,7 @@
                                     <!--<label class="control-label">从奖金币中扣除</label>-->
                                     <!--<input type="number"  ng-model="reOrder.bonusAmt"  placeholder="输入金额" class="form-control input-circle" />-->
                                     <!--</div>-->
-                                    <div class="form-group" ng-if="reOrder.bonusType == '2'">
+                                    <!--<div class="form-group" ng-if="reOrder.bonusType == '2'">
                                         <label class="control-label">产品邮寄方式</label>
                                         <select name="sendbypostyn" ng-model="reOrder.sendbypostyn" class="form-control input-circle" >
                                             <option value="1">自提</option>
@@ -92,7 +92,7 @@
                                     <div class="form-group" ng-class="{'has-error':reOrdervalidateErrors.recevivePhoneError}"   ng-if="reOrder.bonusType == '2' && reOrder.sendbypostyn=='2'">
                                         <label class="control-label">电话</label>
                                         <input type="text" class="form-control input-circle" ng-model="reOrder.recevivePhone" maxlength="50" placeholder="输入电话" />
-                                    </div>
+                                    </div>-->
                                     <div class="form-group"  ng-class="{'has-error':reOrdervalidateErrors.payPasswordError}">
                                         <label class="control-label">支付密码</label>
                                         <input type="password" ng-model="reOrder.payPassword" placeholder="输入支付密码" class="form-control input-circle" /> </div>

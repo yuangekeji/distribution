@@ -1,5 +1,5 @@
 <!-- BEGIN PAGE HEADER-->
-<h4 class="page-title" xmlns="http://www.w3.org/1999/html">订单管理</h4>
+<h4 class="page-title" xmlns="http://www.w3.org/1999/html">积分兑换管理</h4>
 <!-- END PAGE HEADER-->
 <!-- BEGIN MAIN CONTENT -->
 <div class="row">
@@ -9,7 +9,7 @@
             <div class="portlet-title">
                 <div class="caption caption-md">
                     <i class="icon-bar-chart theme-font hide"></i>
-                    <span class="caption-subject bold uppercase">订单管理</span>
+                    <span class="caption-subject bold uppercase">积分兑换管理</span>
                 </div>
             </div>
             <div class="portlet-body">
@@ -18,19 +18,19 @@
                     <!-- BEGIN FORM-->
                     <form action="#" class="form-horizontal form-bordered">
                         <div class="col-md-12">
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">订单号</label>
+                            <div class="form-group col-md-4">
+                                <label class="control-label col-md-5">兑换单号</label>
                                 <div class="col-md-7">
                                     <input type="search"
                                            class="form-control input-sm input-small input-inline"
                                            id="orderNo"
-                                           placeholder="请输入订单号"
+                                           placeholder="请输入兑换单号"
                                            maxlength="15"
                                            aria-controls="sample_1" ng-model="myPage.parameterMap.orderNo">
                                 </div>
                             </div>
                             <div class="form-group col-md-5">
-                                <label class="control-label col-md-3">订单时间</label>
+                                <label class="control-label col-md-3">兑换时间</label>
                                 <div class="col-md-8">
                                     <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
                                         <input type="text" class="form-control" id="startTime" name="from" ng-model="myPage.parameterMap.startTime">
@@ -39,28 +39,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-5">订单来源</label>
-                                <div class="col-md-7">
-                                    <select id="orderCategory" class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.orderCategory">
-                                        <option value="">全部</option>
-                                        <option value="1">报单</option>
-                                        <option value="2">复投</option>
-                                        <option value="3">折扣单</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="form-group col-md-3">
-                                <label class="control-label col-md-5">订单状态</label>
+                            <div class="form-group col-md-4">
+                                <label class="control-label col-md-5">兑换单状态</label>
                                 <div class="col-md-7">
                                     <select id="orderStatus" class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.orderStatus">
                                         <option value="">全部</option>
                                         <option value="1">待支付</option>
                                         <option value="2">待发货</option>
                                         <option value="3">待收货</option>
-                                        <option value="4">订单完成</option>
+                                        <option value="4">兑换单完成</option>
                                     </select>
                                 </div>
                             </div>
@@ -74,19 +63,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label col-md-5">支付类型</label>
-                                <div class="col-md-7">
-                                    <select id="bonusAccountType" class="form-control input-sm input-small input-inline" ng-model="myPage.parameterMap.bonusAccountType">
-                                        <option value="">全部</option>
-                                        <option value="1">种子币</option>
-                                        <option value="2">奖金币</option>
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label class="control-label col-md-5">会员姓名</label>
                                 <div class="col-md-7">
                                     <input type="search"
@@ -110,9 +89,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-offset-1">
-
-                                    <button type="button" class="btn green" ng-click="excelDownload();"><i class="fa fa-download"></i>待发货</button>
-                                    <button type="button" class="btn green" ng-click="excelDownload1();"><i class="fa fa-download"></i>已出库</button>
                                     <button type="button" class="btn green" ng-click="excelDownloadAll();"><i class="fa fa-download"></i>下载</button>
                                     <button type="button" class="btn blue-steel" ng-click="searchByParam();"><i class="fa fa-search"></i>查询</button>
                                 </div>
@@ -125,80 +101,72 @@
                                id="sample_1">
                             <thead>
                             <tr >
-                                <th class="text-center" width="9%">订单号</th>
-                                <th class="text-center" width="5%">订单来源</th>
+                                <th class="text-center" width="9%">兑换单号</th>
                                 <th class="text-center" width="7%">会员名</th>
                                 <th class="text-center" width="5%">登录账号</th>
-                                <!--<th class="text-center" width="5%">会员级别</th>-->
-                                <th class="text-center" width="4%">订单金额</th>
-                                <th class="text-center" width="4%">支付金额</th>
-                                <th class="text-center" width="5%">支付类型</th>
+                                <th class="text-center" width="4%">兑换单金额</th>
+                                <th class="text-center" width="4%">支付积分</th>
                                 <th class="text-center" width="5%">快递费</th>
                                 <th class="text-center" width="30%">商品名信息</th>
-                                <th class="text-center" width="10%">订单时间</th>
-                                <th class="text-center" width="5%">订单状态</th>
+                                <th class="text-center" width="12%">兑换时间</th>
+                                <th class="text-center" width="5%">兑换单状态</th>
                                 <th class="text-center" width="7%">物流信息</th>
                                 <th class="text-center" width="9%">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="orderMaster in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
-                                <td class="text-left"><a ng-click="gotoAdmBonus(orderMaster.orderNo);" style="text-decoration:underline;">{{orderMaster.orderNo}}</a>
-                                    <!--<button type="button" class="btn btn-outline blue-steel btn-xs" ng-click="copyOrder(orderMaster.orderNo)">复制</button>-->
-                                </td>
-                                <td class="text-left">{{orderMaster.orderCategory|OrderCategoryFilter}}</td>
-                                <td class="text-left">{{orderMaster.memberName}}</td>
-                                <td class="text-left">{{orderMaster.memberPhone}}</td>
-                                <!--<td class="text-left">{{orderMaster.memberLevel|MemberLevelFilter}}</td>-->
-                                <td class="text-left">{{orderMaster.orderAmt|number:2}}</td>
-                                <td class="text-left">{{orderMaster.actAmt|number:2}}</td>
-                                <td class="text-left">{{orderMaster.bonusAccountType|bonusAccountTypeFilter}}</td>
-                                <td class="text-left">{{orderMaster.expressFee|number:2}}</td>
+                            <tr ng-show= "!notData" class="odd gradeX" dir-paginate="pointOrder in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                <td class="text-left">{{pointOrder.orderNo}}</td>
+                                <td class="text-left">{{pointOrder.memberName}}</td>
+                                <td class="text-left">{{pointOrder.memberPhone}}</td>
+                                <td class="text-left">{{pointOrder.orderAmt|number:2}}</td>
+                                <td class="text-left">{{pointOrder.pointAmt|number:2}}</td>
+                                <td class="text-left">{{pointOrder.expressFee|number:2}}</td>
                                 <td class="text-left">
-                                    {{orderMaster.goodsNm}}
-                                    <span ng-show="orderMaster.goodsNm != null">,</span>
-                                    {{orderMaster.orderQty}}
-                                    <span ng-show="orderMaster.orderQty != null">个</span>
+                                    {{pointOrder.goodsNm}}
+                                    <span ng-show="pointOrder.goodsNm != null">,</span>
+                                    {{pointOrder.orderQty}}
+                                    <span ng-show="pointOrder.orderQty != null">个</span>
                                 </td>
-                                <td class="text-left">{{orderMaster.createTime|date:'yyyy-MM-dd'}}</td>
+                                <td class="text-left">{{pointOrder.createTime|date:'yyyy-MM-dd'}}</td>
                                 <td class="text-left">
-                                    <span class="label label-sm " ng-class="{'label-default': orderMaster.orderStatues == '1', 'label-info': orderMaster.orderStatues == '2', 'label-primary': orderMaster.orderStatues == '3', 'label-success': orderMaster.orderStatues == '4'}">
-                                    {{orderMaster.orderStatues|OrderStatuesFilter}}
+                                    <span class="label label-sm " ng-class="{'label-default': pointOrder.orderStatues == '1', 'label-info': pointOrder.orderStatues == '2', 'label-primary': pointOrder.orderStatues == '3', 'label-success': pointOrder.orderStatues == '4'}">
+                                    {{pointOrder.orderStatues|pointOrderStatuesFilter}}
                                     </span>
                                 </td>
                                 <td>
                                     <!--<div class="btn btn-circle" >-->
                                            <button type="button"
                                                    class="btn btn-outline green-steel btn-xs"
-                                                   ng-show="orderMaster.bonusAccountType != '1' && orderMaster.sendbypostyn == '2'"
-                                                   ng-click="expressMessageSearch(orderMaster.receiveName, orderMaster.recevivePhone, orderMaster.expressNo, orderMaster.expressAddress, orderMaster.sendbypostyn, orderMaster.orderStatues)">物流信息
+                                                   ng-show="pointOrder.sendbypostyn == '2'"
+                                                   ng-click="expressMessageSearch(pointOrder.receiveName, pointOrder.recevivePhone, pointOrder.expressNo, pointOrder.expressAddress, pointOrder.sendbypostyn, pointOrder.orderStatues)">物流信息
                                            </button>
                                     <!--</div>-->
-                                    <span ng-show="orderMaster.sendbypostyn == '1'">自提</span>
+                                    <span ng-show="pointOrder.sendbypostyn == '1'">自提</span>
                                 </td>
                                 <td class="text-left">
                                     <!--<div class="btn btn-circle" >-->
                                         <button type="button"
-                                                ng-show="{{orderMaster.orderStatues == '2'}}"
+                                                ng-show="{{pointOrder.orderStatues == '2'}}"
                                                 class="btn btn-outline blue-steel btn-xs"
-                                                ng-click="confirmOrder(orderMaster.id,orderMaster.orderNo,'3',orderMaster.expressNo)">确认发货</button>
+                                                ng-click="confirmOrder(pointOrder.id,pointOrder.orderNo,'3',pointOrder.expressNo)">确认发货</button>
                                     <!--</div>-->
                                     <button type="button"
-                                            ng-show="{{orderMaster.orderStatues == '3'}}"
+                                            ng-show="{{pointOrder.orderStatues == '3'}}"
                                             class="btn btn-outline blue-steel btn-xs"
-                                            ng-click="adminConfirmOrder(orderMaster.id,orderMaster.orderNo,'4','a')">确认收货</button>
+                                            ng-click="adminConfirmOrder(pointOrder.id,pointOrder.orderNo,'4','a')">确认收货</button>
                                     <button type="button"
-                                            ng-show="{{orderMaster.orderStatues == '3' && orderMaster.sendbypostyn != '1'}}"
+                                            ng-show="{{pointOrder.orderStatues == '3' && pointOrder.sendbypostyn != '1'}}"
                                             class="btn btn-outline blue-steel btn-xs"
-                                            ng-click="adminConfirmOrder(orderMaster.id,orderMaster.orderNo,'2','s')">发货撤销</button>
+                                            ng-click="adminConfirmOrder(pointOrder.id,pointOrder.orderNo,'2','s')">发货撤销</button>
                                     <button type="button"
-                                            ng-show="{{orderMaster.orderStatues == '4' && orderMaster.orderCategory == '3'}}"
+                                            ng-show="{{pointOrder.orderStatues == '4'}}"
                                             class="btn btn-outline blue-steel btn-xs"
-                                            ng-click="adminConfirmOrder(orderMaster.id,orderMaster.orderNo,'3','r')">收货撤销</button>
+                                            ng-click="adminConfirmOrder(pointOrder.id,pointOrder.orderNo,'3','r')">收货撤销</button>
                                 </td>
                             </tr>
                             <tr ng-show= "notData">
-                                <td colspan="13" class="text-center">无记录</td>
+                                <td colspan="11" class="text-center">无记录</td>
                             </tr>
                             </tbody>
                         </table>
@@ -213,7 +181,7 @@
         </div>
     </div>
 </div>
-<script type="text/ng-template" id="admOrderExpress.html">
+<script type="text/ng-template" id="admPointExpress.html">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
         <h3 class="modal-title">请填写快递信息</h3>

@@ -28,6 +28,7 @@ public class MoreMember extends Member{
 
     private Integer recommendMemberCnt;
 
+    private BigDecimal pointAmt;
 
     public String getRecommendPhone() {
         return recommendPhone;
@@ -163,5 +164,13 @@ public class MoreMember extends Member{
 
     public void setRecommendMemberCnt(Integer recommendMemberCnt) {
         this.recommendMemberCnt = recommendMemberCnt;
+    }
+
+    public BigDecimal getPointAmt() {
+        return pointAmt;
+    }
+
+    public void setPointAmt(BigDecimal pointAmt) {
+        this.pointAmt = pointAmt;
     }
 }

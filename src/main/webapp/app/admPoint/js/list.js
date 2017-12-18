@@ -1,5 +1,5 @@
-angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope, $http, $state, $stateParams, $sessionStorage, Notify, $uibModal, ConfirmModal) {
-    title.setTitle('订单管理');
+angular.module('admPoint').controller('admPointCtrl',function ($q, title, $scope, $http, $state, $stateParams, $sessionStorage, Notify, $uibModal, ConfirmModal) {
+    title.setTitle('积分兑换管理');
     $scope.myPage = {
         pageNo: 1,
         pageSize: 10,
@@ -7,12 +7,10 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         result: [],
         parameterMap: {
             orderNo: "",
-            orderCategory: "",
             orderStatus: "",
             startTime: "",
             endTime: "",
-            sendByPostYN:"",
-            bonusAccountType: ""
+            sendByPostYN:""
         }
     };
 
@@ -43,21 +41,21 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         App.unblockUI(e1);
     }
     /**
-     * 查询订单列表
+     * 查询兑换单列表
      */
     $scope.search = function(){
-        $http.post(ctx + '/admOrder/list', $scope.myPage)
+        $http.post(ctx + '/admPoint/list', $scope.myPage)
             .success(function (resp) {
                 if (resp.successful) {
                     $scope.myPage = resp.data;
                     $scope.notData = false;
                     if (!$scope.myPage.result || $scope.myPage.result.length == 0) $scope.notData = true;
                 } else {
-                    Notify.error("查询订单列表失败，请重新尝试");
+                    Notify.error("查询兑换单列表失败，请重新尝试");
                     console.log(resp.errorMessage);
                 }
             }).error(function (error) {
-            Notify.error("查询订单列表失败，请重新尝试");
+            Notify.error("查询兑换单列表失败，请重新尝试");
             console.error(error);
         });
     }
@@ -78,8 +76,8 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             {
                 animation: true,
                 backdrop: 'static',
-                templateUrl: "admOrderExpress.html",
-                controller: "admOrderExpressCtrl",
+                templateUrl: "admPointExpress.html",
+                controller: "admPointExpressCtrl",
                 size: opt_attributes,
                 resolve: {
                     getDatas: function()
@@ -154,7 +152,7 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
                 return;
             }
             $scope.startLoading();
-            $http.post(ctx + "/admOrder/confirmReceiveOrder", {id: id, orderNo: orderNo, orderStatues: statues}).success(function (resp) {
+            $http.post(ctx + "/admPoint/confirmReceiveOrder", {id: id, orderNo: orderNo, orderStatues: statues}).success(function (resp) {
                 if (resp.successful) {
                     Notify.success("操作完成。");
                     $scope.search();
@@ -168,28 +166,12 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
             });
         });
     };
-    /**
-     * excel download
-     */
-    $scope.excelDownload = function() {
-
-        window.location.href=ctx + "/admOrder/excelDownload?orderNo="+this.myPage.parameterMap.orderNo+"&orderCategory="+this.myPage.parameterMap.orderCategory+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
-
-        /*var blob = new Blob([document.getElementById('orderList').innerHTML], {
-            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
-        });
-        saveAs(blob, "订单列表.xls");*/
-    };
-
-    $scope.excelDownload1 = function () {
-        window.location.href=ctx + "/admOrder/excelDownload1?orderNo="+this.myPage.parameterMap.orderNo+"&orderCategory="+this.myPage.parameterMap.orderCategory+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
-    };
 
     /**
      * 全部下载
      */
     $scope.excelDownloadAll = function () {
-        window.location.href=ctx + "/admOrder/excelDownloadAll?orderNo="+this.myPage.parameterMap.orderNo+"&orderCategory="+this.myPage.parameterMap.orderCategory+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
+        window.location.href=ctx + "/admPoint/excelDownloadAll?orderNo="+this.myPage.parameterMap.orderNo+"&orderStatus="+this.myPage.parameterMap.orderStatus+"&startTime="+this.myPage.parameterMap.startTime+"&endTime="+this.myPage.parameterMap.endTime;
     };
     /**
      * 初始化
@@ -219,28 +201,10 @@ angular.module('admOrder').controller('admOrderCtrl',function ($q, title, $scope
         $scope.myPage.pageNo = num;
         $scope.search();
     };
-    //订单号复制
-    $scope.copyOrder = function (orderNo) {
-        // 创建元素用于复制
-        var aux = document.createElement("input");
-        // 设置元素内容
-        aux.setAttribute("value", orderNo);
-        // 将元素插入页面进行调用
-        document.body.appendChild(aux);
-        // 复制内容
-        aux.select();
-        // 将内容复制到剪贴板
-        document.execCommand("copy");
-        // 删除创建元素
-        document.body.removeChild(aux);
-    }
-    //分销管理页面跳转
-    $scope.gotoAdmBonus = function (orderNo) {
-        $state.go("app.admBonus", {orderNo: orderNo});
-    }
+
 });
 
-angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, Notify) {
+angular.module('admPoint').controller('admPointExpressCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas, Notify) {
 
     var e1 = $('.portlet');
     $scope.startLoading=function () {
@@ -269,11 +233,11 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
     /**确认发货提交*/
     $scope.submit = function (id, orderNo, statues, expressNo) {
         $scope.startLoading();
-        $http.post(ctx + "/admOrder/confirmSendOrder",{id:id, orderNo:orderNo, orderStatues:statues, expressNo:expressNo}).success(function (resp) {
+        $http.post(ctx + "/admPoint/confirmSendOrder",{id:id, orderNo:orderNo, orderStatues:statues, expressNo:expressNo}).success(function (resp) {
             if(resp.successful){
                 Notify.success("确认发货完成");
                 $uibModalInstance.close(true);
-                $state.go("app.admOrder", {}, {reload: true});
+                $state.go("app.admPoint", {}, {reload: true});
             }else{
                 Notify.error(resp);
             }
@@ -284,7 +248,7 @@ angular.module('admOrder').controller('admOrderExpressCtrl', function ($q, title
         })
     };
 });
-angular.module('admOrder').controller('admExpressMessageCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {
+angular.module('admPoint').controller('admExpressMessageCtrl', function ($q, title, $scope, $http,  $state, $stateParams, $sessionStorage, $uibModalInstance,getDatas) {
 
     var e1 = $('.portlet');
     $scope.startLoading=function () {
@@ -309,36 +273,11 @@ angular.module('admOrder').controller('admExpressMessageCtrl', function ($q, tit
         $uibModalInstance.dismiss('cancel');
     };
 });
-angular.module('admOrder').filter("OrderStatuesFilter",function () {
+angular.module('admPoint').filter("pointOrderStatuesFilter",function () {
     return function (input) {
         if(input=='1'){return '待支付'};
         if(input=='2'){return '待发货'};
         if(input=='3'){return '待收货'};
-        if(input=='4'){return '订单完成'};
-    }
-});
-
-angular.module('admOrder').filter("OrderCategoryFilter",function () {
-    return function (input) {
-        if(input=='1'){return '报单'};
-        if(input=='2'){return '复投'};
-        if(input=='3'){return '折扣单'};
-    }
-});
-
-// angular.module('admOrder').filter("MemberLevelFilter",function () {
-//     return function (input) {
-//         if(input=='member_level1'){return '普卡'};
-//         if(input=='member_level2'){return '铜卡'};
-//         if(input=='member_level3'){return '银卡'};
-//         if(input=='member_level4'){return '金卡'};
-//         if(input=='member_level5'){return '白金卡'};
-//         if(input=='member_level6'){return '黑金卡'};
-//     }
-// });
-angular.module('admOrder').filter("bonusAccountTypeFilter",function () {
-    return function (input) {
-        if(input=='1'){return '种子币'};
-        if(input=='2'){return '奖金币'};
+        if(input=='4'){return '兑换单完成'};
     }
 });

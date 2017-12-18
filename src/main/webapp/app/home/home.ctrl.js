@@ -24,10 +24,10 @@ angular.module('home').controller('homeCtrl',
             //当登录用户为会员的时候，并且激活状态为N，到款状态为Y
             if($scope.currentUser && $scope.currentUser.roleId == '1' && $scope.currentUser.status=='N' && $scope.currentUser.moneyStatus=='Y'){
 
-                $scope.currentUser.sendbypostyn= "1" ;//默认自提
+                /*$scope.currentUser.sendbypostyn= "1" ;//默认自提
                 $scope.currentUser.receiveName = $scope.currentUser.consignee;
                 $scope.currentUser.receviveAddress =  $scope.currentUser.expressAddress;
-                $scope.currentUser.recevivePhone =  $scope.currentUser.linkmanPhone;
+                $scope.currentUser.recevivePhone =  $scope.currentUser.linkmanPhone;*/
 
                 $http.get(ctx + "/member/getDictionary/bank_name").success(function (resp) {
                     if(resp.successful){
@@ -81,13 +81,15 @@ angular.module('home').controller('homeCtrl',
                 Notify.warning("请确认三级密码。");
             }else if($scope.currentUser.payPassword!=$scope.payPasswordConfirm){
                 Notify.warning("三级密码和三级密码确认不同,请重新输入。");
-            }else if($scope.currentUser.sendbypostyn == '2' && (!$scope.currentUser.receiveName||!$scope.currentUser.receiveName.trim())){
+            }
+            /*else if($scope.currentUser.sendbypostyn == '2' && (!$scope.currentUser.receiveName||!$scope.currentUser.receiveName.trim())){
                 Notify.warning("请输入收货人姓名。");
             }else if($scope.currentUser.sendbypostyn == '2' && (!$scope.currentUser.receviveAddress||!$scope.currentUser.receviveAddress.trim())){
                 Notify.warning("请输入收货地址。");
             }else if($scope.currentUser.sendbypostyn == '2' && (!$scope.currentUser.recevivePhone||!$scope.currentUser.recevivePhone.trim())){
                 Notify.warning("请输入收货人电话。");
-            }else{
+            }*/
+            else{
 
                 // Notify.warning("正在激活处理，请耐心等待，激活成功后会自动刷新页面。");
                 $scope.activting = true;

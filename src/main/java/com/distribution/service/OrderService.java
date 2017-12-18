@@ -19,7 +19,10 @@ import com.distribution.dao.order.mapper.OrderMasterMapper;
 import com.distribution.dao.order.mapper.more.MoreOrderMasterMapper;
 import com.distribution.dao.order.model.OrderMaster;
 import com.distribution.dao.order.model.more.MoreOrderMaster;
-import org.aspectj.weaver.ast.Or;
+import com.distribution.dao.pointMaster.mapper.more.MorePointMasterMapper;
+import com.distribution.dao.pointMaster.model.PointMaster;
+import com.distribution.dao.pointOrder.mapper.PointOrderMapper;
+import com.distribution.dao.pointOrder.model.PointOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +65,12 @@ public class OrderService {
 
     @Autowired
     private CommonService commonService;
+    @Autowired
+    private PointService pointService;
+    @Autowired
+    private MorePointMasterMapper morePointMasterMapper;
+    @Autowired
+    private PointOrderMapper pointOrderMapper;
 
     /**
      * description 订单列表查询
@@ -89,7 +98,7 @@ public class OrderService {
         int cnt4 = 0;
         int cnt5 = 0;
         int cnt6 = 0;
-
+        int cnt7 = 0;
         //BigInteger orderNo = this.getOrderNo();
         Long orderNo = this.getOrderNo();
         moreOrderMaster.setOrderNo(orderNo);
@@ -144,7 +153,8 @@ public class OrderService {
 
         //奖金币复投有产品，种子币复投没有产品
         //order_detail_inser(复投没有商品不插入订单详细表)
-        if(!reOrderSeed) {
+        //修改为只有折扣单插入detail表
+        if(moreOrderMaster.getOrderCategory().equals("3")) {
             moreOrderMaster.setGoodsCd(1);
             cnt2 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
         }else{
@@ -154,9 +164,18 @@ public class OrderService {
         if(cnt2 == 0){
            throw new RuntimeException();
         }
+        //积分point_master insert
+        if(!reOrderSeed && !moreOrderMaster.getOrderCategory().equals("3")) {
+            PointMaster pointMaster = new PointMaster();
+            pointMaster.setPointAmt(moreOrderMaster.getBonusAmt());
+            cnt7 = pointService.insertPointMaster(pointMaster, moreOrderMaster.getMemberId());
+            if(cnt7 == 0){
+                throw new RuntimeException();
+            }
+        }
 
         //商品库存处理
-        if(!reOrderSeed) {
+        if(moreOrderMaster.getOrderCategory().equals("3")) {
             Goods goods = new Goods();
             goods.setId(moreOrderMaster.getGoodsCd());
             goods.setGoodsNum(moreOrderMaster.getOrderQty());
@@ -329,7 +348,7 @@ public class OrderService {
             moreOrderMaster.setExpressFee(new BigDecimal(0));
             moreOrderMaster.setMemberId(currentUser.getId());
             moreOrderMaster.setMemberLevel(currentUser.getMemberLevel());
-            moreOrderMaster.setOrderStatues("2");
+            moreOrderMaster.setOrderStatues("4");
             moreOrderMaster.setCreateId(currentUser.getId());
             moreOrderMaster.setCreateTime(new Date());
             moreOrderMaster.setUpdateId(currentUser.getId());
@@ -413,6 +432,90 @@ public class OrderService {
 
         if(cnt > 0){
             return "success";
+        }else{
+            throw new RuntimeException();
+        }
+    }
+    /**
+     * 积分兑换订单处理
+     * @param moreOrderMaster
+     * @param currentUser
+     * @return
+     */
+    public String insertPointOrder(MoreOrderMaster moreOrderMaster,Member currentUser){
+
+        Date date = new Date();
+        PointOrder pointOrder = new PointOrder();
+        pointOrder.setOrderCategory("1");
+        pointOrder.setOrderAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())));
+        pointOrder.setPointAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())));
+        pointOrder.setPointType("2");
+        pointOrder.setOrderQty(moreOrderMaster.getOrderQty());
+        int compareValue = pointOrder.getPointAmt().compareTo(new BigDecimal(600));
+        pointOrder.setExpressFee((compareValue > -1) ? new BigDecimal(0) : new BigDecimal(10));
+        pointOrder.setMemberId(currentUser.getId());
+        pointOrder.setOrderStatues("2");
+        pointOrder.setRecevivePhone(moreOrderMaster.getRecevivePhone());
+        pointOrder.setReceiveName(moreOrderMaster.getReceiveName());
+        pointOrder.setExpressAddress(moreOrderMaster.getExpressAddress());
+        pointOrder.setSendbypostyn(moreOrderMaster.getSendbypostyn());
+        pointOrder.setRemark(moreOrderMaster.getRemark());
+        pointOrder.setCreateId(currentUser.getId());
+        pointOrder.setCreateTime(date);
+        pointOrder.setUpdateId(currentUser.getId());
+        pointOrder.setUpdateTime(date);
+
+        if("1".equals(moreOrderMaster.getSendbypostyn())){
+            pointOrder.setRecevivePhone(null);
+            pointOrder.setReceiveName(null);
+            pointOrder.setExpressAddress(null);
+            pointOrder.setOrderStatues("3");//待收货
+        }
+
+        //step 1)库存查询
+        Goods goods = new Goods();
+        goods = goodsMapper.selectByPrimaryKey(moreOrderMaster.getGoodsCd());
+
+        //判断如果库存小于购买数量就失败
+        if(goods.getGoodsNum().compareTo(moreOrderMaster.getOrderQty()) == -1){
+            throw new RuntimeException();
+        }
+
+        //step 2)账户积分余额查询
+        PointMaster pointMaster = new PointMaster();
+        pointMaster = morePointMasterMapper.selectByMemberId(currentUser.getId());
+
+        //判断如果账户积分余额小于购买金额就失败
+        if(pointMaster.getPointAmt().compareTo(pointOrder.getPointAmt()) == -1){
+            //throw new RuntimeException();
+            return "cannotPointBuy";
+        }
+        Long orderNo = this.getOrderNo();
+        pointOrder.setOrderNo(orderNo);
+        int count = pointOrderMapper.insertSelective(pointOrder);
+        if(count > 0){
+            pointMaster.setPointAmt(pointMaster.getPointAmt().subtract(pointOrder.getPointAmt()));
+            pointMaster.setUpdateTime(date);
+            pointMaster.setUpdateId(currentUser.getId());
+            int cnt = morePointMasterMapper.updateByMemberId(pointMaster);
+            if (cnt > 0) {
+                int cnt2;
+                moreOrderMaster.setGoodsCd(1);
+                moreOrderMaster.setOrderNo(orderNo);
+                moreOrderMaster.setOrderAmt(moreOrderMaster.getGoodsPrice().multiply(new BigDecimal(moreOrderMaster.getOrderQty())));
+                moreOrderMaster.setCreateId(currentUser.getId());
+                moreOrderMaster.setCreateTime(date);
+                moreOrderMaster.setUpdateId(currentUser.getId());
+                moreOrderMaster.setUpdateTime(date);
+                cnt2 = moreOrderMasterMapper.insertOrderDetail(moreOrderMaster);
+                if (cnt2 > 0) {
+                    return "success";
+                }else {
+                    throw new RuntimeException();
+                }
+            }else {
+                throw new RuntimeException();
+            }
         }else{
             throw new RuntimeException();
         }

@@ -9,6 +9,7 @@ import com.distribution.dao.dictionary.model.Dictionary;
 import com.distribution.dao.member.model.Member;
 import com.distribution.dao.member.model.more.MoreMember;
 import com.distribution.dao.memberChargeApply.model.more.MoreMemberChargeApply;
+import com.distribution.dao.pointMaster.model.PointMaster;
 import com.distribution.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,8 @@ public class AdmMemberController extends BasicController{
     private NodeService nodeService;
     @Autowired
     private DividendService dividendService;
+    @Autowired
+    private PointService pointService;
     /**
      * description 页面初始化，查询下俩列表数据
      * @author Bright
@@ -127,7 +130,12 @@ public class AdmMemberController extends BasicController{
             moreMember.setCountyTotalAmount(ls);
             moreMember.setCountyTotalPeople(ln);
         }
-
+        PointMaster pointMaster = pointService.selectByMemberId(memberId);
+        if (pointMaster != null) {
+            moreMember.setPointAmt(pointMaster.getPointAmt());
+        }else {
+            moreMember.setPointAmt(new BigDecimal("0"));
+        }
         Map result= new HashMap();
         result.put("member",moreMember);
         return successMsg(result);

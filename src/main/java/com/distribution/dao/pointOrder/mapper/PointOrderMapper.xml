@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.distribution.dao.pointOrder.mapper.PointOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.distribution.dao.pointOrder.model.PointOrder" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="order_category" property="orderCategory" jdbcType="CHAR" />
+    <result column="order_amt" property="orderAmt" jdbcType="DECIMAL" />
+    <result column="point_amt" property="pointAmt" jdbcType="DECIMAL" />
+    <result column="point_type" property="pointType" jdbcType="CHAR" />
+    <result column="order_qty" property="orderQty" jdbcType="INTEGER" />
+    <result column="express_fee" property="expressFee" jdbcType="DECIMAL" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
+    <result column="express_address" property="expressAddress" jdbcType="VARCHAR" />
+    <result column="recevive_phone" property="recevivePhone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="order_statues" property="orderStatues" jdbcType="CHAR" />
+    <result column="express_no" property="expressNo" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="sendByPostYN" property="sendbypostyn" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_no, order_category, order_amt, point_amt, point_type, order_qty, express_fee, 
+    member_id, receive_name, express_address, recevive_phone, remark, order_statues, 
+    express_no, create_id, create_time, update_id, update_time, sendByPostYN
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.distribution.dao.pointOrder.model.PointOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from point_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from point_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from point_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.distribution.dao.pointOrder.model.PointOrderExample" >
+    delete from point_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.distribution.dao.pointOrder.model.PointOrder" >
+    insert into point_order (id, order_no, order_category, 
+      order_amt, point_amt, point_type, 
+      order_qty, express_fee, member_id, 
+      receive_name, express_address, recevive_phone, 
+      remark, order_statues, express_no, 
+      create_id, create_time, update_id, 
+      update_time, sendByPostYN)
+    values (#{id,jdbcType=INTEGER}, #{orderNo,jdbcType=BIGINT}, #{orderCategory,jdbcType=CHAR}, 
+      #{orderAmt,jdbcType=DECIMAL}, #{pointAmt,jdbcType=DECIMAL}, #{pointType,jdbcType=CHAR}, 
+      #{orderQty,jdbcType=INTEGER}, #{expressFee,jdbcType=DECIMAL}, #{memberId,jdbcType=INTEGER}, 
+      #{receiveName,jdbcType=VARCHAR}, #{expressAddress,jdbcType=VARCHAR}, #{recevivePhone,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{orderStatues,jdbcType=CHAR}, #{expressNo,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{sendbypostyn,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.distribution.dao.pointOrder.model.PointOrder" >
+    insert into point_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderCategory != null" >
+        order_category,
+      </if>
+      <if test="orderAmt != null" >
+        order_amt,
+      </if>
+      <if test="pointAmt != null" >
+        point_amt,
+      </if>
+      <if test="pointType != null" >
+        point_type,
+      </if>
+      <if test="orderQty != null" >
+        order_qty,
+      </if>
+      <if test="expressFee != null" >
+        express_fee,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="receiveName != null" >
+        receive_name,
+      </if>
+      <if test="expressAddress != null" >
+        express_address,
+      </if>
+      <if test="recevivePhone != null" >
+        recevive_phone,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="orderStatues != null" >
+        order_statues,
+      </if>
+      <if test="expressNo != null" >
+        express_no,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="sendbypostyn != null" >
+        sendByPostYN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="orderCategory != null" >
+        #{orderCategory,jdbcType=CHAR},
+      </if>
+      <if test="orderAmt != null" >
+        #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="pointAmt != null" >
+        #{pointAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="pointType != null" >
+        #{pointType,jdbcType=CHAR},
+      </if>
+      <if test="orderQty != null" >
+        #{orderQty,jdbcType=INTEGER},
+      </if>
+      <if test="expressFee != null" >
+        #{expressFee,jdbcType=DECIMAL},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="receiveName != null" >
+        #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="expressAddress != null" >
+        #{expressAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="recevivePhone != null" >
+        #{recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatues != null" >
+        #{orderStatues,jdbcType=CHAR},
+      </if>
+      <if test="expressNo != null" >
+        #{expressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendbypostyn != null" >
+        #{sendbypostyn,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.distribution.dao.pointOrder.model.PointOrderExample" resultType="java.lang.Integer" >
+    select count(*) from point_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update point_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderCategory != null" >
+        order_category = #{record.orderCategory,jdbcType=CHAR},
+      </if>
+      <if test="record.orderAmt != null" >
+        order_amt = #{record.orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pointAmt != null" >
+        point_amt = #{record.pointAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pointType != null" >
+        point_type = #{record.pointType,jdbcType=CHAR},
+      </if>
+      <if test="record.orderQty != null" >
+        order_qty = #{record.orderQty,jdbcType=INTEGER},
+      </if>
+      <if test="record.expressFee != null" >
+        express_fee = #{record.expressFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.memberId != null" >
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.receiveName != null" >
+        receive_name = #{record.receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressAddress != null" >
+        express_address = #{record.expressAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recevivePhone != null" >
+        recevive_phone = #{record.recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatues != null" >
+        order_statues = #{record.orderStatues,jdbcType=CHAR},
+      </if>
+      <if test="record.expressNo != null" >
+        express_no = #{record.expressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createId != null" >
+        create_id = #{record.createId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateId != null" >
+        update_id = #{record.updateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendbypostyn != null" >
+        sendByPostYN = #{record.sendbypostyn,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update point_order
+    set id = #{record.id,jdbcType=INTEGER},
+      order_no = #{record.orderNo,jdbcType=BIGINT},
+      order_category = #{record.orderCategory,jdbcType=CHAR},
+      order_amt = #{record.orderAmt,jdbcType=DECIMAL},
+      point_amt = #{record.pointAmt,jdbcType=DECIMAL},
+      point_type = #{record.pointType,jdbcType=CHAR},
+      order_qty = #{record.orderQty,jdbcType=INTEGER},
+      express_fee = #{record.expressFee,jdbcType=DECIMAL},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      receive_name = #{record.receiveName,jdbcType=VARCHAR},
+      express_address = #{record.expressAddress,jdbcType=VARCHAR},
+      recevive_phone = #{record.recevivePhone,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      order_statues = #{record.orderStatues,jdbcType=CHAR},
+      express_no = #{record.expressNo,jdbcType=VARCHAR},
+      create_id = #{record.createId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_id = #{record.updateId,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      sendByPostYN = #{record.sendbypostyn,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.distribution.dao.pointOrder.model.PointOrder" >
+    update point_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="orderCategory != null" >
+        order_category = #{orderCategory,jdbcType=CHAR},
+      </if>
+      <if test="orderAmt != null" >
+        order_amt = #{orderAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="pointAmt != null" >
+        point_amt = #{pointAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="pointType != null" >
+        point_type = #{pointType,jdbcType=CHAR},
+      </if>
+      <if test="orderQty != null" >
+        order_qty = #{orderQty,jdbcType=INTEGER},
+      </if>
+      <if test="expressFee != null" >
+        express_fee = #{expressFee,jdbcType=DECIMAL},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="receiveName != null" >
+        receive_name = #{receiveName,jdbcType=VARCHAR},
+      </if>
+      <if test="expressAddress != null" >
+        express_address = #{expressAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="recevivePhone != null" >
+        recevive_phone = #{recevivePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatues != null" >
+        order_statues = #{orderStatues,jdbcType=CHAR},
+      </if>
+      <if test="expressNo != null" >
+        express_no = #{expressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendbypostyn != null" >
+        sendByPostYN = #{sendbypostyn,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.distribution.dao.pointOrder.model.PointOrder" >
+    update point_order
+    set order_no = #{orderNo,jdbcType=BIGINT},
+      order_category = #{orderCategory,jdbcType=CHAR},
+      order_amt = #{orderAmt,jdbcType=DECIMAL},
+      point_amt = #{pointAmt,jdbcType=DECIMAL},
+      point_type = #{pointType,jdbcType=CHAR},
+      order_qty = #{orderQty,jdbcType=INTEGER},
+      express_fee = #{expressFee,jdbcType=DECIMAL},
+      member_id = #{memberId,jdbcType=INTEGER},
+      receive_name = #{receiveName,jdbcType=VARCHAR},
+      express_address = #{expressAddress,jdbcType=VARCHAR},
+      recevive_phone = #{recevivePhone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      order_statues = #{orderStatues,jdbcType=CHAR},
+      express_no = #{expressNo,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      sendByPostYN = #{sendbypostyn,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

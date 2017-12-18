@@ -65,4 +65,19 @@ public class JobTest extends SpringServiceTest{
 	/*public void mergerPlatformCashFlow() {
 		nodeJob.mergerPlatformCashFlow();
 	}*/
+	@Test
+	public void sendDividendBonusByMtUserTest() {
+		//发放失败的日期
+		String date = "";
+		dividendJob.sendDividendBonusByMtUser(date);
+		dividendJob.banlanceDividendBonusByMtUser(date);
+	}
+	@Test
+	public void sendNodeBonusByMtuser() {
+		//发放失败的日期
+		String date = "";
+		nodeJob.sendNodeBonusByMtuser(date);
+		nodeJob.banlanceNodeBonusByMtuser(date);
+	}
+	
 }

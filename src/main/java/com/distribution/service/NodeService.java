@@ -4,6 +4,7 @@
   */
 package com.distribution.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
@@ -20,6 +30,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.distribution.common.constant.BonusConstant;
+import com.distribution.common.utils.Page;
 import com.distribution.dao.member.mapper.more.MoreMemberMapper;
 import com.distribution.dao.memberNode.mapper.more.MoreMemberNodeMapper;
 import com.distribution.dao.memberNode.model.MemberNode;
@@ -457,7 +468,7 @@ public class NodeService {
 			return map;
 		}
 		//左节点的所有子节点
-		if(node.getLeftId()!=null && !"".equals(node.getLeftId())){
+		if(node.getLeftId()!=null && !"".equals(node.getLeftId().toString())){
 			Map<String,Object> ids = this.getSubNodeIdsMap(node.getLeftId());
 			if(null != ids){
 				String[] leftNum = (String[])ids.get("array");
@@ -473,7 +484,7 @@ public class NodeService {
 			map.put("leftToalSales","0");
 		}
 
-		if(node.getRightId()!=null && !"".equals(node.getRightId())) {
+		if(node.getRightId()!=null && !"".equals(node.getRightId().toString())) {
 			//右节点的所有子节点
 			Map<String,Object> ids = this.getSubNodeIdsMap(node.getRightId());
 			if(null != ids){
@@ -489,7 +500,35 @@ public class NodeService {
 			map.put("rightNum", "0");
 			map.put("rightToalSales","0");
 		}
+		//折合钻石数量
+		processTotalSalesResult(map);
 		return map;
+	}
+	/**
+	 * Name:会员“市级市场”“县级市场”哪个业绩先达到1千万，就先累计1个钻石（扣除1千万的业绩），总业绩也相应的扣除1千万变成一颗钻。
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月17日 下午2:23:52
+	 * @param map
+	 */
+	public void processTotalSalesResult(Map<String,String> map) {
+		int standard = 10000000;
+		int leftToalSales = Double.valueOf(map.get("leftToalSales")).intValue();
+		int rightToalSales = Double.valueOf(map.get("rightToalSales")).intValue();
+		//计算左区钻石数量
+		if(leftToalSales >= standard) {
+			int leftDiamondNum = Math.floorDiv(leftToalSales, standard);
+			int leftRestSaleNum = Math.floorMod(leftToalSales, standard);
+			map.put("leftDiamondNum", String.valueOf(leftDiamondNum));
+			map.put("leftRestSaleNum",String.valueOf(leftRestSaleNum));
+		}
+		//计算右区钻石数量
+		if(rightToalSales >= standard) {
+			int rightDiamondNum = Math.floorDiv(rightToalSales, standard);
+			int rightRestSaleNum = Math.floorMod(rightToalSales, standard);
+			map.put("rightDiamondNum", String.valueOf(rightDiamondNum));
+			map.put("rightRestSaleNum",String.valueOf(rightRestSaleNum));
+		}
 	}
 	/**
 	 * 更新要发放的见点奖明细信息
@@ -570,4 +609,172 @@ public class NodeService {
 		map.put("array", ids.split(","));
 		return map;
 	}
+	
+	public void insertMemberNodeBonusTest(int nodeId,List<OrderMaster> list,int[] memberIds){
+		List<NodeBonusHistory> historyList = new ArrayList<NodeBonusHistory>();
+		for(OrderMaster order : list) {
+			for(int memberId : memberIds) {
+				NodeBonusHistory history = new NodeBonusHistory();
+				history.setCreateBy(order.getCreateId());
+				history.setCreateTime(order.getCreateTime());
+				history.setFromNodeId(nodeId);
+				history.setMebmerId(memberId);
+				history.setStatus(BonusConstant.BONUS_STATUS_0);
+				history.setOrderId(order.getId());
+				history.setOrderNo(order.getOrderNo());
+				history.setOrderDate(order.getCreateTime());
+				historyList.add(history);
+			}
+		}
+        if(historyList.size() > 0){
+        	saveNodeBonusHistoryBatch(historyList);
+        }
+	}
+	/**
+	 * Name:运营中心左右区业绩 
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月17日 下午3:21:00
+	 * @param param:startDate，endDate，scope(left,right,all),pageSize,offset;
+	 * @return
+	 */
+	public Page listOperatorLeftAndRightSales(Page page){
+		Map<String,Object> param = page.getParameterMap();
+		param.put("pageSize", page.getPageSize());
+		param.put("offset", page.getOffset());
+		List<Map<String,Object>> list = moreNodeMapper.listOperatorLeftAndRightSales(param);
+		int totalCount = moreNodeMapper.countOperatorLeftAndRightSales(param);
+		
+		String flag = String.valueOf(param.get("scope"));
+		String startDate = param.get("startDate") == null?"":String.valueOf(param.get("startDate"));
+		String endDate = param.get("endDate") == null?"": String.valueOf(param.get("endDate"));
+		if(null != list && list.size() > 0) {
+			//查询每个运营中心销售业绩
+			for(Map<String,Object> map : list) {
+				processOperatorLeftAndRightSales(map,flag,startDate,endDate);
+			}
+		}
+		page.setTotalCount(totalCount);
+		page.setResult(list);
+		return page;
+	}
+	/**
+	 * Name: 单独查询每个运营中心左区和右区的销售业绩
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月17日 下午4:30:42
+	 * @param map
+	 * @param flag
+	 * @param startDate
+	 * @param endDate
+	 */
+	public void processOperatorLeftAndRightSales(Map<String,Object> map,String flag,String startDate,String endDate) {
+		int nodeId = Integer.parseInt(map.get("nodeId").toString());
+		MemberNode node = moreNodeMapper.selectByPrimaryKey(nodeId);
+		//查询所有左区销售额
+		if(flag.equals("left") || flag.equals("all")) {
+			if(node.getLeftId()!=null && !"".equals(node.getLeftId().toString())){
+				Map<String,Object> param = this.getSubNodeIdsMap(node.getLeftId());
+				if(!StringUtils.isBlank(startDate)) {
+					param.put("startDate", startDate);
+				}
+				if(!StringUtils.isBlank(endDate)) {
+					param.put("endDate", endDate);
+				}
+				if(null != param){
+					String[] leftNum = (String[])param.get("array");
+					if(null != leftNum && leftNum.length > 0){
+						//左节点的所有销售额，不包含折扣单
+						Double leftToalSales = moreNodeMapper.findTotalSalesByParentId(param);
+						map.put("leftNum", String.valueOf(leftNum.length));
+						map.put("leftToalSales", String.valueOf(leftToalSales));
+					}
+				}
+			}else{
+				map.put("leftNum", "0");
+				map.put("leftToalSales","0");
+			}
+		}
+		//查询右区销售业绩
+		if(flag.equals("right") || flag.equals("all")) {
+			if(node.getRightId()!=null && !"".equals(node.getRightId().toString())) {
+				//右节点的所有子节点
+				Map<String,Object> param = this.getSubNodeIdsMap(node.getRightId());
+				if(!StringUtils.isBlank(startDate)) {
+					param.put("startDate", startDate);
+				}
+				if(!StringUtils.isBlank(endDate)) {
+					param.put("endDate", endDate);
+				}
+				if(null != param){
+					String[] rightNum = (String[])param.get("array");
+					if (null != rightNum && rightNum.length > 0) {
+						//右节点的所有销售额，不包含折扣单
+						Double rightToalSales = moreNodeMapper.findTotalSalesByParentId(param);
+						map.put("rightNum", String.valueOf(rightNum.length));
+						map.put("rightToalSales", String.valueOf(rightToalSales));
+					}
+				}
+			}else{
+				map.put("rightNum", "0");
+				map.put("rightToalSales","0");
+			}
+		}
+	}
+	/**
+	 * Name:导出运营中心数据 
+	 * Description: 
+	 * @author BAB1703658
+	 * @date 2017年12月17日 下午5:18:07
+	 * @param title
+	 * @param headers
+	 * @param list
+	 * @return
+	 */
+	public XSSFWorkbook exportExcel(List<Map<String,Object>> list) throws InvocationTargetException {
+		//定义表头
+		String[] headers = {"运营中心名称","左区人数","左区销售业绩", "右区人数", "右区销售业绩"};
+		String title = "运营中心销售业绩";
+		// 声明一个工作薄
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		// 生成一个表格
+		XSSFSheet sheet = workbook.createSheet(title);
+		//定义字体
+		XSSFFont font = workbook.createFont();
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示
+		font.setFontHeightInPoints((short) 12);
+		//定义样式
+		XSSFCellStyle style = workbook.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+		style.setFont(font);
+		// 产生表格标题行
+		XSSFRow row = sheet.createRow(0);
+		for (int i = 0; i < headers.length; i++){
+			XSSFCell cell = row.createCell(i);
+			cell.setCellStyle(style);
+			cell.setCellValue(headers[i]);
+		}
+		//设置表格宽度
+		sheet.setColumnWidth(0, 20 * 256);
+		sheet.setColumnWidth(1, 20 * 256);
+		sheet.setColumnWidth(2, 20 * 256);
+		sheet.setColumnWidth(3, 20 * 256);
+		sheet.setColumnWidth(4, 20 * 256);
+		//定义body样式
+		XSSFCellStyle styleRight = workbook.createCellStyle();
+		styleRight.setAlignment(HSSFCellStyle.ALIGN_RIGHT);//居右
+		XSSFCellStyle styleCenter = workbook.createCellStyle();
+		styleCenter.setAlignment(HSSFCellStyle.ALIGN_CENTER);//居中
+		for(int j=0;j<list.size();j++){
+			XSSFRow bodyRow = sheet.createRow(j+1);
+			Map<String,Object> map = list.get(j);
+			bodyRow.createCell(0).setCellValue(map.get("nodeName")==null?"":String.valueOf(map.get("nodeName")));
+			bodyRow.createCell(1).setCellValue(map.get("leftNum")==null?"":String.valueOf(map.get("leftNum")));
+			bodyRow.createCell(2).setCellValue(map.get("leftToalSales")==null?"":String.valueOf(map.get("leftToalSales")));
+			bodyRow.createCell(3).setCellValue(map.get("rightNum")==null?"":String.valueOf(map.get("rightNum")));
+			bodyRow.createCell(4).setCellValue(map.get("rightToalSales")==null?"":String.valueOf(map.get("rightToalSales")));
+		}
+		return  workbook;
+	}
+
 }

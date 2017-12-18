@@ -1,5 +1,16 @@
 package com.distribution.service;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.distribution.common.constant.BonusConstant;
 import com.distribution.common.constant.Constant;
 import com.distribution.common.utils.CryptoUtil;
@@ -519,5 +530,12 @@ public class OrderService {
         }else{
             throw new RuntimeException();
         }
+    }
+
+    public List<OrderMaster> listOrdersByMemberId(int memberId,String date){
+    	Map<String,Object> map = new HashMap<String,Object>();
+    	map.put("memberId", memberId);
+    	map.put("date", date);
+    	return moreOrderMasterMapper.listOrdersByMemberId(map);
     }
 }

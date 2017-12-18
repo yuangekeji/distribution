@@ -399,6 +399,15 @@ angular
                     'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
                     'static/metronic/pages/scripts/components-date-time-pickers.min.js'
                 ]
+            },
+            {
+                name:'operatorPerformance',
+                files: [
+                    'static/metronic/global/plugins/datatables/datatables.min.css',
+                    'app/admOperatorPerformance/js/list.js?v=' + version,
+                    'static/metronic/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',
+                    'static/metronic/pages/scripts/components-date-time-pickers.min.js'
+                ]
             }
         ]
     });

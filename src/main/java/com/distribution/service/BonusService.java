@@ -464,10 +464,7 @@ public class BonusService {
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:28
 	 */
-	public Map<String,Object> saveNodeBonusFromNodeHistory(Map<String,Object> result){
-		//数据查询范围昨天
-		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
-		result.put("date", date);
+	public Map<String,Object> saveNodeBonusFromNodeHistory(Map<String,Object> result,String date){
 		DateBonusHistory history = findCurrentDayBonusHistory(date);
 		//如果标识为成功，直接返回。
 		if(null != history.getJdAlarmStatus() && history.getJdAlarmStatus() == 1){
@@ -561,10 +558,9 @@ public class BonusService {
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:24
 	 */
-	public Map<String,Object> saveBalanceMemberNodeBonus(Map<String,Object> result){
-		String yesterday = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+	public Map<String,Object> saveBalanceMemberNodeBonus(Map<String,Object> result,String date){
         //查找所有昨天发放的见点奖,包括以前没有结算的。
-		List<NodeBonusHistory> list = nodeBonusHistoryMapper.listAllYesterdayNodeBonusHistory(yesterday);
+		List<NodeBonusHistory> list = nodeBonusHistoryMapper.listAllYesterdayNodeBonusHistory(date);
 		result.put("toBeBalanceItemsAcount", list.size());
 		//见点奖到账处理，所有见点奖入奖金表，计算管理费。
         for(NodeBonusHistory history:list){
@@ -592,11 +588,8 @@ public class BonusService {
 	 * @author su
 	 * @date 2017年9月7日 下午2:34:28
 	 */
-	public Map<String,Object> saveDividendBonus(Map<String,Object> result){
-		//数据查询范围昨天
-		String date = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+	public Map<String,Object> saveDividendBonus(Map<String,Object> result,String date){
 		//String date = DateHelper.formatDate(new Date(), DateHelper.YYYY_MM_DD);
-		result.put("date", date);
 		DateBonusHistory history = findCurrentDayBonusHistory(date);
 		//如果标识为成功，直接返回。
 		if(null != history.getAlarmStatus() && history.getAlarmStatus()== 1){
@@ -786,11 +779,9 @@ public class BonusService {
 	 * @author su
 	 * @date 2017年9月7日 下午11:15:55
 	 */
-	public Map<String,Object> saveBalanceMemberDividendBonus(Map<String,Object> result){
-		
-		String yesterday = DateHelper.formatDate(DateHelper.getYesterDay(), DateHelper.YYYY_MM_DD);
+	public Map<String,Object> saveBalanceMemberDividendBonus(Map<String,Object> result,String date){
         //查找所有昨天发放的分红奖,包括历史发放未结算的
-		List<MoreDividendHistory> list = dividendHistoryMapper.listAllYesterdayDividendHistory(yesterday);
+		List<MoreDividendHistory> list = dividendHistoryMapper.listAllYesterdayDividendHistory(date);
 		if(null != list && list.size() > 0){
 			result.put("toBeBalanceItemsAcount", list.size());
 	        //分红奖到账处理，入奖金表，计算管理费。

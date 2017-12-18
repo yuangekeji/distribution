@@ -308,4 +308,10 @@ angular.module('app').config([
                 resolve: helper.resolveFor('admPoint'),
                 controller: 'admPointCtrl'
             })
+            .state('app.operatorPerformance',{
+                url: '/operatorPerformance',
+                templateUrl: helper.basepath('admOperatorPerformance/html/list.html'),
+                resolve: helper.resolveFor('operatorPerformance'),
+                controller: 'admOperatorPerformanceCtrl'
+            })
     }]);

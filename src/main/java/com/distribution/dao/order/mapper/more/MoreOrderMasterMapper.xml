@@ -348,4 +348,12 @@
         from order_master
         where order_statues > 1 and order_category = 3 and DATE(create_time) = DATE(#{date})
     </select>
+    <select id="listOrdersByMemberId" parameterType="java.util.Map" resultMap="BaseResultMap">
+    	select * from order_master 
+		<![CDATA[where member_id = #{memberId} 
+		and order_statues > 1 
+		and order_category < 3
+		and date(create_time) <= date(#{date})
+		]]>
+    </select>
 </mapper>

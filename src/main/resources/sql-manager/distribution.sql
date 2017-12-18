@@ -980,7 +980,7 @@ set session transaction isolation level SERIALIZABLE;
 select @@global.tx_isolation,@@tx_isolation;
 
 
--- 1204 未部署
+-- 1204 部署完成
 ALTER TABLE `date_bonus_history`
   ADD COLUMN  `all_total_sales` decimal(15,2) DEFAULT NULL COMMENT '所有销售总和';
 ALTER TABLE `date_bonus_history`
@@ -1042,15 +1042,28 @@ CREATE TABLE `platform_account_history` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-
 INSERT INTO `platform_account` VALUES ('1', '0.00', '0.00', '0.00', '0.00', '0.00', '2017-12-09 10:39:43', 'job');
 update account_flow_history set seed_amt = 0.00 where seed_amt  is null;
+
+-- 12.17未部署
+insert into role VALUES(4,'物流管理员');
+insert into role_menu VALUES(4,15);
+insert into role_menu VALUES(4,19);
+insert into menu VALUES(null,null,'运营中心业绩查询',12,'app.operatorPerformance',null);
+insert into role_menu VALUES(2,35);
+insert into role_menu VALUES(3,35);
+INSERT INTO `menu` VALUES ('36', null, '积分兑换记录', '9', 'app.point', null);
+INSERT INTO `role_menu` VALUES ('1', '36');
+INSERT INTO `menu` VALUES ('37', null, '积分兑换管理', '15', 'app.admPoint', null);
+INSERT INTO `role_menu` VALUES ('2', '37');
+INSERT INTO `role_menu` VALUES ('3', '37');
+INSERT INTO `role_menu` VALUES ('4', '37');
 
 DROP TABLE IF EXISTS `point_master`;
 CREATE TABLE `point_master` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-	`member_id` int(11) NOT NULL COMMENT '会员id',
-	`point_amt` decimal(15,2) NOT NULL COMMENT '积分数',
+  `member_id` int(11) NOT NULL COMMENT '会员id',
+  `point_amt` decimal(15,2) NOT NULL COMMENT '积分数',
   `create_id` int(11) NOT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_id` int(11) NOT NULL COMMENT '修改人',
@@ -1088,16 +1101,3 @@ CREATE TABLE `point_order` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `order_no` (`order_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='积分订单master';
-
-insert into role VALUES(4,'物流管理员');
-insert into role_menu VALUES(4,15);
-insert into role_menu VALUES(4,19);
-insert into menu VALUES(null,null,'运营中心业绩查询',12,'app.operatorPerformance',null);
-insert into role_menu VALUES(2,35);
-insert into role_menu VALUES(3,35);
-INSERT INTO `menu` VALUES ('36', null, '积分兑换记录', '9', 'app.point', null);
-INSERT INTO `role_menu` VALUES ('1', '36');
-INSERT INTO `menu` VALUES ('37', null, '积分兑换管理', '15', 'app.admPoint', null);
-INSERT INTO `role_menu` VALUES ('2', '37');
-INSERT INTO `role_menu` VALUES ('3', '37');
-INSERT INTO `role_menu` VALUES ('4', '37');

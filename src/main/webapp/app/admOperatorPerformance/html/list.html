@@ -1,0 +1,78 @@
+<h4 class="page-title">运营中心业绩查询</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet blue-steel box">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart theme-font hide"></i>
+                    <span class="caption-subject bold uppercase">运营中心业绩查询</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id="sample_1_wrapper" class="dataTables_wrapper">
+                    <form action="#" class="form-horizontal form-bordered">
+                        <div class="form-body">
+                            <div class="form-group col-md-5">
+                                <label class="control-label col-md-3">查询时间</label>
+                                <div class="col-md-8">
+                                    <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="yyyy-mm-dd">
+                                        <input type="text" class="form-control" id="startTime" name="from" ng-model="myPage.parameterMap.startTime">
+                                        <span class="input-group-addon"> to </span>
+                                        <input type="text" class="form-control" id="endTime" name="to" ng-model="myPage.parameterMap.endTime">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="form-group col-md-3">-->
+                                <!--<label class="control-label col-md-5">爵位</label>-->
+                                <!--<div class="col-md-7">-->
+                                   <!---->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <div class="form-group col-md-1">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn blue-steel" ng-click="search();"><i class="fa fa-search"></i> 查询</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END FORM-->
+                    <div class="table-scrollable">
+                        <table class="table table-bordered table-hover blue-steel-table" id="sample_1">
+                            <thead>
+                            <tr >
+                                <th>会员名称</th>
+                                <th>左区人数</th>
+                                <th>左区业绩</th>
+                                <th>右区人数</th>
+                                <th>右区业绩</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="odd gradeX" ng-show= "!notData" dir-paginate="ope in myPage.result | itemsPerPage: myPage.pageSize" current-page="myPage.pageNo" total-items="myPage.totalCount">
+                                <td>{{ope.memberName}}</td>
+                                <td>{{ope.totalOrderAmount | number:2}}</td>
+                                <td>{{ope.orderAmount | number:2}}</td>
+                                <td>{{ope.memberPost|PostLevelFilter}}</td>
+                                <td>{{ope.recommendName}}</td>
+                            </tr>
+                            <tr ng-show= "notData" >
+                                <td colspan="5" class="text-center">无记录</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="other-controller">
+                            <div class="text-center">
+                                <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="app/common/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<script>
+    ComponentsDateTimePickers.init(); // init todo page
+</script>
